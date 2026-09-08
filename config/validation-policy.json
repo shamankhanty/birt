@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 1,
+  "statuses": {
+    "PASS": "формальная проверка пройдена; вмешательство не требуется",
+    "WARNING": "данные не блокируются, но изменение требует детерминированной проверки или наблюдения",
+    "FAIL": "обновление/публикация должны быть остановлены до устранения причины"
+  },
+  "aiRouting": {
+    "sendAllFail": true,
+    "sendWarningCategories": ["anomaly", "methodology"],
+    "excludePass": true,
+    "excludeOrdinaryWarning": true
+  },
+  "referenceRule": "Известные особенности принятого baseline не становятся новыми предупреждениями. В AI-очередь попадает только новый дельта-сигнал относительно принятого reference snapshot."
+}

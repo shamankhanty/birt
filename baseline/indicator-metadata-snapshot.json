@@ -1,0 +1,756 @@
+{
+  "baselineVersion": "4.7.0",
+  "sourceStage": "stage5_calculation_engine",
+  "staticIndicators": {
+    "egpu": {
+      "plan": 100,
+      "direction": "higher",
+      "planPeriod": null
+    },
+    "egpu2days": {
+      "plan": 90,
+      "direction": "higher",
+      "planPeriod": null
+    },
+    "birth": {
+      "plan": 99,
+      "direction": "higher",
+      "planPeriod": null
+    },
+    "death": {
+      "plan": 99,
+      "direction": "higher",
+      "planPeriod": null
+    },
+    "semd228": {
+      "plan": 95,
+      "direction": "higher",
+      "planPeriod": null
+    },
+    "hospital": {
+      "plan": 95,
+      "direction": "higher",
+      "planPeriod": null
+    },
+    "ambulatoryCase": {
+      "plan": 95,
+      "direction": "higher",
+      "planPeriod": null
+    },
+    "elmk": {
+      "plan": 100,
+      "direction": "higher",
+      "planPeriod": null
+    },
+    "oncologyCouncil": {
+      "plan": 100,
+      "direction": "higher",
+      "planPeriod": null
+    },
+    "tvspStationary": {
+      "plan": 100,
+      "direction": "higher",
+      "planPeriod": null
+    },
+    "tvspAmbulatory": {
+      "plan": 100,
+      "direction": "higher",
+      "planPeriod": null
+    },
+    "tvspLaboratory": {
+      "plan": 100,
+      "direction": "higher",
+      "planPeriod": null
+    },
+    "tvspDiagnostic": {
+      "plan": 100,
+      "direction": "higher",
+      "planPeriod": null
+    },
+    "smpFederal": {
+      "plan": 100,
+      "direction": "higher",
+      "planPeriod": null
+    },
+    "tmkRemd": {
+      "plan": 100,
+      "direction": "higher",
+      "planPeriod": null
+    },
+    "smp": {
+      "plan": 95,
+      "direction": "higher",
+      "planPeriod": null
+    },
+    "errors": {
+      "plan": null,
+      "direction": "lower",
+      "planPeriod": null
+    },
+    "tmkMax": {
+      "plan": 193000,
+      "direction": "higher",
+      "planPeriod": "план 2026"
+    },
+    "elnMax": {
+      "plan": 99000,
+      "direction": "higher",
+      "planPeriod": "план 2026"
+    },
+    "visitMax": {
+      "plan": 654000,
+      "direction": "higher",
+      "planPeriod": "план 2026"
+    }
+  },
+  "datasetMetadata": {
+    "egpu": {
+      "plan": 100,
+      "direction": "higher",
+      "source": "app/mo-data.json"
+    },
+    "birth": {
+      "plan": 99,
+      "direction": "higher",
+      "source": "app/mo-data.json"
+    },
+    "death": {
+      "plan": 99,
+      "direction": "higher",
+      "source": "app/mo-data.json"
+    },
+    "semd228": {
+      "plan": 95,
+      "direction": "higher",
+      "source": "app/mo-data.json"
+    },
+    "hospital": {
+      "plan": 95,
+      "direction": "higher",
+      "source": "app/mo-data.json"
+    },
+    "smp": {
+      "plan": 95,
+      "direction": "higher",
+      "source": "app/mo-data.json"
+    },
+    "ambulatoryCase": {
+      "plan": 95,
+      "direction": "higher",
+      "source": "app/mo-data.json"
+    },
+    "tvspStationary": {
+      "plan": 100,
+      "direction": "higher",
+      "source": "app/mo-data.json"
+    },
+    "tvspAmbulatory": {
+      "plan": 100,
+      "direction": "higher",
+      "source": "app/mo-data.json"
+    },
+    "tvspLaboratory": {
+      "plan": 100,
+      "direction": "higher",
+      "source": "app/mo-data.json"
+    },
+    "tvspDiagnostic": {
+      "plan": 100,
+      "direction": "higher",
+      "source": "app/mo-data.json"
+    },
+    "smpFederal": {
+      "plan": 100,
+      "direction": "higher",
+      "source": "app/mo-data.json"
+    },
+    "egpu2days": {
+      "plan": 90,
+      "direction": "higher",
+      "source": "app/mo-data.json"
+    },
+    "tmkMaxCount": {
+      "plan": 10000,
+      "direction": "higher",
+      "source": "app/operational-mo.json"
+    },
+    "shortInput": {
+      "plan": 0,
+      "direction": "lower",
+      "source": "app/operational-mo.json"
+    },
+    "hospitalCount": {
+      "plan": null,
+      "direction": "higher",
+      "source": "app/operational-mo.json"
+    },
+    "fapSemdCount": {
+      "plan": null,
+      "direction": "higher",
+      "source": "app/operational-mo.json"
+    },
+    "elnMaxCount": {
+      "plan": 10000,
+      "direction": "higher",
+      "source": "app/operational-mo.json"
+    },
+    "shortInputAmb": {
+      "plan": 0,
+      "direction": "lower",
+      "source": "app/operational-mo.json"
+    },
+    "shortInputHosp": {
+      "plan": 0,
+      "direction": "lower",
+      "source": "app/operational-mo.json"
+    },
+    "elmk": {
+      "plan": 100,
+      "direction": "higher",
+      "source": "app/organization-status.json"
+    },
+    "tmkRemd": {
+      "plan": 100,
+      "direction": "higher",
+      "source": "app/organization-status.json"
+    },
+    "doctorsAll": {
+      "plan": 80,
+      "direction": "higher",
+      "source": "app/physician-metrics.json"
+    },
+    "doctorsLevel3": {
+      "plan": 90,
+      "direction": "higher",
+      "source": "app/physician-metrics.json"
+    },
+    "doctor500_obgyn": {
+      "plan": 50,
+      "direction": "higher",
+      "source": "app/physician-metrics.json"
+    },
+    "doctor500_gp": {
+      "plan": 50,
+      "direction": "higher",
+      "source": "app/physician-metrics.json"
+    },
+    "doctor500_cardiologist": {
+      "plan": 50,
+      "direction": "higher",
+      "source": "app/physician-metrics.json"
+    },
+    "doctor500_oncologist": {
+      "plan": 50,
+      "direction": "higher",
+      "source": "app/physician-metrics.json"
+    },
+    "doctor500_ophthalmologist": {
+      "plan": 50,
+      "direction": "higher",
+      "source": "app/physician-metrics.json"
+    },
+    "doctor500_pediatrician": {
+      "plan": 50,
+      "direction": "higher",
+      "source": "app/physician-metrics.json"
+    },
+    "doctor500_dentist": {
+      "plan": 50,
+      "direction": "higher",
+      "source": "app/physician-metrics.json"
+    },
+    "doctor500_therapist": {
+      "plan": 50,
+      "direction": "higher",
+      "source": "app/physician-metrics.json"
+    },
+    "doctor500_surgeon": {
+      "plan": 50,
+      "direction": "higher",
+      "source": "app/physician-metrics.json"
+    }
+  },
+  "rating": {
+    "excludedIds": [
+      "errors",
+      "tvspLaboratory",
+      "egpu2days",
+      "egpu",
+      "birth"
+    ],
+    "weights": {
+      "care": 0.7,
+      "services": 0.2,
+      "readiness": 0.1
+    },
+    "blocks": {
+      "ambulatoryCase": "care",
+      "birth": "services",
+      "death": "services",
+      "doctor500_cardiologist": "readiness",
+      "doctor500_dentist": "readiness",
+      "doctor500_gp": "readiness",
+      "doctor500_obgyn": "readiness",
+      "doctor500_oncologist": "readiness",
+      "doctor500_ophthalmologist": "readiness",
+      "doctor500_pediatrician": "readiness",
+      "doctor500_surgeon": "readiness",
+      "doctor500_therapist": "readiness",
+      "doctorsAll": "readiness",
+      "doctorsLevel3": "readiness",
+      "egpu": "services",
+      "egpu2days": "services",
+      "elmk": "readiness",
+      "elnMax": "readiness",
+      "elnMaxCount": "readiness",
+      "errors": "readiness",
+      "fapSemdCount": "readiness",
+      "hospital": "care",
+      "hospitalCount": "readiness",
+      "oncologyCouncil": "readiness",
+      "semd228": "care",
+      "shortInput": "readiness",
+      "shortInputAmb": "readiness",
+      "shortInputHosp": "readiness",
+      "smp": "care",
+      "smpFederal": "readiness",
+      "tmkMax": "readiness",
+      "tmkMaxCount": "readiness",
+      "tmkRemd": "readiness",
+      "tvspAmbulatory": "readiness",
+      "tvspDiagnostic": "readiness",
+      "tvspLaboratory": "readiness",
+      "tvspStationary": "readiness",
+      "visitMax": "readiness"
+    },
+    "activeIds": [
+      "death",
+      "doctor500_cardiologist",
+      "doctor500_dentist",
+      "doctor500_gp",
+      "doctor500_obgyn",
+      "doctor500_oncologist",
+      "doctor500_ophthalmologist",
+      "doctor500_pediatrician",
+      "doctor500_surgeon",
+      "doctor500_therapist",
+      "doctorsAll",
+      "doctorsLevel3",
+      "hospital",
+      "semd228",
+      "tvspAmbulatory",
+      "tvspDiagnostic",
+      "tvspStationary"
+    ]
+  },
+  "registryMetadata": {
+    "ambulatoryCase": {
+      "plan": 95,
+      "planPeriod": null,
+      "direction": "higher",
+      "periodKind": "cumulative",
+      "ratingPolicy": "conditional",
+      "ratingActive": false,
+      "ratingBlock": "care",
+      "exclusions": []
+    },
+    "birth": {
+      "plan": 99,
+      "planPeriod": null,
+      "direction": "higher",
+      "periodKind": "cumulative",
+      "ratingPolicy": "exclude",
+      "ratingActive": false,
+      "ratingBlock": "services",
+      "exclusions": []
+    },
+    "death": {
+      "plan": 99,
+      "planPeriod": null,
+      "direction": "higher",
+      "periodKind": "cumulative",
+      "ratingPolicy": "include",
+      "ratingActive": true,
+      "ratingBlock": "services",
+      "exclusions": []
+    },
+    "doctor500_cardiologist": {
+      "plan": 50,
+      "planPeriod": null,
+      "direction": "higher",
+      "periodKind": "monthly",
+      "ratingPolicy": "include",
+      "ratingActive": true,
+      "ratingBlock": "readiness",
+      "exclusions": [
+        "При знаменателе 1–2 врача результат справочный для приоритета заслушивания."
+      ]
+    },
+    "doctor500_dentist": {
+      "plan": 50,
+      "planPeriod": null,
+      "direction": "higher",
+      "periodKind": "monthly",
+      "ratingPolicy": "include",
+      "ratingActive": true,
+      "ratingBlock": "readiness",
+      "exclusions": [
+        "При знаменателе 1–2 врача результат справочный для приоритета заслушивания."
+      ]
+    },
+    "doctor500_gp": {
+      "plan": 50,
+      "planPeriod": null,
+      "direction": "higher",
+      "periodKind": "monthly",
+      "ratingPolicy": "include",
+      "ratingActive": true,
+      "ratingBlock": "readiness",
+      "exclusions": [
+        "При знаменателе 1–2 врача результат справочный для приоритета заслушивания."
+      ]
+    },
+    "doctor500_obgyn": {
+      "plan": 50,
+      "planPeriod": null,
+      "direction": "higher",
+      "periodKind": "monthly",
+      "ratingPolicy": "include",
+      "ratingActive": true,
+      "ratingBlock": "readiness",
+      "exclusions": [
+        "При знаменателе 1–2 врача результат справочный для приоритета заслушивания."
+      ]
+    },
+    "doctor500_oncologist": {
+      "plan": 50,
+      "planPeriod": null,
+      "direction": "higher",
+      "periodKind": "monthly",
+      "ratingPolicy": "include",
+      "ratingActive": true,
+      "ratingBlock": "readiness",
+      "exclusions": [
+        "При знаменателе 1–2 врача результат справочный для приоритета заслушивания."
+      ]
+    },
+    "doctor500_ophthalmologist": {
+      "plan": 50,
+      "planPeriod": null,
+      "direction": "higher",
+      "periodKind": "monthly",
+      "ratingPolicy": "include",
+      "ratingActive": true,
+      "ratingBlock": "readiness",
+      "exclusions": [
+        "При знаменателе 1–2 врача результат справочный для приоритета заслушивания."
+      ]
+    },
+    "doctor500_pediatrician": {
+      "plan": 50,
+      "planPeriod": null,
+      "direction": "higher",
+      "periodKind": "monthly",
+      "ratingPolicy": "include",
+      "ratingActive": true,
+      "ratingBlock": "readiness",
+      "exclusions": [
+        "При знаменателе 1–2 врача результат справочный для приоритета заслушивания."
+      ]
+    },
+    "doctor500_surgeon": {
+      "plan": 50,
+      "planPeriod": null,
+      "direction": "higher",
+      "periodKind": "monthly",
+      "ratingPolicy": "include",
+      "ratingActive": true,
+      "ratingBlock": "readiness",
+      "exclusions": [
+        "При знаменателе 1–2 врача результат справочный для приоритета заслушивания."
+      ]
+    },
+    "doctor500_therapist": {
+      "plan": 50,
+      "planPeriod": null,
+      "direction": "higher",
+      "periodKind": "monthly",
+      "ratingPolicy": "include",
+      "ratingActive": true,
+      "ratingBlock": "readiness",
+      "exclusions": [
+        "При знаменателе 1–2 врача результат справочный для приоритета заслушивания."
+      ]
+    },
+    "doctorsAll": {
+      "plan": 80,
+      "planPeriod": null,
+      "direction": "higher",
+      "periodKind": "monthly",
+      "ratingPolicy": "include",
+      "ratingActive": true,
+      "ratingBlock": "readiness",
+      "exclusions": []
+    },
+    "doctorsLevel3": {
+      "plan": 90,
+      "planPeriod": null,
+      "direction": "higher",
+      "periodKind": "monthly",
+      "ratingPolicy": "include",
+      "ratingActive": true,
+      "ratingBlock": "readiness",
+      "exclusions": []
+    },
+    "egpu": {
+      "plan": 100,
+      "planPeriod": null,
+      "direction": "higher",
+      "periodKind": "cumulative",
+      "ratingPolicy": "exclude",
+      "ratingActive": false,
+      "ratingBlock": "services",
+      "exclusions": []
+    },
+    "egpu2days": {
+      "plan": 90,
+      "planPeriod": null,
+      "direction": "higher",
+      "periodKind": "cumulative",
+      "ratingPolicy": "exclude",
+      "ratingActive": false,
+      "ratingBlock": "services",
+      "exclusions": []
+    },
+    "elmk": {
+      "plan": 100,
+      "planPeriod": null,
+      "direction": "higher",
+      "periodKind": "cumulative",
+      "ratingPolicy": "not_applicable",
+      "ratingActive": false,
+      "ratingBlock": "readiness",
+      "exclusions": []
+    },
+    "elnMax": {
+      "plan": 99000,
+      "planPeriod": "план 2026",
+      "direction": "higher",
+      "periodKind": "operational",
+      "ratingPolicy": "not_applicable",
+      "ratingActive": false,
+      "ratingBlock": "readiness",
+      "exclusions": [
+        "РКПД/противотуберкулёзный профиль учитывает специальные правила применимости МАХ в текущем runtime."
+      ]
+    },
+    "elnMaxCount": {
+      "plan": 10000,
+      "planPeriod": null,
+      "direction": "higher",
+      "periodKind": "cumulative",
+      "ratingPolicy": "conditional",
+      "ratingActive": false,
+      "ratingBlock": "readiness",
+      "exclusions": [
+        "РКПД/противотуберкулёзный профиль учитывает специальные правила применимости МАХ в текущем runtime."
+      ]
+    },
+    "errors": {
+      "plan": null,
+      "planPeriod": null,
+      "direction": "lower",
+      "periodKind": "monthly",
+      "ratingPolicy": "exclude",
+      "ratingActive": false,
+      "ratingBlock": "readiness",
+      "exclusions": []
+    },
+    "fapSemdCount": {
+      "plan": null,
+      "planPeriod": null,
+      "direction": "higher",
+      "periodKind": "cumulative",
+      "ratingPolicy": "not_applicable",
+      "ratingActive": false,
+      "ratingBlock": "readiness",
+      "exclusions": []
+    },
+    "hospital": {
+      "plan": 95,
+      "planPeriod": null,
+      "direction": "higher",
+      "periodKind": "cumulative",
+      "ratingPolicy": "include",
+      "ratingActive": true,
+      "ratingBlock": "care",
+      "exclusions": []
+    },
+    "hospitalCount": {
+      "plan": null,
+      "planPeriod": null,
+      "direction": "higher",
+      "periodKind": "cumulative",
+      "ratingPolicy": "not_applicable",
+      "ratingActive": false,
+      "ratingBlock": "readiness",
+      "exclusions": []
+    },
+    "oncologyCouncil": {
+      "plan": 100,
+      "planPeriod": null,
+      "direction": "higher",
+      "periodKind": "monthly",
+      "ratingPolicy": "not_applicable",
+      "ratingActive": false,
+      "ratingBlock": "readiness",
+      "exclusions": []
+    },
+    "semd228": {
+      "plan": 95,
+      "planPeriod": null,
+      "direction": "higher",
+      "periodKind": "cumulative",
+      "ratingPolicy": "include",
+      "ratingActive": true,
+      "ratingBlock": "care",
+      "exclusions": [
+        "Одна несопоставленная частная строка из Ижевска со знаменателем 1 исключена и сохранена в аудите."
+      ]
+    },
+    "shortInput": {
+      "plan": 0,
+      "planPeriod": null,
+      "direction": "lower",
+      "periodKind": "cumulative",
+      "ratingPolicy": "exclude",
+      "ratingActive": false,
+      "ratingBlock": "readiness",
+      "exclusions": []
+    },
+    "shortInputAmb": {
+      "plan": 0,
+      "planPeriod": null,
+      "direction": "lower",
+      "periodKind": "cumulative",
+      "ratingPolicy": "exclude",
+      "ratingActive": false,
+      "ratingBlock": "readiness",
+      "exclusions": []
+    },
+    "shortInputHosp": {
+      "plan": 0,
+      "planPeriod": null,
+      "direction": "lower",
+      "periodKind": "cumulative",
+      "ratingPolicy": "exclude",
+      "ratingActive": false,
+      "ratingBlock": "readiness",
+      "exclusions": []
+    },
+    "smp": {
+      "plan": 95,
+      "planPeriod": null,
+      "direction": "higher",
+      "periodKind": "cumulative",
+      "ratingPolicy": "not_applicable",
+      "ratingActive": false,
+      "ratingBlock": "care",
+      "exclusions": []
+    },
+    "smpFederal": {
+      "plan": 100,
+      "planPeriod": null,
+      "direction": "higher",
+      "periodKind": "cumulative",
+      "ratingPolicy": "not_applicable",
+      "ratingActive": false,
+      "ratingBlock": "readiness",
+      "exclusions": []
+    },
+    "tmkMax": {
+      "plan": 193000,
+      "planPeriod": "план 2026",
+      "direction": "higher",
+      "periodKind": "operational",
+      "ratingPolicy": "not_applicable",
+      "ratingActive": false,
+      "ratingBlock": "readiness",
+      "exclusions": [
+        "РКПД/противотуберкулёзный профиль учитывает специальные правила применимости МАХ в текущем runtime."
+      ]
+    },
+    "tmkMaxCount": {
+      "plan": 10000,
+      "planPeriod": null,
+      "direction": "higher",
+      "periodKind": "cumulative",
+      "ratingPolicy": "conditional",
+      "ratingActive": false,
+      "ratingBlock": "readiness",
+      "exclusions": [
+        "РКПД/противотуберкулёзный профиль учитывает специальные правила применимости МАХ в текущем runtime."
+      ]
+    },
+    "tmkRemd": {
+      "plan": 100,
+      "planPeriod": null,
+      "direction": "higher",
+      "periodKind": "cumulative",
+      "ratingPolicy": "not_applicable",
+      "ratingActive": false,
+      "ratingBlock": "readiness",
+      "exclusions": []
+    },
+    "tvspAmbulatory": {
+      "plan": 100,
+      "planPeriod": null,
+      "direction": "higher",
+      "periodKind": "cumulative",
+      "ratingPolicy": "include",
+      "ratingActive": true,
+      "ratingBlock": "readiness",
+      "exclusions": []
+    },
+    "tvspDiagnostic": {
+      "plan": 100,
+      "planPeriod": null,
+      "direction": "higher",
+      "periodKind": "cumulative",
+      "ratingPolicy": "include",
+      "ratingActive": true,
+      "ratingBlock": "readiness",
+      "exclusions": []
+    },
+    "tvspLaboratory": {
+      "plan": 100,
+      "planPeriod": null,
+      "direction": "higher",
+      "periodKind": "cumulative",
+      "ratingPolicy": "exclude",
+      "ratingActive": false,
+      "ratingBlock": "readiness",
+      "exclusions": []
+    },
+    "tvspStationary": {
+      "plan": 100,
+      "planPeriod": null,
+      "direction": "higher",
+      "periodKind": "cumulative",
+      "ratingPolicy": "include",
+      "ratingActive": true,
+      "ratingBlock": "readiness",
+      "exclusions": []
+    },
+    "visitMax": {
+      "plan": 654000,
+      "planPeriod": "план 2026",
+      "direction": "higher",
+      "periodKind": "operational",
+      "ratingPolicy": "not_applicable",
+      "ratingActive": false,
+      "ratingBlock": "readiness",
+      "exclusions": []
+    }
+  }
+}

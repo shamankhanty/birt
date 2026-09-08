@@ -1,0 +1,19 @@
+{
+  "baselineVersion": "4.6.0",
+  "latestFullMonth": {
+    "label": "август 2026",
+    "startDate": "01.08.2026",
+    "endDate": "31.08.2026"
+  },
+  "previousFullMonth": {
+    "label": "июль 2026",
+    "startDate": "01.07.2026",
+    "endDate": "31.07.2026"
+  },
+  "fullMonthCumulativeComparison": {
+    "previous": "01.01–31.07.2026",
+    "current": "01.01–31.08.2026"
+  },
+  "ratingActiveIndicatorCount": 17,
+  "rule": "Неполный сентябрь не заменяет последний полный август; месячные показатели используют август к июлю, накопительные — сопоставимые накопительные срезы."
+}
