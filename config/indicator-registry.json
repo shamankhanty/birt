@@ -1,0 +1,1565 @@
+{
+  "schemaVersion": 2,
+  "status": "active",
+  "baselineVersion": "4.7.0",
+  "baselineCommit": "c50be9e1a04b6aa0641e0dd791c2b9238caa15d1",
+  "generatedFrom": [
+    "app/page.tsx",
+    "app/mo-data.json",
+    "app/monthly-mo.json",
+    "app/operational-mo.json",
+    "app/organization-status.json",
+    "app/physician-metrics.json"
+  ],
+  "runtimeIntegration": true,
+  "rule": "С этапа 6 реестр является единственным runtime-источником планов, направления оценки, типа периода и metadata участия показателя в рейтинге; формулы и фактические значения остаются в deterministic calculation layer и исходных данных.",
+  "rating": {
+    "blocks": {
+      "care": 0.7,
+      "services": 0.2,
+      "readiness": 0.1
+    },
+    "baselinePeriod": "август 2026",
+    "missingDataRule": "Отсутствие строки не заменяется нулём; показатель остаётся в контроле полноты, но не искажает балл."
+  },
+  "globalExclusions": [
+    "Неприменимый к МО показатель исключается из знаменателя рейтинга.",
+    "Частные и технические организации исключаются из управленческих списков отстающих, если не дано отдельное указание.",
+    "Случаи краткого ввода показываются справочно и не влияют на рейтинг/приоритет заслушивания."
+  ],
+  "indicators": {
+    "ambulatoryCase": {
+      "name": "Доля СЭМД «Эпикриз по законченному случаю амбулаторный» (СЭМД №92, №233) относительно количества случаев",
+      "group": "СЭМД",
+      "formula": "(Зарегистрированные амбулаторные СЭМД / случаи ПМСП, поданные на оплату) × 100%",
+      "numerator": "СЭМД «Эпикриз по законченному случаю амбулаторный» (СЭМД №92, №233).",
+      "denominator": "Случаи оказания первичной медико-санитарной помощи, поданные на оплату; используются как доступный рабочий знаменатель при отсутствии отдельной выгрузки завершённых случаев.",
+      "source": {
+        "dataFile": "app/mo-data.json",
+        "methodology": "ГИС ЭЗ РТ / РЭМД ЕГИСЗ"
+      },
+      "period": {
+        "kind": "cumulative",
+        "current": "01.01–29.08.2026",
+        "date": "29.08.2026",
+        "comparisonLabel": "Июль 2026",
+        "cadence": "Еженедельно; накопительно с начала года"
+      },
+      "plan": {
+        "value": 95,
+        "period": null
+      },
+      "direction": "higher",
+      "unit": "%",
+      "rating": {
+        "policy": "conditional",
+        "baselineActive": false,
+        "block": "care",
+        "reason": "Нет сопоставимого полного августовского набора по МО; вернуть после появления август/июль."
+      },
+      "exclusions": [],
+      "baselineStaticFact": 87.22,
+      "notes": "Краткий ввод и незакрытый амбулаторный случай могут не сформировать требуемый СЭМД. Представленный отчёт использует случаи, поданные на оплату: это согласованный рабочий знаменатель до появления отдельной выгрузки завершённых случаев ПМСП.",
+      "legal": null,
+      "management": {
+        "hearingPriority": true,
+        "reason": "При наличии применимости, данных и плана может участвовать в приоритете заслушивания."
+      },
+      "rowExclusionRules": []
+    },
+    "birth": {
+      "name": "Доля медицинских свидетельств о рождении относительно актов гражданского состояния",
+      "group": "СЭМД",
+      "formula": "(Электронные свидетельства, зарегистрированные в ФРМСР / акты о рождении) × 100%",
+      "numerator": "Медицинские свидетельства о рождении в форме ЭМД, зарегистрированные в ЕГИСЗ.",
+      "denominator": "Общее количество актов гражданского состояния о рождении.",
+      "source": {
+        "dataFile": "app/mo-data.json",
+        "methodology": "Выгрузка ГИС ЭЗ РТ; статус «Зарегистрирован» принимается как регистрация в ФРМСР ЕГИСЗ"
+      },
+      "period": {
+        "kind": "cumulative",
+        "current": "01.01–31.08.2026",
+        "date": "31.08.2026",
+        "comparisonLabel": "На 31.08",
+        "cadence": "Еженедельно; накопительно с начала года"
+      },
+      "plan": {
+        "value": 99,
+        "period": null
+      },
+      "direction": "higher",
+      "unit": "%",
+      "rating": {
+        "policy": "exclude",
+        "baselineActive": false,
+        "block": "services",
+        "reason": "Явно исключён из buildOrganizationRating() в baseline v4.6.0."
+      },
+      "exclusions": [],
+      "baselineStaticFact": 99.59,
+      "notes": "Числитель и знаменатель берутся за один период. Учитывается регистрация документа в федеральном реестре, а не только его формирование в МИС.",
+      "legal": null,
+      "management": {
+        "hearingPriority": false,
+        "reason": "Исключён из приоритета заслушивания в baseline v4.6.0."
+      },
+      "rowExclusionRules": []
+    },
+    "death": {
+      "name": "Доля медицинских свидетельств о смерти относительно актов гражданского состояния",
+      "group": "СЭМД",
+      "formula": "(Электронные свидетельства, зарегистрированные в ФРМСС / акты о смерти) × 100%",
+      "numerator": "Медицинские свидетельства о смерти в форме ЭМД, зарегистрированные в ЕГИСЗ.",
+      "denominator": "Общее количество актов гражданского состояния о смерти.",
+      "source": {
+        "dataFile": "app/mo-data.json",
+        "methodology": "Выгрузка ГИС ЭЗ РТ; статус «Зарегистрирован» принимается как регистрация в ФРМСС ЕГИСЗ"
+      },
+      "period": {
+        "kind": "cumulative",
+        "current": "01.01–31.08.2026",
+        "date": "31.08.2026",
+        "comparisonLabel": "На 31.08",
+        "cadence": "Еженедельно; накопительно с начала года"
+      },
+      "plan": {
+        "value": 99,
+        "period": null
+      },
+      "direction": "higher",
+      "unit": "%",
+      "rating": {
+        "policy": "include",
+        "baselineActive": true,
+        "block": "services",
+        "reason": "Активен в августовском рейтинге v4.6.0."
+      },
+      "exclusions": [],
+      "baselineStaticFact": 98.58,
+      "notes": "Числитель и знаменатель берутся за один период. Если у МО не было случаев, по которым она должна оформить медицинское свидетельство о смерти, показатель помечается «Нет применимых случаев» и исключается из её рейтинга. Документ с ошибкой регистрации не входит в числитель до успешной повторной отправки.",
+      "legal": null,
+      "management": {
+        "hearingPriority": true,
+        "reason": "При наличии применимости, данных и плана может участвовать в приоритете заслушивания."
+      },
+      "rowExclusionRules": []
+    },
+    "doctor500_cardiologist": {
+      "name": "Доля врачей-кардиологов ПМСП, подписавших свыше 500 СЭМД",
+      "group": null,
+      "formula": "Врачи соответствующей специальности с >500 СЭМД / работающие врачи этой специальности по ФРМР × 100%",
+      "numerator": null,
+      "denominator": null,
+      "source": {
+        "dataFile": "app/physician-metrics.json",
+        "methodology": null
+      },
+      "period": {
+        "kind": "monthly",
+        "current": "август 2026",
+        "date": "31.08.2026",
+        "comparisonLabel": "Август 2026",
+        "cadence": null
+      },
+      "plan": {
+        "value": 50,
+        "period": null
+      },
+      "direction": "higher",
+      "unit": "%",
+      "rating": {
+        "policy": "include",
+        "baselineActive": true,
+        "block": "readiness",
+        "reason": "Активен в августовском рейтинге v4.6.0."
+      },
+      "exclusions": [
+        "При знаменателе 1–2 врача результат справочный для приоритета заслушивания."
+      ],
+      "baselineStaticFact": null,
+      "notes": null,
+      "legal": null,
+      "management": {
+        "hearingPriority": true,
+        "reason": "При наличии применимости, данных и плана может участвовать в приоритете заслушивания."
+      },
+      "rowExclusionRules": [
+        "small_denominator_lt3_reference_only"
+      ]
+    },
+    "doctor500_dentist": {
+      "name": "Доля врачей-стоматологов ПМСП, подписавших свыше 500 СЭМД",
+      "group": null,
+      "formula": "Врачи соответствующей специальности с >500 СЭМД / работающие врачи этой специальности по ФРМР × 100%",
+      "numerator": null,
+      "denominator": null,
+      "source": {
+        "dataFile": "app/physician-metrics.json",
+        "methodology": null
+      },
+      "period": {
+        "kind": "monthly",
+        "current": "август 2026",
+        "date": "31.08.2026",
+        "comparisonLabel": "Август 2026",
+        "cadence": null
+      },
+      "plan": {
+        "value": 50,
+        "period": null
+      },
+      "direction": "higher",
+      "unit": "%",
+      "rating": {
+        "policy": "include",
+        "baselineActive": true,
+        "block": "readiness",
+        "reason": "Активен в августовском рейтинге v4.6.0."
+      },
+      "exclusions": [
+        "При знаменателе 1–2 врача результат справочный для приоритета заслушивания."
+      ],
+      "baselineStaticFact": null,
+      "notes": null,
+      "legal": null,
+      "management": {
+        "hearingPriority": true,
+        "reason": "При наличии применимости, данных и плана может участвовать в приоритете заслушивания."
+      },
+      "rowExclusionRules": [
+        "small_denominator_lt3_reference_only"
+      ]
+    },
+    "doctor500_gp": {
+      "name": "Доля врачей общей практики, подписавших свыше 500 СЭМД",
+      "group": null,
+      "formula": "Врачи соответствующей специальности с >500 СЭМД / работающие врачи этой специальности по ФРМР × 100%",
+      "numerator": null,
+      "denominator": null,
+      "source": {
+        "dataFile": "app/physician-metrics.json",
+        "methodology": null
+      },
+      "period": {
+        "kind": "monthly",
+        "current": "август 2026",
+        "date": "31.08.2026",
+        "comparisonLabel": "Август 2026",
+        "cadence": null
+      },
+      "plan": {
+        "value": 50,
+        "period": null
+      },
+      "direction": "higher",
+      "unit": "%",
+      "rating": {
+        "policy": "include",
+        "baselineActive": true,
+        "block": "readiness",
+        "reason": "Активен в августовском рейтинге v4.6.0."
+      },
+      "exclusions": [
+        "При знаменателе 1–2 врача результат справочный для приоритета заслушивания."
+      ],
+      "baselineStaticFact": null,
+      "notes": null,
+      "legal": null,
+      "management": {
+        "hearingPriority": true,
+        "reason": "При наличии применимости, данных и плана может участвовать в приоритете заслушивания."
+      },
+      "rowExclusionRules": [
+        "small_denominator_lt3_reference_only"
+      ]
+    },
+    "doctor500_obgyn": {
+      "name": "Доля врачей акушеров-гинекологов ПМСП, подписавших свыше 500 СЭМД",
+      "group": null,
+      "formula": "Врачи соответствующей специальности с >500 СЭМД / работающие врачи этой специальности по ФРМР × 100%",
+      "numerator": null,
+      "denominator": null,
+      "source": {
+        "dataFile": "app/physician-metrics.json",
+        "methodology": null
+      },
+      "period": {
+        "kind": "monthly",
+        "current": "август 2026",
+        "date": "31.08.2026",
+        "comparisonLabel": "Август 2026",
+        "cadence": null
+      },
+      "plan": {
+        "value": 50,
+        "period": null
+      },
+      "direction": "higher",
+      "unit": "%",
+      "rating": {
+        "policy": "include",
+        "baselineActive": true,
+        "block": "readiness",
+        "reason": "Активен в августовском рейтинге v4.6.0."
+      },
+      "exclusions": [
+        "При знаменателе 1–2 врача результат справочный для приоритета заслушивания."
+      ],
+      "baselineStaticFact": null,
+      "notes": null,
+      "legal": null,
+      "management": {
+        "hearingPriority": true,
+        "reason": "При наличии применимости, данных и плана может участвовать в приоритете заслушивания."
+      },
+      "rowExclusionRules": [
+        "small_denominator_lt3_reference_only"
+      ]
+    },
+    "doctor500_oncologist": {
+      "name": "Доля врачей-онкологов ПМСП, подписавших свыше 500 СЭМД",
+      "group": null,
+      "formula": "Врачи соответствующей специальности с >500 СЭМД / работающие врачи этой специальности по ФРМР × 100%",
+      "numerator": null,
+      "denominator": null,
+      "source": {
+        "dataFile": "app/physician-metrics.json",
+        "methodology": null
+      },
+      "period": {
+        "kind": "monthly",
+        "current": "август 2026",
+        "date": "31.08.2026",
+        "comparisonLabel": "Август 2026",
+        "cadence": null
+      },
+      "plan": {
+        "value": 50,
+        "period": null
+      },
+      "direction": "higher",
+      "unit": "%",
+      "rating": {
+        "policy": "include",
+        "baselineActive": true,
+        "block": "readiness",
+        "reason": "Активен в августовском рейтинге v4.6.0."
+      },
+      "exclusions": [
+        "При знаменателе 1–2 врача результат справочный для приоритета заслушивания."
+      ],
+      "baselineStaticFact": null,
+      "notes": null,
+      "legal": null,
+      "management": {
+        "hearingPriority": true,
+        "reason": "При наличии применимости, данных и плана может участвовать в приоритете заслушивания."
+      },
+      "rowExclusionRules": [
+        "small_denominator_lt3_reference_only"
+      ]
+    },
+    "doctor500_ophthalmologist": {
+      "name": "Доля врачей-офтальмологов ПМСП, подписавших свыше 500 СЭМД",
+      "group": null,
+      "formula": "Врачи соответствующей специальности с >500 СЭМД / работающие врачи этой специальности по ФРМР × 100%",
+      "numerator": null,
+      "denominator": null,
+      "source": {
+        "dataFile": "app/physician-metrics.json",
+        "methodology": null
+      },
+      "period": {
+        "kind": "monthly",
+        "current": "август 2026",
+        "date": "31.08.2026",
+        "comparisonLabel": "Август 2026",
+        "cadence": null
+      },
+      "plan": {
+        "value": 50,
+        "period": null
+      },
+      "direction": "higher",
+      "unit": "%",
+      "rating": {
+        "policy": "include",
+        "baselineActive": true,
+        "block": "readiness",
+        "reason": "Активен в августовском рейтинге v4.6.0."
+      },
+      "exclusions": [
+        "При знаменателе 1–2 врача результат справочный для приоритета заслушивания."
+      ],
+      "baselineStaticFact": null,
+      "notes": null,
+      "legal": null,
+      "management": {
+        "hearingPriority": true,
+        "reason": "При наличии применимости, данных и плана может участвовать в приоритете заслушивания."
+      },
+      "rowExclusionRules": [
+        "small_denominator_lt3_reference_only"
+      ]
+    },
+    "doctor500_pediatrician": {
+      "name": "Доля врачей-педиатров, подписавших свыше 500 СЭМД",
+      "group": null,
+      "formula": "Врачи соответствующей специальности с >500 СЭМД / работающие врачи этой специальности по ФРМР × 100%",
+      "numerator": null,
+      "denominator": null,
+      "source": {
+        "dataFile": "app/physician-metrics.json",
+        "methodology": null
+      },
+      "period": {
+        "kind": "monthly",
+        "current": "август 2026",
+        "date": "31.08.2026",
+        "comparisonLabel": "Август 2026",
+        "cadence": null
+      },
+      "plan": {
+        "value": 50,
+        "period": null
+      },
+      "direction": "higher",
+      "unit": "%",
+      "rating": {
+        "policy": "include",
+        "baselineActive": true,
+        "block": "readiness",
+        "reason": "Активен в августовском рейтинге v4.6.0."
+      },
+      "exclusions": [
+        "При знаменателе 1–2 врача результат справочный для приоритета заслушивания."
+      ],
+      "baselineStaticFact": null,
+      "notes": null,
+      "legal": null,
+      "management": {
+        "hearingPriority": true,
+        "reason": "При наличии применимости, данных и плана может участвовать в приоритете заслушивания."
+      },
+      "rowExclusionRules": [
+        "small_denominator_lt3_reference_only"
+      ]
+    },
+    "doctor500_surgeon": {
+      "name": "Доля врачей-хирургов ПМСП, подписавших свыше 500 СЭМД",
+      "group": null,
+      "formula": "Врачи соответствующей специальности с >500 СЭМД / работающие врачи этой специальности по ФРМР × 100%",
+      "numerator": null,
+      "denominator": null,
+      "source": {
+        "dataFile": "app/physician-metrics.json",
+        "methodology": null
+      },
+      "period": {
+        "kind": "monthly",
+        "current": "август 2026",
+        "date": "31.08.2026",
+        "comparisonLabel": "Август 2026",
+        "cadence": null
+      },
+      "plan": {
+        "value": 50,
+        "period": null
+      },
+      "direction": "higher",
+      "unit": "%",
+      "rating": {
+        "policy": "include",
+        "baselineActive": true,
+        "block": "readiness",
+        "reason": "Активен в августовском рейтинге v4.6.0."
+      },
+      "exclusions": [
+        "При знаменателе 1–2 врача результат справочный для приоритета заслушивания."
+      ],
+      "baselineStaticFact": null,
+      "notes": null,
+      "legal": null,
+      "management": {
+        "hearingPriority": true,
+        "reason": "При наличии применимости, данных и плана может участвовать в приоритете заслушивания."
+      },
+      "rowExclusionRules": [
+        "small_denominator_lt3_reference_only"
+      ]
+    },
+    "doctor500_therapist": {
+      "name": "Доля врачей-терапевтов, подписавших свыше 500 СЭМД",
+      "group": null,
+      "formula": "Врачи соответствующей специальности с >500 СЭМД / работающие врачи этой специальности по ФРМР × 100%",
+      "numerator": null,
+      "denominator": null,
+      "source": {
+        "dataFile": "app/physician-metrics.json",
+        "methodology": null
+      },
+      "period": {
+        "kind": "monthly",
+        "current": "август 2026",
+        "date": "31.08.2026",
+        "comparisonLabel": "Август 2026",
+        "cadence": null
+      },
+      "plan": {
+        "value": 50,
+        "period": null
+      },
+      "direction": "higher",
+      "unit": "%",
+      "rating": {
+        "policy": "include",
+        "baselineActive": true,
+        "block": "readiness",
+        "reason": "Активен в августовском рейтинге v4.6.0."
+      },
+      "exclusions": [
+        "При знаменателе 1–2 врача результат справочный для приоритета заслушивания."
+      ],
+      "baselineStaticFact": null,
+      "notes": null,
+      "legal": null,
+      "management": {
+        "hearingPriority": true,
+        "reason": "При наличии применимости, данных и плана может участвовать в приоритете заслушивания."
+      },
+      "rowExclusionRules": [
+        "small_denominator_lt3_reference_only"
+      ]
+    },
+    "doctorsAll": {
+      "name": "Доля врачей, подписавших хотя бы один СЭМД",
+      "group": null,
+      "formula": "Врачи с ≥1 СЭМД в РЭМД / работающие врачи по ФРМР × 100%",
+      "numerator": null,
+      "denominator": null,
+      "source": {
+        "dataFile": "app/physician-metrics.json",
+        "methodology": null
+      },
+      "period": {
+        "kind": "monthly",
+        "current": "август 2026",
+        "date": "31.08.2026",
+        "comparisonLabel": "Август 2026",
+        "cadence": null
+      },
+      "plan": {
+        "value": 80,
+        "period": null
+      },
+      "direction": "higher",
+      "unit": "%",
+      "rating": {
+        "policy": "include",
+        "baselineActive": true,
+        "block": "readiness",
+        "reason": "Активен в августовском рейтинге v4.6.0."
+      },
+      "exclusions": [],
+      "baselineStaticFact": null,
+      "notes": null,
+      "legal": null,
+      "management": {
+        "hearingPriority": true,
+        "reason": "При наличии применимости, данных и плана может участвовать в приоритете заслушивания."
+      },
+      "rowExclusionRules": []
+    },
+    "doctorsLevel3": {
+      "name": "Доля врачей МО III уровня, подписавших хотя бы один СЭМД",
+      "group": null,
+      "formula": "Врачи МО III уровня с ≥1 СЭМД в РЭМД / работающие врачи МО III уровня по ФРМР × 100%",
+      "numerator": null,
+      "denominator": null,
+      "source": {
+        "dataFile": "app/physician-metrics.json",
+        "methodology": null
+      },
+      "period": {
+        "kind": "monthly",
+        "current": "август 2026",
+        "date": "31.08.2026",
+        "comparisonLabel": "Август 2026",
+        "cadence": null
+      },
+      "plan": {
+        "value": 90,
+        "period": null
+      },
+      "direction": "higher",
+      "unit": "%",
+      "rating": {
+        "policy": "include",
+        "baselineActive": true,
+        "block": "readiness",
+        "reason": "Активен в августовском рейтинге v4.6.0."
+      },
+      "exclusions": [],
+      "baselineStaticFact": null,
+      "notes": null,
+      "legal": null,
+      "management": {
+        "hearingPriority": true,
+        "reason": "При наличии применимости, данных и плана может участвовать в приоритете заслушивания."
+      },
+      "rowExclusionRules": []
+    },
+    "egpu": {
+      "name": "Доля заявлений на прикрепление с финальным статусом",
+      "group": "Цифровые сервисы",
+      "formula": "(Заявления с финальным статусом / поступившие заявления) × 100%",
+      "numerator": "Заявления, по которым гражданину направлен финальный статус оказания услуги.",
+      "denominator": "Все заявления о прикреплении, поступившие медицинским организациям через ЕПГУ.",
+      "source": {
+        "dataFile": "app/mo-data.json",
+        "methodology": "Интеграционная подсистема ЕГИСЗ / ЕПГУ"
+      },
+      "period": {
+        "kind": "cumulative",
+        "current": "01.01–31.08.2026",
+        "date": "31.08.2026",
+        "comparisonLabel": "На 31.08",
+        "cadence": "Ежемесячно, нарастающим итогом"
+      },
+      "plan": {
+        "value": 100,
+        "period": null
+      },
+      "direction": "higher",
+      "unit": "%",
+      "rating": {
+        "policy": "exclude",
+        "baselineActive": false,
+        "block": "services",
+        "reason": "Явно исключён из buildOrganizationRating() в baseline v4.6.0."
+      },
+      "exclusions": [],
+      "baselineStaticFact": 98.53,
+      "notes": "Финальный статус включает успешное прикрепление и мотивированный отказ. Незавершённое заявление в числитель не включается.",
+      "legal": null,
+      "management": {
+        "hearingPriority": false,
+        "reason": "Исключён из приоритета заслушивания в baseline v4.6.0."
+      },
+      "rowExclusionRules": []
+    },
+    "egpu2days": {
+      "name": "Доля заявлений на прикрепление, рассмотренных за 2 рабочих дня",
+      "group": "Цифровые сервисы",
+      "formula": "(Заявления, рассмотренные в регламентный срок / все поданные заявления) × 100%",
+      "numerator": "Заявления, рассмотренные медицинской организацией в регламентный срок.",
+      "denominator": "Все заявления о прикреплении, поданные через ЕПГУ за отчётный период.",
+      "source": {
+        "dataFile": "app/mo-data.json",
+        "methodology": "Интеграционная подсистема ЕГИСЗ / ЕПГУ"
+      },
+      "period": {
+        "kind": "cumulative",
+        "current": "01.01–31.08.2026",
+        "date": "31.08.2026",
+        "comparisonLabel": "На 31.08",
+        "cadence": "Ежемесячно, нарастающим итогом"
+      },
+      "plan": {
+        "value": 90,
+        "period": null
+      },
+      "direction": "higher",
+      "unit": "%",
+      "rating": {
+        "policy": "exclude",
+        "baselineActive": false,
+        "block": "services",
+        "reason": "Явно исключён из buildOrganizationRating() в baseline v4.6.0."
+      },
+      "exclusions": [],
+      "baselineStaticFact": 81.06,
+      "notes": "Регламентный срок — 2 рабочих дня с даты получения заявления медицинской организацией, а не 2 календарных дня. Основание: приказ Минздрава России от 14.04.2025 № 216н.",
+      "legal": null,
+      "management": {
+        "hearingPriority": false,
+        "reason": "Исключён из приоритета заслушивания в baseline v4.6.0."
+      },
+      "rowExclusionRules": []
+    },
+    "elmk": {
+      "name": "Доля МО, обеспечивших передачу СЭМД для подсистемы ЭЛМК",
+      "group": "СЭМД",
+      "formula": "(МО с зарегистрированным СЭМД для ЭЛМК / МО утверждённого планового перечня) × 100%",
+      "numerator": "Медицинские организации из планового перечня, от которых зарегистрирован требуемый СЭМД.",
+      "denominator": "Утверждённый плановый перечень 74 медицинских организаций.",
+      "source": {
+        "dataFile": "app/organization-status.json",
+        "methodology": "Федеральная BI / ФРМО / РЭМД"
+      },
+      "period": {
+        "kind": "cumulative",
+        "current": "01.01–28.08.2026",
+        "date": "28.08.2026",
+        "comparisonLabel": null,
+        "cadence": "Еженедельно"
+      },
+      "plan": {
+        "value": 100,
+        "period": null
+      },
+      "direction": "higher",
+      "unit": "%",
+      "rating": {
+        "policy": "not_applicable",
+        "baselineActive": false,
+        "block": "readiness",
+        "reason": "Не входит в текущий помесячный контур интегрального рейтинга v4.6.0."
+      },
+      "exclusions": [],
+      "baselineStaticFact": 90.54,
+      "notes": "На 28.08.2026 передача подтверждена у 67 из 74 МО — 90,54%. Нулевой результат требует проверки лицензии и не считается нарушением автоматически.",
+      "legal": null,
+      "management": {
+        "hearingPriority": true,
+        "reason": "При наличии применимости, данных и плана может участвовать в приоритете заслушивания."
+      },
+      "rowExclusionRules": []
+    },
+    "elnMax": {
+      "name": "Количество ЛВН, закрытых после ТМК посредством МАХ",
+      "group": "МАХ",
+      "formula": "Абсолютное значение из утверждённого источника v4.6.0",
+      "numerator": null,
+      "denominator": null,
+      "source": {
+        "dataFile": null,
+        "methodology": null
+      },
+      "period": {
+        "kind": "operational",
+        "current": null,
+        "date": "07.09.2026",
+        "comparisonLabel": null,
+        "cadence": null
+      },
+      "plan": {
+        "value": 99000,
+        "period": "план 2026"
+      },
+      "direction": "higher",
+      "unit": "",
+      "rating": {
+        "policy": "not_applicable",
+        "baselineActive": false,
+        "block": "readiness",
+        "reason": "Не входит в текущий помесячный контур интегрального рейтинга v4.6.0."
+      },
+      "exclusions": [
+        "РКПД/противотуберкулёзный профиль учитывает специальные правила применимости МАХ в текущем runtime."
+      ],
+      "baselineStaticFact": 77629,
+      "notes": null,
+      "legal": null,
+      "management": {
+        "hearingPriority": true,
+        "reason": "При наличии применимости, данных и плана может участвовать в приоритете заслушивания."
+      },
+      "rowExclusionRules": []
+    },
+    "elnMaxCount": {
+      "name": "Количество ЛВН, закрытых после ТМК посредством МАХ",
+      "group": null,
+      "formula": "Количество листков нетрудоспособности, закрытых по результатам ТМК",
+      "numerator": "Закрытые ЛВН, связанные с завершённой ТМК посредством МАХ.",
+      "denominator": "Не применяется — абсолютный показатель.",
+      "source": {
+        "dataFile": "app/operational-mo.json",
+        "methodology": "ГИС ЭЗ РТ / МАХ"
+      },
+      "period": {
+        "kind": "cumulative",
+        "current": "01.01–31.08.2026",
+        "date": "31.08.2026",
+        "comparisonLabel": "На 31.08",
+        "cadence": "Еженедельно и за полный месяц"
+      },
+      "plan": {
+        "value": 10000,
+        "period": null
+      },
+      "direction": "higher",
+      "unit": "",
+      "rating": {
+        "policy": "conditional",
+        "baselineActive": false,
+        "block": "readiness",
+        "reason": "Набор присутствует в помесячном контуре, но не проходит текущие условия включения baseline v4.6.0."
+      },
+      "exclusions": [
+        "РКПД/противотуберкулёзный профиль учитывает специальные правила применимости МАХ в текущем runtime."
+      ],
+      "baselineStaticFact": null,
+      "notes": "Оперативный факт на 07.09.2026 — 77 629 при плане 99 000 на 2026 год. Для рейтинга МО используются полные накопительные срезы на 31.07 и 31.08.",
+      "legal": null,
+      "management": {
+        "hearingPriority": false,
+        "reason": "Исключён из приоритета заслушивания в baseline v4.6.0."
+      },
+      "rowExclusionRules": [
+        "max_profile_inapplicable"
+      ]
+    },
+    "errors": {
+      "name": "Количество ошибок регистрации СЭМД за август",
+      "group": "Качество",
+      "formula": "Сумма количества отказов регистрации СЭМД за полный отчётный месяц",
+      "numerator": "Запросы на регистрацию СЭМД, при обработке которых зафиксирована ошибка.",
+      "denominator": "Не применяется; в источнике отсутствует число всех обработанных запросов.",
+      "source": {
+        "dataFile": null,
+        "methodology": "Федеральная BI / РЭМД ЕГИСЗ"
+      },
+      "period": {
+        "kind": "monthly",
+        "current": null,
+        "date": "31.08.2026",
+        "comparisonLabel": null,
+        "cadence": "Ежемесячно; полный календарный месяц"
+      },
+      "plan": {
+        "value": null,
+        "period": null
+      },
+      "direction": "lower",
+      "unit": "count",
+      "rating": {
+        "policy": "exclude",
+        "baselineActive": false,
+        "block": "readiness",
+        "reason": "Явно исключён из buildOrganizationRating() в baseline v4.6.0."
+      },
+      "exclusions": [],
+      "baselineStaticFact": 785939,
+      "notes": "Показывается абсолютное количество отказов. Доля и оценка качества не рассчитываются без знаменателя всех обработанных запросов.",
+      "legal": null,
+      "management": {
+        "hearingPriority": false,
+        "reason": "Исключён из приоритета заслушивания в baseline v4.6.0."
+      },
+      "rowExclusionRules": []
+    },
+    "fapSemdCount": {
+      "name": "Количество зарегистрированных СЭМД по ФАП и ФП",
+      "group": null,
+      "formula": "(ФАП и ФП с передачей СЭМД / плановый перечень подключённых ФАП и ФП) × 100%",
+      "numerator": "ФАП и ФП, от которых зарегистрирован требуемый СЭМД.",
+      "denominator": "ФАП и ФП, подключённые к Интернету и включённые в плановый перечень.",
+      "source": {
+        "dataFile": "app/operational-mo.json",
+        "methodology": "ГИС ЭЗ РТ / ФРМО / РЭМД"
+      },
+      "period": {
+        "kind": "cumulative",
+        "current": "01.01–29.08.2026",
+        "date": "29.08.2026",
+        "comparisonLabel": null,
+        "cadence": "Еженедельно"
+      },
+      "plan": {
+        "value": null,
+        "period": null
+      },
+      "direction": "higher",
+      "unit": "",
+      "rating": {
+        "policy": "not_applicable",
+        "baselineActive": false,
+        "block": "readiness",
+        "reason": "Не входит в текущий помесячный контур интегрального рейтинга v4.6.0."
+      },
+      "exclusions": [],
+      "baselineStaticFact": null,
+      "notes": "В рабочей таблице дополнительно показывается абсолютное количество зарегистрированных СЭМД.",
+      "legal": null,
+      "management": {
+        "hearingPriority": false,
+        "reason": "Исключён из приоритета заслушивания в baseline v4.6.0."
+      },
+      "rowExclusionRules": []
+    },
+    "hospital": {
+      "name": "Доля СЭМД «Эпикриз в стационаре выписной» и/или «Выписной эпикриз из родильного дома» относительно количества случаев",
+      "group": "СЭМД",
+      "formula": "(Зарегистрированные выписные СЭМД / завершённые случаи стационарной помощи) × 100%",
+      "numerator": "СЭМД «Эпикриз в стационаре выписной» и/или «Выписной эпикриз из родильного дома».",
+      "denominator": "Случаи медицинской помощи, оказанной в условиях стационара.",
+      "source": {
+        "dataFile": "app/mo-data.json",
+        "methodology": "ГИС ЭЗ РТ / РЭМД ЕГИСЗ"
+      },
+      "period": {
+        "kind": "cumulative",
+        "current": "01.01–31.08.2026",
+        "date": "31.08.2026",
+        "comparisonLabel": "На 31.08",
+        "cadence": "Еженедельно; накопительно с начала года"
+      },
+      "plan": {
+        "value": 95,
+        "period": null
+      },
+      "direction": "higher",
+      "unit": "%",
+      "rating": {
+        "policy": "include",
+        "baselineActive": true,
+        "block": "care",
+        "reason": "Активен в августовском рейтинге v4.6.0."
+      },
+      "exclusions": [],
+      "baselineStaticFact": 76.94,
+      "notes": "Сопоставляются завершённые случаи и зарегистрированные документы за одинаковый период. Повторные версии одного документа не должны завышать числитель.",
+      "legal": null,
+      "management": {
+        "hearingPriority": true,
+        "reason": "При наличии применимости, данных и плана может участвовать в приоритете заслушивания."
+      },
+      "rowExclusionRules": []
+    },
+    "hospitalCount": {
+      "name": "Количество госпитализаций",
+      "group": null,
+      "formula": "Количество случаев госпитализации за отчётный период",
+      "numerator": "Завершённые случаи оказания помощи в условиях стационара.",
+      "denominator": "Не применяется — абсолютный показатель.",
+      "source": {
+        "dataFile": "app/operational-mo.json",
+        "methodology": "ГИС ЭЗ РТ"
+      },
+      "period": {
+        "kind": "cumulative",
+        "current": "01.01–29.08.2026",
+        "date": "29.08.2026",
+        "comparisonLabel": null,
+        "cadence": "Еженедельно и накопительно с начала года"
+      },
+      "plan": {
+        "value": null,
+        "period": null
+      },
+      "direction": "higher",
+      "unit": "",
+      "rating": {
+        "policy": "not_applicable",
+        "baselineActive": false,
+        "block": "readiness",
+        "reason": "Не входит в текущий помесячный контур интегрального рейтинга v4.6.0."
+      },
+      "exclusions": [],
+      "baselineStaticFact": null,
+      "notes": null,
+      "legal": null,
+      "management": {
+        "hearingPriority": false,
+        "reason": "Исключён из приоритета заслушивания в baseline v4.6.0."
+      },
+      "rowExclusionRules": []
+    },
+    "oncologyCouncil": {
+      "name": "Доля МО II и III уровня с подразделениями онкологического профиля, формирующих СЭМД «Протокол консилиума врачей онкологического»",
+      "group": "СЭМД",
+      "formula": "(МО с зарегистрированным протоколом / плановые МО II и III уровней) × 100%",
+      "numerator": "МО, от которых зарегистрирован СЭМД «Протокол консилиума врачей онкологического».",
+      "denominator": "МО II и III уровней с подразделениями онкологического профиля по ФРМО.",
+      "source": {
+        "dataFile": null,
+        "methodology": "Федеральная BI / ФРМО / РЭМД"
+      },
+      "period": {
+        "kind": "monthly",
+        "current": null,
+        "date": "30.06.2026",
+        "comparisonLabel": null,
+        "cadence": "Ежемесячно"
+      },
+      "plan": {
+        "value": 100,
+        "period": null
+      },
+      "direction": "higher",
+      "unit": "%",
+      "rating": {
+        "policy": "not_applicable",
+        "baselineActive": false,
+        "block": "readiness",
+        "reason": "Не входит в текущий помесячный контур интегрального рейтинга v4.6.0."
+      },
+      "exclusions": [],
+      "baselineStaticFact": 50,
+      "notes": null,
+      "legal": null,
+      "management": {
+        "hearingPriority": true,
+        "reason": "При наличии применимости, данных и плана может участвовать в приоритете заслушивания."
+      },
+      "rowExclusionRules": []
+    },
+    "semd228": {
+      "name": "Доля СЭМД (122/228) профилактического осмотра (диспансеризации)",
+      "group": "Профилактика",
+      "formula": "2026: MAX(СЭМД 122; СЭМД 228) по каждой МО ÷ обращения ФОМС × 100%. С 01.01.2027: СЭМД 228 ÷ обращения ФОМС × 100%.",
+      "numerator": "За 2026 год — наибольшее из количества успешно зарегистрированных СЭМД 122 и СЭМД 228 отдельно для каждой МО и отчётного периода. С 01.01.2027 — только СЭМД 228.",
+      "denominator": "Количество обращений с профилактической целью / диспансеризацией по данным ФОМС за тот же период и по той же МО.",
+      "source": {
+        "dataFile": "app/mo-data.json",
+        "methodology": "Федеральный отчёт РЭМД по МО (СЭМД 122 и 228) + выгрузка ФОМС по обращениям с профилактической целью"
+      },
+      "period": {
+        "kind": "cumulative",
+        "current": "01.01–31.08.2026",
+        "date": "31.08.2026",
+        "comparisonLabel": "На 31.08",
+        "cadence": "Еженедельно; накопительно с начала года"
+      },
+      "plan": {
+        "value": 95,
+        "period": null
+      },
+      "direction": "higher",
+      "unit": "%",
+      "rating": {
+        "policy": "include",
+        "baselineActive": true,
+        "block": "care",
+        "reason": "Активен в августовском рейтинге v4.6.0."
+      },
+      "exclusions": [
+        "Одна несопоставленная частная строка из Ижевска со знаменателем 1 исключена и сохранена в аудите."
+      ],
+      "baselineStaticFact": 75.26,
+      "notes": "На 31.08.2026: 1 514 789 / 2 012 724 = 75,26%. СЭМД 122 и 228 не суммируются: MAX выбирается по каждой МО, затем значения агрегируются по РТ. Включены взрослые и детские МО. Одна несопоставленная частная строка из Ижевска (знаменатель 1) исключена и сохранена в аудите.",
+      "legal": "Федеральная методика показателя: переходное правило до 31.12.2026 — MAX по СЭМД 122/228; с 01.01.2027 — только СЭМД 228.",
+      "management": {
+        "hearingPriority": true,
+        "reason": "При наличии применимости, данных и плана может участвовать в приоритете заслушивания."
+      },
+      "rowExclusionRules": []
+    },
+    "shortInput": {
+      "name": "Количество случаев краткого ввода — всего",
+      "group": null,
+      "formula": "Амбулаторный блок + профилактика + круглосуточный стационар + дневной стационар",
+      "numerator": "Все накопленные случаи краткого ввода по МО и видам медицинской помощи.",
+      "denominator": "Не применяется — абсолютный показатель.",
+      "source": {
+        "dataFile": "app/operational-mo.json",
+        "methodology": "ГИС ЭЗ РТ"
+      },
+      "period": {
+        "kind": "cumulative",
+        "current": "01.01–28.08.2026",
+        "date": "28.08.2026",
+        "comparisonLabel": null,
+        "cadence": "Еженедельно, накопительно с начала года"
+      },
+      "plan": {
+        "value": 0,
+        "period": null
+      },
+      "direction": "lower",
+      "unit": "",
+      "rating": {
+        "policy": "exclude",
+        "baselineActive": false,
+        "block": "readiness",
+        "reason": "Справочный показатель; без баллов и приоритета заслушивания."
+      },
+      "exclusions": [],
+      "baselineStaticFact": null,
+      "notes": "Чем ближе результат к нулю, тем лучше. Рост накопительного значения является ухудшением; для оперативного управления отдельно показывается прирост между срезами. На 20.08.2026: 649 689 амбулаторных и профилактических случаев, 9 479 стационарных, всего 659 168.",
+      "legal": null,
+      "management": {
+        "hearingPriority": false,
+        "reason": "Исключён из приоритета заслушивания в baseline v4.6.0."
+      },
+      "rowExclusionRules": []
+    },
+    "shortInputAmb": {
+      "name": "Количество случаев краткого ввода — амбулаторно",
+      "group": null,
+      "formula": "Амбулаторные случаи краткого ввода + профилактические обращения краткого ввода",
+      "numerator": "Случаи в амбулаторном блоке и профилактике по каждой МО.",
+      "denominator": "Не применяется — абсолютный показатель.",
+      "source": {
+        "dataFile": "app/operational-mo.json",
+        "methodology": "ГИС ЭЗ РТ"
+      },
+      "period": {
+        "kind": "cumulative",
+        "current": "01.01–28.08.2026",
+        "date": "28.08.2026",
+        "comparisonLabel": null,
+        "cadence": "Еженедельно, накопительно с начала года"
+      },
+      "plan": {
+        "value": 0,
+        "period": null
+      },
+      "direction": "lower",
+      "unit": "",
+      "rating": {
+        "policy": "exclude",
+        "baselineActive": false,
+        "block": "readiness",
+        "reason": "Справочный показатель; без баллов и приоритета заслушивания."
+      },
+      "exclusions": [],
+      "baselineStaticFact": null,
+      "notes": "Направление улучшения: снижение до нуля.",
+      "legal": null,
+      "management": {
+        "hearingPriority": false,
+        "reason": "Исключён из приоритета заслушивания в baseline v4.6.0."
+      },
+      "rowExclusionRules": []
+    },
+    "shortInputHosp": {
+      "name": "Количество случаев краткого ввода — стационар",
+      "group": null,
+      "formula": "Круглосуточный стационар + дневной стационар",
+      "numerator": "Стационарные случаи краткого ввода по каждой МО.",
+      "denominator": "Не применяется — абсолютный показатель.",
+      "source": {
+        "dataFile": "app/operational-mo.json",
+        "methodology": "ГИС ЭЗ РТ"
+      },
+      "period": {
+        "kind": "cumulative",
+        "current": "01.01–28.08.2026",
+        "date": "28.08.2026",
+        "comparisonLabel": null,
+        "cadence": "Еженедельно, накопительно с начала года"
+      },
+      "plan": {
+        "value": 0,
+        "period": null
+      },
+      "direction": "lower",
+      "unit": "",
+      "rating": {
+        "policy": "exclude",
+        "baselineActive": false,
+        "block": "readiness",
+        "reason": "Справочный показатель; без баллов и приоритета заслушивания."
+      },
+      "exclusions": [],
+      "baselineStaticFact": null,
+      "notes": "Направление улучшения: снижение до нуля.",
+      "legal": null,
+      "management": {
+        "hearingPriority": false,
+        "reason": "Исключён из приоритета заслушивания в baseline v4.6.0."
+      },
+      "rowExclusionRules": []
+    },
+    "smp": {
+      "name": "Доля принятых в РЭМД карт вызова СМП",
+      "group": "Скорая помощь",
+      "formula": "(Зарегистрированные СЭМД «Карта вызова скорой медицинской помощи» / завершённые случаи СМП) × 100%",
+      "numerator": "Карты вызова со статусом «Принято» в АСУ СМП; этот статус принимается как успешная регистрация в РЭМД ЕГИСЗ.",
+      "denominator": "Количество карт вызова — завершённых случаев оказания скорой медицинской помощи по данным АСУ СМП.",
+      "source": {
+        "dataFile": "app/mo-data.json",
+        "methodology": "АСУ СМП: «Принято» / «Количество карт»"
+      },
+      "period": {
+        "kind": "cumulative",
+        "current": "01.01–28.08.2026",
+        "date": "28.08.2026",
+        "comparisonLabel": null,
+        "cadence": "Еженедельно; накопительно с начала года"
+      },
+      "plan": {
+        "value": 95,
+        "period": null
+      },
+      "direction": "higher",
+      "unit": "%",
+      "rating": {
+        "policy": "not_applicable",
+        "baselineActive": false,
+        "block": "care",
+        "reason": "Не входит в текущий помесячный контур интегрального рейтинга v4.6.0."
+      },
+      "exclusions": [],
+      "baselineStaticFact": 92.31,
+      "notes": null,
+      "legal": null,
+      "management": {
+        "hearingPriority": true,
+        "reason": "При наличии применимости, данных и плана может участвовать в приоритете заслушивания."
+      },
+      "rowExclusionRules": []
+    },
+    "smpFederal": {
+      "name": "Станции и подстанции СМП, передающие карты вызова",
+      "group": "ТВСП",
+      "formula": "(Подразделения СМП с зарегистрированной картой / плановые подразделения СМП) × 100%",
+      "numerator": "Станции и подстанции, от которых зарегистрирован СЭМД «Карта вызова скорой медицинской помощи».",
+      "denominator": "Отделения, станции и подстанции СМП по ФРМО.",
+      "source": {
+        "dataFile": "app/mo-data.json",
+        "methodology": "Федеральная BI / ФРМО / РЭМД"
+      },
+      "period": {
+        "kind": "cumulative",
+        "current": "01.01–27.08.2026",
+        "date": "28.08.2026",
+        "comparisonLabel": null,
+        "cadence": "Еженедельно"
+      },
+      "plan": {
+        "value": 100,
+        "period": null
+      },
+      "direction": "higher",
+      "unit": "%",
+      "rating": {
+        "policy": "not_applicable",
+        "baselineActive": false,
+        "block": "readiness",
+        "reason": "Не входит в текущий помесячный контур интегрального рейтинга v4.6.0."
+      },
+      "exclusions": [],
+      "baselineStaticFact": 98.55,
+      "notes": null,
+      "legal": null,
+      "management": {
+        "hearingPriority": true,
+        "reason": "При наличии применимости, данных и плана может участвовать в приоритете заслушивания."
+      },
+      "rowExclusionRules": []
+    },
+    "tmkMax": {
+      "name": "Количество ТМК посредством МАХ",
+      "group": "МАХ",
+      "formula": "Абсолютное значение из утверждённого источника v4.6.0",
+      "numerator": null,
+      "denominator": null,
+      "source": {
+        "dataFile": null,
+        "methodology": null
+      },
+      "period": {
+        "kind": "operational",
+        "current": null,
+        "date": "07.09.2026",
+        "comparisonLabel": null,
+        "cadence": null
+      },
+      "plan": {
+        "value": 193000,
+        "period": "план 2026"
+      },
+      "direction": "higher",
+      "unit": "",
+      "rating": {
+        "policy": "not_applicable",
+        "baselineActive": false,
+        "block": "readiness",
+        "reason": "Не входит в текущий помесячный контур интегрального рейтинга v4.6.0."
+      },
+      "exclusions": [
+        "РКПД/противотуберкулёзный профиль учитывает специальные правила применимости МАХ в текущем runtime."
+      ],
+      "baselineStaticFact": 103940,
+      "notes": null,
+      "legal": null,
+      "management": {
+        "hearingPriority": true,
+        "reason": "При наличии применимости, данных и плана может участвовать в приоритете заслушивания."
+      },
+      "rowExclusionRules": []
+    },
+    "tmkMaxCount": {
+      "name": "Количество проведённых ТМК посредством МАХ",
+      "group": null,
+      "formula": "Количество завершённых телемедицинских консультаций за отчётный период",
+      "numerator": "Фактически завершённые ТМК, проведённые с использованием МАХ.",
+      "denominator": "Не применяется — абсолютный показатель.",
+      "source": {
+        "dataFile": "app/operational-mo.json",
+        "methodology": "ГИС ЭЗ РТ / МАХ"
+      },
+      "period": {
+        "kind": "cumulative",
+        "current": "01.01–31.08.2026",
+        "date": "31.08.2026",
+        "comparisonLabel": "На 31.08",
+        "cadence": "Еженедельно и за полный месяц"
+      },
+      "plan": {
+        "value": 10000,
+        "period": null
+      },
+      "direction": "higher",
+      "unit": "",
+      "rating": {
+        "policy": "conditional",
+        "baselineActive": false,
+        "block": "readiness",
+        "reason": "Набор присутствует в помесячном контуре, но не проходит текущие условия включения baseline v4.6.0."
+      },
+      "exclusions": [
+        "РКПД/противотуберкулёзный профиль учитывает специальные правила применимости МАХ в текущем runtime."
+      ],
+      "baselineStaticFact": null,
+      "notes": "Оперативный факт на 07.09.2026 — 103 940 при плане 193 000 на 2026 год. Для рейтинга МО используются полные накопительные срезы на 31.07 и 31.08; оперативный итог РТ показывается отдельно.",
+      "legal": null,
+      "management": {
+        "hearingPriority": false,
+        "reason": "Исключён из приоритета заслушивания в baseline v4.6.0."
+      },
+      "rowExclusionRules": [
+        "max_profile_inapplicable"
+      ]
+    },
+    "tmkRemd": {
+      "name": "Доля МО, обеспечивших передачу СЭМД «Протокол телемедицинской консультации»",
+      "group": "ТВСП",
+      "formula": "(МО с зарегистрированным протоколом ТМК / плановые МО) × 100%",
+      "numerator": "МО, от которых зарегистрирован СЭМД «Протокол телемедицинской консультации».",
+      "denominator": "Медицинские организации, обязанные передавать данный вид СЭМД.",
+      "source": {
+        "dataFile": "app/organization-status.json",
+        "methodology": "Федеральная BI / ФРМО / РЭМД"
+      },
+      "period": {
+        "kind": "cumulative",
+        "current": "01.01–27.08.2026",
+        "date": "28.08.2026",
+        "comparisonLabel": null,
+        "cadence": "Еженедельно"
+      },
+      "plan": {
+        "value": 100,
+        "period": null
+      },
+      "direction": "higher",
+      "unit": "%",
+      "rating": {
+        "policy": "not_applicable",
+        "baselineActive": false,
+        "block": "readiness",
+        "reason": "Не входит в текущий помесячный контур интегрального рейтинга v4.6.0."
+      },
+      "exclusions": [],
+      "baselineStaticFact": 97.5,
+      "notes": "План — 100%. Контрольный срез: 39 из 40 МО обеспечили передачу — 97,50%. В полном плановом перечне нулевой результат у Набережно-Челнинской инфекционной больницы.",
+      "legal": null,
+      "management": {
+        "hearingPriority": true,
+        "reason": "При наличии применимости, данных и плана может участвовать в приоритете заслушивания."
+      },
+      "rowExclusionRules": []
+    },
+    "tvspAmbulatory": {
+      "name": "Амбулаторные ТВСП, передающие эпикриз/талон и/или протокол консультации",
+      "group": "ТВСП",
+      "formula": "(Передающие амбулаторные ТВСП / плановое количество амбулаторных ТВСП) × 100%",
+      "numerator": "На федеральном уровне — объекты/здания с передачей; в управленческой детализации — только плановые OID СП, присутствующие также в перечне передающих.",
+      "denominator": "Плановые амбулаторные ТВСП по ФРМО; ФАП и ФП не учитываются.",
+      "source": {
+        "dataFile": "app/mo-data.json",
+        "methodology": "РЭМД ЕГИСЗ / ФРМО ЕГИСЗ"
+      },
+      "period": {
+        "kind": "cumulative",
+        "current": "январь–август 2026",
+        "date": "28.08.2026",
+        "comparisonLabel": "На 28.08.2026",
+        "cadence": "Ежемесячно, нарастающим итогом"
+      },
+      "plan": {
+        "value": 100,
+        "period": null
+      },
+      "direction": "higher",
+      "unit": "%",
+      "rating": {
+        "policy": "include",
+        "baselineActive": true,
+        "block": "readiness",
+        "reason": "Активен в августовском рейтинге v4.6.0."
+      },
+      "exclusions": [],
+      "baselineStaticFact": 99.78,
+      "notes": "Федеральный итог на 28.08.2026: 460 из 461 — 99,78%. Управленческий числитель по МО считается пересечением плановых и передающих OID и не может превышать знаменатель.",
+      "legal": null,
+      "management": {
+        "hearingPriority": true,
+        "reason": "При наличии применимости, данных и плана может участвовать в приоритете заслушивания."
+      },
+      "rowExclusionRules": []
+    },
+    "tvspDiagnostic": {
+      "name": "ТВСП, передающие протоколы диагностических исследований",
+      "group": "ТВСП",
+      "formula": "(ТВСП с зарегистрированным протоколом / плановые диагностические ТВСП) × 100%",
+      "numerator": "ТВСП, от которых зарегистрирован СЭМД «Протокол диагностических исследований».",
+      "denominator": "ТВСП, обязанные передавать этот вид СЭМД по сведениям ФРМО.",
+      "source": {
+        "dataFile": "app/mo-data.json",
+        "methodology": "Федеральная BI / ФРМО / РЭМД"
+      },
+      "period": {
+        "kind": "cumulative",
+        "current": "01.01–27.08.2026",
+        "date": "28.08.2026",
+        "comparisonLabel": "На 28.08.2026",
+        "cadence": "Еженедельно"
+      },
+      "plan": {
+        "value": 100,
+        "period": null
+      },
+      "direction": "higher",
+      "unit": "%",
+      "rating": {
+        "policy": "include",
+        "baselineActive": true,
+        "block": "readiness",
+        "reason": "Активен в августовском рейтинге v4.6.0."
+      },
+      "exclusions": [],
+      "baselineStaticFact": 98.36,
+      "notes": null,
+      "legal": null,
+      "management": {
+        "hearingPriority": true,
+        "reason": "При наличии применимости, данных и плана может участвовать в приоритете заслушивания."
+      },
+      "rowExclusionRules": []
+    },
+    "tvspLaboratory": {
+      "name": "КДЛ, передающие протоколы лабораторных исследований",
+      "group": "ТВСП",
+      "formula": "(КДЛ с зарегистрированным протоколом / плановый перечень КДЛ) × 100%",
+      "numerator": "КДЛ, от которых зарегистрирован СЭМД «Протокол лабораторного исследования».",
+      "denominator": "КДЛ и лаборатории, обязанные передавать документ по ФРМО.",
+      "source": {
+        "dataFile": "app/mo-data.json",
+        "methodology": "Федеральная BI / ФРМО / РЭМД"
+      },
+      "period": {
+        "kind": "cumulative",
+        "current": "январь–август 2026",
+        "date": "28.08.2026",
+        "comparisonLabel": null,
+        "cadence": "Еженедельно"
+      },
+      "plan": {
+        "value": 100,
+        "period": null
+      },
+      "direction": "higher",
+      "unit": "%",
+      "rating": {
+        "policy": "exclude",
+        "baselineActive": false,
+        "block": "readiness",
+        "reason": "Явно исключён из buildOrganizationRating() в baseline v4.6.0."
+      },
+      "exclusions": [],
+      "baselineStaticFact": 96.85,
+      "notes": "Контрольный расчёт нового среза: 123 ÷ 127 × 100 = 96,85%. Ранее зафиксированные 97,50% не воспроизводились из числителя и знаменателя источника и не переносятся в новый срез.",
+      "legal": null,
+      "management": {
+        "hearingPriority": true,
+        "reason": "При наличии применимости, данных и плана может участвовать в приоритете заслушивания."
+      },
+      "rowExclusionRules": []
+    },
+    "tvspStationary": {
+      "name": "ТВСП, передающие выписные эпикризы",
+      "group": "ТВСП",
+      "formula": "(Стационарные ТВСП с зарегистрированным эпикризом / плановые стационарные ТВСП) × 100%",
+      "numerator": "ТВСП с зарегистрированным выписным эпикризом стационара или родильного дома.",
+      "denominator": "Стационарные ТВСП, обязанные передавать документ по ФРМО.",
+      "source": {
+        "dataFile": "app/mo-data.json",
+        "methodology": "Федеральная BI / ФРМО / РЭМД"
+      },
+      "period": {
+        "kind": "cumulative",
+        "current": "январь–август 2026",
+        "date": "28.08.2026",
+        "comparisonLabel": "На 28.08.2026",
+        "cadence": "Еженедельно"
+      },
+      "plan": {
+        "value": 100,
+        "period": null
+      },
+      "direction": "higher",
+      "unit": "%",
+      "rating": {
+        "policy": "include",
+        "baselineActive": true,
+        "block": "readiness",
+        "reason": "Активен в августовском рейтинге v4.6.0."
+      },
+      "exclusions": [],
+      "baselineStaticFact": 98.91,
+      "notes": null,
+      "legal": null,
+      "management": {
+        "hearingPriority": true,
+        "reason": "При наличии применимости, данных и плана может участвовать в приоритете заслушивания."
+      },
+      "rowExclusionRules": []
+    },
+    "visitMax": {
+      "name": "Количество записей к врачу на телеконсультацию посредством МАХ",
+      "group": "МАХ",
+      "formula": "Количество записей к врачу на телеконсультацию посредством МАХ",
+      "numerator": "Записи к врачу на телеконсультацию, созданные посредством МАХ.",
+      "denominator": "Не применяется — абсолютный показатель.",
+      "source": {
+        "dataFile": null,
+        "methodology": "Дашборд ЦЦТ РТ / МАХ"
+      },
+      "period": {
+        "kind": "operational",
+        "current": null,
+        "date": "07.09.2026",
+        "comparisonLabel": null,
+        "cadence": "Еженедельно и за полный месяц"
+      },
+      "plan": {
+        "value": 654000,
+        "period": "план 2026"
+      },
+      "direction": "higher",
+      "unit": "",
+      "rating": {
+        "policy": "not_applicable",
+        "baselineActive": false,
+        "block": "readiness",
+        "reason": "Не входит в текущий помесячный контур интегрального рейтинга v4.6.0."
+      },
+      "exclusions": [],
+      "baselineStaticFact": 253169,
+      "notes": "Оперативный факт на 07.09.2026 — 253 169 при плане 654 000 на 2026 год.",
+      "legal": null,
+      "management": {
+        "hearingPriority": true,
+        "reason": "При наличии применимости, данных и плана может участвовать в приоритете заслушивания."
+      },
+      "rowExclusionRules": []
+    }
+  },
+  "activatedAtStage": "stage6_indicator_metadata_runtime"
+}

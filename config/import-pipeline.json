@@ -1,0 +1,298 @@
+{
+  "schemaVersion": 1,
+  "status": "active-staging",
+  "rule": "Входные файлы сначала распознаются и проверяются. Канонический реестр показателей, справочник МО, STATE.md и OPEN_ISSUES.md не изменяются конвейером.",
+  "unknownFileStatus": "WARNING",
+  "ambiguousFileStatus": "FAIL",
+  "duplicateSamePeriodStatus": "FAIL",
+  "families": [
+    {
+      "id": "egpu_attachment",
+      "patterns": [
+        "^ПР_2_.*\\.xlsx$"
+      ],
+      "datasets": [
+        "mo-data.json",
+        "mo-details.json",
+        "mo-detail-oids.json",
+        "monthly-mo.json"
+      ],
+      "adapter": "core_monthly",
+      "periodKind": "cumulative"
+    },
+    {
+      "id": "hospital_cases",
+      "patterns": [
+        "^Отчет[_ ]по[_ ]госпитализациям.*\\.xlsx$"
+      ],
+      "datasets": [
+        "mo-data.json",
+        "mo-details.json",
+        "mo-detail-oids.json",
+        "monthly-mo.json"
+      ],
+      "adapter": "core_monthly",
+      "periodKind": "cumulative"
+    },
+    {
+      "id": "preventive_remd",
+      "patterns": [
+        "^1\\.Отчет СЭМД_РЭМД.*\\.xlsx$",
+        "^Отчет СЭМД_РЭМД.*\\.xlsx$"
+      ],
+      "datasets": [
+        "preventive-semd-audit.json",
+        "mo-data.json",
+        "mo-details.json",
+        "mo-detail-oids.json",
+        "monthly-mo.json"
+      ],
+      "adapter": "preventive_pair",
+      "periodKind": "cumulative"
+    },
+    {
+      "id": "preventive_foms",
+      "patterns": [
+        "^Количество_СЭМД_Результаты.*\\.xlsx$",
+        "^Закрытые случаи ДОГВН ПМО.*\\.xlsx$"
+      ],
+      "datasets": [
+        "preventive-semd-audit.json",
+        "mo-data.json",
+        "mo-details.json",
+        "mo-detail-oids.json",
+        "monthly-mo.json"
+      ],
+      "adapter": "preventive_pair",
+      "periodKind": "cumulative"
+    },
+    {
+      "id": "birth_certificates",
+      "patterns": [
+        "^Свидетельства_о_рождении.*\\.xlsx$",
+        ".*рождении.*\\.xlsx$"
+      ],
+      "datasets": [
+        "mo-data.json",
+        "mo-details.json",
+        "monthly-mo.json"
+      ],
+      "adapter": "core_monthly",
+      "periodKind": "cumulative"
+    },
+    {
+      "id": "death_certificates",
+      "patterns": [
+        "^I_Свид-ва.*\\.xlsx$",
+        ".*смерти.*\\.xlsx$"
+      ],
+      "datasets": [
+        "mo-data.json",
+        "mo-details.json",
+        "monthly-mo.json"
+      ],
+      "adapter": "core_monthly",
+      "periodKind": "cumulative"
+    },
+    {
+      "id": "max_tmk_eln",
+      "patterns": [
+        "^ТМК_МАХ.*\\.xlsx$"
+      ],
+      "datasets": [
+        "operational-mo.json",
+        "monthly-mo.json"
+      ],
+      "adapter": "core_monthly",
+      "periodKind": "cumulative"
+    },
+    {
+      "id": "physicians",
+      "patterns": [
+        "^Отч[её]т_по_врачам.*\\.xlsx$",
+        "^Отч[её]т по врачам.*\\.xlsx$"
+      ],
+      "datasets": [
+        "physician-metrics.json",
+        "monthly-mo.json"
+      ],
+      "adapter": "physician_import",
+      "periodKind": "monthly"
+    },
+    {
+      "id": "tvsp_ambulatory",
+      "patterns": [
+        ".*ТВСП.*Эпикриз по закон.*\\.xlsx$",
+        ".*Эпик по закон.*\\.xlsx$"
+      ],
+      "datasets": [
+        "mo-data.json",
+        "mo-details.json",
+        "unit-data.json"
+      ],
+      "adapter": "tvsp",
+      "periodKind": "cumulative"
+    },
+    {
+      "id": "tvsp_stationary",
+      "patterns": [
+        ".*ТВСП.*Эпикриз_в_стационаре.*\\.xlsx$"
+      ],
+      "datasets": [
+        "mo-data.json",
+        "mo-details.json",
+        "unit-data.json"
+      ],
+      "adapter": "tvsp",
+      "periodKind": "cumulative"
+    },
+    {
+      "id": "tvsp_laboratory",
+      "patterns": [
+        ".*ТВСП.*Протокол лабораторного.*\\.xlsx$"
+      ],
+      "datasets": [
+        "mo-data.json",
+        "mo-details.json",
+        "unit-data.json"
+      ],
+      "adapter": "tvsp",
+      "periodKind": "cumulative"
+    },
+    {
+      "id": "tvsp_diagnostic",
+      "patterns": [
+        ".*Доля_ТВСП.*диагностических.*\\.xlsx$"
+      ],
+      "datasets": [
+        "mo-data.json",
+        "mo-details.json",
+        "unit-data.json"
+      ],
+      "adapter": "tvsp",
+      "periodKind": "cumulative"
+    },
+    {
+      "id": "smp_tvsp",
+      "patterns": [
+        "^Отчет_СМП_ТВСП.*\\.xlsx$"
+      ],
+      "datasets": [
+        "mo-data.json",
+        "mo-details.json",
+        "unit-data.json"
+      ],
+      "adapter": "tvsp",
+      "periodKind": "cumulative"
+    },
+    {
+      "id": "tmk_remd",
+      "patterns": [
+        "^Отчет_ТМК_РЭМД.*\\.xlsx$"
+      ],
+      "datasets": [
+        "organization-status.json"
+      ],
+      "adapter": "status_detail",
+      "periodKind": "cumulative"
+    },
+    {
+      "id": "elmk",
+      "patterns": [
+        "^Медкнижки.*\\.xlsx$",
+        ".*Медкнижки.*\\.xlsx$"
+      ],
+      "datasets": [
+        "organization-status.json"
+      ],
+      "adapter": "status_detail",
+      "periodKind": "cumulative"
+    },
+    {
+      "id": "remd_errors",
+      "patterns": [
+        "^Отч[её]т - Отказы.*\\.xlsx$",
+        ".*Отказы.*\\.xlsx$"
+      ],
+      "datasets": [
+        "error-categories.json",
+        "mo-data.json"
+      ],
+      "adapter": "errors",
+      "periodKind": "cumulative"
+    },
+    {
+      "id": "short_input",
+      "patterns": [
+        "^Случаи краткого ввода.*\\.xlsx$"
+      ],
+      "datasets": [
+        "operational-mo.json"
+      ],
+      "adapter": "operational",
+      "periodKind": "cumulative"
+    },
+    {
+      "id": "fap_fp",
+      "patterns": [
+        "^Отчет_по_ФАП_и_ФП.*\\.xlsx$",
+        "^ФАП.*\\.xlsx$"
+      ],
+      "datasets": [
+        "operational-mo.json"
+      ],
+      "adapter": "federal",
+      "periodKind": "cumulative"
+    },
+    {
+      "id": "asu_smp",
+      "patterns": [
+        ".*АСУ ССМП.*\\.xls$"
+      ],
+      "datasets": [
+        "mo-data.json",
+        "mo-details.json"
+      ],
+      "adapter": "federal",
+      "periodKind": "cumulative"
+    },
+    {
+      "id": "electronic_waybill",
+      "patterns": [
+        "^Отч[её]т_по_использованию_системы.*\\.xlsx$"
+      ],
+      "datasets": [
+        "electronic-waybill.json",
+        "electronic-waybill-weekly.json"
+      ],
+      "adapter": "waybill",
+      "periodKind": "weekly"
+    }
+  ],
+  "stage9": {
+    "supportedFamilies": [
+      "egpu_attachment",
+      "hospital_cases",
+      "preventive_remd",
+      "preventive_foms",
+      "birth_certificates",
+      "death_certificates",
+      "max_tmk_eln",
+      "physicians",
+      "tvsp_ambulatory",
+      "tvsp_stationary",
+      "tvsp_laboratory",
+      "tvsp_diagnostic",
+      "smp_tvsp",
+      "tmk_remd",
+      "elmk",
+      "remd_errors",
+      "short_input",
+      "fap_fp",
+      "asu_smp",
+      "electronic_waybill"
+    ],
+    "liveApply": "blocked-until-real-parallel-replay",
+    "historicalReplay": "PENDING_INPUTS"
+  }
+}

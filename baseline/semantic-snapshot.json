@@ -1,0 +1,653 @@
+{
+  "baselineVersion": "4.7.0",
+  "regionalCards": {
+    "ambulatoryCase": {
+      "fact": 87.22,
+      "plan": 95,
+      "direction": "higher",
+      "date": "29.08.2026"
+    },
+    "birth": {
+      "fact": 99.42,
+      "plan": 99,
+      "direction": "higher",
+      "date": "07.09.2026"
+    },
+    "death": {
+      "fact": 98.63,
+      "plan": 99,
+      "direction": "higher",
+      "date": "07.09.2026"
+    },
+    "egpu": {
+      "fact": 98.02,
+      "plan": 100,
+      "direction": "higher",
+      "date": "07.09.2026"
+    },
+    "egpu2days": {
+      "fact": 81.51,
+      "plan": 90,
+      "direction": "higher",
+      "date": "07.09.2026"
+    },
+    "elmk": {
+      "fact": 95.95,
+      "plan": 100,
+      "direction": "higher",
+      "date": "07.09.2026"
+    },
+    "elnMax": {
+      "fact": 35948.0,
+      "plan": 99000,
+      "direction": "higher",
+      "date": "07.09.2026"
+    },
+    "errors": {
+      "fact": 785939.0,
+      "plan": null,
+      "direction": "lower",
+      "date": "31.08.2026"
+    },
+    "hospital": {
+      "fact": 83.94,
+      "plan": 95,
+      "direction": "higher",
+      "date": "07.09.2026"
+    },
+    "oncologyCouncil": {
+      "fact": 50.0,
+      "plan": 100,
+      "direction": "higher",
+      "date": "30.06.2026"
+    },
+    "semd228": {
+      "fact": 76.45,
+      "plan": 95,
+      "direction": "higher",
+      "date": "07.09.2026"
+    },
+    "smp": {
+      "fact": 92.31,
+      "plan": 95,
+      "direction": "higher",
+      "date": "28.08.2026"
+    },
+    "smpFederal": {
+      "fact": 100.0,
+      "plan": 100,
+      "direction": "higher",
+      "date": "07.09.2026"
+    },
+    "tmkMax": {
+      "fact": 20942.0,
+      "plan": 193000,
+      "direction": "higher",
+      "date": "07.09.2026"
+    },
+    "tmkRemd": {
+      "fact": 97.5,
+      "plan": 100,
+      "direction": "higher",
+      "date": "07.09.2026"
+    },
+    "tvspAmbulatory": {
+      "fact": 100.0,
+      "plan": 100,
+      "direction": "higher",
+      "date": "07.09.2026"
+    },
+    "tvspDiagnostic": {
+      "fact": 98.68,
+      "plan": 100,
+      "direction": "higher",
+      "date": "07.09.2026"
+    },
+    "tvspLaboratory": {
+      "fact": 96.83,
+      "plan": 100,
+      "direction": "higher",
+      "date": "07.09.2026"
+    },
+    "tvspStationary": {
+      "fact": 98.91,
+      "plan": 100,
+      "direction": "higher",
+      "date": "07.09.2026"
+    },
+    "visitMax": {
+      "fact": 253169.0,
+      "plan": 654000,
+      "direction": "higher",
+      "date": "07.09.2026"
+    }
+  },
+  "physicianRegional": {
+    "doctorsAll": {
+      "numerator": 9974,
+      "denominator": 13266,
+      "fact": 75.18468264736921,
+      "plan": 80,
+      "period": "август 2026"
+    },
+    "doctorsLevel3": {
+      "numerator": 3527,
+      "denominator": 4732,
+      "fact": 74.53508030431108,
+      "plan": 90,
+      "period": "август 2026"
+    },
+    "doctor500_obgyn": {
+      "numerator": 207,
+      "denominator": 389,
+      "fact": 53.213367609254504,
+      "plan": 50,
+      "period": "август 2026"
+    },
+    "doctor500_gp": {
+      "numerator": 256,
+      "denominator": 305,
+      "fact": 83.93442622950819,
+      "plan": 50,
+      "period": "август 2026"
+    },
+    "doctor500_cardiologist": {
+      "numerator": 85,
+      "denominator": 206,
+      "fact": 41.262135922330096,
+      "plan": 50,
+      "period": "август 2026"
+    },
+    "doctor500_oncologist": {
+      "numerator": 115,
+      "denominator": 224,
+      "fact": 51.33928571428571,
+      "plan": 50,
+      "period": "август 2026"
+    },
+    "doctor500_ophthalmologist": {
+      "numerator": 111,
+      "denominator": 228,
+      "fact": 48.68421052631579,
+      "plan": 50,
+      "period": "август 2026"
+    },
+    "doctor500_pediatrician": {
+      "numerator": 663,
+      "denominator": 1321,
+      "fact": 50.18925056775171,
+      "plan": 50,
+      "period": "август 2026"
+    },
+    "doctor500_dentist": {
+      "numerator": 68,
+      "denominator": 658,
+      "fact": 10.33434650455927,
+      "plan": 50,
+      "period": "август 2026"
+    },
+    "doctor500_therapist": {
+      "numerator": 795,
+      "denominator": 1362,
+      "fact": 58.370044052863435,
+      "plan": 50,
+      "period": "август 2026"
+    },
+    "doctor500_surgeon": {
+      "numerator": 139,
+      "denominator": 279,
+      "fact": 49.82078853046595,
+      "plan": 50,
+      "period": "август 2026"
+    }
+  },
+  "rating": {
+    "activeMetricIds": [
+      "death",
+      "doctor500_cardiologist",
+      "doctor500_dentist",
+      "doctor500_gp",
+      "doctor500_obgyn",
+      "doctor500_oncologist",
+      "doctor500_ophthalmologist",
+      "doctor500_pediatrician",
+      "doctor500_surgeon",
+      "doctor500_therapist",
+      "doctorsAll",
+      "doctorsLevel3",
+      "hospital",
+      "semd228",
+      "tvspAmbulatory",
+      "tvspDiagnostic",
+      "tvspStationary"
+    ],
+    "weights": {
+      "care": 0.7,
+      "services": 0.2,
+      "readiness": 0.1
+    },
+    "period": "август 2026"
+  },
+  "datasets": {
+    "app/mo-data.json": {
+      "egpu": {
+        "rows": 84,
+        "plan": 100,
+        "period": "01.01–31.08.2026",
+        "date": "31.08.2026",
+        "unit": "%"
+      },
+      "birth": {
+        "rows": 37,
+        "plan": 99,
+        "period": "01.01–31.08.2026",
+        "date": "31.08.2026",
+        "unit": "%"
+      },
+      "death": {
+        "rows": 87,
+        "plan": 99,
+        "period": "01.01–31.08.2026",
+        "date": "31.08.2026",
+        "unit": "%"
+      },
+      "semd228": {
+        "rows": 95,
+        "plan": 95,
+        "period": "01.01–31.08.2026",
+        "date": "31.08.2026",
+        "unit": "%"
+      },
+      "hospital": {
+        "rows": 106,
+        "plan": 95,
+        "period": "01.01–31.08.2026",
+        "date": "31.08.2026",
+        "unit": "%"
+      },
+      "smp": {
+        "rows": 45,
+        "plan": 95,
+        "period": "01.01–28.08.2026",
+        "date": "28.08.2026",
+        "unit": "%"
+      },
+      "ambulatoryCase": {
+        "rows": 143,
+        "plan": 95,
+        "period": "01.01–29.08.2026",
+        "date": "29.08.2026",
+        "unit": "%"
+      },
+      "tvspStationary": {
+        "rows": 93,
+        "plan": 100,
+        "period": "январь–август 2026",
+        "date": "28.08.2026",
+        "unit": "%"
+      },
+      "tvspAmbulatory": {
+        "rows": 112,
+        "plan": 100,
+        "period": "январь–август 2026",
+        "date": "28.08.2026",
+        "unit": "%"
+      },
+      "tvspLaboratory": {
+        "rows": 83,
+        "plan": 100,
+        "period": "январь–август 2026",
+        "date": "28.08.2026",
+        "unit": "%"
+      },
+      "tvspDiagnostic": {
+        "rows": 106,
+        "plan": 100,
+        "period": "01.01–27.08.2026",
+        "date": "28.08.2026",
+        "unit": "%"
+      },
+      "smpFederal": {
+        "rows": 43,
+        "plan": 100,
+        "period": "01.01–27.08.2026",
+        "date": "28.08.2026",
+        "unit": "%"
+      },
+      "egpu2days": {
+        "rows": 84,
+        "plan": 90,
+        "period": "01.01–31.08.2026",
+        "date": "31.08.2026",
+        "unit": "%"
+      }
+    },
+    "app/monthly-mo.json": {
+      "egpu": {
+        "rows": 84,
+        "plan": null,
+        "period": null,
+        "date": null,
+        "unit": "%"
+      },
+      "egpu2days": {
+        "rows": 84,
+        "plan": null,
+        "period": null,
+        "date": null,
+        "unit": "%"
+      },
+      "semd228": {
+        "rows": 95,
+        "plan": null,
+        "period": null,
+        "date": null,
+        "unit": "%"
+      },
+      "hospital": {
+        "rows": 106,
+        "plan": null,
+        "period": null,
+        "date": null,
+        "unit": "%"
+      },
+      "ambulatoryCase": {
+        "rows": 93,
+        "plan": null,
+        "period": null,
+        "date": null,
+        "unit": "%"
+      },
+      "birth": {
+        "rows": 37,
+        "plan": null,
+        "period": null,
+        "date": null,
+        "unit": "%"
+      },
+      "death": {
+        "rows": 87,
+        "plan": null,
+        "period": null,
+        "date": null,
+        "unit": "%"
+      },
+      "tmkMaxCount": {
+        "rows": 96,
+        "plan": null,
+        "period": null,
+        "date": null,
+        "unit": "count"
+      },
+      "elnMaxCount": {
+        "rows": 96,
+        "plan": null,
+        "period": null,
+        "date": null,
+        "unit": "count"
+      },
+      "doctorsAll": {
+        "rows": 125,
+        "plan": null,
+        "period": null,
+        "date": null,
+        "unit": "%"
+      },
+      "doctorsLevel3": {
+        "rows": 15,
+        "plan": null,
+        "period": null,
+        "date": null,
+        "unit": "%"
+      },
+      "doctor500_obgyn": {
+        "rows": 92,
+        "plan": null,
+        "period": null,
+        "date": null,
+        "unit": "%"
+      },
+      "doctor500_gp": {
+        "rows": 61,
+        "plan": null,
+        "period": null,
+        "date": null,
+        "unit": "%"
+      },
+      "doctor500_cardiologist": {
+        "rows": 86,
+        "plan": null,
+        "period": null,
+        "date": null,
+        "unit": "%"
+      },
+      "doctor500_oncologist": {
+        "rows": 70,
+        "plan": null,
+        "period": null,
+        "date": null,
+        "unit": "%"
+      },
+      "doctor500_ophthalmologist": {
+        "rows": 93,
+        "plan": null,
+        "period": null,
+        "date": null,
+        "unit": "%"
+      },
+      "doctor500_pediatrician": {
+        "rows": 74,
+        "plan": null,
+        "period": null,
+        "date": null,
+        "unit": "%"
+      },
+      "doctor500_dentist": {
+        "rows": 79,
+        "plan": null,
+        "period": null,
+        "date": null,
+        "unit": "%"
+      },
+      "doctor500_therapist": {
+        "rows": 84,
+        "plan": null,
+        "period": null,
+        "date": null,
+        "unit": "%"
+      },
+      "doctor500_surgeon": {
+        "rows": 87,
+        "plan": null,
+        "period": null,
+        "date": null,
+        "unit": "%"
+      }
+    },
+    "app/operational-mo.json": {
+      "tmkMaxCount": {
+        "rows": 96,
+        "plan": 10000,
+        "period": "01.01–31.08.2026",
+        "date": "31.08.2026",
+        "unit": ""
+      },
+      "shortInput": {
+        "rows": 167,
+        "plan": 0,
+        "period": "01.01–28.08.2026",
+        "date": "28.08.2026",
+        "unit": ""
+      },
+      "hospitalCount": {
+        "rows": 106,
+        "plan": null,
+        "period": "01.01–29.08.2026",
+        "date": "29.08.2026",
+        "unit": ""
+      },
+      "fapSemdCount": {
+        "rows": 50,
+        "plan": null,
+        "period": "01.01–29.08.2026",
+        "date": "29.08.2026",
+        "unit": ""
+      },
+      "elnMaxCount": {
+        "rows": 96,
+        "plan": 10000,
+        "period": "01.01–31.08.2026",
+        "date": "31.08.2026",
+        "unit": ""
+      },
+      "shortInputAmb": {
+        "rows": 167,
+        "plan": 0,
+        "period": "01.01–28.08.2026",
+        "date": "28.08.2026",
+        "unit": ""
+      },
+      "shortInputHosp": {
+        "rows": 167,
+        "plan": 0,
+        "period": "01.01–28.08.2026",
+        "date": "28.08.2026",
+        "unit": ""
+      }
+    },
+    "app/organization-status.json": {
+      "elmk": {
+        "rows": 74,
+        "plan": 100,
+        "period": "01.01–28.08.2026",
+        "date": "28.08.2026",
+        "unit": "%"
+      },
+      "tmkRemd": {
+        "rows": 40,
+        "plan": 100,
+        "period": "01.01–27.08.2026",
+        "date": "28.08.2026",
+        "unit": "%"
+      }
+    },
+    "app/physician-metrics.json": {
+      "doctorsAll": {
+        "rows": 125,
+        "plan": 80,
+        "period": "август 2026",
+        "date": "31.08.2026",
+        "unit": "%"
+      },
+      "doctorsLevel3": {
+        "rows": 15,
+        "plan": 90,
+        "period": "август 2026",
+        "date": "31.08.2026",
+        "unit": "%"
+      },
+      "doctor500_obgyn": {
+        "rows": 92,
+        "plan": 50,
+        "period": "август 2026",
+        "date": "31.08.2026",
+        "unit": "%"
+      },
+      "doctor500_gp": {
+        "rows": 61,
+        "plan": 50,
+        "period": "август 2026",
+        "date": "31.08.2026",
+        "unit": "%"
+      },
+      "doctor500_cardiologist": {
+        "rows": 86,
+        "plan": 50,
+        "period": "август 2026",
+        "date": "31.08.2026",
+        "unit": "%"
+      },
+      "doctor500_oncologist": {
+        "rows": 70,
+        "plan": 50,
+        "period": "август 2026",
+        "date": "31.08.2026",
+        "unit": "%"
+      },
+      "doctor500_ophthalmologist": {
+        "rows": 93,
+        "plan": 50,
+        "period": "август 2026",
+        "date": "31.08.2026",
+        "unit": "%"
+      },
+      "doctor500_pediatrician": {
+        "rows": 74,
+        "plan": 50,
+        "period": "август 2026",
+        "date": "31.08.2026",
+        "unit": "%"
+      },
+      "doctor500_dentist": {
+        "rows": 79,
+        "plan": 50,
+        "period": "август 2026",
+        "date": "31.08.2026",
+        "unit": "%"
+      },
+      "doctor500_therapist": {
+        "rows": 84,
+        "plan": 50,
+        "period": "август 2026",
+        "date": "31.08.2026",
+        "unit": "%"
+      },
+      "doctor500_surgeon": {
+        "rows": 87,
+        "plan": 50,
+        "period": "август 2026",
+        "date": "31.08.2026",
+        "unit": "%"
+      }
+    }
+  },
+  "moRegistry": {
+    "organizations": 127,
+    "unresolved": 1,
+    "matchStats": {
+      "literal": 1186,
+      "manual": 17,
+      "exact": 79,
+      "unique-core": 2,
+      "unresolved": 1
+    }
+  },
+  "preventiveSemd": {
+    "status": "ready",
+    "year": 2026,
+    "formula": "MAX(СЭМД 122; СЭМД 228) по каждой МО",
+    "period122": "01.01–07.09.2026",
+    "period228": "01.01–07.09.2026",
+    "source122": "Медкнижки .Отчет СЭМД_РЭМД 01.01.-07.09. (Выгрузка из федеральной BI 07.09.26).xlsx",
+    "source228": "Медкнижки .Отчет СЭМД_РЭМД 01.01.-07.09. (Выгрузка из федеральной BI 07.09.26).xlsx",
+    "sourceDenominator": "Количество_СЭМД_Результаты_профилактического_медицинского_осмотрадиспансеризации 01.01.-07.09. (Выгрузка из ГИС 07.09.).xlsx",
+    "organizations": 95,
+    "numerator": 1557278,
+    "denominator": 2036859,
+    "share": 76.45487488333754,
+    "selected122": 85,
+    "selected228": 10,
+    "selectedEqual": 2,
+    "over100": 3,
+    "missing": 1,
+    "excluded": [
+      {
+        "oid": "1.2.643.5.1.13.13.12.2.18.1384",
+        "name": "ЧУЗ \"Больница \"РЖД-Медицина\" города Ижевск\"",
+        "denominator": 1
+      }
+    ],
+    "note": "Включены взрослые и детские МО из ФОМС; строки без соответствия РЭМД остаются в аудите и не оцениваются."
+  },
+  "expectedLegacyTests": 47
+}

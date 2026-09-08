@@ -1,0 +1,67 @@
+{
+  "schemaVersion": 2,
+  "baselineVersion": "5.1.0",
+  "baselineDate": "2026-09-08",
+  "previousBaseline": {
+    "version": "4.6.0",
+    "date": "2026-09-07",
+    "commit": "c50be9e1a04b6aa0641e0dd791c2b9238caa15d1",
+    "handoffZipSha256": "90003a0098165ce484118a8bd661dc03e9471c5759a88dfb5e806800ce7df8b9",
+    "manifest": "baseline/reference-v4.6.0-manifest.json"
+  },
+  "changeClass": "source refresh and hearing priority by regional impact",
+  "protectedData": {
+    "app/electronic-waybill-weekly.json": "a9945a61d9cc97bd2c5868ddff76c24875dec8e991035e650ddb4af4561d8947",
+    "app/electronic-waybill.json": "d682decfa448f6fd17c8df1fdcf088b105cff03080daf029849a4d039c638dbc",
+    "app/error-categories.json": "162a381a800ab9ad9e481402790a7330ec3ffa14d99ce9e87486e4537621fb3c",
+    "app/federal-control.json": "2ff15b02895f40f80cc230471f558158c377503d9ba92c144e4ce379e381cedc",
+    "app/hearing-snapshots.json": "c6e59e98609e54926eaa6853368096662e635a18641fdf0f976110ea6d44c1ce",
+    "app/mo-data.json": "46d7cb2b21e329510fdd810c9305542d22f57c6f8615019ed7c54a7501466a7f",
+    "app/mo-detail-oids.json": "9d1d6c709402c37e36fbc47fce640accae881cf0eb1b5602ce6ae6be7d83406c",
+    "app/mo-details.json": "82e9392cb61d63a9e616606c9de4b5463c2d1e423682f37c629f1f1b323be3a6",
+    "app/mo-registry.json": "62202e489fced8a93c40867f04f5b3a021030cf4da1b0d0da6ce3a8cff088ea3",
+    "app/monthly-mo.json": "78535cd8b7d2de942c1c347f6eb313ae727e71f0879127c97c0fab72455d671f",
+    "app/operational-mo.json": "0ba32ec19d7dd96f067385264c55c0842d2d3245a8d349790ad9e5c3a1a889de",
+    "app/organization-status.json": "1ede98f7260514d277fbe0b5265eb50d1ad6a219c1ed88422ec5a69926f1162e",
+    "app/physician-metrics.json": "f08542cba9108a18b263d017e4b28dff2c3b6a39671eedeb4bd55aaa81d3431d",
+    "app/preventive-semd-audit.json": "2edd88fe58fbd15abd2ad26290e2d9bdf5db73935bcf3015e7a0f8c3a72eecb6",
+    "app/semd-summary.json": "fcf60e417aea2d880ac1ccba68d93267a7e79690d7e9b415a7387341d7987d76",
+    "app/unit-data.json": "9190d39db70ddf573e7b354d44e30ade3051648b1aead4e76f3a5bacc6a50918",
+    "app/error-organizations.json": "1cf90d8f1a5dbb8454c8c9f9c7f2736938cf4e45c895d9c0ffc671a3be6e3d99",
+    "app/max-monthly-visits.json": "4ccd792fbc854b92ec7b5161e2e6e00ab68c3c5f14a06278e4332f63f522b31a"
+  },
+  "protectedRules": {
+    "config/indicator-registry.json": "ff138cf73b19022089603d0cf8c4036ab1e3d14e1bfd74e3892e841db49dac58",
+    "app/mo-registry.json": "62202e489fced8a93c40867f04f5b3a021030cf4da1b0d0da6ce3a8cff088ea3",
+    "app/hearing-snapshots.json": "c6e59e98609e54926eaa6853368096662e635a18641fdf0f976110ea6d44c1ce"
+  },
+  "stateFiles": {
+    "STATE.md": "0dbb0c70cdc898a5544fd512a2f5b7594e0251288ac67a14303882fb7002eb71",
+    "OPEN_ISSUES.md": "511949dbf61280b27fe08ff2d45e43f2715879c1fbf3d3223e00bb5736fdbf36"
+  },
+  "keyCode": {
+    "app/page.tsx": "f33807af50d98fca81239993c3eab5a6535acf01fc721fd7af930d3d973636af",
+    "app/globals.css": "e92208b0ecb59053a1ee4ee74801761f32fba64e15e2168fc8e9390a30186ad2",
+    "lib/calculation-engine.js": "2addca9323803eb45f66fca94fe78a72c4d77eed53c7bd05c224dd9aa9f2f0e7",
+    "lib/indicator-registry.js": "484857b41858c082fad05172793ff24f422008a6178257006d4512b0c12d1996",
+    "lib/mo-registry.js": "dcc8274ab055d97d13bd89679af845a236fb4fa8a1dfb506ededfbfa6a2b7918",
+    "lib/period-engine.js": "e489d363d0ea6d35560a8f526ce06c800da36782c0c4bc8da03e9be13a5f8cc5",
+    "lib/validation-engine.js": "6da9bd328e58aeb2a0a96da8871c754facfd8fe91e3d6aa98d65de8f759580f7",
+    "scripts/pipeline/adapters.py": "144e857e818fbb3880c5b6dbbbbce27420ae49d70f12bcd0f58eaf1f46bb2015",
+    "scripts/weekly_update_pipeline.py": "63604915c77920e7dbb2f913d09c917e95b506d3671917f4d5031bc6f1221903"
+  },
+  "regression": {
+    "nodeTests": "132/132 PASS",
+    "validation": "15/15 PASS",
+    "calculationEquivalence": "38/38 PASS",
+    "metadataEquivalence": "38/38 PASS",
+    "stagingAdapters": "17/17 PASS",
+    "ratingIndicators": 17,
+    "latestFullMonth": "август 2026",
+    "previousFullMonth": "июль 2026",
+    "operationalCut": "07.09.2026",
+    "fail": 0,
+    "warnings": []
+  },
+  "note": "v5.1.0 is the working baseline. Top cards use verified source dates, REMD errors use the approved cumulative 07.09 source, MAX keeps July unavailable without a 30.06 boundary, and hearing priority is ordered by potential regional impact. v5.0.0 remains in Git history."
+}
