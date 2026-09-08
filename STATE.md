@@ -78,4 +78,4 @@
 - Calculation equivalence: **38/38 PASS**.
 - Metadata equivalence: **38/38 PASS**.
 - Полная сборка: **PASS**.
-- Автотесты: **129/129 PASS**.
+- Автотесты: **132/132 PASS**.
