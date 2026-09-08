@@ -38,6 +38,9 @@ jobs:
       - name: Install Python dependencies
         run: python3 -m pip install openpyxl
 
+      - name: Restore executable flags
+        run: chmod +x scripts/*.sh
+
       - name: Apply MAX municipality page patch
         run: python3 scripts/apply_max_appointments_page_patch.py
 
