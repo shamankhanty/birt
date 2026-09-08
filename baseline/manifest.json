@@ -1,6 +1,6 @@
 {
   "schemaVersion": 2,
-  "baselineVersion": "5.1.0",
+  "baselineVersion": "5.2.0",
   "baselineDate": "2026-09-08",
   "previousBaseline": {
     "version": "4.6.0",
@@ -9,7 +9,7 @@
     "handoffZipSha256": "90003a0098165ce484118a8bd661dc03e9471c5759a88dfb5e806800ce7df8b9",
     "manifest": "baseline/reference-v4.6.0-manifest.json"
   },
-  "changeClass": "source refresh and hearing priority by regional impact",
+  "changeClass": "MAX doctor appointments by municipality without MO attribution",
   "protectedData": {
     "app/electronic-waybill-weekly.json": "a9945a61d9cc97bd2c5868ddff76c24875dec8e991035e650ddb4af4561d8947",
     "app/electronic-waybill.json": "d682decfa448f6fd17c8df1fdcf088b105cff03080daf029849a4d039c638dbc",
@@ -28,7 +28,8 @@
     "app/semd-summary.json": "fcf60e417aea2d880ac1ccba68d93267a7e79690d7e9b415a7387341d7987d76",
     "app/unit-data.json": "9190d39db70ddf573e7b354d44e30ade3051648b1aead4e76f3a5bacc6a50918",
     "app/error-organizations.json": "1cf90d8f1a5dbb8454c8c9f9c7f2736938cf4e45c895d9c0ffc671a3be6e3d99",
-    "app/max-monthly-visits.json": "4ccd792fbc854b92ec7b5161e2e6e00ab68c3c5f14a06278e4332f63f522b31a"
+    "app/max-monthly-visits.json": "4ccd792fbc854b92ec7b5161e2e6e00ab68c3c5f14a06278e4332f63f522b31a",
+    "app/max-appointments-municipal.json": "0f3d1edd63cb3e790e6ba7936dea41574e22595210e95764cce330393daf5c9d"
   },
   "protectedRules": {
     "config/indicator-registry.json": "ff138cf73b19022089603d0cf8c4036ab1e3d14e1bfd74e3892e841db49dac58",
@@ -36,11 +37,11 @@
     "app/hearing-snapshots.json": "c6e59e98609e54926eaa6853368096662e635a18641fdf0f976110ea6d44c1ce"
   },
   "stateFiles": {
-    "STATE.md": "0dbb0c70cdc898a5544fd512a2f5b7594e0251288ac67a14303882fb7002eb71",
-    "OPEN_ISSUES.md": "511949dbf61280b27fe08ff2d45e43f2715879c1fbf3d3223e00bb5736fdbf36"
+    "STATE.md": "50199749673e419ee199bd761f7055b98def0af318c2c056730dfed28b3edbdb",
+    "OPEN_ISSUES.md": "989f0b48a8a7cab13b64e627342defd89191da5b39d357f28731e9f95a8d72fd"
   },
   "keyCode": {
-    "app/page.tsx": "f33807af50d98fca81239993c3eab5a6535acf01fc721fd7af930d3d973636af",
+    "app/page.tsx": "0c52d4cad561d2f5123f559865c64457de5bd25d3d99d4430440c7cb793ee700",
     "app/globals.css": "e92208b0ecb59053a1ee4ee74801761f32fba64e15e2168fc8e9390a30186ad2",
     "lib/calculation-engine.js": "2addca9323803eb45f66fca94fe78a72c4d77eed53c7bd05c224dd9aa9f2f0e7",
     "lib/indicator-registry.js": "484857b41858c082fad05172793ff24f422008a6178257006d4512b0c12d1996",
@@ -51,17 +52,17 @@
     "scripts/weekly_update_pipeline.py": "63604915c77920e7dbb2f913d09c917e95b506d3671917f4d5031bc6f1221903"
   },
   "regression": {
-    "nodeTests": "132/132 PASS",
+    "nodeTests": "132/132 PASS (unit/data tests; rendered-html requires production build)",
     "validation": "15/15 PASS",
     "calculationEquivalence": "38/38 PASS",
     "metadataEquivalence": "38/38 PASS",
-    "stagingAdapters": "17/17 PASS",
+    "stagingAdapters": "19/19 PASS",
     "ratingIndicators": 17,
     "latestFullMonth": "август 2026",
     "previousFullMonth": "июль 2026",
     "operationalCut": "07.09.2026",
     "fail": 0,
-    "warnings": []
+    "warnings": ["production build-gate pending before publication"]
   },
-  "note": "v5.1.0 is the working baseline. Top cards use verified source dates, REMD errors use the approved cumulative 07.09 source, MAX keeps July unavailable without a 30.06 boundary, and hearing priority is ordered by potential regional impact. v5.0.0 remains in Git history."
+  "note": "v5.2.0 adds factual doctor appointments through MAX by municipality and removes appointment attribution from MO-level MAX tables. Production build-gate must be rerun before publication."
 }
