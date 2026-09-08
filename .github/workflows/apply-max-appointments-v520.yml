@@ -35,10 +35,13 @@ jobs:
         with:
           python-version: '3.12'
 
+      - name: Install Python dependencies
+        run: python3 -m pip install openpyxl
+
       - name: Apply MAX municipality page patch
         run: python3 scripts/apply_max_appointments_page_patch.py
 
-      - name: Install dependencies
+      - name: Install Node dependencies
         run: npm ci
 
       - name: Validate calculations and metadata
