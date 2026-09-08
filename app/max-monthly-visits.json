@@ -1,0 +1,753 @@
+{
+  "name": "Количество записей к врачу посредством МАХ",
+  "plan": null,
+  "unit": "",
+  "previousLabel": "На 31.07",
+  "currentLabel": "На 31.08",
+  "rows": [
+    {
+      "name": "ГАУЗ \"АДРБ С ПЦ\"",
+      "june": 573,
+      "july": 628,
+      "change": 55,
+      "juneQuantity": "573",
+      "julyQuantity": "628"
+    },
+    {
+      "name": "ГАУЗ \"Агрызская ЦРБ\"",
+      "june": 250,
+      "july": 337,
+      "change": 87,
+      "juneQuantity": "250",
+      "julyQuantity": "337"
+    },
+    {
+      "name": "ГАУЗ \"Азнакаевская ЦРБ\"",
+      "june": 1549,
+      "july": 1906,
+      "change": 357,
+      "juneQuantity": "1549",
+      "julyQuantity": "1906"
+    },
+    {
+      "name": "ГАУЗ \"Аксубаевская ЦРБ\"",
+      "june": 130,
+      "july": 160,
+      "change": 30,
+      "juneQuantity": "130",
+      "julyQuantity": "160"
+    },
+    {
+      "name": "ГАУЗ \"Актанышская ЦРБ\"",
+      "june": 436,
+      "july": 519,
+      "change": 83,
+      "juneQuantity": "436",
+      "julyQuantity": "519"
+    },
+    {
+      "name": "ГАУЗ \"Алексеевская ЦРБ\"",
+      "june": 108,
+      "july": 123,
+      "change": 15,
+      "juneQuantity": "108",
+      "julyQuantity": "123"
+    },
+    {
+      "name": "ГАУЗ \"Альметьевская РМБ\"",
+      "june": 73,
+      "july": 82,
+      "change": 9,
+      "juneQuantity": "73",
+      "julyQuantity": "82"
+    },
+    {
+      "name": "ГАУЗ \"Альметьевская ЦРБ\"",
+      "june": 677,
+      "july": 751,
+      "change": 74,
+      "juneQuantity": "677",
+      "julyQuantity": "751"
+    },
+    {
+      "name": "ГАУЗ \"Альметьевская поликлиника №3\"",
+      "june": 363,
+      "july": 390,
+      "change": 27,
+      "juneQuantity": "363",
+      "julyQuantity": "390"
+    },
+    {
+      "name": "ГАУЗ \"Апастовская ЦРБ\"",
+      "june": 11,
+      "july": 11,
+      "change": 0,
+      "juneQuantity": "11",
+      "julyQuantity": "11"
+    },
+    {
+      "name": "ГАУЗ \"Арская ЦРБ\"",
+      "june": 298,
+      "july": 333,
+      "change": 35,
+      "juneQuantity": "298",
+      "julyQuantity": "333"
+    },
+    {
+      "name": "ГАУЗ \"Атнинская ЦРБ\"",
+      "june": 19,
+      "july": 20,
+      "change": 1,
+      "juneQuantity": "19",
+      "julyQuantity": "20"
+    },
+    {
+      "name": "ГАУЗ \"Бавлинская ЦРБ\"",
+      "june": 69,
+      "july": 72,
+      "change": 3,
+      "juneQuantity": "69",
+      "julyQuantity": "72"
+    },
+    {
+      "name": "ГАУЗ \"Базарно-Матакская ЦРБ\"",
+      "june": 18,
+      "july": 18,
+      "change": 0,
+      "juneQuantity": "18",
+      "julyQuantity": "18"
+    },
+    {
+      "name": "ГАУЗ \"Балтасинская ЦРБ\"",
+      "june": 92,
+      "july": 102,
+      "change": 10,
+      "juneQuantity": "92",
+      "julyQuantity": "102"
+    },
+    {
+      "name": "ГАУЗ \"Бугульминская ЦРБ\"",
+      "june": 482,
+      "july": 532,
+      "change": 50,
+      "juneQuantity": "482",
+      "julyQuantity": "532"
+    },
+    {
+      "name": "ГАУЗ \"Буинская ЦРБ\"",
+      "june": 140,
+      "july": 168,
+      "change": 28,
+      "juneQuantity": "140",
+      "julyQuantity": "168"
+    },
+    {
+      "name": "ГАУЗ \"Верхнеуслонская ЦРБ\"",
+      "june": 145,
+      "july": 151,
+      "change": 6,
+      "juneQuantity": "145",
+      "julyQuantity": "151"
+    },
+    {
+      "name": "ГАУЗ \"Высокогорская ЦРБ\"",
+      "june": 678,
+      "july": 756,
+      "change": 78,
+      "juneQuantity": "678",
+      "julyQuantity": "756"
+    },
+    {
+      "name": "ГАУЗ \"ГДП №7\"",
+      "june": 351,
+      "july": 441,
+      "change": 90,
+      "juneQuantity": "351",
+      "julyQuantity": "441"
+    },
+    {
+      "name": "ГАУЗ \"ГКБ № 12\"",
+      "june": 2148,
+      "july": 2744,
+      "change": 596,
+      "juneQuantity": "2148",
+      "julyQuantity": "2744"
+    },
+    {
+      "name": "ГАУЗ \"ГКБ №16\" г. Казани",
+      "june": 648,
+      "july": 763,
+      "change": 115,
+      "juneQuantity": "648",
+      "julyQuantity": "763"
+    },
+    {
+      "name": "ГАУЗ \"ГКБ №7 им. М.Н.Садыкова\"",
+      "june": 2304,
+      "july": 2946,
+      "change": 642,
+      "juneQuantity": "2304",
+      "julyQuantity": "2946"
+    },
+    {
+      "name": "ГАУЗ \"Городская больница №11\" г.Казани",
+      "june": 443,
+      "july": 549,
+      "change": 106,
+      "juneQuantity": "443",
+      "julyQuantity": "549"
+    },
+    {
+      "name": "ГАУЗ \"Городская больница №2\" г.Наб.Челны",
+      "june": 140,
+      "july": 166,
+      "change": 26,
+      "juneQuantity": "140",
+      "julyQuantity": "166"
+    },
+    {
+      "name": "ГАУЗ \"Городская больница №5\" г.Набережные Челны",
+      "june": 585,
+      "july": 620,
+      "change": 35,
+      "juneQuantity": "585",
+      "julyQuantity": "620"
+    },
+    {
+      "name": "ГАУЗ \"Городская детская больница №1\" г.Казани",
+      "june": 989,
+      "july": 1009,
+      "change": 20,
+      "juneQuantity": "989",
+      "julyQuantity": "1009"
+    },
+    {
+      "name": "ГАУЗ \"Городская детская поликлиника №6\" г.Казани",
+      "june": 157,
+      "july": 284,
+      "change": 127,
+      "juneQuantity": "157",
+      "julyQuantity": "284"
+    },
+    {
+      "name": "ГАУЗ \"Городская поликлиника №10\" г. Казани",
+      "june": 188,
+      "july": 360,
+      "change": 172,
+      "juneQuantity": "188",
+      "julyQuantity": "360"
+    },
+    {
+      "name": "ГАУЗ \"Городская поликлиника №18\" г. Казани",
+      "june": 1117,
+      "july": 1335,
+      "change": 218,
+      "juneQuantity": "1117",
+      "julyQuantity": "1335"
+    },
+    {
+      "name": "ГАУЗ \"Городская поликлиника №20\" г.Казани",
+      "june": 242,
+      "july": 256,
+      "change": 14,
+      "juneQuantity": "242",
+      "julyQuantity": "256"
+    },
+    {
+      "name": "ГАУЗ \"Городская поликлиника №21\" г. Казани",
+      "june": 685,
+      "july": 819,
+      "change": 134,
+      "juneQuantity": "685",
+      "julyQuantity": "819"
+    },
+    {
+      "name": "ГАУЗ \"Городская поликлиника №3\" г.Наб.Челны",
+      "june": 107,
+      "july": 124,
+      "change": 17,
+      "juneQuantity": "107",
+      "julyQuantity": "124"
+    },
+    {
+      "name": "ГАУЗ \"Городская поликлиника №4 им. Л.Н. Ганиевой\"",
+      "june": 207,
+      "july": 209,
+      "change": 2,
+      "juneQuantity": "207",
+      "julyQuantity": "209"
+    },
+    {
+      "name": "ГАУЗ \"Городская поликлиника №6\" г.Наб.Челны",
+      "june": 256,
+      "july": 313,
+      "change": 57,
+      "juneQuantity": "256",
+      "julyQuantity": "313"
+    },
+    {
+      "name": "ГАУЗ \"Городская поликлиника №7\" г.Казани",
+      "june": 413,
+      "july": 553,
+      "change": 140,
+      "juneQuantity": "413",
+      "julyQuantity": "553"
+    },
+    {
+      "name": "ГАУЗ \"Городская поликлиника №7\" г.Наб.Челны",
+      "june": 167,
+      "july": 213,
+      "change": 46,
+      "juneQuantity": "167",
+      "julyQuantity": "213"
+    },
+    {
+      "name": "ГАУЗ \"Городская поликлиника №8\" г.Казань",
+      "june": 693,
+      "july": 735,
+      "change": 42,
+      "juneQuantity": "693",
+      "julyQuantity": "735"
+    },
+    {
+      "name": "ГАУЗ \"Госпиталь для Ветеранов Войн\" г. Н. Челны",
+      "june": 333,
+      "july": 481,
+      "change": 148,
+      "juneQuantity": "333",
+      "julyQuantity": "481"
+    },
+    {
+      "name": "ГАУЗ \"Госпиталь для ветеранов войн\" г.Казани",
+      "june": 280,
+      "july": 340,
+      "change": 60,
+      "juneQuantity": "280",
+      "julyQuantity": "340"
+    },
+    {
+      "name": "ГАУЗ \"ДРКБ МЗ РТ\"",
+      "june": 1449,
+      "july": 1724,
+      "change": 275,
+      "juneQuantity": "1449",
+      "julyQuantity": "1724"
+    },
+    {
+      "name": "ГАУЗ \"Детская городская клиническая больница №7\" г.Казани",
+      "june": 2007,
+      "july": 2400,
+      "change": 393,
+      "juneQuantity": "2007",
+      "julyQuantity": "2400"
+    },
+    {
+      "name": "ГАУЗ \"Детская городская поликлиника № 11\"",
+      "june": 112,
+      "july": 130,
+      "change": 18,
+      "juneQuantity": "112",
+      "julyQuantity": "130"
+    },
+    {
+      "name": "ГАУЗ \"Детская городская поликлиника №10\" г.Казани",
+      "june": 1287,
+      "july": 1350,
+      "change": 63,
+      "juneQuantity": "1287",
+      "julyQuantity": "1350"
+    },
+    {
+      "name": "ГАУЗ \"Детская городская поликлиника №2\" г. Казани",
+      "june": 114,
+      "july": 138,
+      "change": 24,
+      "juneQuantity": "114",
+      "julyQuantity": "138"
+    },
+    {
+      "name": "ГАУЗ \"Детская городская поликлиника №2\" г.Наб.Челны",
+      "june": 182,
+      "july": 233,
+      "change": 51,
+      "juneQuantity": "182",
+      "julyQuantity": "233"
+    },
+    {
+      "name": "ГАУЗ \"Детская городская поликлиника №3\"",
+      "june": 141,
+      "july": 169,
+      "change": 28,
+      "juneQuantity": "141",
+      "julyQuantity": "169"
+    },
+    {
+      "name": "ГАУЗ \"Детская городская поликлиника №4 им. Ф.Г. Ахмеровой\"",
+      "june": 167,
+      "july": 227,
+      "change": 60,
+      "juneQuantity": "167",
+      "julyQuantity": "227"
+    },
+    {
+      "name": "ГАУЗ \"Детская городская поликлиника №4\" г. Казани",
+      "june": 1289,
+      "july": 1460,
+      "change": 171,
+      "juneQuantity": "1289",
+      "julyQuantity": "1460"
+    },
+    {
+      "name": "ГАУЗ \"Детская городская поликлиника №5\" г.Наб.Челны",
+      "june": 281,
+      "july": 310,
+      "change": 29,
+      "juneQuantity": "281",
+      "julyQuantity": "310"
+    },
+    {
+      "name": "ГАУЗ \"Детская городская поликлиника №6\" г.Наб.Челны",
+      "june": 207,
+      "july": 225,
+      "change": 18,
+      "juneQuantity": "207",
+      "julyQuantity": "225"
+    },
+    {
+      "name": "ГАУЗ \"Детская городская поликлиника №9\" г.Казани",
+      "june": 643,
+      "july": 727,
+      "change": 84,
+      "juneQuantity": "643",
+      "julyQuantity": "727"
+    },
+    {
+      "name": "ГАУЗ \"Дрожжановская ЦРБ\"",
+      "june": 110,
+      "july": 141,
+      "change": 31,
+      "juneQuantity": "110",
+      "julyQuantity": "141"
+    },
+    {
+      "name": "ГАУЗ \"Елабужская ЦРБ\"",
+      "june": 2062,
+      "july": 2484,
+      "change": 422,
+      "juneQuantity": "2062",
+      "julyQuantity": "2484"
+    },
+    {
+      "name": "ГАУЗ \"Заинская ЦРБ\"",
+      "june": 1206,
+      "july": 1245,
+      "change": 39,
+      "juneQuantity": "1206",
+      "julyQuantity": "1245"
+    },
+    {
+      "name": "ГАУЗ \"Зеленодольская ЦРБ\"",
+      "june": 1373,
+      "july": 1601,
+      "change": 228,
+      "juneQuantity": "1373",
+      "julyQuantity": "1601"
+    },
+    {
+      "name": "ГАУЗ \"КДМЦ\"",
+      "june": 510,
+      "july": 646,
+      "change": 136,
+      "juneQuantity": "510",
+      "julyQuantity": "646"
+    },
+    {
+      "name": "ГАУЗ \"Кайбицкая ЦРБ\"",
+      "june": 253,
+      "july": 292,
+      "change": 39,
+      "juneQuantity": "253",
+      "julyQuantity": "292"
+    },
+    {
+      "name": "ГАУЗ \"Камско-Полянская РБ\"",
+      "june": 10,
+      "july": 10,
+      "change": 0,
+      "juneQuantity": "10",
+      "julyQuantity": "10"
+    },
+    {
+      "name": "ГАУЗ \"Камско-Устьинская ЦРБ\"",
+      "june": 232,
+      "july": 256,
+      "change": 24,
+      "juneQuantity": "232",
+      "julyQuantity": "256"
+    },
+    {
+      "name": "ГАУЗ \"Клиника медицинского университета\" г.Казани",
+      "june": 521,
+      "july": 620,
+      "change": 99,
+      "juneQuantity": "521",
+      "julyQuantity": "620"
+    },
+    {
+      "name": "ГАУЗ \"Клиническая больница №2\" г.Казани",
+      "june": 1009,
+      "july": 1319,
+      "change": 310,
+      "juneQuantity": "1009",
+      "julyQuantity": "1319"
+    },
+    {
+      "name": "ГАУЗ \"Кукморская ЦРБ\"",
+      "june": 118,
+      "july": 124,
+      "change": 6,
+      "juneQuantity": "118",
+      "julyQuantity": "124"
+    },
+    {
+      "name": "ГАУЗ \"Лаишевская ЦРБ\"",
+      "june": 283,
+      "july": 297,
+      "change": 14,
+      "juneQuantity": "283",
+      "julyQuantity": "297"
+    },
+    {
+      "name": "ГАУЗ \"Лениногорская ЦРБ\"",
+      "june": 49,
+      "july": 49,
+      "change": 0,
+      "juneQuantity": "49",
+      "julyQuantity": "49"
+    },
+    {
+      "name": "ГАУЗ \"МЕНДЕЛЕЕВСКАЯ ЦРБ\"",
+      "june": 154,
+      "july": 164,
+      "change": 10,
+      "juneQuantity": "154",
+      "julyQuantity": "164"
+    },
+    {
+      "name": "ГАУЗ \"Мамадышская ЦРБ\"",
+      "june": 257,
+      "july": 268,
+      "change": 11,
+      "juneQuantity": "257",
+      "julyQuantity": "268"
+    },
+    {
+      "name": "ГАУЗ \"Мензелинская ЦРБ\"",
+      "june": 395,
+      "july": 417,
+      "change": 22,
+      "juneQuantity": "395",
+      "julyQuantity": "417"
+    },
+    {
+      "name": "ГАУЗ \"Муслюмовская ЦРБ\"",
+      "june": 56,
+      "july": 78,
+      "change": 22,
+      "juneQuantity": "56",
+      "julyQuantity": "78"
+    },
+    {
+      "name": "ГАУЗ \"НДРБ с ПЦ\"",
+      "june": 1226,
+      "july": 1272,
+      "change": 46,
+      "juneQuantity": "1226",
+      "julyQuantity": "1272"
+    },
+    {
+      "name": "ГАУЗ \"НЦРМБ\"",
+      "june": 180,
+      "july": 466,
+      "change": 286,
+      "juneQuantity": "180",
+      "julyQuantity": "466"
+    },
+    {
+      "name": "ГАУЗ \"Новошешминская ЦРБ\"",
+      "june": 163,
+      "july": 175,
+      "change": 12,
+      "juneQuantity": "163",
+      "julyQuantity": "175"
+    },
+    {
+      "name": "ГАУЗ \"Нурлатская ЦРБ\"",
+      "june": 278,
+      "july": 306,
+      "change": 28,
+      "juneQuantity": "278",
+      "julyQuantity": "306"
+    },
+    {
+      "name": "ГАУЗ \"Пестречинская ЦРБ\"",
+      "june": 241,
+      "july": 331,
+      "change": 90,
+      "juneQuantity": "241",
+      "julyQuantity": "331"
+    },
+    {
+      "name": "ГАУЗ \"РКБ МЗ РТ\"",
+      "june": 1100,
+      "july": 1219,
+      "change": 119,
+      "juneQuantity": "1100",
+      "julyQuantity": "1219"
+    },
+    {
+      "name": "ГАУЗ \"Рыбно-Слободская ЦРБ\"",
+      "june": 56,
+      "july": 66,
+      "change": 10,
+      "juneQuantity": "56",
+      "julyQuantity": "66"
+    },
+    {
+      "name": "ГАУЗ \"САБИНСКАЯ ЦРБ\"",
+      "june": 22,
+      "july": 24,
+      "change": 2,
+      "juneQuantity": "22",
+      "julyQuantity": "24"
+    },
+    {
+      "name": "ГАУЗ \"Сармановская ЦРБ\"",
+      "june": 657,
+      "july": 909,
+      "change": 252,
+      "juneQuantity": "657",
+      "julyQuantity": "909"
+    },
+    {
+      "name": "ГАУЗ \"Стоматологическая поликлиника №1\" г.Наб.Челны",
+      "june": 7,
+      "july": 7,
+      "change": 0,
+      "juneQuantity": "7",
+      "julyQuantity": "7"
+    },
+    {
+      "name": "ГАУЗ \"Тетюшская ЦРБ\"",
+      "june": 166,
+      "july": 180,
+      "change": 14,
+      "juneQuantity": "166",
+      "julyQuantity": "180"
+    },
+    {
+      "name": "ГАУЗ \"Тукаевская ЦРБ\"",
+      "june": 479,
+      "july": 537,
+      "change": 58,
+      "juneQuantity": "479",
+      "julyQuantity": "537"
+    },
+    {
+      "name": "ГАУЗ \"Тюлячинская ЦРБ\"",
+      "june": 233,
+      "july": 384,
+      "change": 151,
+      "juneQuantity": "233",
+      "julyQuantity": "384"
+    },
+    {
+      "name": "ГАУЗ \"УРУССИНСКАЯ ЦРБ\"",
+      "june": 159,
+      "july": 209,
+      "change": 50,
+      "juneQuantity": "159",
+      "julyQuantity": "209"
+    },
+    {
+      "name": "ГАУЗ \"ЦГКБ №18 им. проф. К.Ш.Зыятдинова\"",
+      "june": 1593,
+      "july": 2002,
+      "change": 409,
+      "juneQuantity": "1593",
+      "julyQuantity": "2002"
+    },
+    {
+      "name": "ГАУЗ \"Черемшанская ЦРБ\"",
+      "june": 73,
+      "july": 85,
+      "change": 12,
+      "juneQuantity": "73",
+      "julyQuantity": "85"
+    },
+    {
+      "name": "ГАУЗ \"Чистопольская ЦРБ\"",
+      "june": 577,
+      "july": 645,
+      "change": 68,
+      "juneQuantity": "577",
+      "julyQuantity": "645"
+    },
+    {
+      "name": "Неизвестная МО",
+      "june": 6,
+      "july": 6,
+      "change": 0,
+      "juneQuantity": "6",
+      "julyQuantity": "6"
+    },
+    {
+      "name": "ООО \"КДЦ Авиастроительного района\"",
+      "june": 127,
+      "july": 137,
+      "change": 10,
+      "juneQuantity": "127",
+      "julyQuantity": "137"
+    },
+    {
+      "name": "ООО \"КДЦ на Четаева\"",
+      "june": 90,
+      "july": 114,
+      "change": 24,
+      "juneQuantity": "90",
+      "julyQuantity": "114"
+    },
+    {
+      "name": "ООО \"Ситидок-Эксперт Казань\"",
+      "june": 1,
+      "july": 1,
+      "change": 0,
+      "juneQuantity": "1",
+      "julyQuantity": "1"
+    },
+    {
+      "name": "ООО «ММЦ ПРОФМЕДИЦИНА-НК»",
+      "june": 4,
+      "july": 47,
+      "change": 43,
+      "juneQuantity": "4",
+      "julyQuantity": "47"
+    },
+    {
+      "name": "ООО МО СПАСЕНИЕ",
+      "june": 21,
+      "july": 27,
+      "change": 6,
+      "juneQuantity": "21",
+      "julyQuantity": "27"
+    },
+    {
+      "name": "ФГАОУВО Казанский (Приволжский) федеральный университет",
+      "june": 2,
+      "july": 2,
+      "change": 0,
+      "juneQuantity": "2",
+      "julyQuantity": "2"
+    }
+  ]
+}

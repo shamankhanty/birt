@@ -1,0 +1,3509 @@
+{
+  "source": "МО по показателям (1).xlsx",
+  "normalizationRule": "OID → точное унифицированное название → уникальное название без города → подтверждённый ручной синоним; нечеткое сопоставление запрещено",
+  "organizations": [
+    {
+      "name": "АЗНАКАЕВСКАЯ ЦРБ",
+      "shortName": "АЗНАКАЕВСКАЯ ЦРБ",
+      "oid": "1.2.643.5.1.13.13.12.2.16.1084",
+      "level": "I уровень",
+      "district": "Азнакаевский",
+      "kind": "ЦРБ",
+      "stationary": "Круглосуточный стационар",
+      "type": "Центральные районные больницы",
+      "applicable": [
+        "ambulatoryCase",
+        "birth",
+        "death",
+        "egpu",
+        "egpu2days",
+        "elmk",
+        "hospital",
+        "semd228",
+        "smp",
+        "smpFederal",
+        "tvspAmbulatory",
+        "tvspDiagnostic",
+        "tvspLaboratory",
+        "tvspStationary"
+      ],
+      "aliases": [
+        "АЗНАКАЕВСКАЯ ЦРБ",
+        "Азнакаевская ЦРБ",
+        "ГАУЗ \"Азнакаевская ЦРБ\""
+      ]
+    },
+    {
+      "name": "ВЕРХНЕУСЛОНСКАЯ ЦРБ",
+      "shortName": "ВЕРХНЕУСЛОНСКАЯ ЦРБ",
+      "oid": "1.2.643.5.1.13.13.12.2.16.1052",
+      "level": "I уровень",
+      "district": "Верхнеуслонский",
+      "kind": "ЦРБ",
+      "stationary": "Круглосуточный стационар",
+      "type": "Центральные районные больницы",
+      "applicable": [
+        "ambulatoryCase",
+        "birth",
+        "death",
+        "egpu",
+        "egpu2days",
+        "elmk",
+        "hospital",
+        "semd228",
+        "smp",
+        "smpFederal",
+        "tvspAmbulatory",
+        "tvspDiagnostic",
+        "tvspLaboratory",
+        "tvspStationary"
+      ],
+      "aliases": [
+        "ВЕРХНЕУСЛОНСКАЯ ЦРБ",
+        "Верхнеуслонская ЦРБ",
+        "ГАУЗ \"Верхнеуслонская ЦРБ\""
+      ]
+    },
+    {
+      "name": "ГАУЗ \"АГРЫЗСКАЯ ЦРБ\"",
+      "shortName": "АГРЫЗСКАЯ ЦРБ",
+      "oid": "1.2.643.5.1.13.13.12.2.16.1088",
+      "level": "I уровень",
+      "district": "Агрызский",
+      "kind": "ЦРБ",
+      "stationary": "Круглосуточный стационар",
+      "type": "Центральные районные больницы",
+      "applicable": [
+        "ambulatoryCase",
+        "birth",
+        "death",
+        "egpu",
+        "egpu2days",
+        "hospital",
+        "semd228",
+        "smp",
+        "smpFederal",
+        "tvspAmbulatory",
+        "tvspDiagnostic",
+        "tvspLaboratory",
+        "tvspStationary"
+      ],
+      "aliases": [
+        "АГРЫЗСКАЯ ЦРБ",
+        "Агрызская ЦРБ",
+        "ГАУЗ \"АГРЫЗСКАЯ ЦРБ\"",
+        "ГАУЗ \"Агрызская ЦРБ\""
+      ]
+    },
+    {
+      "name": "ГАУЗ \"АДРБ С ПЦ\"",
+      "shortName": "АДРБ С ПЦ",
+      "oid": "1.2.643.5.1.13.13.12.2.16.1146",
+      "level": "II уровень",
+      "district": "Альметьевский",
+      "kind": "Многопрофильные",
+      "stationary": "Круглосуточный стационар",
+      "type": "Центральные районные больницы",
+      "applicable": [
+        "ambulatoryCase",
+        "birth",
+        "egpu",
+        "egpu2days",
+        "elmk",
+        "hospital",
+        "semd228",
+        "tmkRemd",
+        "tvspAmbulatory",
+        "tvspDiagnostic",
+        "tvspLaboratory",
+        "tvspStationary"
+      ],
+      "aliases": [
+        "АДРБ С ПЦ",
+        "АДРБ с ПЦ",
+        "ГАУЗ \"АДРБ С ПЦ\""
+      ]
+    },
+    {
+      "name": "ГАУЗ \"АКСУБАЕВСКАЯ ЦРБ\"",
+      "shortName": "АКСУБАЕВСКАЯ ЦРБ",
+      "oid": "1.2.643.5.1.13.13.12.2.16.1156",
+      "level": "I уровень",
+      "district": "Аксубаевский",
+      "kind": "ЦРБ",
+      "stationary": "Круглосуточный стационар",
+      "type": "Центральные районные больницы",
+      "applicable": [
+        "ambulatoryCase",
+        "birth",
+        "death",
+        "egpu",
+        "egpu2days",
+        "elmk",
+        "hospital",
+        "semd228",
+        "smp",
+        "smpFederal",
+        "tvspAmbulatory",
+        "tvspDiagnostic",
+        "tvspLaboratory",
+        "tvspStationary"
+      ],
+      "aliases": [
+        "АКСУБАЕВСКАЯ ЦРБ",
+        "Аксубаевская ЦРБ",
+        "ГАУЗ \"АКСУБАЕВСКАЯ ЦРБ\"",
+        "ГАУЗ \"Аксубаевская ЦРБ\""
+      ]
+    },
+    {
+      "name": "ГАУЗ \"АКТАНЫШСКАЯ ЦРБ\"",
+      "shortName": "АКТАНЫШСКАЯ ЦРБ",
+      "oid": "1.2.643.5.1.13.13.12.2.16.1092",
+      "level": "I уровень",
+      "district": "Актанышский",
+      "kind": "ЦРБ",
+      "stationary": "Круглосуточный стационар",
+      "type": "Центральные районные больницы",
+      "applicable": [
+        "ambulatoryCase",
+        "birth",
+        "death",
+        "egpu",
+        "egpu2days",
+        "elmk",
+        "hospital",
+        "semd228",
+        "smp",
+        "smpFederal",
+        "tvspAmbulatory",
+        "tvspDiagnostic",
+        "tvspStationary"
+      ],
+      "aliases": [
+        "АКТАНЫШСКАЯ ЦРБ",
+        "Актанышская ЦРБ",
+        "ГАУЗ \"АКТАНЫШСКАЯ ЦРБ\"",
+        "ГАУЗ \"Актанышская ЦРБ\""
+      ]
+    },
+    {
+      "name": "ГАУЗ \"АЛЕКСЕЕВСКАЯ ЦРБ\"",
+      "shortName": "АЛЕКСЕЕВСКАЯ ЦРБ",
+      "oid": "1.2.643.5.1.13.13.12.2.16.1087",
+      "level": "I уровень",
+      "district": "Алексеевский",
+      "kind": "ЦРБ",
+      "stationary": "Круглосуточный стационар",
+      "type": "Центральные районные больницы",
+      "applicable": [
+        "ambulatoryCase",
+        "birth",
+        "death",
+        "egpu",
+        "egpu2days",
+        "elmk",
+        "hospital",
+        "semd228",
+        "smp",
+        "smpFederal",
+        "tvspAmbulatory",
+        "tvspDiagnostic",
+        "tvspLaboratory",
+        "tvspStationary"
+      ],
+      "aliases": [
+        "АЛЕКСЕЕВСКАЯ ЦРБ",
+        "Алексеевская ЦРБ",
+        "ГАУЗ \"АЛЕКСЕЕВСКАЯ ЦРБ\"",
+        "ГАУЗ \"Алексеевская ЦРБ\""
+      ]
+    },
+    {
+      "name": "ГАУЗ \"АЛЬМЕТЬЕВСКАЯ ГП № 3\"",
+      "shortName": "АЛЬМЕТЬЕВСКАЯ ГП № 3",
+      "oid": "1.2.643.5.1.13.13.12.2.16.1107",
+      "level": "I уровень",
+      "district": "Альметьевский",
+      "kind": "Поликлинника",
+      "stationary": "Дневной стационар",
+      "type": "Городские поликлиники",
+      "applicable": [
+        "ambulatoryCase",
+        "birth",
+        "death",
+        "egpu",
+        "egpu2days",
+        "elmk",
+        "hospital",
+        "semd228",
+        "tvspAmbulatory",
+        "tvspDiagnostic",
+        "tvspLaboratory"
+      ],
+      "aliases": [
+        "АЛЬМЕТЬЕВСКАЯ ГП № 3",
+        "ГАУЗ \"АЛЬМЕТЬЕВСКАЯ ГП № 3\"",
+        "ГАУЗ \"Альметьевская поликлиника №3\""
+      ]
+    },
+    {
+      "name": "ГАУЗ \"АЛЬМЕТЬЕВСКАЯ РМБ\"",
+      "shortName": "АЛЬМЕТЬЕВСКАЯ РМБ",
+      "oid": "1.2.643.5.1.13.13.12.2.16.44921",
+      "level": "III уровень",
+      "district": "Альметьевский",
+      "kind": "Многопрофильные",
+      "stationary": "Круглосуточный стационар",
+      "type": "Центральные районные больницы",
+      "applicable": [
+        "ambulatoryCase",
+        "birth",
+        "death",
+        "egpu",
+        "egpu2days",
+        "elmk",
+        "hospital",
+        "semd228",
+        "tmkRemd",
+        "tvspAmbulatory",
+        "tvspDiagnostic",
+        "tvspStationary"
+      ],
+      "aliases": [
+        "АЛЬМЕТЬЕВСКАЯ РМБ",
+        "ГАУЗ \"АЛЬМЕТЬЕВСКАЯ РМБ\"",
+        "ГАУЗ \"Альметьевская РМБ\""
+      ]
+    },
+    {
+      "name": "ГАУЗ \"АЛЬМЕТЬЕВСКАЯ СП\"",
+      "shortName": "АЛЬМЕТЬЕВСКАЯ СП",
+      "oid": "1.2.643.5.1.13.13.12.2.16.1100",
+      "level": "I уровень",
+      "district": "Альметьевский",
+      "kind": "Стоматологическая",
+      "stationary": "",
+      "type": "Стоматологические поликлиники",
+      "applicable": [
+        "ambulatoryCase",
+        "death",
+        "tvspAmbulatory"
+      ],
+      "aliases": [
+        "АЛЬМЕТЬЕВСКАЯ СП",
+        "ГАУЗ \"АЛЬМЕТЬЕВСКАЯ СП\"",
+        "ГАУЗ \"Альметьевская СП\""
+      ]
+    },
+    {
+      "name": "ГАУЗ \"АЛЬМЕТЬЕВСКАЯ ЦРБ\"",
+      "shortName": "АЛЬМЕТЬЕВСКАЯ ЦРБ",
+      "oid": "1.2.643.5.1.13.13.12.2.16.1108",
+      "level": "II уровень",
+      "district": "Альметьевский",
+      "kind": "ЦРБ",
+      "stationary": "Круглосуточный стационар",
+      "type": "Центральные районные больницы",
+      "applicable": [
+        "ambulatoryCase",
+        "birth",
+        "death",
+        "egpu",
+        "egpu2days",
+        "elmk",
+        "hospital",
+        "semd228",
+        "tmkRemd",
+        "tvspAmbulatory",
+        "tvspDiagnostic",
+        "tvspLaboratory",
+        "tvspStationary"
+      ],
+      "aliases": [
+        "АЛЬМЕТЬЕВСКАЯ ЦРБ",
+        "ГАУЗ \"АЛЬМЕТЬЕВСКАЯ ЦРБ\"",
+        "ГАУЗ \"Альметьевская ЦРБ\""
+      ]
+    },
+    {
+      "name": "ГАУЗ \"АПАСТОВСКАЯ ЦРБ\"",
+      "shortName": "АПАСТОВСКАЯ ЦРБ",
+      "oid": "1.2.643.5.1.13.13.12.2.16.1152",
+      "level": "I уровень",
+      "district": "Апастовский",
+      "kind": "ЦРБ",
+      "stationary": "Круглосуточный стационар",
+      "type": "Центральные районные больницы",
+      "applicable": [
+        "ambulatoryCase",
+        "birth",
+        "death",
+        "egpu",
+        "egpu2days",
+        "elmk",
+        "hospital",
+        "semd228",
+        "smp",
+        "smpFederal",
+        "tvspAmbulatory",
+        "tvspDiagnostic",
+        "tvspLaboratory",
+        "tvspStationary"
+      ],
+      "aliases": [
+        "АПАСТОВСКАЯ ЦРБ",
+        "Апастовская ЦРБ",
+        "ГАУЗ \"АПАСТОВСКАЯ ЦРБ\"",
+        "ГАУЗ \"Апастовская ЦРБ\""
+      ]
+    },
+    {
+      "name": "ГАУЗ \"АРСКАЯ ЦРБ\"",
+      "shortName": "АРСКАЯ ЦРБ",
+      "oid": "1.2.643.5.1.13.13.12.2.16.1164",
+      "level": "II уровень",
+      "district": "Арский",
+      "kind": "ЦРБ",
+      "stationary": "Круглосуточный стационар",
+      "type": "Центральные районные больницы",
+      "applicable": [
+        "ambulatoryCase",
+        "birth",
+        "death",
+        "egpu",
+        "egpu2days",
+        "elmk",
+        "hospital",
+        "semd228",
+        "smp",
+        "smpFederal",
+        "tmkRemd",
+        "tvspAmbulatory",
+        "tvspDiagnostic",
+        "tvspStationary"
+      ],
+      "aliases": [
+        "АРСКАЯ ЦРБ",
+        "Арская ЦРБ",
+        "ГАУЗ \"АРСКАЯ ЦРБ\"",
+        "ГАУЗ \"Арская ЦРБ\""
+      ]
+    },
+    {
+      "name": "ГАУЗ \"АССМП\"",
+      "shortName": "АССМП",
+      "oid": "1.2.643.5.1.13.13.12.2.16.1057",
+      "level": "I уровень",
+      "district": "ССМП",
+      "kind": "ССМП",
+      "stationary": "",
+      "type": "Вне рейтинга",
+      "applicable": [
+        "smp",
+        "smpFederal"
+      ],
+      "aliases": [
+        "АССМП",
+        "Альметьевская ССМП",
+        "ГАУЗ \"АССМП\""
+      ]
+    },
+    {
+      "name": "ГАУЗ \"АТНИНСКАЯ ЦРБ\"",
+      "shortName": "АТНИНСКАЯ ЦРБ",
+      "oid": "1.2.643.5.1.13.13.12.2.16.1078",
+      "level": "I уровень",
+      "district": "Атнинский",
+      "kind": "ЦРБ",
+      "stationary": "Круглосуточный стационар",
+      "type": "Центральные районные больницы",
+      "applicable": [
+        "ambulatoryCase",
+        "birth",
+        "death",
+        "egpu",
+        "egpu2days",
+        "elmk",
+        "hospital",
+        "semd228",
+        "smp",
+        "smpFederal",
+        "tvspAmbulatory",
+        "tvspDiagnostic",
+        "tvspLaboratory",
+        "tvspStationary"
+      ],
+      "aliases": [
+        "АТНИНСКАЯ ЦРБ",
+        "Атнинская ЦРБ",
+        "ГАУЗ \"АТНИНСКАЯ ЦРБ\"",
+        "ГАУЗ \"Атнинская ЦРБ\""
+      ]
+    },
+    {
+      "name": "ГАУЗ \"АЦОЗ И МП\"",
+      "shortName": "АЦОЗ И МП",
+      "oid": "1.2.643.5.1.13.13.12.2.16.1128",
+      "level": "I уровень",
+      "district": "Альметьевский",
+      "kind": "Иное",
+      "stationary": "",
+      "type": "Республиканские и специализированные МО",
+      "applicable": [
+        "ambulatoryCase",
+        "death"
+      ],
+      "aliases": [
+        "АЦОЗ И МП",
+        "ГАУЗ \"АЦОЗ И МП\"",
+        "ГАУЗ \"АЦОЗ и МП\""
+      ]
+    },
+    {
+      "name": "ГАУЗ \"БАВЛИНСКАЯ ЦРБ\"",
+      "shortName": "БАВЛИНСКАЯ ЦРБ",
+      "oid": "1.2.643.5.1.13.13.12.2.16.1129",
+      "level": "II уровень",
+      "district": "Бавлинский",
+      "kind": "ЦРБ",
+      "stationary": "Круглосуточный стационар",
+      "type": "Центральные районные больницы",
+      "applicable": [
+        "ambulatoryCase",
+        "birth",
+        "death",
+        "egpu",
+        "egpu2days",
+        "elmk",
+        "hospital",
+        "semd228",
+        "smp",
+        "smpFederal",
+        "tmkRemd",
+        "tvspAmbulatory",
+        "tvspDiagnostic",
+        "tvspLaboratory",
+        "tvspStationary"
+      ],
+      "aliases": [
+        "БАВЛИНСКАЯ ЦРБ",
+        "Бавлинская ЦРБ",
+        "ГАУЗ \"БАВЛИНСКАЯ ЦРБ\"",
+        "ГАУЗ \"Бавлинская ЦРБ\""
+      ]
+    },
+    {
+      "name": "ГАУЗ \"БАЗАРНО-МАТАКСКАЯ ЦРБ\"",
+      "shortName": "БАЗАРНО-МАТАКСКАЯ ЦРБ",
+      "oid": "1.2.643.5.1.13.13.12.2.16.1161",
+      "level": "I уровень",
+      "district": "Алькеевский",
+      "kind": "ЦРБ",
+      "stationary": "Круглосуточный стационар",
+      "type": "Центральные районные больницы",
+      "applicable": [
+        "ambulatoryCase",
+        "birth",
+        "death",
+        "egpu",
+        "egpu2days",
+        "elmk",
+        "hospital",
+        "semd228",
+        "smp",
+        "smpFederal",
+        "tvspAmbulatory",
+        "tvspDiagnostic",
+        "tvspStationary"
+      ],
+      "aliases": [
+        "БАЗАРНО-МАТАКСКАЯ ЦРБ",
+        "Базарно-Матакская ЦРБ",
+        "ГАУЗ \"БАЗАРНО-МАТАКСКАЯ ЦРБ\"",
+        "ГАУЗ \"Базарно-Матакская ЦРБ\""
+      ]
+    },
+    {
+      "name": "ГАУЗ \"БАЛТАСИНСКАЯ ЦРБ\"",
+      "shortName": "БАЛТАСИНСКАЯ ЦРБ",
+      "oid": "1.2.643.5.1.13.13.12.2.16.1081",
+      "level": "I уровень",
+      "district": "Балтасинский",
+      "kind": "ЦРБ",
+      "stationary": "Круглосуточный стационар",
+      "type": "Центральные районные больницы",
+      "applicable": [
+        "ambulatoryCase",
+        "birth",
+        "death",
+        "egpu",
+        "egpu2days",
+        "elmk",
+        "hospital",
+        "semd228",
+        "smp",
+        "smpFederal",
+        "tvspAmbulatory",
+        "tvspDiagnostic",
+        "tvspLaboratory",
+        "tvspStationary"
+      ],
+      "aliases": [
+        "БАЛТАСИНСКАЯ ЦРБ",
+        "Балтасинская ЦРБ",
+        "ГАУЗ \"БАЛТАСИНСКАЯ ЦРБ\"",
+        "ГАУЗ \"Балтасинская ЦРБ\""
+      ]
+    },
+    {
+      "name": "ГАУЗ \"БУГУЛЬМИНСКАЯ ЦРБ\"",
+      "shortName": "БУГУЛЬМИНСКАЯ ЦРБ",
+      "oid": "1.2.643.5.1.13.13.12.2.16.1042",
+      "level": "II уровень",
+      "district": "Бугульминский",
+      "kind": "ЦРБ",
+      "stationary": "Круглосуточный стационар",
+      "type": "Центральные районные больницы",
+      "applicable": [
+        "ambulatoryCase",
+        "birth",
+        "death",
+        "egpu",
+        "egpu2days",
+        "elmk",
+        "hospital",
+        "semd228",
+        "smp",
+        "smpFederal",
+        "tmkRemd",
+        "tvspAmbulatory",
+        "tvspDiagnostic",
+        "tvspLaboratory",
+        "tvspStationary"
+      ],
+      "aliases": [
+        "БУГУЛЬМИНСКАЯ ЦРБ",
+        "Бугульминская ЦРБ",
+        "ГАУЗ \"БУГУЛЬМИНСКАЯ ЦРБ\"",
+        "ГАУЗ \"Бугульминская ЦРБ\""
+      ]
+    },
+    {
+      "name": "ГАУЗ \"БУИНСКАЯ ЦРБ\"",
+      "shortName": "БУИНСКАЯ ЦРБ",
+      "oid": "1.2.643.5.1.13.13.12.2.16.1120",
+      "level": "I уровень",
+      "district": "Буинский",
+      "kind": "ЦРБ",
+      "stationary": "Круглосуточный стационар",
+      "type": "Центральные районные больницы",
+      "applicable": [
+        "ambulatoryCase",
+        "birth",
+        "death",
+        "egpu",
+        "egpu2days",
+        "elmk",
+        "hospital",
+        "semd228",
+        "smp",
+        "smpFederal",
+        "tvspAmbulatory",
+        "tvspDiagnostic",
+        "tvspStationary"
+      ],
+      "aliases": [
+        "БУИНСКАЯ ЦРБ",
+        "Буинская ЦРБ",
+        "ГАУЗ \"БУИНСКАЯ ЦРБ\"",
+        "ГАУЗ \"Буинская ЦРБ\""
+      ]
+    },
+    {
+      "name": "ГАУЗ \"ВЫСОКОГОРСКАЯ ЦРБ\"",
+      "shortName": "ВЫСОКОГОРСКАЯ ЦРБ",
+      "oid": "1.2.643.5.1.13.13.12.2.16.1050",
+      "level": "I уровень",
+      "district": "Высокогорский",
+      "kind": "ЦРБ",
+      "stationary": "Круглосуточный стационар",
+      "type": "Центральные районные больницы",
+      "applicable": [
+        "ambulatoryCase",
+        "birth",
+        "death",
+        "egpu",
+        "egpu2days",
+        "elmk",
+        "hospital",
+        "semd228",
+        "smp",
+        "smpFederal",
+        "tvspAmbulatory",
+        "tvspDiagnostic",
+        "tvspLaboratory",
+        "tvspStationary"
+      ],
+      "aliases": [
+        "ВЫСОКОГОРСКАЯ ЦРБ",
+        "Высокогорская ЦРБ",
+        "ГАУЗ \"ВЫСОКОГОРСКАЯ ЦРБ\"",
+        "ГАУЗ \"Высокогорская ЦРБ\""
+      ]
+    },
+    {
+      "name": "ГАУЗ \"ГДБ № 1\"",
+      "shortName": "ДГБ № 1 г.Казань",
+      "oid": "1.2.643.5.1.13.13.12.2.16.1148",
+      "level": "II уровень",
+      "district": "Казань",
+      "kind": "Многопрофильные",
+      "stationary": "Круглосуточный стационар",
+      "type": "Детские городские поликлиники",
+      "applicable": [
+        "ambulatoryCase",
+        "birth",
+        "death",
+        "egpu",
+        "egpu2days",
+        "hospital",
+        "semd228",
+        "tmkRemd",
+        "tvspAmbulatory",
+        "tvspDiagnostic",
+        "tvspStationary"
+      ],
+      "aliases": [
+        "ГАУЗ \"ГДБ № 1\"",
+        "ГАУЗ \"Городская детская больница №1\" г.Казани",
+        "ГДБ № 1 г. Казань",
+        "ДГБ № 1 г.Казань"
+      ]
+    },
+    {
+      "name": "ГАУЗ \"ГДП №7\"",
+      "shortName": "ДГП №7 г.Казань",
+      "oid": "1.2.643.5.1.13.13.12.2.16.1113",
+      "level": "I уровень",
+      "district": "Казань",
+      "kind": "Поликлинника",
+      "stationary": "Дневной стационар",
+      "type": "Детские городские поликлиники",
+      "applicable": [
+        "ambulatoryCase",
+        "birth",
+        "death",
+        "egpu",
+        "egpu2days",
+        "hospital",
+        "semd228",
+        "tvspAmbulatory",
+        "tvspDiagnostic",
+        "tvspStationary"
+      ],
+      "aliases": [
+        "ГАУЗ \"ГДП №7\"",
+        "ГДП №7 г.Казань",
+        "ДГП №7 г.Казань"
+      ]
+    },
+    {
+      "name": "ГАУЗ \"ГКБ № 12\"",
+      "shortName": "ГКБ № 12 г.Казань",
+      "oid": "1.2.643.5.1.13.13.12.2.16.28030",
+      "level": "III уровень",
+      "district": "Казань",
+      "kind": "Многопрофильные",
+      "stationary": "Круглосуточный стационар",
+      "type": "Городские больницы",
+      "applicable": [
+        "ambulatoryCase",
+        "birth",
+        "death",
+        "egpu",
+        "egpu2days",
+        "elmk",
+        "hospital",
+        "semd228",
+        "tmkRemd",
+        "tvspAmbulatory",
+        "tvspDiagnostic",
+        "tvspLaboratory",
+        "tvspStationary"
+      ],
+      "aliases": [
+        "ГАУЗ \"ГКБ № 12\"",
+        "ГКБ № 12 г. Казань",
+        "ГКБ № 12 г.Казань"
+      ]
+    },
+    {
+      "name": "ГАУЗ \"ГКБ №16\"",
+      "shortName": "ГКБ №16 г.Казань",
+      "oid": "1.2.643.5.1.13.13.12.2.16.1136",
+      "level": "III уровень",
+      "district": "Казань",
+      "kind": "Многопрофильные",
+      "stationary": "Круглосуточный стационар",
+      "type": "Городские больницы",
+      "applicable": [
+        "ambulatoryCase",
+        "birth",
+        "death",
+        "egpu",
+        "egpu2days",
+        "elmk",
+        "hospital",
+        "semd228",
+        "tmkRemd",
+        "tvspAmbulatory",
+        "tvspDiagnostic",
+        "tvspLaboratory",
+        "tvspStationary"
+      ],
+      "aliases": [
+        "ГАУЗ \"ГКБ №16\"",
+        "ГАУЗ \"ГКБ №16\" г. Казани",
+        "ГКБ №16 г. Казань",
+        "ГКБ №16 г.Казань"
+      ]
+    },
+    {
+      "name": "ГАУЗ \"ГКБ№7 ИМ. М.Н.САДЫКОВА\"",
+      "shortName": "ГКБ№7 ИМ. М.Н.САДЫКОВА г.Казань",
+      "oid": "1.2.643.5.1.13.13.12.2.16.1163",
+      "level": "III уровень",
+      "district": "Казань",
+      "kind": "Многопрофильные",
+      "stationary": "Круглосуточный стационар",
+      "type": "Городские больницы",
+      "applicable": [
+        "ambulatoryCase",
+        "birth",
+        "death",
+        "egpu",
+        "egpu2days",
+        "elmk",
+        "hospital",
+        "semd228",
+        "tmkRemd",
+        "tvspAmbulatory",
+        "tvspDiagnostic",
+        "tvspLaboratory",
+        "tvspStationary"
+      ],
+      "aliases": [
+        "ГАУЗ \"ГКБ №7 им. М.Н.Садыкова\"",
+        "ГАУЗ \"ГКБ№7 ИМ. М.Н.САДЫКОВА\"",
+        "ГКБ№7 ИМ. М.Н.САДЫКОВА",
+        "ГКБ№7 ИМ. М.Н.САДЫКОВА г.Казань"
+      ]
+    },
+    {
+      "name": "ГАУЗ \"ГОРОДСКАЯ БОЛЬНИЦА № 11\"",
+      "shortName": "ГБ № 11 г.Казань",
+      "oid": "1.2.643.5.1.13.13.12.2.16.1070",
+      "level": "I уровень",
+      "district": "Казань",
+      "kind": "Многопрофильные",
+      "stationary": "Круглосуточный стационар",
+      "type": "Городские больницы",
+      "applicable": [
+        "ambulatoryCase",
+        "birth",
+        "death",
+        "egpu",
+        "egpu2days",
+        "elmk",
+        "hospital",
+        "semd228",
+        "tvspAmbulatory",
+        "tvspDiagnostic",
+        "tvspLaboratory",
+        "tvspStationary"
+      ],
+      "aliases": [
+        "ГАУЗ \"ГОРОДСКАЯ БОЛЬНИЦА № 11\"",
+        "ГАУЗ \"Городская больница №11\" г.Казани",
+        "ГБ № 11 г.Казань",
+        "ГОРОДСКАЯ БОЛЬНИЦА № 11 г. Казань"
+      ]
+    },
+    {
+      "name": "ГАУЗ \"ГОРОДСКАЯ БОЛЬНИЦА №2\"",
+      "shortName": "ГБ №2 г.Наб.Челны",
+      "oid": "1.2.643.5.1.13.13.12.2.16.1116",
+      "level": "II уровень",
+      "district": "Набережные челны",
+      "kind": "Многопрофильные",
+      "stationary": "Круглосуточный стационар",
+      "type": "Городские больницы",
+      "applicable": [
+        "ambulatoryCase",
+        "birth",
+        "death",
+        "egpu",
+        "egpu2days",
+        "elmk",
+        "hospital",
+        "semd228",
+        "tmkRemd",
+        "tvspAmbulatory",
+        "tvspDiagnostic",
+        "tvspLaboratory",
+        "tvspStationary"
+      ],
+      "aliases": [
+        "ГАУЗ \"ГОРОДСКАЯ БОЛЬНИЦА №2\"",
+        "ГАУЗ \"Городская больница №2\" г.Наб.Челны",
+        "ГБ №2 г.Наб.Челны",
+        "ГОРОДСКАЯ БОЛЬНИЦА №2 г. Наб.Челны"
+      ]
+    },
+    {
+      "name": "ГАУЗ \"ГОРОДСКАЯ БОЛЬНИЦА №5\"",
+      "shortName": "ГБ №5 г.Наб. Челны",
+      "oid": "1.2.643.5.1.13.13.12.2.16.1112",
+      "level": "II уровень",
+      "district": "Набережные челны",
+      "kind": "Многопрофильные",
+      "stationary": "Круглосуточный стационар",
+      "type": "Городские больницы",
+      "applicable": [
+        "ambulatoryCase",
+        "birth",
+        "death",
+        "egpu",
+        "egpu2days",
+        "elmk",
+        "hospital",
+        "semd228",
+        "tmkRemd",
+        "tvspAmbulatory",
+        "tvspDiagnostic",
+        "tvspLaboratory",
+        "tvspStationary"
+      ],
+      "aliases": [
+        "ГАУЗ \"ГОРОДСКАЯ БОЛЬНИЦА №5\"",
+        "ГАУЗ \"Городская больница №5\" г.Набережные Челны",
+        "ГБ №5 г.Наб. Челны",
+        "ГОРОДСКАЯ БОЛЬНИЦА №5"
+      ]
+    },
+    {
+      "name": "ГАУЗ \"ГОРОДСКАЯ ДЕТСКАЯ ПОЛИКЛИНИКА № 6\"",
+      "shortName": "ДГП № 6 г.Казань",
+      "oid": "1.2.643.5.1.13.13.12.2.16.1090",
+      "level": "I уровень",
+      "district": "Казань",
+      "kind": "Поликлинника",
+      "stationary": "Дневной стационар",
+      "type": "Детские городские поликлиники",
+      "applicable": [
+        "ambulatoryCase",
+        "birth",
+        "death",
+        "egpu",
+        "egpu2days",
+        "hospital",
+        "semd228",
+        "tvspAmbulatory",
+        "tvspDiagnostic",
+        "tvspLaboratory"
+      ],
+      "aliases": [
+        "ГАУЗ \"ГОРОДСКАЯ ДЕТСКАЯ ПОЛИКЛИНИКА № 6\"",
+        "ГАУЗ \"Городская детская поликлиника №6\" г.Казани",
+        "ГДП № 6 г.Казань",
+        "ДГП № 6 г.Казань"
+      ]
+    },
+    {
+      "name": "ГАУЗ \"ГОРОДСКАЯ ПОЛИКЛИНИКА № 10\"",
+      "shortName": "ГП № 10 г.Казань",
+      "oid": "1.2.643.5.1.13.13.12.2.16.1074",
+      "level": "I уровень",
+      "district": "Казань",
+      "kind": "Поликлинника",
+      "stationary": "Дневной стационар",
+      "type": "Городские поликлиники",
+      "applicable": [
+        "ambulatoryCase",
+        "death",
+        "egpu",
+        "egpu2days",
+        "elmk",
+        "hospital",
+        "semd228",
+        "tvspAmbulatory",
+        "tvspDiagnostic",
+        "tvspLaboratory"
+      ],
+      "aliases": [
+        "ГАУЗ \"ГОРОДСКАЯ ПОЛИКЛИНИКА № 10\"",
+        "ГАУЗ \"Городская поликлиника №10\" г. Казани",
+        "ГОРОДСКАЯ ПОЛИКЛИНИКА № 10 г. Казань",
+        "ГП № 10 г.Казань"
+      ]
+    },
+    {
+      "name": "ГАУЗ \"ГОРОДСКАЯ ПОЛИКЛИНИКА № 20\"",
+      "shortName": "ГП № 20 г.Казань",
+      "oid": "1.2.643.5.1.13.13.12.2.16.1178",
+      "level": "I уровень",
+      "district": "Казань",
+      "kind": "Поликлинника",
+      "stationary": "Дневной стационар",
+      "type": "Городские поликлиники",
+      "applicable": [
+        "ambulatoryCase",
+        "death",
+        "egpu",
+        "egpu2days",
+        "elmk",
+        "hospital",
+        "semd228",
+        "tvspAmbulatory",
+        "tvspDiagnostic",
+        "tvspLaboratory"
+      ],
+      "aliases": [
+        "ГАУЗ \"ГОРОДСКАЯ ПОЛИКЛИНИКА № 20\"",
+        "ГАУЗ \"Городская поликлиника №20\" г.Казани",
+        "ГОРОДСКАЯ ПОЛИКЛИНИКА № 20 г. Казань",
+        "ГП № 20 г.Казань"
+      ]
+    },
+    {
+      "name": "ГАУЗ \"ГОРОДСКАЯ ПОЛИКЛИНИКА № 21\"",
+      "shortName": "ГП № 21 г.Казань",
+      "oid": "1.2.643.5.1.13.13.12.2.16.1179",
+      "level": "I уровень",
+      "district": "Казань",
+      "kind": "Поликлинника",
+      "stationary": "Дневной стационар",
+      "type": "Городские поликлиники",
+      "applicable": [
+        "ambulatoryCase",
+        "death",
+        "egpu",
+        "egpu2days",
+        "elmk",
+        "hospital",
+        "semd228",
+        "tvspAmbulatory",
+        "tvspDiagnostic",
+        "tvspLaboratory",
+        "tvspStationary"
+      ],
+      "aliases": [
+        "ГАУЗ \"ГОРОДСКАЯ ПОЛИКЛИНИКА № 21\"",
+        "ГАУЗ \"Городская поликлиника №21\" г. Казани",
+        "ГОРОДСКАЯ ПОЛИКЛИНИКА № 21 г. Казань",
+        "ГП № 21 г.Казань"
+      ]
+    },
+    {
+      "name": "ГАУЗ \"ГОРОДСКАЯ ПОЛИКЛИНИКА № 7\"",
+      "shortName": "ГП № 7 г. Казань",
+      "oid": "1.2.643.5.1.13.13.12.2.16.1153",
+      "level": "I уровень",
+      "district": "Казань",
+      "kind": "Поликлинника",
+      "stationary": "Дневной стационар",
+      "type": "Городские поликлиники",
+      "applicable": [
+        "ambulatoryCase",
+        "death",
+        "egpu",
+        "egpu2days",
+        "elmk",
+        "hospital",
+        "semd228",
+        "tvspAmbulatory",
+        "tvspDiagnostic"
+      ],
+      "aliases": [
+        "ГАУЗ \"ГОРОДСКАЯ ПОЛИКЛИНИКА № 7\"",
+        "ГАУЗ \"Городская поликлиника №7\" г.Казани",
+        "ГОРОДСКАЯ ПОЛИКЛИНИКА № 7 г. Казань",
+        "ГП № 7 г. Казань"
+      ]
+    },
+    {
+      "name": "ГАУЗ \"ГОРОДСКАЯ ПОЛИКЛИНИКА № 8\" Г.КАЗАНИ",
+      "shortName": "ГП № 8 г.Казань",
+      "oid": "1.2.643.5.1.13.13.12.2.16.1082",
+      "level": "I уровень",
+      "district": "Казань",
+      "kind": "Поликлинника",
+      "stationary": "Дневной стационар",
+      "type": "Городские поликлиники",
+      "applicable": [
+        "ambulatoryCase",
+        "death",
+        "egpu",
+        "egpu2days",
+        "elmk",
+        "hospital",
+        "semd228",
+        "tvspAmbulatory",
+        "tvspDiagnostic",
+        "tvspLaboratory",
+        "tvspStationary"
+      ],
+      "aliases": [
+        "ГАУЗ \"ГОРОДСКАЯ ПОЛИКЛИНИКА № 8\" Г.КАЗАНИ",
+        "ГАУЗ \"Городская поликлиника №8\" г.Казань",
+        "ГОРОДСКАЯ ПОЛИКЛИНИКА № 8 Г.КАЗАНИ",
+        "ГП № 8 г.Казань"
+      ]
+    },
+    {
+      "name": "ГАУЗ \"ГОРОДСКАЯ ПОЛИКЛИНИКА №18\"",
+      "shortName": "ГП №18 г.Казань",
+      "oid": "1.2.643.5.1.13.13.12.2.16.1080",
+      "level": "I уровень",
+      "district": "Казань",
+      "kind": "Поликлинника",
+      "stationary": "Дневной стационар",
+      "type": "Городские поликлиники",
+      "applicable": [
+        "ambulatoryCase",
+        "death",
+        "egpu",
+        "egpu2days",
+        "elmk",
+        "hospital",
+        "semd228",
+        "tvspAmbulatory",
+        "tvspDiagnostic"
+      ],
+      "aliases": [
+        "ГАУЗ \"ГОРОДСКАЯ ПОЛИКЛИНИКА №18\"",
+        "ГАУЗ \"Городская поликлиника №18\" г. Казани",
+        "ГОРОДСКАЯ ПОЛИКЛИНИКА №18 г. Казань",
+        "ГП №18 г.Казань"
+      ]
+    },
+    {
+      "name": "ГАУЗ \"ГОРОДСКАЯ ПОЛИКЛИНИКА №3\"",
+      "shortName": "ГП №3 г.Наб.Челны",
+      "oid": "1.2.643.5.1.13.13.12.2.16.1208",
+      "level": "I уровень",
+      "district": "Набережные челны",
+      "kind": "Поликлинника",
+      "stationary": "Дневной стационар",
+      "type": "Городские поликлиники",
+      "applicable": [
+        "ambulatoryCase",
+        "death",
+        "egpu",
+        "egpu2days",
+        "elmk",
+        "hospital",
+        "semd228",
+        "tvspAmbulatory",
+        "tvspDiagnostic",
+        "tvspLaboratory"
+      ],
+      "aliases": [
+        "ГАУЗ \"ГОРОДСКАЯ ПОЛИКЛИНИКА №3\"",
+        "ГАУЗ \"Городская поликлиника №3\" г.Наб.Челны",
+        "ГОРОДСКАЯ ПОЛИКЛИНИКА №3 г. Наб.Челны",
+        "ГП №3 г.Наб.Челны"
+      ]
+    },
+    {
+      "name": "ГАУЗ \"ГОРОДСКАЯ ПОЛИКЛИНИКА №4 ИМ.Л.Н.ГАНИЕВОЙ\"",
+      "shortName": "ГП №4 ИМ.Л.Н.ГАНИЕВОЙ г.Наб.Челны",
+      "oid": "1.2.643.5.1.13.13.12.2.16.1147",
+      "level": "I уровень",
+      "district": "Набережные челны",
+      "kind": "Поликлинника",
+      "stationary": "Дневной стационар",
+      "type": "Городские поликлиники",
+      "applicable": [
+        "ambulatoryCase",
+        "death",
+        "egpu",
+        "egpu2days",
+        "elmk",
+        "hospital",
+        "semd228",
+        "tvspAmbulatory",
+        "tvspDiagnostic",
+        "tvspLaboratory"
+      ],
+      "aliases": [
+        "ГАУЗ \"ГОРОДСКАЯ ПОЛИКЛИНИКА №4 ИМ.Л.Н.ГАНИЕВОЙ\"",
+        "ГАУЗ \"Городская поликлиника №4 им. Л.Н. Ганиевой\"",
+        "ГОРОДСКАЯ ПОЛИКЛИНИКА №4 ИМ.Л.Н.ГАНИЕВОЙ",
+        "ГП №4 ИМ.Л.Н.ГАНИЕВОЙ г.Наб.Челны"
+      ]
+    },
+    {
+      "name": "ГАУЗ \"ГОРОДСКАЯ ПОЛИКЛИНИКА №6\"",
+      "shortName": "ГП №6 г.Наб.Челны",
+      "oid": "1.2.643.5.1.13.13.12.2.16.1051",
+      "level": "I уровень",
+      "district": "Набережные челны",
+      "kind": "Поликлинника",
+      "stationary": "Дневной стационар",
+      "type": "Городские поликлиники",
+      "applicable": [
+        "ambulatoryCase",
+        "death",
+        "egpu",
+        "egpu2days",
+        "elmk",
+        "hospital",
+        "semd228",
+        "tvspAmbulatory",
+        "tvspDiagnostic",
+        "tvspLaboratory"
+      ],
+      "aliases": [
+        "ГАУЗ \"ГОРОДСКАЯ ПОЛИКЛИНИКА №6\"",
+        "ГАУЗ \"Городская поликлиника №6\" г.Наб.Челны",
+        "ГОРОДСКАЯ ПОЛИКЛИНИКА №6 г. Наб.Челны",
+        "ГП №6 г.Наб.Челны"
+      ]
+    },
+    {
+      "name": "ГАУЗ \"ГОРОДСКАЯ ПОЛИКЛИНИКА №7\"",
+      "shortName": "ГП №7 г.Наб.Челны",
+      "oid": "1.2.643.5.1.13.13.12.2.16.1115",
+      "level": "I уровень",
+      "district": "Набережные челны",
+      "kind": "Поликлинника",
+      "stationary": "Дневной стационар",
+      "type": "Городские поликлиники",
+      "applicable": [
+        "ambulatoryCase",
+        "egpu",
+        "egpu2days",
+        "elmk",
+        "hospital",
+        "semd228",
+        "tvspAmbulatory",
+        "tvspDiagnostic",
+        "tvspLaboratory",
+        "tvspStationary"
+      ],
+      "aliases": [
+        "ГАУЗ \"ГОРОДСКАЯ ПОЛИКЛИНИКА №7\"",
+        "ГАУЗ \"Городская поликлиника №7\" г.Наб.Челны",
+        "ГОРОДСКАЯ ПОЛИКЛИНИКА №7 г. Наб.Челны",
+        "ГП №7 г.Наб.Челны"
+      ]
+    },
+    {
+      "name": "ГАУЗ \"ГОСПИТАЛЬ ДЛЯ ВЕТЕРАНОВ ВОЙН\" Г. КАЗАНИ",
+      "shortName": "ГВВ г.Казань",
+      "oid": "1.2.643.5.1.13.13.12.2.16.1135",
+      "level": "II уровень",
+      "district": "Казань",
+      "kind": "Многопрофильные",
+      "stationary": "Круглосуточный стационар",
+      "type": "Городские больницы",
+      "applicable": [
+        "ambulatoryCase",
+        "birth",
+        "death",
+        "egpu",
+        "egpu2days",
+        "elmk",
+        "hospital",
+        "semd228",
+        "tmkRemd",
+        "tvspAmbulatory",
+        "tvspDiagnostic",
+        "tvspLaboratory",
+        "tvspStationary"
+      ],
+      "aliases": [
+        "ГАУЗ \"ГОСПИТАЛЬ ДЛЯ ВЕТЕРАНОВ ВОЙН\" Г. КАЗАНИ",
+        "ГАУЗ \"Госпиталь для ветеранов войн\" г.Казани",
+        "ГВВ Г. КАЗАНИ",
+        "ГВВ г.Казань"
+      ]
+    },
+    {
+      "name": "ГАУЗ \"ГОСПИТАЛЬ ДЛЯ ВЕТЕРАНОВ ВОЙН\" Г. Н. ЧЕЛНЫ",
+      "shortName": "ГВВ г.Наб.Челны",
+      "oid": "1.2.643.5.1.13.13.12.2.16.1085",
+      "level": "II уровень",
+      "district": "Набережные челны",
+      "kind": "Многопрофильные",
+      "stationary": "Круглосуточный стационар",
+      "type": "Городские больницы",
+      "applicable": [
+        "ambulatoryCase",
+        "birth",
+        "death",
+        "egpu",
+        "egpu2days",
+        "elmk",
+        "hospital",
+        "semd228",
+        "tmkRemd",
+        "tvspAmbulatory",
+        "tvspDiagnostic",
+        "tvspLaboratory",
+        "tvspStationary"
+      ],
+      "aliases": [
+        "ГАУЗ \"ГОСПИТАЛЬ ДЛЯ ВЕТЕРАНОВ ВОЙН\" Г. Н. ЧЕЛНЫ",
+        "ГАУЗ \"Госпиталь для Ветеранов Войн\" г. Н. Челны",
+        "ГВВ Г. Н. ЧЕЛНЫ",
+        "ГВВ г.Наб.Челны"
+      ]
+    },
+    {
+      "name": "ГАУЗ \"ДГКБ № 7\"",
+      "shortName": "ДГКБ № 7 г.Казань",
+      "oid": "1.2.643.5.1.13.13.12.2.16.1123",
+      "level": "III уровень",
+      "district": "Казань",
+      "kind": "Многопрофильные",
+      "stationary": "Круглосуточный стационар",
+      "type": "Детские городские поликлиники",
+      "applicable": [
+        "ambulatoryCase",
+        "birth",
+        "death",
+        "egpu",
+        "egpu2days",
+        "hospital",
+        "semd228",
+        "tmkRemd",
+        "tvspAmbulatory",
+        "tvspDiagnostic",
+        "tvspLaboratory",
+        "tvspStationary"
+      ],
+      "aliases": [
+        "ГАУЗ \"ДГКБ № 7\"",
+        "ГАУЗ \"Детская городская клиническая больница №7\" г.Казани",
+        "ДГКБ № 7 г.Казань"
+      ]
+    },
+    {
+      "name": "ГАУЗ \"ДГП № 2\"",
+      "shortName": "ДГП № 2 г.Казань",
+      "oid": "1.2.643.5.1.13.13.12.2.16.1182",
+      "level": "I уровень",
+      "district": "Казань",
+      "kind": "Поликлинника",
+      "stationary": "Дневной стационар",
+      "type": "Детские городские поликлиники",
+      "applicable": [
+        "ambulatoryCase",
+        "birth",
+        "death",
+        "egpu",
+        "egpu2days",
+        "hospital",
+        "semd228",
+        "tvspAmbulatory",
+        "tvspDiagnostic",
+        "tvspLaboratory"
+      ],
+      "aliases": [
+        "ГАУЗ \"ДГП № 2\"",
+        "ГАУЗ \"Детская городская поликлиника №2\" г. Казани",
+        "ДГП № 2 г.Казань"
+      ]
+    },
+    {
+      "name": "ГАУЗ \"ДГП № 9\"",
+      "shortName": "ДГП № 9 г.Казань",
+      "oid": "1.2.643.5.1.13.13.12.2.16.1193",
+      "level": "I уровень",
+      "district": "Казань",
+      "kind": "Поликлинника",
+      "stationary": "Дневной стационар",
+      "type": "Детские городские поликлиники",
+      "applicable": [
+        "ambulatoryCase",
+        "birth",
+        "death",
+        "egpu",
+        "egpu2days",
+        "hospital",
+        "semd228",
+        "tvspAmbulatory",
+        "tvspDiagnostic",
+        "tvspLaboratory"
+      ],
+      "aliases": [
+        "ГАУЗ \"ДГП № 9\"",
+        "ГАУЗ \"Детская городская поликлиника №9\" г.Казани",
+        "ДГП № 9 г.Казань"
+      ]
+    },
+    {
+      "name": "ГАУЗ \"ДЕТСКАЯ ГОРОДСКАЯ БОЛЬНИЦА № 8\"",
+      "shortName": "ДГБ № 8 г.Казань",
+      "oid": "1.2.643.5.1.13.13.12.2.16.1202",
+      "level": "II уровень",
+      "district": "Казань",
+      "kind": "Поликлинника",
+      "stationary": "Круглосуточный стационар",
+      "type": "Детские городские поликлиники",
+      "applicable": [
+        "ambulatoryCase",
+        "death",
+        "hospital",
+        "tmkRemd",
+        "tvspAmbulatory",
+        "tvspDiagnostic",
+        "tvspLaboratory",
+        "tvspStationary"
+      ],
+      "aliases": [
+        "ГАУЗ \"ДЕТСКАЯ ГОРОДСКАЯ БОЛЬНИЦА № 8\"",
+        "ГАУЗ \"Детская городская больница №8\" г.Казани",
+        "ДГБ № 8 г.Казань"
+      ]
+    },
+    {
+      "name": "ГАУЗ \"ДЕТСКАЯ ГОРОДСКАЯ ПОЛИКЛИНИКА № 10\"",
+      "shortName": "ДГП № 10 г.Казань",
+      "oid": "1.2.643.5.1.13.13.12.2.16.1199",
+      "level": "I уровень",
+      "district": "Казань",
+      "kind": "Поликлинника",
+      "stationary": "",
+      "type": "Детские городские поликлиники",
+      "applicable": [
+        "ambulatoryCase",
+        "birth",
+        "death",
+        "egpu",
+        "egpu2days",
+        "semd228",
+        "tvspAmbulatory",
+        "tvspDiagnostic",
+        "tvspLaboratory"
+      ],
+      "aliases": [
+        "ГАУЗ \"ДЕТСКАЯ ГОРОДСКАЯ ПОЛИКЛИНИКА № 10\"",
+        "ГАУЗ \"Детская городская поликлиника №10\" г.Казани",
+        "ДГП № 10 г.Казань"
+      ]
+    },
+    {
+      "name": "ГАУЗ \"ДЕТСКАЯ ГОРОДСКАЯ ПОЛИКЛИНИКА № 11\"",
+      "shortName": "ДГП № 11 г.Казань",
+      "oid": "1.2.643.5.1.13.13.12.2.16.1200",
+      "level": "I уровень",
+      "district": "Казань",
+      "kind": "Поликлинника",
+      "stationary": "",
+      "type": "Детские городские поликлиники",
+      "applicable": [
+        "ambulatoryCase",
+        "birth",
+        "death",
+        "egpu",
+        "egpu2days",
+        "semd228",
+        "tvspAmbulatory",
+        "tvspDiagnostic",
+        "tvspLaboratory"
+      ],
+      "aliases": [
+        "ГАУЗ \"ДЕТСКАЯ ГОРОДСКАЯ ПОЛИКЛИНИКА № 11\"",
+        "ГАУЗ \"Детская городская поликлиника № 11\"",
+        "ДГП № 11 г.Казань"
+      ]
+    },
+    {
+      "name": "ГАУЗ \"ДЕТСКАЯ ГОРОДСКАЯ ПОЛИКЛИНИКА № 4\"",
+      "shortName": "ДГП № 4 г.Казань",
+      "oid": "1.2.643.5.1.13.13.12.2.16.1122",
+      "level": "I уровень",
+      "district": "Казань",
+      "kind": "Поликлинника",
+      "stationary": "Дневной стационар",
+      "type": "Детские городские поликлиники",
+      "applicable": [
+        "ambulatoryCase",
+        "birth",
+        "death",
+        "egpu",
+        "egpu2days",
+        "hospital",
+        "semd228",
+        "tvspAmbulatory",
+        "tvspDiagnostic"
+      ],
+      "aliases": [
+        "ГАУЗ \"ДЕТСКАЯ ГОРОДСКАЯ ПОЛИКЛИНИКА № 4\"",
+        "ГАУЗ \"Детская городская поликлиника №4\" г. Казани",
+        "ДГП № 4 г.Казань"
+      ]
+    },
+    {
+      "name": "ГАУЗ \"ДЕТСКАЯ ГОРОДСКАЯ ПОЛИКЛИНИКА №2\"",
+      "shortName": "ДГП №2 г.Наб.Челны",
+      "oid": "1.2.643.5.1.13.13.12.2.16.1045",
+      "level": "I уровень",
+      "district": "Набережные челны",
+      "kind": "Поликлинника",
+      "stationary": "Дневной стационар",
+      "type": "Детские городские поликлиники",
+      "applicable": [
+        "ambulatoryCase",
+        "egpu",
+        "egpu2days",
+        "hospital",
+        "semd228",
+        "tvspAmbulatory",
+        "tvspDiagnostic",
+        "tvspStationary"
+      ],
+      "aliases": [
+        "ГАУЗ \"ДЕТСКАЯ ГОРОДСКАЯ ПОЛИКЛИНИКА №2\"",
+        "ГАУЗ \"Детская городская поликлиника №2\" г.Наб.Челны",
+        "ДГП №2 г.Наб.Челны"
+      ]
+    },
+    {
+      "name": "ГАУЗ \"ДЕТСКАЯ ГОРОДСКАЯ ПОЛИКЛИНИКА №3\"",
+      "shortName": "ДГП №3 г.Наб.Челны",
+      "oid": "1.2.643.5.1.13.13.12.2.16.1067",
+      "level": "I уровень",
+      "district": "Набережные челны",
+      "kind": "Поликлинника",
+      "stationary": "Дневной стационар",
+      "type": "Детские городские поликлиники",
+      "applicable": [
+        "ambulatoryCase",
+        "birth",
+        "death",
+        "egpu",
+        "egpu2days",
+        "hospital",
+        "semd228",
+        "tvspAmbulatory",
+        "tvspDiagnostic",
+        "tvspStationary"
+      ],
+      "aliases": [
+        "ГАУЗ \"ДЕТСКАЯ ГОРОДСКАЯ ПОЛИКЛИНИКА №3\"",
+        "ГАУЗ \"Детская городская поликлиника №3\"",
+        "ДГП №3 г.Наб.Челны"
+      ]
+    },
+    {
+      "name": "ГАУЗ \"ДЕТСКАЯ ГОРОДСКАЯ ПОЛИКЛИНИКА №4 ИМ. Ф.Г. АХМЕРОВОЙ\"",
+      "shortName": "ДГП №4 ИМ. Ф.Г. АХМЕРОВОЙ г.Наб.Челны",
+      "oid": "1.2.643.5.1.13.13.12.2.16.1127",
+      "level": "I уровень",
+      "district": "Набережные челны",
+      "kind": "Поликлинника",
+      "stationary": "Дневной стационар",
+      "type": "Детские городские поликлиники",
+      "applicable": [
+        "ambulatoryCase",
+        "birth",
+        "death",
+        "egpu",
+        "egpu2days",
+        "hospital",
+        "semd228",
+        "tvspAmbulatory",
+        "tvspDiagnostic",
+        "tvspStationary"
+      ],
+      "aliases": [
+        "ГАУЗ \"ДЕТСКАЯ ГОРОДСКАЯ ПОЛИКЛИНИКА №4 ИМ. Ф.Г. АХМЕРОВОЙ\"",
+        "ГАУЗ \"Детская городская поликлиника №4 им. Ф.Г. Ахмеровой\"",
+        "ДГП №4 ИМ. Ф.Г. АХМЕРОВОЙ г.Наб.Челны"
+      ]
+    },
+    {
+      "name": "ГАУЗ \"ДЕТСКАЯ ГОРОДСКАЯ ПОЛИКЛИНИКА №5\"",
+      "shortName": "ДГП №5 г.Наб.Челны",
+      "oid": "1.2.643.5.1.13.13.12.2.16.1089",
+      "level": "I уровень",
+      "district": "Набережные челны",
+      "kind": "Поликлинника",
+      "stationary": "Дневной стационар",
+      "type": "Детские городские поликлиники",
+      "applicable": [
+        "ambulatoryCase",
+        "birth",
+        "death",
+        "egpu",
+        "egpu2days",
+        "hospital",
+        "semd228",
+        "tvspAmbulatory",
+        "tvspDiagnostic",
+        "tvspLaboratory",
+        "tvspStationary"
+      ],
+      "aliases": [
+        "ГАУЗ \"ДЕТСКАЯ ГОРОДСКАЯ ПОЛИКЛИНИКА №5\"",
+        "ГАУЗ \"Детская городская поликлиника №5\" г.Наб.Челны",
+        "ДГП №5 г.Наб.Челны"
+      ]
+    },
+    {
+      "name": "ГАУЗ \"ДЕТСКАЯ ГОРОДСКАЯ ПОЛИКЛИНИКА №6\"",
+      "shortName": "ДГП №6 г.Наб.Челны",
+      "oid": "1.2.643.5.1.13.13.12.2.16.1066",
+      "level": "I уровень",
+      "district": "Набережные челны",
+      "kind": "Поликлинника",
+      "stationary": "Дневной стационар",
+      "type": "Детские городские поликлиники",
+      "applicable": [
+        "ambulatoryCase",
+        "egpu",
+        "egpu2days",
+        "hospital",
+        "semd228",
+        "tvspAmbulatory",
+        "tvspDiagnostic",
+        "tvspLaboratory"
+      ],
+      "aliases": [
+        "ГАУЗ \"ДЕТСКАЯ ГОРОДСКАЯ ПОЛИКЛИНИКА №6\"",
+        "ГАУЗ \"Детская городская поликлиника №6\" г.Наб.Челны",
+        "ДГП №6 г.Наб.Челны"
+      ]
+    },
+    {
+      "name": "ГАУЗ \"ДЕТСКАЯ СТОМАТОЛОГИЧЕСКАЯ ПОЛИКЛИНИКА № 1\"",
+      "shortName": "ДСП № 1 г.Казань",
+      "oid": "1.2.643.5.1.13.13.12.2.16.1060",
+      "level": "I уровень",
+      "district": "Казань",
+      "kind": "Стоматологическая",
+      "stationary": "",
+      "type": "Стоматологические поликлиники",
+      "applicable": [
+        "ambulatoryCase",
+        "tvspAmbulatory"
+      ],
+      "aliases": [
+        "ГАУЗ \"ДЕТСКАЯ СТОМАТОЛОГИЧЕСКАЯ ПОЛИКЛИНИКА № 1\"",
+        "ГАУЗ \"Детская стоматологическая поликлиника №1\" г. Казань",
+        "ДСП № 1 г.Казань"
+      ]
+    },
+    {
+      "name": "ГАУЗ \"ДЕТСКАЯ СТОМАТОЛОГИЧЕСКАЯ ПОЛИКЛИНИКА № 6\"",
+      "shortName": "ДСП № 6 .Казань",
+      "oid": "1.2.643.5.1.13.13.12.2.16.1150",
+      "level": "I уровень",
+      "district": "Казань",
+      "kind": "Стоматологическая",
+      "stationary": "",
+      "type": "Стоматологические поликлиники",
+      "applicable": [
+        "ambulatoryCase",
+        "tvspAmbulatory"
+      ],
+      "aliases": [
+        "ГАУЗ \"ДЕТСКАЯ СТОМАТОЛОГИЧЕСКАЯ ПОЛИКЛИНИКА № 6\"",
+        "ГАУЗ \"Детская стоматологическая поликлиника №6\"",
+        "ДСП № 6 .Казань"
+      ]
+    },
+    {
+      "name": "ГАУЗ \"ДЕТСКАЯ СТОМАТОЛОГИЧЕСКАЯ ПОЛИКЛИНИКА №1\"",
+      "shortName": "ДСП №1 г.Наб.Челны",
+      "oid": "1.2.643.5.1.13.13.12.2.16.1167",
+      "level": "I уровень",
+      "district": "Набережные челны",
+      "kind": "Стоматологическая",
+      "stationary": "",
+      "type": "Стоматологические поликлиники",
+      "applicable": [
+        "ambulatoryCase",
+        "tvspAmbulatory"
+      ],
+      "aliases": [
+        "ГАУЗ \"ДЕТСКАЯ СТОМАТОЛОГИЧЕСКАЯ ПОЛИКЛИНИКА №1\"",
+        "ГАУЗ \"Детская стоматологическая поликлиника №1\" г.Наб. Челны",
+        "ДСП №1 г.Наб.Челны"
+      ]
+    },
+    {
+      "name": "ГАУЗ \"ДРКБ МЗ РТ\"",
+      "shortName": "ДРКБ МЗ РТ",
+      "oid": "1.2.643.5.1.13.13.12.2.16.1155",
+      "level": "III уровень",
+      "district": "Казань",
+      "kind": "Многопрофильные",
+      "stationary": "Круглосуточный стационар",
+      "type": "Республиканские и специализированные МО",
+      "applicable": [
+        "ambulatoryCase",
+        "birth",
+        "death",
+        "egpu",
+        "egpu2days",
+        "elmk",
+        "hospital",
+        "semd228",
+        "tmkRemd",
+        "tvspAmbulatory",
+        "tvspDiagnostic",
+        "tvspLaboratory",
+        "tvspStationary"
+      ],
+      "aliases": [
+        "ГАУЗ \"ДРКБ МЗ РТ\"",
+        "ДРКБ МЗ РТ"
+      ]
+    },
+    {
+      "name": "ГАУЗ \"ДРОЖЖАНОВСКАЯ ЦРБ\"",
+      "shortName": "ДРОЖЖАНОВСКАЯ ЦРБ",
+      "oid": "1.2.643.5.1.13.13.12.2.16.1105",
+      "level": "I уровень",
+      "district": "Дрожжановский",
+      "kind": "ЦРБ",
+      "stationary": "Круглосуточный стационар",
+      "type": "Центральные районные больницы",
+      "applicable": [
+        "ambulatoryCase",
+        "birth",
+        "death",
+        "egpu",
+        "egpu2days",
+        "elmk",
+        "hospital",
+        "semd228",
+        "smp",
+        "smpFederal",
+        "tvspAmbulatory",
+        "tvspDiagnostic",
+        "tvspLaboratory",
+        "tvspStationary"
+      ],
+      "aliases": [
+        "ГАУЗ \"ДРОЖЖАНОВСКАЯ ЦРБ\"",
+        "ГАУЗ \"Дрожжановская ЦРБ\"",
+        "ДРОЖЖАНОВСКАЯ ЦРБ",
+        "Дрожжановская ЦРБ"
+      ]
+    },
+    {
+      "name": "ГАУЗ \"ДЦМР\"",
+      "shortName": "ДЦМР г.Нижнекамск",
+      "oid": "1.2.643.5.1.13.13.12.2.16.1099",
+      "level": "I уровень",
+      "district": "Нижнекамский",
+      "kind": "Многопрофильные",
+      "stationary": "Круглосуточный стационар",
+      "type": "Республиканские и специализированные МО",
+      "applicable": [
+        "birth",
+        "death",
+        "hospital",
+        "tvspDiagnostic",
+        "tvspStationary"
+      ],
+      "aliases": [
+        "ГАУЗ \"ДЦМР\"",
+        "ДЦМР г.Нижнекамск"
+      ]
+    },
+    {
+      "name": "ГАУЗ \"ЕЦРБ\"",
+      "shortName": "ЕЛАБУЖСКАЯ ЦРБ",
+      "oid": "1.2.643.5.1.13.13.12.2.16.1093",
+      "level": "II уровень",
+      "district": "Елабужский",
+      "kind": "ЦРБ",
+      "stationary": "Круглосуточный стационар",
+      "type": "Центральные районные больницы",
+      "applicable": [
+        "ambulatoryCase",
+        "birth",
+        "death",
+        "egpu",
+        "egpu2days",
+        "elmk",
+        "hospital",
+        "semd228",
+        "smp",
+        "smpFederal",
+        "tmkRemd",
+        "tvspAmbulatory",
+        "tvspDiagnostic",
+        "tvspLaboratory",
+        "tvspStationary"
+      ],
+      "aliases": [
+        "ГАУЗ \"ЕЦРБ\"",
+        "ГАУЗ \"Елабужская ЦРБ\"",
+        "ЕЛАБУЖСКАЯ ЦРБ",
+        "Елабужская ЦРБ"
+      ]
+    },
+    {
+      "name": "ГАУЗ \"ЗАИНСКАЯ ЦРБ\"",
+      "shortName": "ЗАИНСКАЯ ЦРБ",
+      "oid": "1.2.643.5.1.13.13.12.2.16.1072",
+      "level": "I уровень",
+      "district": "Заинский",
+      "kind": "ЦРБ",
+      "stationary": "Круглосуточный стационар",
+      "type": "Центральные районные больницы",
+      "applicable": [
+        "ambulatoryCase",
+        "birth",
+        "death",
+        "egpu",
+        "egpu2days",
+        "elmk",
+        "hospital",
+        "semd228",
+        "smp",
+        "smpFederal",
+        "tvspAmbulatory",
+        "tvspDiagnostic",
+        "tvspLaboratory",
+        "tvspStationary"
+      ],
+      "aliases": [
+        "ГАУЗ \"ЗАИНСКАЯ ЦРБ\"",
+        "ГАУЗ \"Заинская ЦРБ\"",
+        "ЗАИНСКАЯ ЦРБ",
+        "Заинская ЦРБ"
+      ]
+    },
+    {
+      "name": "ГАУЗ \"ЗЕЛЕНОДОЛЬСКАЯ ЦРБ\"",
+      "shortName": "ЗЕЛЕНОДОЛЬСКАЯ ЦРБ",
+      "oid": "1.2.643.5.1.13.13.12.2.16.1139",
+      "level": "II уровень",
+      "district": "Зеленодольский",
+      "kind": "ЦРБ",
+      "stationary": "Круглосуточный стационар",
+      "type": "Центральные районные больницы",
+      "applicable": [
+        "ambulatoryCase",
+        "birth",
+        "death",
+        "egpu",
+        "egpu2days",
+        "elmk",
+        "hospital",
+        "semd228",
+        "smp",
+        "smpFederal",
+        "tmkRemd",
+        "tvspAmbulatory",
+        "tvspDiagnostic",
+        "tvspLaboratory",
+        "tvspStationary"
+      ],
+      "aliases": [
+        "ГАУЗ \"ЗЕЛЕНОДОЛЬСКАЯ ЦРБ\"",
+        "ГАУЗ \"Зеленодольская ЦРБ\"",
+        "ЗЕЛЕНОДОЛЬСКАЯ ЦРБ",
+        "Зеленодольская ЦРБ"
+      ]
+    },
+    {
+      "name": "ГАУЗ \"КАЙБИЦКАЯ ЦЕНТРАЛЬНАЯ РАЙОННАЯ БОЛЬНИЦА\"",
+      "shortName": "КАЙБИЦКАЯ ЦРБ",
+      "oid": "1.2.643.5.1.13.13.12.2.16.1131",
+      "level": "I уровень",
+      "district": "Кайбицкий",
+      "kind": "Многопрофильные",
+      "stationary": "Круглосуточный стационар",
+      "type": "Центральные районные больницы",
+      "applicable": [
+        "ambulatoryCase",
+        "birth",
+        "death",
+        "egpu",
+        "egpu2days",
+        "elmk",
+        "hospital",
+        "semd228",
+        "smp",
+        "smpFederal",
+        "tvspAmbulatory",
+        "tvspDiagnostic",
+        "tvspLaboratory",
+        "tvspStationary"
+      ],
+      "aliases": [
+        "ГАУЗ \"КАЙБИЦКАЯ ЦЕНТРАЛЬНАЯ РАЙОННАЯ БОЛЬНИЦА\"",
+        "ГАУЗ \"Кайбицкая ЦРБ\"",
+        "КАЙБИЦКАЯ ЦРБ",
+        "Кайбицкая ЦРБ"
+      ]
+    },
+    {
+      "name": "ГАУЗ \"КАМСКО-УСТЬИНСКАЯ ЦРБ\"",
+      "shortName": "КАМСКО-УСТЬИНСКАЯ ЦРБ",
+      "oid": "1.2.643.5.1.13.13.12.2.16.1044",
+      "level": "I уровень",
+      "district": "Камско-Устьинский",
+      "kind": "ЦРБ",
+      "stationary": "Круглосуточный стационар",
+      "type": "Центральные районные больницы",
+      "applicable": [
+        "ambulatoryCase",
+        "birth",
+        "death",
+        "egpu",
+        "egpu2days",
+        "elmk",
+        "hospital",
+        "semd228",
+        "smp",
+        "smpFederal",
+        "tvspAmbulatory",
+        "tvspDiagnostic",
+        "tvspLaboratory",
+        "tvspStationary"
+      ],
+      "aliases": [
+        "ГАУЗ \"КАМСКО-УСТЬИНСКАЯ ЦРБ\"",
+        "ГАУЗ \"Камско-Устьинская ЦРБ\"",
+        "КАМСКО-УСТЬИНСКАЯ ЦРБ",
+        "Камско-Устьинская ЦРБ"
+      ]
+    },
+    {
+      "name": "ГАУЗ \"КДМЦ\"",
+      "shortName": "КДМЦ г.Наб.Челны",
+      "oid": "1.2.643.5.1.13.13.12.2.16.1065",
+      "level": "II уровень",
+      "district": "Набережные челны",
+      "kind": "Многопрофильные",
+      "stationary": "Круглосуточный стационар",
+      "type": "Центральные районные больницы",
+      "applicable": [
+        "ambulatoryCase",
+        "birth",
+        "death",
+        "egpu",
+        "egpu2days",
+        "hospital",
+        "semd228",
+        "tmkRemd",
+        "tvspAmbulatory",
+        "tvspDiagnostic",
+        "tvspLaboratory",
+        "tvspStationary"
+      ],
+      "aliases": [
+        "ГАУЗ \"КДМЦ\"",
+        "КДМЦ г.Наб.Челны"
+      ]
+    },
+    {
+      "name": "ГАУЗ \"КЛИНИКА МЕДИЦИНСКОГО УНИВЕРСИТЕТА\"",
+      "shortName": "КМУ г.Казань",
+      "oid": "1.2.643.5.1.13.13.12.2.16.1125",
+      "level": "II уровень",
+      "district": "Казань",
+      "kind": "Многопрофильные",
+      "stationary": "Круглосуточный стационар",
+      "type": "Республиканские и специализированные МО",
+      "applicable": [
+        "ambulatoryCase",
+        "birth",
+        "death",
+        "egpu",
+        "egpu2days",
+        "elmk",
+        "hospital",
+        "semd228",
+        "tmkRemd",
+        "tvspAmbulatory",
+        "tvspDiagnostic",
+        "tvspStationary"
+      ],
+      "aliases": [
+        "ГАУЗ \"КЛИНИКА МЕДИЦИНСКОГО УНИВЕРСИТЕТА\"",
+        "ГАУЗ \"Клиника медицинского университета\" г.Казани",
+        "КМУ",
+        "КМУ г.Казань"
+      ]
+    },
+    {
+      "name": "ГАУЗ \"КЛИНИЧЕСКАЯ БОЛЬНИЦА №2\"",
+      "shortName": "КБ №2 г.Казань",
+      "oid": "1.2.643.5.1.13.13.12.2.16.1185",
+      "level": "II уровень",
+      "district": "Казань",
+      "kind": "Многопрофильные",
+      "stationary": "Круглосуточный стационар",
+      "type": "Городские больницы",
+      "applicable": [
+        "ambulatoryCase",
+        "birth",
+        "death",
+        "egpu",
+        "egpu2days",
+        "elmk",
+        "hospital",
+        "semd228",
+        "tmkRemd",
+        "tvspAmbulatory",
+        "tvspDiagnostic",
+        "tvspLaboratory",
+        "tvspStationary"
+      ],
+      "aliases": [
+        "ГАУЗ \"КЛИНИЧЕСКАЯ БОЛЬНИЦА №2\"",
+        "ГАУЗ \"Клиническая больница №2\" г.Казани",
+        "КБ №2 г. Казань",
+        "КБ №2 г.Казань"
+      ]
+    },
+    {
+      "name": "ГАУЗ \"КПРБ\"",
+      "shortName": "КАМСКО-ПОЛЯНСКАЯ РБ",
+      "oid": "1.2.643.5.1.13.13.12.2.16.1165",
+      "level": "I уровень",
+      "district": "Нижнекамский",
+      "kind": "ЦРБ",
+      "stationary": "Круглосуточный стационар",
+      "type": "Центральные районные больницы",
+      "applicable": [
+        "ambulatoryCase",
+        "birth",
+        "death",
+        "egpu",
+        "egpu2days",
+        "elmk",
+        "hospital",
+        "semd228",
+        "tvspAmbulatory",
+        "tvspDiagnostic",
+        "tvspStationary"
+      ],
+      "aliases": [
+        "ГАУЗ \"КПРБ\"",
+        "ГАУЗ \"Камско-Полянская РБ\"",
+        "КАМСКО-ПОЛЯНСКАЯ РБ",
+        "КПРБ"
+      ]
+    },
+    {
+      "name": "ГАУЗ \"КУКМОРСКАЯ ЦРБ\"",
+      "shortName": "КУКМОРСКАЯ ЦРБ",
+      "oid": "1.2.643.5.1.13.13.12.2.16.1144",
+      "level": "I уровень",
+      "district": "Кукморский",
+      "kind": "ЦРБ",
+      "stationary": "Круглосуточный стационар",
+      "type": "Центральные районные больницы",
+      "applicable": [
+        "ambulatoryCase",
+        "birth",
+        "death",
+        "egpu",
+        "egpu2days",
+        "elmk",
+        "hospital",
+        "semd228",
+        "smp",
+        "smpFederal",
+        "tvspAmbulatory",
+        "tvspDiagnostic",
+        "tvspLaboratory",
+        "tvspStationary"
+      ],
+      "aliases": [
+        "ГАУЗ \"КУКМОРСКАЯ ЦРБ\"",
+        "ГАУЗ \"Кукморская ЦРБ\"",
+        "КУКМОРСКАЯ ЦРБ",
+        "Кукморская ЦРБ"
+      ]
+    },
+    {
+      "name": "ГАУЗ \"КЭД\"",
+      "shortName": "КЭД г.Казань",
+      "oid": "1.2.643.5.1.13.13.12.2.16.1154",
+      "level": "II уровень",
+      "district": "Казань",
+      "kind": "Многопрофильные",
+      "stationary": "Дневной стационар",
+      "type": "Республиканские и специализированные МО",
+      "applicable": [
+        "ambulatoryCase",
+        "birth",
+        "death",
+        "hospital",
+        "tmkRemd",
+        "tvspDiagnostic",
+        "tvspLaboratory"
+      ],
+      "aliases": [
+        "ГАУЗ \"КЭД\"",
+        "ГАУЗ \"Казанский эндокринологический диспансер\"",
+        "КЭД г.Казань"
+      ]
+    },
+    {
+      "name": "ГАУЗ \"ЛЕНИНОГОРСКАЯ ЦРБ\"",
+      "shortName": "ЛЕНИНОГОРСКАЯ ЦРБ",
+      "oid": "1.2.643.5.1.13.13.12.2.16.1073",
+      "level": "II уровень",
+      "district": "Лениногорский",
+      "kind": "ЦРБ",
+      "stationary": "Круглосуточный стационар",
+      "type": "Центральные районные больницы",
+      "applicable": [
+        "ambulatoryCase",
+        "birth",
+        "death",
+        "egpu",
+        "egpu2days",
+        "elmk",
+        "hospital",
+        "semd228",
+        "smp",
+        "smpFederal",
+        "tmkRemd",
+        "tvspAmbulatory",
+        "tvspDiagnostic",
+        "tvspStationary"
+      ],
+      "aliases": [
+        "ГАУЗ \"ЛЕНИНОГОРСКАЯ ЦРБ\"",
+        "ГАУЗ \"Лениногорская ЦРБ\"",
+        "ЛЕНИНОГОРСКАЯ ЦРБ",
+        "Лениногорская ЦРБ ССМП"
+      ]
+    },
+    {
+      "name": "ГАУЗ \"МАМАДЫШСКАЯ ЦРБ\"",
+      "shortName": "МАМАДЫШСКАЯ ЦРБ",
+      "oid": "1.2.643.5.1.13.13.12.2.16.1104",
+      "level": "I уровень",
+      "district": "Мамадышский",
+      "kind": "ЦРБ",
+      "stationary": "Круглосуточный стационар",
+      "type": "Центральные районные больницы",
+      "applicable": [
+        "ambulatoryCase",
+        "birth",
+        "death",
+        "egpu",
+        "egpu2days",
+        "elmk",
+        "hospital",
+        "semd228",
+        "smp",
+        "smpFederal",
+        "tvspAmbulatory",
+        "tvspDiagnostic",
+        "tvspStationary"
+      ],
+      "aliases": [
+        "ГАУЗ \"МАМАДЫШСКАЯ ЦРБ\"",
+        "ГАУЗ \"Мамадышская ЦРБ\"",
+        "МАМАДЫШСКАЯ ЦРБ",
+        "Мамадышская ЦРБ"
+      ]
+    },
+    {
+      "name": "ГАУЗ \"МЕНДЕЛЕЕВСКАЯ ЦРБ\"",
+      "shortName": "МЕНДЕЛЕЕВСКАЯ ЦРБ",
+      "oid": "1.2.643.5.1.13.13.12.2.16.1058",
+      "level": "I уровень",
+      "district": "Менделеевский",
+      "kind": "ЦРБ",
+      "stationary": "Круглосуточный стационар",
+      "type": "Центральные районные больницы",
+      "applicable": [
+        "ambulatoryCase",
+        "birth",
+        "death",
+        "egpu",
+        "egpu2days",
+        "elmk",
+        "hospital",
+        "semd228",
+        "smp",
+        "smpFederal",
+        "tvspAmbulatory",
+        "tvspDiagnostic",
+        "tvspLaboratory",
+        "tvspStationary"
+      ],
+      "aliases": [
+        "ГАУЗ \"МЕНДЕЛЕЕВСКАЯ ЦРБ\"",
+        "МЕНДЕЛЕЕВСКАЯ ЦРБ",
+        "Менделеевская ЦРБ"
+      ]
+    },
+    {
+      "name": "ГАУЗ \"МЕНЗЕЛИНСКАЯ ЦРБ\"",
+      "shortName": "МЕНЗЕЛИНСКАЯ ЦРБ",
+      "oid": "1.2.643.5.1.13.13.12.2.16.1101",
+      "level": "I уровень",
+      "district": "Мензелинский",
+      "kind": "ЦРБ",
+      "stationary": "Круглосуточный стационар",
+      "type": "Центральные районные больницы",
+      "applicable": [
+        "ambulatoryCase",
+        "birth",
+        "death",
+        "egpu",
+        "egpu2days",
+        "elmk",
+        "hospital",
+        "semd228",
+        "smp",
+        "smpFederal",
+        "tvspAmbulatory",
+        "tvspDiagnostic",
+        "tvspLaboratory",
+        "tvspStationary"
+      ],
+      "aliases": [
+        "ГАУЗ \"МЕНЗЕЛИНСКАЯ ЦРБ\"",
+        "ГАУЗ \"Мензелинская ЦРБ\"",
+        "МЕНЗЕЛИНСКАЯ ЦРБ",
+        "Мензелинская ЦРБ"
+      ]
+    },
+    {
+      "name": "ГАУЗ \"МКДЦ\"",
+      "shortName": "МКДЦ г.Казань",
+      "oid": "1.2.643.5.1.13.13.12.2.16.1079",
+      "level": "III уровень",
+      "district": "Казань",
+      "kind": "Многопрофильные",
+      "stationary": "Круглосуточный стационар",
+      "type": "Республиканские и специализированные МО",
+      "applicable": [
+        "ambulatoryCase",
+        "death",
+        "elmk",
+        "hospital",
+        "tmkRemd",
+        "tvspAmbulatory",
+        "tvspDiagnostic",
+        "tvspLaboratory",
+        "tvspStationary"
+      ],
+      "aliases": [
+        "ГАУЗ \"МКДЦ\"",
+        "ГАУЗ \"Межрегиональный клинико-диагностический центр\"",
+        "МКДЦ",
+        "МКДЦ г.Казань"
+      ]
+    },
+    {
+      "name": "ГАУЗ \"НАБЕРЕЖНО-ЧЕЛНИНСКАЯ ИБ\"",
+      "shortName": "НАБЕРЕЖНО-ЧЕЛНИНСКАЯ ИБ",
+      "oid": "1.2.643.5.1.13.13.12.2.16.1064",
+      "level": "II уровень",
+      "district": "Набережные челны",
+      "kind": "Узкопрофильные",
+      "stationary": "Круглосуточный стационар",
+      "type": "Республиканские и специализированные МО",
+      "applicable": [
+        "ambulatoryCase",
+        "death",
+        "hospital",
+        "tmkRemd",
+        "tvspDiagnostic",
+        "tvspLaboratory",
+        "tvspStationary"
+      ],
+      "aliases": [
+        "ГАУЗ \"НАБЕРЕЖНО-ЧЕЛНИНСКАЯ ИБ\"",
+        "НАБЕРЕЖНО-ЧЕЛНИНСКАЯ ИБ"
+      ]
+    },
+    {
+      "name": "ГАУЗ \"НОВОШЕШМИНСКАЯ ЦРБ\"",
+      "shortName": "НОВОШЕШМИНСКАЯ ЦРБ",
+      "oid": "1.2.643.5.1.13.13.12.2.16.1059",
+      "level": "I уровень",
+      "district": "Новошешминский",
+      "kind": "ЦРБ",
+      "stationary": "Круглосуточный стационар",
+      "type": "Центральные районные больницы",
+      "applicable": [
+        "ambulatoryCase",
+        "birth",
+        "death",
+        "egpu",
+        "egpu2days",
+        "elmk",
+        "hospital",
+        "semd228",
+        "smp",
+        "smpFederal",
+        "tvspAmbulatory",
+        "tvspDiagnostic",
+        "tvspStationary"
+      ],
+      "aliases": [
+        "ГАУЗ \"НОВОШЕШМИНСКАЯ ЦРБ\"",
+        "ГАУЗ \"Новошешминская ЦРБ\"",
+        "НОВОШЕШМИНСКАЯ ЦРБ",
+        "Новошешминская ЦРБ"
+      ]
+    },
+    {
+      "name": "ГАУЗ \"НУРЛАТСКАЯ ЦРБ\"",
+      "shortName": "НУРЛАТСКАЯ ЦРБ",
+      "oid": "1.2.643.5.1.13.13.12.2.16.1138",
+      "level": "I уровень",
+      "district": "Нурлатский",
+      "kind": "ЦРБ",
+      "stationary": "Круглосуточный стационар",
+      "type": "Центральные районные больницы",
+      "applicable": [
+        "ambulatoryCase",
+        "birth",
+        "death",
+        "egpu",
+        "egpu2days",
+        "elmk",
+        "hospital",
+        "semd228",
+        "smp",
+        "smpFederal",
+        "tvspAmbulatory",
+        "tvspDiagnostic",
+        "tvspLaboratory",
+        "tvspStationary"
+      ],
+      "aliases": [
+        "ГАУЗ \"НУРЛАТСКАЯ ЦРБ\"",
+        "ГАУЗ \"Нурлатская ЦРБ\"",
+        "НУРЛАТСКАЯ ЦРБ",
+        "Нурлатская ЦРБ"
+      ]
+    },
+    {
+      "name": "ГАУЗ \"НЦРМБ\"",
+      "shortName": "НЦРМБ г.Нижнекамск",
+      "oid": "1.2.643.5.1.13.13.12.2.16.1192",
+      "level": "II уровень",
+      "district": "Нижнекамский",
+      "kind": "Многопрофильные",
+      "stationary": "Круглосуточный стационар",
+      "type": "Центральные районные больницы",
+      "applicable": [
+        "ambulatoryCase",
+        "birth",
+        "death",
+        "egpu",
+        "egpu2days",
+        "elmk",
+        "hospital",
+        "semd228",
+        "smp",
+        "tmkRemd",
+        "tvspAmbulatory",
+        "tvspDiagnostic",
+        "tvspStationary"
+      ],
+      "aliases": [
+        "ГАУЗ \"НЦРМБ\"",
+        "НЦРМБ",
+        "НЦРМБ г.Нижнекамск",
+        "Нижнекамская ЦРМБ"
+      ]
+    },
+    {
+      "name": "ГАУЗ \"ПЕСТРЕЧИНСКАЯ ЦРБ\"",
+      "shortName": "ПЕСТРЕЧИНСКАЯ ЦРБ",
+      "oid": "1.2.643.5.1.13.13.12.2.16.1109",
+      "level": "I уровень",
+      "district": "Пестречинский",
+      "kind": "ЦРБ",
+      "stationary": "Круглосуточный стационар",
+      "type": "Центральные районные больницы",
+      "applicable": [
+        "ambulatoryCase",
+        "birth",
+        "death",
+        "egpu",
+        "egpu2days",
+        "elmk",
+        "hospital",
+        "semd228",
+        "smp",
+        "smpFederal",
+        "tvspAmbulatory",
+        "tvspDiagnostic",
+        "tvspStationary"
+      ],
+      "aliases": [
+        "ГАУЗ \"ПЕСТРЕЧИНСКАЯ ЦРБ\"",
+        "ГАУЗ \"Пестречинская ЦРБ\"",
+        "ПЕСТРЕЧИНСКАЯ ЦРБ",
+        "Пестречинская ЦРБ"
+      ]
+    },
+    {
+      "name": "ГАУЗ \"РКБ МЗ РТ\"",
+      "shortName": "РКБ МЗ РТ",
+      "oid": "1.2.643.5.1.13.13.12.2.16.1094",
+      "level": "III уровень",
+      "district": "Казань",
+      "kind": "Многопрофильные",
+      "stationary": "Круглосуточный стационар",
+      "type": "Республиканские и специализированные МО",
+      "applicable": [
+        "ambulatoryCase",
+        "birth",
+        "death",
+        "egpu",
+        "egpu2days",
+        "elmk",
+        "hospital",
+        "semd228",
+        "smp",
+        "smpFederal",
+        "tmkRemd",
+        "tvspAmbulatory",
+        "tvspDiagnostic",
+        "tvspLaboratory",
+        "tvspStationary"
+      ],
+      "aliases": [
+        "ГАУЗ \"РКБ МЗ РТ\"",
+        "ГАУЗ \"РКИБ\" (Спасская ЦРБ)",
+        "РКБ МЗ РТ",
+        "РКБ МЗ РТ – Спасская ЦРБ"
+      ]
+    },
+    {
+      "name": "ГАУЗ \"РКИБ\"",
+      "shortName": "РКИБ г.Казань",
+      "oid": "1.2.643.5.1.13.13.12.2.16.1041",
+      "level": "III уровень",
+      "district": "Казань",
+      "kind": "Узкопрофильные",
+      "stationary": "Круглосуточный стационар",
+      "type": "Республиканские и специализированные МО",
+      "applicable": [
+        "ambulatoryCase",
+        "death",
+        "hospital",
+        "tmkRemd",
+        "tvspDiagnostic",
+        "tvspLaboratory",
+        "tvspStationary"
+      ],
+      "aliases": [
+        "ГАУЗ \"РКИБ им. проф. А.Ф. Агафонова\"",
+        "ГАУЗ \"РКИБ\"",
+        "РКИБ г.Казань"
+      ]
+    },
+    {
+      "name": "ГАУЗ \"РККВД\"",
+      "shortName": "РККВД г.Казань",
+      "oid": "1.2.643.5.1.13.13.12.2.16.1086",
+      "level": "III уровень",
+      "district": "Казань",
+      "kind": "Узкопрофильные",
+      "stationary": "Круглосуточный стационар",
+      "type": "Республиканские и специализированные МО",
+      "applicable": [
+        "ambulatoryCase",
+        "death",
+        "elmk",
+        "hospital",
+        "tmkRemd",
+        "tvspAmbulatory",
+        "tvspDiagnostic",
+        "tvspLaboratory",
+        "tvspStationary"
+      ],
+      "aliases": [
+        "ГАУЗ \"РККВД\"",
+        "РККВД",
+        "РККВД г.Казань"
+      ]
+    },
+    {
+      "name": "ГАУЗ \"РКОБ МЗ РТ ИМ. ПРОФ. Е.В.АДАМЮКА\"",
+      "shortName": "РКОБ МЗ РТ ИМ. ПРОФ. Е.В.АДАМЮКА г.Казань",
+      "oid": "1.2.643.5.1.13.13.12.2.16.1046",
+      "level": "III уровень",
+      "district": "Казань",
+      "kind": "Узкопрофильные",
+      "stationary": "Круглосуточный стационар",
+      "type": "Республиканские и специализированные МО",
+      "applicable": [
+        "ambulatoryCase",
+        "death",
+        "hospital",
+        "tmkRemd",
+        "tvspAmbulatory",
+        "tvspDiagnostic",
+        "tvspLaboratory",
+        "tvspStationary"
+      ],
+      "aliases": [
+        "ГАУЗ \"РКОБ МЗ РТ ИМ. ПРОФ. Е.В.АДАМЮКА\"",
+        "ГАУЗ \"РКОБ МЗ РТ им. проф. Е.В. Адамюка\"",
+        "РКОБ МЗ РТ ИМ. ПРОФ. Е.В.АДАМЮКА г.Казань"
+      ]
+    },
+    {
+      "name": "ГАУЗ \"РКОД МЗ РТ ИМ. ПРОФ. М.З.СИГАЛА\"",
+      "shortName": "РКОД МЗ РТ ИМ. ПРОФ. М.З.СИГАЛА г.Казань",
+      "oid": "1.2.643.5.1.13.13.12.2.16.1063",
+      "level": "III уровень",
+      "district": "Казань",
+      "kind": "Узкопрофильные",
+      "stationary": "Круглосуточный стационар",
+      "type": "Республиканские и специализированные МО",
+      "applicable": [
+        "ambulatoryCase",
+        "death",
+        "hospital",
+        "tmkRemd",
+        "tvspAmbulatory",
+        "tvspDiagnostic",
+        "tvspLaboratory",
+        "tvspStationary"
+      ],
+      "aliases": [
+        "ГАУЗ \"РКОД МЗ РТ ИМ. ПРОФ. М.З.СИГАЛА\"",
+        "ГАУЗ \"РКОД МЗ РТ им. проф. М.З. Сигала\"",
+        "РКОД МЗ РТ ИМ. ПРОФ. М.З.СИГАЛА г.Казань"
+      ]
+    },
+    {
+      "name": "ГАУЗ \"РКПБ ИМ. АКАД. В.М. БЕХТЕРЕВА\"",
+      "shortName": "РКПБ ИМ. АКАД. В.М. БЕХТЕРЕВА г.Казань",
+      "oid": "1.2.643.5.1.13.13.12.2.16.1056",
+      "level": "II уровень",
+      "district": "Казань",
+      "kind": "Узкопрофильные",
+      "stationary": "Круглосуточный стационар",
+      "type": "Республиканские и специализированные МО",
+      "applicable": [
+        "ambulatoryCase",
+        "death",
+        "elmk",
+        "hospital",
+        "tmkRemd",
+        "tvspAmbulatory",
+        "tvspDiagnostic",
+        "tvspLaboratory",
+        "tvspStationary"
+      ],
+      "aliases": [
+        "ГАУЗ \"РКПБ ИМ. АКАД. В.М. БЕХТЕРЕВА\"",
+        "РКПБ ИМ. АКАД. В.М. БЕХТЕРЕВА",
+        "РКПБ ИМ. АКАД. В.М. БЕХТЕРЕВА г.Казань",
+        "РКПБ им. акад. В.М. Бехтерева МЗ РТ"
+      ]
+    },
+    {
+      "name": "ГАУЗ \"РКПД\"",
+      "shortName": "РКПД г.Казань",
+      "oid": "1.2.643.5.1.13.13.12.2.16.1049",
+      "level": "II уровень",
+      "district": "Казань",
+      "kind": "Узкопрофильные",
+      "stationary": "Круглосуточный стационар",
+      "type": "Республиканские и специализированные МО",
+      "applicable": [
+        "ambulatoryCase",
+        "death",
+        "elmk",
+        "hospital",
+        "tmkRemd",
+        "tvspAmbulatory",
+        "tvspDiagnostic",
+        "tvspLaboratory",
+        "tvspStationary"
+      ],
+      "aliases": [
+        "ГАУЗ \"РКПД\"",
+        "РКПД",
+        "РКПД г.Казань"
+      ]
+    },
+    {
+      "name": "ГАУЗ \"РСП МЗ РТ\"",
+      "shortName": "РСП МЗ РТ г.Казань",
+      "oid": "1.2.643.5.1.13.13.12.2.16.1121",
+      "level": "I уровень",
+      "district": "Казань",
+      "kind": "Узкопрофильные",
+      "stationary": "",
+      "type": "Республиканские и специализированные МО",
+      "applicable": [
+        "ambulatoryCase",
+        "death",
+        "tvspAmbulatory"
+      ],
+      "aliases": [
+        "ГАУЗ \"РСП МЗ РТ\"",
+        "РСП МЗ РТ г.Казань"
+      ]
+    },
+    {
+      "name": "ГАУЗ \"РЦОЗ И МП\"",
+      "shortName": "РЦОЗ И МП г.Казань",
+      "oid": "1.2.643.5.1.13.13.12.2.16.1096",
+      "level": "I уровень",
+      "district": "Казань",
+      "kind": "Узкопрофильные",
+      "stationary": "",
+      "type": "Республиканские и специализированные МО",
+      "applicable": [
+        "ambulatoryCase",
+        "death",
+        "elmk",
+        "tvspAmbulatory",
+        "tvspDiagnostic"
+      ],
+      "aliases": [
+        "ГАУЗ \"РЦОЗ И МП\"",
+        "ГАУЗ \"РЦОЗ и МП\"",
+        "РЦОЗ И МП",
+        "РЦОЗ И МП г.Казань"
+      ]
+    },
+    {
+      "name": "ГАУЗ \"РЦПБ СПИД И ИЗ МЗ РТ\"",
+      "shortName": "РЦПБ СПИД И ИЗ г.Казань",
+      "oid": "1.2.643.5.1.13.13.12.2.16.1119",
+      "level": "II уровень",
+      "district": "Казань",
+      "kind": "Узкопрофильные",
+      "stationary": "",
+      "type": "Республиканские и специализированные МО",
+      "applicable": [
+        "ambulatoryCase",
+        "death",
+        "tmkRemd",
+        "tvspAmbulatory",
+        "tvspDiagnostic",
+        "tvspLaboratory"
+      ],
+      "aliases": [
+        "ГАУЗ \"РЦПБ СПИД И ИЗ МЗ РТ\"",
+        "ГАУЗ \"РЦПБ СПИД и ИЗ МЗ РТ\"",
+        "РЦПБ СПИД И ИЗ г.Казань"
+      ]
+    },
+    {
+      "name": "ГАУЗ \"РЫБНО-СЛОБОДСКАЯ ЦРБ\"",
+      "shortName": "РЫБНО-СЛОБОДСКАЯ ЦРБ",
+      "oid": "1.2.643.5.1.13.13.12.2.16.1133",
+      "level": "I уровень",
+      "district": "Рыбно-Слободской",
+      "kind": "ЦРБ",
+      "stationary": "Круглосуточный стационар",
+      "type": "Центральные районные больницы",
+      "applicable": [
+        "ambulatoryCase",
+        "birth",
+        "death",
+        "egpu",
+        "egpu2days",
+        "elmk",
+        "hospital",
+        "semd228",
+        "smp",
+        "smpFederal",
+        "tvspAmbulatory",
+        "tvspDiagnostic",
+        "tvspStationary"
+      ],
+      "aliases": [
+        "ГАУЗ \"РЫБНО-СЛОБОДСКАЯ ЦРБ\"",
+        "ГАУЗ \"Рыбно-Слободская ЦРБ\"",
+        "РЫБНО-СЛОБОДСКАЯ ЦРБ",
+        "Рыбно-Слободская ЦРБ"
+      ]
+    },
+    {
+      "name": "ГАУЗ \"САБИНСКАЯ ЦРБ\"",
+      "shortName": "САБИНСКАЯ ЦРБ",
+      "oid": "1.2.643.5.1.13.13.12.2.16.1126",
+      "level": "I уровень",
+      "district": "Сабинский",
+      "kind": "ЦРБ",
+      "stationary": "Круглосуточный стационар",
+      "type": "Центральные районные больницы",
+      "applicable": [
+        "ambulatoryCase",
+        "birth",
+        "death",
+        "egpu",
+        "egpu2days",
+        "elmk",
+        "hospital",
+        "semd228",
+        "smp",
+        "smpFederal",
+        "tvspAmbulatory",
+        "tvspDiagnostic",
+        "tvspLaboratory",
+        "tvspStationary"
+      ],
+      "aliases": [
+        "ГАУЗ \"САБИНСКАЯ ЦРБ\"",
+        "САБИНСКАЯ ЦРБ",
+        "Сабинская ЦРБ"
+      ]
+    },
+    {
+      "name": "ГАУЗ \"САРМАНОВСКАЯ ЦРБ\"",
+      "shortName": "САРМАНОВСКАЯ ЦРБ",
+      "oid": "1.2.643.5.1.13.13.12.2.16.1169",
+      "level": "I уровень",
+      "district": "Сармановский",
+      "kind": "ЦРБ",
+      "stationary": "Круглосуточный стационар",
+      "type": "Центральные районные больницы",
+      "applicable": [
+        "ambulatoryCase",
+        "birth",
+        "death",
+        "egpu",
+        "egpu2days",
+        "elmk",
+        "hospital",
+        "semd228",
+        "smp",
+        "smpFederal",
+        "tvspAmbulatory",
+        "tvspDiagnostic",
+        "tvspLaboratory",
+        "tvspStationary"
+      ],
+      "aliases": [
+        "ГАУЗ \"САРМАНОВСКАЯ ЦРБ\"",
+        "ГАУЗ \"Сармановская ЦРБ\"",
+        "САРМАНОВСКАЯ ЦРБ",
+        "Сармановская ЦРБ"
+      ]
+    },
+    {
+      "name": "ГАУЗ \"ССМП\"",
+      "shortName": "ССМП г.Казань",
+      "oid": "1.2.643.5.1.13.13.12.2.16.1158",
+      "level": "I уровень",
+      "district": "Казань",
+      "kind": "ССМП",
+      "stationary": "",
+      "type": "Вне рейтинга",
+      "applicable": [
+        "smp",
+        "smpFederal"
+      ],
+      "aliases": [
+        "ГАУЗ \"ССМП\"",
+        "ССМП г.Казань"
+      ]
+    },
+    {
+      "name": "ГАУЗ \"СТАНЦИЯ СКОРОЙ МЕДИЦИНСКОЙ ПОМОЩИ\"",
+      "shortName": "ССМП г.Наб.Челны",
+      "oid": "1.2.643.5.1.13.13.12.2.16.1106",
+      "level": "I уровень",
+      "district": "Набережные челны",
+      "kind": "ССМП",
+      "stationary": "",
+      "type": "Вне рейтинга",
+      "applicable": [
+        "smp",
+        "smpFederal"
+      ],
+      "aliases": [
+        "ГАУЗ \"СТАНЦИЯ СКОРОЙ МЕДИЦИНСКОЙ ПОМОЩИ\"",
+        "Лаишевский (ССМП г.Казань)",
+        "ССМП Наб. Челны",
+        "ССМП г.Наб.Челны"
+      ]
+    },
+    {
+      "name": "ГАУЗ \"СТОМАТОЛОГИЧЕСКАЯ ПОЛИКЛИНИКА № 3\"",
+      "shortName": "СП № 3 г.Наб.Челны",
+      "oid": "1.2.643.5.1.13.13.12.2.16.1062",
+      "level": "I уровень",
+      "district": "Набережные челны",
+      "kind": "Стоматологическая",
+      "stationary": "",
+      "type": "Стоматологические поликлиники",
+      "applicable": [
+        "ambulatoryCase",
+        "tvspAmbulatory"
+      ],
+      "aliases": [
+        "ГАУЗ \"СТОМАТОЛОГИЧЕСКАЯ ПОЛИКЛИНИКА № 3\"",
+        "ГАУЗ \"Стоматологическая поликлиника №3\" г.Наб.Челны",
+        "СП № 3 г.Наб.Челны"
+      ]
+    },
+    {
+      "name": "ГАУЗ \"СТОМАТОЛОГИЧЕСКАЯ ПОЛИКЛИНИКА №1\"",
+      "shortName": "СП №1 г.Наб.Челны",
+      "oid": "1.2.643.5.1.13.13.12.2.16.1110",
+      "level": "I уровень",
+      "district": "Набережные челны",
+      "kind": "Стоматологическая",
+      "stationary": "",
+      "type": "Стоматологические поликлиники",
+      "applicable": [
+        "ambulatoryCase",
+        "tvspAmbulatory"
+      ],
+      "aliases": [
+        "ГАУЗ \"СТОМАТОЛОГИЧЕСКАЯ ПОЛИКЛИНИКА №1\"",
+        "ГАУЗ \"Стоматологическая поликлиника №1\" г.Наб.Челны",
+        "СП №1 г.Наб.Челны"
+      ]
+    },
+    {
+      "name": "ГАУЗ \"СТОМАТОЛОГИЧЕСКАЯ ПОЛИКЛИНИКА №2\"",
+      "shortName": "СП №2 г.Наб.Челны",
+      "oid": "1.2.643.5.1.13.13.12.2.16.1048",
+      "level": "I уровень",
+      "district": "Набережные челны",
+      "kind": "Стоматологическая",
+      "stationary": "",
+      "type": "Стоматологические поликлиники",
+      "applicable": [
+        "ambulatoryCase",
+        "tvspAmbulatory"
+      ],
+      "aliases": [
+        "ГАУЗ \"СТОМАТОЛОГИЧЕСКАЯ ПОЛИКЛИНИКА №2\"",
+        "ГАУЗ \"Стоматологическая поликлиника №2\" г.Наб.Челны",
+        "СП №2 г.Наб.Челны"
+      ]
+    },
+    {
+      "name": "ГАУЗ \"ТЕТЮШСКАЯ ЦРБ\"",
+      "shortName": "ТЕТЮШСКАЯ ЦРБ",
+      "oid": "1.2.643.5.1.13.13.12.2.16.1130",
+      "level": "I уровень",
+      "district": "Тетюшский",
+      "kind": "ЦРБ",
+      "stationary": "Круглосуточный стационар",
+      "type": "Центральные районные больницы",
+      "applicable": [
+        "ambulatoryCase",
+        "birth",
+        "death",
+        "egpu",
+        "egpu2days",
+        "elmk",
+        "hospital",
+        "semd228",
+        "smp",
+        "smpFederal",
+        "tvspAmbulatory",
+        "tvspDiagnostic",
+        "tvspLaboratory",
+        "tvspStationary"
+      ],
+      "aliases": [
+        "ГАУЗ \"ТЕТЮШСКАЯ ЦРБ\"",
+        "ГАУЗ \"Тетюшская ЦРБ\"",
+        "ТЕТЮШСКАЯ ЦРБ",
+        "Тетюшская ЦРБ"
+      ]
+    },
+    {
+      "name": "ГАУЗ \"ТУКАЕВСКАЯ ЦРБ\"",
+      "shortName": "ТУКАЕВСКАЯ ЦРБ",
+      "oid": "1.2.643.5.1.13.13.12.2.16.1140",
+      "level": "I уровень",
+      "district": "Тукаевский",
+      "kind": "ЦРБ",
+      "stationary": "Круглосуточный стационар",
+      "type": "Центральные районные больницы",
+      "applicable": [
+        "ambulatoryCase",
+        "birth",
+        "death",
+        "egpu",
+        "egpu2days",
+        "elmk",
+        "hospital",
+        "semd228",
+        "tvspAmbulatory",
+        "tvspDiagnostic",
+        "tvspLaboratory",
+        "tvspStationary"
+      ],
+      "aliases": [
+        "ГАУЗ \"ТУКАЕВСКАЯ ЦРБ\"",
+        "ГАУЗ \"Тукаевская ЦРБ\"",
+        "ТУКАЕВСКАЯ ЦРБ"
+      ]
+    },
+    {
+      "name": "ГАУЗ \"ТЮЛЯЧИНСКАЯ ЦРБ\"",
+      "shortName": "ТЮЛЯЧИНСКАЯ ЦРБ",
+      "oid": "1.2.643.5.1.13.13.12.2.16.1039",
+      "level": "I уровень",
+      "district": "Тюлячинский",
+      "kind": "ЦРБ",
+      "stationary": "Круглосуточный стационар",
+      "type": "Центральные районные больницы",
+      "applicable": [
+        "ambulatoryCase",
+        "birth",
+        "death",
+        "egpu",
+        "egpu2days",
+        "elmk",
+        "hospital",
+        "semd228",
+        "smp",
+        "smpFederal",
+        "tvspAmbulatory",
+        "tvspDiagnostic",
+        "tvspLaboratory",
+        "tvspStationary"
+      ],
+      "aliases": [
+        "ГАУЗ \"ТЮЛЯЧИНСКАЯ ЦРБ\"",
+        "ГАУЗ \"Тюлячинская ЦРБ\"",
+        "ТЮЛЯЧИНСКАЯ ЦРБ",
+        "Тюлячинская ЦРБ"
+      ]
+    },
+    {
+      "name": "ГАУЗ \"УРУССИНСКАЯ ЦРБ\"",
+      "shortName": "УРУССИНСКАЯ ЦРБ",
+      "oid": "1.2.643.5.1.13.13.12.2.16.1097",
+      "level": "I уровень",
+      "district": "Ютазинский",
+      "kind": "ЦРБ",
+      "stationary": "Круглосуточный стационар",
+      "type": "Центральные районные больницы",
+      "applicable": [
+        "ambulatoryCase",
+        "birth",
+        "death",
+        "egpu",
+        "egpu2days",
+        "elmk",
+        "hospital",
+        "semd228",
+        "smp",
+        "smpFederal",
+        "tvspAmbulatory",
+        "tvspDiagnostic",
+        "tvspLaboratory",
+        "tvspStationary"
+      ],
+      "aliases": [
+        "ГАУЗ \"УРУССИНСКАЯ ЦРБ\"",
+        "УРУССИНСКАЯ ЦРБ",
+        "Уруссинская ЦРБ"
+      ]
+    },
+    {
+      "name": "ГАУЗ \"ЦГКБ № 18 ИМ. ПРОФ. К.Ш. ЗЫЯТДИНОВА\"",
+      "shortName": "ЦГКБ № 18 ИМ. ПРОФ. К.Ш. ЗЫЯТДИНОВА г.Казань",
+      "oid": "1.2.643.5.1.13.13.12.2.16.1151",
+      "level": "III уровень",
+      "district": "Казань",
+      "kind": "Многопрофильные",
+      "stationary": "Круглосуточный стационар",
+      "type": "Городские больницы",
+      "applicable": [
+        "ambulatoryCase",
+        "birth",
+        "death",
+        "egpu",
+        "egpu2days",
+        "elmk",
+        "hospital",
+        "semd228",
+        "tmkRemd",
+        "tvspAmbulatory",
+        "tvspDiagnostic",
+        "tvspLaboratory",
+        "tvspStationary"
+      ],
+      "aliases": [
+        "ГАУЗ \"ЦГКБ № 18 ИМ. ПРОФ. К.Ш. ЗЫЯТДИНОВА\"",
+        "ГАУЗ \"ЦГКБ №18 им. проф. К.Ш.Зыятдинова\"",
+        "ЦГКБ № 18 ИМ. ПРОФ. К.Ш. ЗЫЯТДИНОВА",
+        "ЦГКБ № 18 ИМ. ПРОФ. К.Ш. ЗЫЯТДИНОВА г.Казань"
+      ]
+    },
+    {
+      "name": "ГАУЗ \"ЧЕРЕМШАНСКАЯ ЦРБ\"",
+      "shortName": "ЧЕРЕМШАНСКАЯ ЦРБ",
+      "oid": "1.2.643.5.1.13.13.12.2.16.1162",
+      "level": "I уровень",
+      "district": "Черемшанский",
+      "kind": "ЦРБ",
+      "stationary": "Круглосуточный стационар",
+      "type": "Центральные районные больницы",
+      "applicable": [
+        "ambulatoryCase",
+        "birth",
+        "death",
+        "egpu",
+        "egpu2days",
+        "elmk",
+        "hospital",
+        "semd228",
+        "smp",
+        "smpFederal",
+        "tvspAmbulatory",
+        "tvspDiagnostic",
+        "tvspStationary"
+      ],
+      "aliases": [
+        "ГАУЗ \"ЧЕРЕМШАНСКАЯ ЦРБ\"",
+        "ГАУЗ \"Черемшанская ЦРБ\"",
+        "ЧЕРЕМШАНСКАЯ ЦРБ",
+        "Черемшанская ЦРБ"
+      ]
+    },
+    {
+      "name": "ГАУЗ \"ЧИСТОПОЛЬСКАЯ ЦРБ\"",
+      "shortName": "ЧИСТОПОЛЬСКАЯ ЦРБ",
+      "oid": "1.2.643.5.1.13.13.12.2.16.1038",
+      "level": "II уровень",
+      "district": "Чистопольский",
+      "kind": "ЦРБ",
+      "stationary": "Круглосуточный стационар",
+      "type": "Центральные районные больницы",
+      "applicable": [
+        "ambulatoryCase",
+        "birth",
+        "death",
+        "egpu",
+        "egpu2days",
+        "elmk",
+        "hospital",
+        "semd228",
+        "smp",
+        "smpFederal",
+        "tmkRemd",
+        "tvspAmbulatory",
+        "tvspDiagnostic",
+        "tvspLaboratory",
+        "tvspStationary"
+      ],
+      "aliases": [
+        "ГАУЗ \"ЧИСТОПОЛЬСКАЯ ЦРБ\"",
+        "ГАУЗ \"Чистопольская ЦРБ\"",
+        "ЧИСТОПОЛЬСКАЯ ЦРБ",
+        "Чистопольская ЦРБ"
+      ]
+    },
+    {
+      "name": "ГАУЗ «РКНД МЗ РТ»",
+      "shortName": "РКНД МЗ РТ г.Казань",
+      "oid": "1.2.643.5.1.13.13.12.2.16.1168",
+      "level": "II уровень",
+      "district": "Казань",
+      "kind": "Узкопрофильные",
+      "stationary": "Круглосуточный стационар",
+      "type": "Республиканские и специализированные МО",
+      "applicable": [
+        "ambulatoryCase",
+        "death",
+        "hospital",
+        "tmkRemd",
+        "tvspAmbulatory",
+        "tvspDiagnostic",
+        "tvspLaboratory",
+        "tvspStationary"
+      ],
+      "aliases": [
+        "ГАУЗ \"РКНД МЗ РТ\"",
+        "ГАУЗ \"Республиканский клинический наркологический диспансер МЗ РТ\"",
+        "ГАУЗ «РКНД МЗ РТ»",
+        "РКНД МЗ РТ г.Казань"
+      ]
+    },
+    {
+      "name": "ГАУЗ НДРБ С ПЦ",
+      "shortName": "НДРБ С ПЦ г.Нижнекамск",
+      "oid": "1.2.643.5.1.13.13.12.2.16.1171",
+      "level": "II уровень",
+      "district": "Нижнекамский",
+      "kind": "Многопрофильные",
+      "stationary": "Круглосуточный стационар",
+      "type": "Центральные районные больницы",
+      "applicable": [
+        "ambulatoryCase",
+        "birth",
+        "death",
+        "egpu",
+        "egpu2days",
+        "hospital",
+        "semd228",
+        "tmkRemd",
+        "tvspAmbulatory",
+        "tvspDiagnostic",
+        "tvspStationary"
+      ],
+      "aliases": [
+        "ГАУЗ \"НДРБ с ПЦ\"",
+        "ГАУЗ НДРБ С ПЦ",
+        "НДРБ С ПЦ г.Нижнекамск"
+      ]
+    },
+    {
+      "name": "ГАУЗ РТ \"БСМП ИМ.Р.С.АКЧУРИНА\"",
+      "shortName": "РТ БСМП ИМ.Р.С.АКЧУРИНА г.Наб.Челны",
+      "oid": "1.2.643.5.1.13.13.12.2.16.1040",
+      "level": "III уровень",
+      "district": "Набережные челны",
+      "kind": "Многопрофильные",
+      "stationary": "Круглосуточный стационар",
+      "type": "Республиканские и специализированные МО",
+      "applicable": [
+        "ambulatoryCase",
+        "birth",
+        "death",
+        "hospital",
+        "tmkRemd",
+        "tvspDiagnostic",
+        "tvspLaboratory",
+        "tvspStationary"
+      ],
+      "aliases": [
+        "ГАУЗ РТ \"БСМП ИМ.Р.С.АКЧУРИНА\"",
+        "ГАУЗ РТ \"БСМП им. Р.С. Акчурина\"",
+        "РТ БСМП ИМ.Р.С.АКЧУРИНА г.Наб.Челны"
+      ]
+    },
+    {
+      "name": "ГБУЗ \"ЦЕНТР РЕАБИЛИТАЦИИ СЛУХА\"",
+      "shortName": "ЦЕНТР РЕАБИЛИТАЦИИ СЛУХА г.Наб.Челны",
+      "oid": "1.2.643.5.1.13.13.12.2.16.1061",
+      "level": "III уровень",
+      "district": "Набережные челны",
+      "kind": "Узкопрофильные",
+      "stationary": "Круглосуточный стационар",
+      "type": "Республиканские и специализированные МО",
+      "applicable": [
+        "ambulatoryCase",
+        "death",
+        "hospital",
+        "tvspAmbulatory",
+        "tvspLaboratory",
+        "tvspStationary"
+      ],
+      "aliases": [
+        "ГБУЗ \"ЦЕНТР РЕАБИЛИТАЦИИ СЛУХА\"",
+        "ГБУЗ «Центр Реабилитации Слуха»",
+        "ЦЕНТР РЕАБИЛИТАЦИИ СЛУХА г.Наб.Челны"
+      ]
+    },
+    {
+      "name": "ДЦ МЗ РТ",
+      "shortName": "ДЦ МЗ РТ г.Казань",
+      "oid": "1.2.643.5.1.13.13.12.2.16.62940",
+      "level": "I уровень",
+      "district": "Казань",
+      "kind": "Иное",
+      "stationary": "",
+      "type": "Вне рейтинга",
+      "applicable": [],
+      "aliases": [
+        "ДЦ МЗ РТ",
+        "ДЦ МЗ РТ г.Казань"
+      ]
+    },
+    {
+      "name": "ЛАИШЕВСКАЯ ЦРБ",
+      "shortName": "ЛАИШЕВСКАЯ ЦРБ",
+      "oid": "1.2.643.5.1.13.13.12.2.16.1149",
+      "level": "I уровень",
+      "district": "Лаишевскй",
+      "kind": "ЦРБ",
+      "stationary": "Круглосуточный стационар",
+      "type": "Центральные районные больницы",
+      "applicable": [
+        "ambulatoryCase",
+        "birth",
+        "death",
+        "egpu",
+        "egpu2days",
+        "elmk",
+        "hospital",
+        "semd228",
+        "smpFederal",
+        "tvspAmbulatory",
+        "tvspDiagnostic",
+        "tvspStationary"
+      ],
+      "aliases": [
+        "ГАУЗ \"Лаишевская ЦРБ\"",
+        "ЛАИШЕВСКАЯ ЦРБ"
+      ]
+    },
+    {
+      "name": "МУСЛЮМОВСКАЯ ЦРБ",
+      "shortName": "МУСЛЮМОВСКАЯ ЦРБ",
+      "oid": "1.2.643.5.1.13.13.12.2.16.1055",
+      "level": "I уровень",
+      "district": "Муслюмовский",
+      "kind": "ЦРБ",
+      "stationary": "Круглосуточный стационар",
+      "type": "Центральные районные больницы",
+      "applicable": [
+        "ambulatoryCase",
+        "birth",
+        "death",
+        "egpu",
+        "egpu2days",
+        "elmk",
+        "hospital",
+        "semd228",
+        "smp",
+        "smpFederal",
+        "tvspAmbulatory",
+        "tvspDiagnostic",
+        "tvspLaboratory",
+        "tvspStationary"
+      ],
+      "aliases": [
+        "ГАУЗ \"Муслюмовская ЦРБ\"",
+        "МУСЛЮМОВСКАЯ ЦРБ",
+        "Муслюмовская ЦРБ"
+      ]
+    },
+    {
+      "name": "Филиал ГАУЗ \"РКНД МЗ РТ\" - АНД",
+      "shortName": "Филиал  РКНД МЗ РТ г.Альметьевск",
+      "oid": "1.2.643.5.1.13.13.12.2.16.9665",
+      "level": "II уровень",
+      "district": "Альметьевский",
+      "kind": "Узкопрофильные",
+      "stationary": "Круглосуточный стационар",
+      "type": "Республиканские и специализированные МО",
+      "applicable": [
+        "ambulatoryCase",
+        "death",
+        "hospital",
+        "tvspDiagnostic",
+        "tvspLaboratory",
+        "tvspStationary"
+      ],
+      "aliases": [
+        "Филиал  РКНД МЗ РТ г.Альметьевск",
+        "Филиал ГАУЗ \"РКНД МЗ РТ\" - АНД"
+      ]
+    },
+    {
+      "name": "Филиал ГАУЗ \"РКНД МЗ РТ\" НЧНД",
+      "shortName": "Филиал  РКНД МЗ РТ г.Наб.Челны",
+      "oid": "1.2.643.5.1.13.13.12.2.16.9641",
+      "level": "II уровень",
+      "district": "Набережные челны",
+      "kind": "Узкопрофильные",
+      "stationary": "Круглосуточный стационар",
+      "type": "Республиканские и специализированные МО",
+      "applicable": [
+        "ambulatoryCase",
+        "death",
+        "hospital",
+        "tvspAmbulatory",
+        "tvspDiagnostic",
+        "tvspLaboratory",
+        "tvspStationary"
+      ],
+      "aliases": [
+        "Филиал  РКНД МЗ РТ г.Наб.Челны",
+        "Филиал ГАУЗ \"РКНД МЗ РТ\" - НЧНД",
+        "Филиал ГАУЗ \"РКНД МЗ РТ\" НЧНД"
+      ]
+    },
+    {
+      "name": "Филиал ГАУЗ \"РКНД МЗ РТ\"-ННД",
+      "shortName": "Филиал  РКНД МЗ РТ г.Нижнекамск",
+      "oid": "1.2.643.5.1.13.13.12.2.16.9622",
+      "level": "II уровень",
+      "district": "Нижнекамский",
+      "kind": "Узкопрофильные",
+      "stationary": "Круглосуточный стационар",
+      "type": "Республиканские и специализированные МО",
+      "applicable": [
+        "ambulatoryCase",
+        "death",
+        "hospital",
+        "tvspStationary"
+      ],
+      "aliases": [
+        "Филиал  РКНД МЗ РТ г.Нижнекамск",
+        "Филиал ГАУЗ \"РКНД МЗ РТ\" - ННД",
+        "Филиал ГАУЗ \"РКНД МЗ РТ\"-ННД"
+      ]
+    },
+    {
+      "name": "Филиал ГАУЗ \"РКПД\" - \"Бугульминский противотуберкулезный диспансер\"",
+      "shortName": "Филиал  РКПД г.Бугульма",
+      "oid": "1.2.643.5.1.13.13.12.2.16.9256",
+      "level": "II уровень",
+      "district": "Бугульминский",
+      "kind": "Узкопрофильные",
+      "stationary": "Круглосуточный стационар",
+      "type": "Республиканские и специализированные МО",
+      "applicable": [
+        "ambulatoryCase",
+        "death",
+        "hospital",
+        "tvspAmbulatory",
+        "tvspDiagnostic",
+        "tvspLaboratory",
+        "tvspStationary"
+      ],
+      "aliases": [
+        "Филиал  РКПД г.Бугульма",
+        "Филиал ГАУЗ \"РКПД\" - \"Бугульминский ПТД\"",
+        "Филиал ГАУЗ \"РКПД\" - \"Бугульминский противотуберкулезный диспансер\""
+      ]
+    },
+    {
+      "name": "Филиал ГАУЗ \"РКПД\" - \"Зеленодольский противотуберкулезный диспансер\"",
+      "shortName": "Филиал  РКПД г.Зеленодольск",
+      "oid": "1.2.643.5.1.13.13.12.2.16.9258",
+      "level": "II уровень",
+      "district": "Зеленодольский",
+      "kind": "Узкопрофильные",
+      "stationary": "Круглосуточный стационар",
+      "type": "Республиканские и специализированные МО",
+      "applicable": [
+        "ambulatoryCase",
+        "death",
+        "hospital",
+        "tvspAmbulatory",
+        "tvspDiagnostic",
+        "tvspLaboratory",
+        "tvspStationary"
+      ],
+      "aliases": [
+        "Филиал  РКПД г.Зеленодольск",
+        "Филиал ГАУЗ \"РКПД\" - \"Зеленодольский ПТД\"",
+        "Филиал ГАУЗ \"РКПД\" - \"Зеленодольский противотуберкулезный диспансер\""
+      ]
+    },
+    {
+      "name": "Филиал ГАУЗ \"РКПД\" - \"Набережночелнинский ПТД\"",
+      "shortName": "Филиал  РКПД г.Наб.Челны",
+      "oid": "1.2.643.5.1.13.13.12.2.16.9667",
+      "level": "II уровень",
+      "district": "Набережные челны",
+      "kind": "Узкопрофильные",
+      "stationary": "Круглосуточный стационар",
+      "type": "Республиканские и специализированные МО",
+      "applicable": [
+        "ambulatoryCase",
+        "death",
+        "hospital",
+        "tvspDiagnostic",
+        "tvspLaboratory",
+        "tvspStationary"
+      ],
+      "aliases": [
+        "Филиал  РКПД г.Наб.Челны",
+        "Филиал ГАУЗ \"РКПД\" - \"Набережночелнинский ПТД\""
+      ]
+    },
+    {
+      "name": "ФИЛИАЛ ГАУЗ \"РКПД\" - \"НИЖНЕКАМСКИЙ ПРОТИВОТУБЕРКУЛЕЗНЫЙ ДИСПАНСЕР\"",
+      "shortName": "ФИЛИАЛ  РКПД г.Нижнекамск",
+      "oid": "1.2.643.5.1.13.13.12.2.16.9257",
+      "level": "II уровень",
+      "district": "Нижнекамский",
+      "kind": "Узкопрофильные",
+      "stationary": "Круглосуточный стационар",
+      "type": "Республиканские и специализированные МО",
+      "applicable": [
+        "ambulatoryCase",
+        "death",
+        "hospital",
+        "tvspAmbulatory",
+        "tvspDiagnostic",
+        "tvspStationary"
+      ],
+      "aliases": [
+        "ФИЛИАЛ  РКПД г.Нижнекамск",
+        "ФИЛИАЛ ГАУЗ \"РКПД\" - \"НИЖНЕКАМСКИЙ ПРОТИВОТУБЕРКУЛЕЗНЫЙ ДИСПАНСЕР\"",
+        "Филиал ГАУЗ \"РКПД\" - \"Нижнекамский ПТД\""
+      ]
+    },
+    {
+      "name": "Филиал ГАУЗ \"РКПД\"-\"Альметьевский противотуберкулезный диспансер\"",
+      "shortName": "Филиал  РКПД г.Альметьевск",
+      "oid": "1.2.643.5.1.13.13.12.2.16.9255",
+      "level": "II уровень",
+      "district": "Альметьевский",
+      "kind": "Узкопрофильные",
+      "stationary": "Круглосуточный стационар",
+      "type": "Республиканские и специализированные МО",
+      "applicable": [
+        "ambulatoryCase",
+        "death",
+        "hospital",
+        "tvspAmbulatory",
+        "tvspDiagnostic",
+        "tvspLaboratory",
+        "tvspStationary"
+      ],
+      "aliases": [
+        "Филиал  РКПД г.Альметьевск",
+        "Филиал ГАУЗ \"РКПД\" - \"Альметьевский ПТД\"",
+        "Филиал ГАУЗ \"РКПД\"-\"Альметьевский противотуберкулезный диспансер\""
+      ]
+    },
+    {
+      "name": "Филиал ГАУЗ \"РКПД\"-\"Лениногорский противотуберкулезный диспансер\"",
+      "shortName": "Филиал  РКПД г.Лениногорск",
+      "oid": "1.2.643.5.1.13.13.12.2.16.9259",
+      "level": "II уровень",
+      "district": "Лениногорский",
+      "kind": "Узкопрофильные",
+      "stationary": "Круглосуточный стационар",
+      "type": "Республиканские и специализированные МО",
+      "applicable": [
+        "ambulatoryCase",
+        "death",
+        "hospital",
+        "tvspAmbulatory",
+        "tvspDiagnostic",
+        "tvspLaboratory",
+        "tvspStationary"
+      ],
+      "aliases": [
+        "Филиал  РКПД г.Лениногорск",
+        "Филиал ГАУЗ \"РКПД\" - \"Лениногорский ПТД\"",
+        "Филиал ГАУЗ \"РКПД\"-\"Лениногорский противотуберкулезный диспансер\""
+      ]
+    },
+    {
+      "name": "Филиал ГАУЗ «РЦПБ СПИД И ИЗ МЗ РТ» в г. Альметьевск",
+      "shortName": "Филиал  РЦПБ СПИД И ИЗ г.Альметьевск",
+      "oid": "1.2.643.5.1.13.13.12.2.16.9252",
+      "level": "II уровень",
+      "district": "Альметьевский",
+      "kind": "Узкопрофильные",
+      "stationary": "",
+      "type": "Республиканские и специализированные МО",
+      "applicable": [
+        "ambulatoryCase",
+        "death",
+        "tvspAmbulatory",
+        "tvspLaboratory"
+      ],
+      "aliases": [
+        "ФГАУЗ «РЦПБ СПИД и ИЗ МЗ РТ» в г. Альметьевск",
+        "Филиал  РЦПБ СПИД И ИЗ г.Альметьевск",
+        "Филиал ГАУЗ «РЦПБ СПИД И ИЗ МЗ РТ» в г. Альметьевск"
+      ]
+    },
+    {
+      "name": "Филиал ГАУЗ «РЦПБ СПИД И ИЗ МЗ РТ» в г. Набережные Челны",
+      "shortName": "Филиал  РЦПБ СПИД И ИЗ г.Наб. Челны",
+      "oid": "1.2.643.5.1.13.13.12.2.16.9253",
+      "level": "II уровень",
+      "district": "Набережные челны",
+      "kind": "Узкопрофильные",
+      "stationary": "",
+      "type": "Республиканские и специализированные МО",
+      "applicable": [
+        "ambulatoryCase",
+        "death",
+        "tvspAmbulatory",
+        "tvspLaboratory"
+      ],
+      "aliases": [
+        "ФГАУЗ \"РЦПБ СПИД и ИЗ МЗ РТ\" в г. Набережные Челны",
+        "Филиал  РЦПБ СПИД И ИЗ г.Наб. Челны",
+        "Филиал ГАУЗ «РЦПБ СПИД И ИЗ МЗ РТ» в г. Набережные Челны"
+      ]
+    },
+    {
+      "name": "Филиал ГАУЗ РКПД \"Детский туберкулезный санаторий\"",
+      "shortName": "Филиал  РКПД Детский туберкулезный санаторий",
+      "oid": "1.2.643.5.1.13.13.12.2.16.9261",
+      "level": "II уровень",
+      "district": "Казань",
+      "kind": "Узкопрофильные",
+      "stationary": "Круглосуточный стационар",
+      "type": "Республиканские и специализированные МО",
+      "applicable": [
+        "death",
+        "hospital",
+        "tvspStationary"
+      ],
+      "aliases": [
+        "Филиал  РКПД Детский туберкулезный санаторий",
+        "Филиал ГАУЗ РКПД \"Детский туберкулезный санаторий\""
+      ]
+    },
+    {
+      "name": "ФГАОУВО Казанский (Приволжский) федеральный университет",
+      "shortName": "ФГАОУВО КФУ",
+      "oid": "1.2.643.5.1.13.13.12.2.16.1231",
+      "level": "III уровень",
+      "district": "Казань",
+      "kind": "Многопрофильные",
+      "stationary": "Круглосуточный стационар",
+      "type": "Республиканские и специализированные МО",
+      "applicable": [
+        "ambulatoryCase",
+        "birth",
+        "death",
+        "egpu",
+        "egpu2days",
+        "elmk",
+        "hospital",
+        "semd228"
+      ],
+      "aliases": [
+        "ФГАОУ ВО К(П)ФУ",
+        "ФГАОУВО КФУ",
+        "ФГАОУВО Казанский (Приволжский) федеральный университет"
+      ]
+    }
+  ],
+  "unresolved": [
+    {
+      "sheet": "амбулаторные эпикризы",
+      "name": "ГАУЗ \"Центр общественного здоровья и медицинской профилактики\" (ЦОЗ и МП) г. Нижнекамск",
+      "reason": "unresolved"
+    }
+  ],
+  "matchStats": {
+    "literal": 1186,
+    "manual": 17,
+    "exact": 79,
+    "unique-core": 2,
+    "unresolved": 1
+  },
+  "diagnosticDenominatorDecision": {
+    "status": "resolved",
+    "federalSource": 304,
+    "registryUniqueTvsp": 422,
+    "message": "Утверждён официальный знаменатель 304 ТВСП; расчёт текущего среза — 298 из 304 = 98,03%."
+  }
+}
