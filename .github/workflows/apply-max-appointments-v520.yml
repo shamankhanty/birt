@@ -1,0 +1,66 @@
+name: Apply MAX appointments v5.2.0
+
+on:
+  push:
+    branches:
+      - feature/max-appointments-municipal
+    paths:
+      - 'app/max-appointments-municipal.json'
+      - 'scripts/apply_max_appointments_page_patch.py'
+      - 'tests/max-section.test.mjs'
+      - 'tests/hearing-snapshots.test.mjs'
+      - 'tests/baseline-lock.test.mjs'
+      - '.github/workflows/apply-max-appointments-v520.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  apply-and-verify:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout feature branch
+        uses: actions/checkout@v4
+        with:
+          ref: feature/max-appointments-municipal
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Apply MAX municipality page patch
+        run: python3 scripts/apply_max_appointments_page_patch.py
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Validate calculations and metadata
+        run: npm run validate:refactor
+
+      - name: Validate staging adapters
+        run: python3 scripts/pipeline/adapter_selftest.py
+
+      - name: Production build
+        run: npm run build
+
+      - name: Run full tests
+        run: node --test tests/*.test.mjs
+
+      - name: Commit generated page
+        run: |
+          if git diff --quiet -- app/page.tsx; then
+            echo "app/page.tsx already contains the v5.2.0 change"
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add app/page.tsx
+          git commit -m "МАХ: запись по муниципалитетам v5.2.0"
+          git push
