@@ -1,0 +1,13 @@
+node_modules/
+dist/
+.vinext/
+.wrangler/
+.sites-runtime/
+.offline-build/
+__pycache__/
+*.pyc
+offline-output/
+offline-dist/
+offline-package/
+.env*
+!.env.example
