@@ -8,10 +8,12 @@ on:
       - 'app/max-appointments-municipal.json'
       - 'scripts/apply_max_appointments_page_patch.py'
       - 'scripts/promote_v520_manifest.py'
+      - 'scripts/finalize_v520_docs.py'
       - 'tests/max-section.test.mjs'
       - 'tests/hearing-snapshots.test.mjs'
       - 'tests/baseline-lock.test.mjs'
       - 'baseline/manifest.json'
+      - 'README.md'
       - 'STATE.md'
       - 'OPEN_ISSUES.md'
       - 'build/sites-vite-plugin.ts'
@@ -50,6 +52,9 @@ jobs:
       - name: Apply MAX municipality page patch
         run: python3 scripts/apply_max_appointments_page_patch.py
 
+      - name: Finalize v5.2.0 documentation
+        run: python3 scripts/finalize_v520_docs.py
+
       - name: Refresh v5.2.0 baseline hashes
         run: python3 scripts/promote_v520_manifest.py
 
@@ -70,12 +75,12 @@ jobs:
 
       - name: Commit generated baseline
         run: |
-          if git diff --quiet -- app/page.tsx baseline/manifest.json; then
+          if git diff --quiet -- app/page.tsx baseline/manifest.json README.md STATE.md OPEN_ISSUES.md; then
             echo "Generated v5.2.0 files are already committed"
             exit 0
           fi
           git config user.name "github-actions[bot]"
           git config user.email "41898282+shamankhanty@users.noreply.github.com"
-          git add app/page.tsx baseline/manifest.json
-          git commit -m "МАХ: запись по муниципалитетам v5.2.0"
+          git add app/page.tsx baseline/manifest.json README.md STATE.md OPEN_ISSUES.md
+          git commit -m "Фиксация baseline v5.2.0 после полного gate"
           git push
