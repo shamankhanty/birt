@@ -4,7 +4,7 @@
 
 **Подтверждённых незакрытых программных ошибок нет.**
 
-Контроль изменения v5.2.0: unit/data tests без `rendered-html` **132/132 PASS**, validation **15/15 PASS**, calculation equivalence **38/38 PASS**, metadata equivalence **38/38 PASS**, staging/self-test **19/19 PASS**. Production build-gate требуется повторить перед публикацией; последняя подтверждённая полная сборка v5.1.0 — PASS.
+Контроль изменения v5.2.0: **133/133 теста PASS**, validation **15/15 PASS**, calculation equivalence **38/38 PASS**, metadata equivalence **38/38 PASS**, staging/self-test **19/19 PASS**, production build **PASS**; Sites artifact прошёл проверку структуры.
 
 ## Ожидаемые данные и решения
 

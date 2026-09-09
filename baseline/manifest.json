@@ -37,8 +37,8 @@
     "app/hearing-snapshots.json": "c6e59e98609e54926eaa6853368096662e635a18641fdf0f976110ea6d44c1ce"
   },
   "stateFiles": {
-    "STATE.md": "50199749673e419ee199bd761f7055b98def0af318c2c056730dfed28b3edbdb",
-    "OPEN_ISSUES.md": "989f0b48a8a7cab13b64e627342defd89191da5b39d357f28731e9f95a8d72fd"
+    "STATE.md": "e25d9ea11cecd41a6b4d17a19d381a2d26f9df2ec1ded9e8db0b5dfa0d69727b",
+    "OPEN_ISSUES.md": "953e32a88b980681e02f9753a4d78c6c8fbed19b98a8b54d757d778ea4b7d626"
   },
   "keyCode": {
     "app/page.tsx": "0c52d4cad561d2f5123f559865c64457de5bd25d3d99d4430440c7cb793ee700",
@@ -52,7 +52,7 @@
     "scripts/weekly_update_pipeline.py": "63604915c77920e7dbb2f913d09c917e95b506d3671917f4d5031bc6f1221903"
   },
   "regression": {
-    "nodeTests": "132/132 PASS (unit/data tests; rendered-html requires production build)",
+    "nodeTests": "133/133 PASS",
     "validation": "15/15 PASS",
     "calculationEquivalence": "38/38 PASS",
     "metadataEquivalence": "38/38 PASS",
@@ -62,9 +62,7 @@
     "previousFullMonth": "июль 2026",
     "operationalCut": "07.09.2026",
     "fail": 0,
-    "warnings": [
-      "production build-gate pending before publication"
-    ]
+    "warnings": []
   },
-  "note": "v5.2.0 adds factual doctor appointments through MAX by municipality and removes appointment attribution from MO-level MAX tables. Production build-gate must be rerun before publication."
+  "note": "v5.2.0 adds factual doctor appointments through MAX by municipality without MO attribution. Validation, staging, production build and the full 133-test suite passed before merge."
 }
