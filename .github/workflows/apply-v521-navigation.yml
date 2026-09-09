@@ -28,8 +28,8 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
-      - name: Prepare build script permission
-        run: chmod +x scripts/sites-env.sh
+      - name: Prepare build script permissions
+        run: chmod +x scripts/*.sh
 
       - name: Run tests
         run: npm test
@@ -37,8 +37,8 @@ jobs:
       - name: Build
         run: npm run build
 
-      - name: Restore repository file mode
-        run: git checkout -- scripts/sites-env.sh
+      - name: Restore repository file modes
+        run: git checkout -- scripts/*.sh
 
       - name: Validate diff
         run: git diff --check
