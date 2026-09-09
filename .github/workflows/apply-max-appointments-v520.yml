@@ -13,6 +13,8 @@ on:
       - 'baseline/manifest.json'
       - 'STATE.md'
       - 'OPEN_ISSUES.md'
+      - 'build/sites-vite-plugin.ts'
+      - 'worker/index.ts'
       - '.github/workflows/apply-max-appointments-v520.yml'
 
 permissions:
@@ -41,6 +43,9 @@ jobs:
       - name: Install Python dependencies
         run: python3 -m pip install openpyxl
 
+      - name: Restore executable flags
+        run: chmod +x scripts/*.sh
+
       - name: Apply MAX municipality page patch
         run: python3 scripts/apply_max_appointments_page_patch.py
 
@@ -56,11 +61,11 @@ jobs:
       - name: TypeScript check
         run: npx tsc --noEmit
 
-      - name: Run unit and data tests
-        shell: bash
-        run: |
-          mapfile -t files < <(find tests -maxdepth 1 -name '*.test.mjs' ! -name 'rendered-html.test.mjs' -print | sort)
-          node --test "${files[@]}"
+      - name: Production build
+        run: npm run build
+
+      - name: Run full tests
+        run: node --test tests/*.test.mjs
 
       - name: Commit generated page
         run: |
