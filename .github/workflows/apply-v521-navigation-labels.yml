@@ -1,0 +1,75 @@
+name: Verify navigation and MSR/MSS v5.2.1
+
+on:
+  push:
+    branches:
+      - feature/nav-msr-mss-v521
+    paths:
+      - 'scripts/apply_v521_navigation_labels.py'
+      - 'tests/navigation-labels-v521.test.mjs'
+      - 'app/**'
+      - 'config/**'
+      - 'baseline/**'
+      - 'README.md'
+      - 'STATE.md'
+      - 'OPEN_ISSUES.md'
+      - '.github/workflows/apply-v521-navigation-labels.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  apply-and-verify:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout feature branch
+        uses: actions/checkout@v4
+        with:
+          ref: feature/nav-msr-mss-v521
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Install Python dependencies
+        run: python3 -m pip install openpyxl
+
+      - name: Restore executable flags
+        run: chmod +x scripts/*.sh
+
+      - name: Apply v5.2.1 navigation and naming changes
+        run: python3 scripts/apply_v521_navigation_labels.py
+
+      - name: Install Node dependencies
+        run: npm ci
+
+      - name: Validate calculations and metadata
+        run: npm run validate:refactor
+
+      - name: Validate staging adapters
+        run: python3 scripts/pipeline/adapter_selftest.py
+
+      - name: Production build
+        run: npm run build
+
+      - name: Run full tests
+        run: node --test tests/*.test.mjs
+
+      - name: Commit generated v5.2.1 changes
+        run: |
+          if git diff --quiet; then
+            echo "v5.2.1 changes are already committed"
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+shamankhanty@users.noreply.github.com"
+          git add -A
+          git commit -m "Интерфейс: МСР/МСС и новый порядок разделов v5.2.1"
+          git push
