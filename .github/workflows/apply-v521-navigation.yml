@@ -1,7 +1,10 @@
 name: Apply v5.2.1 navigation and labels
 
 on:
+  workflow_dispatch:
   push:
+    branches:
+      - main
     paths:
       - '.github/workflows/apply-v521-navigation.yml'
       - 'scripts/apply_v521_navigation.py'
