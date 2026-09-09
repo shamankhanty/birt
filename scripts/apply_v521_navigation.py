@@ -3,6 +3,7 @@ import re
 
 ROOT = Path(__file__).resolve().parents[1]
 PAGE = ROOT / "app" / "page.tsx"
+SELF = Path(__file__).resolve()
 
 PHRASE_REPLACEMENTS = (
     ("Доля медицинских свидетельств о рождении относительно общего количества актов гражданского состояния", "МСР"),
@@ -49,18 +50,23 @@ CURRENT_LABELS = {
 }
 
 
-def replace_phrases() -> list[str]:
-    changed: list[str] = []
+def text_candidates():
     candidates: list[Path] = []
     for root_name in SCAN_ROOTS:
         root = ROOT / root_name
         if not root.exists():
             continue
-        candidates.extend(p for p in root.rglob("*") if p.is_file() and p.suffix.lower() in TEXT_SUFFIXES)
+        candidates.extend(
+            p for p in root.rglob("*") if p.is_file() and p.suffix.lower() in TEXT_SUFFIXES
+        )
     candidates.extend(ROOT / name for name in ROOT_DOCS if (ROOT / name).exists())
+    return candidates
 
-    for path in candidates:
-        if "baseline" in path.parts:
+
+def replace_phrases() -> list[str]:
+    changed: list[str] = []
+    for path in text_candidates():
+        if path.resolve() == SELF or "baseline" in path.parts:
             continue
         text = path.read_text(encoding="utf-8")
         updated = text
@@ -72,22 +78,20 @@ def replace_phrases() -> list[str]:
     return changed
 
 
-def render_button(tab: str, label: str, number: str, development: bool = False) -> str:
+def normalize_button(block: str, tab: str, number: str, development: bool) -> str:
+    block = re.sub(r"<span>\d+</span>", f"<span>{number}</span>", block, count=1)
+
+    simple_class = f'className={{tab === "{tab}" ? "active" : ""}}'
+    dev_class = f'className={{`developmentSection ${{tab === "{tab}" ? "active" : ""}}`}}'
     if development:
-        class_line = f'                className={{`developmentSection ${{tab === "{tab}" ? "active" : ""}}`}}'
+        block = block.replace(simple_class, dev_class, 1)
     else:
-        class_line = f'                className={{tab === "{tab}" ? "active" : ""}}'
-    return "\n".join([
-        "              <button",
-        class_line,
-        "                onClick={() => {",
-        f'                  setTab("{tab}");',
-        "                  setShowMatrixSections(false);",
-        "                }}",
-        "              >",
-        f"                <span>{number}</span> {label}",
-        "              </button>",
-    ])
+        block = block.replace(dev_class, simple_class, 1)
+
+    expected = dev_class if development else simple_class
+    if expected not in block:
+        raise RuntimeError(f"Unable to normalize CSS class for sidebar button {tab!r}")
+    return block
 
 
 def patch_navigation() -> None:
@@ -116,9 +120,11 @@ def patch_navigation() -> None:
     aside = page[aside_start:aside_end]
 
     matches: dict[str, re.Match[str]] = {}
-    for tab, label in CURRENT_LABELS.items():
+    for tab in CURRENT_LABELS:
         pattern = re.compile(
-            r'\n\s*<button\b(?:(?!</button>).)*?setTab\("' + re.escape(tab) + r'"\);(?:(?!</button>).)*?<span>\d+</span>\s*' + re.escape(label) + r'\s*</button>',
+            r'\n\s*<button\b(?:(?!</button>).)*?setTab\("'
+            + re.escape(tab)
+            + r'"\);(?:(?!</button>).)*?</button>',
             re.S,
         )
         found = list(pattern.finditer(aside))
@@ -126,15 +132,25 @@ def patch_navigation() -> None:
             raise RuntimeError(f"Sidebar button {tab!r} found {len(found)} times")
         matches[tab] = found[0]
 
-    nav_start = min(m.start() for m in matches.values())
-    nav_end = max(m.end() for m in matches.values())
+    nav_start = min(match.start() for match in matches.values())
+    nav_end = max(match.end() for match in matches.values())
     before = aside[:nav_start]
     after = aside[nav_end:]
 
-    primary_markup = "\n" + "\n".join(render_button(*item, development=False) for item in PRIMARY)
-    divider_markup = '\n              <div className="sideDevelopment">\n                <span>В разработке</span>\n              </div>'
-    development_markup = "\n" + "\n".join(render_button(*item, development=True) for item in DEVELOPMENT)
-    new_aside = before + primary_markup + divider_markup + development_markup + after
+    ordered_blocks: list[str] = []
+    for tab, _label, number in PRIMARY:
+        ordered_blocks.append(normalize_button(matches[tab].group(0), tab, number, False))
+
+    ordered_blocks.append(
+        '\n              <div className="sideDevelopment">\n'
+        '                <span>В разработке</span>\n'
+        '              </div>'
+    )
+
+    for tab, _label, number in DEVELOPMENT:
+        ordered_blocks.append(normalize_button(matches[tab].group(0), tab, number, True))
+
+    new_aside = before + "".join(ordered_blocks) + after
     page = page[:aside_start] + new_aside + page[aside_end:]
 
     if page == original:
@@ -146,7 +162,8 @@ def verify() -> None:
     page = PAGE.read_text(encoding="utf-8")
     if 'const DASHBOARD_VERSION = "5.2.1";' not in page:
         raise RuntimeError("Dashboard version was not updated to 5.2.1")
-    expected = [
+
+    mobile_expected = [
         '["unified", "Расширенная сводка", "01"]',
         '["matrix", "Показатели", "02"]',
         '["ranking", "Рейтинг медицинских организаций", "03"]',
@@ -156,21 +173,31 @@ def verify() -> None:
         '["remdErrors", "Ошибки РЭМД", "07"]',
         '["divider", "В разработке", ""]',
         '["federal", "Показатели на контроле РФ", "08"]',
+        '["methods", "Методики расчёта", "09"]',
+        '["history", "История обновлений", "10"]',
+        '["semd", "Все виды СЭМД", "11"]',
+        '["errors", "Ошибки методик", "12"]',
     ]
-    positions = [page.find(token) for token in expected]
+    positions = [page.find(token) for token in mobile_expected]
     if any(pos < 0 for pos in positions) or positions != sorted(positions):
         raise RuntimeError("Mobile navigation order verification failed")
 
+    aside_start = page.find('<aside\n          className={`sidebar')
+    aside_end = page.find("</aside>", aside_start)
+    aside = page[aside_start:aside_end]
+    desktop_order = [tab for tab, _label, _number in PRIMARY + DEVELOPMENT]
+    desktop_positions = [aside.find(f'setTab("{tab}")') for tab in desktop_order]
+    if any(pos < 0 for pos in desktop_positions) or desktop_positions != sorted(desktop_positions):
+        raise RuntimeError("Desktop navigation order verification failed")
+    if aside.find("В разработке") < aside.find('setTab("remdErrors")') or aside.find("В разработке") > aside.find('setTab("federal")'):
+        raise RuntimeError("Desktop development divider is in the wrong position")
+
     for old, _new in PHRASE_REPLACEMENTS:
-        for root_name in SCAN_ROOTS:
-            root = ROOT / root_name
-            if not root.exists():
+        for path in text_candidates():
+            if path.resolve() == SELF or "baseline" in path.parts:
                 continue
-            for path in root.rglob("*"):
-                if not path.is_file() or path.suffix.lower() not in TEXT_SUFFIXES or "baseline" in path.parts:
-                    continue
-                if old in path.read_text(encoding="utf-8"):
-                    raise RuntimeError(f"Old indicator title remains in {path.relative_to(ROOT)}")
+            if old in path.read_text(encoding="utf-8"):
+                raise RuntimeError(f"Old indicator title remains in {path.relative_to(ROOT)}")
 
 
 if __name__ == "__main__":
