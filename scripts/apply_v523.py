@@ -5,9 +5,18 @@ R=Path(__file__).resolve().parents[1]
 P=R/'app/page.tsx'; C=R/'app/globals.css'; M=R/'baseline/manifest.json'
 A=R/'data_sources/remd_errors_august_2026.tar.gz'
 if not A.exists():
- parts=sorted((R/'data_sources').glob('remd_errors_august_2026.b64.part*'))
- if not parts: raise RuntimeError('missing August REMD source parts')
- A.write_bytes(base64.b64decode(''.join(x.read_text().strip() for x in parts)))
+ d=R/'data_sources'
+ main=[d/f'remd_errors_august_2026.b64.part{i:02d}' for i in range(10)]
+ repair=[d/f'remd_errors_august_2026.b64.part04fix{i:02d}' for i in range(10)]
+ parts=main[:4]+repair+main[5:]
+ if not all(x.exists() for x in parts):
+  missing=[str(x.relative_to(R)) for x in parts if not x.exists()]
+  raise RuntimeError(f'missing August REMD source parts: {missing}')
+ raw=base64.b64decode(''.join(x.read_text().strip() for x in parts),validate=True)
+ digest=hashlib.sha256(raw).hexdigest()
+ if digest!='8efd5d2d324990eef522db42701235ef19a33b7ddf82730c303d9af414c87247':
+  raise RuntimeError(f'August REMD source integrity mismatch: {digest}')
+ A.write_bytes(raw)
 
 def rep(s,a,b,n):
  if a in s:return s.replace(a,b,1)
