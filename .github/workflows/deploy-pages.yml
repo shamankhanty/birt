@@ -37,9 +37,9 @@ jobs:
       - name: Install Python validation dependencies
         run: python3 -m pip install --disable-pip-version-check openpyxl
 
-      - name: Verify requested v5.2.4 controls in source
+      - name: Verify requested v5.2.5 controls in source
         run: |
-          grep -Fq 'const DASHBOARD_VERSION = "5.2.4"' app/page.tsx
+          grep -Fq 'const DASHBOARD_VERSION = "5.2.5"' app/page.tsx
           grep -Fq 'function hearingDisplayGroup(metric: HearingMetric)' app/page.tsx
           grep -Fq 'СЭМД относительно случаев / обращений' app/page.tsx
           grep -Fq 'Справочные / неприменимые / без сопоставимого плана / без необходимых данных' app/page.tsx
@@ -66,7 +66,7 @@ jobs:
       - name: Verify Pages artifact
         run: |
           test -s _site/index.html
-          grep -q '5.2.4' _site/index.html
+          grep -q '5.2.5' _site/index.html
           grep -q 'hearingMetricGroup' _site/index.html
           # The offline compiler serializes the en dash as \u2013 in embedded JSON.
           grep -Fq '01.08\u201331.08.2026' _site/index.html
