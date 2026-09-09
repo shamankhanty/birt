@@ -114,7 +114,7 @@ type FederalControlData = {
   agreement: FederalControlRow[];
   collegium: FederalControlRow[];
 };
-const DASHBOARD_VERSION = "5.2.2";
+const DASHBOARD_VERSION = "5.2.3";
 const indicatorRegistry = createIndicatorRegistryRuntime(
   indicatorRegistryRaw as IndicatorRegistryDocument,
 );
@@ -4571,7 +4571,6 @@ export default function Home() {
               ["matrix", "Показатели", "02"],
               ["ranking", "Рейтинг медицинских организаций", "03"],
               ["hearings", "МО для заслушивания", "04"],
-              ["max", "МАХ", "05"],
               ["waybill", "Электронный путевой лист", "06"],
               ["remdErrors", "Ошибки РЭМД", "07"],
               ["divider", "В разработке", ""],
@@ -4580,6 +4579,7 @@ export default function Home() {
               ["history", "История обновлений", "10"],
               ["semd", "Все виды СЭМД", "11"],
               ["errors", "Ошибки методик", "12"],
+              ["max", "МАХ", "05"],
             ].map(([id, label, number]) =>
               id === "divider" ? (
                 <div className="mobileSectionDivider" key={id}>
@@ -4689,15 +4689,6 @@ export default function Home() {
                 </b>
               </button>
               <button
-                className={tab === "max" ? "active" : ""}
-                onClick={() => {
-                  setTab("max");
-                  setShowMatrixSections(false);
-                }}
-              >
-                <span>05</span> МАХ
-              </button>
-              <button
                 className={tab === "waybill" ? "active" : ""}
                 onClick={() => {
                   setTab("waybill");
@@ -4762,6 +4753,12 @@ export default function Home() {
                 }}
               >
                 <span>12</span> Ошибки методик <b>{calcErrors.length}</b>
+              </button>
+              <button
+                className={`developmentSection ${tab === "max" ? "active" : ""}`}
+                onClick={() => { setTab("max"); setShowMatrixSections(false); }}
+              >
+                <span>05</span> МАХ
               </button>
               <div className="sideFoot">
                 <p>Версия {DASHBOARD_VERSION}</p>
@@ -5206,6 +5203,14 @@ export default function Home() {
                       onClick={() => setExtendedStatusFilter("all")}
                     >
                       Все
+                    </button>
+                    <button
+                      className={
+                        extendedStatusFilter === "exceptContract" ? "active" : ""
+                      }
+                      onClick={() => setExtendedStatusFilter("exceptContract")}
+                    >
+                      Все, кроме «В контракте»
                     </button>
                     <button
                       className={

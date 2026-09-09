@@ -1,6 +1,6 @@
 {
   "schemaVersion": 2,
-  "baselineVersion": "5.2.2",
+  "baselineVersion": "5.2.3",
   "baselineDate": "2026-09-09",
   "previousBaseline": {
     "version": "4.6.0",
@@ -9,11 +9,11 @@
     "handoffZipSha256": "90003a0098165ce484118a8bd661dc03e9471c5759a88dfb5e806800ce7df8b9",
     "manifest": "baseline/reference-v4.6.0-manifest.json"
   },
-  "changeClass": "MAX interface compaction and GitHub Pages release pipeline",
+  "changeClass": "UI readability, MAX navigation placement, full-August REMD slice",
   "protectedData": {
     "app/electronic-waybill-weekly.json": "a9945a61d9cc97bd2c5868ddff76c24875dec8e991035e650ddb4af4561d8947",
     "app/electronic-waybill.json": "d682decfa448f6fd17c8df1fdcf088b105cff03080daf029849a4d039c638dbc",
-    "app/error-categories.json": "162a381a800ab9ad9e481402790a7330ec3ffa14d99ce9e87486e4537621fb3c",
+    "app/error-categories.json": "4e374666ad150df70e725dd604ec2dee003468aa85505c86e65989f2ce54acb1",
     "app/federal-control.json": "2ff15b02895f40f80cc230471f558158c377503d9ba92c144e4ce379e381cedc",
     "app/hearing-snapshots.json": "4e6f494e413e2003e6d24c7492e79cbcd67837f31ba01565a5c2fac42a8b5871",
     "app/mo-data.json": "749d38d936a9cfd3197d4be2faa31e9087aad928f85a6b8bc1e32a46c6648961",
@@ -27,7 +27,7 @@
     "app/preventive-semd-audit.json": "2edd88fe58fbd15abd2ad26290e2d9bdf5db73935bcf3015e7a0f8c3a72eecb6",
     "app/semd-summary.json": "fcf60e417aea2d880ac1ccba68d93267a7e79690d7e9b415a7387341d7987d76",
     "app/unit-data.json": "9190d39db70ddf573e7b354d44e30ade3051648b1aead4e76f3a5bacc6a50918",
-    "app/error-organizations.json": "1cf90d8f1a5dbb8454c8c9f9c7f2736938cf4e45c895d9c0ffc671a3be6e3d99",
+    "app/error-organizations.json": "3e89c14bf9ef86476ba20742d51c3f844869ed529073fe558b5ff654119981a8",
     "app/max-monthly-visits.json": "4ccd792fbc854b92ec7b5161e2e6e00ab68c3c5f14a06278e4332f63f522b31a",
     "app/max-appointments-municipal.json": "69f690e62514706254d6f5b08cd694ae91bae6349eb14e653d47bcde89f63c17"
   },
@@ -37,12 +37,12 @@
     "app/hearing-snapshots.json": "4e6f494e413e2003e6d24c7492e79cbcd67837f31ba01565a5c2fac42a8b5871"
   },
   "stateFiles": {
-    "STATE.md": "99e63a851d385f2af121a5ebc5da3048af283378857a23ee0ce3abf19f66ec71",
-    "OPEN_ISSUES.md": "953e32a88b980681e02f9753a4d78c6c8fbed19b98a8b54d757d778ea4b7d626"
+    "STATE.md": "e54b58439c2ef354f6ef5a1e1144f636eb44a6258d3af982f46f6b93c9730515",
+    "OPEN_ISSUES.md": "beb03831b7519e5667d38668b37c0af9d4de298f078a15cea81c584b127192c1"
   },
   "keyCode": {
-    "app/page.tsx": "a7eb10a95c42835cf0d0a5d101317030e7e2ccb918ec448e055147fccd10a3b2",
-    "app/globals.css": "692767c4298c69edd873c4bf1fdd984b9f1fde0ef1794bb7add9f1a14d6524bf",
+    "app/page.tsx": "088a5e785604db3e92dbee994336e010bf6104b7e97a360c55f88c2a80653d9a",
+    "app/globals.css": "d4d90d9204a51831815c4125c0a87cb0bfadc34a60d2468e92c4c61ab272d169",
     "lib/calculation-engine.js": "2addca9323803eb45f66fca94fe78a72c4d77eed53c7bd05c224dd9aa9f2f0e7",
     "lib/indicator-registry.js": "484857b41858c082fad05172793ff24f422008a6178257006d4512b0c12d1996",
     "lib/mo-registry.js": "dcc8274ab055d97d13bd89679af845a236fb4fa8a1dfb506ededfbfa6a2b7918",
@@ -52,7 +52,7 @@
     "scripts/weekly_update_pipeline.py": "63604915c77920e7dbb2f913d09c917e95b506d3671917f4d5031bc6f1221903"
   },
   "regression": {
-    "nodeTests": "133/133 PASS",
+    "nodeTests": "136/136 PASS",
     "validation": "15/15 PASS",
     "calculationEquivalence": "38/38 PASS",
     "metadataEquivalence": "38/38 PASS",
@@ -64,5 +64,5 @@
     "fail": 0,
     "warnings": []
   },
-  "note": "v5.2.2 removes the duplicated MAX visual block, adds the extended-summary filter, and compacts the MAX interface without changing approved calculations. GitHub Pages is the sole publication channel."
+  "note": "v5.2.3: larger TOP-10 text; MAX last in Development; REMD errors use full August 2026. No error share is calculated without denominator."
 }

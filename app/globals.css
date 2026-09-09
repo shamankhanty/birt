@@ -521,3 +521,10 @@ body{font-size:14px}
 .maxMoMetrics article{min-height:72px;padding:10px 12px}
 @media(max-width:1250px){.maxMonthCards{grid-template-columns:repeat(3,minmax(0,1fr))}}
 @media(max-width:720px){.maxServiceSwitch{width:100%;overflow:auto}.maxServiceSwitch button{flex:1}.maxMonthCards{grid-template-columns:repeat(2,minmax(0,1fr))}}
+
+
+/* v5.2.3 hearing TOP-10 readability */
+.hearingTopTen p{padding:7px 9px}
+.hearingTopTen p b{font-size:20px;line-height:1}
+.hearingTopTen p span{margin-top:2px;color:#49655c;font-size:11.5px;line-height:1.2;font-weight:750}
+.hearingTopTen>em{font-size:10.5px;line-height:1.35}

@@ -8,10 +8,9 @@ const adapters = fs.readFileSync(new URL('../scripts/pipeline/adapters.py', impo
 const current = JSON.parse(fs.readFileSync(new URL('../app/error-categories.json', import.meta.url), 'utf8'));
 const organizations = JSON.parse(fs.readFileSync(new URL('../app/error-organizations.json', import.meta.url), 'utf8'));
 
-test('current category baseline matches the approved 07.09 cumulative source', () => {
-  assert.equal(current.total, 10489964);
-  assert.equal(current.items.length, 34);
-  assert.equal(current.period, '01.01–07.09.2026');
+test('current category baseline matches approved full August', () => {
+  assert.equal(current.total, 785939); assert.equal(current.items.length, 32);
+  assert.equal(current.period, '01.08–31.08.2026'); assert.equal(current.share, null);
 });
 
 test('error UI exposes category and MO drilldowns without quality-rating wording', () => {
@@ -59,5 +58,5 @@ test('current source is fully attributable to source organizations', () => {
   assert.equal(breakdown.attributedErrors, current.total);
   assert.equal(breakdown.unassignedErrors, 0);
   assert.equal(breakdown.coveragePercent, 100);
-  assert.equal(breakdown.organizationCount, 300);
+  assert.equal(breakdown.organizationCount, 213);
 });

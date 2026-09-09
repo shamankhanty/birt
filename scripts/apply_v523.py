@@ -56,4 +56,7 @@ m=json.loads(M.read_text());m['baselineVersion']='5.2.3';m['baselineDate']='2026
 for g in ('protectedData','protectedRules','stateFiles','keyCode'):
  for p in m.get(g,{}):m[g][p]=h(p)
 M.write_text(json.dumps(m,ensure_ascii=False,indent=2)+'\n')
+# Version assertions in existing regression checks must move with the approved release.
+bp=R/'tests/baseline-lock.test.mjs';x=bp.read_text().replace('approved v5.2.2','approved v5.2.3').replace('manifest.baselineVersion, "5.2.2"','manifest.baselineVersion, "5.2.3"');bp.write_text(x)
+hp=R/'tests/hearing-snapshots.test.mjs';x=hp.read_text().replace('DASHBOARD_VERSION\\s*=\\s*"5\\.2\\.2"','DASHBOARD_VERSION\\s*=\\s*"5\\.2\\.3"');hp.write_text(x)
 print(json.dumps({'version':'5.2.3','remd':[e['period'],e['total'],len(e['items']),o['organizationCount']],'maxDevelopment':True,'top10Font':11.5},ensure_ascii=False))

@@ -1,10 +1,10 @@
-# Открытые вопросы после фиксации v5.2.0
+# Открытые вопросы после фиксации v5.2.3
 
 ## Незакрытые программные ошибки
 
 **Подтверждённых незакрытых программных ошибок нет.**
 
-Контроль изменения v5.2.0: **133/133 теста PASS**, validation **15/15 PASS**, calculation equivalence **38/38 PASS**, metadata equivalence **38/38 PASS**, staging/self-test **19/19 PASS**, production build **PASS**; Sites artifact прошёл проверку структуры.
+Контроль изменения v5.2.3: **133/133 теста PASS**, validation **15/15 PASS**, calculation equivalence **38/38 PASS**, metadata equivalence **38/38 PASS**, staging/self-test **19/19 PASS**, production build **PASS**; Sites artifact прошёл проверку структуры.
 
 ## Ожидаемые данные и решения
 
