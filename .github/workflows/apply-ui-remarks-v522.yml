@@ -1,0 +1,87 @@
+name: Apply UI remarks v5.2.2
+
+on:
+  push:
+    branches: ["main"]
+    paths:
+      - ".github/workflows/apply-ui-remarks-v522.yml"
+      - "scripts/apply_ui_remarks_v522.py"
+
+permissions:
+  contents: write
+  pages: write
+  id-token: write
+
+concurrency:
+  group: "apply-ui-v522"
+  cancel-in-progress: false
+
+jobs:
+  apply-test-deploy:
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Checkout main
+        uses: actions/checkout@v4
+        with:
+          ref: main
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci --no-audit --no-fund
+
+      - name: Prepare validation environment
+        run: |
+          chmod +x scripts/*.sh scripts/pipeline/*.sh 2>/dev/null || true
+          python3 -m pip install --disable-pip-version-check openpyxl
+
+      - name: Apply accumulated UI remarks
+        run: python3 scripts/apply_ui_remarks_v522.py
+
+      - name: Validate calculations and metadata
+        run: npm run validate:refactor
+
+      - name: Validate staging adapters
+        run: python3 scripts/pipeline/adapter_selftest.py
+
+      - name: Full production build and regression tests
+        run: npm test
+
+      - name: Build GitHub Pages artifact
+        run: |
+          rm -rf _site
+          mkdir -p _site
+          OFFLINE_OUTPUT_DIR=_site OFFLINE_BASENAME=index node scripts/build-offline.mjs
+          rm -f _site/index.zip
+          touch _site/.nojekyll
+          test -s _site/index.html
+          grep -q '5.2.2' _site/index.html
+
+      - name: Commit verified source changes
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add app/page.tsx app/globals.css STATE.md README.md tests/ui-remarks-v522.test.mjs .github/workflows/deploy-pages.yml
+          if ! git diff --cached --quiet; then
+            git commit -m "v5.2.2: apply accumulated UI remarks"
+            git push origin main
+          fi
+
+      - name: Configure GitHub Pages
+        uses: actions/configure-pages@v5
+
+      - name: Upload Pages artifact
+        uses: actions/upload-pages-artifact@v4
+        with:
+          path: _site
+
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
