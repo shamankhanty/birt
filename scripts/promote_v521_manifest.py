@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Lock the approved v5.2.1 navigation and GitHub Pages release."""
+"""Lock the approved v5.2.2 interface update and GitHub Pages release."""
 import hashlib
 import json
 from pathlib import Path
@@ -13,12 +13,13 @@ def digest(relative: str) -> str:
     return hashlib.sha256((ROOT / relative).read_bytes()).hexdigest()
 
 
-manifest["baselineVersion"] = "5.2.1"
+manifest["baselineVersion"] = "5.2.2"
 manifest["baselineDate"] = "2026-09-09"
-manifest["changeClass"] = "navigation labels and GitHub Pages release pipeline"
+manifest["changeClass"] = "MAX interface compaction and GitHub Pages release pipeline"
 manifest["note"] = (
-    "v5.2.1 reorganizes navigation and abbreviates MСР/MСС labels without changing "
-    "approved calculations. GitHub Pages is the sole publication channel."
+    "v5.2.2 removes the duplicated MAX visual block, adds the extended-summary filter, "
+    "and compacts the MAX interface without changing approved calculations. "
+    "GitHub Pages is the sole publication channel."
 )
 
 for group_name in ("protectedData", "protectedRules", "stateFiles", "keyCode"):
@@ -29,4 +30,4 @@ manifest_path.write_text(
     json.dumps(manifest, ensure_ascii=False, indent=2) + "\n",
     encoding="utf-8",
 )
-print(json.dumps({"status": "PASS", "baselineVersion": "5.2.1"}, ensure_ascii=False))
+print(json.dumps({"status": "PASS", "baselineVersion": "5.2.2"}, ensure_ascii=False))

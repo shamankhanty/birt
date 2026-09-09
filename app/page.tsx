@@ -114,7 +114,7 @@ type FederalControlData = {
   agreement: FederalControlRow[];
   collegium: FederalControlRow[];
 };
-const DASHBOARD_VERSION = "5.2.1";
+const DASHBOARD_VERSION = "5.2.2";
 const indicatorRegistry = createIndicatorRegistryRuntime(
   indicatorRegistryRaw as IndicatorRegistryDocument,
 );
@@ -135,7 +135,12 @@ type ExtendedCategory =
   | "medicines"
   | "ai";
 type ExtendedStatus =
-  "all" | "achieved" | "notAchieved" | "contract" | "noData";
+  | "all"
+  | "exceptContract"
+  | "achieved"
+  | "notAchieved"
+  | "contract"
+  | "noData";
 type ExtendedCardItem = {
   key: string;
   row: FederalControlRow;
@@ -3082,6 +3087,7 @@ export default function Home() {
     | "history"
   >("unified");
   const [maxMonth, setMaxMonth] = useState<"2026-07" | "2026-08">("2026-08");
+  const [maxService, setMaxService] = useState<"visit" | "tmk" | "eln">("visit");
   const [maxFilter, setMaxFilter] = useState<"volume" | "growth" | "decline" | "zero" | "missing">("volume");
   const [maxSelectedMo, setMaxSelectedMo] = useState<string | null>(null);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -3148,14 +3154,16 @@ export default function Home() {
   const visibleMaxRows = useMemo(() => {
     if (maxMonth === "2026-07") return [] as MaxMonthlyRow[];
     const rows = [...augustMaxRows];
-    const total = (row: MaxMonthlyRow) => (row.tmk.value ?? 0) + (row.eln.value ?? 0);
-    const missing = (row: MaxMonthlyRow) => [row.tmk, row.eln].some((item) => item.status === "missing");
-    const zero = (row: MaxMonthlyRow) => [row.tmk, row.eln].filter((item) => item.status !== "unavailable").every((item) => item.value === 0);
+    const serviceValue = (row: MaxMonthlyRow) =>
+      maxService === "tmk" ? row.tmk : row.eln;
+    const missing = (row: MaxMonthlyRow) => serviceValue(row).status === "missing";
+    const zero = (row: MaxMonthlyRow) =>
+      serviceValue(row).status !== "unavailable" && serviceValue(row).value === 0;
     if (maxFilter === "missing") return rows.filter(missing).sort((a, b) => a.name.localeCompare(b.name, "ru"));
     if (maxFilter === "zero") return rows.filter(zero).sort((a, b) => a.name.localeCompare(b.name, "ru"));
     if (maxFilter === "growth" || maxFilter === "decline") return rows.filter(() => false);
-    return rows.sort((a, b) => total(b) - total(a));
-  }, [maxMonth, maxFilter]);
+    return rows.sort((a, b) => (serviceValue(b).value ?? 0) - (serviceValue(a).value ?? 0));
+  }, [maxMonth, maxFilter, maxService]);
   const selectedMaxRow = augustMaxRows.find((row) => row.name === maxSelectedMo) ?? null;
   const hearingRows = useMemo<HearingRow[]>(() => {
     const registrationErrorsByOid = new Map(
@@ -3642,7 +3650,10 @@ export default function Home() {
           status = regionalControlStatus(row, item.collegium);
         return (
           (extendedCategory === "all" || category === extendedCategory) &&
-          (extendedStatusFilter === "all" || status === extendedStatusFilter) &&
+          (extendedStatusFilter === "all" ||
+            (extendedStatusFilter === "exceptContract"
+              ? status !== "contract"
+              : status === extendedStatusFilter)) &&
           (row.id + " " + row.name + " " + (item.collegium?.id ?? ""))
             .toLowerCase()
             .includes(unifiedQuery.toLowerCase())
@@ -4952,7 +4963,20 @@ export default function Home() {
                     const completion = item.plan ? (item.fact / item.plan) * 100 : null;
                     const title = item.id === "visitMax" ? "Запись к врачу посредством МАХ" : item.name.replace(/^Количество\s+/u, "");
                     return (
-                      <article key={item.id}>
+                      <article
+                        key={item.id}
+                        className={`maxServiceCard ${
+                          maxService ===
+                          (item.id === "visitMax" ? "visit" : item.id === "tmkMax" ? "tmk" : "eln")
+                            ? "active"
+                            : ""
+                        }`}
+                        onClick={() =>
+                          setMaxService(
+                            item.id === "visitMax" ? "visit" : item.id === "tmkMax" ? "tmk" : "eln",
+                          )
+                        }
+                      >
                         <small>Республика Татарстан · накопительно</small>
                         <h2>{title}</h2>
                         <strong>{format(item.fact, 0)}</strong>
@@ -4964,6 +4988,14 @@ export default function Home() {
                   })}
               </div>
 
+              <div className="maxServiceSwitch" role="group" aria-label="Сервис МАХ">
+                <button className={maxService === "visit" ? "active" : ""} onClick={() => setMaxService("visit")}>Запись к врачу</button>
+                <button className={maxService === "tmk" ? "active" : ""} onClick={() => setMaxService("tmk")}>ТМК</button>
+                <button className={maxService === "eln" ? "active" : ""} onClick={() => setMaxService("eln")}>ЛВН</button>
+              </div>
+
+              {maxService === "visit" && (
+                <>
               <div className="maxMonthlyHead">
                 <div>
                   <p className="eyebrow">ЗАПИСЬ НА ПРИЁМ К ВРАЧУ</p>
@@ -4972,7 +5004,7 @@ export default function Home() {
                 </div>
               </div>
 
-              <div className="maxRegionalCards">
+              <div className="maxRegionalCards maxMonthCards">
                 {maxAppointmentsMunicipal.months.map((month) => (
                   <article key={month.id}>
                     <small>{month.complete ? "Полный месяц" : "Текущий неполный месяц"}</small>
@@ -5024,10 +5056,15 @@ export default function Home() {
                 <span>Источник не содержит идентификатор медицинской организации. Поэтому значения не распределяются между поликлиниками и больницами и не участвуют в рейтинге МО.</span>
               </div>
 
+                </>
+              )}
+
+              {maxService !== "visit" && (
+                <>
               <div className="maxMonthlyHead">
                 <div>
-                  <p className="eyebrow">ТМК И ЛВН</p>
-                  <h2>Работа МО за полный месяц</h2>
+                  <p className="eyebrow">{maxService === "tmk" ? "ТМК" : "ЛВН"}</p>
+                  <h2>{maxService === "tmk" ? "ТМК: работа МО за полный месяц" : "ЛВН после ТМК: работа МО за полный месяц"}</h2>
                   <p>Август рассчитан как разность накопительных срезов на 31.08 и 31.07. Накопительные значения в месячную таблицу не подставляются.</p>
                 </div>
                 <div className="maxMonthSwitch" aria-label="Выбранный полный месяц">
@@ -5061,17 +5098,16 @@ export default function Home() {
               ) : (
                 <div className="maxTableWrap">
                   <table className="maxTable">
-                    <thead><tr><th>МО</th><th>ТМК</th><th>к июлю</th><th>ЛВН</th><th>к июлю</th></tr></thead>
+                    <thead><tr><th>МО</th><th>{maxService === "tmk" ? "ТМК" : "ЛВН"}</th><th>к июлю</th></tr></thead>
                     <tbody>
                       {visibleMaxRows.map((row) => (
                         <tr key={row.name} onClick={() => setMaxSelectedMo(row.name)}>
                           <td><strong>{row.name}</strong></td>
-                          <td>{renderMaxValue(row.tmk)}</td><td>—</td>
-                          <td>{renderMaxValue(row.eln)}</td><td>—</td>
+                          <td>{renderMaxValue(maxService === "tmk" ? row.tmk : row.eln)}</td><td>—</td>
                         </tr>
                       ))}
                     </tbody>
-                    <tfoot><tr><td>Итого по сопоставимым строкам</td><td>{format(augustMaxTotals.tmk, 0)}</td><td>—</td><td>{format(augustMaxTotals.eln, 0)}</td><td>—</td></tr></tfoot>
+                    <tfoot><tr><td>Итого по сопоставимым строкам</td><td>{format(maxService === "tmk" ? augustMaxTotals.tmk : augustMaxTotals.eln, 0)}</td><td>—</td></tr></tfoot>
                   </table>
                 </div>
               )}
@@ -5080,15 +5116,19 @@ export default function Home() {
                 <div className="maxMoCard">
                   <header><div><small>КАРТОЧКА МО · АВГУСТ 2026</small><h2>{selectedMaxRow.name}</h2></div><button onClick={() => setMaxSelectedMo(null)}>Закрыть</button></header>
                   <div className="maxMoMetrics">
-                    <article><small>ТМК</small>{renderMaxValue(selectedMaxRow.tmk)}</article>
-                    <article><small>ЛВН после ТМК</small>{renderMaxValue(selectedMaxRow.eln)}</article>
+                    <article>
+                      <small>{maxService === "tmk" ? "ТМК" : "ЛВН после ТМК"}</small>
+                      {renderMaxValue(maxService === "tmk" ? selectedMaxRow.tmk : selectedMaxRow.eln)}
+                    </article>
                   </div>
                   <p><b>Управленческий вывод:</b> доступен один полный месяц; вывод о росте или снижении будет сформирован после появления сопоставимого июля.</p>
-                  <div className="maxHistory"><span>Июль 2026 · нет сопоставимого среза на 30.06</span><span>Август 2026 · ТМК {selectedMaxRow.tmk.value == null ? "нет данных" : format(selectedMaxRow.tmk.value, 0)} · ЛВН {selectedMaxRow.eln.value == null ? "нет данных" : format(selectedMaxRow.eln.value, 0)}</span></div>
+                  <div className="maxHistory"><span>Июль 2026 · нет сопоставимого среза на 30.06</span><span>Август 2026 · {maxService === "tmk" ? "ТМК" : "ЛВН"} {(maxService === "tmk" ? selectedMaxRow.tmk.value : selectedMaxRow.eln.value) == null ? "нет данных" : format((maxService === "tmk" ? selectedMaxRow.tmk.value : selectedMaxRow.eln.value) ?? 0, 0)}</span></div>
                 </div>
               )}
 
               <details className="maxMethod"><summary>Источник и ограничения текущей версии</summary><p><b>ТМК и ЛВН:</b> файл «ТМК_МАХ», листы 1–3, разрез по МО. Полный август получен из одинаковых накопительных срезов 31.07 → 31.08.</p><p><b>Запись на приём к врачу:</b> файл «Статистика записей к врачу.xlsx», разрез муниципалитет × месяц. Данные показываются по факту без привязки к медицинским организациям. Сентябрь — текущий неполный месяц.</p><p><b>Важно:</b> годовые планы РТ не применяются к отдельным МО; отсутствие строки не считается нулевой активностью.</p></details>
+                </>
+              )}
             </section>
           )}
 
@@ -5109,47 +5149,6 @@ export default function Home() {
                   </article>
                 ))}
               </div>
-              <section className="regionalMaxPanel">
-                <div className="regionalMaxHead">
-                  <div>
-                    <p className="eyebrow">РЕГИОНАЛЬНЫЙ КОНТРОЛЬ · МАХ</p>
-                    <h2>Оперативный факт на 07.09.2026 и годовой план</h2>
-                  </div>
-                  <span>федеральные данные не используются</span>
-                </div>
-                <div className="regionalMaxCards">
-                  {liveIndicators
-                    .filter(
-                      (item) => item.id === "tmkMax" || item.id === "elnMax" || item.id === "visitMax",
-                    )
-                    .map((item) => {
-                      const completion = item.plan
-                        ? (item.fact / item.plan) * 100
-                        : 0;
-                      return (
-                        <article key={item.id}>
-                          <div>
-                            <h3>{item.name}</h3>
-                            <span>01.08–{item.date}</span>
-                          </div>
-                          <strong>{format(item.fact, 0)}</strong>
-                          <p>
-                            Годовой план <b>{format(item.plan ?? 0, 0)}</b>
-                          </p>
-                          <div className="regionalMaxBar">
-                            <i
-                              style={{ width: `${Math.min(completion, 100)}%` }}
-                            />
-                          </div>
-                          <footer>
-                            <b>{format(completion, 2)}%</b>
-                            <span>годового плана</span>
-                          </footer>
-                        </article>
-                      );
-                    })}
-                </div>
-              </section>
               <div className="extendedStats six">
                 <article>
                   <small>Всего показателей</small>

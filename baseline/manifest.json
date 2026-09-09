@@ -1,6 +1,6 @@
 {
   "schemaVersion": 2,
-  "baselineVersion": "5.2.1",
+  "baselineVersion": "5.2.2",
   "baselineDate": "2026-09-09",
   "previousBaseline": {
     "version": "4.6.0",
@@ -9,7 +9,7 @@
     "handoffZipSha256": "90003a0098165ce484118a8bd661dc03e9471c5759a88dfb5e806800ce7df8b9",
     "manifest": "baseline/reference-v4.6.0-manifest.json"
   },
-  "changeClass": "navigation labels and GitHub Pages release pipeline",
+  "changeClass": "MAX interface compaction and GitHub Pages release pipeline",
   "protectedData": {
     "app/electronic-waybill-weekly.json": "a9945a61d9cc97bd2c5868ddff76c24875dec8e991035e650ddb4af4561d8947",
     "app/electronic-waybill.json": "d682decfa448f6fd17c8df1fdcf088b105cff03080daf029849a4d039c638dbc",
@@ -37,12 +37,12 @@
     "app/hearing-snapshots.json": "4e6f494e413e2003e6d24c7492e79cbcd67837f31ba01565a5c2fac42a8b5871"
   },
   "stateFiles": {
-    "STATE.md": "3621035ba5df66f85a973a2f5ae39bacd6bc36dadd310d3bd0f9e758e6d5f1e8",
+    "STATE.md": "99e63a851d385f2af121a5ebc5da3048af283378857a23ee0ce3abf19f66ec71",
     "OPEN_ISSUES.md": "953e32a88b980681e02f9753a4d78c6c8fbed19b98a8b54d757d778ea4b7d626"
   },
   "keyCode": {
-    "app/page.tsx": "629aea4963bb669e419b1579e092607a93da913d8532df67c46bdec7404e5e29",
-    "app/globals.css": "e92208b0ecb59053a1ee4ee74801761f32fba64e15e2168fc8e9390a30186ad2",
+    "app/page.tsx": "a7eb10a95c42835cf0d0a5d101317030e7e2ccb918ec448e055147fccd10a3b2",
+    "app/globals.css": "692767c4298c69edd873c4bf1fdd984b9f1fde0ef1794bb7add9f1a14d6524bf",
     "lib/calculation-engine.js": "2addca9323803eb45f66fca94fe78a72c4d77eed53c7bd05c224dd9aa9f2f0e7",
     "lib/indicator-registry.js": "484857b41858c082fad05172793ff24f422008a6178257006d4512b0c12d1996",
     "lib/mo-registry.js": "dcc8274ab055d97d13bd89679af845a236fb4fa8a1dfb506ededfbfa6a2b7918",
@@ -64,5 +64,5 @@
     "fail": 0,
     "warnings": []
   },
-  "note": "v5.2.1 reorganizes navigation and abbreviates MСР/MСС labels without changing approved calculations. GitHub Pages is the sole publication channel."
+  "note": "v5.2.2 removes the duplicated MAX visual block, adds the extended-summary filter, and compacts the MAX interface without changing approved calculations. GitHub Pages is the sole publication channel."
 }

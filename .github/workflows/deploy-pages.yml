@@ -57,7 +57,7 @@ jobs:
       - name: Verify Pages artifact
         run: |
           test -s _site/index.html
-          grep -q '5.2.1' _site/index.html
+          grep -q '5.2.2' _site/index.html
 
       - name: Configure GitHub Pages
         uses: actions/configure-pages@v5
