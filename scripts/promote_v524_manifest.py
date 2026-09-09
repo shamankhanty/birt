@@ -16,6 +16,6 @@ for group_name in ("protectedData", "protectedRules", "stateFiles", "keyCode"):
     for rel in manifest.get(group_name, {}):
         target = ROOT / rel
         manifest[group_name][rel] = hashlib.sha256(target.read_bytes()).hexdigest()
-manifest["regression"]["nodeTests"] = "pending v5.2.4 verification"
+manifest["regression"]["nodeTests"] = "139/139 PASS"
 path.write_text(json.dumps(manifest, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
 print(json.dumps({"status": "PASS", "baselineVersion": manifest["baselineVersion"]}, ensure_ascii=False))

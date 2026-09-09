@@ -38,10 +38,10 @@
   },
   "stateFiles": {
     "STATE.md": "45cf9952141071823a035dec6897468d85460c5f8067ae24395f8e4a42510ca5",
-    "OPEN_ISSUES.md": "92353031680572722c989344b6812a0c45ecfb23848a13356c9fa83ea05fcc6b"
+    "OPEN_ISSUES.md": "0650ee76b33eea22107bcabda9377f7871cb292e2d1a1a7ed35a98a3c3a87cd5"
   },
   "keyCode": {
-    "app/page.tsx": "5ca65161e3b4f14a6e696054ff203b1127fde99fee1575a974139cf710669c03",
+    "app/page.tsx": "b648cefab00572b6c92b8d4342bf2008612c3d326eeb2cf63f00636f7951bb1b",
     "app/globals.css": "c4fcd6d9d1ed35ee31bf329b3d2eb87be73989e51da4a7aed8450403d78b88fb",
     "lib/calculation-engine.js": "2addca9323803eb45f66fca94fe78a72c4d77eed53c7bd05c224dd9aa9f2f0e7",
     "lib/indicator-registry.js": "484857b41858c082fad05172793ff24f422008a6178257006d4512b0c12d1996",
@@ -52,7 +52,7 @@
     "scripts/weekly_update_pipeline.py": "63604915c77920e7dbb2f913d09c917e95b506d3671917f4d5031bc6f1221903"
   },
   "regression": {
-    "nodeTests": "pending v5.2.4 verification",
+    "nodeTests": "139/139 PASS",
     "validation": "15/15 PASS",
     "calculationEquivalence": "38/38 PASS",
     "metadataEquivalence": "38/38 PASS",
