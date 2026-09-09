@@ -5,7 +5,7 @@ import fs from "node:fs";
 const control = JSON.parse(fs.readFileSync(new URL("../app/federal-control.json", import.meta.url), "utf8"));
 const agreement = new Map(control.agreement.map((row) => [row.id, row]));
 
-test("v5.2.4 loads only the two confirmed regional facts", () => {
+test("confirmed v5.2.4 facts remain traceable after v5.2.5 manual additions", () => {
   const firstDay = agreement.get("22");
   assert.equal(firstDay.regionalFact, "959 973 из 6 653 066 · 14,43%");
   assert.equal(firstDay.regionalPeriod, "01.08–31.08.2026");
@@ -17,6 +17,9 @@ test("v5.2.4 loads only the two confirmed regional facts", () => {
   assert.equal(prescription.status, "Справочно");
 });
 
-test("unconfirmed rate of REMD registration errors remains without a regional fact", () => {
-  assert.equal(agreement.get("29").regionalFact, undefined);
+test("manual rate of REMD registration errors remains explicitly provisional", () => {
+  const errors = agreement.get("29");
+  assert.equal(errors.regionalFact, "14,25%");
+  assert.match(errors.sourceNote, /Ручной ввод/u);
+  assert.match(errors.sourceNote, /знаменателем всех запросов/u);
 });

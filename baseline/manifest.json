@@ -1,6 +1,6 @@
 {
   "schemaVersion": 2,
-  "baselineVersion": "5.2.4",
+  "baselineVersion": "5.2.5",
   "baselineDate": "2026-09-09",
   "previousBaseline": {
     "version": "4.6.0",
@@ -9,14 +9,14 @@
     "handoffZipSha256": "90003a0098165ce484118a8bd661dc03e9471c5759a88dfb5e806800ce7df8b9",
     "manifest": "baseline/reference-v4.6.0-manifest.json"
   },
-  "changeClass": "МО hearing-card grouping, verified regional facts, deterministic Pages CI",
+  "changeClass": "МАХ official/operational separation, manual RT facts, physician applicability, EPGU trend",
   "protectedData": {
     "app/electronic-waybill-weekly.json": "a9945a61d9cc97bd2c5868ddff76c24875dec8e991035e650ddb4af4561d8947",
     "app/electronic-waybill.json": "d682decfa448f6fd17c8df1fdcf088b105cff03080daf029849a4d039c638dbc",
     "app/error-categories.json": "4e374666ad150df70e725dd604ec2dee003468aa85505c86e65989f2ce54acb1",
-    "app/federal-control.json": "41ebbf8d58d4aa921b1b0dcbc8a6cd870f9f23df6267476a822d8370d228c5cc",
+    "app/federal-control.json": "6dfd779f3cdeb320d08aa10ccb8a32522930c756fd808017977b85ec71d7e100",
     "app/hearing-snapshots.json": "4e6f494e413e2003e6d24c7492e79cbcd67837f31ba01565a5c2fac42a8b5871",
-    "app/mo-data.json": "749d38d936a9cfd3197d4be2faa31e9087aad928f85a6b8bc1e32a46c6648961",
+    "app/mo-data.json": "b09cea542c394c8feecb5057b0b2104cc759f9263901e28e82cb40d0906bbccf",
     "app/mo-detail-oids.json": "9d1d6c709402c37e36fbc47fce640accae881cf0eb1b5602ce6ae6be7d83406c",
     "app/mo-details.json": "82e9392cb61d63a9e616606c9de4b5463c2d1e423682f37c629f1f1b323be3a6",
     "app/mo-registry.json": "62202e489fced8a93c40867f04f5b3a021030cf4da1b0d0da6ce3a8cff088ea3",
@@ -37,12 +37,12 @@
     "app/hearing-snapshots.json": "4e6f494e413e2003e6d24c7492e79cbcd67837f31ba01565a5c2fac42a8b5871"
   },
   "stateFiles": {
-    "STATE.md": "45cf9952141071823a035dec6897468d85460c5f8067ae24395f8e4a42510ca5",
-    "OPEN_ISSUES.md": "0650ee76b33eea22107bcabda9377f7871cb292e2d1a1a7ed35a98a3c3a87cd5"
+    "STATE.md": "af6e521c322c635964d121d8227f2a140b0b5a6964054b4c43a59dbc822d7c76",
+    "OPEN_ISSUES.md": "ac94e143e7a93ba8d40d8726f88c9cfe2d3dc45bc992298d8e362fbf118f58d1"
   },
   "keyCode": {
-    "app/page.tsx": "b648cefab00572b6c92b8d4342bf2008612c3d326eeb2cf63f00636f7951bb1b",
-    "app/globals.css": "c4fcd6d9d1ed35ee31bf329b3d2eb87be73989e51da4a7aed8450403d78b88fb",
+    "app/page.tsx": "da61288d0f80d4f7f477ca7319eeed4605f9070c810565e8afcb3252c3fe7bb1",
+    "app/globals.css": "a0e67c624d6e6877dad6cb5c44c59264dfa1799c33cc4a3a5eb6c0ab8cbc4dbe",
     "lib/calculation-engine.js": "2addca9323803eb45f66fca94fe78a72c4d77eed53c7bd05c224dd9aa9f2f0e7",
     "lib/indicator-registry.js": "484857b41858c082fad05172793ff24f422008a6178257006d4512b0c12d1996",
     "lib/mo-registry.js": "dcc8274ab055d97d13bd89679af845a236fb4fa8a1dfb506ededfbfa6a2b7918",
@@ -52,7 +52,7 @@
     "scripts/weekly_update_pipeline.py": "63604915c77920e7dbb2f913d09c917e95b506d3671917f4d5031bc6f1221903"
   },
   "regression": {
-    "nodeTests": "139/139 PASS",
+    "nodeTests": "143/143 PASS",
     "validation": "15/15 PASS",
     "calculationEquivalence": "38/38 PASS",
     "metadataEquivalence": "38/38 PASS",
@@ -64,5 +64,5 @@
     "fail": 0,
     "warnings": []
   },
-  "note": "v5.2.4: fixed management grouping in МО для заслушивания; only confirmed facts №22 and №39.1 loaded; Pages CI no longer mutates sources."
+  "note": "v5.2.5: official MAX results are visually separated from МО monitoring; agreed RT facts are marked as manual until primary reports arrive; physician applicability and EPGU operational trend are corrected."
 }

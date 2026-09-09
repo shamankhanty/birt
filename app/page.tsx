@@ -94,6 +94,7 @@ type FederalControlRow = {
   regionalFact?: string;
   regionalPeriod?: string;
   sourceNote?: string;
+  regionalManualStatus?: "achieved" | "notAchieved" | "reference";
 };
 
 function federalPeriodType(row: FederalControlRow) {
@@ -114,7 +115,7 @@ type FederalControlData = {
   agreement: FederalControlRow[];
   collegium: FederalControlRow[];
 };
-const DASHBOARD_VERSION = "5.2.4";
+const DASHBOARD_VERSION = "5.2.5";
 const indicatorRegistry = createIndicatorRegistryRuntime(
   indicatorRegistryRaw as IndicatorRegistryDocument,
 );
@@ -1269,8 +1270,10 @@ const fullMonthCumulativeComparison = buildFullMonthComparison(
 );
 const comparisonPeriods: Record<string, { previous: string; current: string }> =
   {
-    egpu: fullMonthCumulativeComparison,
-    egpu2days: fullMonthCumulativeComparison,
+    // Оперативные ЕПГУ: сопоставимые накопительные точки 31.08 и 07.09.
+    // Июль ↔ август остаётся в месячном представлении, а не выдаётся за неделю.
+    egpu: { previous: "01.01–31.08.2026", current: "01.01–07.09.2026" },
+    egpu2days: { previous: "01.01–31.08.2026", current: "01.01–07.09.2026" },
     birth: fullMonthCumulativeComparison,
     death: fullMonthCumulativeComparison,
     semd228: fullMonthCumulativeComparison,
@@ -2173,6 +2176,9 @@ function regionalControlStatus(
   row: FederalControlRow,
   alternate?: FederalControlRow,
 ): Exclude<ExtendedStatus, "all"> {
+  if (row.regionalManualStatus === "reference") return "contract";
+  if (row.regionalManualStatus === "achieved") return "achieved";
+  if (row.regionalManualStatus === "notAchieved") return "notAchieved";
   if (row.regionalId && blockedIndicatorIds.has(row.regionalId))
     return "noData";
   const regional = row.regionalId
@@ -2563,6 +2569,15 @@ function hearingMetricGroupsForDisplay(row: HearingRow, filter: HearingChangeFil
 
 const versionHistory = [
   {
+    version: "5.2.5",
+    date: "09.09.2026",
+    items: [
+      "В раздел МАХ добавлены компактные официальные плашки РТ; они отделены от оперативного мониторинга МО и не используются для недельной динамики.",
+      "Внесены вручную согласованные факты РТ с пометкой о последующей замене первичными отчётами; период в рабочей таблице приведён к 2026 году.",
+      "Для врачебных показателей применимость определяется уровнем МО и наличием соответствующей должности в выгрузке; ЕПГУ получил корректную оперативную динамику 31.08 → 07.09.",
+    ],
+  },
+  {
     version: "5.2.4",
     date: "09.09.2026",
     items: [
@@ -2951,7 +2966,16 @@ function buildUnionRating(rows: RankRow[]): UnionRatingRow[] {
 }
 
 function applicableForRegistry(registry: RegistryOrganization, id: string) {
-  if (isPhysicianMetric(id)) return true;
+  if (id === "doctorsLevel3") return registry.level === "III уровень";
+  if (isPhysicianMetric(id)) {
+    const physicianDataset = physicianMetrics.datasets[id];
+    const physicianRow = physicianDataset?.rows?.find(
+      (row) => row.oid === registry.oid,
+    );
+    // Отсутствие специальности в выгрузке не означает невыполнение: у МО нет
+    // соответствующей должности либо показатель неприменим к её профилю.
+    return Boolean(physicianRow && (physicianRow.volume ?? 0) > 0);
+  }
   if (registry.oid === "context:spassk-crb")
     return spasskCrbReportMetrics.has(id);
   if (
@@ -4212,11 +4236,15 @@ export default function Home() {
   const regionalFact = isCountMetric
     ? (rtIndicator?.fact ?? aggregateCountRows(indicatorRows))
     : (rtIndicator?.fact ?? (detailRows.length ? detailAggregate.fact : 0));
-  const regionalPrevious = isCountMetric
+  const operationalRegionalPrevious: Record<string, number> = {
+    egpu: (29814 / 30260) * 100,
+    egpu2days: (24533 / 30260) * 100,
+  };
+  const regionalPrevious = operationalRegionalPrevious[matrixMetric] ?? (isCountMetric
     ? indicatorRows.reduce((sum, row) => sum + (row.previous ?? 0), 0)
     : rtIndicator?.trend === null || rtIndicator?.trend === undefined
       ? null
-      : regionalFact - rtIndicator.trend;
+      : regionalFact - rtIndicator.trend);
   const regionalChange =
     regionalPrevious === null ? null : regionalFact - regionalPrevious;
   type MonthlyBenchmark = {
@@ -5003,18 +5031,21 @@ export default function Home() {
             <section className="maxSection">
               <div className="pageHead maxHead">
                 <div>
-                  <p className="eyebrow">МАХ · УПРАВЛЕНЧЕСКИЙ КОНТРОЛЬ</p>
-                  <h1>Исполнение годового плана РТ и активность МО</h1>
-                  <p>Накопительный результат региона отделён от работы медицинских организаций за полный месяц.</p>
-                </div>
-                <div className="maxSourceNote">
-                  <small>Актуальность накопительного факта</small>
-                  <strong>07.09.2026</strong>
-                  <span>ГИС ЭЗ РТ / МАХ</span>
+                  <p className="eyebrow">МАХ</p>
+                  <h1>Официальный результат РТ и оперативный мониторинг МО</h1>
+                  <p>Официальный накопительный результат не используется в недельной или месячной динамике МО.</p>
                 </div>
               </div>
 
-              <div className="maxRegionalCards">
+              <section className="maxOfficialBlock" aria-label="Официальные данные Республики Татарстан по МАХ">
+                <header>
+                  <div>
+                    <p className="eyebrow">ОФИЦИАЛЬНО ПО РЕСПУБЛИКЕ ТАТАРСТАН</p>
+                    <h2>Накопительный результат за 2026 год</h2>
+                  </div>
+                  <span>Источник: ГИС ЭЗ РТ / МАХ</span>
+                </header>
+              <div className="maxRegionalCards maxOfficialCards">
                 {liveIndicators
                   .filter((item) => ["visitMax", "tmkMax", "elnMax"].includes(item.id))
                   .sort((a, b) => ["visitMax", "tmkMax", "elnMax"].indexOf(a.id) - ["visitMax", "tmkMax", "elnMax"].indexOf(b.id))
@@ -5036,7 +5067,7 @@ export default function Home() {
                           )
                         }
                       >
-                        <small>Республика Татарстан · накопительно</small>
+                        <small>Официальный факт РТ · накопительно за 2026 год</small>
                         <h2>{title}</h2>
                         <strong>{format(item.fact, 0)}</strong>
                         <p>Годовой план <b>{format(item.plan ?? 0, 0)}</b></p>
@@ -5046,7 +5077,16 @@ export default function Home() {
                     );
                   })}
               </div>
+              </section>
 
+              <section className="maxOperationalBlock" aria-label="Оперативный мониторинг медицинских организаций">
+                <header>
+                  <div>
+                    <p className="eyebrow">ОПЕРАТИВНО ПО МО</p>
+                    <h2>Недельная и месячная активность</h2>
+                  </div>
+                  <span>ТМК и ЛВН: ориентир РТ 10 000 в месяц. План МО не установлен.</span>
+                </header>
               <div className="maxServiceSwitch" role="group" aria-label="Сервис МАХ">
                 <button className={maxService === "visit" ? "active" : ""} onClick={() => setMaxService("visit")}>Запись к врачу</button>
                 <button className={maxService === "tmk" ? "active" : ""} onClick={() => setMaxService("tmk")}>ТМК</button>
@@ -5188,6 +5228,7 @@ export default function Home() {
               <details className="maxMethod"><summary>Источник и ограничения текущей версии</summary><p><b>ТМК и ЛВН:</b> файл «ТМК_МАХ», листы 1–3, разрез по МО. Полный август получен из одинаковых накопительных срезов 31.07 → 31.08.</p><p><b>Запись на приём к врачу:</b> файл «Статистика записей к врачу.xlsx», разрез муниципалитет × месяц. Данные показываются по факту без привязки к медицинским организациям. Сентябрь — текущий неполный месяц.</p><p><b>Важно:</b> годовые планы РТ не применяются к отдельным МО; отсутствие строки не считается нулевой активностью.</p></details>
                 </>
               )}
+              </section>
             </section>
           )}
 
@@ -5414,10 +5455,7 @@ export default function Home() {
                         row,
                         item.collegium,
                       );
-                      const federalAchieved = row.status === "Достигнут";
-                      const status = federalAchieved
-                        ? "achieved"
-                        : regionalStatus;
+                      const status = regionalStatus;
                       const deviation = regionalFileComparable
                         ? federalLowerIsBetter(row)
                           ? plan.value! - regionalFile!.value!
@@ -5439,9 +5477,7 @@ export default function Home() {
                               federal.value !== null
                             ? regional.fact - federal.value
                             : null;
-                      const statusLabel = federalAchieved
-                        ? "Достигнут по федеральному срезу"
-                        : status === "achieved"
+                      const statusLabel = status === "achieved"
                           ? "Выполнен по данным РТ"
                           : status === "notAchieved"
                             ? "Не выполнен"

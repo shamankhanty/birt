@@ -11,7 +11,7 @@ test("МАХ keeps annual regional plans separate from monthly MO activity", () 
   assert.equal(registry.indicators.visitMax.plan.value, 654000);
   assert.equal(registry.indicators.tmkMax.plan.value, 193000);
   assert.equal(registry.indicators.elnMax.plan.value, 99000);
-  assert.match(page, /Накопительный результат региона отделён от работы медицинских организаций за полный месяц/u);
+  assert.match(page, /Официальный накопительный результат не используется в недельной или месячной динамике МО/u);
   assert.match(page, /годовые планы РТ не применяются к отдельным МО/u);
 });
 
