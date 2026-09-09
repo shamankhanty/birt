@@ -9,7 +9,7 @@ import operationalMoRaw from "./operational-mo.json";
 import errorCategoriesRaw from "./error-categories.json";
 import errorOrganizationsRaw from "./error-organizations.json";
 import monthlyMoRaw from "./monthly-mo.json";
-import maxMonthlyVisitsRaw from "./max-monthly-visits.json";
+import maxAppointmentsMunicipalRaw from "./max-appointments-municipal.json";
 import unitDataRaw from "./unit-data.json";
 import organizationStatusRaw from "./organization-status.json";
 import moRegistryRaw from "./mo-registry.json";
@@ -60,13 +60,27 @@ type MaxMonthlyRow = {
   name: string;
   tmk: MaxServiceValue;
   eln: MaxServiceValue;
-  visit: MaxServiceValue;
 };
 type MonthlyMaxSourceRow = {
   name: string;
   june: number | null;
   july: number | null;
   sourceWarning?: string;
+};
+type MaxAppointmentMunicipalData = {
+  name: string;
+  source: string;
+  dimension: "municipality";
+  bindingToMedicalOrganization: false;
+  note: string;
+  months: Array<{ id: string; label: string; complete: boolean }>;
+  totals: Record<string, number>;
+  grandTotal: number;
+  rows: Array<{
+    municipality: string;
+    values: Record<string, number | null>;
+    total: number;
+  }>;
 };
 
 type FederalControlRow = {
@@ -100,7 +114,7 @@ type FederalControlData = {
   agreement: FederalControlRow[];
   collegium: FederalControlRow[];
 };
-const DASHBOARD_VERSION = "5.1.0";
+const DASHBOARD_VERSION = "5.2.0";
 const indicatorRegistry = createIndicatorRegistryRuntime(
   indicatorRegistryRaw as IndicatorRegistryDocument,
 );
@@ -599,21 +613,16 @@ const {
   organizationByMetricAndName: registryOrganizationByMetricAndName,
 } = createMoRegistryRuntime(moRegistry);
 const monthlyMoData = monthlyMoRaw as Record<string, MonthlyMoDataset>;
-const maxMonthlyVisits = maxMonthlyVisitsRaw as { rows: MonthlyMaxSourceRow[] };
+const maxAppointmentsMunicipal = maxAppointmentsMunicipalRaw as MaxAppointmentMunicipalData;
 
 function buildAugustMaxRows(): MaxMonthlyRow[] {
   const tmkRows = (monthlyMoData.tmkMaxCount?.rows ?? []) as MonthlyMaxSourceRow[];
   const elnRows = (monthlyMoData.elnMaxCount?.rows ?? []) as MonthlyMaxSourceRow[];
-  const visitRows = maxMonthlyVisits.rows;
-  const byName = new Map<string, { name: string; tmk?: MonthlyMaxSourceRow; eln?: MonthlyMaxSourceRow; visit?: MonthlyMaxSourceRow }>();
+  const byName = new Map<string, { name: string; tmk?: MonthlyMaxSourceRow; eln?: MonthlyMaxSourceRow }>();
   for (const row of tmkRows) byName.set(moKey(row.name), { name: row.name, tmk: row });
   for (const row of elnRows) {
     const key = moKey(row.name);
     byName.set(key, { ...(byName.get(key) ?? { name: row.name }), eln: row });
-  }
-  for (const row of visitRows) {
-    const key = moKey(row.name);
-    byName.set(key, { ...(byName.get(key) ?? { name: row.name }), visit: row });
   }
   const monthlyValue = (row?: MonthlyMaxSourceRow): MaxServiceValue => {
     if (!row) return { value: null, previous: null, change: null, share: null, status: "missing" };
@@ -628,16 +637,13 @@ function buildAugustMaxRows(): MaxMonthlyRow[] {
       name: cleanMoName(row.name),
       tmk: monthlyValue(row.tmk),
       eln: monthlyValue(row.eln),
-      visit: monthlyValue(row.visit),
     }));
   const tmkTotal = rows.reduce((sum, row) => sum + (row.tmk.value ?? 0), 0);
   const elnTotal = rows.reduce((sum, row) => sum + (row.eln.value ?? 0), 0);
-  const visitTotal = rows.reduce((sum, row) => sum + (row.visit.value ?? 0), 0);
   return rows.map((row) => ({
     ...row,
     tmk: { ...row.tmk, share: row.tmk.value != null && tmkTotal ? (row.tmk.value / tmkTotal) * 100 : null },
     eln: { ...row.eln, share: row.eln.value != null && elnTotal ? (row.eln.value / elnTotal) * 100 : null },
-    visit: { ...row.visit, share: row.visit.value != null && visitTotal ? (row.visit.value / visitTotal) * 100 : null },
   }));
 }
 
@@ -645,7 +651,6 @@ const augustMaxRows = buildAugustMaxRows();
 const augustMaxTotals = {
   tmk: augustMaxRows.reduce((sum, row) => sum + (row.tmk.value ?? 0), 0),
   eln: augustMaxRows.reduce((sum, row) => sum + (row.eln.value ?? 0), 0),
-  visit: augustMaxRows.reduce((sum, row) => sum + (row.visit.value ?? 0), 0),
 };
 const reportingPeriods = resolveReportingPeriods({
   monthlyDatasets: monthlyMoData,
@@ -2500,6 +2505,15 @@ function hearingMetricsForDisplay(
 
 const versionHistory = [
   {
+    version: "5.2.0",
+    date: "08.09.2026",
+    items: [
+      "Добавлен отдельный фактический блок «Запись на приём к врачу через МАХ» по муниципалитетам за апрель–сентябрь 2026 года.",
+      "Привязка записи к медицинским организациям не выполняется: источник содержит только муниципалитет и месяц.",
+      "Из помесячной таблицы МО в разделе МАХ убрана запись к врачу; на уровне МО сохранены только ТМК и ЛВН с подтверждённой привязкой.",
+    ],
+  },
+  {
     version: "5.0.0",
     date: "08.09.2026",
     items: [
@@ -3134,9 +3148,9 @@ export default function Home() {
   const visibleMaxRows = useMemo(() => {
     if (maxMonth === "2026-07") return [] as MaxMonthlyRow[];
     const rows = [...augustMaxRows];
-    const total = (row: MaxMonthlyRow) => (row.tmk.value ?? 0) + (row.eln.value ?? 0) + (row.visit.value ?? 0);
-    const missing = (row: MaxMonthlyRow) => [row.tmk, row.eln, row.visit].some((item) => item.status === "missing");
-    const zero = (row: MaxMonthlyRow) => [row.tmk, row.eln, row.visit].filter((item) => item.status !== "unavailable").every((item) => item.value === 0);
+    const total = (row: MaxMonthlyRow) => (row.tmk.value ?? 0) + (row.eln.value ?? 0);
+    const missing = (row: MaxMonthlyRow) => [row.tmk, row.eln].some((item) => item.status === "missing");
+    const zero = (row: MaxMonthlyRow) => [row.tmk, row.eln].filter((item) => item.status !== "unavailable").every((item) => item.value === 0);
     if (maxFilter === "missing") return rows.filter(missing).sort((a, b) => a.name.localeCompare(b.name, "ru"));
     if (maxFilter === "zero") return rows.filter(zero).sort((a, b) => a.name.localeCompare(b.name, "ru"));
     if (maxFilter === "growth" || maxFilter === "decline") return rows.filter(() => false);
@@ -4952,7 +4966,67 @@ export default function Home() {
 
               <div className="maxMonthlyHead">
                 <div>
-                  <p className="eyebrow">ОСНОВНОЙ БЛОК</p>
+                  <p className="eyebrow">ЗАПИСЬ НА ПРИЁМ К ВРАЧУ</p>
+                  <h2>Фактические записи через МАХ по муниципалитетам</h2>
+                  <p>Показываются данные источника как есть: муниципалитет × месяц. Привязка к медицинским организациям не выполняется.</p>
+                </div>
+              </div>
+
+              <div className="maxRegionalCards">
+                {maxAppointmentsMunicipal.months.map((month) => (
+                  <article key={month.id}>
+                    <small>{month.complete ? "Полный месяц" : "Текущий неполный месяц"}</small>
+                    <h2>{month.label}</h2>
+                    <strong>{format(maxAppointmentsMunicipal.totals[month.id] ?? 0, 0)}</strong>
+                    <p>фактических записей</p>
+                  </article>
+                ))}
+              </div>
+
+              <div className="maxTableWrap">
+                <table className="maxTable">
+                  <thead>
+                    <tr>
+                      <th>Муниципалитет</th>
+                      {maxAppointmentsMunicipal.months.map((month) => (
+                        <th key={month.id}>{month.label.replace(" 2026", "")}</th>
+                      ))}
+                      <th>Итого</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {maxAppointmentsMunicipal.rows.map((row) => (
+                      <tr key={row.municipality}>
+                        <td><strong>{row.municipality}</strong></td>
+                        {maxAppointmentsMunicipal.months.map((month) => (
+                          <td key={month.id}>
+                            {row.values[month.id] == null ? "—" : format(row.values[month.id] ?? 0, 0)}
+                          </td>
+                        ))}
+                        <td><strong>{format(row.total, 0)}</strong></td>
+                      </tr>
+                    ))}
+                  </tbody>
+                  <tfoot>
+                    <tr>
+                      <td>Итого по РТ</td>
+                      {maxAppointmentsMunicipal.months.map((month) => (
+                        <td key={month.id}><strong>{format(maxAppointmentsMunicipal.totals[month.id] ?? 0, 0)}</strong></td>
+                      ))}
+                      <td><strong>{format(maxAppointmentsMunicipal.grandTotal, 0)}</strong></td>
+                    </tr>
+                  </tfoot>
+                </table>
+              </div>
+
+              <div className="maxDataGap">
+                <strong>Без привязки к МО</strong>
+                <span>Источник не содержит идентификатор медицинской организации. Поэтому значения не распределяются между поликлиниками и больницами и не участвуют в рейтинге МО.</span>
+              </div>
+
+              <div className="maxMonthlyHead">
+                <div>
+                  <p className="eyebrow">ТМК И ЛВН</p>
                   <h2>Работа МО за полный месяц</h2>
                   <p>Август рассчитан как разность накопительных срезов на 31.08 и 31.07. Накопительные значения в месячную таблицу не подставляются.</p>
                 </div>
@@ -4987,18 +5061,17 @@ export default function Home() {
               ) : (
                 <div className="maxTableWrap">
                   <table className="maxTable">
-                    <thead><tr><th>МО</th><th>Запись к врачу</th><th>к июлю</th><th>ТМК</th><th>к июлю</th><th>ЛВН</th><th>к июлю</th></tr></thead>
+                    <thead><tr><th>МО</th><th>ТМК</th><th>к июлю</th><th>ЛВН</th><th>к июлю</th></tr></thead>
                     <tbody>
                       {visibleMaxRows.map((row) => (
                         <tr key={row.name} onClick={() => setMaxSelectedMo(row.name)}>
                           <td><strong>{row.name}</strong></td>
-                          <td>{renderMaxValue(row.visit)}</td><td>—</td>
                           <td>{renderMaxValue(row.tmk)}</td><td>—</td>
                           <td>{renderMaxValue(row.eln)}</td><td>—</td>
                         </tr>
                       ))}
                     </tbody>
-                    <tfoot><tr><td>Итого по сопоставимым строкам</td><td>{format(augustMaxTotals.visit, 0)}</td><td>—</td><td>{format(augustMaxTotals.tmk, 0)}</td><td>—</td><td>{format(augustMaxTotals.eln, 0)}</td><td>—</td></tr></tfoot>
+                    <tfoot><tr><td>Итого по сопоставимым строкам</td><td>{format(augustMaxTotals.tmk, 0)}</td><td>—</td><td>{format(augustMaxTotals.eln, 0)}</td><td>—</td></tr></tfoot>
                   </table>
                 </div>
               )}
@@ -5007,16 +5080,15 @@ export default function Home() {
                 <div className="maxMoCard">
                   <header><div><small>КАРТОЧКА МО · АВГУСТ 2026</small><h2>{selectedMaxRow.name}</h2></div><button onClick={() => setMaxSelectedMo(null)}>Закрыть</button></header>
                   <div className="maxMoMetrics">
-                    <article><small>Запись к врачу</small>{renderMaxValue(selectedMaxRow.visit)}</article>
                     <article><small>ТМК</small>{renderMaxValue(selectedMaxRow.tmk)}</article>
                     <article><small>ЛВН после ТМК</small>{renderMaxValue(selectedMaxRow.eln)}</article>
                   </div>
                   <p><b>Управленческий вывод:</b> доступен один полный месяц; вывод о росте или снижении будет сформирован после появления сопоставимого июля.</p>
-                  <div className="maxHistory"><span>Июль 2026 · нет сопоставимого среза на 30.06</span><span>Август 2026 · запись к врачу {selectedMaxRow.visit.value == null ? "нет данных" : format(selectedMaxRow.visit.value, 0)} · ТМК {selectedMaxRow.tmk.value == null ? "нет данных" : format(selectedMaxRow.tmk.value, 0)} · ЛВН {selectedMaxRow.eln.value == null ? "нет данных" : format(selectedMaxRow.eln.value, 0)}</span></div>
+                  <div className="maxHistory"><span>Июль 2026 · нет сопоставимого среза на 30.06</span><span>Август 2026 · ТМК {selectedMaxRow.tmk.value == null ? "нет данных" : format(selectedMaxRow.tmk.value, 0)} · ЛВН {selectedMaxRow.eln.value == null ? "нет данных" : format(selectedMaxRow.eln.value, 0)}</span></div>
                 </div>
               )}
 
-              <details className="maxMethod"><summary>Источник и ограничения текущей версии</summary><p><b>ТМК и ЛВН:</b> файл «ТМК_МАХ», листы 1–3, разрез по МО. Полный август получен из одинаковых накопительных срезов 31.07 → 31.08.</p><p><b>Запись к врачу:</b> лист 4. В исходнике технический столбец называется «Количество записей к врачу на телеконсультацию»; в интерфейсе используется утверждённое управленческое название. Для июля нужен срез на 30.06, которого в проверенных архивах нет.</p><p><b>Важно:</b> годовые планы РТ не применяются к отдельным МО; отсутствие строки не считается нулевой активностью.</p></details>
+              <details className="maxMethod"><summary>Источник и ограничения текущей версии</summary><p><b>ТМК и ЛВН:</b> файл «ТМК_МАХ», листы 1–3, разрез по МО. Полный август получен из одинаковых накопительных срезов 31.07 → 31.08.</p><p><b>Запись на приём к врачу:</b> файл «Статистика записей к врачу.xlsx», разрез муниципалитет × месяц. Данные показываются по факту без привязки к медицинским организациям. Сентябрь — текущий неполный месяц.</p><p><b>Важно:</b> годовые планы РТ не применяются к отдельным МО; отсутствие строки не считается нулевой активностью.</p></details>
             </section>
           )}
 
