@@ -31,6 +31,18 @@ jobs:
       - name: Install dependencies
         run: npm ci --no-audit --no-fund
 
+      - name: Prepare executable scripts
+        run: chmod +x scripts/*.sh scripts/pipeline/*.sh 2>/dev/null || true
+
+      - name: Validate calculations and metadata
+        run: npm run validate:refactor
+
+      - name: Validate staging adapters
+        run: python3 scripts/pipeline/adapter_selftest.py
+
+      - name: Run regression tests
+        run: npm test
+
       - name: Build single-file static dashboard
         run: |
           rm -rf _site
@@ -38,6 +50,11 @@ jobs:
           OFFLINE_OUTPUT_DIR=_site OFFLINE_BASENAME=index node scripts/build-offline.mjs
           rm -f _site/index.zip
           touch _site/.nojekyll
+
+      - name: Verify Pages artifact
+        run: |
+          test -s _site/index.html
+          grep -q '5.2.1' _site/index.html
 
       - name: Configure GitHub Pages
         uses: actions/configure-pages@v5

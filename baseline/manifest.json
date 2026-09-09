@@ -1,6 +1,6 @@
 {
   "schemaVersion": 2,
-  "baselineVersion": "5.2.0",
+  "baselineVersion": "5.2.1",
   "baselineDate": "2026-09-09",
   "previousBaseline": {
     "version": "4.6.0",
@@ -9,14 +9,14 @@
     "handoffZipSha256": "90003a0098165ce484118a8bd661dc03e9471c5759a88dfb5e806800ce7df8b9",
     "manifest": "baseline/reference-v4.6.0-manifest.json"
   },
-  "changeClass": "MAX doctor appointments by municipality without MO attribution",
+  "changeClass": "navigation labels and GitHub Pages release pipeline",
   "protectedData": {
     "app/electronic-waybill-weekly.json": "a9945a61d9cc97bd2c5868ddff76c24875dec8e991035e650ddb4af4561d8947",
     "app/electronic-waybill.json": "d682decfa448f6fd17c8df1fdcf088b105cff03080daf029849a4d039c638dbc",
     "app/error-categories.json": "162a381a800ab9ad9e481402790a7330ec3ffa14d99ce9e87486e4537621fb3c",
     "app/federal-control.json": "2ff15b02895f40f80cc230471f558158c377503d9ba92c144e4ce379e381cedc",
-    "app/hearing-snapshots.json": "c6e59e98609e54926eaa6853368096662e635a18641fdf0f976110ea6d44c1ce",
-    "app/mo-data.json": "46d7cb2b21e329510fdd810c9305542d22f57c6f8615019ed7c54a7501466a7f",
+    "app/hearing-snapshots.json": "4e6f494e413e2003e6d24c7492e79cbcd67837f31ba01565a5c2fac42a8b5871",
+    "app/mo-data.json": "749d38d936a9cfd3197d4be2faa31e9087aad928f85a6b8bc1e32a46c6648961",
     "app/mo-detail-oids.json": "9d1d6c709402c37e36fbc47fce640accae881cf0eb1b5602ce6ae6be7d83406c",
     "app/mo-details.json": "82e9392cb61d63a9e616606c9de4b5463c2d1e423682f37c629f1f1b323be3a6",
     "app/mo-registry.json": "62202e489fced8a93c40867f04f5b3a021030cf4da1b0d0da6ce3a8cff088ea3",
@@ -32,16 +32,16 @@
     "app/max-appointments-municipal.json": "69f690e62514706254d6f5b08cd694ae91bae6349eb14e653d47bcde89f63c17"
   },
   "protectedRules": {
-    "config/indicator-registry.json": "ff138cf73b19022089603d0cf8c4036ab1e3d14e1bfd74e3892e841db49dac58",
+    "config/indicator-registry.json": "f7542c17ea3a23df4d9deceb66067d2efb66e4b267a65b784264770b382f2121",
     "app/mo-registry.json": "62202e489fced8a93c40867f04f5b3a021030cf4da1b0d0da6ce3a8cff088ea3",
-    "app/hearing-snapshots.json": "c6e59e98609e54926eaa6853368096662e635a18641fdf0f976110ea6d44c1ce"
+    "app/hearing-snapshots.json": "4e6f494e413e2003e6d24c7492e79cbcd67837f31ba01565a5c2fac42a8b5871"
   },
   "stateFiles": {
-    "STATE.md": "e25d9ea11cecd41a6b4d17a19d381a2d26f9df2ec1ded9e8db0b5dfa0d69727b",
+    "STATE.md": "3621035ba5df66f85a973a2f5ae39bacd6bc36dadd310d3bd0f9e758e6d5f1e8",
     "OPEN_ISSUES.md": "953e32a88b980681e02f9753a4d78c6c8fbed19b98a8b54d757d778ea4b7d626"
   },
   "keyCode": {
-    "app/page.tsx": "0c52d4cad561d2f5123f559865c64457de5bd25d3d99d4430440c7cb793ee700",
+    "app/page.tsx": "629aea4963bb669e419b1579e092607a93da913d8532df67c46bdec7404e5e29",
     "app/globals.css": "e92208b0ecb59053a1ee4ee74801761f32fba64e15e2168fc8e9390a30186ad2",
     "lib/calculation-engine.js": "2addca9323803eb45f66fca94fe78a72c4d77eed53c7bd05c224dd9aa9f2f0e7",
     "lib/indicator-registry.js": "484857b41858c082fad05172793ff24f422008a6178257006d4512b0c12d1996",
@@ -64,5 +64,5 @@
     "fail": 0,
     "warnings": []
   },
-  "note": "v5.2.0 adds factual doctor appointments through MAX by municipality without MO attribution. Validation, staging, production build and the full 133-test suite passed before merge."
+  "note": "v5.2.1 reorganizes navigation and abbreviates MСР/MСС labels without changing approved calculations. GitHub Pages is the sole publication channel."
 }

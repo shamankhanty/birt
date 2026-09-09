@@ -28,8 +28,8 @@ test('error UI exposes category and MO drilldowns without quality-rating wording
 
 test('REMD errors are a primary section and methodology errors stay separate', () => {
   for (const text of [
-    '["remdErrors", "Ошибки РЭМД", "08"]',
-    '["errors", "Ошибки методик", "11"]',
+    '["remdErrors", "Ошибки РЭМД", "07"]',
+    '["errors", "Ошибки методик", "12"]',
     'МО для заслушивания',
   ]) assert.ok(page.includes(text), `missing navigation contract: ${text}`);
 });

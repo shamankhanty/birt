@@ -114,7 +114,7 @@ type FederalControlData = {
   agreement: FederalControlRow[];
   collegium: FederalControlRow[];
 };
-const DASHBOARD_VERSION = "5.2.0";
+const DASHBOARD_VERSION = "5.2.1";
 const indicatorRegistry = createIndicatorRegistryRuntime(
   indicatorRegistryRaw as IndicatorRegistryDocument,
 );
@@ -240,7 +240,7 @@ const baselineIndicators: Indicator[] = [
   {
     id: "birth",
     group: "СЭМД",
-    name: "Доля медицинских свидетельств о рождении относительно актов гражданского состояния",
+    name: "МСР",
     fact: 99.42,
     plan: null,
     unit: "%",
@@ -254,7 +254,7 @@ const baselineIndicators: Indicator[] = [
   {
     id: "death",
     group: "СЭМД",
-    name: "Доля медицинских свидетельств о смерти относительно общего количества актов гражданского состояния",
+    name: "МСС",
     fact: 98.63,
     plan: null,
     unit: "%",
@@ -1782,7 +1782,7 @@ const methodologies: Methodology[] = [
   },
   {
     id: "birth",
-    name: "Доля медицинских свидетельств о рождении относительно актов гражданского состояния",
+    name: "МСР",
     formula:
       "(Электронные свидетельства, зарегистрированные в ФРМСР / акты о рождении) × 100%",
     numerator:
@@ -1794,7 +1794,7 @@ const methodologies: Methodology[] = [
   },
   {
     id: "death",
-    name: "Доля медицинских свидетельств о смерти относительно актов гражданского состояния",
+    name: "МСС",
     formula:
       "(Электронные свидетельства, зарегистрированные в ФРМСС / акты о смерти) × 100%",
     numerator:
@@ -4557,18 +4557,18 @@ export default function Home() {
             </header>
             {[
               ["unified", "Расширенная сводка", "01"],
-              ["federal", "Показатели на контроле РФ", "02"],
-              ["matrix", "Показатели", "03"],
-              ["max", "МАХ", "04"],
-              ["hearings", "МО для заслушивания", "05"],
+              ["matrix", "Показатели", "02"],
+              ["ranking", "Рейтинг медицинских организаций", "03"],
+              ["hearings", "МО для заслушивания", "04"],
+              ["max", "МАХ", "05"],
               ["waybill", "Электронный путевой лист", "06"],
-              ["remdErrors", "Ошибки РЭМД", "08"],
+              ["remdErrors", "Ошибки РЭМД", "07"],
+              ["divider", "В разработке", ""],
+              ["federal", "Показатели на контроле РФ", "08"],
               ["methods", "Методики расчёта", "09"],
               ["history", "История обновлений", "10"],
-              ["divider", "В разработке", ""],
-              ["ranking", "Рейтинг медицинских организаций", "04"],
-              ["semd", "Все виды СЭМД", "07"],
-              ["errors", "Ошибки методик", "11"],
+              ["semd", "Все виды СЭМД", "11"],
+              ["errors", "Ошибки методик", "12"],
             ].map(([id, label, number]) =>
               id === "divider" ? (
                 <div className="mobileSectionDivider" key={id}>
@@ -4645,31 +4645,22 @@ export default function Home() {
                 <span>01</span> Расширенная сводка
               </button>
               <button
-                className={tab === "federal" ? "active" : ""}
-                onClick={() => {
-                  setTab("federal");
-                  setShowMatrixSections(false);
-                }}
-              >
-                <span>02</span> Показатели на контроле РФ
-              </button>
-              <button
                 className={tab === "matrix" ? "active" : ""}
                 onClick={() => {
                   setTab("matrix");
                   setShowMatrixSections(false);
                 }}
               >
-                <span>03</span> Показатели
+                <span>02</span> Показатели
               </button>
               <button
-                className={tab === "max" ? "active" : ""}
+                className={tab === "ranking" ? "active" : ""}
                 onClick={() => {
-                  setTab("max");
+                  setTab("ranking");
                   setShowMatrixSections(false);
                 }}
               >
-                <span>04</span> МАХ
+                <span>03</span> Рейтинг медицинских организаций
               </button>
               <button
                 className={tab === "hearings" ? "active" : ""}
@@ -4678,13 +4669,22 @@ export default function Home() {
                   setShowMatrixSections(false);
                 }}
               >
-                <span>05</span> МО для заслушивания{" "}
+                <span>04</span> МО для заслушивания{" "}
                 <b>
                   {
                     hearingRows.filter((row) => row.level === "mandatory")
                       .length
                   }
                 </b>
+              </button>
+              <button
+                className={tab === "max" ? "active" : ""}
+                onClick={() => {
+                  setTab("max");
+                  setShowMatrixSections(false);
+                }}
+              >
+                <span>05</span> МАХ
               </button>
               <button
                 className={tab === "waybill" ? "active" : ""}
@@ -4702,10 +4702,22 @@ export default function Home() {
                   setShowMatrixSections(false);
                 }}
               >
-                <span>08</span> Ошибки РЭМД
+                <span>07</span> Ошибки РЭМД
+              </button>
+              <div className="sideDevelopment">
+                <span>В разработке</span>
+              </div>
+              <button
+                className={`developmentSection ${tab === "federal" ? "active" : ""}`}
+                onClick={() => {
+                  setTab("federal");
+                  setShowMatrixSections(false);
+                }}
+              >
+                <span>08</span> Показатели на контроле РФ
               </button>
               <button
-                className={tab === "methods" ? "active" : ""}
+                className={`developmentSection ${tab === "methods" ? "active" : ""}`}
                 onClick={() => {
                   setTab("methods");
                   setShowMatrixSections(false);
@@ -4714,25 +4726,13 @@ export default function Home() {
                 <span>09</span> Методики расчёта
               </button>
               <button
-                className={tab === "history" ? "active" : ""}
+                className={`developmentSection ${tab === "history" ? "active" : ""}`}
                 onClick={() => {
                   setTab("history");
                   setShowMatrixSections(false);
                 }}
               >
                 <span>10</span> История обновлений
-              </button>
-              <div className="sideDevelopment">
-                <span>В разработке</span>
-              </div>
-              <button
-                className={`developmentSection ${tab === "ranking" ? "active" : ""}`}
-                onClick={() => {
-                  setTab("ranking");
-                  setShowMatrixSections(false);
-                }}
-              >
-                <span>04</span> Рейтинг медицинских организаций
               </button>
               <button
                 className={`developmentSection ${tab === "semd" ? "active" : ""}`}
@@ -4741,7 +4741,7 @@ export default function Home() {
                   setShowMatrixSections(false);
                 }}
               >
-                <span>07</span> Все виды СЭМД
+                <span>11</span> Все виды СЭМД
               </button>
               <button
                 className={`developmentSection ${tab === "errors" ? "active" : ""}`}
@@ -4750,7 +4750,7 @@ export default function Home() {
                   setShowMatrixSections(false);
                 }}
               >
-                <span>11</span> Ошибки методик <b>{calcErrors.length}</b>
+                <span>12</span> Ошибки методик <b>{calcErrors.length}</b>
               </button>
               <div className="sideFoot">
                 <p>Версия {DASHBOARD_VERSION}</p>

@@ -156,8 +156,8 @@ def registry_metric(metric,path,start,name,title,date):
     mo[metric]=rows_dataset(title,99,'%',date,raw,mo.get(metric,{}),period=f'01.01–{date}')
     details[metric]=det
     return sum(v[1] for v in agg.values()),sum(v[0] for v in agg.values())
-birth=registry_metric('birth',one('*рождении*17.08*.xlsx'),3,'name','Доля медицинских свидетельств о рождении относительно актов гражданского состояния','17.08.2026')
-death=registry_metric('death',one('*смерти*17.08*.xlsx'),4,'name','Доля медицинских свидетельств о смерти относительно актов гражданского состояния','17.08.2026')
+birth=registry_metric('birth',one('*рождении*17.08*.xlsx'),3,'name','МСР','17.08.2026')
+death=registry_metric('death',one('*смерти*17.08*.xlsx'),4,'name','МСС','17.08.2026')
 
 # Краткий ввод: общий, амбулаторный и стационарный блоки. Меньше — лучше.
 sw=load_workbook(one('*краткого ввода*17.08*.xlsx'),read_only=True,data_only=True).active

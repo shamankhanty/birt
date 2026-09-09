@@ -21,7 +21,7 @@ test("all twelve heard organizations have immutable restored baselines",()=>{
 test("hearing UI compares current metrics with the restored baseline",()=>{
   assert.match(source,/hearingSnapshotSummary\(row\)/);
   assert.match(source,/Контрольная точка/);
-  assert.match(source,/DASHBOARD_VERSION\s*=\s*"5\.2\.0"/);
+  assert.match(source,/DASHBOARD_VERSION\s*=\s*"5\.2\.1"/);
 });
 
 test("missing source data is neutral in hearing influence",()=>{
