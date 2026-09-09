@@ -37,6 +37,15 @@ jobs:
       - name: Install Python validation dependencies
         run: python3 -m pip install --disable-pip-version-check openpyxl
 
+      - name: Apply visible UI release fix
+        run: python3 scripts/fix_extended_status_button.py
+
+      - name: Verify requested visible controls in source
+        run: |
+          grep -Fq 'onClick={() => setExtendedStatusFilter("exceptContract")}' app/page.tsx
+          grep -Fq 'className="maxServiceSwitch"' app/page.tsx
+          ! grep -q 'regionalMaxPanel' app/page.tsx
+
       - name: Validate calculations and metadata
         run: npm run validate:refactor
 
@@ -58,6 +67,8 @@ jobs:
         run: |
           test -s _site/index.html
           grep -q '5.2.2' _site/index.html
+          grep -q 'exceptContract' _site/index.html
+          grep -q 'maxServiceSwitch' _site/index.html
 
       - name: Configure GitHub Pages
         uses: actions/configure-pages@v5

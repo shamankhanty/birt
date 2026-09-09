@@ -5,9 +5,11 @@ import fs from "node:fs";
 const page = fs.readFileSync(new URL("../app/page.tsx", import.meta.url), "utf8");
 const css = fs.readFileSync(new URL("../app/globals.css", import.meta.url), "utf8");
 
-test("extended summary has all-except-contract filter", () => {
-  assert.match(page, /exceptContract/u);
-  assert.match(page, /Все, кроме «В контракте»/u);
+test("extended summary exposes a visible all-except-contract button", () => {
+  assert.match(
+    page,
+    /aria-label="Статус показателя"[\s\S]*?setExtendedStatusFilter\("all"\)[\s\S]*?setExtendedStatusFilter\("exceptContract"\)[\s\S]*?Все, кроме «В контракте»[\s\S]*?setExtendedStatusFilter\("achieved"\)/u,
+  );
 });
 
 test("duplicate MAX regional block is removed", () => {
