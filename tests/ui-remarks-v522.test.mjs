@@ -24,9 +24,23 @@ test("MAX has one active service and compact monthly cards", () => {
   assert.match(page, /setMaxService\("eln"\)/u);
   assert.match(page, /maxMonthCards/u);
   assert.match(css, /v5\.2\.2 compact MAX and service selector/u);
-  assert.match(page, /const DASHBOARD_VERSION = "5\.2\.3"/u);
+  assert.match(page, /const DASHBOARD_VERSION = "5\.2\.4"/u);
   assert.ok(page.indexOf('["max", "МАХ", "05"]') > page.indexOf('["divider", "В разработке", ""]'));
   assert.ok(page.includes('developmentSection ${tab === "max"'));
   assert.doesNotMatch(page, /className=\{tab === "max" \? "active" : ""\}/u);
   assert.match(css, /v5\.2\.3 hearing TOP-10 readability/u);
+});
+
+test("hearing card uses the fixed management grouping", () => {
+  for (const label of [
+    "СЭМД относительно случаев / обращений",
+    "ТВСП",
+    "Врачи / электронная подпись / 500+",
+    "ЕПГУ и цифровые сервисы",
+    "Прочие количественные / технологические показатели",
+    "Справочные / неприменимые / без сопоставимого плана / без необходимых данных",
+  ]) assert.match(page, new RegExp(label, "u"));
+  assert.match(page, /function hearingMetricGroupsForDisplay/u);
+  assert.match(page, /metric\.regionalContribution/u);
+  assert.match(page, /<section className="hearingMetricGroup"/u);
 });

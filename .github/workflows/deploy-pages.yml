@@ -37,22 +37,14 @@ jobs:
       - name: Install Python validation dependencies
         run: python3 -m pip install --disable-pip-version-check openpyxl
 
-      - name: Preserve visible extended-summary filter fix
-        run: python3 scripts/fix_extended_status_button.py
-
-      - name: Apply v5.2.3 changes
-        run: python3 scripts/apply_v523.py
-
-      - name: Verify requested v5.2.3 controls in source
+      - name: Verify requested v5.2.4 controls in source
         run: |
-          grep -Fq 'const DASHBOARD_VERSION = "5.2.3"' app/page.tsx
-          grep -Fq 'onClick={() => setExtendedStatusFilter("exceptContract")}' app/page.tsx
-          grep -Fq 'className="maxServiceSwitch"' app/page.tsx
-          ! grep -q 'regionalMaxPanel' app/page.tsx
-          grep -Fq 'developmentSection ${tab === "max"' app/page.tsx
+          grep -Fq 'const DASHBOARD_VERSION = "5.2.4"' app/page.tsx
+          grep -Fq 'function hearingDisplayGroup(metric: HearingMetric)' app/page.tsx
+          grep -Fq 'СЭМД относительно случаев / обращений' app/page.tsx
+          grep -Fq 'Справочные / неприменимые / без сопоставимого плана / без необходимых данных' app/page.tsx
           grep -Fq '01.08–31.08.2026' app/error-categories.json
           grep -Fq '785939' app/error-categories.json
-          grep -Fq 'v5.2.3 hearing TOP-10 readability' app/globals.css
 
       - name: Validate calculations and metadata
         run: npm run validate:refactor
@@ -74,25 +66,12 @@ jobs:
       - name: Verify Pages artifact
         run: |
           test -s _site/index.html
-          grep -q '5.2.3' _site/index.html
-          grep -q 'exceptContract' _site/index.html
-          grep -q 'maxServiceSwitch' _site/index.html
+          grep -q '5.2.4' _site/index.html
+          grep -q 'hearingMetricGroup' _site/index.html
           # The offline compiler serializes the en dash as \u2013 in embedded JSON.
           grep -Fq '01.08\u201331.08.2026' _site/index.html
           grep -Eq '785.?939|785939' _site/index.html
           grep -q 'hearingTopTen' _site/index.html
-
-      - name: Commit verified v5.2.3 source changes
-        run: |
-          git config user.name "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add app/page.tsx app/globals.css app/error-categories.json app/error-organizations.json \
-                  README.md STATE.md OPEN_ISSUES.md baseline/manifest.json \
-                  tests/error-mo-drilldown.test.mjs tests/ui-remarks-v522.test.mjs
-          if ! git diff --cached --quiet; then
-            git commit -m "v5.2.3: apply requested UI and monthly REMD changes"
-            git push origin main
-          fi
 
       - name: Configure GitHub Pages
         uses: actions/configure-pages@v5

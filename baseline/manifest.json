@@ -1,6 +1,6 @@
 {
   "schemaVersion": 2,
-  "baselineVersion": "5.2.3",
+  "baselineVersion": "5.2.4",
   "baselineDate": "2026-09-09",
   "previousBaseline": {
     "version": "4.6.0",
@@ -9,12 +9,12 @@
     "handoffZipSha256": "90003a0098165ce484118a8bd661dc03e9471c5759a88dfb5e806800ce7df8b9",
     "manifest": "baseline/reference-v4.6.0-manifest.json"
   },
-  "changeClass": "UI readability, MAX navigation placement, full-August REMD slice",
+  "changeClass": "МО hearing-card grouping, verified regional facts, deterministic Pages CI",
   "protectedData": {
     "app/electronic-waybill-weekly.json": "a9945a61d9cc97bd2c5868ddff76c24875dec8e991035e650ddb4af4561d8947",
     "app/electronic-waybill.json": "d682decfa448f6fd17c8df1fdcf088b105cff03080daf029849a4d039c638dbc",
     "app/error-categories.json": "4e374666ad150df70e725dd604ec2dee003468aa85505c86e65989f2ce54acb1",
-    "app/federal-control.json": "2ff15b02895f40f80cc230471f558158c377503d9ba92c144e4ce379e381cedc",
+    "app/federal-control.json": "41ebbf8d58d4aa921b1b0dcbc8a6cd870f9f23df6267476a822d8370d228c5cc",
     "app/hearing-snapshots.json": "4e6f494e413e2003e6d24c7492e79cbcd67837f31ba01565a5c2fac42a8b5871",
     "app/mo-data.json": "749d38d936a9cfd3197d4be2faa31e9087aad928f85a6b8bc1e32a46c6648961",
     "app/mo-detail-oids.json": "9d1d6c709402c37e36fbc47fce640accae881cf0eb1b5602ce6ae6be7d83406c",
@@ -37,12 +37,12 @@
     "app/hearing-snapshots.json": "4e6f494e413e2003e6d24c7492e79cbcd67837f31ba01565a5c2fac42a8b5871"
   },
   "stateFiles": {
-    "STATE.md": "e54b58439c2ef354f6ef5a1e1144f636eb44a6258d3af982f46f6b93c9730515",
-    "OPEN_ISSUES.md": "beb03831b7519e5667d38668b37c0af9d4de298f078a15cea81c584b127192c1"
+    "STATE.md": "45cf9952141071823a035dec6897468d85460c5f8067ae24395f8e4a42510ca5",
+    "OPEN_ISSUES.md": "92353031680572722c989344b6812a0c45ecfb23848a13356c9fa83ea05fcc6b"
   },
   "keyCode": {
-    "app/page.tsx": "088a5e785604db3e92dbee994336e010bf6104b7e97a360c55f88c2a80653d9a",
-    "app/globals.css": "d4d90d9204a51831815c4125c0a87cb0bfadc34a60d2468e92c4c61ab272d169",
+    "app/page.tsx": "5ca65161e3b4f14a6e696054ff203b1127fde99fee1575a974139cf710669c03",
+    "app/globals.css": "c4fcd6d9d1ed35ee31bf329b3d2eb87be73989e51da4a7aed8450403d78b88fb",
     "lib/calculation-engine.js": "2addca9323803eb45f66fca94fe78a72c4d77eed53c7bd05c224dd9aa9f2f0e7",
     "lib/indicator-registry.js": "484857b41858c082fad05172793ff24f422008a6178257006d4512b0c12d1996",
     "lib/mo-registry.js": "dcc8274ab055d97d13bd89679af845a236fb4fa8a1dfb506ededfbfa6a2b7918",
@@ -52,7 +52,7 @@
     "scripts/weekly_update_pipeline.py": "63604915c77920e7dbb2f913d09c917e95b506d3671917f4d5031bc6f1221903"
   },
   "regression": {
-    "nodeTests": "136/136 PASS",
+    "nodeTests": "pending v5.2.4 verification",
     "validation": "15/15 PASS",
     "calculationEquivalence": "38/38 PASS",
     "metadataEquivalence": "38/38 PASS",
@@ -64,5 +64,5 @@
     "fail": 0,
     "warnings": []
   },
-  "note": "v5.2.3: larger TOP-10 text; MAX last in Development; REMD errors use full August 2026. No error share is calculated without denominator."
+  "note": "v5.2.4: fixed management grouping in МО для заслушивания; only confirmed facts №22 and №39.1 loaded; Pages CI no longer mutates sources."
 }

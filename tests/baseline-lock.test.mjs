@@ -8,8 +8,8 @@ const reference = JSON.parse(fs.readFileSync("baseline/reference-v4.6.0-manifest
 const snapshot = JSON.parse(fs.readFileSync("baseline/semantic-snapshot.json", "utf8"));
 const sha256 = (path) => crypto.createHash("sha256").update(fs.readFileSync(path)).digest("hex");
 
-test("current baseline lock identifies approved v5.2.3 and its v4.6.0 reference", () => {
-  assert.equal(manifest.baselineVersion, "5.2.3");
+test("current baseline lock identifies approved v5.2.4 and its v4.6.0 reference", () => {
+  assert.equal(manifest.baselineVersion, "5.2.4");
   assert.equal(manifest.previousBaseline.version, "4.6.0");
   assert.equal(reference.baselineVersion, "4.6.0");
   assert.equal(reference.baselineCommit, "c50be9e1a04b6aa0641e0dd791c2b9238caa15d1");
