@@ -77,7 +77,8 @@ jobs:
           grep -q '5.2.3' _site/index.html
           grep -q 'exceptContract' _site/index.html
           grep -q 'maxServiceSwitch' _site/index.html
-          grep -q '01.08–31.08.2026' _site/index.html
+          # The offline compiler serializes the en dash as \u2013 in embedded JSON.
+          grep -Fq '01.08\u201331.08.2026' _site/index.html
           grep -Eq '785.?939|785939' _site/index.html
           grep -q 'hearingTopTen' _site/index.html
 
