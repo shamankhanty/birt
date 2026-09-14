@@ -25,6 +25,58 @@ def compact_error_payload(app:Path):
         raise ValueError('error organization breakdown mismatch between canonical files')
     categories.write_text(json.dumps(payload,ensure_ascii=False,indent=2)+'\n',encoding='utf-8')
 
+def _row_key(row:dict):
+    return str(row.get('oid')) if row.get('oid') else str(row.get('name') or '').strip().lower()
+
+def preserve_same_slice_dynamics(canonical_app:Path,staging_app:Path):
+    """Make a replay of the same source cut idempotent without losing prior-week dynamics."""
+    cumulative_warning='Накопительное значение уменьшилось; корректировка источника требует уточнения.'
+    for name in ('mo-data.json','operational-mo.json','organization-status.json'):
+        base_path=canonical_app/name; staged_path=staging_app/name
+        if not base_path.exists() or not staged_path.exists(): continue
+        base=json.loads(base_path.read_text(encoding='utf-8'))
+        staged=json.loads(staged_path.read_text(encoding='utf-8'))
+        changed=False
+        for metric,new_ds in staged.items():
+            old_ds=base.get(metric)
+            if not isinstance(new_ds,dict) or not isinstance(old_ds,dict): continue
+            if not (new_ds.get('date')==old_ds.get('date') and new_ds.get('period')==old_ds.get('period')): continue
+            old_rows={_row_key(r):r for r in old_ds.get('rows',[]) if isinstance(r,dict)}
+            for row in new_ds.get('rows',[]):
+                old=old_rows.get(_row_key(row))
+                if not old: continue
+                previous=old.get('previous')
+                row['previous']=previous
+                fact=row.get('fact')
+                same_fact=fact==old.get('fact')
+                row['trend']=old.get('trend') if same_fact else (None if previous is None or fact is None else fact-previous)
+                if name=='operational-mo.json':
+                    if same_fact:
+                        if 'sourceWarning' in old: row['sourceWarning']=old['sourceWarning']
+                        else: row.pop('sourceWarning',None)
+                    elif previous is not None and fact is not None and fact < previous:
+                        row['sourceWarning']=cumulative_warning
+                    elif row.get('sourceWarning')==cumulative_warning:
+                        row.pop('sourceWarning',None)
+                changed=True
+        if changed:
+            staged_path.write_text(json.dumps(staged,ensure_ascii=False,indent=2)+'\n',encoding='utf-8')
+    base_path=canonical_app/'preventive-semd-audit.json'; staged_path=staging_app/'preventive-semd-audit.json'
+    if base_path.exists() and staged_path.exists():
+        base=json.loads(base_path.read_text(encoding='utf-8')); staged=json.loads(staged_path.read_text(encoding='utf-8'))
+        old_summary=base.get('summary',{}); new_summary=staged.get('summary',{})
+        same_cut=(old_summary.get('period122')==new_summary.get('period122') and old_summary.get('period228')==new_summary.get('period228'))
+        if same_cut:
+            old_rows={_row_key(r):r for r in base.get('rows',[]) if isinstance(r,dict)}
+            for row in staged.get('rows',[]):
+                old=old_rows.get(_row_key(row))
+                if not old: continue
+                previous=old.get('oldShare')
+                row['oldShare']=previous
+                share=row.get('share')
+                row['change']=old.get('change') if share==old.get('share') else (None if previous is None or share is None else share-previous)
+            staged_path.write_text(json.dumps(staged,ensure_ascii=False,indent=2)+'\n',encoding='utf-8')
+
 def stage(input_dir:Path,output_dir:Path):
     intake=scan(input_dir)
     if intake['summary']['FAIL']:
@@ -56,6 +108,10 @@ def stage(input_dir:Path,output_dir:Path):
         compact_error_payload(output_dir/'app')
     except Exception as e:
         results.append(AdapterResult('error_payload_compaction',['remd_errors'],'FAIL',[],[],{},[],[str(e)]).dict())
+    try:
+        preserve_same_slice_dynamics(ROOT/'app',output_dir/'app')
+    except Exception as e:
+        results.append(AdapterResult('same_slice_dynamics',['weekly_dynamics'],'FAIL',[],[],{},[],[str(e)]).dict())
     after=tree_hashes(output_dir/'app'); changed=sorted(k for k in set(before)|set(after) if before.get(k)!=after.get(k))
     fail=any(x['status']=='FAIL' for x in results); warning=any(x['status']=='WARNING' for x in results)
     validation_dir=output_dir/'validation'

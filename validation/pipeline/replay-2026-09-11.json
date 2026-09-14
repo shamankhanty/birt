@@ -1,0 +1,23 @@
+{
+  "schemaVersion": 1,
+  "status": "PASS",
+  "replayType": "real-current-cut-idempotence",
+  "baselineVersion": "5.3.0",
+  "sourceCut": "2026-09-11",
+  "sourceFiles": 19,
+  "recognized": 19,
+  "warnings": 0,
+  "failures": 0,
+  "effectiveLatestFullMonthEnd": "2026-08-31",
+  "previousComparableMonthEnd": "2026-07-31",
+  "partialNewerMonthDetected": true,
+  "stagingStatus": "PASS",
+  "changedFilesAfterReplay": [],
+  "aiRequired": false,
+  "notes": [
+    "Реальный пакет исходников 11.09.2026 повторно воспроизведён на утверждённой v5.3.0 без изменения канонических данных.",
+    "Неполный сентябрьский 500+ распознан как оперативный недельный источник и не заменяет полный августовский месяц.",
+    "Повторный прогон того же среза сохраняет previous/trend и не создаёт ложную динамику.",
+    "Этот replay подтверждает идемпотентность текущего среза; live apply остаётся отдельным защищённым шагом."
+  ]
+}
