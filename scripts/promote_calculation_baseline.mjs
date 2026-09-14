@@ -16,7 +16,7 @@ for (const id of Object.keys(snapshot.regional ?? {})) {
     method: item.method, source: item.source,
   };
 }
-snapshot.baselineVersion = "4.7.0";
+snapshot.baselineVersion = "5.3.0";
 snapshot.rule = "Snapshot фиксирует утверждённый runtime после оперативного обновления на 07.09.2026; месячный рейтинг остаётся по полному августу.";
 snapshot.approvedStaticVsRuntimeDivergences = [];
 fs.writeFileSync(snapshotPath, `${JSON.stringify(snapshot, null, 2)}\n`);

@@ -17,7 +17,9 @@ test('pipeline catalog recognizes representative historical source families',()=
  const cases={
   'ПР_2_01.01-31.08.2026.xlsx':'egpu_attachment',
   'Отчет_по_госпитализациям__-_01.01.2026-31.08.2026.xlsx':'hospital_cases',
+  'Отчет_по_законченному_случаю_амбулаторный_-_01.01.2026-11.09.2026.xlsx':'ambulatory_cases',
   '1.Отчет СЭМД_РЭМД январь - август.xlsx':'preventive_remd',
+  'Закрытые_случаи_ДОГВН_ПМО_и_зарегистрированные_СЭМД_122_и_228_-_01.01.2026-11.09.2026.xlsx':'preventive_remd',
   'Количество_СЭМД_Результаты_профилактического_медицинского_осмотрадиспансеризации Январь - Август.xlsx':'preventive_foms',
   'Свидетельства_о_рождении 31.08.2026.xlsx':'birth_certificates',
   'I_Свид-ва о смерти 31.08.2026.xlsx':'death_certificates',
@@ -66,5 +68,5 @@ test('legacy dated update scripts remain available as reference adapters',()=>{
 test('stage9 supports every catalogued source family in staging',()=>{
  const cfg=JSON.parse(fs.readFileSync(path.join(root,'config/import-pipeline.json'),'utf8'));
  const all=cfg.families.map(x=>x.id).sort(); const supported=[...cfg.stage9.supportedFamilies].sort();
- assert.deepEqual(supported,all); assert.equal(all.length,20);
+ assert.deepEqual(supported,all); assert.equal(all.length,21);
 });

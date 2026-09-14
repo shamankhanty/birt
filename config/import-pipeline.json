@@ -35,10 +35,25 @@
       "periodKind": "cumulative"
     },
     {
+      "id": "ambulatory_cases",
+      "patterns": [
+        "^Отчет[_ ]по[_ ]законченному[_ ]случаю[_ ]амбулаторный.*\\.xlsx$"
+      ],
+      "datasets": [
+        "mo-data.json",
+        "mo-details.json",
+        "mo-detail-oids.json",
+        "monthly-mo.json"
+      ],
+      "adapter": "core_monthly",
+      "periodKind": "cumulative"
+    },
+    {
       "id": "preventive_remd",
       "patterns": [
         "^1\\.Отчет СЭМД_РЭМД.*\\.xlsx$",
-        "^Отчет СЭМД_РЭМД.*\\.xlsx$"
+        "^Отчет СЭМД_РЭМД.*\\.xlsx$",
+        "^Закрытые[_ ]случаи[_ ]ДОГВН[_ ]ПМО.*\\.xlsx$"
       ],
       "datasets": [
         "preventive-semd-audit.json",
@@ -53,8 +68,7 @@
     {
       "id": "preventive_foms",
       "patterns": [
-        "^Количество_СЭМД_Результаты.*\\.xlsx$",
-        "^Закрытые случаи ДОГВН ПМО.*\\.xlsx$"
+        "^Количество_СЭМД_Результаты.*\\.xlsx$"
       ],
       "datasets": [
         "preventive-semd-audit.json",
@@ -224,7 +238,7 @@
     {
       "id": "short_input",
       "patterns": [
-        "^Случаи краткого ввода.*\\.xlsx$"
+        "^Случаи[_ ]краткого[_ ]ввода.*\\.xlsx$"
       ],
       "datasets": [
         "operational-mo.json"
@@ -273,6 +287,7 @@
     "supportedFamilies": [
       "egpu_attachment",
       "hospital_cases",
+      "ambulatory_cases",
       "preventive_remd",
       "preventive_foms",
       "birth_certificates",

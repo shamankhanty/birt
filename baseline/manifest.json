@@ -1,7 +1,7 @@
 {
   "schemaVersion": 2,
-  "baselineVersion": "5.2.5",
-  "baselineDate": "2026-09-09",
+  "baselineVersion": "5.3.0",
+  "baselineDate": "2026-09-14",
   "previousBaseline": {
     "version": "4.6.0",
     "date": "2026-09-07",
@@ -9,27 +9,28 @@
     "handoffZipSha256": "90003a0098165ce484118a8bd661dc03e9471c5759a88dfb5e806800ce7df8b9",
     "manifest": "baseline/reference-v4.6.0-manifest.json"
   },
-  "changeClass": "МАХ official/operational separation, manual RT facts, physician applicability, EPGU trend",
+  "changeClass": "Оперативный срез 11.09, недельный 500+ вне месячного рейтинга, контроль отсутствующих строк",
   "protectedData": {
     "app/electronic-waybill-weekly.json": "a9945a61d9cc97bd2c5868ddff76c24875dec8e991035e650ddb4af4561d8947",
     "app/electronic-waybill.json": "d682decfa448f6fd17c8df1fdcf088b105cff03080daf029849a4d039c638dbc",
-    "app/error-categories.json": "4e374666ad150df70e725dd604ec2dee003468aa85505c86e65989f2ce54acb1",
+    "app/error-categories.json": "32f94948d56df9560cb891b11f587a3f909a69fa48cb2d98192fd1d72ae38a72",
     "app/federal-control.json": "6dfd779f3cdeb320d08aa10ccb8a32522930c756fd808017977b85ec71d7e100",
     "app/hearing-snapshots.json": "4e6f494e413e2003e6d24c7492e79cbcd67837f31ba01565a5c2fac42a8b5871",
-    "app/mo-data.json": "b09cea542c394c8feecb5057b0b2104cc759f9263901e28e82cb40d0906bbccf",
-    "app/mo-detail-oids.json": "9d1d6c709402c37e36fbc47fce640accae881cf0eb1b5602ce6ae6be7d83406c",
-    "app/mo-details.json": "82e9392cb61d63a9e616606c9de4b5463c2d1e423682f37c629f1f1b323be3a6",
+    "app/mo-data.json": "3ceccfb6d39ddd0ecb0ef9649187ca60e7ef8f803cf68f12fcdbf53565038857",
+    "app/mo-detail-oids.json": "8ce883d8e438ece7e804ad42407c49695b3f28cea7f4ad2c0dc0b1c0a1e435b2",
+    "app/mo-details.json": "4959b6f7e5b7cb5564819d604435aadceefbdab3cbf228460e583b09663527d4",
     "app/mo-registry.json": "62202e489fced8a93c40867f04f5b3a021030cf4da1b0d0da6ce3a8cff088ea3",
     "app/monthly-mo.json": "78535cd8b7d2de942c1c347f6eb313ae727e71f0879127c97c0fab72455d671f",
-    "app/operational-mo.json": "0ba32ec19d7dd96f067385264c55c0842d2d3245a8d349790ad9e5c3a1a889de",
-    "app/organization-status.json": "1ede98f7260514d277fbe0b5265eb50d1ad6a219c1ed88422ec5a69926f1162e",
+    "app/operational-mo.json": "3a5a5d1805f3a89039dd0bce2e65769a1bdcca8e710cef4e5bc0fd9ef81e624f",
+    "app/organization-status.json": "1b6a3d3db31a5aebb7f32f70599473592d895fd093e19f849d749f0cdc38d7d0",
     "app/physician-metrics.json": "f08542cba9108a18b263d017e4b28dff2c3b6a39671eedeb4bd55aaa81d3431d",
-    "app/preventive-semd-audit.json": "2edd88fe58fbd15abd2ad26290e2d9bdf5db73935bcf3015e7a0f8c3a72eecb6",
+    "app/preventive-semd-audit.json": "765e29e614312614e80f0e9cedf8948faa02c11f4f9913a7da7a4bef3e9a3a00",
     "app/semd-summary.json": "fcf60e417aea2d880ac1ccba68d93267a7e79690d7e9b415a7387341d7987d76",
-    "app/unit-data.json": "9190d39db70ddf573e7b354d44e30ade3051648b1aead4e76f3a5bacc6a50918",
-    "app/error-organizations.json": "3e89c14bf9ef86476ba20742d51c3f844869ed529073fe558b5ff654119981a8",
+    "app/unit-data.json": "98759b0a146d042eb32d8f11fd4b9531fedefbd2378d5cfbd709101e74649aeb",
+    "app/error-organizations.json": "87e9dc9c4454b25f9eb5012794f2cb0a74ae38b03b20b4a0ae8ea968e750d700",
     "app/max-monthly-visits.json": "4ccd792fbc854b92ec7b5161e2e6e00ab68c3c5f14a06278e4332f63f522b31a",
-    "app/max-appointments-municipal.json": "69f690e62514706254d6f5b08cd694ae91bae6349eb14e653d47bcde89f63c17"
+    "app/max-appointments-municipal.json": "69f690e62514706254d6f5b08cd694ae91bae6349eb14e653d47bcde89f63c17",
+    "app/physician-weekly-snapshot.json": "004e2fc19000743c665b44645ccfadcd455a365d520d34b12570144e6297bc46"
   },
   "protectedRules": {
     "config/indicator-registry.json": "f7542c17ea3a23df4d9deceb66067d2efb66e4b267a65b784264770b382f2121",
@@ -37,32 +38,32 @@
     "app/hearing-snapshots.json": "4e6f494e413e2003e6d24c7492e79cbcd67837f31ba01565a5c2fac42a8b5871"
   },
   "stateFiles": {
-    "STATE.md": "af6e521c322c635964d121d8227f2a140b0b5a6964054b4c43a59dbc822d7c76",
-    "OPEN_ISSUES.md": "ac94e143e7a93ba8d40d8726f88c9cfe2d3dc45bc992298d8e362fbf118f58d1"
+    "STATE.md": "f16d0a0f3f9e1c5a6739a88529e5c1aaa8000164ae043a125e8000b648514656",
+    "OPEN_ISSUES.md": "21eb5993473d589a0ec318978b983d4ca81f5e10ec97dd35c1cd92dd926b5e78"
   },
   "keyCode": {
-    "app/page.tsx": "da61288d0f80d4f7f477ca7319eeed4605f9070c810565e8afcb3252c3fe7bb1",
+    "app/page.tsx": "2987ecb0a8685fb0c3a3818e6160ecec132bb25fce11c78643fa422e33e3cfd8",
     "app/globals.css": "a0e67c624d6e6877dad6cb5c44c59264dfa1799c33cc4a3a5eb6c0ab8cbc4dbe",
     "lib/calculation-engine.js": "2addca9323803eb45f66fca94fe78a72c4d77eed53c7bd05c224dd9aa9f2f0e7",
     "lib/indicator-registry.js": "484857b41858c082fad05172793ff24f422008a6178257006d4512b0c12d1996",
-    "lib/mo-registry.js": "dcc8274ab055d97d13bd89679af845a236fb4fa8a1dfb506ededfbfa6a2b7918",
-    "lib/period-engine.js": "e489d363d0ea6d35560a8f526ce06c800da36782c0c4bc8da03e9be13a5f8cc5",
-    "lib/validation-engine.js": "6da9bd328e58aeb2a0a96da8871c754facfd8fe91e3d6aa98d65de8f759580f7",
-    "scripts/pipeline/adapters.py": "144e857e818fbb3880c5b6dbbbbce27420ae49d70f12bcd0f58eaf1f46bb2015",
+    "lib/mo-registry.js": "9fe16e52a33111d44fb143f8f3879f3d0960821ac176a149c02d0d0bb14d3cab",
+    "lib/period-engine.js": "30cb85efde4c299ee5ca0314c84f7699c0a5170baa48cc6e7c3e9d75dbec22b6",
+    "lib/validation-engine.js": "ec8c0bfdc6be305bf1f2d4629e9016de5bb5cc00ba24f92eec5ebfc87510246b",
+    "scripts/pipeline/adapters.py": "3a8b1a4fd8f9e9e552ea4b694a280ab3d4c8f8daf4b2d18fe85083f74ff29f33",
     "scripts/weekly_update_pipeline.py": "63604915c77920e7dbb2f913d09c917e95b506d3671917f4d5031bc6f1221903"
   },
   "regression": {
-    "nodeTests": "143/143 PASS",
+    "nodeTests": "144/144 PASS",
     "validation": "15/15 PASS",
     "calculationEquivalence": "38/38 PASS",
     "metadataEquivalence": "38/38 PASS",
-    "stagingAdapters": "19/19 PASS",
+    "stagingAdapters": "21/21 PASS",
     "ratingIndicators": 17,
     "latestFullMonth": "август 2026",
     "previousFullMonth": "июль 2026",
-    "operationalCut": "07.09.2026",
+    "operationalCut": "11.09.2026",
     "fail": 0,
     "warnings": []
   },
-  "note": "v5.2.5: official MAX results are visually separated from МО monitoring; agreed RT facts are marked as manual until primary reports arrive; physician applicability and EPGU operational trend are corrected."
+  "note": "v5.3.0: источники обновлены на 11.09.2026; август сохранён единственным полным месяцем рейтинга; неполный сентябрьский файл 500+ доступен только как оперативный недельный контроль раздела «Показатели»."
 }

@@ -7,7 +7,7 @@ test('stage9 source adapters are deterministic and staging-only',()=>{
   assert.equal(r.status,0,`${r.stdout}\n${r.stderr}`);
   const x=JSON.parse(r.stdout);
   assert.equal(x.status,'PASS');
-  assert.equal(x.adapters,19);
+  assert.equal(x.adapters,21);
   assert.equal(x.canonicalUnchanged,true);
   assert.equal(x.endToEndStaging,'PASS');
 });

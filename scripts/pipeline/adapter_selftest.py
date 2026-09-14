@@ -9,7 +9,7 @@ from openpyxl import Workbook
 ROOT=Path(__file__).resolve().parents[2]
 import sys
 sys.path.insert(0,str(ROOT/'scripts/pipeline'))
-from adapters import (adapt_egpu,adapt_hospital,adapt_certificates,adapt_max,adapt_errors,adapt_physicians,adapt_preventive,adapt_waybill,
+from adapters import (adapt_egpu,adapt_hospital,adapt_ambulatory_cases,adapt_certificates,adapt_max,adapt_errors,adapt_physicians,adapt_preventive,adapt_waybill,
  adapt_tvsp_subunits,adapt_tvsp_buildings,adapt_presence,adapt_short_input,adapt_fap,adapt_asu_smp)
 from staging_runner import stage
 
@@ -34,6 +34,9 @@ def build_sources(d:Path):
  h=d/f'Отчет_по_госпитализациям_{end}.xlsx'
  def hosp(ws):ws.cell(6,2,name);ws.cell(6,3,oid);ws.cell(6,4,100);ws.cell(6,5,40);ws.cell(6,6,35)
  wb_save(h,[('Лист3',hosp)])
+ a=d/f'Отчет_по_законченному_случаю_амбулаторный_{end}.xlsx'
+ def amb(ws):ws.cell(5,1,name);ws.cell(5,2,oid);ws.cell(5,3,100);ws.cell(5,4,88)
+ wb_save(a,[('1',amb)])
  b=d/f'Свидетельства_о_рождении_01.01-30.09.2026.xlsx'
  def cert(ws):ws.cell(3,1,name);ws.cell(3,2,'B1');ws.cell(3,4,'Зарегистрирован');ws.cell(4,1,name);ws.cell(4,2,'B2');ws.cell(4,4,'Создан')
  wb_save(b,[('Лист1',cert)])
@@ -52,12 +55,15 @@ def build_sources(d:Path):
  fo=d/f'Количество_СЭМД_Результаты_{end}.xlsx'
  def fow(ws):ws.cell(5,2,name);ws.cell(5,3,oid);ws.cell(5,4,100)
  wb_save(fo,[('Лист1',fow)])
+ comb=d/f'Закрытые_случаи_ДОГВН_ПМО_{end}.xlsx'
+ def combw(ws):ws.cell(5,2,name);ws.cell(5,3,oid);ws.cell(5,10,80);ws.cell(5,14,75)
+ wb_save(comb,[('1',combw)])
  ph=d/f'Отчёт_по_врачам_{end}.xlsx'
  specs=['Акушер-гинеколог','Врач общей практики','Кардиолог','Онколог','Офтальмолог','Педиатр','Стоматолог','Терапевт','Хирург']
  def allw(ws):ws.cell(9,1,'Республика Татарстан');ws.cell(9,2,oid);ws.cell(9,3,name);ws.cell(9,4,'III уровень');ws.cell(9,5,10);ws.cell(9,7,8)
  def spw(ws):
   for i,sp in enumerate(specs,9):
-   ws.cell(i,1,'Республика Татарстан');ws.cell(i,2,oid);ws.cell(i,3,name);ws.cell(i,5,sp);ws.cell(i,6,10);ws.cell(i,7,9);ws.cell(i,8,2);ws.cell(i,9,1);ws.cell(i,10,6);ws.cell(i,14,0.6)
+   ws.cell(i,1,'Республика Татарстан');ws.cell(i,2,oid);ws.cell(i,3,name);ws.cell(i,5,sp);ws.cell(i,6,10);ws.cell(i,7,9);ws.cell(i,8,2);ws.cell(i,9,1);ws.cell(i,10,6);ws.cell(i,14,60)
  def subj(ws):
   for i,sp in enumerate(specs,10):ws.cell(i,1,'Республика Татарстан');ws.cell(i,2,sp);ws.cell(i,3,10);ws.cell(i,7,6)
  wb_save(ph,[('Все врачи_Детализация по МО',allw),('Врачи по спец-тям_По МО',spw),('Врачи по спец-тям_По субъекту',subj)])
@@ -94,7 +100,7 @@ def build_sources(d:Path):
  wb_save(fap,[('Лист1',fapw)])
  asu=d/f'АСУ_ССМП_{end}.xlsx'
  wb=Workbook();ws=wb.active;ws.cell(9,1,name);ws.cell(9,1).font=openpyxl.styles.Font(bold=True);ws.cell(9,2,100);ws.cell(9,11,92);wb.save(asu)
- return {'egpu':p,'hospital':h,'birth':b,'death':de,'max':mx,'errors':er,'remd':rem,'foms':fo,'physicians':ph,'waybill':way,
+ return {'egpu':p,'hospital':h,'ambulatory':a,'birth':b,'death':de,'max':mx,'errors':er,'remd':rem,'foms':fo,'combined':comb,'physicians':ph,'waybill':way,
  'tvspa':tvspa,'tvsps':tvsps,'tvspl':tvspl,'diag':diag,'smpt':smpt,'tmk':tmk,'elmk':elmk,'short':short,'fap':fap,'asu':asu}
 
 def fresh(base:Path,label):
@@ -105,11 +111,12 @@ def main():
  with tempfile.TemporaryDirectory() as td:
   d=Path(td);src=build_sources(d);end=date(2026,9,30);test_oid,_=oid_name()
   cases=[
-   ('egpu',lambda a:adapt_egpu(a,src['egpu'],end)),('hospital',lambda a:adapt_hospital(a,src['hospital'],end)),
+   ('egpu',lambda a:adapt_egpu(a,src['egpu'],end)),('hospital',lambda a:adapt_hospital(a,src['hospital'],end)),('ambulatory',lambda a:adapt_ambulatory_cases(a,src['ambulatory'],end)),
    ('birth',lambda a:adapt_certificates(a,src['birth'],end,'birth','birth_certificates')),('death',lambda a:adapt_certificates(a,src['death'],end,'death','death_certificates')),
    ('max',lambda a:adapt_max(a,src['max'],end)),('errors',lambda a:adapt_errors(a,src['errors'],end)),
    ('physicians',lambda a:adapt_physicians(a,src['physicians'],end,ROOT/'app/mo-registry.json')),
    ('preventive',lambda a:adapt_preventive(a,src['remd'],src['foms'],end,ROOT/'app/mo-registry.json')),
+   ('preventive-combined',lambda a:adapt_preventive(a,src['combined'],src['foms'],end,ROOT/'app/mo-registry.json')),
    ('waybill',lambda a:adapt_waybill(a,src['waybill'],end)),
    ('tvsp-ambulatory',lambda a:adapt_tvsp_subunits(a,src['tvspa'],end,'tvspAmbulatory','tvsp_ambulatory','Амбулаторные ТВСП, передающие эпикриз/талон и/или протокол консультации','объект контроля с ТВСП')),
    ('tvsp-stationary',lambda a:adapt_tvsp_subunits(a,src['tvsps'],end,'tvspStationary','tvsp_stationary','ТВСП, передающие выписные эпикризы','объект контроля с ТВСП')),
@@ -130,7 +137,7 @@ def main():
     assert bd['organizations'][0]['oid']==test_oid,bd['organizations'][0];assert bd['organizations'][0]['topCategories'][0]['name']=='Ошибка тест'
    results.append({'adapter':label,'changed':r.changedFiles,'facts':r.facts})
   # End-to-end staging can be formally PASS on a non-rating operational source.
-  inp=d/'only-errors';inp.mkdir();shutil.copy2(src['errors'],inp/src['errors'].name);out=d/'candidate';m=stage(inp,out);assert m['status']=='PASS',m;assert m['formalValidation']['status']=='PASS',m['formalValidation'];assert m['changedFiles']==['error-categories.json'],m['changedFiles']
+  inp=d/'only-errors';inp.mkdir();shutil.copy2(src['errors'],inp/src['errors'].name);out=d/'candidate';m=stage(inp,out);assert m['status']=='PASS',m;assert m['formalValidation']['status']=='PASS',m['formalValidation'];assert m['changedFiles']==['error-categories.json','error-organizations.json'],m['changedFiles']
  assert sha_tree(ROOT/'app')==canonical,'canonical app changed'
  print(json.dumps({'status':'PASS','adapters':len(results),'adapterResults':results,'canonicalUnchanged':True,'endToEndStaging':'PASS'},ensure_ascii=False,indent=2))
 if __name__=='__main__':main()

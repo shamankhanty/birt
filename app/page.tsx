@@ -19,6 +19,7 @@ import federalControlRaw from "./federal-control.json";
 import hearingSnapshotsRaw from "./hearing-snapshots.json";
 import preventiveSemdAuditRaw from "./preventive-semd-audit.json";
 import physicianMetricsRaw from "./physician-metrics.json";
+import physicianWeeklySnapshotRaw from "./physician-weekly-snapshot.json";
 import indicatorRegistryRaw from "../config/indicator-registry.json";
 import {
   cleanMoName,
@@ -115,7 +116,7 @@ type FederalControlData = {
   agreement: FederalControlRow[];
   collegium: FederalControlRow[];
 };
-const DASHBOARD_VERSION = "5.2.5";
+const DASHBOARD_VERSION = "5.3.0";
 const indicatorRegistry = createIndicatorRegistryRuntime(
   indicatorRegistryRaw as IndicatorRegistryDocument,
 );
@@ -556,6 +557,13 @@ type PhysicianMetricsData = {
   datasets: Record<string, PhysicianMetricDataset>;
 };
 const physicianMetricsSource = physicianMetricsRaw as PhysicianMetricsData;
+type PhysicianWeeklySnapshot = {
+  source: string;
+  date: string;
+  period: string;
+  summary: Record<string, { numerator: number; denominator: number; fact: number | null }>;
+};
+const physicianWeeklySnapshot = physicianWeeklySnapshotRaw as PhysicianWeeklySnapshot;
 const physicianMetrics = {
   ...physicianMetricsSource,
   datasets: indicatorRegistry.applyToDatasetMap(
@@ -2568,6 +2576,15 @@ function hearingMetricGroupsForDisplay(row: HearingRow, filter: HearingChangeFil
 }
 
 const versionHistory = [
+  {
+    version: "5.3.0",
+    date: "11.09.2026",
+    items: [
+      "Обновлён оперативный срез по первичным выгрузкам на 11.09; полный август сохранён как единый месяц для рейтинга и сравнения.",
+      "Строка, отсутствующая в новой выгрузке, показывается отдельно и не заменяется нулём; внешние источники не включаются в рейтинг МО.",
+      "Обновлены абсолютные ошибки РЭМД и доступные оперативные данные без подмены месячных показателей частичным сентябрьским срезом.",
+    ],
+  },
   {
     version: "5.2.5",
     date: "09.09.2026",
@@ -5437,7 +5454,7 @@ export default function Home() {
                     {block.rows.map((item) => {
                       const { row } = item;
                       const regionalSourceRow =
-                        item.source === "collegium" ? row : item.collegium;
+                        item.source === "collegium" ? row : (item.collegium ?? row);
                       const regional = row.regionalId
                         ? calculatedIndicatorById[row.regionalId]
                         : undefined;
@@ -8242,6 +8259,14 @@ export default function Home() {
               {selectedDataset.note && matrixMetric !== "semd228" && (
                 <p className="sourceDataNote">
                   <b>Источник и ограничение:</b> {selectedDataset.note}
+                </p>
+              )}
+              {matrixMetric.startsWith("doctor") && physicianWeeklySnapshot.summary[matrixMetric] && (
+                <p className="sourceDataNote weeklyPhysicianNote">
+                  <b>Оперативный недельный контроль «500+»:</b>{" "}
+                  {format(physicianWeeklySnapshot.summary[matrixMetric].numerator, 0)} из {format(physicianWeeklySnapshot.summary[matrixMetric].denominator, 0)}
+                  {" · "}{format(physicianWeeklySnapshot.summary[matrixMetric].fact ?? 0, 2)}%
+                  {" · срез на "}{physicianWeeklySnapshot.date}. Данные не включены в месячный рейтинг и заслушивание МО до закрытого месячного отчёта.
                 </p>
               )}
               {preventiveTransition && (

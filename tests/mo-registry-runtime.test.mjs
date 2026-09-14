@@ -53,7 +53,7 @@ function numberTokens(value) {
   return [...String(value).matchAll(/№\s*(\d+)/gu)].map((match) => match[1]);
 }
 
-test("central MO runtime is byte-equivalent to v4.6.0 linkage behavior", () => {
+test("central MO runtime matches the approved linkage snapshot", () => {
   const mapping = currentMapping();
   assert.equal(mapping.length, baseline.entryCount);
   assert.equal(mapping.filter((entry) => entry.resolvedOid !== null).length, baseline.resolvedCount);

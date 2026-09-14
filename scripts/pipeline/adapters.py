@@ -60,6 +60,47 @@ def norm(v) -> str:
     return re.sub(r'[^а-яa-z0-9№]+', ' ', s).strip()
 
 
+def is_external_source_name(name: str) -> bool:
+    """Rows from providers outside the approved MO registry stay visible,
+    but must not be interpreted as an unresolved state/municipal MO."""
+    return bool(re.match(r'\s*(?:ООО|ЧУЗ|ФГБОУ|КГМА|НМЧУ)\b', str(name or ''), re.I))
+
+
+def loose_source_key(value: str) -> str:
+    """Conservative alias key used only to avoid duplicate no-row markers."""
+    value = norm(value)
+    value = re.sub(r'\bг\s*(?:казани|казань|н\s*челны|наб(?:ережные)?\s*челны)\b', '', value)
+    replacements = {
+        'дгп': 'детская городская поликлиника',
+        'гп': 'городская поликлиника',
+        'гб': 'городская больница',
+        'гвв': 'госпиталь для ветеранов войн',
+    }
+    for short, full in replacements.items():
+        value = re.sub(rf'\b{short}\b', full, value)
+    return re.sub(r'\s+', ' ', value).strip()
+
+
+def retain_no_source_rows(previous: dict[str, dict], rows: list[dict]) -> list[dict]:
+    """Keep previously present MO as an explicit no-source-row status.
+
+    A missing line is evidence about source coverage, not a zero fact.
+    """
+    present = {str(row.get("oid")) if row.get("oid") else norm(row.get("name")) for row in rows}
+    present_loose = {loose_source_key(row.get("name")) for row in rows}
+    for key, old in previous.items():
+        old_name = old.get("name", "")
+        if key in present or loose_source_key(old_name) in present_loose:
+            continue
+        rows.append({
+            "name": old.get("name", "МО"), "oid": old.get("oid"),
+            "fact": None, "count": None, "previous": old.get("fact"),
+            "trend": None, "sourceStatus": "no_source_row",
+            "sourceWarning": "Нет строки в актуальной выгрузке; значение не заменено нулём.",
+        })
+    return rows
+
+
 def parse_iso(s: str | None) -> date | None:
     return date.fromisoformat(s) if s else None
 
@@ -80,6 +121,10 @@ def month_label(d: date) -> str:
 def previous_month_label(d: date) -> str:
     y, m = (d.year - 1, 12) if d.month == 1 else (d.year, d.month - 1)
     return month_label(date(y, m, 1)).capitalize()
+
+
+def is_full_month(d: date) -> bool:
+    return d.day == calendar.monthrange(d.year, d.month)[1]
 
 
 def current_label(d: date) -> str:
@@ -106,10 +151,19 @@ def monthly_payload(previous_rows: dict[str, dict], current_rows: list[dict], d:
             else:
                 pq = old.get("quantity")
         out.append({
-            "name": x["name"], "june": pv, "july": x.get("fact"),
+            "name": x["name"], "oid": x.get("oid"), "june": pv, "july": x.get("fact"),
             "change": None if pv is None else x.get("fact") - pv,
             "juneQuantity": pq, "julyQuantity": cq,
         })
+    current_keys = {str(x.get("oid")) if x.get("oid") else norm(x.get("name")) for x in current_rows}
+    for key, old in previous_rows.items():
+        if key not in current_keys:
+            out.append({
+                "name": old.get("name", "МО"), "oid": old.get("oid"),
+                "june": old.get("fact"), "july": None, "change": None,
+                "juneQuantity": old.get("quantity"), "julyQuantity": None,
+                "sourceStatus": "no_source_row",
+            })
     prev_end_month = d.month - 1 or 12
     prev_year = d.year if d.month > 1 else d.year - 1
     prev_end = date(prev_year, prev_end_month, calendar.monthrange(prev_year, prev_end_month)[1])
@@ -157,9 +211,10 @@ def adapt_egpu(app: Path, source: Path, end: date) -> AdapterResult:
             dn[norm(x["name"])] = d
             if x["oid"]: do[x["oid"]] = d
         base = mo.get(metric, {})
-        mo[metric] = {**base, "name": base.get("name", title), "date": date_ru(end), "period": period_cumulative(end), "rows": rows}
+        mo[metric] = {**base, "name": base.get("name", title), "date": date_ru(end), "period": period_cumulative(end), "rows": retain_no_source_rows(prev, rows)}
         details[metric], oids[metric] = dn, do
-        monthly[metric] = monthly_payload(prev, cur, end)
+        if is_full_month(end):
+            monthly[metric] = monthly_payload(prev, cur, end)
         facts[metric] = {"rows": len(rows), "numerator": sum(x["count"] for x in cur), "denominator": sum(x["volume"] for x in cur)}
     for name, data in [("mo-data.json", mo), ("mo-details.json", details), ("mo-detail-oids.json", oids), ("monthly-mo.json", monthly)]: save(app, name, data)
     return AdapterResult("core_monthly", ["egpu_attachment"], "PASS", ["mo-data.json","mo-details.json","mo-detail-oids.json","monthly-mo.json"], [source.name], facts, [], [])
@@ -183,10 +238,44 @@ def adapt_hospital(app: Path, source: Path, end: date) -> AdapterResult:
     for x in cur:
         old=prev.get(x["oid"]); rows.append({"name":x["name"],"oid":x["oid"],"fact":x["fact"],"count":x["count"],"previous":old.get("fact") if old else None,"trend":None if not old else x["fact"]-old.get("fact",0)})
         d={"volume":x["volume"],"registered":x["count"]}; dn[norm(x["name"])]=d; do[x["oid"]]=d
-    mo["hospital"]={**mo.get("hospital",{}),"date":date_ru(end),"period":period_cumulative(end),"rows":rows}
-    details["hospital"],oids["hospital"]=dn,do; monthly["hospital"]=monthly_payload(prev,cur,end)
+    mo["hospital"]={**mo.get("hospital",{}),"date":date_ru(end),"period":period_cumulative(end),"rows":retain_no_source_rows(prev, rows)}
+    details["hospital"],oids["hospital"]=dn,do
+    if is_full_month(end): monthly["hospital"]=monthly_payload(prev,cur,end)
     for name,data in [("mo-data.json",mo),("mo-details.json",details),("mo-detail-oids.json",oids),("monthly-mo.json",monthly)]:save(app,name,data)
     return AdapterResult("core_monthly",["hospital_cases"],"PASS",["mo-data.json","mo-details.json","mo-detail-oids.json","monthly-mo.json"],[source.name],{"rows":len(rows),"numerator":sum(x["count"] for x in cur),"denominator":sum(x["volume"] for x in cur)},[],[])
+
+
+def parse_ambulatory_cases(path: Path) -> list[dict]:
+    wb = openpyxl.load_workbook(path, read_only=True, data_only=True)
+    out = []
+    for r in wb.active.iter_rows(min_row=5, values_only=True):
+        if len(r) < 4 or not r[0] or not r[1]:
+            continue
+        denominator, numerator = n(r[2]), n(r[3])
+        out.append({"name": str(r[0]), "oid": str(r[1]), "fact": numerator / denominator * 100 if denominator else 0, "count": numerator, "volume": denominator})
+    if not out:
+        raise ValueError("Амбулаторный эпикриз: не найдено строк данных")
+    return out
+
+
+def adapt_ambulatory_cases(app: Path, source: Path, end: date) -> AdapterResult:
+    mo, details, oids, monthly = (load(app, x) for x in ["mo-data.json", "mo-details.json", "mo-detail-oids.json", "monthly-mo.json"])
+    current = parse_ambulatory_cases(source)
+    previous = previous_rows_from_dataset(mo.get("ambulatoryCase", {}))
+    rows, details_by_name, details_by_oid = [], {}, {}
+    for item in current:
+        old = previous.get(item["oid"])
+        row={"name": item["name"], "oid": item["oid"], "fact": item["fact"], "count": item["count"], "previous": old.get("fact") if old else None, "trend": None if not old else item["fact"] - old.get("fact", 0)}
+        if is_external_source_name(item["name"]): row["sourceStatus"]="external_source"
+        rows.append(row)
+        detail = {"volume": item["volume"], "registered": item["count"]}
+        details_by_name[norm(item["name"])], details_by_oid[item["oid"]] = detail, detail
+    mo["ambulatoryCase"] = {**mo.get("ambulatoryCase", {}), "date": date_ru(end), "period": period_cumulative(end), "rows": retain_no_source_rows(previous, rows)}
+    details["ambulatoryCase"], oids["ambulatoryCase"] = details_by_name, details_by_oid
+    if is_full_month(end): monthly["ambulatoryCase"] = monthly_payload(previous, current, end)
+    for name, data in [("mo-data.json", mo), ("mo-details.json", details), ("mo-detail-oids.json", oids), ("monthly-mo.json", monthly)]:
+        save(app, name, data)
+    return AdapterResult("core_monthly", ["ambulatory_cases"], "PASS", ["mo-data.json", "mo-details.json", "mo-detail-oids.json", "monthly-mo.json"], [source.name], {"rows": len(rows), "numerator": sum(item["count"] for item in current), "denominator": sum(item["volume"] for item in current)}, [], [])
 
 
 def parse_certificates(path: Path) -> list[dict]:
@@ -207,9 +296,14 @@ def parse_certificates(path: Path) -> list[dict]:
 def adapt_certificates(app: Path, source: Path, end: date, metric: str, family: str) -> AdapterResult:
     mo,details,monthly=(load(app,x) for x in ["mo-data.json","mo-details.json","monthly-mo.json"]); cur=parse_certificates(source); prev=previous_rows_from_dataset(mo.get(metric,{})); rows=[]; dn={}
     for x in cur:
-        old=prev.get(norm(x["name"])); rows.append({"name":x["name"],"fact":x["fact"],"count":x["count"],"previous":old.get("fact") if old else None,"trend":None if not old else x["fact"]-old.get("fact",0)})
+        old=prev.get(norm(x["name"])); row={"name":x["name"],"fact":x["fact"],"count":x["count"],"previous":old.get("fact") if old else None,"trend":None if not old else x["fact"]-old.get("fact",0)}
+        if is_external_source_name(x["name"]) or norm(x["name"]) == "спасская црб":
+            row["sourceStatus"]="external_source"
+            row["sourceWarning"]="Строка источника не сопоставлена с утверждённым OID; не включена в рейтинг МО."
+        rows.append(row)
         dn[norm(x["name"]) ]={"volume":x["volume"],"registered":x["count"]}
-    mo[metric]={**mo.get(metric,{}),"date":date_ru(end),"period":period_cumulative(end),"rows":rows}; details[metric]=dn; monthly[metric]=monthly_payload(prev,cur,end)
+    mo[metric]={**mo.get(metric,{}),"date":date_ru(end),"period":period_cumulative(end),"rows":retain_no_source_rows(prev, rows)}; details[metric]=dn
+    if is_full_month(end): monthly[metric]=monthly_payload(prev,cur,end)
     for name,data in [("mo-data.json",mo),("mo-details.json",details),("monthly-mo.json",monthly)]:save(app,name,data)
     total=sum(x["volume"] for x in cur); num=sum(x["count"] for x in cur)
     return AdapterResult("core_monthly",[family],"PASS",["mo-data.json","mo-details.json","monthly-mo.json"],[source.name],{"rows":len(rows),"numerator":num,"denominator":total,"fact":num/total*100 if total else None},[],[])
@@ -229,7 +323,13 @@ def adapt_max(app: Path, source: Path, end: date) -> AdapterResult:
         cur=parse_max(source,col); prev=previous_rows_from_dataset(operational.get(metric,{})); rows=[]
         for x in cur:
             old=prev.get(norm(x["name"])); rows.append({"name":x["name"],"fact":x["fact"],"count":x["count"],"previous":old.get("fact") if old else None,"trend":None if not old else x["fact"]-old.get("fact",0)})
-        operational[metric]={**operational.get(metric,{}),"date":date_ru(end),"period":period_cumulative(end),"rows":rows}; monthly[metric]=monthly_payload(prev,cur,end,"count")
+        final_rows = retain_no_source_rows(prev, rows)
+        if "спасская црб" in {loose_source_key(row.get("name")) for row in rows}:
+            # Approved MAX source convention: this label is the contextual
+            # Spassk row, not a second line in addition to РКБ МЗ РТ.
+            final_rows = [row for row in final_rows if not (row.get("sourceStatus") == "no_source_row" and "ркб мз рт" in norm(row.get("name")))]
+        operational[metric]={**operational.get(metric,{}),"date":date_ru(end),"period":period_cumulative(end),"rows":final_rows}
+        if is_full_month(end): monthly[metric]=monthly_payload(prev,cur,end,"count")
         facts[metric]={"rows":len(rows),"total":sum(x["count"] for x in cur)}
     save(app,"operational-mo.json",operational);save(app,"monthly-mo.json",monthly)
     return AdapterResult("core_monthly",["max_tmk_eln"],"PASS",["operational-mo.json","monthly-mo.json"],[source.name],facts,[],[])
@@ -339,11 +439,15 @@ def adapt_errors(app: Path, source: Path, end: date) -> AdapterResult:
         "organizationBreakdown": breakdown,
     })
     save(app, "error-categories.json", payload)
+    # Keep the standalone drill-down payload in sync with the category payload.
+    # The UI imports both files and must never present an August organisation
+    # breakdown next to a newer operational total.
+    save(app, "error-organizations.json", breakdown)
     warnings = []
     if unassigned_errors:
         warnings.append(f"МО не определена для {unassigned_errors} ошибок ({100-coverage:.2f}%)")
     return AdapterResult(
-        "errors", ["remd_errors"], "PASS", ["error-categories.json"], [source.name],
+        "errors", ["remd_errors"], "PASS", ["error-categories.json", "error-organizations.json"], [source.name],
         {"errors": total, "categories": len(payload["items"]),
          "organizations": len(organizations), "attributedErrors": attributed_errors,
          "unassignedErrors": unassigned_errors, "coveragePercent": coverage},
@@ -362,7 +466,7 @@ def parse_physicians(path: Path, registry_path: Path) -> dict:
     for r in specialty_rows:
         den,signed,under,between,over=map(n,r[5:10])
         if signed!=under+between+over or signed>den: raise ValueError(f"Врачи: категории не сходятся {r[1]} {r[4]}")
-        if len(r)>13 and r[13] is not None and not math.isclose(float(r[13]),over/den if den else 0,abs_tol=0.0002): raise ValueError(f"Врачи: доля источника не сходится {r[1]} {r[4]}")
+        if len(r)>13 and r[13] is not None and not math.isclose(float(r[13]),over/den*100 if den else 0,abs_tol=0.01): raise ValueError(f"Врачи: доля источника не сходится {r[1]} {r[4]}")
     def mk(rows,numi,deni):
         return [{"name":str(r[2]),"oid":str(r[1]),"fact":n(r[numi])/n(r[deni])*100 if n(r[deni]) else 0,"count":n(r[numi]),"volume":n(r[deni])} for r in rows]
     out={"doctorsAll":mk(all_rows,6,4),"doctorsLevel3":mk([r for r in all_rows if r[3]=="III уровень"],6,4)}
@@ -378,6 +482,24 @@ def parse_physicians(path: Path, registry_path: Path) -> dict:
 
 
 def adapt_physicians(app: Path, source: Path, end: date, registry_path: Path) -> AdapterResult:
+    # «500+» — месячный показатель. Неполный календарный месяц разрешён
+    # только как отдельный недельный контроль раздела 02 и не меняет
+    # утверждённые августовские datasets/rating.
+    if not is_full_month(end):
+        current = parse_physicians(source, registry_path)
+        facts = {
+            metric: {
+                "numerator": sum(row["count"] for row in rows),
+                "denominator": sum(row["volume"] for row in rows),
+                "fact": (sum(row["count"] for row in rows) / sum(row["volume"] for row in rows) * 100) if sum(row["volume"] for row in rows) else None,
+            }
+            for metric, rows in current.items()
+        }
+        weekly = load(app, "physician-weekly-snapshot.json") if (app / "physician-weekly-snapshot.json").exists() else {}
+        weekly.update({"source": source.name, "date": date_ru(end), "period": period_cumulative(end), "datasets": current, "summary": facts})
+        save(app, "physician-weekly-snapshot.json", weekly)
+        return AdapterResult("physician_weekly_snapshot", ["physicians"], "PASS", ["physician-weekly-snapshot.json"], [source.name], facts, ["Неполный сентябрь сохранён только для недельного контроля; рейтинг и полный август не изменены."], [])
+
     phys,monthly=(load(app,x) for x in ["physician-metrics.json","monthly-mo.json"]); current=parse_physicians(source,registry_path); facts={}
     for metric,cur in current.items():
         old_ds=phys.get("datasets",{}).get(metric,{}); prev=previous_rows_from_dataset(old_ds); rows=[]
@@ -385,17 +507,30 @@ def adapt_physicians(app: Path, source: Path, end: date, registry_path: Path) ->
             old=prev.get(x["oid"]); warning="Справочно: в МО только 1–2 врача этой специальности; в заслушивании не оценивается." if metric.startswith("doctor500_") and x["volume"]<3 else None
             rows.append({**x,"previous":old.get("fact") if old else None,"trend":None if not old else x["fact"]-old.get("fact",0),"sourceWarning":warning})
         num=sum(x["count"] for x in cur); den=sum(x["volume"] for x in cur)
-        ds={**old_ds,"date":date_ru(end),"period":month_label(end),"periodType":"month","rows":rows,"summary":{"numerator":num,"denominator":den,"fact":num/den*100 if den else 0}}
-        phys.setdefault("datasets",{})[metric]=ds; monthly[metric]=monthly_payload(prev,cur,end)
-        monthly[metric]["previousLabel"]=previous_month_label(end);monthly[metric]["currentLabel"]=month_label(end).capitalize()
+        full_month = is_full_month(end)
+        period = month_label(end) if full_month else period_cumulative(end)
+        ds={**old_ds,"date":date_ru(end),"period":period,"periodType":"month" if full_month else "snapshot","rows":rows,"summary":{"numerator":num,"denominator":den,"fact":num/den*100 if den else 0}}
+        ds["rows"] = retain_no_source_rows(prev, rows)
+        phys.setdefault("datasets",{})[metric]=ds
+        # Partial September is an operational snapshot, not a replacement for
+        # the accepted full-August rating period.
+        if full_month:
+            monthly[metric]=monthly_payload(prev,cur,end)
+            monthly[metric]["previousLabel"]=previous_month_label(end);monthly[metric]["currentLabel"]=month_label(end).capitalize()
         facts[metric]=ds["summary"]
-    phys["source"]=source.name;phys["formed"]=date_ru(end);phys["period"]=month_label(end);phys["quality"]={"allMoRows":len(current["doctorsAll"]),"specialtyRows":sum(len(current[k]) for k in SPECIALTIES.values()),"unmatchedOids":0,"categoryErrors":0}
+    full_month = is_full_month(end)
+    phys["source"]=source.name;phys["formed"]=date_ru(end);phys["period"]=month_label(end) if full_month else period_cumulative(end);phys["periodType"]="month" if full_month else "snapshot";phys["quality"]={"allMoRows":len(current["doctorsAll"]),"specialtyRows":sum(len(current[k]) for k in SPECIALTIES.values()),"unmatchedOids":0,"categoryErrors":0}
     save(app,"physician-metrics.json",phys);save(app,"monthly-mo.json",monthly)
     return AdapterResult("physician_import",["physicians"],"PASS",["physician-metrics.json","monthly-mo.json"],[source.name],facts,[],[])
 
 
 def parse_remd(path: Path) -> dict:
     wb=openpyxl.load_workbook(path,read_only=True,data_only=True); ws=_sheet(wb,["Отчет РЭМД по МО"]); out={}
+    if re.match(r"Закрытые[_ ]случаи[_ ]ДОГВН[_ ]ПМО", path.name, re.I):
+        for r in ws.iter_rows(min_row=5,values_only=True):
+            if len(r)>13 and r[1] and r[2]: out[str(r[2])]={"name":str(r[1]),"s122":n(r[9]),"s228":n(r[13])}
+        if not out: raise ValueError("Закрытые случаи ДОГВН/ПМО: не найдено СЭМД 122/228")
+        return out
     for r in ws.iter_rows(min_row=8,values_only=True):
         if len(r)>107 and r[2]: out[str(r[2])]={"name":str(r[1]),"s122":n(r[80]),"s228":n(r[107])}
     if not out: raise ValueError("РЭМД 122/228: не найдено строк данных")
@@ -418,11 +553,14 @@ def adapt_preventive(app: Path, remd: Path, foms_path: Path, end: date, registry
         if not rv: excluded.append({"oid":oid,"name":v["name"],"denominator":v["den"]});continue
         num=max(rv["s122"],rv["s228"]); den=v["den"]; fact=num/den*100 if den else None; old=prev.get(oid); oldfact=old.get("fact") if old else None
         selected="122" if rv["s122"]>=rv["s228"] else "228"; audit_rows.append({"name":v["name"],"oid":oid,"child":oid in child_oids,"semd122":rv["s122"],"semd228":rv["s228"],"selected":num,"selectedType":selected,"foms":den,"share":fact,"oldShare":oldfact,"change":None if oldfact is None or fact is None else fact-oldfact,"issues":[] if fact is None or fact<=100 else ["Значение выше 100%"]})
-        row={"name":v["name"],"oid":oid,"fact":fact or 0,"count":num,"previous":oldfact,"trend":None if oldfact is None or fact is None else fact-oldfact};rows.append(row);d={"volume":den,"registered":num};dn[norm(v["name"])]=d;do[oid]=d
+        row={"name":v["name"],"oid":oid,"fact":fact or 0,"count":num,"previous":oldfact,"trend":None if oldfact is None or fact is None else fact-oldfact}
+        if is_external_source_name(v["name"]): row["sourceStatus"]="external_source"
+        rows.append(row);d={"volume":den,"registered":num};dn[norm(v["name"])]=d;do[oid]=d
     num=sum(r["selected"] for r in audit_rows); den=sum(r["foms"] for r in audit_rows); share=num/den*100 if den else None
     audit={"summary":{"status":"ready","year":end.year,"formula":"MAX(СЭМД 122; СЭМД 228) по каждой МО" if end.year<=2026 else "СЭМД 228","period122":period_cumulative(end),"period228":period_cumulative(end),"source122":remd.name,"source228":remd.name,"sourceDenominator":foms_path.name,"organizations":len(rows),"numerator":num,"denominator":den,"share":share,"selected122":sum(r["selectedType"]=="122" for r in audit_rows),"selected228":sum(r["selectedType"]=="228" for r in audit_rows),"selectedEqual":sum(r["semd122"]==r["semd228"] for r in audit_rows),"over100":sum((r["share"] or 0)>100 for r in audit_rows),"missing":len(excluded),"excluded":excluded,"note":"Включены взрослые и детские МО из ФОМС; строки без соответствия РЭМД остаются в аудите и не оцениваются."},"rows":audit_rows}
     mo["semd228"]={**mo.get("semd228",{}),"date":date_ru(end),"period":period_cumulative(end),"rows":rows};details["semd228"]=dn;oids["semd228"]=do
-    cur=[{"name":r["name"],"oid":r["oid"],"fact":r["share"] or 0,"count":r["selected"],"volume":r["foms"]} for r in audit_rows];monthly["semd228"]=monthly_payload(prev,cur,end)
+    cur=[{"name":r["name"],"oid":r["oid"],"fact":r["share"] or 0,"count":r["selected"],"volume":r["foms"]} for r in audit_rows]
+    if is_full_month(end): monthly["semd228"]=monthly_payload(prev,cur,end)
     for name,data in [("preventive-semd-audit.json",audit),("mo-data.json",mo),("mo-details.json",details),("mo-detail-oids.json",oids),("monthly-mo.json",monthly)]:save(app,name,data)
     return AdapterResult("preventive_pair",["preventive_remd","preventive_foms"],"PASS",["preventive-semd-audit.json","mo-data.json","mo-details.json","mo-detail-oids.json","monthly-mo.json"],[remd.name,foms_path.name],{"organizations":len(rows),"numerator":num,"denominator":den,"share":share,"excluded":len(excluded)},["Есть строки ФОМС без РЭМД; сохранены в audit" ] if excluded else [],[])
 
@@ -471,7 +609,7 @@ def _aggregate_unit_metric(app: Path, metric: str, units_payload: dict, end: dat
         d={"volume":g["volume"],"registered":g["registered"]}; dn[norm(g["name"])]=d
         if "." in oid and oid[0].isdigit(): do[oid]=d
     base=mo.get(metric,{})
-    mo[metric]={**base,"name":base.get("name",units_payload["name"]),"date":date_ru(end),"period":period,"rows":rows}
+    mo[metric]={**base,"name":base.get("name",units_payload["name"]),"date":date_ru(end),"period":period,"rows":retain_no_source_rows(prev, rows)}
     details[metric]=dn;oids[metric]=do
     save(app,"mo-data.json",mo);save(app,"mo-details.json",details);save(app,"mo-detail-oids.json",oids)
 
@@ -562,6 +700,7 @@ def adapt_short_input(app: Path, source: Path, end: date) -> AdapterResult:
         for name,oid,amb,hosp in raw:
             fact=amb+hosp if key=="shortInput" else amb if key=="shortInputAmb" else hosp;old=prev.get(oid) or prev.get(norm(name));pv=old.get("fact") if old else None
             row={"name":name,"oid":oid,"fact":fact,"count":fact,"previous":pv,"trend":None if pv is None else fact-pv}
+            if is_external_source_name(name): row["sourceStatus"]="external_source"
             if pv is not None and fact<pv: row["sourceWarning"]="Накопительное значение уменьшилось; корректировка источника требует уточнения."
             rows.append(row)
         op[key]={**op.get(key,{}),"name":title,"date":date_ru(end),"period":period_cumulative(end),"mode":"count","direction":"lower","note":"Справочный накопительный показатель без норматива: не влияет на рейтинг и приоритет заслушивания. Уменьшение накопительного значения отмечается как риск качества источника.","rows":rows};facts[key]=sum(r["fact"] for r in rows)
@@ -621,13 +760,14 @@ def adapt_asu_smp(app: Path, source: Path, end: date) -> AdapterResult:
     return AdapterResult("federal",["asu_smp"],"PASS",["mo-data.json","mo-details.json"],[source.name],{"organizations":len(rows),"volume":sum(r["volume"] for r in rows),"registered":sum(r["registered"] for r in rows)},[],[])
 
 SUPPORTED_FAMILIES={
-    "egpu_attachment","hospital_cases","preventive_remd","preventive_foms","birth_certificates","death_certificates","max_tmk_eln","physicians","remd_errors","electronic_waybill",
+    "egpu_attachment","hospital_cases","ambulatory_cases","preventive_remd","preventive_foms","birth_certificates","death_certificates","max_tmk_eln","physicians","remd_errors","electronic_waybill",
     "tvsp_ambulatory","tvsp_stationary","tvsp_laboratory","tvsp_diagnostic","smp_tvsp","tmk_remd","elmk","short_input","fap_fp","asu_smp"
 }
 
 def run_family(app:Path,family:str,source:Path,end:date,root:Path)->AdapterResult:
     if family=="egpu_attachment": return adapt_egpu(app,source,end)
     if family=="hospital_cases": return adapt_hospital(app,source,end)
+    if family=="ambulatory_cases": return adapt_ambulatory_cases(app,source,end)
     if family=="birth_certificates": return adapt_certificates(app,source,end,"birth",family)
     if family=="death_certificates": return adapt_certificates(app,source,end,"death",family)
     if family=="max_tmk_eln": return adapt_max(app,source,end)

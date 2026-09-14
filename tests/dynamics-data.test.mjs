@@ -10,7 +10,7 @@ const details = await readJson("mo-details.json");
 test("full July and August cuts carry comparable dynamics", () => {
   assert.deepEqual(
     Object.fromEntries(["egpu", "egpu2days", "semd228", "ambulatoryCase", "smp"].map(id => [id, mo[id].rows.filter(row => row.trend !== null && row.trend !== 0).length])),
-    { egpu: 42, egpu2days: 68, semd228: 93, ambulatoryCase: 121, smp: 45 },
+    { egpu: 42, egpu2days: 68, semd228: 93, ambulatoryCase: 120, smp: 45 },
   );
   assert.ok(operational.shortInput.rows.some(row => row.trend > 0));
   assert.ok(operational.shortInput.rows.some(row => row.trend < 0));
@@ -23,26 +23,26 @@ test("hospital slice uses the verified sheet 3 denominator", () => {
 
 test("current source totals reconcile for the refreshed indicators", () => {
   const sum = (id, field) => Object.values(details[id]).reduce((total, row) => total + row[field], 0);
-  assert.deepEqual([mo.ambulatoryCase.date, sum("ambulatoryCase", "registered"), sum("ambulatoryCase", "volume")], ["29.08.2026", 9549272, 10948601]);
-  assert.deepEqual([mo.hospital.date, sum("hospital", "registered"), sum("hospital", "volume")], ["07.09.2026", 514249, 612631]);
+  assert.deepEqual([mo.ambulatoryCase.date, sum("ambulatoryCase", "registered"), sum("ambulatoryCase", "volume")], ["11.09.2026", 10182100, 11491246]);
+  assert.deepEqual([mo.hospital.date, sum("hospital", "registered"), sum("hospital", "volume")], ["11.09.2026", 530968, 624362]);
   assert.deepEqual(
     [operational.shortInput.date, operational.shortInput.rows.reduce((total, row) => total + row.fact, 0), operational.shortInputAmb.rows.reduce((total, row) => total + row.fact, 0), operational.shortInputHosp.rows.reduce((total, row) => total + row.fact, 0)],
-    ["07.09.2026", 694560, 685066, 9494],
+    ["11.09.2026", 710168, 701402, 8766],
   );
 });
 
 test("ambulance-card rows reconcile to the source total without duplicates", () => {
   assert.equal(mo.smp.rows.length, 45);
   assert.equal(new Set(mo.smp.rows.map(row => row.name)).size, 45);
-  assert.equal(Object.values(details.smp).reduce((sum, row) => sum + row.volume, 0), 624216);
-  assert.equal(Object.values(details.smp).reduce((sum, row) => sum + row.registered, 0), 576237);
+  assert.equal(Object.values(details.smp).reduce((sum, row) => sum + row.volume, 0), 659836);
+  assert.equal(Object.values(details.smp).reduce((sum, row) => sum + row.registered, 0), 602974);
 });
 
 test("TVSP subunit aggregations remain separate from federal building totals", () => {
   const expected = {
-    tvspStationary: "07.09.2026",
-    tvspAmbulatory: "07.09.2026",
-    tvspLaboratory: "07.09.2026",
+    tvspStationary: "11.09.2026",
+    tvspAmbulatory: "11.09.2026",
+    tvspLaboratory: "11.09.2026",
   };
   for (const [id, date] of Object.entries(expected)) {
     assert.ok(Object.values(details[id]).reduce((sum, row) => sum + row.volume, 0) > 0);
