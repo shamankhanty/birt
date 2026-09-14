@@ -1,0 +1,138 @@
+date: "29.08.2026",
+-    items: [
+-      "Восстановлены контрольные снимки пяти заслушанных МО на 25.08.2026 14:13 МСК.",
+-      "Добавлено сравнение 18–19 показателей каждой МО с актуальным срезом.",
+-      "Первичный осмотр врачом приёмного отделения перенесён в группу ТВСП и передачи документов.",
+-      "Уточнена формулировка отсутствующего регионального расчёта.",
+-    ],
+-  },
+-  {
+-    version: "3.5.2",
+-    date: "29.08.2026",
+-    items: [
+-      "В расширенной сводке добавлены семь смысловых групп показателей.",
+-      "Добавлена фильтрация карточек по группе показателей.",
+-      "Выровнена карточка «Госпитализации».",
+-    ],
+-  },
+-  {
+-    version: "3.5.1",
+-    date: "29.08.2026",
+-    items: [
+-      "Разделены федеральное выполнение и выполнение по актуальным данным РТ.",
+-      "Исправлены счётчики расширенной сводки.",
+-      "Показатели врачей с 500+ СЭМД переведены на месячный расчёт.",
+-      "План технических ошибок записи через ЕПГУ установлен не более 5%.",
+-      "Введена схема версионности дашборда.",
++      "Добавлены история обновлений, управленческая группировка показателей и контроль заслушанных МО.",
++      "Электронный путевой лист переведён на сопоставимую недельную динамику с расшифровкой по организациям и подразделениям.",
++      "Уточнены правила отсутствующих данных, технических ошибок ЕПГУ и месячного расчёта 500+.",
+     ],
+   },
+ ];
+-
+ const heardOrganizationOids = new Set([
+   "1.2.643.5.1.13.13.12.2.16.1161", // Базарно-Матакская ЦРБ
+   "1.2.643.5.1.13.13.12.2.16.1149", // Лаишевская ЦРБ
+@@ -3408,6 +3234,40 @@
+         });
+       }
+     });
++    // Оперативный 500+ используется в заслушиваниях как текущий контроль,
++    // но не подменяет закрытый месячный рейтинг и не влияет на индекс приоритета.
++    byOrg.forEach((owner) => {
++      Object.entries(physicianWeeklySnapshot.datasets)
++        .filter(([id]) => id.startsWith("doctor500_"))
++        .forEach(([id, rows]) => {
++          if (!applicableForRegistry(owner.registry, id)) return;
++          const current = rows.find((item) => item.oid === owner.registry.oid);
++          const monthlyName = physicianMetrics.datasets[id]?.name ?? id;
++          owner.metrics.push({
++            id: `operational500_${id}`,
++            name: `${monthlyName} — оперативный контроль`,
++            fact: current?.fact ?? null,
++            previous: null,
++            plan: null,
++            unit: "%",
++            date: physicianWeeklySnapshot.date,
++            period: physicianWeeklySnapshot.period,
++            count: current?.count ?? null,
++            volume: current?.volume ?? null,
++            applicable: true,
++            affectsPriority: false,
++            passed: null,
++            persistent: false,
++            adverseChange: false,
++            score: null,
++            detail: current
++              ? "Оперативный срез 500+; нет предыдущего сопоставимого недельного значения. В месячный рейтинг не включается."
++              : "Нет данных в оперативном срезе; отсутствие строки не считается невыполнением.",
++            status: "reference",
++          });
++        });
++    });
++
+     const regionalDenominators = new Map<string, number>();
+     byOrg.forEach(({ metrics }) =>
+       metrics.forEach((metric) => {
+@@ -3547,6 +3407,7 @@
+               100,
+             quantityGap,
+             regionalContribution,
++            affecting,
+             mainProblem:
+               [...affecting].sort(
+                 (a, b) => (b.regionalContribution ?? 0) - (a.regionalContribution ?? 0),
+@@ -3925,6 +3786,16 @@
+     waybillMode === "week"
+       ? electronicWaybillWeekly.current.rows
+       : electronicWaybill.rows;
++  const waybillMovementDelta =
++    (electronicWaybillWeekly.current.systemSummary.vehiclesWithMovement /
++      Math.max(1, electronicWaybillWeekly.current.systemSummary.vehicles)) * 100 -
++    (electronicWaybillWeekly.previous.systemSummary.vehiclesWithMovement /
++      Math.max(1, electronicWaybillWeekly.previous.systemSummary.vehicles)) * 100;
++  const waybillCoverageDelta =
++    (electronicWaybillWeekly.current.systemSummary.vehiclesWithWaybills /
++      Math.max(1, electronicWaybillWeekly.current.systemSummary.vehicles)) * 100 -
++    (electronicWaybillWeekly.previous.systemSummary.vehiclesWithWaybills /
++      Math.max(1, electronicWaybillWeekly.previous.systemSummary.vehicles)) * 100;
+   const previousWaybillByNumber = useMemo(
+     () =>
+       new Map(
+@@ -4115,10 +3986,15 @@
+   const selectedUnitDataset = unitData[matrixMetric];
+   const lowerIsBetter =
+     matrixMetric === "shortInput" || selectedDataset.direction === "lower";
+-  const periods = comparisonPeriods[matrixMetric] ?? {
+-    previous: "предыдущий период",
+-    current: `на ${selectedDataset.date}`,
+-  };
++  const periods = isMaxMetric
++    ? {
++        previous: selectedDataset.previousPeriod ?? selectedDataset.previousDate ?? "нет сопоставимого предыдущего среза",
++        current: selectedDataset.period ?? `на ${selectedDataset.date}`,
++      }
++    : comparisonPeriods[matrixMetric] ?? {
++        previous: "предыдущий период",
++        current: `на ${selectedDataset.date}`,
++      };
+   const previousSnapshot = snapshotDate(periods.previous);
+   const currentSnapshot = snapshotDate(periods.current);
+   const indicatorRows = selectedDataset.rows.filter(
+@@ -4254,8 +4130,8 @@
+     ? (rtIndicator?.fact ?? aggregateCountRows(indicatorRows))
+     : (rtIndicator?.fact ?? (detailRows.length ? detailAggregate.fact : 0));
+   const operationalRegionalPrevious: Record<string, number> = {
+-    egpu: (29814 / 30260) * 100,
+-    egpu2days: (24533 / 30260) * 100,
++    egpu: (30850 / 31474) * 100,
++    egpu2days: (25654 / 31474) * 100,
+   };
+   const regionalPrevious = operationalRegionalPrevious[matrixMetric] ?? (isCountMetric
+     ? indicatorRows.reduce((sum, row) => sum + (row.previous ?? 0), 0)
+@@ -4653,8 +4529,7 @@
+           </div>
+         </div>
+         <div className="asof">
+-          <span className="pulse" /> В
