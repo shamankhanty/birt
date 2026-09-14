@@ -1,0 +1,117 @@
+ерсия {DASHBOARD_VERSION} · данные на
+-          30.08.2026
++          <span className="pulse" /> Версия {DASHBOARD_VERSION} · оперативные данные 11–13.09.2026 · рейтинг: август 2026
+         </div>
+       </header>
+ 
+@@ -6647,7 +6522,7 @@
+                 </div>
+                 <div className="hearingPeriod">
+                   <small>Последние срезы</small>
+-                  <strong>до 07.09.2026</strong>
++                  <strong>срезы по 11–13.09.2026</strong>
+                   <span>период каждого показателя указан в расшифровке</span>
+                 </div>
+               </div>
+@@ -6657,7 +6532,7 @@
+                   <strong className="red">
+                     {format(hearingImpactSummary.topTenShare, 1)}%
+                   </strong>
+-                  <span>совокупного рассчитанного дефицита</span>
++                  <span>суммарного индекса влияния на цели РТ</span>
+                 </article>
+                 <article className="heard">
+                   <small>Заслушаны</small>
+@@ -6733,13 +6608,13 @@
+                     <p key={row.key}>
+                       <b>{index + 1}</b>
+                       <span>
+-                        {cleanMoName(row.name)} — {format(row.regionalContribution, 3)} п.п.
++                        {cleanMoName(row.name)} — индекс {format(row.regionalContribution, 3)}
+                       </span>
+                     </p>
+                   ))}
+                 </div>
+                 <em>
+-                  Вместе: {format(hearingImpactSummary.topTenContribution, 3)} п.п., или {format(hearingImpactSummary.topTenShare, 1)}% рассчитанного совокупного дефицита.
++                  ТОП-10: индекс {format(hearingImpactSummary.topTenContribution, 3)}, или {format(hearingImpactSummary.topTenShare, 1)}% суммарного индекса влияния.
+                 </em>
+               </details>
+               <div className="hearingToolbar">
+@@ -6876,8 +6751,8 @@
+                             <b>{snapshotSummary.comparable}</b>
+                           </p>
+                           <p>
+-                            <small>Текущий вклад</small>
+-                            <b>{format(row.regionalContribution, 3)} п.п.</b>
++                            <small>Текущий индекс влияния</small>
++                            <b>{format(row.regionalContribution, 3)}</b>
+                             <span>исторический знаменатель РТ в baseline не сохранён</span>
+                           </p>
+                         </div>
+@@ -6890,8 +6765,8 @@
+                           </b>
+                         </p>
+                         <p>
+-                          <small>Совокупный вклад</small>
+-                          <b>{format(row.regionalContribution, 3)} п.п.</b>
++                          <small>Показателей, влияющих на РТ</small>
++                          <b>{row.affecting.filter((metric) => (metric.regionalContribution ?? 0) > 0).length}</b>
+                         </p>
+                         <p>
+                           <small>Показателей с данными</small>
+@@ -6975,7 +6850,7 @@
+                                           ? "Влияет на приоритет"
+                                           : "Справочно"}
+                                     {metric.regionalContribution !== null && metric.regionalContribution !== undefined
+-                                      ? ` · влияние ${format(metric.regionalContribution, 3)} п.п. РТ`
++                                      ? ` · вклад в недостижение РТ ${format(metric.regionalContribution, 3)} п.п.`
+                                       : ""}
+                                   </small>
+                                   {row.heard && comparison.baseline && (
+@@ -7226,24 +7101,11 @@
+                         ТС · {electronicWaybillWeekly.current.period}
+                       </span>
+                     </article>
+-                    <article className="positive">
++                    <article className={waybillMovementDelta >= 0 ? "positive" : "negative"}>
+                       <small>Изменение движения</small>
+                       <strong>
+-                        ↑{" "}
+-                        {format(
+-                          (electronicWaybillWeekly.current.systemSummary
+-                            .vehiclesWithMovement /
+-                            electronicWaybillWeekly.current.systemSummary
+-                              .vehicles) *
+-                            100 -
+-                            (electronicWaybillWeekly.previous.systemSummary
+-                              .vehiclesWithMovement /
+-                              electronicWaybillWeekly.previous.systemSummary
+-                                .vehicles) *
+-                              100,
+-                          2,
+-                        )}{" "}
+-                        п.п.
++                        {waybillMovementDelta > 0 ? "↑" : waybillMovementDelta < 0 ? "↓" : "→"}{" "}
++                        {format(Math.abs(waybillMovementDelta), 2)} п.п.
+                       </strong>
+                       <span>
+                         +
+@@ -7257,24 +7119,11 @@
+                         ТС с движением
+                       </span>
+                     </article>
+-                    <article className="positive">
++                    <article className={waybillCoverageDelta >= 0 ? "positive" : "negative"}>
+                       <small>ТС с путевыми листами</small>
+                       <strong>
+-                        ↑{" "}
+-                        {format(
+-                          (electronicWaybillWeekly.current.systemSummary
+-                            .vehiclesWithWaybills /
+-                            electronicWaybillWeekly.current.systemSummary
+-                              .vehicles) *
+-                            100 -
+-                            (electronicWaybillWeekly.previous.systemSummary
+-                              .vehiclesWithWaybills /
+-                              electronicWaybillWeekly.previous.sys
