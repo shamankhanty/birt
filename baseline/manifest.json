@@ -33,17 +33,17 @@
     "app/physician-weekly-snapshot.json": "004e2fc19000743c665b44645ccfadcd455a365d520d34b12570144e6297bc46"
   },
   "protectedRules": {
-    "config/indicator-registry.json": "e9a638403176dd833c351f81d9535223eeb5df3ce8916fb43bbe06bf62c2ab36",
+    "config/indicator-registry.json": "74e1e177d8eaacc4c0ec4c05fbb58be1de9eb9793ad406a99a15ab8ceb2876ce",
     "app/mo-registry.json": "62202e489fced8a93c40867f04f5b3a021030cf4da1b0d0da6ce3a8cff088ea3",
     "app/hearing-snapshots.json": "4e6f494e413e2003e6d24c7492e79cbcd67837f31ba01565a5c2fac42a8b5871",
     "config/import-pipeline.json": "46e5e5ac343aad5ddc06a377fe7cf3e94890bc7f6e4c5012fb11ee1e7f20af62"
   },
   "stateFiles": {
-    "STATE.md": "d2c9b6b4f936e32f70dbd3b0cf4c88e25d7f22809c82d8db4e77f188020e470c",
-    "OPEN_ISSUES.md": "98c7441c1091c272d6a6fe899b9f60da40a451f77b0f8ebce6c9c09a10ed4291"
+    "STATE.md": "4b7a8885e39b058ef9da580579f9be67fc17e5f68b70ebd595285061b72cedd2",
+    "OPEN_ISSUES.md": "1652a23e4c923fb88d2487633fde16a84c52df6475fb6998e1bdad501ed8c31f"
   },
   "keyCode": {
-    "app/page.tsx": "ca9733b0665e7b992b4cffb97f54b733355596ce729cc127fc88eeaa64a75559",
+    "app/page.tsx": "52472b94bf698219eb92aede2012d5313a3e413a6f2875ef977eb30cb7f98fa9",
     "app/globals.css": "a0e67c624d6e6877dad6cb5c44c59264dfa1799c33cc4a3a5eb6c0ab8cbc4dbe",
     "lib/calculation-engine.js": "2addca9323803eb45f66fca94fe78a72c4d77eed53c7bd05c224dd9aa9f2f0e7",
     "lib/indicator-registry.js": "484857b41858c082fad05172793ff24f422008a6178257006d4512b0c12d1996",
