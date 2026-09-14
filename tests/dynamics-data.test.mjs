@@ -6,6 +6,9 @@ const readJson = async name => JSON.parse(await readFile(new URL(`../app/${name}
 const mo = await readJson("mo-data.json");
 const operational = await readJson("operational-mo.json");
 const details = await readJson("mo-details.json");
+const pageSource = await readFile(new URL("../app/page.tsx", import.meta.url), "utf8");
+const semdSummary = await readJson("semd-summary.json");
+const errorCategories = await readJson("error-categories.json");
 
 test("current comparable cuts carry dynamics without synthetic zeros", () => {
   assert.deepEqual(
@@ -31,6 +34,14 @@ test("current source totals reconcile for the refreshed indicators", () => {
     [operational.shortInput.date, operational.shortInput.rows.reduce((total, row) => total + row.fact, 0), operational.shortInputAmb.rows.reduce((total, row) => total + row.fact, 0), operational.shortInputHosp.rows.reduce((total, row) => total + row.fact, 0)],
     ["11.09.2026", 710168, 701402, 8766],
   );
+  assert.equal(semdSummary.period, "01.01.2026–11.09.2026");
+  assert.equal(semdSummary.total, 65254256);
+  assert.equal(errorCategories.period, "07.09.2026–13.09.2026");
+  assert.equal(errorCategories.total, 2046140);
+  assert.match(pageSource, /value: sumDatasetFacts\(moData\.shortInput\)/);
+  assert.match(pageSource, /value: extendedHospitalTotals\.volume/);
+  assert.match(pageSource, /value: sumDatasetFacts\(moData\.fapSemdCount\)/);
+  assert.match(pageSource, /value: errorCategories\.total/);
 });
 
 test("ambulance-card rows reconcile to the source total without duplicates", () => {

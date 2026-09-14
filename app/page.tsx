@@ -290,15 +290,14 @@ const baselineIndicators: Indicator[] = [
     id: "hospital",
     group: "СЭМД",
     name: "Доля СЭМД «Эпикриз в стационаре выписной» и/или «Выписной эпикриз из родильного дома» относительно количества случаев",
-    fact: 83.94,
+    fact: 89.5,
     plan: null,
     unit: "%",
-    trend: 7.0,
-    date: "07.09.2026",
-    lag: 98382,
-    quantity: 514249,
-    quantityLabel: "из 612 631 случая",
-    compareTo: "29.08.2026",
+    trend: null,
+    date: "11.09.2026",
+    lag: 65536,
+    quantity: 558826,
+    quantityLabel: "из 624 362 случаев · числитель РЭМД ЕГИСЗ, сопоставление по OID",
   },
   {
     id: "ambulatoryCase",
@@ -916,44 +915,80 @@ const operational = [
   },
   {
     title: "Случаи краткого ввода",
-    value: 694560,
-    period: "01.01–07.09.2026",
-    note: "685 066 — амбулаторный блок и профилактика · 9 494 — стационарный блок",
+    value: 710168,
+    period: "01.01–11.09.2026",
+    note: "701 402 — амбулаторный блок и профилактика · 8 766 — стационарный блок",
     accent: "amber",
   },
   {
     title: "Госпитализации",
-    value: 611601,
-    period: "01.01–31.08.2026",
-    note: "474 161 выписной СЭМД · 77,53% от случаев · полный август, знаменатель листа 3",
+    value: 624362,
+    period: "01.01–11.09.2026",
+    note: "558 826 выписных СЭМД РЭМД · 89,50% от случаев · сопоставление OID↔OID",
     accent: "blue",
   },
   {
     title: "ФАП и ФП: регистрация СЭМД",
-    value: 2868210,
-    period: "01.01–07.09.2026",
-    note: "Управленческий периметр МО; отсутствие строки не заменяется нулём",
+    value: 2911671,
+    period: "01.01–11.09.2026",
+    note: "1 641 из 1 673 ФАП/ФП имеют ≥1 зарегистрированный СЭМД · 32 — ноль",
     accent: "green",
   },
   {
     title: "Ошибки регистрации СЭМД",
-    value: 10489964,
-    period: "01.01–07.09.2026",
-    note: "Количество отказов; доля не пересчитана без знаменателя всех запросов",
+    value: 2046140,
+    period: "07.09–13.09.2026",
+    note: "Последняя полная неделя · 100% ошибок сопоставлены с МО · доля не рассчитана без знаменателя",
     accent: "red",
   },
 ];
+const sumDatasetFacts = (dataset?: MoDataset) =>
+  dataset?.rows.reduce((sum, row) => sum + (row.fact ?? 0), 0) ?? 0;
+const extendedHospitalTotals = Object.values(moDetails.hospital ?? {}).reduce(
+  (acc, row) => {
+    acc.volume += row.volume ?? 0;
+    acc.registered += row.registered ?? 0;
+    return acc;
+  },
+  { volume: 0, registered: 0 },
+);
+const extendedHospitalFact = extendedHospitalTotals.volume
+  ? (extendedHospitalTotals.registered / extendedHospitalTotals.volume) * 100
+  : null;
 const extendedOperational = [
-  ...operational.filter(
-    (item) =>
-      item.title !== "Заявления через ЕПГУ, обработанные за 2 рабочих дня" &&
-      item.title !== "ТМК посредством МАХ",
-  ),
+  {
+    title: "Случаи краткого ввода",
+    value: sumDatasetFacts(moData.shortInput),
+    period: moData.shortInput.period ?? "—",
+    note: `${format(sumDatasetFacts(moData.shortInputAmb), 0)} — амбулаторный блок и профилактика · ${format(sumDatasetFacts(moData.shortInputHosp), 0)} — стационарный блок`,
+    accent: "amber",
+  },
+  {
+    title: "Госпитализации",
+    value: extendedHospitalTotals.volume,
+    period: moData.hospital.period ?? "—",
+    note: `${format(extendedHospitalTotals.registered, 0)} выписных СЭМД РЭМД · ${extendedHospitalFact == null ? "—" : `${format(extendedHospitalFact, 2)}%`} от случаев · сопоставление OID↔OID`,
+    accent: "blue",
+  },
+  {
+    title: "ФАП и ФП: регистрация СЭМД",
+    value: sumDatasetFacts(moData.fapSemdCount),
+    period: moData.fapSemdCount.period ?? "—",
+    note: "Полный перечень ФАП/ФП; нулевые подразделения сохранены и не заменяются отсутствием данных",
+    accent: "green",
+  },
+  {
+    title: "Ошибки регистрации СЭМД",
+    value: errorCategories.total,
+    period: errorCategories.period,
+    note: "Последняя полная неделя · доля не рассчитана без знаменателя всех обработанных запросов",
+    accent: "red",
+  },
   {
     title: "Всего зарегистрировано СЭМД",
     value: semdSummary.total,
     period: semdSummary.period,
-    note: `${semdSummary.registeredTypes} видов с зарегистрированными документами · сформировано ${semdSummary.formed}`,
+    note: `${semdSummary.registeredTypes} видов с зарегистрированными документами · выгрузка сформирована ${semdSummary.formed}`,
     accent: "green",
   },
 ];
@@ -2588,6 +2623,7 @@ const versionHistory = [
       "В «МО для заслушивания» добавлен оперативный контроль 500+; вклад МО в недостижение целей РТ показан без дублирования одного значения в нескольких карточках.",
       "Исправлены даты актуальности в шапке и динамике МАХ; история обновлений агрегирована для пользователей без технических CI-итераций.",
       "Исправлен расчёт выписных эпикризов: числитель берётся из РЭМД ЕГИСЗ, знаменатель — из случаев госпитализации; сопоставление по OID, прежняя несопоставимая динамика сброшена.",
+      "Верхние плашки «Расширенной сводки» синхронизированы с актуальными источниками: краткий ввод, госпитализации, ФАП/ФП и СЭМД — по 11.09; ошибки РЭМД — за полную неделю 07–13.09.",
     ],
   },
   {
