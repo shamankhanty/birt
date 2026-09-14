@@ -185,6 +185,7 @@ jobs:
           path: _site
 
   deploy:
+    if: github.event_name != 'pull_request'
     needs: build
     runs-on: ubuntu-latest
     environment:
