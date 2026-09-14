@@ -4307,7 +4307,11 @@ export default function Home() {
         ? maxAugustMonthlyDataset
         : monthlyMoData[matrixMetric];
   const metricDisplayName = (id: string) =>
-    id === "tmkMaxCount" ? "ТМК и ЛВН посредством МАХ" : moData[id].name;
+    id === "tmkMaxCount"
+      ? "ТМК посредством МАХ"
+      : id === "elnMaxCount"
+        ? "ЛВН после ТМК посредством МАХ"
+        : moData[id].name;
   const filteredMetricIds = metricIds.filter((id) =>
     metricDisplayName(id)
       .toLowerCase()
