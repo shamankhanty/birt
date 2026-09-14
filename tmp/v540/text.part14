@@ -1,0 +1,129 @@
+d": "monthly",
+-        "current": null,
+-        "date": "31.08.2026",
++        "kind": "operational",
++        "current": "07.09–13.09.2026",
++        "date": "13.09.2026",
+         "comparisonLabel": null,
+-        "cadence": "Ежемесячно; полный календарный месяц"
++        "cadence": "Еженедельно; последняя полная неделя"
+       },
+       "plan": {
+         "value": null,
+@@ -841,8 +841,8 @@
+         "reason": "Явно исключён из buildOrganizationRating() в baseline v4.6.0."
+       },
+       "exclusions": [],
+-      "baselineStaticFact": 785939,
+-      "notes": "Показывается абсолютное количество отказов. Доля и оценка качества не рассчитываются без знаменателя всех обработанных запросов.",
++      "baselineStaticFact": 2046140,
++      "notes": "Оперативный недельный контроль. Показывается абсолютное количество отказов по категориям и МО. Доля и оценка качества не рассчитываются без знаменателя всех обработанных запросов.",
+       "legal": null,
+       "management": {
+         "hearingPriority": false,
+@@ -1176,9 +1176,9 @@
+       },
+       "period": {
+         "kind": "cumulative",
+-        "current": "01.01–28.08.2026",
+-        "date": "28.08.2026",
+-        "comparisonLabel": null,
++        "current": "01.01–11.09.2026",
++        "date": "11.09.2026",
++        "comparisonLabel": "На 11.09",
+         "cadence": "Еженедельно; накопительно с начала года"
+       },
+       "plan": {
+@@ -1195,7 +1195,7 @@
+       },
+       "exclusions": [],
+       "baselineStaticFact": 92.31,
+-      "notes": null,
++      "notes": "Числитель — карты вызова со статусом «Принято» при отправке в федеральный сервис; статус используется как подтверждение успешной регистрации в РЭМД ЕГИСЗ. Знаменатель — завершённые случаи СМП («Количество карт») из АСУ СМП за тот же период.",
+       "legal": null,
+       "management": {
+         "hearingPriority": true,
+@@ -1295,9 +1295,9 @@
+       },
+       "period": {
+         "kind": "cumulative",
+-        "current": "01.01–31.08.2026",
+-        "date": "31.08.2026",
+-        "comparisonLabel": "На 31.08",
++        "current": "01.01–11.09.2026",
++        "date": "11.09.2026",
++        "comparisonLabel": "На 07.09",
+         "cadence": "Еженедельно и за полный месяц"
+       },
+       "plan": {
+@@ -1316,7 +1316,7 @@
+         "РКПД/противотуберкулёзный профиль учитывает специальные правила применимости МАХ в текущем runtime."
+       ],
+       "baselineStaticFact": null,
+-      "notes": "Оперативный факт на 07.09.2026 — 103 940 при плане 193 000 на 2026 год. Для рейтинга МО используются полные накопительные срезы на 31.07 и 31.08; оперативный итог РТ показывается отдельно.",
++      "notes": "Оперативный срез МО: 01.01–11.09.2026; предыдущий сопоставимый срез 01.01–07.09.2026. Годовой план РТ 193 000 показывается отдельно; индивидуальные месячные планы МО не выводятся.",
+       "legal": null,
+       "management": {
+         "hearingPriority": false,
+diff -ruN '--exclude=.sites-runtime' '--exclude=node_modules' '--exclude=__pycache__' '--exclude=validation' '--exclude=source.tar.gz' '--exclude=error-organizations.json' '--exclude=electronic-waybill-weekly.json' '--exclude=mo-data.json' '--exclude=mo-details.json' '--exclude=mo-detail-oids.json' main_source/scripts/pipeline/adapters.py wsrepo/scripts/pipeline/adapters.py
+--- main_source/scripts/pipeline/adapters.py	2026-09-14 06:54:31.000000000 +0000
++++ wsrepo/scripts/pipeline/adapters.py	2026-09-14 08:18:52.251909047 +0000
+@@ -131,6 +131,41 @@
+     return f"На {date_ru(d)[:5]}"
+ 
+ 
++def source_period(path: Path, end: date, kind: str = "cumulative") -> str:
++    text = path.name
++    # Full dates in filenames, e.g. 07_09_2026_13_09_2026.
++    full=[]
++    for d,m,y in re.findall(r'(?<!\d)(\d{1,2})[._-](\d{1,2})[._-](20\d{2})(?!\d)', text):
++        try: full.append(date(int(y),int(m),int(d)))
++        except ValueError: pass
++    if len(full) >= 2:
++        start,end_date=min(full),max(full)
++        return f"{date_ru(start)}–{date_ru(end_date)}"
++    # Short date ranges without a year, e.g. 31_08_06_09 or 07.09 - 13.09.
++    for pattern in [
++        r'(?<!\d)(\d{1,2})[._](\d{1,2})[_-](\d{1,2})[._](\d{1,2})(?![._-]\d)',
++        r'(?<!\d)(\d{1,2})[._](\d{1,2})\s*[-–]\s*(\d{1,2})[._](\d{1,2})(?![._-]\d)',
++    ]:
++        m=re.search(pattern,text)
++        if not m: continue
++        sd,sm,ed,em=map(int,m.groups())
++        sy=end.year - (1 if sm > em else 0)
++        try:
++            start=date(sy,sm,sd); finish=date(end.year,em,ed)
++            return f"{date_ru(start)}–{date_ru(finish)}"
++        except ValueError:
++            pass
++    return period_cumulative(end) if kind == "cumulative" else date_ru(end)
++
++def previous_fields(old: dict | None, same_cut: bool, current_fact):
++    if not old:
++        return None, None
++    if same_cut:
++        return old.get("previous"), old.get("trend")
++    pv=old.get("fact")
++    return pv, None if pv is None or current_fact is None else current_fact-pv
++
++
+ def previous_rows_from_dataset(ds: dict) -> dict[str, dict]:
+     return {(str(r.get("oid")) if r.get("oid") else norm(r.get("name"))): r for r in ds.get("rows", [])}
+ 
+@@ -201,17 +236,23 @@
+         cur = parse_egpu(source, col)
+         prev = previous_rows_from_dataset(mo.get(metric, {}))
+         dn, do, rows = {}, {}, []
++        same_cut = mo.get(metric, {}).get("date") == date_ru(end)
+         for x in cur:
+             old = prev.get(x["oid"] or norm(x["name"]))
++            pv, trend = previous_fields(old, same_cut, x["fact"])
+             row = {"name": x["name"], "oid": x["oid"], "fact": x["fact"], "count": x["count"],
+-                   "previous": old.get("fact") if old else None,
+-                   "trend": None if not old else x["fact"] - old.get("fact", 0)}
++                   "previous": pv, "trend": trend}
+             rows.append(row)
+             d = {"volume": x["volume"], "registered": x["count"]}
+             dn[norm(x["name"])] = d
+             if x["oid"]: do[x["oid"]] = d
+         base = mo.get(metric, {})
