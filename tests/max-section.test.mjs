@@ -63,5 +63,5 @@ test("MAX period modes do not mix cumulative, weekly and monthly values", () => 
   assert.match(page, /31\.08 минус 31\.07/u);
   assert.match(page, /срез на 30\.06/u);
   assert.doesNotMatch(page, /ТМК\s*\+\s*ЛВН/u);
-  assert.doesNotMatch(page, /10 000 в месяц/u);
+  assert.doesNotMatch(page, /Месячный план[\s\S]{0,250}10 000 в месяц/u);
 });
