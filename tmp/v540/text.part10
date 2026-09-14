@@ -81,6 +81,14 @@ diff -ruN '--exclude=.sites-runtime' '--exclude=node_modules' '--exclude=__pycac
        "trend": null,
        "quantity": null,
 @@ -346,8 +346,8 @@
+       "previous": null,
+       "trend": null,
+       "quantity": 602974,
+-      "numerator": 576237,
+-      "denominator": 624216,
++      "numerator": 602974,
++      "denominator": 659836,
+       "method": "ratio_components",
        "source": "mo-details"
      },
 @@ -492,22 +492,22 @@
