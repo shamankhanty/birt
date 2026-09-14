@@ -50,3 +50,18 @@ test("missing rows are not converted to zero", () => {
   assert.match(page, /Нет строки в выгрузке/u);
   assert.match(page, /Отсутствующие данные не заменяются нулём/u);
 });
+
+
+test("MAX period modes do not mix cumulative, weekly and monthly values", () => {
+  assert.match(page, /Верхние значения — накопительный итог РТ/u);
+  assert.match(page, /Годовой план РТ/u);
+  assert.match(page, /193000/u);
+  assert.match(page, /99000/u);
+  assert.match(page, /Нет двух полных сопоставимых недель/u);
+  assert.match(page, /Нет сопоставимого периода/u);
+  assert.match(page, /maxAugustMonthlyDataset/u);
+  assert.match(page, /31\.08 минус 31\.07/u);
+  assert.match(page, /срез на 30\.06/u);
+  assert.doesNotMatch(page, /ТМК\s*\+\s*ЛВН/u);
+  assert.doesNotMatch(page, /10 000 в месяц/u);
+});
