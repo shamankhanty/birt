@@ -37,14 +37,15 @@ jobs:
       - name: Install Python validation dependencies
         run: python3 -m pip install --disable-pip-version-check openpyxl
 
-      - name: Verify requested v5.2.5 controls in source
+      - name: Verify requested v5.3.0 controls in source
         run: |
-          grep -Fq 'const DASHBOARD_VERSION = "5.2.5"' app/page.tsx
+          grep -Fq 'const DASHBOARD_VERSION = "5.3.0"' app/page.tsx
           grep -Fq 'function hearingDisplayGroup(metric: HearingMetric)' app/page.tsx
           grep -Fq 'СЭМД относительно случаев / обращений' app/page.tsx
           grep -Fq 'Справочные / неприменимые / без сопоставимого плана / без необходимых данных' app/page.tsx
-          grep -Fq '01.08–31.08.2026' app/error-categories.json
-          grep -Fq '785939' app/error-categories.json
+          grep -Fq '01.01–11.09.2026' app/error-categories.json
+          grep -Fq '12246628' app/error-categories.json
+          grep -Fq 'Неполный сентябрь сохранён только для недельного контроля' scripts/pipeline/adapters.py
 
       - name: Validate calculations and metadata
         run: npm run validate:refactor
@@ -66,11 +67,11 @@ jobs:
       - name: Verify Pages artifact
         run: |
           test -s _site/index.html
-          grep -q '5.2.5' _site/index.html
+          grep -q '5.3.0' _site/index.html
           grep -q 'hearingMetricGroup' _site/index.html
           # The offline compiler serializes the en dash as \u2013 in embedded JSON.
-          grep -Fq '01.08\u201331.08.2026' _site/index.html
-          grep -Eq '785.?939|785939' _site/index.html
+          grep -Fq '01.01\u201311.09.2026' _site/index.html
+          grep -Eq '12.?246.?628|12246628' _site/index.html
           grep -q 'hearingTopTen' _site/index.html
 
       - name: Configure GitHub Pages
