@@ -8103,7 +8103,7 @@ export default function Home() {
               <div className="pageHead compactHead indicatorTitle">
                 <h1>
                   {isMaxMetric
-                    ? "ТМК и ЛВН посредством МАХ"
+                    ? metricDisplayName(matrixMetric)
                     : selectedDataset.name}
                 </h1>
                 <div
