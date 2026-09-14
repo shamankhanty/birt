@@ -1,0 +1,73 @@
+-exclude=.sites-runtime' '--exclude=node_modules' '--exclude=__pycache__' '--exclude=validation' '--exclude=source.tar.gz' '--exclude=error-organizations.json' '--exclude=electronic-waybill-weekly.json' '--exclude=mo-data.json' '--exclude=mo-details.json' '--exclude=mo-detail-oids.json' main_source/tests/mo-linkage.test.mjs wsrepo/tests/mo-linkage.test.mjs
+--- main_source/tests/mo-linkage.test.mjs	2026-09-14 06:54:31.000000000 +0000
++++ wsrepo/tests/mo-linkage.test.mjs	2026-09-14 08:27:26.293605979 +0000
+@@ -12,7 +12,7 @@
+   const detail = oidDetails.egpu[row.oid];
+   assert.equal(row.count, detail.registered);
+   assert.ok(Math.abs(row.fact - detail.registered / detail.volume * 100) < 1e-10);
+-  assert.deepEqual(detail, { registered: 126, volume: 181 });
++  assert.deepEqual(detail, { registered: 126, volume: 183 });
+ });
+ 
+ test("OID detail links reconcile every current ratio row that supplies an OID", () => {
+diff -ruN '--exclude=.sites-runtime' '--exclude=node_modules' '--exclude=__pycache__' '--exclude=validation' '--exclude=source.tar.gz' '--exclude=error-organizations.json' '--exclude=electronic-waybill-weekly.json' '--exclude=mo-data.json' '--exclude=mo-details.json' '--exclude=mo-detail-oids.json' main_source/tests/physician-weekly-ui.test.mjs wsrepo/tests/physician-weekly-ui.test.mjs
+--- main_source/tests/physician-weekly-ui.test.mjs	2026-09-14 06:54:31.000000000 +0000
++++ wsrepo/tests/physician-weekly-ui.test.mjs	2026-09-14 08:27:26.293774142 +0000
+@@ -7,12 +7,13 @@
+ const monthly = JSON.parse(fs.readFileSync("app/monthly-mo.json", "utf8"));
+ const physicians = JSON.parse(fs.readFileSync("app/physician-metrics.json", "utf8"));
+ 
+-test("partial September 500+ is visible only as weekly control in section 02", () => {
++test("partial September 500+ is operational control and does not replace monthly rating", () => {
+   assert.equal(weekly.date, "11.09.2026");
+   assert.match(weekly.period, /01\.01–11\.09\.2026/u);
+   assert.match(page, /physician-weekly-snapshot\.json/u);
+   assert.match(page, /Оперативный недельный контроль «500\+»/u);
+-  assert.match(page, /не включены в месячный рейтинг и заслушивание МО/u);
++  assert.match(page, /В месячный рейтинг не включается/u);
++  assert.match(page, /operational500_/u);
+   for (const id of Object.keys(weekly.summary)) {
+     assert.ok(physicians.datasets[id].periodType === "month", `${id} must keep the closed monthly dataset`);
+     assert.ok(monthly[id], `${id} remains represented by its full-month comparison`);
+diff -ruN '--exclude=.sites-runtime' '--exclude=node_modules' '--exclude=__pycache__' '--exclude=validation' '--exclude=source.tar.gz' '--exclude=error-organizations.json' '--exclude=electronic-waybill-weekly.json' '--exclude=mo-data.json' '--exclude=mo-details.json' '--exclude=mo-detail-oids.json' main_source/tests/source-refresh-2908.test.mjs wsrepo/tests/source-refresh-2908.test.mjs
+--- main_source/tests/source-refresh-2908.test.mjs	2026-09-14 06:54:31.000000000 +0000
++++ wsrepo/tests/source-refresh-2908.test.mjs	2026-09-14 08:27:26.294001297 +0000
+@@ -39,7 +39,7 @@
+ 
+ test("each indicator shows its real latest source cut-off", () => {
+   const expected = {
+-    egpu: "07.09.2026", egpu2days: "07.09.2026", birth: "11.09.2026", death: "11.09.2026",
++    egpu: "11.09.2026", egpu2days: "11.09.2026", birth: "11.09.2026", death: "11.09.2026",
+     semd228: "11.09.2026", hospital: "11.09.2026", smp: "11.09.2026",
+     tvspStationary: "11.09.2026", tvspAmbulatory: "11.09.2026", tvspLaboratory: "11.09.2026",
+     tvspDiagnostic: "11.09.2026", smpFederal: "11.09.2026",
+diff -ruN '--exclude=.sites-runtime' '--exclude=node_modules' '--exclude=__pycache__' '--exclude=validation' '--exclude=source.tar.gz' '--exclude=error-organizations.json' '--exclude=electronic-waybill-weekly.json' '--exclude=mo-data.json' '--exclude=mo-details.json' '--exclude=mo-detail-oids.json' main_source/tests/ui-remarks-v522.test.mjs wsrepo/tests/ui-remarks-v522.test.mjs
+--- main_source/tests/ui-remarks-v522.test.mjs	2026-09-14 06:54:31.000000000 +0000
++++ wsrepo/tests/ui-remarks-v522.test.mjs	2026-09-14 08:27:26.294144216 +0000
+@@ -24,7 +24,7 @@
+   assert.match(page, /setMaxService\("eln"\)/u);
+   assert.match(page, /maxMonthCards/u);
+   assert.match(css, /v5\.2\.2 compact MAX and service selector/u);
+-  assert.match(page, /const DASHBOARD_VERSION = "5\.3\.0"/u);
++  assert.match(page, /const DASHBOARD_VERSION = "5\.4\.0"/u);
+   assert.ok(page.indexOf('["max", "МАХ", "05"]') > page.indexOf('["divider", "В разработке", ""]'));
+   assert.ok(page.includes('developmentSection ${tab === "max"'));
+   assert.doesNotMatch(page, /className=\{tab === "max" \? "active" : ""\}/u);
+diff -ruN '--exclude=.sites-runtime' '--exclude=node_modules' '--exclude=__pycache__' '--exclude=validation' '--exclude=source.tar.gz' '--exclude=error-organizations.json' '--exclude=electronic-waybill-weekly.json' '--exclude=mo-data.json' '--exclude=mo-details.json' '--exclude=mo-detail-oids.json' main_source/tests/update-pipeline.test.mjs wsrepo/tests/update-pipeline.test.mjs
+--- main_source/tests/update-pipeline.test.mjs	2026-09-14 06:54:31.000000000 +0000
++++ wsrepo/tests/update-pipeline.test.mjs	2026-09-14 08:22:57.718457186 +0000
+@@ -28,11 +28,20 @@
+   'Отчет_Доля_ТВСП_СЭМД_Протокол лабораторного 31.08.2026.xlsx':'tvsp_laboratory',
+   'Отчет_СМП_ТВСП 31.08.2026.xlsx':'smp_tvsp',
+   'Отчёт - Отказы 31.08.2026.xlsx':'remd_errors',
+-  'Отчёт_по_использованию_системы_31.08.2026.xlsx':'electronic_waybill'
++  'Отчёт - Отказы по регистрации ЭМД в РЭМД 07.09 - 13.09.xlsx':'remd_errors',
++  'Отчёт_по_использованию_системы_31.08.2026.xlsx':'electronic_waybill',
++  'Отчёт_по_использованию_системы_31_08_06_09.xlsx':'electronic_waybill' 
+  };
+  for(const [name,fam] of Object.entries(cases)){const x=classify(name);assert.equal(x.status,'PASS',name);assert.equal(x.family,fam,name)}
+ });
+ 
++
++test('weekly filenames without repeated year resolve to the correct 2026 end date',()=>{
++ const a=classify('Отчёт_по_и
