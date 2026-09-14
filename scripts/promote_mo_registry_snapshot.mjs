@@ -14,7 +14,7 @@ for (const [metric, dataset] of Object.entries(read("app/monthly-mo.json"))) {
 }
 entries.sort((a, b) => JSON.stringify(a).localeCompare(JSON.stringify(b), "ru"));
 const payload = {
-  schemaVersion: 1, baselineVersion: "5.4.0", entryCount: entries.length,
+  schemaVersion: 1, baselineVersion: "5.4.1", entryCount: entries.length,
   resolvedCount: entries.filter((entry) => entry.resolvedOid !== null).length,
   mappingSha256: crypto.createHash("sha256").update(JSON.stringify(entries)).digest("hex"),
 };
