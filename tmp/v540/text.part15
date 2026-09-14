@@ -1,0 +1,74 @@
+-        mo[metric] = {**base, "name": base.get("name", title), "date": date_ru(end), "period": period_cumulative(end), "rows": retain_no_source_rows(prev, rows)}
++        previous_date = base.get("previousDate") if same_cut else base.get("date")
++        previous_period = base.get("previousPeriod") if same_cut else base.get("period")
++        note = f"Оперативный накопительный срез на {date_ru(end)}. Отрицательные производные остатки источника не используются; отсутствие данных не заменяется нулём."
++        mo[metric] = {**base, "name": base.get("name", title), "date": date_ru(end), "period": period_cumulative(end),
++                      "previousDate": previous_date, "previousPeriod": previous_period, "note": note,
++                      "rows": retain_no_source_rows(prev, rows)}
+         details[metric], oids[metric] = dn, do
+         if is_full_month(end):
+             monthly[metric] = monthly_payload(prev, cur, end)
+@@ -320,15 +361,20 @@
+ def adapt_max(app: Path, source: Path, end: date) -> AdapterResult:
+     operational,monthly=(load(app,x) for x in ["operational-mo.json","monthly-mo.json"]); facts={}
+     for metric,col in [("tmkMaxCount",3),("elnMaxCount",4)]:
+-        cur=parse_max(source,col); prev=previous_rows_from_dataset(operational.get(metric,{})); rows=[]
++        base=operational.get(metric,{})
++        cur=parse_max(source,col); prev=previous_rows_from_dataset(base); rows=[]
++        same_cut=base.get("date")==date_ru(end)
+         for x in cur:
+-            old=prev.get(norm(x["name"])); rows.append({"name":x["name"],"fact":x["fact"],"count":x["count"],"previous":old.get("fact") if old else None,"trend":None if not old else x["fact"]-old.get("fact",0)})
++            old=prev.get(norm(x["name"])); pv,trend=previous_fields(old,same_cut,x["fact"]); rows.append({"name":x["name"],"fact":x["fact"],"count":x["count"],"previous":pv,"trend":trend})
+         final_rows = retain_no_source_rows(prev, rows)
+         if "спасская црб" in {loose_source_key(row.get("name")) for row in rows}:
+             # Approved MAX source convention: this label is the contextual
+             # Spassk row, not a second line in addition to РКБ МЗ РТ.
+             final_rows = [row for row in final_rows if not (row.get("sourceStatus") == "no_source_row" and "ркб мз рт" in norm(row.get("name")))]
+-        operational[metric]={**operational.get(metric,{}),"date":date_ru(end),"period":period_cumulative(end),"rows":final_rows}
++        operational[metric]={**base,"date":date_ru(end),"period":period_cumulative(end),
++            "previousDate": base.get("previousDate") if same_cut else base.get("date"),
++            "previousPeriod": base.get("previousPeriod") if same_cut else base.get("period"),
++            "rows":final_rows}
+         if is_full_month(end): monthly[metric]=monthly_payload(prev,cur,end,"count")
+         facts[metric]={"rows":len(rows),"total":sum(x["count"] for x in cur)}
+     save(app,"operational-mo.json",operational);save(app,"monthly-mo.json",monthly)
+@@ -417,8 +463,9 @@
+     attributed_errors = total - unassigned_errors
+     coverage = attributed_errors / total * 100 if total else 100.0
+     registry_coverage = registry_matched_errors / total * 100 if total else 100.0
++    period = source_period(source, end, "weekly")
+     breakdown = {
+-        "status": "available", "sourcePeriod": period_cumulative(end),
++        "status": "available", "sourcePeriod": period,
+         "totalErrors": total, "attributedErrors": attributed_errors,
+         "unassignedErrors": unassigned_errors, "coveragePercent": coverage,
+         "sourceRows": parsed["sourceRows"], "attributedRows": parsed["attributedRows"],
+@@ -431,7 +478,7 @@
+ 
+     payload = load(app, "error-categories.json")
+     payload.update({
+-        "total": total, "period": period_cumulative(end), "share": None,
++        "total": total, "period": period, "share": None,
+         "shareDate": date_ru(end),
+         "shareSource": "Доля не рассчитана: в выгрузке отказов отсутствует знаменатель всех обработанных запросов",
+         "successfulRequests": None,
+@@ -573,12 +620,20 @@
+     if not rows:raise ValueError("ЭЛП: не найдено строк детализации")
+     vehicles=sum(r["vehicles"] for r in rows); moved=sum(r["moved"] for r in rows)
+     detail={"organizations":len(rows),"vehicles":vehicles,"vehiclesWithMovement":moved,"movementShare":moved/vehicles*100 if vehicles else None,"waybills":sum(r["waybills"] for r in rows),"driversWithWaybills":sum(r["driversWithWaybills"] for r in rows),"organizationsWithMovement":sum(r["vehicles"]>0 and r["moved"]>0 for r in rows),"zeroMovementOrganizations":sum(r["vehicles"]>0 and r["moved"]==0 for r in rows),"zeroVehicleOrganizations":sum(r["vehicles"]==0 for r in rows)}
+-    return {"source":path.name,"period":period,"sourceHeading":str(ws["B2"].value or ""),"systemSummary":{},"detail":detail,"rows":rows}
++    system_summary={
++        "organizations":n(ws["C6"].value),"vehicles":n(ws["C7"].value),
++        "vehiclesWithWaybills":n(ws["E7"].value),"vehiclesWithMovement":n(ws["H7"].value),
++    }
++    return {"source":path.name,"period":period,"sourceHeading":str(ws["B2"].value or ""),"systemSummary":system_summary,"detail":detail,"rows":rows}
+ 
+ 
+ def adapt_waybill(app: Path, source: Path, end: date) -> AdapterResult:
+-    payload=load(app,"electronic-waybill-weekly.json"); period=f"до {date_ru(end)}"; current=extract_waybill(source,period); previous=payload.get("current") or payload.get("previous")
+-    out={"previous":previous,"current":current,"comparisonRule":payload.get("comparisonRule","Недельная динамика и рейтинг рассчитаны по сумме строк детализации по организациям."),"periodCorrection":payload.get("periodCorrection")}
++    payload=load(app,"electronic-waybill-weekly.json"); period=source_period(source,end,"weekly"); current=extract_waybill(source,period)
++    if payload.get("current",{}).get("period")==period:
++        previous=payload.get("previous")
++    else:
++        previous=payload.get("
