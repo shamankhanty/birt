@@ -13,6 +13,18 @@ ROOT=Path(__file__).resolve().parents[2]
 def sha(p:Path): return hashlib.sha256(p.read_bytes()).hexdigest()
 def tree_hashes(folder:Path): return {p.relative_to(folder).as_posix():sha(p) for p in sorted(folder.rglob('*')) if p.is_file()}
 
+def compact_error_payload(app:Path):
+    """Keep REMD category totals and MO breakdown in separate canonical JSON files."""
+    categories=app/'error-categories.json'; organizations=app/'error-organizations.json'
+    if not categories.exists() or not organizations.exists(): return
+    payload=json.loads(categories.read_text(encoding='utf-8'))
+    embedded=payload.pop('organizationBreakdown',None)
+    if embedded is None: return
+    separate=json.loads(organizations.read_text(encoding='utf-8'))
+    if embedded!=separate:
+        raise ValueError('error organization breakdown mismatch between canonical files')
+    categories.write_text(json.dumps(payload,ensure_ascii=False,indent=2)+'\n',encoding='utf-8')
+
 def stage(input_dir:Path,output_dir:Path):
     intake=scan(input_dir)
     if intake['summary']['FAIL']:
@@ -40,6 +52,10 @@ def stage(input_dir:Path,output_dir:Path):
             results.append(AdapterResult(latest.get('adapter') or 'unknown',[family],'WARNING',[],[latest['name']],{},['Adapter отсутствует в staging; reference script сохранён'],[]).dict());continue
         try: results.append(run_family(output_dir/'app',family,Path(latest['path']),parse_iso(latest['endDate']),ROOT).dict())
         except Exception as e: results.append(AdapterResult(latest.get('adapter') or family,[family],'FAIL',[],[latest['name']],{},[],[str(e)]).dict())
+    try:
+        compact_error_payload(output_dir/'app')
+    except Exception as e:
+        results.append(AdapterResult('error_payload_compaction',['remd_errors'],'FAIL',[],[],{},[],[str(e)]).dict())
     after=tree_hashes(output_dir/'app'); changed=sorted(k for k in set(before)|set(after) if before.get(k)!=after.get(k))
     fail=any(x['status']=='FAIL' for x in results); warning=any(x['status']=='WARNING' for x in results)
     validation_dir=output_dir/'validation'

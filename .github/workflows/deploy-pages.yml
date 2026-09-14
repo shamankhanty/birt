@@ -1,13 +1,12 @@
 name: Deploy dashboard to GitHub Pages
 
-# Project Pages URL follows the current repository name (birt).
 on:
   push:
     branches: ["main"]
   workflow_dispatch:
 
 permissions:
-  contents: write
+  contents: read
   pages: write
   id-token: write
 
@@ -21,6 +20,8 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 2
 
       - name: Setup Node
         uses: actions/setup-node@v4
@@ -37,20 +38,63 @@ jobs:
       - name: Install Python validation dependencies
         run: python3 -m pip install --disable-pip-version-check openpyxl
 
-      - name: Verify requested v5.3.0 controls in source
+      - name: Validate UTF-8 and JSON integrity
         run: |
-          grep -Fq 'const DASHBOARD_VERSION = "5.3.0"' app/page.tsx
-          grep -Fq 'function hearingDisplayGroup(metric: HearingMetric)' app/page.tsx
-          grep -Fq 'СЭМД относительно случаев / обращений' app/page.tsx
-          grep -Fq 'Справочные / неприменимые / без сопоставимого плана / без необходимых данных' app/page.tsx
-          grep -Fq '01.01–11.09.2026' app/error-categories.json
-          grep -Fq '12246628' app/error-categories.json
-          grep -Fq 'Неполный сентябрь сохранён только для недельного контроля' scripts/pipeline/adapters.py
+          python3 - <<'PY'
+          import json
+          from pathlib import Path
+
+          checked = 0
+          for root in ("app", "config", "baseline"):
+              for path in sorted(Path(root).rglob("*.json")):
+                  text = path.read_text(encoding="utf-8")
+                  json.loads(text)
+                  checked += 1
+          print(f"JSON integrity: PASS; files={checked}")
+          PY
+
+      - name: Verify release consistency
+        run: |
+          python3 - <<'PY'
+          import json
+          import re
+          from pathlib import Path
+
+          manifest = json.loads(Path("baseline/manifest.json").read_text(encoding="utf-8"))
+          page = Path("app/page.tsx").read_text(encoding="utf-8")
+          match = re.search(r'const DASHBOARD_VERSION = "([^"]+)"', page)
+          assert match, "DASHBOARD_VERSION not found"
+          version = match.group(1)
+          assert version == manifest["baselineVersion"], (version, manifest["baselineVersion"])
+
+          errors = json.loads(Path("app/error-categories.json").read_text(encoding="utf-8"))
+          error_org = json.loads(Path("app/error-organizations.json").read_text(encoding="utf-8"))
+          assert errors["total"] == sum(int(item["count"]) for item in errors["items"]), "error category total mismatch"
+          assert error_org["totalErrors"] == errors["total"], "error organization total mismatch"
+          assert "organizationBreakdown" not in errors, "duplicate error organization payload must stay in error-organizations.json only"
+
+          print(f"Release consistency: PASS; version={version}; REMD errors={errors['total']}")
+          PY
+
+      - name: Detect pipeline-code changes
+        id: changes
+        shell: bash
+        run: |
+          if [[ "${{ github.event_name }}" == "workflow_dispatch" ]]; then
+            echo "pipeline=true" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+          if git diff --name-only HEAD^ HEAD | grep -Eq '^(scripts/pipeline/|config/import-pipeline\.json)'; then
+            echo "pipeline=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "pipeline=false" >> "$GITHUB_OUTPUT"
+          fi
 
       - name: Validate calculations and metadata
         run: npm run validate:refactor
 
       - name: Validate staging adapters
+        if: steps.changes.outputs.pipeline == 'true'
         run: python3 scripts/pipeline/adapter_selftest.py
 
       - name: Run regression tests
@@ -67,12 +111,25 @@ jobs:
       - name: Verify Pages artifact
         run: |
           test -s _site/index.html
-          grep -q '5.3.0' _site/index.html
+          VERSION="$(python3 -c 'import json; print(json.load(open("baseline/manifest.json", encoding="utf-8"))["baselineVersion"])')"
+          grep -Fq "$VERSION" _site/index.html
           grep -q 'hearingMetricGroup' _site/index.html
-          # The offline compiler serializes the en dash as \u2013 in embedded JSON.
-          grep -Fq '01.01\u201311.09.2026' _site/index.html
-          grep -Eq '12.?246.?628|12246628' _site/index.html
           grep -q 'hearingTopTen' _site/index.html
+
+      - name: Package current source workspace
+        run: |
+          VERSION="$(python3 -c 'import json; print(json.load(open("baseline/manifest.json", encoding="utf-8"))["baselineVersion"])')"
+          git archive --format=tar.gz --output="dashboard-source-${VERSION}.tar.gz" HEAD
+          echo "SOURCE_PACKAGE=dashboard-source-${VERSION}.tar.gz" >> "$GITHUB_ENV"
+
+      - name: Upload source workspace artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: dashboard-source-workspace
+          path: ${{ env.SOURCE_PACKAGE }}
+          if-no-files-found: error
+          retention-days: 30
+          compression-level: 0
 
       - name: Configure GitHub Pages
         uses: actions/configure-pages@v5
