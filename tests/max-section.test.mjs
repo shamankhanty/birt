@@ -53,7 +53,7 @@ test("missing rows are not converted to zero", () => {
 
 
 test("MAX period modes do not mix cumulative, weekly and monthly values", () => {
-  assert.match(page, /Верхние значения — накопительный итог РТ/u);
+  assert.match(page, /Официальный накопительный результат не используется в недельной или месячной динамике МО/u);
   assert.match(page, /Годовой план РТ/u);
   assert.match(page, /193000/u);
   assert.match(page, /99000/u);
