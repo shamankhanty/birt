@@ -1,0 +1,80 @@
+current") or payload.get("previous")
++    out={"previous":previous,"current":current,"comparisonRule":payload.get("comparisonRule","Недельная динамика и рейтинг рассчитаны по сумме строк детализации по организациям."),"periodCorrection":None}
+     save(app,"electronic-waybill-weekly.json",out)
+     return AdapterResult("waybill",["electronic_waybill"],"PASS",["electronic-waybill-weekly.json"],[source.name],current["detail"],[],[])
+ 
+@@ -750,11 +805,11 @@
+ 
+ 
+ def adapt_asu_smp(app: Path, source: Path, end: date) -> AdapterResult:
+-    mo,details=(load(app,x) for x in ["mo-data.json","mo-details.json"]);prev=previous_rows_from_dataset(mo.get("smp",{}));rows=[]
++    mo,details=(load(app,x) for x in ["mo-data.json","mo-details.json"]);base=mo.get("smp",{});prev=previous_rows_from_dataset(base);rows=[];same_cut=base.get("date")==date_ru(end)
+     for r,bold in _asu_rows(source):
+         if len(r)<=10 or not bold or not str(r[0] or "").strip():continue
+-        name=str(r[0]).strip();vol=n(r[1]);reg=n(r[10]);fact=reg/vol*100 if vol else 0;old=prev.get(norm(name));pv=old.get("fact") if old else None
+-        rows.append({"name":name,"fact":fact,"count":reg,"volume":vol,"registered":reg,"previous":pv,"trend":None if pv is None else fact-pv})
++        name=str(r[0]).strip();vol=n(r[1]);reg=n(r[10]);fact=reg/vol*100 if vol else 0;old=prev.get(norm(name));pv,trend=previous_fields(old,same_cut,fact)
++        rows.append({"name":name,"fact":fact,"count":reg,"volume":vol,"registered":reg,"previous":pv,"trend":trend})
+     if not rows:raise ValueError("АСУ СМП: не найдено итоговых строк организаций")
+     mo["smp"]={**mo.get("smp",{}),"date":date_ru(end),"period":period_cumulative(end),"note":"Числитель — статус «Принято» АСУ СМП, принимаемый как регистрация в РЭМД; знаменатель — количество карт вызова АСУ СМП за тот же период.","rows":rows};details["smp"]={norm(r["name"]):{"volume":r["volume"],"registered":r["registered"]} for r in rows};save(app,"mo-data.json",mo);save(app,"mo-details.json",details)
+     return AdapterResult("federal",["asu_smp"],"PASS",["mo-data.json","mo-details.json"],[source.name],{"organizations":len(rows),"volume":sum(r["volume"] for r in rows),"registered":sum(r["registered"] for r in rows)},[],[])
+diff -ruN '--exclude=.sites-runtime' '--exclude=node_modules' '--exclude=__pycache__' '--exclude=validation' '--exclude=source.tar.gz' '--exclude=error-organizations.json' '--exclude=electronic-waybill-weekly.json' '--exclude=mo-data.json' '--exclude=mo-details.json' '--exclude=mo-detail-oids.json' main_source/scripts/pipeline/source_catalog.py wsrepo/scripts/pipeline/source_catalog.py
+--- main_source/scripts/pipeline/source_catalog.py	2026-09-14 06:54:31.000000000 +0000
++++ wsrepo/scripts/pipeline/source_catalog.py	2026-09-14 08:16:59.796660140 +0000
+@@ -10,6 +10,29 @@
+ CONFIG=ROOT/'config/import-pipeline.json'
+ MONTHS={'январ':1,'феврал':2,'март':3,'апрел':4,'май':5,'мая':5,'июн':6,'июл':7,'август':8,'сентябр':9,'октябр':10,'ноябр':11,'декабр':12}
+ 
++def baseline_year():
++    try:
++        payload=json.loads((ROOT/'baseline/period-engine-snapshot.json').read_text(encoding='utf-8'))
++        return int(payload['latestFullMonth']['endDate'].split('.')[-1])
++    except Exception:
++        return 2026
++
++def short_range_end(text:str):
++    year=baseline_year()
++    # 31_08_06_09 / 31.08-06.09: start day/month + end day/month, no year.
++    patterns=[
++        r'(?<!\d)(\d{1,2})[._](\d{1,2})[_-](\d{1,2})[._](\d{1,2})(?![._-]\d)',
++        r'(?<!\d)(\d{1,2})[._](\d{1,2})\s*[-–]\s*(\d{1,2})[._](\d{1,2})(?![._-]\d)',
++    ]
++    for pattern in patterns:
++        m=re.search(pattern,text)
++        if not m: continue
++        sd,sm,ed,em=map(int,m.groups())
++        end_year=year + (1 if em < sm else 0)
++        try: return date(end_year,em,ed)
++        except ValueError: return None
++    return None
++
+ @dataclass
+ class Item:
+     path:str; name:str; family:str|None; status:str; adapter:str|None; datasets:list[str]; periodKind:str|None; endDate:str|None; matches:list[str]; integrity:str
+@@ -35,6 +58,8 @@
+     return date(y,hits[-1],calendar.monthrange(y,hits[-1])[1])
+ 
+ def infer_end(path:Path):
++    short=short_range_end(path.name)
++    if short:return short
+     ds=parse_dates(path.name)
+     if ds:return max(ds)
+     ds=parse_dates(str(path.parent))
+diff -ruN '--exclude=.sites-runtime' '--exclude=node_modules' '--exclude=__pycache__' '--exclude=validation' '--exclude=source.tar.gz' '--exclude=error-organizations.json' '--exclude=electronic-waybill-weekly.json' '--exclude=mo-data.json' '--exclude=mo-details.json' '--exclude=mo-detail-oids.json' main_source/scripts/pipeline/staging_runner.py wsrepo/scripts/pipeline/staging_runner.py
+--- main_source/scripts/pipeline/staging_runner.py	2026-09-14 06:54:31.000000000 +0000
++++ wsrepo/scripts/pipeline/staging_runner.py	2026-09-14 08:16:59.798121876 +0000
+@@ -47,11 +47,14 @@
+         consumed|={'preventive_remd','preventive_foms'}
+     for family,items in sorted(by.items()):
+         if family in consumed:continue
+-        latest=max(items,key=lambda x:x.get('endDate') or '')
++        ordered=sorted(items,key=lambda x:x.get('endDate') or '')
++        selected=ordered if family=='electronic_waybill' else [ordered[-1]]
++        latest=selected[-1]
+         if family not in SUPPORTED_FAMILIES:
+             results.append(AdapterResult(latest.get('adapter') or 'unknown',[family],'WARNING',[],[latest['name']],{},['Adapter отсутствует в staging; reference script сохранён'],[]).dict());continue
+-        try: results.append(run_family(output_dir/'app',family,Path(latest['path']),parse_iso(latest['endDate']),ROOT).dict())
+-        except Exception as e: results.append(AdapterResult(latest.get('adapter') or family,[family],'FAIL',[],[latest['name']],{},[],[str(e)]).dict())
++        for item in selected:
++            try: results.append(run_family(output_dir/'app',family,Path(item['path']),parse_iso(item['endDate']),ROOT).dict())
++            except Exce
