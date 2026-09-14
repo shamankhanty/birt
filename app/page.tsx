@@ -1384,13 +1384,14 @@ const presentationMetricOrder = [
   "smpFederal",
   "tvspStationary",
   "tmkMaxCount",
+  "elnMaxCount",
   "smp",
   "errors",
 ];
 const metricIds = [
   ...presentationMetricOrder.filter((id) => id in moData),
   ...Object.keys(moData).filter(
-    (id) => id !== "elnMaxCount" && !presentationMetricOrder.includes(id),
+    (id) => !presentationMetricOrder.includes(id),
   ),
 ];
 const calcErrors = [
@@ -4023,10 +4024,6 @@ export default function Home() {
   const isPresenceMetric = selectedDataset.mode === "presence";
   const isMaxMetric =
     matrixMetric === "tmkMaxCount" || matrixMetric === "elnMaxCount";
-  const maxMetricTotals = {
-    tmk: calculatedIndicatorById.tmkMaxCount?.fact ?? 0,
-    eln: calculatedIndicatorById.elnMaxCount?.fact ?? 0,
-  };
   const maxAnnualPlan = matrixMetric === "tmkMaxCount" ? 193000 : 99000;
   const maxAugustMonthlyDataset: MonthlyMoDataset | null = isMaxMetric
     ? {
@@ -4324,8 +4321,6 @@ export default function Home() {
       .includes(metricQuery.trim().toLowerCase()),
   );
   const sidebarMetricValue = (id: string) => {
-    if (id === "tmkMaxCount")
-      return `${format(calculatedIndicatorById.tmkMaxCount?.fact ?? 0, 0)} / ${format(calculatedIndicatorById.elnMaxCount?.fact ?? 0, 0)}`;
     const dataset = moData[id];
     if (dataset.mode === "count")
       return `${format(calculatedIndicatorById[id]?.fact ?? 0, 0)}`;
@@ -4335,7 +4330,7 @@ export default function Home() {
     return `${format(fact, 2)}%`;
   };
   const sidebarMetricTone = (id: string) => {
-    if (id === "tmkMaxCount") return "neutral";
+    if (id === "tmkMaxCount" || id === "elnMaxCount") return "neutral";
     const dataset = moData[id];
     if (dataset.mode === "count" || dataset.plan === null) return "neutral";
     const indicator = calculatedIndicatorById[id];
@@ -4687,7 +4682,7 @@ export default function Home() {
                   {filteredMetricIds.map((id) => (
                     <button
                       key={id}
-                      className={`sideMetricButton ${sidebarMetricTone(id)} ${matrixMetric === id || (id === "tmkMaxCount" && matrixMetric === "elnMaxCount") ? "active" : ""}`}
+                      className={`sideMetricButton ${sidebarMetricTone(id)} ${matrixMetric === id ? "active" : ""}`}
                       onClick={() => setMatrixMetric(id)}
                       title={metricDisplayName(id)}
                     >
@@ -8138,38 +8133,11 @@ export default function Home() {
                   </span>
                 </div>
               </div>
-              {isMaxMetric && (
-                <div className="maxMetricSwitch">
-                  <button
-                    className={matrixMetric === "tmkMaxCount" ? "active" : ""}
-                    onClick={() => setMatrixMetric("tmkMaxCount")}
-                  >
-                    <span>Проведено ТМК</span>
-                    <strong>{format(maxMetricTotals.tmk, 0)}</strong>
-                  </button>
-                  <button
-                    className={matrixMetric === "elnMaxCount" ? "active" : ""}
-                    onClick={() => setMatrixMetric("elnMaxCount")}
-                  >
-                    <span>Закрыто ЛВН после ТМК</span>
-                    <strong>{format(maxMetricTotals.eln, 0)}</strong>
-                  </button>
-                  <p>
-                    Верхние значения — накопительный итог РТ. Недельная и
-                    месячная динамика ниже рассчитываются отдельно и не
-                    смешиваются с накопительным фактом.
-                  </p>
-                </div>
-              )}
               <div className="mobileMetricSelect">
                 <label htmlFor="mobile-metric">Показатель</label>
                 <select
                   id="mobile-metric"
-                  value={
-                    matrixMetric === "elnMaxCount"
-                      ? "tmkMaxCount"
-                      : matrixMetric
-                  }
+                  value={matrixMetric}
                   onChange={(e) => setMatrixMetric(e.target.value)}
                 >
                   {metricIds.map((id) => (
