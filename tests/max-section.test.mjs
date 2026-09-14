@@ -68,3 +68,15 @@ test("MAX period modes do not mix cumulative, weekly and monthly values", () => 
   assert.match(page, /ЛВН после ТМК посредством МАХ/u);
   assert.doesNotMatch(page, /Месячный план[\s\S]{0,250}10 000 в месяц/u);
 });
+
+
+test("TMC and LVN are independent sidebar indicators", () => {
+  assert.match(page, /"tmkMaxCount",\s*"elnMaxCount",/u);
+  assert.match(page, /id === "tmkMaxCount"[\s\S]*?"ТМК посредством МАХ"/u);
+  assert.match(page, /id === "elnMaxCount"[\s\S]*?"ЛВН после ТМК посредством МАХ"/u);
+  assert.match(page, /matrixMetric === id \? "active" : ""/u);
+  assert.match(page, /value=\{matrixMetric\}/u);
+  assert.doesNotMatch(page, /maxMetricSwitch/u);
+  assert.doesNotMatch(page, /maxMetricTotals/u);
+  assert.doesNotMatch(page, /calculatedIndicatorById\.tmkMaxCount[\s\S]{0,180}\s\/\s[\s\S]{0,180}calculatedIndicatorById\.elnMaxCount/u);
+});
