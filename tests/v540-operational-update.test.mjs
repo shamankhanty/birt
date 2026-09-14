@@ -12,14 +12,14 @@ test('v5.4.0 header separates operational cut from full-month rating', () => {
   assert.ok(!page.includes('данные на 30.08.2026'));
 });
 
-test('MAX comparison periods follow real source cuts', () => {
+test('MAX does not label cumulative cuts as week-to-week dynamics', () => {
   for (const id of ['tmkMaxCount','elnMaxCount']) {
-    assert.equal(op[id].previousDate, '07.09.2026');
-    assert.equal(op[id].previousPeriod, '01.01–07.09.2026');
     assert.equal(op[id].date, '11.09.2026');
     assert.equal(op[id].period, '01.01–11.09.2026');
   }
-  assert.ok(page.includes('selectedDataset.previousPeriod ?? selectedDataset.previousDate'));
+  assert.ok(page.includes('Нет двух полных сопоставимых недель'));
+  assert.ok(page.includes('Нет сопоставимого периода'));
+  assert.ok(page.includes('const regionalPrevious = isMaxMetric'));
 });
 
 test('REMD errors use operational weekly cut', () => {

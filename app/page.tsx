@@ -2624,6 +2624,7 @@ const versionHistory = [
       "Исправлены даты актуальности в шапке и динамике МАХ; история обновлений агрегирована для пользователей без технических CI-итераций.",
       "Исправлен расчёт выписных эпикризов: числитель берётся из РЭМД ЕГИСЗ, знаменатель — из случаев госпитализации; сопоставление по OID, прежняя несопоставимая динамика сброшена.",
       "Верхние плашки «Расширенной сводки» синхронизированы с актуальными источниками: краткий ввод, госпитализации, ФАП/ФП и СЭМД — по 11.09; ошибки РЭМД — за полную неделю 07–13.09.",
+      "МАХ разделён по периодам: верхний блок — накопительный итог РТ; недельная динамика показывается только при наличии двух полных сопоставимых недель; месячная — август к июлю. Ложное сравнение накопительных срезов 07.09 → 11.09 удалено.",
     ],
   },
   {
@@ -4020,13 +4021,34 @@ export default function Home() {
     tmk: calculatedIndicatorById.tmkMaxCount?.fact ?? 0,
     eln: calculatedIndicatorById.elnMaxCount?.fact ?? 0,
   };
+  const maxAnnualPlan = matrixMetric === "tmkMaxCount" ? 193000 : 99000;
+  const maxAugustMonthlyDataset: MonthlyMoDataset | null = isMaxMetric
+    ? {
+        unit: "count",
+        previousLabel: "Июль 2026",
+        currentLabel: "Август 2026",
+        rows: augustMaxRows.map((row) => {
+          const value = matrixMetric === "tmkMaxCount" ? row.tmk : row.eln;
+          return {
+            name: row.name,
+            june: null,
+            july: value.value,
+            change: null,
+            juneQuantity: null,
+            julyQuantity: value.value === null ? null : format(value.value, 0),
+            sourceWarning:
+              "Август рассчитан как накопительный срез 31.08 минус 31.07. Для сравнения июля с августом по МО нужен сопоставимый срез на 30.06; его в текущем наборе нет.",
+          };
+        }),
+      }
+    : null;
   const selectedUnitDataset = unitData[matrixMetric];
   const lowerIsBetter =
     matrixMetric === "shortInput" || selectedDataset.direction === "lower";
   const periods = isMaxMetric
     ? {
-        previous: selectedDataset.previousPeriod ?? selectedDataset.previousDate ?? "нет сопоставимого предыдущего среза",
-        current: selectedDataset.period ?? `на ${selectedDataset.date}`,
+        previous: "нет двух полных сопоставимых недель",
+        current: `накопительный срез на ${selectedDataset.date}`,
       }
     : comparisonPeriods[matrixMetric] ?? {
         previous: "предыдущий период",
@@ -4170,11 +4192,13 @@ export default function Home() {
     egpu: (30850 / 31474) * 100,
     egpu2days: (25654 / 31474) * 100,
   };
-  const regionalPrevious = operationalRegionalPrevious[matrixMetric] ?? (isCountMetric
-    ? indicatorRows.reduce((sum, row) => sum + (row.previous ?? 0), 0)
-    : rtIndicator?.trend === null || rtIndicator?.trend === undefined
-      ? null
-      : regionalFact - rtIndicator.trend);
+  const regionalPrevious = isMaxMetric
+    ? null
+    : operationalRegionalPrevious[matrixMetric] ?? (isCountMetric
+      ? indicatorRows.reduce((sum, row) => sum + (row.previous ?? 0), 0)
+      : rtIndicator?.trend === null || rtIndicator?.trend === undefined
+        ? null
+        : regionalFact - rtIndicator.trend);
   const regionalChange =
     regionalPrevious === null ? null : regionalFact - regionalPrevious;
   type MonthlyBenchmark = {
@@ -4279,9 +4303,15 @@ export default function Home() {
   const monthlyDataset =
     matrixMetric === "semd228"
       ? { ...monthlyMoData.semd228, rows: adultPreventiveMonthlyRows }
-      : monthlyMoData[matrixMetric];
+      : isMaxMetric
+        ? maxAugustMonthlyDataset
+        : monthlyMoData[matrixMetric];
   const metricDisplayName = (id: string) =>
-    id === "tmkMaxCount" ? "ТМК и ЛВН посредством МАХ" : moData[id].name;
+    id === "tmkMaxCount"
+      ? "ТМК посредством МАХ"
+      : id === "elnMaxCount"
+        ? "ЛВН после ТМК посредством МАХ"
+        : moData[id].name;
   const filteredMetricIds = metricIds.filter((id) =>
     metricDisplayName(id)
       .toLowerCase()
@@ -8073,7 +8103,7 @@ export default function Home() {
               <div className="pageHead compactHead indicatorTitle">
                 <h1>
                   {isMaxMetric
-                    ? "ТМК и ЛВН посредством МАХ"
+                    ? metricDisplayName(matrixMetric)
                     : selectedDataset.name}
                 </h1>
                 <div
@@ -8081,14 +8111,14 @@ export default function Home() {
                 >
                   <small>
                     {isMaxMetric
-                      ? "Месячный план"
+                      ? "Годовой план РТ"
                       : isCountMetric
                         ? "Период"
                         : "Плановый показатель"}
                   </small>
                   <strong>
                     {isMaxMetric
-                      ? "10 000 в месяц"
+                      ? format(maxAnnualPlan, 0)
                       : isCountMetric
                         ? (selectedDataset.period ?? selectedDataset.date)
                         : selectedDataset.plan === null
@@ -8097,7 +8127,7 @@ export default function Home() {
                   </strong>
                   <span>
                     {isMaxMetric
-                      ? `оперативный срез на ${selectedDataset.date}`
+                      ? `официальный план · факт накопительно на ${selectedDataset.date}`
                       : `актуальность ${selectedDataset.date}`}
                   </span>
                 </div>
@@ -8119,8 +8149,9 @@ export default function Home() {
                     <strong>{format(maxMetricTotals.eln, 0)}</strong>
                   </button>
                   <p>
-                    Один раздел: итог по РТ и детализация по МО переключаются
-                    вместе.
+                    Верхние значения — накопительный итог РТ. Недельная и
+                    месячная динамика ниже рассчитываются отдельно и не
+                    смешиваются с накопительным фактом.
                   </p>
                 </div>
               )}
@@ -8224,7 +8255,16 @@ export default function Home() {
                     </button>
                   </div>
                 </div>
-                {dynamicsMode === "week" ? (
+                {dynamicsMode === "week" && isMaxMetric ? (
+                  <div className="monthEmpty">
+                    <b>Нет двух полных сопоставимых недель</b>
+                    <span>
+                      Накопительные срезы 07.09 и 11.09 разделены четырьмя днями
+                      и не являются сравнением «неделя к неделе». Недельная
+                      динамика появится после двух полных сопоставимых недель.
+                    </span>
+                  </div>
+                ) : dynamicsMode === "week" ? (
                   <div className="dynamicsCards">
                     <article>
                       <small>Предыдущий срез</small>
@@ -8361,7 +8401,7 @@ export default function Home() {
                       </strong>
                       <span>
                         {isMaxMetric
-                          ? `${format((regionalFact / Math.max(1, selectedDataset.plan ?? 1)) * 100, 1)}% годового плана · `
+                          ? `${format((regionalFact / Math.max(1, maxAnnualPlan)) * 100, 1)}% годового плана РТ · `
                           : ""}
                         на {selectedDataset.date} · в итог месяца не включён
                       </span>
@@ -8404,6 +8444,15 @@ export default function Home() {
                     </span>
                   </section>
                 )
+              ) : isMaxMetric ? (
+                <section className="monthlyNoDetail">
+                  <b>Нет сопоставимого периода</b>
+                  <span>
+                    Накопительные значения по МО не выдаются за объём недели.
+                    При отсутствии точных недельных границ значение остаётся
+                    «нет данных», а не заменяется нулём.
+                  </span>
+                </section>
               ) : (
                 <>
                   {selectedUnitDataset ? (
