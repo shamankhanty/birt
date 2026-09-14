@@ -7,24 +7,26 @@ const mo = await readJson("mo-data.json");
 const operational = await readJson("operational-mo.json");
 const details = await readJson("mo-details.json");
 
-test("full July and August cuts carry comparable dynamics", () => {
+test("current comparable cuts carry dynamics without synthetic zeros", () => {
   assert.deepEqual(
     Object.fromEntries(["egpu", "egpu2days", "semd228", "ambulatoryCase", "smp"].map(id => [id, mo[id].rows.filter(row => row.trend !== null && row.trend !== 0).length])),
-    { egpu: 42, egpu2days: 68, semd228: 93, ambulatoryCase: 120, smp: 45 },
+    { egpu: 46, egpu2days: 66, semd228: 93, ambulatoryCase: 120, smp: 45 },
   );
   assert.ok(operational.shortInput.rows.some(row => row.trend > 0));
   assert.ok(operational.shortInput.rows.some(row => row.trend < 0));
 });
 
-test("hospital slice uses the verified sheet 3 denominator", () => {
-  assert.ok(mo.hospital.rows.some(row => row.previous !== null && row.trend !== null));
-  assert.match(mo.hospital.note, /Знаменатель — лист 3/i);
+test("hospital slice uses REMD numerator and hospital-case denominator without incomparable dynamics", () => {
+  assert.equal(mo.hospital.comparisonReset, true);
+  assert.ok(mo.hospital.rows.every(row => row.previous === null && row.trend === null));
+  assert.match(mo.hospital.note, /числитель.*РЭМД ЕГИСЗ/i);
+  assert.match(mo.hospital.note, /знаменатель.*госпитализац/i);
 });
 
 test("current source totals reconcile for the refreshed indicators", () => {
   const sum = (id, field) => Object.values(details[id]).reduce((total, row) => total + row[field], 0);
   assert.deepEqual([mo.ambulatoryCase.date, sum("ambulatoryCase", "registered"), sum("ambulatoryCase", "volume")], ["11.09.2026", 10182100, 11491246]);
-  assert.deepEqual([mo.hospital.date, sum("hospital", "registered"), sum("hospital", "volume")], ["11.09.2026", 530968, 624362]);
+  assert.deepEqual([mo.hospital.date, sum("hospital", "registered"), sum("hospital", "volume")], ["11.09.2026", 558826, 624362]);
   assert.deepEqual(
     [operational.shortInput.date, operational.shortInput.rows.reduce((total, row) => total + row.fact, 0), operational.shortInputAmb.rows.reduce((total, row) => total + row.fact, 0), operational.shortInputHosp.rows.reduce((total, row) => total + row.fact, 0)],
     ["11.09.2026", 710168, 701402, 8766],

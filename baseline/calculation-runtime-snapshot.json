@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
-  "baselineVersion": "5.3.0",
-  "rule": "Snapshot фиксирует утверждённый runtime после оперативного обновления на 07.09.2026; месячный рейтинг остаётся по полному августу.",
+  "baselineVersion": "5.4.0",
+  "rule": "Snapshot фиксирует утверждённый runtime после оперативного обновления источников по 11–13.09.2026; месячный рейтинг остаётся по полному августу.",
   "allIndicators": {
     "ambulatoryCase": {
       "fact": 88.60744953158256,
@@ -172,26 +172,26 @@
       "source": "physician-metrics"
     },
     "egpu": {
-      "fact": 98.01741119654318,
+      "fact": 98.0463718334049,
       "plan": 100,
-      "date": "07.09.2026",
+      "date": "11.09.2026",
       "previous": null,
       "trend": null,
-      "quantity": 30850,
-      "numerator": 29814,
-      "denominator": 30260,
+      "quantity": 31969,
+      "numerator": 31969,
+      "denominator": 32606,
       "method": "ratio_components",
       "source": "mo-details"
     },
     "egpu2days": {
-      "fact": 81.50854673698926,
+      "fact": 81.69048641354351,
       "plan": 90,
-      "date": "07.09.2026",
+      "date": "11.09.2026",
       "previous": null,
       "trend": null,
-      "quantity": 25654,
-      "numerator": 24533,
-      "denominator": 30260,
+      "quantity": 26636,
+      "numerator": 26636,
+      "denominator": 32606,
       "method": "ratio_components",
       "source": "mo-details"
     },
@@ -232,9 +232,9 @@
       "source": "mo-data"
     },
     "errors": {
-      "fact": 785939,
+      "fact": 2046140,
       "plan": null,
-      "date": "31.08.2026",
+      "date": "13.09.2026",
       "previous": null,
       "trend": null,
       "quantity": null,
@@ -256,12 +256,12 @@
       "source": "mo-data"
     },
     "hospital": {
-      "fact": 85.04169055772131,
+      "fact": 89.50352519852265,
       "plan": 95,
       "date": "11.09.2026",
       "previous": null,
       "trend": null,
-      "quantity": 530968,
+      "quantity": 558826,
       "numerator": 474161,
       "denominator": 611601,
       "method": "ratio_components",
@@ -346,8 +346,8 @@
       "previous": null,
       "trend": null,
       "quantity": 602974,
-      "numerator": 576237,
-      "denominator": 624216,
+      "numerator": 602974,
+      "denominator": 659836,
       "method": "ratio_components",
       "source": "mo-details"
     },
@@ -492,22 +492,22 @@
       "source": "mo-details"
     },
     "egpu": {
-      "fact": 98.01741119654318,
+      "fact": 98.0463718334049,
       "plan": 100,
-      "date": "07.09.2026",
-      "quantity": 30850,
-      "numerator": 29814,
-      "denominator": 30260,
+      "date": "11.09.2026",
+      "quantity": 31969,
+      "numerator": 31969,
+      "denominator": 32606,
       "method": "ratio_components",
       "source": "mo-details"
     },
     "egpu2days": {
-      "fact": 81.50854673698926,
+      "fact": 81.69048641354351,
       "plan": 90,
-      "date": "07.09.2026",
-      "quantity": 25654,
-      "numerator": 24533,
-      "denominator": 30260,
+      "date": "11.09.2026",
+      "quantity": 26636,
+      "numerator": 26636,
+      "denominator": 32606,
       "method": "ratio_components",
       "source": "mo-details"
     },
@@ -532,9 +532,9 @@
       "source": "page-baseline"
     },
     "errors": {
-      "fact": 785939,
+      "fact": 2046140,
       "plan": null,
-      "date": "31.08.2026",
+      "date": "13.09.2026",
       "quantity": null,
       "numerator": null,
       "denominator": null,
@@ -542,10 +542,10 @@
       "source": "page-baseline"
     },
     "hospital": {
-      "fact": 85.04169055772131,
+      "fact": 89.50352519852265,
       "plan": 95,
       "date": "11.09.2026",
-      "quantity": 530968,
+      "quantity": 558826,
       "numerator": 474161,
       "denominator": 611601,
       "method": "ratio_components",
@@ -576,8 +576,8 @@
       "plan": 95,
       "date": "11.09.2026",
       "quantity": 602974,
-      "numerator": 576237,
-      "denominator": 624216,
+      "numerator": 602974,
+      "denominator": 659836,
       "method": "ratio_components",
       "source": "mo-details"
     },

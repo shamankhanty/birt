@@ -1,0 +1,10 @@
+{
+  "schemaVersion": 1,
+  "baselineVersion": "5.4.0",
+  "status": "PASS",
+  "checkedIndicators": 38,
+  "registryCoverage": "38/38",
+  "mismatches": [],
+  "preservedBaselineConflicts": [],
+  "note": "PASS means the current deterministic calculation layer reproduces the approved runtime snapshot."
+}

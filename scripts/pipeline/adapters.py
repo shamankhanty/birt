@@ -131,6 +131,41 @@ def current_label(d: date) -> str:
     return f"На {date_ru(d)[:5]}"
 
 
+def source_period(path: Path, end: date, kind: str = "cumulative") -> str:
+    text = path.name
+    # Full dates in filenames, e.g. 07_09_2026_13_09_2026.
+    full=[]
+    for d,m,y in re.findall(r'(?<!\d)(\d{1,2})[._-](\d{1,2})[._-](20\d{2})(?!\d)', text):
+        try: full.append(date(int(y),int(m),int(d)))
+        except ValueError: pass
+    if len(full) >= 2:
+        start,end_date=min(full),max(full)
+        return f"{date_ru(start)}–{date_ru(end_date)}"
+    # Short date ranges without a year, e.g. 31_08_06_09 or 07.09 - 13.09.
+    for pattern in [
+        r'(?<!\d)(\d{1,2})[._](\d{1,2})[_-](\d{1,2})[._](\d{1,2})(?![._-]\d)',
+        r'(?<!\d)(\d{1,2})[._](\d{1,2})\s*[-–]\s*(\d{1,2})[._](\d{1,2})(?![._-]\d)',
+    ]:
+        m=re.search(pattern,text)
+        if not m: continue
+        sd,sm,ed,em=map(int,m.groups())
+        sy=end.year - (1 if sm > em else 0)
+        try:
+            start=date(sy,sm,sd); finish=date(end.year,em,ed)
+            return f"{date_ru(start)}–{date_ru(finish)}"
+        except ValueError:
+            pass
+    return period_cumulative(end) if kind == "cumulative" else date_ru(end)
+
+def previous_fields(old: dict | None, same_cut: bool, current_fact):
+    if not old:
+        return None, None
+    if same_cut:
+        return old.get("previous"), old.get("trend")
+    pv=old.get("fact")
+    return pv, None if pv is None or current_fact is None else current_fact-pv
+
+
 def previous_rows_from_dataset(ds: dict) -> dict[str, dict]:
     return {(str(r.get("oid")) if r.get("oid") else norm(r.get("name"))): r for r in ds.get("rows", [])}
 
@@ -201,17 +236,23 @@ def adapt_egpu(app: Path, source: Path, end: date) -> AdapterResult:
         cur = parse_egpu(source, col)
         prev = previous_rows_from_dataset(mo.get(metric, {}))
         dn, do, rows = {}, {}, []
+        same_cut = mo.get(metric, {}).get("date") == date_ru(end)
         for x in cur:
             old = prev.get(x["oid"] or norm(x["name"]))
+            pv, trend = previous_fields(old, same_cut, x["fact"])
             row = {"name": x["name"], "oid": x["oid"], "fact": x["fact"], "count": x["count"],
-                   "previous": old.get("fact") if old else None,
-                   "trend": None if not old else x["fact"] - old.get("fact", 0)}
+                   "previous": pv, "trend": trend}
             rows.append(row)
             d = {"volume": x["volume"], "registered": x["count"]}
             dn[norm(x["name"])] = d
             if x["oid"]: do[x["oid"]] = d
         base = mo.get(metric, {})
-        mo[metric] = {**base, "name": base.get("name", title), "date": date_ru(end), "period": period_cumulative(end), "rows": retain_no_source_rows(prev, rows)}
+        previous_date = base.get("previousDate") if same_cut else base.get("date")
+        previous_period = base.get("previousPeriod") if same_cut else base.get("period")
+        note = f"Оперативный накопительный срез на {date_ru(end)}. Отрицательные производные остатки источника не используются; отсутствие данных не заменяется нулём."
+        mo[metric] = {**base, "name": base.get("name", title), "date": date_ru(end), "period": period_cumulative(end),
+                      "previousDate": previous_date, "previousPeriod": previous_period, "note": note,
+                      "rows": retain_no_source_rows(prev, rows)}
         details[metric], oids[metric] = dn, do
         if is_full_month(end):
             monthly[metric] = monthly_payload(prev, cur, end)
@@ -220,30 +261,118 @@ def adapt_egpu(app: Path, source: Path, end: date) -> AdapterResult:
     return AdapterResult("core_monthly", ["egpu_attachment"], "PASS", ["mo-data.json","mo-details.json","mo-detail-oids.json","monthly-mo.json"], [source.name], facts, [], [])
 
 
-def parse_hospital(path: Path) -> list[dict]:
+def parse_hospital_denominators(path: Path) -> list[dict]:
+    """Hospital denominator from the regional/FOMS hospital cases workbook.
+
+    This source is authoritative only for the number of inpatient/day-hospital
+    cases. The numerator must come from REMD EGISZ and is joined by MO OID.
+    """
     wb = openpyxl.load_workbook(path, read_only=True, data_only=True)
     ws = _sheet(wb, ["Лист3"])
     out = []
     for r in ws.iter_rows(min_row=6, values_only=True):
-        if len(r) < 6 or not r[1] or not r[2]: continue
-        den, num = n(r[3]), n(r[4]) + n(r[5])
-        out.append({"name": str(r[1]), "oid": str(r[2]), "fact": num / den * 100 if den else 0, "count": num, "volume": den})
-    if not out: raise ValueError("Госпитализации: не найдено строк данных")
+        if len(r) < 4 or not r[1] or not r[2]:
+            continue
+        out.append({"name": str(r[1]), "oid": str(r[2]), "volume": n(r[3])})
+    if not out:
+        raise ValueError("Госпитализации: не найдено строк знаменателя")
     return out
 
 
-def adapt_hospital(app: Path, source: Path, end: date) -> AdapterResult:
-    mo, details, oids, monthly = (load(app, x) for x in ["mo-data.json", "mo-details.json", "mo-detail-oids.json", "monthly-mo.json"])
-    cur = parse_hospital(source); prev = previous_rows_from_dataset(mo.get("hospital", {})); rows=[]; dn={}; do={}
-    for x in cur:
-        old=prev.get(x["oid"]); rows.append({"name":x["name"],"oid":x["oid"],"fact":x["fact"],"count":x["count"],"previous":old.get("fact") if old else None,"trend":None if not old else x["fact"]-old.get("fact",0)})
-        d={"volume":x["volume"],"registered":x["count"]}; dn[norm(x["name"])]=d; do[x["oid"]]=d
-    mo["hospital"]={**mo.get("hospital",{}),"date":date_ru(end),"period":period_cumulative(end),"rows":retain_no_source_rows(prev, rows)}
-    details["hospital"],oids["hospital"]=dn,do
-    if is_full_month(end): monthly["hospital"]=monthly_payload(prev,cur,end)
-    for name,data in [("mo-data.json",mo),("mo-details.json",details),("mo-detail-oids.json",oids),("monthly-mo.json",monthly)]:save(app,name,data)
-    return AdapterResult("core_monthly",["hospital_cases"],"PASS",["mo-data.json","mo-details.json","mo-detail-oids.json","monthly-mo.json"],[source.name],{"rows":len(rows),"numerator":sum(x["count"] for x in cur),"denominator":sum(x["volume"] for x in cur)},[],[])
+def parse_remd_hospital_numerators(path: Path) -> dict[str, dict]:
+    """REMD numerator: maternity discharge + inpatient discharge summaries."""
+    wb = openpyxl.load_workbook(path, read_only=True, data_only=True)
+    ws = _sheet(wb, ["Отчет РЭМД по МО", "Отчёт РЭМД по МО"])
+    out: dict[str, dict] = {}
+    for r in ws.iter_rows(min_row=8, values_only=True):
+        if len(r) < 11 or not r[1] or not r[2]:
+            continue
+        oid = str(r[2])
+        maternity, inpatient = n(r[9]), n(r[10])
+        item = out.setdefault(oid, {"name": str(r[1]), "maternity": 0, "inpatient": 0, "count": 0})
+        item["maternity"] += maternity
+        item["inpatient"] += inpatient
+        item["count"] += maternity + inpatient
+    if not out:
+        raise ValueError("РЭМД: не найдено строк для выписных эпикризов")
+    return out
 
+
+def adapt_hospital(app: Path, source: Path, end: date, remd_source: Path | None = None) -> AdapterResult:
+    if remd_source is None:
+        raise ValueError("Для hospital_cases обязателен отдельный источник числителя РЭМД ЕГИСЗ")
+    mo, details, oids, monthly = (load(app, x) for x in ["mo-data.json", "mo-details.json", "mo-detail-oids.json", "monthly-mo.json"])
+    denominators = parse_hospital_denominators(source)
+    numerators = parse_remd_hospital_numerators(remd_source)
+    prev = previous_rows_from_dataset(mo.get("hospital", {}))
+    rows, dn, do = [], {}, {}
+    matched = 0
+    numerator_total = 0
+    denominator_total = 0
+    for item in denominators:
+        oid = item["oid"]
+        denominator_total += item["volume"]
+        num = numerators.get(oid)
+        old = prev.get(oid)
+        if num is None:
+            row = {
+                "name": item["name"], "oid": oid, "fact": None, "count": None,
+                "previous": None, "trend": None, "sourceStatus": "no_source_row",
+                "sourceWarning": "Нет строки МО в источнике числителя РЭМД ЕГИСЗ; значение не заменено нулём.",
+            }
+            detail = {"volume": item["volume"], "registered": None}
+        else:
+            matched += 1
+            count = num["count"]
+            numerator_total += count
+            fact = count / item["volume"] * 100 if item["volume"] else None
+            # Источник числителя исправлен: старая динамика несопоставима и не показывается.
+            row = {
+                "name": item["name"], "oid": oid, "fact": fact, "count": count,
+                "previous": None, "trend": None,
+            }
+            detail = {
+                "volume": item["volume"], "registered": count,
+                "inpatient": num["inpatient"], "maternity": num["maternity"],
+            }
+        rows.append(row)
+        dn[norm(item["name"])] = detail
+        do[oid] = detail
+    base = mo.get("hospital", {})
+    mo["hospital"] = {
+        **base,
+        "date": date_ru(end),
+        "period": period_cumulative(end),
+        "previousDate": None,
+        "previousPeriod": None,
+        "comparisonReset": True,
+        "note": "Числитель пересчитан по РЭМД ЕГИСЗ, знаменатель — случаи стационарной помощи из отчёта по госпитализациям. Сопоставление по OID МО. Динамика к прежнему расчёту не показывается из-за исправления источника числителя.",
+        "sourceNumerator": remd_source.name,
+        "sourceDenominator": source.name,
+        "rows": rows,
+    }
+    details["hospital"], oids["hospital"] = dn, do
+    # Неполный сентябрьский срез не заменяет месячный августовский набор.
+    if is_full_month(end):
+        current = [
+            {"name": r["name"], "oid": r["oid"], "fact": r["fact"], "count": r["count"], "volume": do[r["oid"]]["volume"]}
+            for r in rows if r.get("fact") is not None
+        ]
+        monthly["hospital"] = monthly_payload(prev, current, end)
+    for name, data in [("mo-data.json",mo),("mo-details.json",details),("mo-detail-oids.json",oids),("monthly-mo.json",monthly)]:
+        save(app,name,data)
+    warnings = []
+    if matched != len(denominators):
+        warnings.append(f"В РЭМД сопоставлено {matched} из {len(denominators)} МО знаменателя; отсутствующие строки не заменены нулём.")
+    status = "WARNING" if warnings else "PASS"
+    return AdapterResult(
+        "hospital_pair", ["hospital_cases", "elmk"], status,
+        ["mo-data.json","mo-details.json","mo-detail-oids.json","monthly-mo.json"],
+        [source.name, remd_source.name],
+        {"rows": len(rows), "matched": matched, "numerator": numerator_total, "denominator": denominator_total,
+         "fact": (numerator_total / denominator_total * 100 if denominator_total else None)},
+        warnings, []
+    )
 
 def parse_ambulatory_cases(path: Path) -> list[dict]:
     wb = openpyxl.load_workbook(path, read_only=True, data_only=True)
@@ -320,15 +449,20 @@ def parse_max(path: Path, col: int) -> list[dict]:
 def adapt_max(app: Path, source: Path, end: date) -> AdapterResult:
     operational,monthly=(load(app,x) for x in ["operational-mo.json","monthly-mo.json"]); facts={}
     for metric,col in [("tmkMaxCount",3),("elnMaxCount",4)]:
-        cur=parse_max(source,col); prev=previous_rows_from_dataset(operational.get(metric,{})); rows=[]
+        base=operational.get(metric,{})
+        cur=parse_max(source,col); prev=previous_rows_from_dataset(base); rows=[]
+        same_cut=base.get("date")==date_ru(end)
         for x in cur:
-            old=prev.get(norm(x["name"])); rows.append({"name":x["name"],"fact":x["fact"],"count":x["count"],"previous":old.get("fact") if old else None,"trend":None if not old else x["fact"]-old.get("fact",0)})
+            old=prev.get(norm(x["name"])); pv,trend=previous_fields(old,same_cut,x["fact"]); rows.append({"name":x["name"],"fact":x["fact"],"count":x["count"],"previous":pv,"trend":trend})
         final_rows = retain_no_source_rows(prev, rows)
         if "спасская црб" in {loose_source_key(row.get("name")) for row in rows}:
             # Approved MAX source convention: this label is the contextual
             # Spassk row, not a second line in addition to РКБ МЗ РТ.
             final_rows = [row for row in final_rows if not (row.get("sourceStatus") == "no_source_row" and "ркб мз рт" in norm(row.get("name")))]
-        operational[metric]={**operational.get(metric,{}),"date":date_ru(end),"period":period_cumulative(end),"rows":final_rows}
+        operational[metric]={**base,"date":date_ru(end),"period":period_cumulative(end),
+            "previousDate": base.get("previousDate") if same_cut else base.get("date"),
+            "previousPeriod": base.get("previousPeriod") if same_cut else base.get("period"),
+            "rows":final_rows}
         if is_full_month(end): monthly[metric]=monthly_payload(prev,cur,end,"count")
         facts[metric]={"rows":len(rows),"total":sum(x["count"] for x in cur)}
     save(app,"operational-mo.json",operational);save(app,"monthly-mo.json",monthly)
@@ -417,8 +551,9 @@ def adapt_errors(app: Path, source: Path, end: date) -> AdapterResult:
     attributed_errors = total - unassigned_errors
     coverage = attributed_errors / total * 100 if total else 100.0
     registry_coverage = registry_matched_errors / total * 100 if total else 100.0
+    period = source_period(source, end, "weekly")
     breakdown = {
-        "status": "available", "sourcePeriod": period_cumulative(end),
+        "status": "available", "sourcePeriod": period,
         "totalErrors": total, "attributedErrors": attributed_errors,
         "unassignedErrors": unassigned_errors, "coveragePercent": coverage,
         "sourceRows": parsed["sourceRows"], "attributedRows": parsed["attributedRows"],
@@ -431,7 +566,7 @@ def adapt_errors(app: Path, source: Path, end: date) -> AdapterResult:
 
     payload = load(app, "error-categories.json")
     payload.update({
-        "total": total, "period": period_cumulative(end), "share": None,
+        "total": total, "period": period, "share": None,
         "shareDate": date_ru(end),
         "shareSource": "Доля не рассчитана: в выгрузке отказов отсутствует знаменатель всех обработанных запросов",
         "successfulRequests": None,
@@ -573,12 +708,20 @@ def extract_waybill(path: Path, period: str) -> dict:
     if not rows:raise ValueError("ЭЛП: не найдено строк детализации")
     vehicles=sum(r["vehicles"] for r in rows); moved=sum(r["moved"] for r in rows)
     detail={"organizations":len(rows),"vehicles":vehicles,"vehiclesWithMovement":moved,"movementShare":moved/vehicles*100 if vehicles else None,"waybills":sum(r["waybills"] for r in rows),"driversWithWaybills":sum(r["driversWithWaybills"] for r in rows),"organizationsWithMovement":sum(r["vehicles"]>0 and r["moved"]>0 for r in rows),"zeroMovementOrganizations":sum(r["vehicles"]>0 and r["moved"]==0 for r in rows),"zeroVehicleOrganizations":sum(r["vehicles"]==0 for r in rows)}
-    return {"source":path.name,"period":period,"sourceHeading":str(ws["B2"].value or ""),"systemSummary":{},"detail":detail,"rows":rows}
+    system_summary={
+        "organizations":n(ws["C6"].value),"vehicles":n(ws["C7"].value),
+        "vehiclesWithWaybills":n(ws["E7"].value),"vehiclesWithMovement":n(ws["H7"].value),
+    }
+    return {"source":path.name,"period":period,"sourceHeading":str(ws["B2"].value or ""),"systemSummary":system_summary,"detail":detail,"rows":rows}
 
 
 def adapt_waybill(app: Path, source: Path, end: date) -> AdapterResult:
-    payload=load(app,"electronic-waybill-weekly.json"); period=f"до {date_ru(end)}"; current=extract_waybill(source,period); previous=payload.get("current") or payload.get("previous")
-    out={"previous":previous,"current":current,"comparisonRule":payload.get("comparisonRule","Недельная динамика и рейтинг рассчитаны по сумме строк детализации по организациям."),"periodCorrection":payload.get("periodCorrection")}
+    payload=load(app,"electronic-waybill-weekly.json"); period=source_period(source,end,"weekly"); current=extract_waybill(source,period)
+    if payload.get("current",{}).get("period")==period:
+        previous=payload.get("previous")
+    else:
+        previous=payload.get("current") or payload.get("previous")
+    out={"previous":previous,"current":current,"comparisonRule":payload.get("comparisonRule","Недельная динамика и рейтинг рассчитаны по сумме строк детализации по организациям."),"periodCorrection":None}
     save(app,"electronic-waybill-weekly.json",out)
     return AdapterResult("waybill",["electronic_waybill"],"PASS",["electronic-waybill-weekly.json"],[source.name],current["detail"],[],[])
 
@@ -750,11 +893,11 @@ def _asu_rows(path: Path):
 
 
 def adapt_asu_smp(app: Path, source: Path, end: date) -> AdapterResult:
-    mo,details=(load(app,x) for x in ["mo-data.json","mo-details.json"]);prev=previous_rows_from_dataset(mo.get("smp",{}));rows=[]
+    mo,details=(load(app,x) for x in ["mo-data.json","mo-details.json"]);base=mo.get("smp",{});prev=previous_rows_from_dataset(base);rows=[];same_cut=base.get("date")==date_ru(end)
     for r,bold in _asu_rows(source):
         if len(r)<=10 or not bold or not str(r[0] or "").strip():continue
-        name=str(r[0]).strip();vol=n(r[1]);reg=n(r[10]);fact=reg/vol*100 if vol else 0;old=prev.get(norm(name));pv=old.get("fact") if old else None
-        rows.append({"name":name,"fact":fact,"count":reg,"volume":vol,"registered":reg,"previous":pv,"trend":None if pv is None else fact-pv})
+        name=str(r[0]).strip();vol=n(r[1]);reg=n(r[10]);fact=reg/vol*100 if vol else 0;old=prev.get(norm(name));pv,trend=previous_fields(old,same_cut,fact)
+        rows.append({"name":name,"fact":fact,"count":reg,"volume":vol,"registered":reg,"previous":pv,"trend":trend})
     if not rows:raise ValueError("АСУ СМП: не найдено итоговых строк организаций")
     mo["smp"]={**mo.get("smp",{}),"date":date_ru(end),"period":period_cumulative(end),"note":"Числитель — статус «Принято» АСУ СМП, принимаемый как регистрация в РЭМД; знаменатель — количество карт вызова АСУ СМП за тот же период.","rows":rows};details["smp"]={norm(r["name"]):{"volume":r["volume"],"registered":r["registered"]} for r in rows};save(app,"mo-data.json",mo);save(app,"mo-details.json",details)
     return AdapterResult("federal",["asu_smp"],"PASS",["mo-data.json","mo-details.json"],[source.name],{"organizations":len(rows),"volume":sum(r["volume"] for r in rows),"registered":sum(r["registered"] for r in rows)},[],[])

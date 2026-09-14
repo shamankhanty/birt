@@ -674,7 +674,9 @@
         "previous": 0,
         "trend": 0
       }
-    ]
+    ],
+    "previousDate": "07.09.2026",
+    "previousPeriod": "01.01–07.09.2026"
   },
   "shortInput": {
     "name": "Количество случаев краткого ввода — всего",
@@ -4086,7 +4088,9 @@
         "previous": 0,
         "trend": 0
       }
-    ]
+    ],
+    "previousDate": "07.09.2026",
+    "previousPeriod": "01.01–07.09.2026"
   },
   "shortInputAmb": {
     "name": "Количество случаев краткого ввода — амбулаторно",

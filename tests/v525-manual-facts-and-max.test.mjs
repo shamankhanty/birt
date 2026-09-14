@@ -30,7 +30,7 @@ test("physician applicability requires the relevant level and source role", () =
   assert.match(page, /Boolean\(physicianRow && \(physicianRow\.volume \?\? 0\) > 0\)/u);
 });
 
-test("EPGU weekly comparison uses 31 August and 7 September source cuts", () => {
-  assert.match(page, /egpu: \{ previous: "01\.01–31\.08\.2026", current: "01\.01–07\.09\.2026" \}/u);
-  assert.match(page, /egpu: \(29814 \/ 30260\) \* 100/u);
+test("EPGU operational comparison uses 7 and 11 September source cuts", () => {
+  assert.match(page, /egpu: \{ previous: "01\.01–07\.09\.2026", current: "01\.01–11\.09\.2026" \}/u);
+  assert.match(page, /egpu: \(30850 \/ 31474\) \* 100/u);
 });

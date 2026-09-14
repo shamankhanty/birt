@@ -28,9 +28,18 @@ test('pipeline catalog recognizes representative historical source families',()=
   'Отчет_Доля_ТВСП_СЭМД_Протокол лабораторного 31.08.2026.xlsx':'tvsp_laboratory',
   'Отчет_СМП_ТВСП 31.08.2026.xlsx':'smp_tvsp',
   'Отчёт - Отказы 31.08.2026.xlsx':'remd_errors',
-  'Отчёт_по_использованию_системы_31.08.2026.xlsx':'electronic_waybill'
+  'Отчёт - Отказы по регистрации ЭМД в РЭМД 07.09 - 13.09.xlsx':'remd_errors',
+  'Отчёт_по_использованию_системы_31.08.2026.xlsx':'electronic_waybill',
+  'Отчёт_по_использованию_системы_31_08_06_09.xlsx':'electronic_waybill' 
  };
  for(const [name,fam] of Object.entries(cases)){const x=classify(name);assert.equal(x.status,'PASS',name);assert.equal(x.family,fam,name)}
+});
+
+
+test('weekly filenames without repeated year resolve to the correct 2026 end date',()=>{
+ const a=classify('Отчёт_по_использованию_системы_31_08_06_09.xlsx');
+ const b=classify('Отчёт - Отказы по регистрации ЭМД в РЭМД 07.09 - 13.09.xlsx');
+ assert.equal(a.endDate,'2026-09-06'); assert.equal(b.endDate,'2026-09-13');
 });
 
 test('unknown file is WARNING, not silent PASS',()=>{assert.equal(classify('Совершенно_новый_отчет_07.09.2026.xlsx').status,'WARNING')});

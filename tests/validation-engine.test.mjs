@@ -19,7 +19,7 @@ const base = Object.freeze({
 const cloneInput = () => structuredClone(base);
 const check = (report, id) => report.checks.find((item) => item.id === id);
 
-test("accepted v4.6.0 reference is all PASS and sends nothing to AI", () => {
+test("accepted current baseline is all PASS and sends nothing to AI", () => {
   const report = validateDashboard(base);
   assert.equal(report.overallStatus, "PASS");
   assert.deepEqual(report.summary, { checks: 15, PASS: 15, WARNING: 0, FAIL: 0, blocking: 0, aiReviewItems: 0 });
@@ -68,10 +68,10 @@ test("duplicate medical organization inside a dataset is a blocking FAIL", () =>
 
 test("new unresolved organization in an active rating indicator is FAIL", () => {
   const input = cloneInput();
-  input.monthlyMo.hospital.rows.push({ name: "НЕИЗВЕСТНАЯ МО ДЛЯ ТЕСТА", june: 50, july: 51, change: 1 });
+  input.monthlyMo.semd228.rows.push({ name: "НЕИЗВЕСТНАЯ МО ДЛЯ ТЕСТА", june: 50, july: 51, change: 1 });
   const report = validateDashboard(input);
   assert.equal(check(report, "data.new_unresolved_organizations").status, "FAIL");
-  assert.ok(report.aiReviewItems.some((item) => item.metric === "hospital"));
+  assert.ok(report.aiReviewItems.some((item) => item.metric === "semd228"));
 });
 
 test("new unresolved organization outside the rating is WARNING and bypasses AI", () => {
@@ -84,7 +84,7 @@ test("new unresolved organization outside the rating is WARNING and bypasses AI"
 
 test("organization disappearing from an active comparable dataset is FAIL", () => {
   const input = cloneInput();
-  input.monthlyMo.hospital.rows.splice(0, 1);
+  input.monthlyMo.semd228.rows.splice(0, 1);
   const report = validateDashboard(input);
   assert.equal(check(report, "data.dropped_organizations").status, "FAIL");
   assert.equal(check(report, "data.row_count_drop").status, "FAIL");

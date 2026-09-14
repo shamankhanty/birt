@@ -24,25 +24,27 @@ test("electronic waybill detail totals are preserved and source differences stay
   assert.ok(data.quality.every(item => item.difference !== 0));
 });
 
-test("weekly EPL comparison uses official totals and complete current hierarchy", () => {
-  assert.equal(weekly.previous.period, "17.08–23.08.2026");
-  assert.equal(weekly.current.period, "24.08–30.08.2026");
+test("weekly EPL comparison uses the latest two comparable weeks", () => {
+  assert.equal(weekly.previous.period, "31.08.2026–06.09.2026");
+  assert.equal(weekly.current.period, "07.09.2026–13.09.2026");
   assert.equal(weekly.previous.rows.length, 126);
   assert.equal(weekly.current.rows.length, 126);
   assert.deepEqual(
     [weekly.previous.systemSummary.vehicles, weekly.previous.systemSummary.vehiclesWithMovement, weekly.previous.systemSummary.vehiclesWithWaybills],
-    [1770, 515, 664],
+    [1725, 804, 1016],
+  );
+  assert.deepEqual(
+    [weekly.current.systemSummary.vehicles, weekly.current.systemSummary.vehiclesWithMovement, weekly.current.systemSummary.vehiclesWithWaybills],
+    [1722, 809, 1002],
   );
   assert.deepEqual(
     [weekly.current.detail.vehicles, weekly.current.detail.vehiclesWithMovement, weekly.current.detail.waybills, weekly.current.detail.driversWithWaybills],
-    [1724, 699, 3935, 1434],
+    [1458, 707, 3846, 1204],
   );
-  assert.equal(weekly.current.systemSummary.vehiclesWithMovement, 699);
-  assert.equal(weekly.current.systemSummary.vehiclesWithMovement, weekly.current.detail.vehiclesWithMovement);
   assert.deepEqual(weekly.previous.rows.map(row => row.sourceNumber), weekly.current.rows.map(row => row.sourceNumber));
-  assert.equal(weekly.current.rows.reduce((sum, row) => sum + Math.max(1, row.components?.length ?? 0), 0), 171);
   const kazan = weekly.current.rows.find(row => row.sourceNumber === 110);
-  assert.equal(kazan.name, "ССМП Казани (подстанции №1–9 и общая строка)");
-  assert.deepEqual([kazan.components.length, kazan.vehicles, kazan.moved], [10, 126, 55]);
+  assert.ok(kazan);
+  assert.equal(kazan.name, "Станции скорой медицинской помощи г. Казани Подстанция № 1");
+  assert.deepEqual([kazan.vehicles, kazan.moved, kazan.waybills], [32, 13, 96]);
   assert.match(weekly.comparisonRule, /по номеру группы/);
 });

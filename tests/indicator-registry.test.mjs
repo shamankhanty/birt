@@ -57,7 +57,7 @@ test("approved 2026 preventive methodology is frozen in the registry", () => {
   assert.equal(x.rating.baselineActive, true);
 });
 
-test("rating baseline exactly mirrors v4.6.0 August inclusion and weights", () => {
+test("rating baseline preserves August weights and excludes hospital after source correction", () => {
   assert.deepEqual(registry.rating.blocks, { care: 0.7, services: 0.2, readiness: 0.1 });
   const active = Object.entries(registry.indicators)
     .filter(([, item]) => item.rating.baselineActive)
@@ -76,7 +76,6 @@ test("rating baseline exactly mirrors v4.6.0 August inclusion and weights", () =
     "doctor500_therapist",
     "doctorsAll",
     "doctorsLevel3",
-    "hospital",
     "semd228",
     "tvspAmbulatory",
     "tvspDiagnostic",
@@ -85,6 +84,8 @@ test("rating baseline exactly mirrors v4.6.0 August inclusion and weights", () =
   assert.equal(registry.indicators.ambulatoryCase.rating.policy, "conditional");
   assert.equal(registry.indicators.tvspLaboratory.rating.policy, "exclude");
   assert.equal(registry.indicators.egpu2days.rating.policy, "exclude");
+  assert.equal(registry.indicators.hospital.rating.policy, "exclude");
+  assert.equal(registry.indicators.hospital.rating.baselineActive, false);
 });
 
 test("monthly physician metrics are identified as monthly and errors as lower-is-better", () => {

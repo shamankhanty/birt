@@ -76,8 +76,8 @@ test("approved full-month cumulative comparison is reproduced without hard-coded
   });
 });
 
-test("rating-month detection reproduces the exact 17 active baseline indicators", () => {
-  const excluded = new Set(["errors", "tvspLaboratory", "egpu2days", "egpu", "birth"]);
+test("rating-month detection reproduces the 16 active indicators after hospital source correction", () => {
+  const excluded = new Set(["errors", "tvspLaboratory", "egpu2days", "egpu", "birth", "hospital"]);
   const active = Object.entries(monthlyRuntime)
     .filter(([id, dataset]) =>
       dataset.unit === "%" &&

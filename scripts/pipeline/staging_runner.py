@@ -5,7 +5,7 @@ import hashlib,json,shutil,sys,subprocess,os
 from collections import defaultdict
 from pathlib import Path
 sys.path.insert(0,str(Path(__file__).resolve().parent))
-from adapters import AdapterResult,SUPPORTED_FAMILIES,run_family,adapt_preventive,parse_iso
+from adapters import AdapterResult,SUPPORTED_FAMILIES,run_family,adapt_preventive,adapt_hospital,parse_iso
 from source_catalog import scan
 
 ROOT=Path(__file__).resolve().parents[2]
@@ -40,6 +40,10 @@ def preserve_same_slice_dynamics(canonical_app:Path,staging_app:Path):
         for metric,new_ds in staged.items():
             old_ds=base.get(metric)
             if not isinstance(new_ds,dict) or not isinstance(old_ds,dict): continue
+            # A corrected methodology/source is not comparable with the prior value
+            # even when the reporting cut date is identical. Do not resurrect old dynamics.
+            if new_ds.get('comparisonReset'):
+                continue
             if not (new_ds.get('date')==old_ds.get('date') and new_ds.get('period')==old_ds.get('period')): continue
             old_rows={_row_key(r):r for r in old_ds.get('rows',[]) if isinstance(r,dict)}
             for row in new_ds.get('rows',[]):
@@ -97,13 +101,27 @@ def stage(input_dir:Path,output_dir:Path):
             try: results.append(adapt_preventive(output_dir/'app',Path(r['path']),Path(f['path']),parse_iso(r['endDate']),ROOT/'app/mo-registry.json').dict())
             except Exception as e: results.append(AdapterResult('preventive_pair',['preventive_remd','preventive_foms'],'FAIL',[],[r['name'],f['name']],{},[],[str(e)]).dict())
         consumed|={'preventive_remd','preventive_foms'}
+    # Hospital indicator: denominator from hospital cases, numerator strictly from REMD EGISZ workbook.
+    if by.get('hospital_cases'):
+        h=max(by.get('hospital_cases',[]),key=lambda x:x.get('endDate') or '')
+        remd_candidates=by.get('elmk',[])
+        r=max(remd_candidates,key=lambda x:x.get('endDate') or '') if remd_candidates else None
+        if not r or r.get('endDate')!=h.get('endDate'):
+            results.append(AdapterResult('hospital_pair',['hospital_cases','elmk'],'FAIL',[],[x['name'] for x in [h,r] if x],{},[],['Для показателя выписных эпикризов нужны знаменатель госпитализаций и числитель РЭМД за один период']).dict())
+        else:
+            try: results.append(adapt_hospital(output_dir/'app',Path(h['path']),parse_iso(h['endDate']),Path(r['path'])).dict())
+            except Exception as e: results.append(AdapterResult('hospital_pair',['hospital_cases','elmk'],'FAIL',[],[h['name'],r['name']],{},[],[str(e)]).dict())
+        consumed.add('hospital_cases')
     for family,items in sorted(by.items()):
         if family in consumed:continue
-        latest=max(items,key=lambda x:x.get('endDate') or '')
+        ordered=sorted(items,key=lambda x:x.get('endDate') or '')
+        selected=ordered if family=='electronic_waybill' else [ordered[-1]]
+        latest=selected[-1]
         if family not in SUPPORTED_FAMILIES:
             results.append(AdapterResult(latest.get('adapter') or 'unknown',[family],'WARNING',[],[latest['name']],{},['Adapter отсутствует в staging; reference script сохранён'],[]).dict());continue
-        try: results.append(run_family(output_dir/'app',family,Path(latest['path']),parse_iso(latest['endDate']),ROOT).dict())
-        except Exception as e: results.append(AdapterResult(latest.get('adapter') or family,[family],'FAIL',[],[latest['name']],{},[],[str(e)]).dict())
+        for item in selected:
+            try: results.append(run_family(output_dir/'app',family,Path(item['path']),parse_iso(item['endDate']),ROOT).dict())
+            except Exception as e: results.append(AdapterResult(item.get('adapter') or family,[family],'FAIL',[],[item['name']],{},[],[str(e)]).dict())
     try:
         compact_error_payload(output_dir/'app')
     except Exception as e:

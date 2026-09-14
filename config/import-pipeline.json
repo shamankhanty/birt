@@ -233,7 +233,7 @@
         "mo-data.json"
       ],
       "adapter": "errors",
-      "periodKind": "cumulative"
+      "periodKind": "weekly"
     },
     {
       "id": "short_input",

@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
-  "baselineVersion": "5.3.0",
+  "baselineVersion": "5.4.0",
   "entryCount": 3076,
   "resolvedCount": 2920,
-  "mappingSha256": "cb61991f65b3894ab2e02b4c1bcee524cf0617da9e91c01a30801a6d84227336"
+  "mappingSha256": "fc2b599656e442707b18f45064a383de4b62ebde1f0afb4d42a53ecafeeba243"
 }

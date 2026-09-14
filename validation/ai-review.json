@@ -1,0 +1,9 @@
+{
+  "schemaVersion": 1,
+  "baselineVersion": "5.4.0",
+  "dataDate": "11.09.2026",
+  "sourceOverallStatus": "PASS",
+  "reviewCount": 0,
+  "rule": "AI receives only FAIL items, new anomalies and methodological conflicts; PASS and ordinary WARNING items are excluded.",
+  "items": []
+}

@@ -1,0 +1,226 @@
+{
+  "schemaVersion": 1,
+  "baselineVersion": "5.4.0",
+  "dataDate": "11.09.2026",
+  "reportingPeriod": {
+    "latestFullMonth": "август 2026",
+    "previousFullMonth": "июль 2026",
+    "hasPartialNewerMonth": true,
+    "latestObservedDate": "11.09.2026"
+  },
+  "overallStatus": "PASS",
+  "summary": {
+    "checks": 15,
+    "PASS": 15,
+    "WARNING": 0,
+    "FAIL": 0,
+    "blocking": 0,
+    "aiReviewItems": 0
+  },
+  "acknowledgedBaseline": {
+    "unresolvedOrganizations": 147,
+    "percentageAnomalies": 35,
+    "missingCurrentValues": 1
+  },
+  "checks": [
+    {
+      "id": "registry.indicator_metadata",
+      "category": "schema",
+      "title": "Полнота единого реестра показателей",
+      "status": "PASS",
+      "blocking": false,
+      "requiresAiReview": false,
+      "message": "38 indicators have required metadata",
+      "details": {
+        "indicatorCount": 38
+      },
+      "issues": []
+    },
+    {
+      "id": "registry.mo_oid_uniqueness",
+      "category": "duplicates",
+      "title": "Уникальность OID в справочнике МО",
+      "status": "PASS",
+      "blocking": false,
+      "requiresAiReview": false,
+      "message": "127 registry OIDs are unique",
+      "details": {
+        "organizationCount": 127
+      },
+      "issues": []
+    },
+    {
+      "id": "registry.numbered_alias_safety",
+      "category": "duplicates",
+      "title": "Безопасность алиасов номерных МО",
+      "status": "PASS",
+      "blocking": false,
+      "requiresAiReview": false,
+      "message": "No numbered facility alias crosses organization numbers",
+      "details": {},
+      "issues": []
+    },
+    {
+      "id": "registry.runtime_coverage",
+      "category": "schema",
+      "title": "Покрытие runtime-наборов реестром показателей",
+      "status": "PASS",
+      "blocking": false,
+      "requiresAiReview": false,
+      "message": "33 runtime datasets are covered by the indicator registry",
+      "details": {
+        "runtimeDatasetCount": 33,
+        "registryIndicatorCount": 38
+      },
+      "issues": []
+    },
+    {
+      "id": "registry.metadata_source_alignment",
+      "category": "schema",
+      "title": "Соответствие metadata источников каноническому реестру",
+      "status": "PASS",
+      "blocking": false,
+      "requiresAiReview": false,
+      "message": "33 source datasets match canonical plan/direction metadata",
+      "details": {
+        "inspectedDatasets": 33
+      },
+      "issues": []
+    },
+    {
+      "id": "data.duplicate_organizations",
+      "category": "duplicates",
+      "title": "Дубли МО внутри одного показателя",
+      "status": "PASS",
+      "blocking": false,
+      "requiresAiReview": false,
+      "message": "4906 rows contain no duplicate organization within a dataset",
+      "details": {
+        "inspectedRows": 4906
+      },
+      "issues": []
+    },
+    {
+      "id": "calculation.ratio_components",
+      "category": "calculation",
+      "title": "Арифметическая сверка числителя, знаменателя и доли",
+      "status": "PASS",
+      "blocking": false,
+      "requiresAiReview": false,
+      "message": "992 ratio rows reconcile to numerator/denominator components",
+      "details": {
+        "inspectedRows": 992,
+        "tolerancePercentagePoints": 0.015
+      },
+      "issues": []
+    },
+    {
+      "id": "calculation.trend",
+      "category": "calculation",
+      "title": "Арифметическая сверка динамики",
+      "status": "PASS",
+      "blocking": false,
+      "requiresAiReview": false,
+      "message": "1717 trend rows reconcile to fact minus previous",
+      "details": {
+        "inspectedRows": 1717
+      },
+      "issues": []
+    },
+    {
+      "id": "period.kind_compatibility",
+      "category": "period",
+      "title": "Соответствие типа периода реестру показателей",
+      "status": "PASS",
+      "blocking": false,
+      "requiresAiReview": false,
+      "message": "22 source periods match their registry period kind",
+      "details": {
+        "inspectedDatasets": 22
+      },
+      "issues": []
+    },
+    {
+      "id": "period.rating_month",
+      "category": "period",
+      "title": "Сопоставимость периода рейтинга",
+      "status": "PASS",
+      "blocking": false,
+      "requiresAiReview": false,
+      "message": "16 rating indicators belong to август 2026",
+      "details": {
+        "activeRatingIndicators": 16,
+        "latestFullMonth": "август 2026",
+        "previousFullMonth": "июль 2026",
+        "latestObservedDate": "11.09.2026",
+        "hasPartialNewerMonth": true
+      },
+      "issues": []
+    },
+    {
+      "id": "data.new_unresolved_organizations",
+      "category": "completeness",
+      "title": "Новые несопоставленные названия МО",
+      "status": "PASS",
+      "blocking": false,
+      "requiresAiReview": false,
+      "message": "No new unresolved organizations beyond 147 acknowledged baseline rows",
+      "details": {
+        "currentUnresolvedRows": 147,
+        "acknowledgedBaselineRows": 147
+      },
+      "issues": []
+    },
+    {
+      "id": "data.dropped_organizations",
+      "category": "completeness",
+      "title": "МО, пропавшие из сопоставимого набора",
+      "status": "PASS",
+      "blocking": false,
+      "requiresAiReview": false,
+      "message": "No organization present in the accepted reference disappeared from a comparable dataset",
+      "details": {},
+      "issues": []
+    },
+    {
+      "id": "data.row_count_drop",
+      "category": "completeness",
+      "title": "Снижение количества строк в наборе",
+      "status": "PASS",
+      "blocking": false,
+      "requiresAiReview": false,
+      "message": "No dataset has fewer rows than the accepted reference",
+      "details": {},
+      "issues": []
+    },
+    {
+      "id": "data.missing_current_values",
+      "category": "completeness",
+      "title": "Пропуски текущего значения при наличии предыдущего",
+      "status": "PASS",
+      "blocking": false,
+      "requiresAiReview": false,
+      "message": "No new missing current values beyond 1 acknowledged baseline cases",
+      "details": {
+        "currentMissingValues": 1,
+        "acknowledgedBaselineCases": 1
+      },
+      "issues": []
+    },
+    {
+      "id": "data.percentage_anomalies",
+      "category": "anomaly",
+      "title": "Новые аномальные процентные значения",
+      "status": "PASS",
+      "blocking": false,
+      "requiresAiReview": false,
+      "message": "No new percentage anomalies beyond 35 acknowledged baseline cases",
+      "details": {
+        "currentAnomalyRows": 35,
+        "acknowledgedBaselineCases": 35
+      },
+      "issues": []
+    }
+  ],
+  "aiReviewItems": []
+}

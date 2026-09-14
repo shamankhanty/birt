@@ -1,6 +1,6 @@
 {
   "schemaVersion": 2,
-  "baselineVersion": "5.3.0",
+  "baselineVersion": "5.4.0",
   "baselineDate": "2026-09-14",
   "previousBaseline": {
     "version": "4.6.0",
@@ -9,61 +9,64 @@
     "handoffZipSha256": "90003a0098165ce484118a8bd661dc03e9471c5759a88dfb5e806800ce7df8b9",
     "manifest": "baseline/reference-v4.6.0-manifest.json"
   },
-  "changeClass": "Оперативный срез 11.09, недельный 500+ вне месячного рейтинга, контроль отсутствующих строк",
+  "changeClass": "Оперативные источники 11–13.09; недельные ошибки РЭМД; 500+ в заслушивании; исправление источника выписных эпикризов",
   "protectedData": {
-    "app/electronic-waybill-weekly.json": "a9945a61d9cc97bd2c5868ddff76c24875dec8e991035e650ddb4af4561d8947",
+    "app/electronic-waybill-weekly.json": "e527cb953583e1750b56ed102bc4eaae893fa714221df967da4a8ffd1a88c375",
     "app/electronic-waybill.json": "d682decfa448f6fd17c8df1fdcf088b105cff03080daf029849a4d039c638dbc",
-    "app/error-categories.json": "af77832b265c8909ba23d4c6f07bf660c37741e0c3a2315b8d003b1acdb3aa61",
+    "app/error-categories.json": "b957090940a9a81322d4a76719a96853ab27f861d59d09054b04abcaa088bb17",
     "app/federal-control.json": "6dfd779f3cdeb320d08aa10ccb8a32522930c756fd808017977b85ec71d7e100",
     "app/hearing-snapshots.json": "4e6f494e413e2003e6d24c7492e79cbcd67837f31ba01565a5c2fac42a8b5871",
-    "app/mo-data.json": "3ceccfb6d39ddd0ecb0ef9649187ca60e7ef8f803cf68f12fcdbf53565038857",
-    "app/mo-detail-oids.json": "8ce883d8e438ece7e804ad42407c49695b3f28cea7f4ad2c0dc0b1c0a1e435b2",
-    "app/mo-details.json": "4959b6f7e5b7cb5564819d604435aadceefbdab3cbf228460e583b09663527d4",
+    "app/mo-data.json": "85d51fac666c5a593f4e8b7e45ac74d6ada9b7815fa9531372750aca73bc8a1d",
+    "app/mo-detail-oids.json": "3a7e3a4c54e082c5bfdc44132214058db533b34f3a2e0e1afbe6ac222dc5ac4a",
+    "app/mo-details.json": "69c03da6a097faa9d2ef81bedef774c23c9e0d8c40c73b17caa3bce37caacc7f",
     "app/mo-registry.json": "62202e489fced8a93c40867f04f5b3a021030cf4da1b0d0da6ce3a8cff088ea3",
     "app/monthly-mo.json": "78535cd8b7d2de942c1c347f6eb313ae727e71f0879127c97c0fab72455d671f",
-    "app/operational-mo.json": "3a5a5d1805f3a89039dd0bce2e65769a1bdcca8e710cef4e5bc0fd9ef81e624f",
+    "app/operational-mo.json": "ec42bf250c211ebae364a83cbe34d1a573f432e47e08962178cd2ddc9c49cc07",
     "app/organization-status.json": "1b6a3d3db31a5aebb7f32f70599473592d895fd093e19f849d749f0cdc38d7d0",
     "app/physician-metrics.json": "f08542cba9108a18b263d017e4b28dff2c3b6a39671eedeb4bd55aaa81d3431d",
     "app/preventive-semd-audit.json": "765e29e614312614e80f0e9cedf8948faa02c11f4f9913a7da7a4bef3e9a3a00",
     "app/semd-summary.json": "fcf60e417aea2d880ac1ccba68d93267a7e79690d7e9b415a7387341d7987d76",
     "app/unit-data.json": "98759b0a146d042eb32d8f11fd4b9531fedefbd2378d5cfbd709101e74649aeb",
-    "app/error-organizations.json": "87e9dc9c4454b25f9eb5012794f2cb0a74ae38b03b20b4a0ae8ea968e750d700",
+    "app/error-organizations.json": "894d28447b68af388c9b66e5238c7a7631a2d00b44e5773ea8ce194e1a8b2b92",
     "app/max-monthly-visits.json": "4ccd792fbc854b92ec7b5161e2e6e00ab68c3c5f14a06278e4332f63f522b31a",
     "app/max-appointments-municipal.json": "69f690e62514706254d6f5b08cd694ae91bae6349eb14e653d47bcde89f63c17",
     "app/physician-weekly-snapshot.json": "004e2fc19000743c665b44645ccfadcd455a365d520d34b12570144e6297bc46"
   },
   "protectedRules": {
-    "config/indicator-registry.json": "f7542c17ea3a23df4d9deceb66067d2efb66e4b267a65b784264770b382f2121",
+    "config/indicator-registry.json": "e9a638403176dd833c351f81d9535223eeb5df3ce8916fb43bbe06bf62c2ab36",
     "app/mo-registry.json": "62202e489fced8a93c40867f04f5b3a021030cf4da1b0d0da6ce3a8cff088ea3",
-    "app/hearing-snapshots.json": "4e6f494e413e2003e6d24c7492e79cbcd67837f31ba01565a5c2fac42a8b5871"
+    "app/hearing-snapshots.json": "4e6f494e413e2003e6d24c7492e79cbcd67837f31ba01565a5c2fac42a8b5871",
+    "config/import-pipeline.json": "46e5e5ac343aad5ddc06a377fe7cf3e94890bc7f6e4c5012fb11ee1e7f20af62"
   },
   "stateFiles": {
-    "STATE.md": "f16d0a0f3f9e1c5a6739a88529e5c1aaa8000164ae043a125e8000b648514656",
-    "OPEN_ISSUES.md": "21eb5993473d589a0ec318978b983d4ca81f5e10ec97dd35c1cd92dd926b5e78"
+    "STATE.md": "d2c9b6b4f936e32f70dbd3b0cf4c88e25d7f22809c82d8db4e77f188020e470c",
+    "OPEN_ISSUES.md": "98c7441c1091c272d6a6fe899b9f60da40a451f77b0f8ebce6c9c09a10ed4291"
   },
   "keyCode": {
-    "app/page.tsx": "2987ecb0a8685fb0c3a3818e6160ecec132bb25fce11c78643fa422e33e3cfd8",
+    "app/page.tsx": "48e5cbaec6bfc3ef821d2e0ca4415a41c5b9cb8b83f2c32c4e5dd10220c6fd84",
     "app/globals.css": "a0e67c624d6e6877dad6cb5c44c59264dfa1799c33cc4a3a5eb6c0ab8cbc4dbe",
     "lib/calculation-engine.js": "2addca9323803eb45f66fca94fe78a72c4d77eed53c7bd05c224dd9aa9f2f0e7",
     "lib/indicator-registry.js": "484857b41858c082fad05172793ff24f422008a6178257006d4512b0c12d1996",
     "lib/mo-registry.js": "9fe16e52a33111d44fb143f8f3879f3d0960821ac176a149c02d0d0bb14d3cab",
     "lib/period-engine.js": "30cb85efde4c299ee5ca0314c84f7699c0a5170baa48cc6e7c3e9d75dbec22b6",
     "lib/validation-engine.js": "ec8c0bfdc6be305bf1f2d4629e9016de5bb5cc00ba24f92eec5ebfc87510246b",
-    "scripts/pipeline/adapters.py": "3a8b1a4fd8f9e9e552ea4b694a280ab3d4c8f8daf4b2d18fe85083f74ff29f33",
-    "scripts/weekly_update_pipeline.py": "63604915c77920e7dbb2f913d09c917e95b506d3671917f4d5031bc6f1221903"
+    "scripts/pipeline/adapters.py": "252d50a4316af1141ed6091cc31ef41b9ed1298b5e576490924a780f1d88e4e2",
+    "scripts/weekly_update_pipeline.py": "63604915c77920e7dbb2f913d09c917e95b506d3671917f4d5031bc6f1221903",
+    "scripts/pipeline/source_catalog.py": "8bcc6be2a432a18562d17236882e01170a632a919292f00c3eca7003e344591c",
+    "scripts/pipeline/staging_runner.py": "09d904a06acf11a8c3a685df64fd41d8af228d59c7621c3ebc600345e4f81dbd"
   },
   "regression": {
-    "nodeTests": "144/144 PASS",
+    "nodeTests": "152/152 PASS",
     "validation": "15/15 PASS",
     "calculationEquivalence": "38/38 PASS",
     "metadataEquivalence": "38/38 PASS",
     "stagingAdapters": "21/21 PASS",
-    "ratingIndicators": 17,
+    "ratingIndicators": 16,
     "latestFullMonth": "август 2026",
     "previousFullMonth": "июль 2026",
-    "operationalCut": "11.09.2026",
+    "operationalCut": "11–13.09.2026",
     "fail": 0,
     "warnings": []
   },
-  "note": "v5.3.0: источники обновлены на 11.09.2026; август сохранён единственным полным месяцем рейтинга; неполный сентябрьский файл 500+ доступен только как оперативный недельный контроль раздела «Показатели»."
+  "note": "v5.4.0 опубликована после полного CI: ЕПГУ и СМП обновлены на 11.09; ЭПЛ и ошибки РЭМД — полная неделя 07–13.09; 500+ добавлен в заслушивание справочно. Выписные эпикризы: числитель РЭМД ЕГИСЗ, знаменатель — случаи госпитализации, сопоставление OID↔OID; несопоставимая динамика сброшена; августовский МО-рейтинг этого показателя временно исключён до полного августовского РЭМД-источника."
 }

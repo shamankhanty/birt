@@ -1,0 +1,13 @@
+{
+  "status": "PASS",
+  "baselineVersion": "5.4.0",
+  "registrySchemaVersion": 2,
+  "runtimeIntegration": true,
+  "indicatorsChecked": 38,
+  "datasetMetadataChecked": 33,
+  "staticIndicatorsChecked": 20,
+  "latestFullMonth": "август 2026",
+  "previousFullMonth": "июль 2026",
+  "ratingIndicators": 16,
+  "mismatches": []
+}

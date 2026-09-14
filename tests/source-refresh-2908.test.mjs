@@ -11,8 +11,12 @@ const status = read("organization-status.json");
 test("11.09 hospital report is reconciled exactly", () => {
   assert.equal(mo.hospital.date, "11.09.2026");
   assert.equal(mo.hospital.rows.length, 106);
-  assert.equal(mo.hospital.rows.reduce((sum, row) => sum + row.count, 0), 530968);
+  assert.equal(mo.hospital.rows.reduce((sum, row) => sum + (row.count ?? 0), 0), 558826);
   assert.equal(Object.values(read("mo-details.json").hospital).reduce((sum, row) => sum + row.volume, 0), 624362);
+  assert.equal(mo.hospital.comparisonReset, true);
+  const ndrb = mo.hospital.rows.find(row => row.oid === "1.2.643.5.1.13.13.12.2.16.1171");
+  assert.equal(ndrb.count, 6584);
+  assert.ok(Math.abs(ndrb.fact - 77.52266572471447) < 1e-9);
 });
 
 test("11.09 FAP/FP report retains zero units", () => {
@@ -39,7 +43,7 @@ test("remaining 11.09 federal sources are synchronized", () => {
 
 test("each indicator shows its real latest source cut-off", () => {
   const expected = {
-    egpu: "07.09.2026", egpu2days: "07.09.2026", birth: "11.09.2026", death: "11.09.2026",
+    egpu: "11.09.2026", egpu2days: "11.09.2026", birth: "11.09.2026", death: "11.09.2026",
     semd228: "11.09.2026", hospital: "11.09.2026", smp: "11.09.2026",
     tvspStationary: "11.09.2026", tvspAmbulatory: "11.09.2026", tvspLaboratory: "11.09.2026",
     tvspDiagnostic: "11.09.2026", smpFederal: "11.09.2026",

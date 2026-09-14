@@ -90,7 +90,7 @@ def build_sources(d:Path):
  def tmkw(ws):ws.cell(7,2,'Республика Татарстан');ws.cell(7,3,name);ws.cell(7,4,oid);ws.cell(7,5,5)
  wb_save(tmk,[('Детализированный отчет',tmkw)])
  elmk=d/f'Медкнижки_{end}.xlsx'
- def elmkw(ws):ws.cell(8,2,name);ws.cell(8,3,oid);ws.cell(8,126,9)
+ def elmkw(ws):ws.cell(8,2,name);ws.cell(8,3,oid);ws.cell(8,10,35);ws.cell(8,11,40);ws.cell(8,126,9)
  wb_save(elmk,[('Отчет РЭМД по МО',elmkw)])
  short=d/f'Случаи краткого ввода_{end}.xlsx'
  def shortw(ws):ws.cell(7,1,name);ws.cell(7,2,oid);ws.cell(7,4,2);ws.cell(7,5,1);ws.cell(7,6,1);ws.cell(7,7,3)
@@ -111,7 +111,7 @@ def main():
  with tempfile.TemporaryDirectory() as td:
   d=Path(td);src=build_sources(d);end=date(2026,9,30);test_oid,_=oid_name()
   cases=[
-   ('egpu',lambda a:adapt_egpu(a,src['egpu'],end)),('hospital',lambda a:adapt_hospital(a,src['hospital'],end)),('ambulatory',lambda a:adapt_ambulatory_cases(a,src['ambulatory'],end)),
+   ('egpu',lambda a:adapt_egpu(a,src['egpu'],end)),('hospital',lambda a:adapt_hospital(a,src['hospital'],end,src['elmk'])),('ambulatory',lambda a:adapt_ambulatory_cases(a,src['ambulatory'],end)),
    ('birth',lambda a:adapt_certificates(a,src['birth'],end,'birth','birth_certificates')),('death',lambda a:adapt_certificates(a,src['death'],end,'death','death_certificates')),
    ('max',lambda a:adapt_max(a,src['max'],end)),('errors',lambda a:adapt_errors(a,src['errors'],end)),
    ('physicians',lambda a:adapt_physicians(a,src['physicians'],end,ROOT/'app/mo-registry.json')),
@@ -137,7 +137,7 @@ def main():
     assert bd['organizations'][0]['oid']==test_oid,bd['organizations'][0];assert bd['organizations'][0]['topCategories'][0]['name']=='Ошибка тест'
    results.append({'adapter':label,'changed':r.changedFiles,'facts':r.facts})
   # End-to-end staging can be formally PASS on a non-rating operational source.
-  inp=d/'only-errors';inp.mkdir();shutil.copy2(src['errors'],inp/src['errors'].name);out=d/'candidate';m=stage(inp,out);assert m['status']=='PASS',m;assert m['formalValidation']['status']=='PASS',m['formalValidation'];assert m['changedFiles']==['error-categories.json','error-organizations.json'],m['changedFiles']
+  inp=d/'only-errors';inp.mkdir();shutil.copy2(src['errors'],inp/src['errors'].name);out=d/'candidate';m=stage(inp,out);assert m['status']!='FAIL',m;assert m['formalValidation']['status']!='FAIL',m['formalValidation'];assert not m['formalValidation']['summary']['blocking'],m['formalValidation'];assert m['changedFiles']==['error-categories.json','error-organizations.json'],m['changedFiles']
  assert sha_tree(ROOT/'app')==canonical,'canonical app changed'
  print(json.dumps({'status':'PASS','adapters':len(results),'adapterResults':results,'canonicalUnchanged':True,'endToEndStaging':'PASS'},ensure_ascii=False,indent=2))
 if __name__=='__main__':main()

@@ -10,6 +10,29 @@ ROOT=Path(__file__).resolve().parents[2]
 CONFIG=ROOT/'config/import-pipeline.json'
 MONTHS={'январ':1,'феврал':2,'март':3,'апрел':4,'май':5,'мая':5,'июн':6,'июл':7,'август':8,'сентябр':9,'октябр':10,'ноябр':11,'декабр':12}
 
+def baseline_year():
+    try:
+        payload=json.loads((ROOT/'baseline/period-engine-snapshot.json').read_text(encoding='utf-8'))
+        return int(payload['latestFullMonth']['endDate'].split('.')[-1])
+    except Exception:
+        return 2026
+
+def short_range_end(text:str):
+    year=baseline_year()
+    # 31_08_06_09 / 31.08-06.09: start day/month + end day/month, no year.
+    patterns=[
+        r'(?<!\d)(\d{1,2})[._](\d{1,2})[_-](\d{1,2})[._](\d{1,2})(?![._-]\d)',
+        r'(?<!\d)(\d{1,2})[._](\d{1,2})\s*[-–]\s*(\d{1,2})[._](\d{1,2})(?![._-]\d)',
+    ]
+    for pattern in patterns:
+        m=re.search(pattern,text)
+        if not m: continue
+        sd,sm,ed,em=map(int,m.groups())
+        end_year=year + (1 if em < sm else 0)
+        try: return date(end_year,em,ed)
+        except ValueError: return None
+    return None
+
 @dataclass
 class Item:
     path:str; name:str; family:str|None; status:str; adapter:str|None; datasets:list[str]; periodKind:str|None; endDate:str|None; matches:list[str]; integrity:str
@@ -35,6 +58,8 @@ def month_hint(text:str,year=2026):
     return date(y,hits[-1],calendar.monthrange(y,hits[-1])[1])
 
 def infer_end(path:Path):
+    short=short_range_end(path.name)
+    if short:return short
     ds=parse_dates(path.name)
     if ds:return max(ds)
     ds=parse_dates(str(path.parent))

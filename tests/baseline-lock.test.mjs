@@ -8,8 +8,8 @@ const reference = JSON.parse(fs.readFileSync("baseline/reference-v4.6.0-manifest
 const snapshot = JSON.parse(fs.readFileSync("baseline/semantic-snapshot.json", "utf8"));
 const sha256 = (path) => crypto.createHash("sha256").update(fs.readFileSync(path)).digest("hex");
 
-test("current baseline lock identifies approved v5.3.0 and its v4.6.0 reference", () => {
-  assert.equal(manifest.baselineVersion, "5.3.0");
+test("current baseline lock identifies approved v5.4.0 and its v4.6.0 reference", () => {
+  assert.equal(manifest.baselineVersion, "5.4.0");
   assert.equal(manifest.previousBaseline.version, "4.6.0");
   assert.equal(reference.baselineVersion, "4.6.0");
   assert.equal(reference.baselineCommit, "c50be9e1a04b6aa0641e0dd791c2b9238caa15d1");
@@ -33,7 +33,7 @@ test("historical v4.6.0 manifest remains available as an immutable reference", (
 
 test("baseline semantic anchors preserve approved preventive calculation", () => {
   assert.equal(snapshot.preventiveSemd.status, "ready");
-  assert.equal(snapshot.preventiveSemd.numerator, 1557278);
-  assert.equal(snapshot.preventiveSemd.denominator, 2036859);
-  assert.ok(Math.abs(snapshot.preventiveSemd.share - 76.45487488333754) < 1e-12);
+  assert.equal(snapshot.preventiveSemd.numerator, 1527595);
+  assert.equal(snapshot.preventiveSemd.denominator, 2069632);
+  assert.ok(Math.abs(snapshot.preventiveSemd.share - 73.80998167790216) < 1e-12);
 });

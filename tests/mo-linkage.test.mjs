@@ -12,7 +12,7 @@ test("ДГКБ №7 has source quantities for the EPGU final-status indicator", 
   const detail = oidDetails.egpu[row.oid];
   assert.equal(row.count, detail.registered);
   assert.ok(Math.abs(row.fact - detail.registered / detail.volume * 100) < 1e-10);
-  assert.deepEqual(detail, { registered: 126, volume: 181 });
+  assert.deepEqual(detail, { registered: 126, volume: 183 });
 });
 
 test("OID detail links reconcile every current ratio row that supplies an OID", () => {
