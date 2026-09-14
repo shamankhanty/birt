@@ -32,6 +32,9 @@ jobs:
         with:
           fetch-depth: 2
 
+      - name: Apply MAX period correction
+        run: python3 scripts/fix_max_period_modes_v540.py
+
       - name: Classify changes
         id: changes
         shell: bash
@@ -45,7 +48,7 @@ jobs:
           changed="$(git diff --name-only HEAD^ HEAD)"
           printf '%s\n' "$changed"
 
-          if printf '%s\n' "$changed" | grep -Eq '^(app/.*\.(ts|tsx|css)|lib/|offline/|package(-lock)?\.json|scripts/build-offline\.mjs|scripts/build-verified\.sh|scripts/sites-env\.sh|scripts/validate-artifact\.sh|tests/rendered-html\.test\.mjs)'; then
+          if printf '%s\n' "$changed" | grep -Eq '^(app/.*\.(ts|tsx|css)|lib/|offline/|package(-lock)?\.json|scripts/build-offline\.mjs|scripts/build-verified\.sh|scripts/sites-env\.sh|scripts/validate-artifact\.sh|tests/rendered-html\.test\.mjs)' || [[ -f scripts/fix_max_period_modes_v540.py ]]; then
             echo "code=true" >> "$GITHUB_OUTPUT"
           else
             echo "code=false" >> "$GITHUB_OUTPUT"
