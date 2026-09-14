@@ -45,13 +45,13 @@ jobs:
           changed="$(git diff --name-only HEAD^ HEAD)"
           printf '%s\n' "$changed"
 
-          if printf '%s\n' "$changed" | grep -Eq '^(app/.*\.(ts|tsx|css)|lib/|offline/|package(-lock)?\.json|scripts/build-offline\.mjs|scripts/build-verified\.sh|scripts/sites-env\.sh|scripts/validate-artifact\.sh)'; then
+          if printf '%s\n' "$changed" | grep -Eq '^(app/.*\.(ts|tsx|css)|lib/|offline/|package(-lock)?\.json|scripts/build-offline\.mjs|scripts/build-verified\.sh|scripts/sites-env\.sh|scripts/validate-artifact\.sh|tests/rendered-html\.test\.mjs)'; then
             echo "code=true" >> "$GITHUB_OUTPUT"
           else
             echo "code=false" >> "$GITHUB_OUTPUT"
           fi
 
-          if printf '%s\n' "$changed" | grep -Eq '^(scripts/pipeline/|scripts/weekly_update_pipeline\.py|config/import-pipeline\.json)'; then
+          if printf '%s\n' "$changed" | grep -Eq '^(scripts/pipeline/|scripts/weekly_update_pipeline\.py|config/import-pipeline\.json|tests/update-adapters\.test\.mjs|tests/update-pipeline\.test\.mjs)'; then
             echo "pipeline=true" >> "$GITHUB_OUTPUT"
           else
             echo "pipeline=false" >> "$GITHUB_OUTPUT"
@@ -69,7 +69,7 @@ jobs:
       - name: Prepare executable scripts
         run: chmod +x scripts/*.sh scripts/pipeline/*.sh 2>/dev/null || true
 
-      - name: Install Python validation dependencies
+      - name: Install Python pipeline dependencies
         if: steps.changes.outputs.pipeline == 'true'
         run: python3 -m pip install --disable-pip-version-check openpyxl
 
@@ -114,16 +114,34 @@ jobs:
       - name: Validate calculations and metadata
         run: npm run validate:refactor
 
+      - name: Run fast regression tests
+        shell: bash
+        run: |
+          mapfile -t core_tests < <(
+            find tests -maxdepth 1 -name '*.test.mjs' \
+              ! -name 'rendered-html.test.mjs' \
+              ! -name 'update-adapters.test.mjs' \
+              ! -name 'update-pipeline.test.mjs' \
+              -print | sort
+          )
+          test "${#core_tests[@]}" -gt 0
+          node --test "${core_tests[@]}"
+
       - name: Validate staging adapters
         if: steps.changes.outputs.pipeline == 'true'
         run: python3 scripts/pipeline/adapter_selftest.py
 
-      - name: Run regression tests
-        run: node --test tests/*.test.mjs
+      - name: Run pipeline regression tests
+        if: steps.changes.outputs.pipeline == 'true'
+        run: node --test tests/update-adapters.test.mjs tests/update-pipeline.test.mjs
 
       - name: Run full application build
         if: steps.changes.outputs.code == 'true'
         run: npm run build
+
+      - name: Run rendered HTML regression test
+        if: steps.changes.outputs.code == 'true'
+        run: node --test tests/rendered-html.test.mjs
 
       - name: Build single-file static dashboard
         run: |
