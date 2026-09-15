@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "baselineVersion": "5.4.2",
+  "baselineVersion": "5.4.3",
   "rule": "Snapshot фиксирует утверждённый runtime после оперативного обновления источников по 11–13.09.2026; месячный рейтинг остаётся по полному августу.",
   "allIndicators": {
     "ambulatoryCase": {

@@ -116,7 +116,7 @@ type FederalControlData = {
   agreement: FederalControlRow[];
   collegium: FederalControlRow[];
 };
-const DASHBOARD_VERSION = "5.4.2";
+const DASHBOARD_VERSION = "5.4.3";
 const indicatorRegistry = createIndicatorRegistryRuntime(
   indicatorRegistryRaw as IndicatorRegistryDocument,
 );
@@ -1316,45 +1316,27 @@ const fullMonthCumulativeComparison = buildFullMonthComparison(
 );
 const comparisonPeriods: Record<string, { previous: string; current: string }> =
   {
-    // Оперативные ЕПГУ: сопоставимые накопительные точки 07.09 и 11.09.
-    // Июль ↔ август остаётся в месячном представлении, а не выдаётся за неделю.
+    // Оперативная динамика = текущая подтверждённая выгрузка к непосредственно предыдущей.
     egpu: { previous: "01.01–07.09.2026", current: "01.01–11.09.2026" },
     egpu2days: { previous: "01.01–07.09.2026", current: "01.01–11.09.2026" },
-    birth: fullMonthCumulativeComparison,
-    death: fullMonthCumulativeComparison,
-    semd228: fullMonthCumulativeComparison,
-    hospital: fullMonthCumulativeComparison,
-    ambulatoryCase: {
-      previous: "01.01–21.08.2026",
-      current: "01.01–29.08.2026",
-    },
-    tvspStationary: {
-      previous: "январь–август · срез 24.08.2026",
-      current: "январь–август · срез 28.08.2026",
-    },
-    tvspAmbulatory: {
-      previous: "январь–август · срез 24.08.2026",
-      current: "январь–август · срез 28.08.2026",
-    },
-    tvspLaboratory: {
-      previous: "январь–август · срез 24.08.2026",
-      current: "январь–август · срез 28.08.2026",
-    },
-    tvspDiagnostic: {
-      previous: "01.01–24.08.2026",
-      current: "01.01–27.08.2026",
-    },
-    smpFederal: { previous: "01.01–18.08.2026", current: "01.01–27.08.2026" },
+    birth: { previous: "01.01–07.09.2026", current: "01.01–11.09.2026" },
+    death: { previous: "01.01–07.09.2026", current: "01.01–11.09.2026" },
+    semd228: { previous: "01.01–07.09.2026", current: "01.01–11.09.2026" },
+    ambulatoryCase: { previous: "01.01–29.08.2026", current: "01.01–11.09.2026" },
+    tvspStationary: { previous: "срез 07.09.2026", current: "срез 11.09.2026" },
+    tvspAmbulatory: { previous: "срез 07.09.2026", current: "срез 11.09.2026" },
+    tvspLaboratory: { previous: "срез 07.09.2026", current: "срез 11.09.2026" },
+    tvspDiagnostic: { previous: "01.01–07.09.2026", current: "01.01–11.09.2026" },
+    smpFederal: { previous: "01.01–07.09.2026", current: "01.01–11.09.2026" },
     smp: { previous: "01.01–28.08.2026", current: "01.01–11.09.2026" },
-    shortInput: { previous: "01.01–17.08.2026", current: "01.01–20.08.2026" },
-    shortInputAmb: {
-      previous: "01.01–17.08.2026",
-      current: "01.01–20.08.2026",
-    },
-    shortInputHosp: {
-      previous: "01.01–17.08.2026",
-      current: "01.01–20.08.2026",
-    },
+    shortInput: { previous: "01.01–07.09.2026", current: "01.01–11.09.2026" },
+    shortInputAmb: { previous: "01.01–07.09.2026", current: "01.01–11.09.2026" },
+    shortInputHosp: { previous: "01.01–07.09.2026", current: "01.01–11.09.2026" },
+    fapSemdCount: { previous: "01.01–07.09.2026", current: "01.01–11.09.2026" },
+    elmk: { previous: "01.01–07.09.2026", current: "01.01–11.09.2026" },
+    tmkRemd: { previous: "01.01–07.09.2026", current: "01.01–11.09.2026" },
+    tmkMaxCount: { previous: "01.01–07.09.2026", current: "01.01–11.09.2026" },
+    elnMaxCount: { previous: "01.01–07.09.2026", current: "01.01–11.09.2026" },
   };
 // Порядок соответствует последовательности показателей в презентации
 // «ВКС 03.08.26». Непрезентационные показатели добавляются в конец.
@@ -2282,6 +2264,19 @@ function snapshotDate(period: string) {
   );
 }
 
+function snapshotDistanceDays(previous: string, current: string) {
+  const parse = (value: string) => {
+    const match = value.match(/^(\d{2})\.(\d{2})\.(\d{4})$/u);
+    if (!match) return null;
+    return Date.UTC(Number(match[3]), Number(match[2]) - 1, Number(match[1]));
+  };
+  const previousTs = parse(previous);
+  const currentTs = parse(current);
+  if (previousTs === null || currentTs === null || currentTs < previousTs)
+    return null;
+  return Math.round((currentTs - previousTs) / 86_400_000);
+}
+
 function moSearchText(metric: string, row: MoRow) {
   const registry = registryOrganizationForMetric(metric, row);
   return [
@@ -2615,6 +2610,14 @@ function hearingMetricGroupsForDisplay(row: HearingRow, filter: HearingChangeFil
 }
 
 const versionHistory = [
+  {
+    version: "5.4.3",
+    date: "15.09.2026",
+    items: [
+      "В разделе показателей оперативная динамика теперь сравнивает текущую выгрузку с непосредственно предыдущей с указанием дат, абсолютной разницы и относительного изменения для количественных показателей.",
+      "Переключатель «Неделя» заменён на «Оперативно»; месячная динамика по-прежнему рассчитывается только по сопоставимым полным месяцам.",
+    ],
+  },
   {
     version: "5.4.2",
     date: "14.09.2026",
@@ -3087,7 +3090,7 @@ export default function Home() {
   >("count");
   const [semdSortDirection, setSemdSortDirection] =
     useState<SortDirection>("desc");
-  const [dynamicsMode, setDynamicsMode] = useState<"week" | "month">("week");
+  const [dynamicsMode, setDynamicsMode] = useState<"operational" | "month">("operational");
   const [methodQuery, setMethodQuery] = useState("");
   const [federalSet, setFederalSet] = useState<"agreement" | "collegium">(
     "agreement",
@@ -3700,7 +3703,7 @@ export default function Home() {
     if (!item.row.regionalId) return;
     setExtendedReturn({ point: item.row.id, scrollY: window.scrollY });
     setMatrixMetric(item.row.regionalId);
-    setDynamicsMode("week");
+    setDynamicsMode("operational");
     setTab("matrix");
     setShowMatrixSections(false);
     window.scrollTo({ top: 0, behavior: "auto" });
@@ -4049,15 +4052,24 @@ export default function Home() {
   const selectedUnitDataset = unitData[matrixMetric];
   const lowerIsBetter =
     matrixMetric === "shortInput" || selectedDataset.direction === "lower";
-  const periods = isMaxMetric
-    ? {
-        previous: "нет двух полных сопоставимых недель",
-        current: `накопительный срез на ${selectedDataset.date}`,
-      }
-    : comparisonPeriods[matrixMetric] ?? {
-        previous: "предыдущий период",
-        current: `на ${selectedDataset.date}`,
-      };
+  const datasetOperationalPeriods =
+    selectedDataset.previousPeriod && selectedDataset.period
+      ? {
+          previous: selectedDataset.previousPeriod,
+          current: selectedDataset.period,
+        }
+      : selectedDataset.previousDate
+        ? {
+            previous: `на ${selectedDataset.previousDate}`,
+            current: `на ${selectedDataset.date}`,
+          }
+        : null;
+  const periods =
+    datasetOperationalPeriods ??
+    comparisonPeriods[matrixMetric] ?? {
+      previous: "предыдущая выгрузка",
+      current: `на ${selectedDataset.date}`,
+    };
   const previousSnapshot = snapshotDate(periods.previous);
   const currentSnapshot = snapshotDate(periods.current);
   const indicatorRows = selectedDataset.rows.filter(
@@ -4192,19 +4204,74 @@ export default function Home() {
   const regionalFact = isCountMetric
     ? (rtIndicator?.fact ?? aggregateCountRows(indicatorRows))
     : (rtIndicator?.fact ?? (detailRows.length ? detailAggregate.fact : 0));
+  // Региональный факт предыдущей подтверждённой выгрузки.
+  // Значения зафиксированы из предыдущего утверждённого runtime до обновления 11.09.2026.
+  // Они нужны именно для региональных карточек: сумма row.previous может быть неполной,
+  // если в новой выгрузке изменился состав или наименование строк МО.
   const operationalRegionalPrevious: Record<string, number> = {
-    egpu: (30850 / 31474) * 100,
-    egpu2days: (25654 / 31474) * 100,
+    egpu: 98.01741119654318,
+    egpu2days: 81.50854673698926,
+    birth: 99.41902687000727,
+    death: 98.63398669559959,
+    semd228: 76.45487488333754,
+    hospital: 83.94106729825947,
+    ambulatoryCase: 87.21910680643124,
+    tvspStationary: 98.91,
+    tvspAmbulatory: 100,
+    tvspLaboratory: 96.83,
+    tvspDiagnostic: 98.68,
+    smpFederal: 100,
+    smp: 92.313718328271,
+    shortInput: 692864,
+    shortInputAmb: 683370,
+    shortInputHosp: 9494,
+    fapSemdCount: 2868210,
+    elmk: 95.94594594594594,
+    tmkRemd: 97.5,
+    tmkMaxCount: 20942,
+    elnMaxCount: 35948,
   };
-  const regionalPrevious = isMaxMetric
-    ? null
-    : operationalRegionalPrevious[matrixMetric] ?? (isCountMetric
-      ? indicatorRows.reduce((sum, row) => sum + (row.previous ?? 0), 0)
-      : rtIndicator?.trend === null || rtIndicator?.trend === undefined
-        ? null
-        : regionalFact - rtIndicator.trend);
+  const baselineIndicatorForMetric = indicators.find(
+    (indicator) => indicator.id === matrixMetric,
+  );
+  const comparableCountRows = isCountMetric
+    ? indicatorRows.filter((row) => row.previous !== null)
+    : [];
+  const countRowsWithoutPrevious = isCountMetric
+    ? indicatorRows.length - comparableCountRows.length
+    : 0;
+  const operationalRegionalCurrent = isCountMetric
+    ? regionalFact
+    : selectedUnitDataset && selectedUnitDataset.plan > 0
+      ? (selectedUnitDataset.fact / selectedUnitDataset.plan) * 100
+      : detailRows.length
+        ? detailAggregate.fact
+        : regionalFact;
+  const staticPrevious =
+    baselineIndicatorForMetric?.date === previousSnapshot
+      ? baselineIndicatorForMetric.fact
+      : baselineIndicatorForMetric?.date === currentSnapshot &&
+          baselineIndicatorForMetric.trend !== null &&
+          baselineIndicatorForMetric.trend !== undefined
+        ? operationalRegionalCurrent - baselineIndicatorForMetric.trend
+        : null;
+  const regionalPrevious =
+    operationalRegionalPrevious[matrixMetric] ??
+    (isCountMetric
+      ? rtIndicator?.previous ?? null
+      : staticPrevious);
   const regionalChange =
-    regionalPrevious === null ? null : regionalFact - regionalPrevious;
+    regionalPrevious === null
+      ? null
+      : operationalRegionalCurrent - regionalPrevious;
+  const regionalRelativeChange =
+    regionalPrevious === null || regionalPrevious === 0 || regionalChange === null
+      ? null
+      : (regionalChange / regionalPrevious) * 100;
+  const operationalIntervalDays = snapshotDistanceDays(
+    snapshotDate(periods.previous),
+    snapshotDate(periods.current),
+  );
   type MonthlyBenchmark = {
     june: number;
     july: number;
@@ -4994,7 +5061,7 @@ export default function Home() {
                 <div>
                   <p className="eyebrow">МАХ</p>
                   <h1>Официальный результат РТ и оперативный мониторинг МО</h1>
-                  <p>Официальный накопительный результат не используется в недельной или месячной динамике МО.</p>
+                  <p>Официальный накопительный результат не смешивается с оперативной динамикой между выгрузками и с месячной динамикой МО.</p>
                 </div>
               </div>
 
@@ -8211,16 +8278,16 @@ export default function Home() {
                   <div>
                     <b>Динамика показателя</b>
                     <span>
-                      Неделя — оперативный контроль · месяцы — устойчивый
-                      результат
+                      Оперативно — текущая выгрузка к предыдущей · месяцы —
+                      полный месячный период
                     </span>
                   </div>
                   <div className="dynamicsSwitch">
                     <button
-                      className={dynamicsMode === "week" ? "active" : ""}
-                      onClick={() => setDynamicsMode("week")}
+                      className={dynamicsMode === "operational" ? "active" : ""}
+                      onClick={() => setDynamicsMode("operational")}
                     >
-                      Неделя
+                      Оперативно
                     </button>
                     <button
                       className={dynamicsMode === "month" ? "active" : ""}
@@ -8230,33 +8297,24 @@ export default function Home() {
                     </button>
                   </div>
                 </div>
-                {dynamicsMode === "week" && isMaxMetric ? (
-                  <div className="monthEmpty">
-                    <b>Нет двух полных сопоставимых недель</b>
-                    <span>
-                      Накопительные срезы 07.09 и 11.09 разделены четырьмя днями
-                      и не являются сравнением «неделя к неделе». Недельная
-                      динамика появится после двух полных сопоставимых недель.
-                    </span>
-                  </div>
-                ) : dynamicsMode === "week" ? (
+                {dynamicsMode === "operational" ? (
                   <div className="dynamicsCards">
                     <article>
-                      <small>Предыдущий срез</small>
+                      <small>Предыдущая выгрузка</small>
                       <strong>
                         {regionalPrevious === null
                           ? "—"
                           : `${format(regionalPrevious, isCountMetric ? 0 : 2)}${isCountMetric ? "" : "%"}`}
                       </strong>
-                      <span>{periods.previous}</span>
+                      <span>{previousSnapshot}</span>
                     </article>
                     <article>
-                      <small>Текущий срез</small>
+                      <small>Текущая выгрузка</small>
                       <strong>
-                        {format(regionalFact, isCountMetric ? 0 : 2)}
+                        {format(operationalRegionalCurrent, isCountMetric ? 0 : 2)}
                         {isCountMetric ? "" : "%"}
                       </strong>
-                      <span>{periods.current}</span>
+                      <span>{currentSnapshot}</span>
                     </article>
                     <article
                       className={
@@ -8271,7 +8329,7 @@ export default function Home() {
                             : "negative"
                       }
                     >
-                      <small>Изменение</small>
+                      <small>Разница</small>
                       <strong>
                         {regionalChange === null
                           ? "—"
@@ -8279,28 +8337,25 @@ export default function Home() {
                       </strong>
                       <span>
                         {regionalChange === null
-                          ? "нет сопоставимого среза"
-                          : lowerIsBetter
-                            ? "снижение — улучшение"
-                            : "рост — улучшение"}
+                          ? "нет сопоставимого предыдущего значения"
+                          : isCountMetric && regionalRelativeChange !== null
+                            ? `${regionalRelativeChange > 0 ? "+" : regionalRelativeChange < 0 ? "−" : ""}${format(Math.abs(regionalRelativeChange), 1)}% к предыдущей выгрузке`
+                            : lowerIsBetter
+                              ? "снижение — улучшение"
+                              : "рост — улучшение"}
                       </span>
                     </article>
                     <article>
-                      <small>
-                        {rtIndicator?.quantity !== undefined
-                          ? "Количество в текущем срезе"
-                          : "Правило сравнения"}
-                      </small>
+                      <small>Интервал и сопоставимость</small>
                       <strong>
-                        {rtIndicator?.quantity !== undefined
-                          ? format(rtIndicator.quantity, 0)
-                          : isCountMetric
-                            ? "1 неделя"
-                            : "с начала года"}
+                        {operationalIntervalDays === null
+                          ? "—"
+                          : `${operationalIntervalDays} ${operationalIntervalDays === 1 ? "день" : operationalIntervalDays >= 2 && operationalIntervalDays <= 4 ? "дня" : "дней"}`}
                       </strong>
                       <span>
-                        {rtIndicator?.quantityLabel ??
-                          "одинаковая продолжительность и состав МО"}
+                        {isCountMetric && countRowsWithoutPrevious > 0
+                          ? `${comparableCountRows.length} из ${indicatorRows.length} МО сопоставлены; ${countRowsWithoutPrevious} без предыдущего значения`
+                          : "текущая выгрузка сравнивается с непосредственно предыдущей"}
                       </span>
                     </article>
                   </div>
@@ -8414,20 +8469,11 @@ export default function Home() {
                     <b>Помесячной детализации по МО пока нет</b>
                     <span>
                       По этому показателю не загружены два сопоставимых полных
-                      исходника за июль и август. Недельная таблица скрыта, чтобы
-                      не смешивать разные периоды.
+                      исходника за июль и август. Оперативная таблица остаётся
+                      доступной отдельно и не смешивается с месячным периодом.
                     </span>
                   </section>
                 )
-              ) : isMaxMetric ? (
-                <section className="monthlyNoDetail">
-                  <b>Нет сопоставимого периода</b>
-                  <span>
-                    Накопительные значения по МО не выдаются за объём недели.
-                    При отсутствии точных недельных границ значение остаётся
-                    «нет данных», а не заменяется нулём.
-                  </span>
-                </section>
               ) : (
                 <>
                   {selectedUnitDataset ? (
@@ -8617,11 +8663,7 @@ export default function Home() {
                               ? "Наибольший рост — ухудшение"
                               : "Наибольшее снижение"
                           }
-                          subtitle={
-                            isCountMetric
-                              ? "к предыдущему срезу"
-                              : `Срез на ${previousSnapshot} → срез на ${currentSnapshot}`
-                          }
+                          subtitle={`Выгрузка ${previousSnapshot} → ${currentSnapshot}`}
                           rows={deterioration}
                           plan={selectedDataset.plan ?? 0}
                           tone="warn"
@@ -8735,13 +8777,14 @@ export default function Home() {
                                       }
                                       onClick={() => setMoSort("current")}
                                     >
-                                      Текущий период{" "}
+                                      Текущая выгрузка{" "}
                                       <i>
                                         {sortMark(
                                           moSortKey === "current",
                                           moSortDirection,
                                         )}
                                       </i>
+                                      <small>{currentSnapshot}</small>
                                     </button>
                                   </th>
                                   <th>
@@ -8751,13 +8794,14 @@ export default function Home() {
                                       }
                                       onClick={() => setMoSort("previous")}
                                     >
-                                      Предыдущий период{" "}
+                                      Предыдущая выгрузка{" "}
                                       <i>
                                         {sortMark(
                                           moSortKey === "previous",
                                           moSortDirection,
                                         )}
                                       </i>
+                                      <small>{previousSnapshot}</small>
                                     </button>
                                   </th>
                                   <th>
@@ -8767,7 +8811,7 @@ export default function Home() {
                                       }
                                       onClick={() => setMoSort("trend")}
                                     >
-                                      Изменение{" "}
+                                      Разница{" "}
                                       <i>
                                         {sortMark(
                                           moSortKey === "trend",
@@ -8783,7 +8827,7 @@ export default function Home() {
                                       }
                                       onClick={() => setMoSort("trend")}
                                     >
-                                      Динамика{" "}
+                                      Изменение, %{" "}
                                       <i>
                                         {sortMark(
                                           moSortKey === "trend",
@@ -8906,7 +8950,7 @@ export default function Home() {
                                       }
                                       onClick={() => setMoSort("trend")}
                                     >
-                                      Динамика{" "}
+                                      Разница, п.п.{" "}
                                       <i>
                                         {sortMark(
                                           moSortKey === "trend",
@@ -8914,7 +8958,7 @@ export default function Home() {
                                         )}
                                       </i>
                                       <small>
-                                        к срезу на {previousSnapshot}
+                                        {previousSnapshot} → {currentSnapshot}
                                       </small>
                                     </button>
                                   </th>
@@ -9008,9 +9052,13 @@ export default function Home() {
                                         <span
                                           className={`trendPill ${trendBad ? "down" : trendGood ? "up" : ""}`}
                                         >
-                                          {o.trend === null
+                                          {o.previous === null || o.trend === null
                                             ? "нет сравнения"
-                                            : `${o.trend > 0 ? "↑" : o.trend < 0 ? "↓" : "→"} ${format(Math.abs(o.trend), 0)}`}
+                                            : o.previous === 0
+                                              ? o.fact === 0
+                                                ? "→ 0%"
+                                                : "новое значение"
+                                              : `${o.trend > 0 ? "↑" : o.trend < 0 ? "↓" : "→"} ${o.trend > 0 ? "+" : o.trend < 0 ? "−" : ""}${format(Math.abs((o.trend / o.previous) * 100), 1)}%`}
                                         </span>
                                       </td>
                                       <td>

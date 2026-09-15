@@ -11,7 +11,7 @@ test("МАХ keeps annual regional plans separate from monthly MO activity", () 
   assert.equal(registry.indicators.visitMax.plan.value, 654000);
   assert.equal(registry.indicators.tmkMax.plan.value, 193000);
   assert.equal(registry.indicators.elnMax.plan.value, 99000);
-  assert.match(page, /Официальный накопительный результат не используется в недельной или месячной динамике МО/u);
+  assert.match(page, /Официальный накопительный результат не смешивается с оперативной динамикой между выгрузками и с месячной динамикой МО/u);
   assert.match(page, /годовые планы РТ не применяются к отдельным МО/u);
 });
 
@@ -52,13 +52,15 @@ test("missing rows are not converted to zero", () => {
 });
 
 
-test("MAX period modes do not mix cumulative, weekly and monthly values", () => {
-  assert.match(page, /Официальный накопительный результат не используется в недельной или месячной динамике МО/u);
+test("MAX separates export-to-export operational dynamics from monthly values", () => {
+  assert.match(page, /Официальный накопительный результат не смешивается с оперативной динамикой между выгрузками/u);
   assert.match(page, /Годовой план РТ/u);
   assert.match(page, /193000/u);
   assert.match(page, /99000/u);
-  assert.match(page, /Нет двух полных сопоставимых недель/u);
-  assert.match(page, /Нет сопоставимого периода/u);
+  assert.match(page, /Оперативно — текущая выгрузка к предыдущей/u);
+  assert.match(page, /Предыдущая выгрузка/u);
+  assert.match(page, /Текущая выгрузка/u);
+  assert.match(page, /Разница/u);
   assert.match(page, /maxAugustMonthlyDataset/u);
   assert.match(page, /31\.08 минус 31\.07/u);
   assert.match(page, /срез на 30\.06/u);

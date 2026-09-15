@@ -166,6 +166,14 @@ def previous_fields(old: dict | None, same_cut: bool, current_fact):
     return pv, None if pv is None or current_fact is None else current_fact-pv
 
 
+def previous_cut_metadata(base: dict, end: date) -> dict:
+    same_cut = base.get("date") == date_ru(end)
+    return {
+        "previousDate": base.get("previousDate") if same_cut else base.get("date"),
+        "previousPeriod": base.get("previousPeriod") if same_cut else base.get("period"),
+    }
+
+
 def previous_rows_from_dataset(ds: dict) -> dict[str, dict]:
     return {(str(r.get("oid")) if r.get("oid") else norm(r.get("name"))): r for r in ds.get("rows", [])}
 
@@ -399,7 +407,8 @@ def adapt_ambulatory_cases(app: Path, source: Path, end: date) -> AdapterResult:
         rows.append(row)
         detail = {"volume": item["volume"], "registered": item["count"]}
         details_by_name[norm(item["name"])], details_by_oid[item["oid"]] = detail, detail
-    mo["ambulatoryCase"] = {**mo.get("ambulatoryCase", {}), "date": date_ru(end), "period": period_cumulative(end), "rows": retain_no_source_rows(previous, rows)}
+    base = mo.get("ambulatoryCase", {})
+    mo["ambulatoryCase"] = {**base, "date": date_ru(end), "period": period_cumulative(end), **previous_cut_metadata(base, end), "rows": retain_no_source_rows(previous, rows)}
     details["ambulatoryCase"], oids["ambulatoryCase"] = details_by_name, details_by_oid
     if is_full_month(end): monthly["ambulatoryCase"] = monthly_payload(previous, current, end)
     for name, data in [("mo-data.json", mo), ("mo-details.json", details), ("mo-detail-oids.json", oids), ("monthly-mo.json", monthly)]:
@@ -431,7 +440,8 @@ def adapt_certificates(app: Path, source: Path, end: date, metric: str, family: 
             row["sourceWarning"]="Строка источника не сопоставлена с утверждённым OID; не включена в рейтинг МО."
         rows.append(row)
         dn[norm(x["name"]) ]={"volume":x["volume"],"registered":x["count"]}
-    mo[metric]={**mo.get(metric,{}),"date":date_ru(end),"period":period_cumulative(end),"rows":retain_no_source_rows(prev, rows)}; details[metric]=dn
+    base=mo.get(metric,{})
+    mo[metric]={**base,"date":date_ru(end),"period":period_cumulative(end),**previous_cut_metadata(base,end),"rows":retain_no_source_rows(prev, rows)}; details[metric]=dn
     if is_full_month(end): monthly[metric]=monthly_payload(prev,cur,end)
     for name,data in [("mo-data.json",mo),("mo-details.json",details),("monthly-mo.json",monthly)]:save(app,name,data)
     total=sum(x["volume"] for x in cur); num=sum(x["count"] for x in cur)
@@ -693,7 +703,8 @@ def adapt_preventive(app: Path, remd: Path, foms_path: Path, end: date, registry
         rows.append(row);d={"volume":den,"registered":num};dn[norm(v["name"])]=d;do[oid]=d
     num=sum(r["selected"] for r in audit_rows); den=sum(r["foms"] for r in audit_rows); share=num/den*100 if den else None
     audit={"summary":{"status":"ready","year":end.year,"formula":"MAX(СЭМД 122; СЭМД 228) по каждой МО" if end.year<=2026 else "СЭМД 228","period122":period_cumulative(end),"period228":period_cumulative(end),"source122":remd.name,"source228":remd.name,"sourceDenominator":foms_path.name,"organizations":len(rows),"numerator":num,"denominator":den,"share":share,"selected122":sum(r["selectedType"]=="122" for r in audit_rows),"selected228":sum(r["selectedType"]=="228" for r in audit_rows),"selectedEqual":sum(r["semd122"]==r["semd228"] for r in audit_rows),"over100":sum((r["share"] or 0)>100 for r in audit_rows),"missing":len(excluded),"excluded":excluded,"note":"Включены взрослые и детские МО из ФОМС; строки без соответствия РЭМД остаются в аудите и не оцениваются."},"rows":audit_rows}
-    mo["semd228"]={**mo.get("semd228",{}),"date":date_ru(end),"period":period_cumulative(end),"rows":rows};details["semd228"]=dn;oids["semd228"]=do
+    base=mo.get("semd228",{})
+    mo["semd228"]={**base,"date":date_ru(end),"period":period_cumulative(end),**previous_cut_metadata(base,end),"rows":rows};details["semd228"]=dn;oids["semd228"]=do
     cur=[{"name":r["name"],"oid":r["oid"],"fact":r["share"] or 0,"count":r["selected"],"volume":r["foms"]} for r in audit_rows]
     if is_full_month(end): monthly["semd228"]=monthly_payload(prev,cur,end)
     for name,data in [("preventive-semd-audit.json",audit),("mo-data.json",mo),("mo-details.json",details),("mo-detail-oids.json",oids),("monthly-mo.json",monthly)]:save(app,name,data)
@@ -752,7 +763,7 @@ def _aggregate_unit_metric(app: Path, metric: str, units_payload: dict, end: dat
         d={"volume":g["volume"],"registered":g["registered"]}; dn[norm(g["name"])]=d
         if "." in oid and oid[0].isdigit(): do[oid]=d
     base=mo.get(metric,{})
-    mo[metric]={**base,"name":base.get("name",units_payload["name"]),"date":date_ru(end),"period":period,"rows":retain_no_source_rows(prev, rows)}
+    mo[metric]={**base,"name":base.get("name",units_payload["name"]),"date":date_ru(end),"period":period,**previous_cut_metadata(base,end),"rows":retain_no_source_rows(prev, rows)}
     details[metric]=dn;oids[metric]=do
     save(app,"mo-data.json",mo);save(app,"mo-details.json",details);save(app,"mo-detail-oids.json",oids)
 
@@ -827,7 +838,8 @@ def adapt_presence(app: Path, source: Path, end: date, family: str) -> AdapterRe
         rows.append({**old,"count":count,"fact":fact,"previous":prev,"trend":None if prev is None else fact-prev})
     positive=sum(r["fact"]>0 for r in rows); total=len(rows)
     note=(f"Плановый перечень — {total} МО; {positive} МО передают протоколы ТМК в РЭМД." if family=="tmk_remd" else f"Плановый перечень — {total} МО. На {date_ru(end)} передача подтверждена у {positive} МО; ноль не трактуется как нарушение без проверки лицензии.")
-    status[key].update({"date":date_ru(end),"period":period_cumulative(end),"note":note,"rows":rows});save(app,"organization-status.json",status)
+    base=status[key]
+    status[key].update({"date":date_ru(end),"period":period_cumulative(end),**previous_cut_metadata(base,end),"note":note,"rows":rows});save(app,"organization-status.json",status)
     return AdapterResult("status_detail",[family],"PASS",["organization-status.json"],[source.name],{"planOrganizations":total,"transmitting":positive},[],[])
 
 
@@ -846,7 +858,8 @@ def adapt_short_input(app: Path, source: Path, end: date) -> AdapterResult:
             if is_external_source_name(name): row["sourceStatus"]="external_source"
             if pv is not None and fact<pv: row["sourceWarning"]="Накопительное значение уменьшилось; корректировка источника требует уточнения."
             rows.append(row)
-        op[key]={**op.get(key,{}),"name":title,"date":date_ru(end),"period":period_cumulative(end),"mode":"count","direction":"lower","note":"Справочный накопительный показатель без норматива: не влияет на рейтинг и приоритет заслушивания. Уменьшение накопительного значения отмечается как риск качества источника.","rows":rows};facts[key]=sum(r["fact"] for r in rows)
+        base=op.get(key,{})
+        op[key]={**base,"name":title,"date":date_ru(end),"period":period_cumulative(end),**previous_cut_metadata(base,end),"mode":"count","direction":"lower","note":"Справочный накопительный показатель без норматива: не влияет на рейтинг и приоритет заслушивания. Уменьшение накопительного значения отмечается как риск качества источника.","rows":rows};facts[key]=sum(r["fact"] for r in rows)
     save(app,"operational-mo.json",op);return AdapterResult("operational",["short_input"],"PASS",["operational-mo.json"],[source.name],facts,[],[])
 
 
@@ -861,7 +874,8 @@ def adapt_fap(app: Path, source: Path, end: date) -> AdapterResult:
         old=prev.get(norm(name));pv=old.get("fact") if old else None;row={"name":name,"fact":v["count"],"count":v["count"],"previous":pv,"trend":None if pv is None else v["count"]-pv,"units":v["units"],"zeroUnits":v["zero"]}
         if v["zero"]:row["sourceWarning"]=f'{v["zero"]} ФАП/ФП с нулевым результатом из {v["units"]}'
         rows.append(row)
-    op["fapSemdCount"]={**op.get("fapSemdCount",{}),"name":"Количество зарегистрированных СЭМД по ФАП и ФП","date":date_ru(end),"period":period_cumulative(end),"mode":"count","note":"Лист 1 содержит полный перечень ФАП/ФП; нулевые подразделения сохранены и показаны отдельно.","rows":rows};save(app,"operational-mo.json",op)
+    base=op.get("fapSemdCount",{})
+    op["fapSemdCount"]={**base,"name":"Количество зарегистрированных СЭМД по ФАП и ФП","date":date_ru(end),"period":period_cumulative(end),**previous_cut_metadata(base,end),"mode":"count","note":"Лист 1 содержит полный перечень ФАП/ФП; нулевые подразделения сохранены и показаны отдельно.","rows":rows};save(app,"operational-mo.json",op)
     return AdapterResult("federal",["fap_fp"],"PASS",["operational-mo.json"],[source.name],{"organizations":len(rows),"units":sum(v["units"] for v in grouped.values()),"zeroUnits":sum(v["zero"] for v in grouped.values()),"documents":sum(v["count"] for v in grouped.values())},[],[])
 
 
@@ -899,7 +913,8 @@ def adapt_asu_smp(app: Path, source: Path, end: date) -> AdapterResult:
         name=str(r[0]).strip();vol=n(r[1]);reg=n(r[10]);fact=reg/vol*100 if vol else 0;old=prev.get(norm(name));pv,trend=previous_fields(old,same_cut,fact)
         rows.append({"name":name,"fact":fact,"count":reg,"volume":vol,"registered":reg,"previous":pv,"trend":trend})
     if not rows:raise ValueError("АСУ СМП: не найдено итоговых строк организаций")
-    mo["smp"]={**mo.get("smp",{}),"date":date_ru(end),"period":period_cumulative(end),"note":"Числитель — статус «Принято» АСУ СМП, принимаемый как регистрация в РЭМД; знаменатель — количество карт вызова АСУ СМП за тот же период.","rows":rows};details["smp"]={norm(r["name"]):{"volume":r["volume"],"registered":r["registered"]} for r in rows};save(app,"mo-data.json",mo);save(app,"mo-details.json",details)
+    base=mo.get("smp",{})
+    mo["smp"]={**base,"date":date_ru(end),"period":period_cumulative(end),**previous_cut_metadata(base,end),"note":"Числитель — статус «Принято» АСУ СМП, принимаемый как регистрация в РЭМД; знаменатель — количество карт вызова АСУ СМП за тот же период.","rows":rows};details["smp"]={norm(r["name"]):{"volume":r["volume"],"registered":r["registered"]} for r in rows};save(app,"mo-data.json",mo);save(app,"mo-details.json",details)
     return AdapterResult("federal",["asu_smp"],"PASS",["mo-data.json","mo-details.json"],[source.name],{"organizations":len(rows),"volume":sum(r["volume"] for r in rows),"registered":sum(r["registered"] for r in rows)},[],[])
 
 SUPPORTED_FAMILIES={
