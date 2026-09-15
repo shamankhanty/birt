@@ -681,7 +681,9 @@
       }
     ],
     "previousDate": "07.09.2026",
-    "previousPeriod": "01.01–07.09.2026"
+    "previousPeriod": "01.01–07.09.2026",
+    "numerator": 31969,
+    "denominator": 32606
   },
   "birth": {
     "name": "МСР",
@@ -950,7 +952,9 @@
         "previous": 100.0,
         "trend": -3.030303030303031
       }
-    ]
+    ],
+    "numerator": 22340,
+    "denominator": 22439
   },
   "death": {
     "name": "МСС",
@@ -1595,7 +1599,9 @@
         "sourceStatus": "no_source_row",
         "sourceWarning": "Нет строки в актуальной выгрузке; значение не заменено нулём."
       }
-    ]
+    ],
+    "numerator": 28143,
+    "denominator": 28611
   },
   "semd228": {
     "name": "Доля СЭМД (122/228) профилактического осмотра (диспансеризации)",
@@ -2383,7 +2389,13 @@
         "trend": -0.299765204489546,
         "sourceStatus": "external_source"
       }
-    ]
+    ],
+    "numerator": 1527595,
+    "denominator": 2069632,
+    "previousDate": "07.09.2026",
+    "previousPeriod": "01.01–07.09.2026",
+    "previousNumerator": 1557278,
+    "previousDenominator": 2036859
   },
   "hospital": {
     "name": "Доля СЭМД «Эпикриз в стационаре выписной» и/или «Выписной эпикриз из родильного дома» относительно количества случаев",
@@ -3246,7 +3258,9 @@
     "previousPeriod": null,
     "comparisonReset": true,
     "sourceNumerator": "Медкнижки .Отчет СЭМД_РЭМД 01.01.-11.09. (Выгрузка из федеральной BI 11.09.26).xlsx",
-    "sourceDenominator": "Отчет_по_госпитализациям__-_01.01.2026-11.09.2026.xlsx"
+    "sourceDenominator": "Отчет_по_госпитализациям__-_01.01.2026-11.09.2026.xlsx",
+    "numerator": 558826,
+    "denominator": 624362
   },
   "smp": {
     "name": "Доля принятых в РЭМД карт вызова СМП",
@@ -3661,7 +3675,13 @@
         "previous": 26.970954356846473,
         "trend": -1.7771559072340715
       }
-    ]
+    ],
+    "numerator": 602974,
+    "denominator": 659836,
+    "previousDate": "28.08.2026",
+    "previousPeriod": "01.01–28.08.2026",
+    "previousNumerator": 576237,
+    "previousDenominator": 624216
   },
   "ambulatoryCase": {
     "name": "Доля СЭМД «Эпикриз по законченному случаю амбулаторный» (СЭМД №92, №233) относительно количества случаев",
@@ -4850,7 +4870,13 @@
         "sourceStatus": "no_source_row",
         "sourceWarning": "Нет строки в актуальной выгрузке; значение не заменено нулём."
       }
-    ]
+    ],
+    "numerator": 10182100,
+    "denominator": 11491246,
+    "previousDate": "29.08.2026",
+    "previousPeriod": "01.01–29.08.2026",
+    "previousNumerator": 9549272,
+    "previousDenominator": 10948601
   },
   "tvspStationary": {
     "name": "ТВСП, передающие выписные эпикризы",
@@ -9084,6 +9110,8 @@
       }
     ],
     "previousDate": "07.09.2026",
-    "previousPeriod": "01.01–07.09.2026"
+    "previousPeriod": "01.01–07.09.2026",
+    "numerator": 26636,
+    "denominator": 32606
   }
 }

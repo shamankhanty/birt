@@ -174,6 +174,19 @@ def previous_cut_metadata(base: dict, end: date) -> dict:
     }
 
 
+def previous_summary_metadata(base: dict, end: date) -> dict:
+    """Carry numerator/denominator of the immediately previous comparable export.
+
+    This is dataset-level metadata for cumulative shares. Missing components stay
+    missing and are never reconstructed from the percentage alone.
+    """
+    same_cut = base.get("date") == date_ru(end)
+    return {
+        "previousNumerator": base.get("previousNumerator") if same_cut else base.get("numerator"),
+        "previousDenominator": base.get("previousDenominator") if same_cut else base.get("denominator"),
+    }
+
+
 def previous_rows_from_dataset(ds: dict) -> dict[str, dict]:
     return {(str(r.get("oid")) if r.get("oid") else norm(r.get("name"))): r for r in ds.get("rows", [])}
 
@@ -258,8 +271,12 @@ def adapt_egpu(app: Path, source: Path, end: date) -> AdapterResult:
         previous_date = base.get("previousDate") if same_cut else base.get("date")
         previous_period = base.get("previousPeriod") if same_cut else base.get("period")
         note = f"Оперативный накопительный срез на {date_ru(end)}. Отрицательные производные остатки источника не используются; отсутствие данных не заменяется нулём."
+        current_numerator = sum(x["count"] for x in cur)
+        current_denominator = sum(x["volume"] for x in cur)
         mo[metric] = {**base, "name": base.get("name", title), "date": date_ru(end), "period": period_cumulative(end),
-                      "previousDate": previous_date, "previousPeriod": previous_period, "note": note,
+                      "previousDate": previous_date, "previousPeriod": previous_period,
+                      **previous_summary_metadata(base, end),
+                      "numerator": current_numerator, "denominator": current_denominator, "note": note,
                       "rows": retain_no_source_rows(prev, rows)}
         details[metric], oids[metric] = dn, do
         if is_full_month(end):
@@ -312,7 +329,15 @@ def adapt_hospital(app: Path, source: Path, end: date, remd_source: Path | None 
     mo, details, oids, monthly = (load(app, x) for x in ["mo-data.json", "mo-details.json", "mo-detail-oids.json", "monthly-mo.json"])
     denominators = parse_hospital_denominators(source)
     numerators = parse_remd_hospital_numerators(remd_source)
-    prev = previous_rows_from_dataset(mo.get("hospital", {}))
+    base = mo.get("hospital", {})
+    prev = previous_rows_from_dataset(base)
+    same_cut = base.get("date") == date_ru(end)
+    # The current production baseline is the first cut after the REMD numerator
+    # correction. It stays non-comparable with the legacy calculation. Once a
+    # later cut arrives, the immediately preceding corrected cut becomes a valid
+    # comparison baseline and its components are carried forward.
+    corrected_baseline_exists = bool(base.get("sourceNumerator") and base.get("sourceDenominator"))
+    comparable_to_previous = same_cut and not base.get("comparisonReset", False) or (not same_cut and corrected_baseline_exists)
     rows, dn, do = [], {}, {}
     matched = 0
     numerator_total = 0
@@ -334,10 +359,14 @@ def adapt_hospital(app: Path, source: Path, end: date, remd_source: Path | None 
             count = num["count"]
             numerator_total += count
             fact = count / item["volume"] * 100 if item["volume"] else None
-            # Источник числителя исправлен: старая динамика несопоставима и не показывается.
+            if comparable_to_previous:
+                pv, trend = previous_fields(old, same_cut, fact)
+            else:
+                # Первый срез после исправления источника не сравнивается со старой методикой.
+                pv, trend = None, None
             row = {
                 "name": item["name"], "oid": oid, "fact": fact, "count": count,
-                "previous": None, "trend": None,
+                "previous": pv, "trend": trend,
             }
             detail = {
                 "volume": item["volume"], "registered": count,
@@ -346,15 +375,30 @@ def adapt_hospital(app: Path, source: Path, end: date, remd_source: Path | None 
         rows.append(row)
         dn[norm(item["name"])] = detail
         do[oid] = detail
-    base = mo.get("hospital", {})
+    if comparable_to_previous:
+        previous_meta = {**previous_cut_metadata(base, end), **previous_summary_metadata(base, end)}
+    else:
+        previous_meta = {
+            "previousDate": base.get("previousDate") if same_cut else None,
+            "previousPeriod": base.get("previousPeriod") if same_cut else None,
+            "previousNumerator": base.get("previousNumerator") if same_cut else None,
+            "previousDenominator": base.get("previousDenominator") if same_cut else None,
+        }
+    comparison_reset = base.get("comparisonReset", True) if same_cut else not corrected_baseline_exists
     mo["hospital"] = {
         **base,
         "date": date_ru(end),
         "period": period_cumulative(end),
-        "previousDate": None,
-        "previousPeriod": None,
-        "comparisonReset": True,
-        "note": "Числитель пересчитан по РЭМД ЕГИСЗ, знаменатель — случаи стационарной помощи из отчёта по госпитализациям. Сопоставление по OID МО. Динамика к прежнему расчёту не показывается из-за исправления источника числителя.",
+        **previous_meta,
+        "numerator": numerator_total,
+        "denominator": denominator_total,
+        "comparisonReset": comparison_reset,
+        "note": (
+            "Числитель — РЭМД ЕГИСЗ, знаменатель — случаи стационарной помощи из отчёта по госпитализациям. "
+            "Сопоставление по OID МО. Первый срез после исправления источника числителя не сравнивается со старой методикой."
+            if comparison_reset
+            else "Числитель — РЭМД ЕГИСЗ, знаменатель — случаи стационарной помощи из отчёта по госпитализациям. Сопоставление по OID МО; динамика рассчитана к непосредственно предыдущему срезу той же методики."
+        ),
         "sourceNumerator": remd_source.name,
         "sourceDenominator": source.name,
         "rows": rows,
@@ -408,7 +452,12 @@ def adapt_ambulatory_cases(app: Path, source: Path, end: date) -> AdapterResult:
         detail = {"volume": item["volume"], "registered": item["count"]}
         details_by_name[norm(item["name"])], details_by_oid[item["oid"]] = detail, detail
     base = mo.get("ambulatoryCase", {})
-    mo["ambulatoryCase"] = {**base, "date": date_ru(end), "period": period_cumulative(end), **previous_cut_metadata(base, end), "rows": retain_no_source_rows(previous, rows)}
+    current_numerator = sum(item["count"] for item in current)
+    current_denominator = sum(item["volume"] for item in current)
+    mo["ambulatoryCase"] = {**base, "date": date_ru(end), "period": period_cumulative(end),
+                            **previous_cut_metadata(base, end), **previous_summary_metadata(base, end),
+                            "numerator": current_numerator, "denominator": current_denominator,
+                            "rows": retain_no_source_rows(previous, rows)}
     details["ambulatoryCase"], oids["ambulatoryCase"] = details_by_name, details_by_oid
     if is_full_month(end): monthly["ambulatoryCase"] = monthly_payload(previous, current, end)
     for name, data in [("mo-data.json", mo), ("mo-details.json", details), ("mo-detail-oids.json", oids), ("monthly-mo.json", monthly)]:
@@ -441,10 +490,12 @@ def adapt_certificates(app: Path, source: Path, end: date, metric: str, family: 
         rows.append(row)
         dn[norm(x["name"]) ]={"volume":x["volume"],"registered":x["count"]}
     base=mo.get(metric,{})
-    mo[metric]={**base,"date":date_ru(end),"period":period_cumulative(end),**previous_cut_metadata(base,end),"rows":retain_no_source_rows(prev, rows)}; details[metric]=dn
+    total=sum(x["volume"] for x in cur); num=sum(x["count"] for x in cur)
+    mo[metric]={**base,"date":date_ru(end),"period":period_cumulative(end),
+                **previous_cut_metadata(base,end),**previous_summary_metadata(base,end),
+                "numerator":num,"denominator":total,"rows":retain_no_source_rows(prev, rows)}; details[metric]=dn
     if is_full_month(end): monthly[metric]=monthly_payload(prev,cur,end)
     for name,data in [("mo-data.json",mo),("mo-details.json",details),("monthly-mo.json",monthly)]:save(app,name,data)
-    total=sum(x["volume"] for x in cur); num=sum(x["count"] for x in cur)
     return AdapterResult("core_monthly",[family],"PASS",["mo-data.json","mo-details.json","monthly-mo.json"],[source.name],{"rows":len(rows),"numerator":num,"denominator":total,"fact":num/total*100 if total else None},[],[])
 
 
@@ -704,7 +755,9 @@ def adapt_preventive(app: Path, remd: Path, foms_path: Path, end: date, registry
     num=sum(r["selected"] for r in audit_rows); den=sum(r["foms"] for r in audit_rows); share=num/den*100 if den else None
     audit={"summary":{"status":"ready","year":end.year,"formula":"MAX(СЭМД 122; СЭМД 228) по каждой МО" if end.year<=2026 else "СЭМД 228","period122":period_cumulative(end),"period228":period_cumulative(end),"source122":remd.name,"source228":remd.name,"sourceDenominator":foms_path.name,"organizations":len(rows),"numerator":num,"denominator":den,"share":share,"selected122":sum(r["selectedType"]=="122" for r in audit_rows),"selected228":sum(r["selectedType"]=="228" for r in audit_rows),"selectedEqual":sum(r["semd122"]==r["semd228"] for r in audit_rows),"over100":sum((r["share"] or 0)>100 for r in audit_rows),"missing":len(excluded),"excluded":excluded,"note":"Включены взрослые и детские МО из ФОМС; строки без соответствия РЭМД остаются в аудите и не оцениваются."},"rows":audit_rows}
     base=mo.get("semd228",{})
-    mo["semd228"]={**base,"date":date_ru(end),"period":period_cumulative(end),**previous_cut_metadata(base,end),"rows":rows};details["semd228"]=dn;oids["semd228"]=do
+    mo["semd228"]={**base,"date":date_ru(end),"period":period_cumulative(end),
+                    **previous_cut_metadata(base,end),**previous_summary_metadata(base,end),
+                    "numerator":num,"denominator":den,"rows":rows};details["semd228"]=dn;oids["semd228"]=do
     cur=[{"name":r["name"],"oid":r["oid"],"fact":r["share"] or 0,"count":r["selected"],"volume":r["foms"]} for r in audit_rows]
     if is_full_month(end): monthly["semd228"]=monthly_payload(prev,cur,end)
     for name,data in [("preventive-semd-audit.json",audit),("mo-data.json",mo),("mo-details.json",details),("mo-detail-oids.json",oids),("monthly-mo.json",monthly)]:save(app,name,data)
@@ -763,7 +816,12 @@ def _aggregate_unit_metric(app: Path, metric: str, units_payload: dict, end: dat
         d={"volume":g["volume"],"registered":g["registered"]}; dn[norm(g["name"])]=d
         if "." in oid and oid[0].isdigit(): do[oid]=d
     base=mo.get(metric,{})
-    mo[metric]={**base,"name":base.get("name",units_payload["name"]),"date":date_ru(end),"period":period,**previous_cut_metadata(base,end),"rows":retain_no_source_rows(prev, rows)}
+    current_numerator=sum(g["registered"] for g in grouped.values())
+    current_denominator=sum(g["volume"] for g in grouped.values())
+    mo[metric]={**base,"name":base.get("name",units_payload["name"]),"date":date_ru(end),"period":period,
+                **previous_cut_metadata(base,end),**previous_summary_metadata(base,end),
+                "numerator":current_numerator,"denominator":current_denominator,
+                "rows":retain_no_source_rows(prev, rows)}
     details[metric]=dn;oids[metric]=do
     save(app,"mo-data.json",mo);save(app,"mo-details.json",details);save(app,"mo-detail-oids.json",oids)
 
@@ -839,7 +897,9 @@ def adapt_presence(app: Path, source: Path, end: date, family: str) -> AdapterRe
     positive=sum(r["fact"]>0 for r in rows); total=len(rows)
     note=(f"Плановый перечень — {total} МО; {positive} МО передают протоколы ТМК в РЭМД." if family=="tmk_remd" else f"Плановый перечень — {total} МО. На {date_ru(end)} передача подтверждена у {positive} МО; ноль не трактуется как нарушение без проверки лицензии.")
     base=status[key]
-    status[key].update({"date":date_ru(end),"period":period_cumulative(end),**previous_cut_metadata(base,end),"note":note,"rows":rows});save(app,"organization-status.json",status)
+    status[key].update({"date":date_ru(end),"period":period_cumulative(end),
+                        **previous_cut_metadata(base,end),**previous_summary_metadata(base,end),
+                        "numerator":positive,"denominator":total,"note":note,"rows":rows});save(app,"organization-status.json",status)
     return AdapterResult("status_detail",[family],"PASS",["organization-status.json"],[source.name],{"planOrganizations":total,"transmitting":positive},[],[])
 
 
@@ -914,7 +974,11 @@ def adapt_asu_smp(app: Path, source: Path, end: date) -> AdapterResult:
         rows.append({"name":name,"fact":fact,"count":reg,"volume":vol,"registered":reg,"previous":pv,"trend":trend})
     if not rows:raise ValueError("АСУ СМП: не найдено итоговых строк организаций")
     base=mo.get("smp",{})
-    mo["smp"]={**base,"date":date_ru(end),"period":period_cumulative(end),**previous_cut_metadata(base,end),"note":"Числитель — статус «Принято» АСУ СМП, принимаемый как регистрация в РЭМД; знаменатель — количество карт вызова АСУ СМП за тот же период.","rows":rows};details["smp"]={norm(r["name"]):{"volume":r["volume"],"registered":r["registered"]} for r in rows};save(app,"mo-data.json",mo);save(app,"mo-details.json",details)
+    current_numerator=sum(r["registered"] for r in rows); current_denominator=sum(r["volume"] for r in rows)
+    mo["smp"]={**base,"date":date_ru(end),"period":period_cumulative(end),
+               **previous_cut_metadata(base,end),**previous_summary_metadata(base,end),
+               "numerator":current_numerator,"denominator":current_denominator,
+               "note":"Числитель — статус «Принято» АСУ СМП, принимаемый как регистрация в РЭМД; знаменатель — количество карт вызова АСУ СМП за тот же период.","rows":rows};details["smp"]={norm(r["name"]):{"volume":r["volume"],"registered":r["registered"]} for r in rows};save(app,"mo-data.json",mo);save(app,"mo-details.json",details)
     return AdapterResult("federal",["asu_smp"],"PASS",["mo-data.json","mo-details.json"],[source.name],{"organizations":len(rows),"volume":sum(r["volume"] for r in rows),"registered":sum(r["registered"] for r in rows)},[],[])
 
 SUPPORTED_FAMILIES={
