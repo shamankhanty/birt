@@ -116,7 +116,7 @@ type FederalControlData = {
   agreement: FederalControlRow[];
   collegium: FederalControlRow[];
 };
-const DASHBOARD_VERSION = "5.4.3";
+const DASHBOARD_VERSION = "5.4.4";
 const indicatorRegistry = createIndicatorRegistryRuntime(
   indicatorRegistryRaw as IndicatorRegistryDocument,
 );
@@ -534,6 +534,11 @@ type MoDataset = {
   period?: string;
   previousDate?: string;
   previousPeriod?: string;
+  numerator?: number | null;
+  denominator?: number | null;
+  previousNumerator?: number | null;
+  previousDenominator?: number | null;
+  comparisonReset?: boolean;
   periodKind?: "monthly" | "cumulative" | "operational" | "snapshot";
   note?: string;
   rows: MoRow[];
@@ -2611,6 +2616,14 @@ function hearingMetricGroupsForDisplay(row: HearingRow, filter: HearingChangeFil
 
 const versionHistory = [
   {
+    version: "5.4.4",
+    date: "15.09.2026",
+    items: [
+      "Для накопительных долевых показателей в оперативной динамике добавлены числитель и знаменатель текущего и предыдущего срезов, а также их изменение.",
+      "Уменьшение накопительного числителя или знаменателя автоматически помечается как аномалия качества данных; отсутствующие компоненты предыдущего среза не восстанавливаются из процента.",
+    ],
+  },
+  {
     version: "5.4.3",
     date: "15.09.2026",
     items: [
@@ -4208,6 +4221,31 @@ export default function Home() {
   // Значения зафиксированы из предыдущего утверждённого runtime до обновления 11.09.2026.
   // Они нужны именно для региональных карточек: сумма row.previous может быть неполной,
   // если в новой выгрузке изменился состав или наименование строк МО.
+  const operationalRegionalPreviousComponents: Record<
+    string,
+    { numerator: number; denominator: number; date: string; source: string }
+  > = {
+    // Точные компоненты предыдущего сопоставимого среза сохраняются только там,
+    // где они подтверждены источником/аудитом. Не восстанавливаем компоненты из одной доли.
+    semd228: {
+      numerator: 1557278,
+      denominator: 2036859,
+      date: "07.09.2026",
+      source: "аудит СЭМД 122/228 на 07.09.2026",
+    },
+    ambulatoryCase: {
+      numerator: 9549272,
+      denominator: 10948601,
+      date: "29.08.2026",
+      source: "утверждённый предыдущий runtime",
+    },
+    smp: {
+      numerator: 576237,
+      denominator: 624216,
+      date: "28.08.2026",
+      source: "утверждённый предыдущий runtime",
+    },
+  };
   const operationalRegionalPrevious: Record<string, number> = {
     egpu: 98.01741119654318,
     egpu2days: 81.50854673698926,
@@ -4255,11 +4293,56 @@ export default function Home() {
           baselineIndicatorForMetric.trend !== undefined
         ? operationalRegionalCurrent - baselineIndicatorForMetric.trend
         : null;
-  const regionalPrevious =
-    operationalRegionalPrevious[matrixMetric] ??
-    (isCountMetric
-      ? rtIndicator?.previous ?? null
-      : staticPrevious);
+  const regionalPrevious = selectedDataset.comparisonReset
+    ? null
+    : operationalRegionalPrevious[matrixMetric] ??
+      (isCountMetric
+        ? rtIndicator?.previous ?? null
+        : staticPrevious);
+  const isCumulativeShareMetric =
+    sourceBackedIndicatorIds.has(matrixMetric) &&
+    !isCountMetric &&
+    !isPresenceMetric &&
+    detailAggregate.denominator > 0 &&
+    Boolean(
+      selectedDataset.period?.startsWith("01.01") ||
+        selectedDataset.period?.toLocaleLowerCase("ru-RU").includes("январ"),
+    );
+  const currentRegionalComponents = isCumulativeShareMetric
+    ? {
+        numerator: selectedDataset.numerator ?? detailAggregate.numerator,
+        denominator: selectedDataset.denominator ?? detailAggregate.denominator,
+      }
+    : null;
+  const staticPreviousComponents = operationalRegionalPreviousComponents[matrixMetric];
+  const previousRegionalComponents =
+    isCumulativeShareMetric && !selectedDataset.comparisonReset
+      ? selectedDataset.previousNumerator !== undefined &&
+        selectedDataset.previousNumerator !== null &&
+        selectedDataset.previousDenominator !== undefined &&
+        selectedDataset.previousDenominator !== null
+        ? {
+            numerator: selectedDataset.previousNumerator,
+            denominator: selectedDataset.previousDenominator,
+            date: previousSnapshot,
+            source: "метаданные предыдущей выгрузки",
+          }
+        : staticPreviousComponents && staticPreviousComponents.date === previousSnapshot
+          ? staticPreviousComponents
+          : null
+      : null;
+  const numeratorChange =
+    currentRegionalComponents && previousRegionalComponents
+      ? currentRegionalComponents.numerator - previousRegionalComponents.numerator
+      : null;
+  const denominatorChange =
+    currentRegionalComponents && previousRegionalComponents
+      ? currentRegionalComponents.denominator - previousRegionalComponents.denominator
+      : null;
+  const cumulativeComponentAnomaly =
+    isCumulativeShareMetric &&
+    ((numeratorChange !== null && numeratorChange < 0) ||
+      (denominatorChange !== null && denominatorChange < 0));
   const regionalChange =
     regionalPrevious === null
       ? null
@@ -8306,7 +8389,14 @@ export default function Home() {
                           ? "—"
                           : `${format(regionalPrevious, isCountMetric ? 0 : 2)}${isCountMetric ? "" : "%"}`}
                       </strong>
-                      <span>{previousSnapshot}</span>
+                      <span>
+                        {previousSnapshot}
+                        {isCumulativeShareMetric
+                          ? previousRegionalComponents
+                            ? ` · ${format(previousRegionalComponents.numerator, 0)} / ${format(previousRegionalComponents.denominator, 0)}`
+                            : " · компоненты предыдущего среза не сохранены"
+                          : ""}
+                      </span>
                     </article>
                     <article>
                       <small>Текущая выгрузка</small>
@@ -8314,7 +8404,12 @@ export default function Home() {
                         {format(operationalRegionalCurrent, isCountMetric ? 0 : 2)}
                         {isCountMetric ? "" : "%"}
                       </strong>
-                      <span>{currentSnapshot}</span>
+                      <span>
+                        {currentSnapshot}
+                        {currentRegionalComponents
+                          ? ` · ${format(currentRegionalComponents.numerator, 0)} / ${format(currentRegionalComponents.denominator, 0)}`
+                          : ""}
+                      </span>
                     </article>
                     <article
                       className={
@@ -8340,12 +8435,16 @@ export default function Home() {
                           ? "нет сопоставимого предыдущего значения"
                           : isCountMetric && regionalRelativeChange !== null
                             ? `${regionalRelativeChange > 0 ? "+" : regionalRelativeChange < 0 ? "−" : ""}${format(Math.abs(regionalRelativeChange), 1)}% к предыдущей выгрузке`
-                            : lowerIsBetter
-                              ? "снижение — улучшение"
-                              : "рост — улучшение"}
+                            : isCumulativeShareMetric &&
+                                numeratorChange !== null &&
+                                denominatorChange !== null
+                              ? `числитель ${numeratorChange > 0 ? "+" : numeratorChange < 0 ? "−" : ""}${format(Math.abs(numeratorChange), 0)} · знаменатель ${denominatorChange > 0 ? "+" : denominatorChange < 0 ? "−" : ""}${format(Math.abs(denominatorChange), 0)}`
+                              : lowerIsBetter
+                                ? "снижение — улучшение"
+                                : "рост — улучшение"}
                       </span>
                     </article>
-                    <article>
+                    <article className={cumulativeComponentAnomaly ? "negative" : ""}>
                       <small>Интервал и сопоставимость</small>
                       <strong>
                         {operationalIntervalDays === null
@@ -8353,9 +8452,15 @@ export default function Home() {
                           : `${operationalIntervalDays} ${operationalIntervalDays === 1 ? "день" : operationalIntervalDays >= 2 && operationalIntervalDays <= 4 ? "дня" : "дней"}`}
                       </strong>
                       <span>
-                        {isCountMetric && countRowsWithoutPrevious > 0
-                          ? `${comparableCountRows.length} из ${indicatorRows.length} МО сопоставлены; ${countRowsWithoutPrevious} без предыдущего значения`
-                          : "текущая выгрузка сравнивается с непосредственно предыдущей"}
+                        {selectedDataset.comparisonReset
+                          ? "Сравнение отключено: между срезами изменены источник или методика расчёта. Новый сопоставимый baseline формируется с текущего среза."
+                          : cumulativeComponentAnomaly
+                            ? `⚠ Аномалия накопительного среза: ${numeratorChange !== null && numeratorChange < 0 ? "числитель уменьшился" : ""}${numeratorChange !== null && numeratorChange < 0 && denominatorChange !== null && denominatorChange < 0 ? "; " : ""}${denominatorChange !== null && denominatorChange < 0 ? "знаменатель уменьшился" : ""}. Требуется проверка источника/состава.`
+                            : isCountMetric && countRowsWithoutPrevious > 0
+                              ? `${comparableCountRows.length} из ${indicatorRows.length} МО сопоставлены; ${countRowsWithoutPrevious} без предыдущего значения`
+                              : isCumulativeShareMetric && !previousRegionalComponents
+                                ? "доля сопоставима, но компоненты предыдущего среза не сохранены; после следующей выгрузки будут показаны изменения числителя и знаменателя"
+                                : "текущая выгрузка сравнивается с непосредственно предыдущей"}
                       </span>
                     </article>
                   </div>

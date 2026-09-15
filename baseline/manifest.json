@@ -1,6 +1,6 @@
 {
   "schemaVersion": 2,
-  "baselineVersion": "5.4.3",
+  "baselineVersion": "5.4.4",
   "baselineDate": "2026-09-15",
   "previousBaseline": {
     "version": "4.6.0",
@@ -9,14 +9,14 @@
     "handoffZipSha256": "90003a0098165ce484118a8bd661dc03e9471c5759a88dfb5e806800ce7df8b9",
     "manifest": "baseline/reference-v4.6.0-manifest.json"
   },
-  "changeClass": "Логика оперативной динамики показателей: текущая выгрузка к предыдущей с датами и разницей",
+  "changeClass": "Компонентная оперативная динамика накопительных долей: числитель, знаменатель и контроль аномалий",
   "protectedData": {
     "app/electronic-waybill-weekly.json": "e527cb953583e1750b56ed102bc4eaae893fa714221df967da4a8ffd1a88c375",
     "app/electronic-waybill.json": "d682decfa448f6fd17c8df1fdcf088b105cff03080daf029849a4d039c638dbc",
     "app/error-categories.json": "b957090940a9a81322d4a76719a96853ab27f861d59d09054b04abcaa088bb17",
     "app/federal-control.json": "6dfd779f3cdeb320d08aa10ccb8a32522930c756fd808017977b85ec71d7e100",
     "app/hearing-snapshots.json": "4e6f494e413e2003e6d24c7492e79cbcd67837f31ba01565a5c2fac42a8b5871",
-    "app/mo-data.json": "85d51fac666c5a593f4e8b7e45ac74d6ada9b7815fa9531372750aca73bc8a1d",
+    "app/mo-data.json": "dc3a5f0645f7eca7fc5cd40db3279f860af251051a908ba9150d0f545ca91aa4",
     "app/mo-detail-oids.json": "3a7e3a4c54e082c5bfdc44132214058db533b34f3a2e0e1afbe6ac222dc5ac4a",
     "app/mo-details.json": "69c03da6a097faa9d2ef81bedef774c23c9e0d8c40c73b17caa3bce37caacc7f",
     "app/mo-registry.json": "62202e489fced8a93c40867f04f5b3a021030cf4da1b0d0da6ce3a8cff088ea3",
@@ -33,30 +33,30 @@
     "app/physician-weekly-snapshot.json": "004e2fc19000743c665b44645ccfadcd455a365d520d34b12570144e6297bc46"
   },
   "protectedRules": {
-    "config/indicator-registry.json": "b860206cb17646a8c8584dce603cc6eed5c5453a38301e22a3052760d5b17efa",
+    "config/indicator-registry.json": "d6c5c7f78c5c52c89eac23a507f1f5abdb4d7bcc0000886ac6dd04e8f2cd4c04",
     "app/mo-registry.json": "62202e489fced8a93c40867f04f5b3a021030cf4da1b0d0da6ce3a8cff088ea3",
     "app/hearing-snapshots.json": "4e6f494e413e2003e6d24c7492e79cbcd67837f31ba01565a5c2fac42a8b5871",
     "config/import-pipeline.json": "46e5e5ac343aad5ddc06a377fe7cf3e94890bc7f6e4c5012fb11ee1e7f20af62"
   },
   "stateFiles": {
-    "STATE.md": "40d4df9e5f5163f181de2372adf61b9357c53f246af056426c570472cbe9b1fd",
-    "OPEN_ISSUES.md": "bc5a060f2db132d91a2b3b458abfe5bb331ca369cd969eabe7532610907aef11"
+    "STATE.md": "89be413beb4a73fe4de03be58c167d59cab48a1e21eff9a5e43daddd9fee9bd8",
+    "OPEN_ISSUES.md": "946315becd5dd8f1f1eede14e0d48a6141fd760b2e9e5b7e8266df3663da0edb"
   },
   "keyCode": {
-    "app/page.tsx": "8ecba2745e10a5b32d6eaba1d82a561d831cb5b087f55662e0a9f0f65c25dcc3",
+    "app/page.tsx": "d072d46515b1c1e87abf8be60b5efe38a12db5938df57d5039212306deeb9167",
     "app/globals.css": "a0e67c624d6e6877dad6cb5c44c59264dfa1799c33cc4a3a5eb6c0ab8cbc4dbe",
     "lib/calculation-engine.js": "2addca9323803eb45f66fca94fe78a72c4d77eed53c7bd05c224dd9aa9f2f0e7",
     "lib/indicator-registry.js": "484857b41858c082fad05172793ff24f422008a6178257006d4512b0c12d1996",
     "lib/mo-registry.js": "9fe16e52a33111d44fb143f8f3879f3d0960821ac176a149c02d0d0bb14d3cab",
     "lib/period-engine.js": "30cb85efde4c299ee5ca0314c84f7699c0a5170baa48cc6e7c3e9d75dbec22b6",
     "lib/validation-engine.js": "ec8c0bfdc6be305bf1f2d4629e9016de5bb5cc00ba24f92eec5ebfc87510246b",
-    "scripts/pipeline/adapters.py": "b95ac2547d4ad1afcbe38d4f1efed4be9a41dfe6f9b4998700f7947e8566d82d",
+    "scripts/pipeline/adapters.py": "96853a6198f91ad40324c017c5a693a789159689b658f6712ffd73d7eeb28328",
     "scripts/weekly_update_pipeline.py": "63604915c77920e7dbb2f913d09c917e95b506d3671917f4d5031bc6f1221903",
     "scripts/pipeline/source_catalog.py": "8bcc6be2a432a18562d17236882e01170a632a919292f00c3eca7003e344591c",
     "scripts/pipeline/staging_runner.py": "09d904a06acf11a8c3a685df64fd41d8af228d59c7621c3ebc600345e4f81dbd"
   },
   "regression": {
-    "nodeTests": "147/147 PASS",
+    "nodeTests": "151/151 PASS",
     "validation": "15/15 PASS",
     "calculationEquivalence": "38/38 PASS",
     "metadataEquivalence": "38/38 PASS",
@@ -68,5 +68,5 @@
     "fail": 0,
     "warnings": []
   },
-  "note": "v5.4.3: в разделе показателей режим «Оперативно» сравнивает текущую подтверждённую выгрузку с непосредственно предыдущей; показываются даты, абсолютная разница и относительное изменение для количественных показателей. Месячная динамика остаётся отдельной. Production остаётся на v5.4.2 до отдельной команды."
+  "note": "v5.4.4: для применимых накопительных долевых показателей оперативная динамика показывает числитель и знаменатель обоих срезов и изменение компонентов; уменьшение накопительного компонента помечается как аномалия качества данных. Неподтверждённые предыдущие компоненты не восстанавливаются из процента. Production остаётся на v5.4.3 до отдельной команды."
 }
