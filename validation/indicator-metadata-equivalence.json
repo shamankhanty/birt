@@ -1,6 +1,6 @@
 {
   "status": "PASS",
-  "baselineVersion": "5.4.1",
+  "baselineVersion": "5.4.2",
   "registrySchemaVersion": 2,
   "runtimeIntegration": true,
   "indicatorsChecked": 38,
