@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "baselineVersion": "5.4.4",
+  "baselineVersion": "5.4.5",
   "acknowledgedFingerprints": [
     "missing_current_value|monthly-mo|ambulatoryCase|1.2.643.5.1.13.13.12.2.16.1064|НАБЕРЕЖНО-ЧЕЛНИНСКАЯ ИБ|july",
     "percentage_above_100|mo-data|hospital||ООО \"КСМ\"|fact",

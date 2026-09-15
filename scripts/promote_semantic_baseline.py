@@ -21,6 +21,6 @@ for match in re.finditer(r'\{\s*id:\s*"([^"]+)"(?P<body>.*?)\n\s*\}', block, re.
         snapshot["regionalCards"][indicator_id]["date"] = date.group(1)
 snapshot["regionalCards"]["errors"]["plan"] = None
 snapshot["preventiveSemd"] = json.loads((ROOT / "app" / "preventive-semd-audit.json").read_text(encoding="utf-8"))["summary"]
-snapshot["baselineVersion"] = "5.4.4"
+snapshot["baselineVersion"] = "5.4.5"
 path.write_text(json.dumps(snapshot, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
 print(json.dumps({"status": "PASS", "baselineVersion": snapshot["baselineVersion"]}, ensure_ascii=False))
