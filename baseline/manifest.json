@@ -1,6 +1,6 @@
 {
   "schemaVersion": 2,
-  "baselineVersion": "5.4.4",
+  "baselineVersion": "5.4.5",
   "baselineDate": "2026-09-15",
   "previousBaseline": {
     "version": "4.6.0",
@@ -9,7 +9,7 @@
     "handoffZipSha256": "90003a0098165ce484118a8bd661dc03e9471c5759a88dfb5e806800ce7df8b9",
     "manifest": "baseline/reference-v4.6.0-manifest.json"
   },
-  "changeClass": "Компонентная оперативная динамика накопительных долей: числитель, знаменатель и контроль аномалий",
+  "changeClass": "Оперативный 500+: отдельный текущий срез; история версий агрегируется по дате",
   "protectedData": {
     "app/electronic-waybill-weekly.json": "e527cb953583e1750b56ed102bc4eaae893fa714221df967da4a8ffd1a88c375",
     "app/electronic-waybill.json": "d682decfa448f6fd17c8df1fdcf088b105cff03080daf029849a4d039c638dbc",
@@ -30,33 +30,33 @@
     "app/error-organizations.json": "894d28447b68af388c9b66e5238c7a7631a2d00b44e5773ea8ce194e1a8b2b92",
     "app/max-monthly-visits.json": "4ccd792fbc854b92ec7b5161e2e6e00ab68c3c5f14a06278e4332f63f522b31a",
     "app/max-appointments-municipal.json": "69f690e62514706254d6f5b08cd694ae91bae6349eb14e653d47bcde89f63c17",
-    "app/physician-weekly-snapshot.json": "004e2fc19000743c665b44645ccfadcd455a365d520d34b12570144e6297bc46"
+    "app/physician-weekly-snapshot.json": "2e2148b587d4eabfefd93b294c5030f6ffd96d06b4e2ee808a8600be0b40eadb"
   },
   "protectedRules": {
-    "config/indicator-registry.json": "d6c5c7f78c5c52c89eac23a507f1f5abdb4d7bcc0000886ac6dd04e8f2cd4c04",
+    "config/indicator-registry.json": "08fc0adce893f879bddd28c5bbc51c58bfe031e8a1e426dd3b05f7c0c9754eb2",
     "app/mo-registry.json": "62202e489fced8a93c40867f04f5b3a021030cf4da1b0d0da6ce3a8cff088ea3",
     "app/hearing-snapshots.json": "4e6f494e413e2003e6d24c7492e79cbcd67837f31ba01565a5c2fac42a8b5871",
     "config/import-pipeline.json": "46e5e5ac343aad5ddc06a377fe7cf3e94890bc7f6e4c5012fb11ee1e7f20af62"
   },
   "stateFiles": {
-    "STATE.md": "89be413beb4a73fe4de03be58c167d59cab48a1e21eff9a5e43daddd9fee9bd8",
-    "OPEN_ISSUES.md": "946315becd5dd8f1f1eede14e0d48a6141fd760b2e9e5b7e8266df3663da0edb"
+    "STATE.md": "d84b776ef652edb56fbfeda66ceab59aad6d9097658588a48858ec1583f32ffb",
+    "OPEN_ISSUES.md": "4c5a91f72cd6011ff2297fcb8644e39dec751e99e99a06a538ecb2ed6c90a3ee"
   },
   "keyCode": {
-    "app/page.tsx": "d072d46515b1c1e87abf8be60b5efe38a12db5938df57d5039212306deeb9167",
+    "app/page.tsx": "368d2f468e2ecce2267e783238d2d77b39d04250812040831143de6123f336d0",
     "app/globals.css": "a0e67c624d6e6877dad6cb5c44c59264dfa1799c33cc4a3a5eb6c0ab8cbc4dbe",
     "lib/calculation-engine.js": "2addca9323803eb45f66fca94fe78a72c4d77eed53c7bd05c224dd9aa9f2f0e7",
     "lib/indicator-registry.js": "484857b41858c082fad05172793ff24f422008a6178257006d4512b0c12d1996",
     "lib/mo-registry.js": "9fe16e52a33111d44fb143f8f3879f3d0960821ac176a149c02d0d0bb14d3cab",
     "lib/period-engine.js": "30cb85efde4c299ee5ca0314c84f7699c0a5170baa48cc6e7c3e9d75dbec22b6",
     "lib/validation-engine.js": "ec8c0bfdc6be305bf1f2d4629e9016de5bb5cc00ba24f92eec5ebfc87510246b",
-    "scripts/pipeline/adapters.py": "96853a6198f91ad40324c017c5a693a789159689b658f6712ffd73d7eeb28328",
+    "scripts/pipeline/adapters.py": "16b64c2f8d72ba3878af4a9bef5195a7df9551a5252b9ed0afcc431c5300061c",
     "scripts/weekly_update_pipeline.py": "63604915c77920e7dbb2f913d09c917e95b506d3671917f4d5031bc6f1221903",
     "scripts/pipeline/source_catalog.py": "8bcc6be2a432a18562d17236882e01170a632a919292f00c3eca7003e344591c",
     "scripts/pipeline/staging_runner.py": "09d904a06acf11a8c3a685df64fd41d8af228d59c7621c3ebc600345e4f81dbd"
   },
   "regression": {
-    "nodeTests": "151/151 PASS",
+    "nodeTests": "152/152 PASS",
     "validation": "15/15 PASS",
     "calculationEquivalence": "38/38 PASS",
     "metadataEquivalence": "38/38 PASS",
@@ -68,5 +68,5 @@
     "fail": 0,
     "warnings": []
   },
-  "note": "v5.4.4: для применимых накопительных долевых показателей оперативная динамика показывает числитель и знаменатель обоих срезов и изменение компонентов; уменьшение накопительного компонента помечается как аномалия качества данных. Неподтверждённые предыдущие компоненты не восстанавливаются из процента. Production остаётся на v5.4.3 до отдельной команды."
+  "note": "v5.4.5: оперативный режим 500+ использует срез 11.09 отдельно от полного августа; предыдущий оперативный срез не выдумывается и будет автоматически сохранён при следующей загрузке. История обновлений группирует версии одной даты в одну карточку. Production не публиковать без отдельной команды."
 }

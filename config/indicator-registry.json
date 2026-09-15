@@ -1,7 +1,7 @@
 {
   "schemaVersion": 2,
   "status": "active",
-  "baselineVersion": "5.4.4",
+  "baselineVersion": "5.4.5",
   "baselineCommit": "c50be9e1a04b6aa0641e0dd791c2b9238caa15d1",
   "generatedFrom": [
     "app/page.tsx",

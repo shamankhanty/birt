@@ -692,7 +692,14 @@ def adapt_physicians(app: Path, source: Path, end: date, registry_path: Path) ->
             for metric, rows in current.items()
         }
         weekly = load(app, "physician-weekly-snapshot.json") if (app / "physician-weekly-snapshot.json").exists() else {}
-        weekly.update({"source": source.name, "date": date_ru(end), "period": period_cumulative(end), "datasets": current, "summary": facts})
+        new_date = date_ru(end)
+        if weekly.get("date") and weekly.get("date") != new_date:
+            weekly["previousSource"] = weekly.get("source")
+            weekly["previousDate"] = weekly.get("date")
+            weekly["previousPeriod"] = weekly.get("period")
+            weekly["previousDatasets"] = weekly.get("datasets", {})
+            weekly["previousSummary"] = weekly.get("summary", {})
+        weekly.update({"source": source.name, "date": new_date, "period": period_cumulative(end), "datasets": current, "summary": facts})
         save(app, "physician-weekly-snapshot.json", weekly)
         return AdapterResult("physician_weekly_snapshot", ["physicians"], "PASS", ["physician-weekly-snapshot.json"], [source.name], facts, ["Неполный сентябрь сохранён только для недельного контроля; рейтинг и полный август не изменены."], [])
 

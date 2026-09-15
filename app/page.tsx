@@ -116,7 +116,7 @@ type FederalControlData = {
   agreement: FederalControlRow[];
   collegium: FederalControlRow[];
 };
-const DASHBOARD_VERSION = "5.4.4";
+const DASHBOARD_VERSION = "5.4.5";
 const indicatorRegistry = createIndicatorRegistryRuntime(
   indicatorRegistryRaw as IndicatorRegistryDocument,
 );
@@ -569,6 +569,11 @@ type PhysicianWeeklySnapshot = {
   period: string;
   datasets: Record<string, Array<{ name: string; oid: string; fact: number; count: number; volume: number }>>;
   summary: Record<string, { numerator: number; denominator: number; fact: number | null }>;
+  previousSource?: string | null;
+  previousDate?: string | null;
+  previousPeriod?: string | null;
+  previousDatasets?: Record<string, Array<{ name: string; oid: string; fact: number; count: number; volume: number }>>;
+  previousSummary?: Record<string, { numerator: number; denominator: number; fact: number | null }>;
 };
 const physicianWeeklySnapshot = physicianWeeklySnapshotRaw as PhysicianWeeklySnapshot;
 const physicianMetrics = {
@@ -2614,7 +2619,15 @@ function hearingMetricGroupsForDisplay(row: HearingRow, filter: HearingChangeFil
     .filter((item) => item.metrics.length > 0);
 }
 
-const versionHistory = [
+const versionHistoryEntries = [
+  {
+    version: "5.4.5",
+    date: "15.09.2026",
+    items: [
+      "Оперативный режим показателей 500+ теперь использует фактический срез 11.09 из physician-weekly-snapshot, а месячный режим сохраняет полный август отдельно.",
+      "История обновлений автоматически объединяет все технические версии одной даты в одну пользовательскую карточку с накоплением изменений.",
+    ],
+  },
   {
     version: "5.4.4",
     date: "15.09.2026",
@@ -2682,6 +2695,18 @@ const versionHistory = [
     ],
   },
 ];
+
+const versionHistory = versionHistoryEntries.reduce<
+  Array<{ version: string; date: string; items: string[] }>
+>((acc, entry) => {
+  const sameDate = acc.find((item) => item.date === entry.date);
+  if (sameDate) {
+    sameDate.items.push(...entry.items);
+    return acc;
+  }
+  acc.push({ ...entry, items: [...entry.items] });
+  return acc;
+}, []);
 const heardOrganizationOids = new Set([
   "1.2.643.5.1.13.13.12.2.16.1161", // Базарно-Матакская ЦРБ
   "1.2.643.5.1.13.13.12.2.16.1149", // Лаишевская ЦРБ
@@ -4041,6 +4066,35 @@ export default function Home() {
   const isPresenceMetric = selectedDataset.mode === "presence";
   const isMaxMetric =
     matrixMetric === "tmkMaxCount" || matrixMetric === "elnMaxCount";
+  const isOperationalPhysician500 =
+    dynamicsMode === "operational" &&
+    matrixMetric.startsWith("doctor500_") &&
+    Boolean(physicianWeeklySnapshot.summary[matrixMetric]);
+  const physicianOperationalSummary = isOperationalPhysician500
+    ? physicianWeeklySnapshot.summary[matrixMetric]
+    : null;
+  const physicianOperationalPreviousSummary = isOperationalPhysician500
+    ? (physicianWeeklySnapshot.previousSummary?.[matrixMetric] ?? null)
+    : null;
+  const previousPhysicianOperationalRows = isOperationalPhysician500
+    ? (physicianWeeklySnapshot.previousDatasets?.[matrixMetric] ?? [])
+    : [];
+  const previousPhysicianOperationalByOid = new Map(
+    previousPhysicianOperationalRows.map((row) => [row.oid, row]),
+  );
+  const physicianOperationalRows: MoRow[] = isOperationalPhysician500
+    ? (physicianWeeklySnapshot.datasets[matrixMetric] ?? []).map((row) => {
+        const previous = previousPhysicianOperationalByOid.get(row.oid);
+        return {
+          ...row,
+          previous: previous?.fact ?? null,
+          trend: previous ? row.fact - previous.fact : null,
+        };
+      })
+    : [];
+  const displayDatasetDate = isOperationalPhysician500
+    ? physicianWeeklySnapshot.date
+    : selectedDataset.date;
   const maxAnnualPlan = matrixMetric === "tmkMaxCount" ? 193000 : 99000;
   const maxAugustMonthlyDataset: MonthlyMoDataset | null = isMaxMetric
     ? {
@@ -4066,17 +4120,24 @@ export default function Home() {
   const lowerIsBetter =
     matrixMetric === "shortInput" || selectedDataset.direction === "lower";
   const datasetOperationalPeriods =
-    selectedDataset.previousPeriod && selectedDataset.period
+    isOperationalPhysician500
       ? {
-          previous: selectedDataset.previousPeriod,
-          current: selectedDataset.period,
+          previous: physicianWeeklySnapshot.previousDate
+            ? `на ${physicianWeeklySnapshot.previousDate}`
+            : "предыдущая выгрузка",
+          current: `на ${physicianWeeklySnapshot.date}`,
         }
-      : selectedDataset.previousDate
+      : selectedDataset.previousPeriod && selectedDataset.period
         ? {
-            previous: `на ${selectedDataset.previousDate}`,
-            current: `на ${selectedDataset.date}`,
+            previous: selectedDataset.previousPeriod,
+            current: selectedDataset.period,
           }
-        : null;
+        : selectedDataset.previousDate
+          ? {
+              previous: `на ${selectedDataset.previousDate}`,
+              current: `на ${selectedDataset.date}`,
+            }
+          : null;
   const periods =
     datasetOperationalPeriods ??
     comparisonPeriods[matrixMetric] ?? {
@@ -4085,7 +4146,10 @@ export default function Home() {
     };
   const previousSnapshot = snapshotDate(periods.previous);
   const currentSnapshot = snapshotDate(periods.current);
-  const indicatorRows = selectedDataset.rows.filter(
+  const indicatorRows = (isOperationalPhysician500
+    ? physicianOperationalRows
+    : selectedDataset.rows
+  ).filter(
     (o) =>
       !isTechnicalRow(o.name) &&
       !isExcludedFromIndicators(o.name) &&
@@ -4278,13 +4342,15 @@ export default function Home() {
   const countRowsWithoutPrevious = isCountMetric
     ? indicatorRows.length - comparableCountRows.length
     : 0;
-  const operationalRegionalCurrent = isCountMetric
-    ? regionalFact
-    : selectedUnitDataset && selectedUnitDataset.plan > 0
-      ? (selectedUnitDataset.fact / selectedUnitDataset.plan) * 100
-      : detailRows.length
-        ? detailAggregate.fact
-        : regionalFact;
+  const operationalRegionalCurrent = isOperationalPhysician500
+    ? (physicianOperationalSummary?.fact ?? 0)
+    : isCountMetric
+      ? regionalFact
+      : selectedUnitDataset && selectedUnitDataset.plan > 0
+        ? (selectedUnitDataset.fact / selectedUnitDataset.plan) * 100
+        : detailRows.length
+          ? detailAggregate.fact
+          : regionalFact;
   const staticPrevious =
     baselineIndicatorForMetric?.date === previousSnapshot
       ? baselineIndicatorForMetric.fact
@@ -4293,12 +4359,14 @@ export default function Home() {
           baselineIndicatorForMetric.trend !== undefined
         ? operationalRegionalCurrent - baselineIndicatorForMetric.trend
         : null;
-  const regionalPrevious = selectedDataset.comparisonReset
-    ? null
-    : operationalRegionalPrevious[matrixMetric] ??
-      (isCountMetric
-        ? rtIndicator?.previous ?? null
-        : staticPrevious);
+  const regionalPrevious = isOperationalPhysician500
+    ? (physicianOperationalPreviousSummary?.fact ?? null)
+    : selectedDataset.comparisonReset
+      ? null
+      : operationalRegionalPrevious[matrixMetric] ??
+        (isCountMetric
+          ? rtIndicator?.previous ?? null
+          : staticPrevious);
   const isCumulativeShareMetric =
     sourceBackedIndicatorIds.has(matrixMetric) &&
     !isCountMetric &&
@@ -4308,29 +4376,41 @@ export default function Home() {
       selectedDataset.period?.startsWith("01.01") ||
         selectedDataset.period?.toLocaleLowerCase("ru-RU").includes("январ"),
     );
-  const currentRegionalComponents = isCumulativeShareMetric
+  const currentRegionalComponents = isOperationalPhysician500 && physicianOperationalSummary
     ? {
-        numerator: selectedDataset.numerator ?? detailAggregate.numerator,
-        denominator: selectedDataset.denominator ?? detailAggregate.denominator,
+        numerator: physicianOperationalSummary.numerator,
+        denominator: physicianOperationalSummary.denominator,
       }
-    : null;
+    : isCumulativeShareMetric
+      ? {
+          numerator: selectedDataset.numerator ?? detailAggregate.numerator,
+          denominator: selectedDataset.denominator ?? detailAggregate.denominator,
+        }
+      : null;
   const staticPreviousComponents = operationalRegionalPreviousComponents[matrixMetric];
   const previousRegionalComponents =
-    isCumulativeShareMetric && !selectedDataset.comparisonReset
-      ? selectedDataset.previousNumerator !== undefined &&
-        selectedDataset.previousNumerator !== null &&
-        selectedDataset.previousDenominator !== undefined &&
-        selectedDataset.previousDenominator !== null
-        ? {
-            numerator: selectedDataset.previousNumerator,
-            denominator: selectedDataset.previousDenominator,
-            date: previousSnapshot,
-            source: "метаданные предыдущей выгрузки",
-          }
-        : staticPreviousComponents && staticPreviousComponents.date === previousSnapshot
-          ? staticPreviousComponents
-          : null
-      : null;
+    isOperationalPhysician500 && physicianOperationalPreviousSummary
+      ? {
+          numerator: physicianOperationalPreviousSummary.numerator,
+          denominator: physicianOperationalPreviousSummary.denominator,
+          date: physicianWeeklySnapshot.previousDate ?? previousSnapshot,
+          source: physicianWeeklySnapshot.previousSource ?? "предыдущий оперативный срез 500+",
+        }
+      : isCumulativeShareMetric && !selectedDataset.comparisonReset
+        ? selectedDataset.previousNumerator !== undefined &&
+          selectedDataset.previousNumerator !== null &&
+          selectedDataset.previousDenominator !== undefined &&
+          selectedDataset.previousDenominator !== null
+          ? {
+              numerator: selectedDataset.previousNumerator,
+              denominator: selectedDataset.previousDenominator,
+              date: previousSnapshot,
+              source: "метаданные предыдущей выгрузки",
+            }
+          : staticPreviousComponents && staticPreviousComponents.date === previousSnapshot
+            ? staticPreviousComponents
+            : null
+        : null;
   const numeratorChange =
     currentRegionalComponents && previousRegionalComponents
       ? currentRegionalComponents.numerator - previousRegionalComponents.numerator
@@ -8280,7 +8360,7 @@ export default function Home() {
                   <span>
                     {isMaxMetric
                       ? `официальный план · факт накопительно на ${selectedDataset.date}`
-                      : `актуальность ${selectedDataset.date}`}
+                      : `актуальность ${displayDatasetDate}`}
                   </span>
                 </div>
               </div>
@@ -8303,7 +8383,7 @@ export default function Home() {
                   <b>Источник и ограничение:</b> {selectedDataset.note}
                 </p>
               )}
-              {matrixMetric.startsWith("doctor") && physicianWeeklySnapshot.summary[matrixMetric] && (
+              {matrixMetric.startsWith("doctor500_") && physicianWeeklySnapshot.summary[matrixMetric] && (
                 <p className="sourceDataNote weeklyPhysicianNote">
                   <b>Оперативный недельный контроль «500+»:</b>{" "}
                   {format(physicianWeeklySnapshot.summary[matrixMetric].numerator, 0)} из {format(physicianWeeklySnapshot.summary[matrixMetric].denominator, 0)}
@@ -8391,7 +8471,7 @@ export default function Home() {
                       </strong>
                       <span>
                         {previousSnapshot}
-                        {isCumulativeShareMetric
+                        {isCumulativeShareMetric || isOperationalPhysician500
                           ? previousRegionalComponents
                             ? ` · ${format(previousRegionalComponents.numerator, 0)} / ${format(previousRegionalComponents.denominator, 0)}`
                             : " · компоненты предыдущего среза не сохранены"
@@ -8435,7 +8515,7 @@ export default function Home() {
                           ? "нет сопоставимого предыдущего значения"
                           : isCountMetric && regionalRelativeChange !== null
                             ? `${regionalRelativeChange > 0 ? "+" : regionalRelativeChange < 0 ? "−" : ""}${format(Math.abs(regionalRelativeChange), 1)}% к предыдущей выгрузке`
-                            : isCumulativeShareMetric &&
+                            : (isCumulativeShareMetric || isOperationalPhysician500) &&
                                 numeratorChange !== null &&
                                 denominatorChange !== null
                               ? `числитель ${numeratorChange > 0 ? "+" : numeratorChange < 0 ? "−" : ""}${format(Math.abs(numeratorChange), 0)} · знаменатель ${denominatorChange > 0 ? "+" : denominatorChange < 0 ? "−" : ""}${format(Math.abs(denominatorChange), 0)}`
@@ -8458,6 +8538,8 @@ export default function Home() {
                             ? `⚠ Аномалия накопительного среза: ${numeratorChange !== null && numeratorChange < 0 ? "числитель уменьшился" : ""}${numeratorChange !== null && numeratorChange < 0 && denominatorChange !== null && denominatorChange < 0 ? "; " : ""}${denominatorChange !== null && denominatorChange < 0 ? "знаменатель уменьшился" : ""}. Требуется проверка источника/состава.`
                             : isCountMetric && countRowsWithoutPrevious > 0
                               ? `${comparableCountRows.length} из ${indicatorRows.length} МО сопоставлены; ${countRowsWithoutPrevious} без предыдущего значения`
+                              : isOperationalPhysician500 && !physicianOperationalPreviousSummary
+                                ? "предыдущего оперативного среза 500+ в архиве нет; текущий срез сохранён как baseline для следующей выгрузки"
                               : isCumulativeShareMetric && !previousRegionalComponents
                                 ? "доля сопоставима, но компоненты предыдущего среза не сохранены; после следующей выгрузки будут показаны изменения числителя и знаменателя"
                                 : "текущая выгрузка сравнивается с непосредственно предыдущей"}
@@ -9125,7 +9207,7 @@ export default function Home() {
                                     </strong>
                                     <small>
                                       {o.sourceWarning ??
-                                        `данные на ${selectedDataset.date}`}
+                                        `данные на ${displayDatasetDate}`}
                                     </small>
                                   </td>
                                   {isCountMetric ? (
