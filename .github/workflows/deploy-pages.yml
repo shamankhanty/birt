@@ -40,6 +40,7 @@ jobs:
         shell: bash
         run: |
           python3 scripts/apply_v543_operational_dynamics.py
+          python3 scripts/apply_v543_operational_dynamics_delta.py
 
           python3 - <<'PY'
           from pathlib import Path
@@ -52,7 +53,7 @@ jobs:
           p.write_text(s, encoding='utf-8')
           PY
 
-          rm scripts/apply_v543_operational_dynamics.py
+          rm scripts/apply_v543_operational_dynamics.py scripts/apply_v543_operational_dynamics_delta.py
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add -A
