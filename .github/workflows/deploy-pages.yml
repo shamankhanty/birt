@@ -39,19 +39,13 @@ jobs:
         if: github.event_name == 'pull_request' && github.head_ref == 'fix/operational-export-dynamics-v543'
         shell: bash
         run: |
+          git fetch origin "${{ github.head_ref }}"
+          git checkout -B "${{ github.head_ref }}" FETCH_HEAD
+          if [[ ! -f scripts/apply_v543_operational_dynamics.py ]]; then
+            echo "v5.4.3 bootstrap already applied"
+            exit 0
+          fi
           python3 scripts/apply_v543_operational_dynamics.py
-
-          python3 - <<'PY'
-          from pathlib import Path
-          p = Path('.github/workflows/deploy-pages.yml')
-          s = p.read_text(encoding='utf-8')
-          start = s.index('      # V543_BOOTSTRAP_START\n')
-          end = s.index('      # V543_BOOTSTRAP_END\n', start) + len('      # V543_BOOTSTRAP_END\n')
-          s = s[:start] + s[end:]
-          s = s.replace('  contents: write\n', '  contents: read\n', 1)
-          p.write_text(s, encoding='utf-8')
-          PY
-
           rm -f scripts/apply_v543_operational_dynamics.py scripts/apply_v543_operational_dynamics_delta.py scripts/.v543_payload_1 scripts/.v543_payload_2 scripts/.v543_payload_3 scripts/.v543_payload_4
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
