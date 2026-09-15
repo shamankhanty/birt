@@ -116,7 +116,7 @@ type FederalControlData = {
   agreement: FederalControlRow[];
   collegium: FederalControlRow[];
 };
-const DASHBOARD_VERSION = "5.4.1";
+const DASHBOARD_VERSION = "5.4.2";
 const indicatorRegistry = createIndicatorRegistryRuntime(
   indicatorRegistryRaw as IndicatorRegistryDocument,
 );
@@ -2616,10 +2616,11 @@ function hearingMetricGroupsForDisplay(row: HearingRow, filter: HearingChangeFil
 
 const versionHistory = [
   {
-    version: "5.4.1",
+    version: "5.4.2",
     date: "14.09.2026",
     items: [
       "Исправлена методика расчёта и отображения показателей МАХ: ТМК и ЛВН разделены, исключены расчёты по неподтверждённым границам периодов.",
+      "ТМК и ЛВН после ТМК посредством МАХ разделены на два самостоятельных показателя в меню и интерфейсе.",
     ],
   },
   {

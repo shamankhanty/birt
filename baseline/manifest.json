@@ -1,6 +1,6 @@
 {
   "schemaVersion": 2,
-  "baselineVersion": "5.4.1",
+  "baselineVersion": "5.4.2",
   "baselineDate": "2026-09-14",
   "previousBaseline": {
     "version": "4.6.0",
@@ -9,7 +9,7 @@
     "handoffZipSha256": "90003a0098165ce484118a8bd661dc03e9471c5759a88dfb5e806800ce7df8b9",
     "manifest": "baseline/reference-v4.6.0-manifest.json"
   },
-  "changeClass": "Оперативные источники 11–13.09; недельные ошибки РЭМД; 500+ в заслушивании; исправление источника выписных эпикризов",
+  "changeClass": "UI МАХ: раздельные показатели ТМК и ЛВН после ТМК",
   "protectedData": {
     "app/electronic-waybill-weekly.json": "e527cb953583e1750b56ed102bc4eaae893fa714221df967da4a8ffd1a88c375",
     "app/electronic-waybill.json": "d682decfa448f6fd17c8df1fdcf088b105cff03080daf029849a4d039c638dbc",
@@ -33,17 +33,17 @@
     "app/physician-weekly-snapshot.json": "004e2fc19000743c665b44645ccfadcd455a365d520d34b12570144e6297bc46"
   },
   "protectedRules": {
-    "config/indicator-registry.json": "74e1e177d8eaacc4c0ec4c05fbb58be1de9eb9793ad406a99a15ab8ceb2876ce",
+    "config/indicator-registry.json": "aa17719569cc87891ee6ffcda3bc49366f609128713b11314b9c5893888debd1",
     "app/mo-registry.json": "62202e489fced8a93c40867f04f5b3a021030cf4da1b0d0da6ce3a8cff088ea3",
     "app/hearing-snapshots.json": "4e6f494e413e2003e6d24c7492e79cbcd67837f31ba01565a5c2fac42a8b5871",
     "config/import-pipeline.json": "46e5e5ac343aad5ddc06a377fe7cf3e94890bc7f6e4c5012fb11ee1e7f20af62"
   },
   "stateFiles": {
-    "STATE.md": "4b7a8885e39b058ef9da580579f9be67fc17e5f68b70ebd595285061b72cedd2",
-    "OPEN_ISSUES.md": "1652a23e4c923fb88d2487633fde16a84c52df6475fb6998e1bdad501ed8c31f"
+    "STATE.md": "9f20ef0c16f2e5aa08de71b0bc677155543ab5c7d0ac07e686b1be42eaf85c6d",
+    "OPEN_ISSUES.md": "01a3be41da3768d5f777b099847f6a3780d9dbb767511f6c38dd652b75960bbd"
   },
   "keyCode": {
-    "app/page.tsx": "36747e7e0eb06e1ce21cdd9e6534b8ebf0665f719496bce3224c597911cadf85",
+    "app/page.tsx": "7adc99f36512d72c8e8e6ab5b485f4277416f31f48f839ecbfba38ba974cdf4f",
     "app/globals.css": "a0e67c624d6e6877dad6cb5c44c59264dfa1799c33cc4a3a5eb6c0ab8cbc4dbe",
     "lib/calculation-engine.js": "2addca9323803eb45f66fca94fe78a72c4d77eed53c7bd05c224dd9aa9f2f0e7",
     "lib/indicator-registry.js": "484857b41858c082fad05172793ff24f422008a6178257006d4512b0c12d1996",
@@ -56,7 +56,7 @@
     "scripts/pipeline/staging_runner.py": "09d904a06acf11a8c3a685df64fd41d8af228d59c7621c3ebc600345e4f81dbd"
   },
   "regression": {
-    "nodeTests": "152/152 PASS",
+    "nodeTests": "154/154 PASS",
     "validation": "15/15 PASS",
     "calculationEquivalence": "38/38 PASS",
     "metadataEquivalence": "38/38 PASS",
@@ -68,5 +68,5 @@
     "fail": 0,
     "warnings": []
   },
-  "note": "v5.4.1 подготовлена к публикации после полного CI из main. Исправлена методика расчёта и отображения показателей МАХ: ТМК и ЛВН разделены, исключены расчёты по неподтверждённым границам периодов. Production не обновлён."
+  "note": "v5.4.2: ТМК и ЛВН после ТМК посредством МАХ разделены на два самостоятельных показателя в меню и интерфейсе. Данные и методика расчётов не изменялись. Production не обновлён."
 }
