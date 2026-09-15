@@ -20,7 +20,7 @@ test("v5.2.5 marks agreed RT facts as manual until primary reports arrive", () =
 test("MAX separates official RT results from operational MO monitoring", () => {
   assert.match(page, /ОФИЦИАЛЬНО ПО РЕСПУБЛИКЕ ТАТАРСТАН/u);
   assert.match(page, /ОПЕРАТИВНО ПО МО/u);
-  assert.match(page, /Официальный накопительный результат не используется в недельной или месячной динамике МО/u);
+  assert.match(page, /Официальный накопительный результат не смешивается с оперативной динамикой между выгрузками и с месячной динамикой МО/u);
   assert.match(styles, /\.maxOfficialBlock/u);
   assert.match(styles, /\.maxOperationalBlock/u);
 });
@@ -32,5 +32,5 @@ test("physician applicability requires the relevant level and source role", () =
 
 test("EPGU operational comparison uses 7 and 11 September source cuts", () => {
   assert.match(page, /egpu: \{ previous: "01\.01–07\.09\.2026", current: "01\.01–11\.09\.2026" \}/u);
-  assert.match(page, /egpu: \(30850 \/ 31474\) \* 100/u);
+  assert.match(page, /egpu: 98\.01741119654318/u);
 });
