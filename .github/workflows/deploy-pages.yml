@@ -114,7 +114,10 @@ jobs:
           PY
 
       - name: Validate calculations and metadata
-        run: npm run validate:refactor
+        run: |
+          node scripts/run-validation.mjs --check
+          node scripts/run-calculation-equivalence.mjs --check
+          node scripts/run-indicator-metadata-equivalence.mjs --check
 
       - name: Run fast regression tests
         shell: bash

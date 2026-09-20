@@ -40,3 +40,17 @@ test("read-only post-transfer verification does not change CURRENT artifacts aft
   assert.equal(sha(manifest), before);
   for (const file of current) assert.equal(sha(path.join(temp, file)), files[file], `${file} changed during verification`);
 });
+
+test("CI verification check mode preserves every committed CURRENT manifest hash", () => {
+  const manifest = JSON.parse(fs.readFileSync("baseline/current-production-manifest.json", "utf8"));
+  const before = Object.fromEntries(Object.keys(manifest.files).map(file => [file, sha(file)]));
+  for (const script of [
+    "scripts/run-validation.mjs",
+    "scripts/run-calculation-equivalence.mjs",
+    "scripts/run-indicator-metadata-equivalence.mjs",
+  ]) {
+    const run = spawnSync(process.execPath, [script, "--check"], { cwd: process.cwd(), encoding: "utf8" });
+    assert.equal(run.status, 0, `${script}: ${run.stderr || run.stdout}`);
+  }
+  for (const [file, digest] of Object.entries(before)) assert.equal(sha(file), digest, `${file} changed during CI verification`);
+});

@@ -4,6 +4,7 @@ import { createAiReviewQueue, validateDashboard } from "../lib/validation-engine
 import { resolveReportingPeriods } from "../lib/period-engine.js";
 
 const readJson = (file) => JSON.parse(fs.readFileSync(file, "utf8"));
+const checkOnly = process.argv.includes("--check");
 const appDir = process.env.DASHBOARD_APP_DIR || "app";
 const validationDir = process.env.DASHBOARD_VALIDATION_DIR || "validation";
 const appFile = (name) => path.join(appDir, name);
@@ -36,9 +37,11 @@ const report = validateDashboard({
   reporting,
 });
 const aiQueue = createAiReviewQueue(report);
-fs.mkdirSync(validationDir, { recursive: true });
-fs.writeFileSync(path.join(validationDir, "validation-report.json"), `${JSON.stringify(report, null, 2)}\n`);
-fs.writeFileSync(path.join(validationDir, "ai-review.json"), `${JSON.stringify(aiQueue, null, 2)}\n`);
+if (!checkOnly) {
+  fs.mkdirSync(validationDir, { recursive: true });
+  fs.writeFileSync(path.join(validationDir, "validation-report.json"), `${JSON.stringify(report, null, 2)}\n`);
+  fs.writeFileSync(path.join(validationDir, "ai-review.json"), `${JSON.stringify(aiQueue, null, 2)}\n`);
+}
 
 console.log(`Validation: ${report.overallStatus}; checks=${report.summary.checks}; PASS=${report.summary.PASS}; WARNING=${report.summary.WARNING}; FAIL=${report.summary.FAIL}; AI=${report.summary.aiReviewItems}`);
 for (const check of report.checks.filter((item) => item.status !== "PASS")) {

@@ -5,6 +5,7 @@ import { createIndicatorRegistryRuntime } from "../lib/indicator-registry.js";
 import { datasetBelongsToReportingMonth, resolveReportingPeriods } from "../lib/period-engine.js";
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
+const checkOnly = process.argv.includes("--check");
 const read = (file) => JSON.parse(fs.readFileSync(path.join(ROOT, file), "utf8"));
 const registry = read("config/indicator-registry.json");
 const baseline = read("baseline/indicator-metadata-snapshot.json");
@@ -99,8 +100,10 @@ const result = {
   mismatches,
 };
 const reportDir = process.env.DASHBOARD_VALIDATION_DIR || path.join(ROOT, "validation");
-fs.mkdirSync(reportDir, { recursive: true });
-fs.writeFileSync(path.join(reportDir, "indicator-metadata-equivalence.json"), JSON.stringify(result, null, 2) + "\n");
+if (!checkOnly) {
+  fs.mkdirSync(reportDir, { recursive: true });
+  fs.writeFileSync(path.join(reportDir, "indicator-metadata-equivalence.json"), JSON.stringify(result, null, 2) + "\n");
+}
 console.log(JSON.stringify(result, null, 2));
 if (mismatches.length) process.exitCode = 1;
 
