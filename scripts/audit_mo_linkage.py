@@ -36,6 +36,17 @@ def load(name: str):
     return json.loads((ROOT / "app" / name).read_text(encoding="utf-8"))
 
 
+def is_valid_no_current_source_row(metric: str, row: dict) -> bool:
+    return (
+        metric == "death"
+        and row.get("sourceStatus") == "external_source"
+        and row.get("fact") is None
+        and row.get("count") is None
+        and bool(str(row.get("sourceWarning") or "").strip())
+        and not str(row.get("oid") or "").strip()
+    )
+
+
 def main() -> None:
     datasets = {**load("mo-data.json"), **load("operational-mo.json"), **load("organization-status.json")}
     details = load("mo-details.json")
@@ -68,6 +79,8 @@ def main() -> None:
             checked += 1
             name = row.get("name", "")
             source_warning = str(row.get("sourceWarning") or "").lower()
+            if is_valid_no_current_source_row(metric, row):
+                continue
             if row.get("sourceStatus") == "no_source_row" or source_warning.startswith(("нет строки в исходном перечне", "нет строки в выгрузке")):
                 # Управленческий справочник может содержать применимую МО,
                 # которой нет в текущем исходнике. Такая строка должна явно
