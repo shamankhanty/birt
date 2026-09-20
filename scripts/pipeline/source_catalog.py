@@ -1,4 +1,4 @@
-#!/usr/bin/env python3
+﻿#!/usr/bin/env python3
 from __future__ import annotations
 import json,re,calendar,zipfile
 from collections import Counter
@@ -36,6 +36,9 @@ def short_range_end(text:str):
 @dataclass
 class Item:
     path:str; name:str; family:str|None; status:str; adapter:str|None; datasets:list[str]; periodKind:str|None; endDate:str|None; matches:list[str]; integrity:str
+    startDate:str|None=None
+    recognition:str='filename'
+    reason:str|None=None
 
 def load_config(): return json.loads(CONFIG.read_text(encoding='utf-8'))
 def parse_dates(text:str):
@@ -62,6 +65,13 @@ def infer_end(path:Path):
     if short:return short
     ds=parse_dates(path.name)
     if ds:return max(ds)
+    # Cumulative ranges without a year, e.g. 01.01.-17.09.
+    # Use the baseline year; do not borrow a date from another source file.
+    ranges=re.findall(r'(?<!\d)(\d{1,2})[._](\d{1,2})[._]?\s*[-–]\s*(\d{1,2})[._](\d{1,2})[.]?(?![_-]?\d)',path.name)
+    if ranges:
+        _,_,ed,em=map(int,ranges[-1])
+        try:return date(baseline_year(),em,ed)
+        except ValueError:pass
     ds=parse_dates(str(path.parent))
     if ds:return max(ds)
     return month_hint(path.name+' '+path.parent.name)
@@ -82,19 +92,51 @@ def classify(path:Path,cfg=None):
     for fam in cfg['families']:
         if any(re.search(p,path.name,re.I) for p in fam['patterns']): hits.append(fam)
     end=infer_end(path); integ=integrity(path)
+    structure={}
+    if path.exists() and path.suffix.lower()=='.xlsx' and integ=='PASS':
+        try:
+            from excel_structure import inspect_workbook
+            structure=inspect_workbook(path)
+        except Exception as exc:
+            integ='FAIL'; structure={'error':f'Excel: {exc}'}
+        if structure.get('family'):
+            structural=[f for f in cfg['families'] if f['id']==structure['family']]
+            if hits and hits[0]['id']!=structure['family']:
+                structure['error']='Название файла противоречит структуре книги'
+            hits=structural
+        if structure.get('endDate'): end=date.fromisoformat(structure['endDate'])
+    start=structure.get('startDate')
+    if not start:
+        match=re.search(r'(?<!\d)(\d{2})[._](\d{2})[.]?(?:20\d{2})?\s*[-–]',path.name)
+        if match and end:
+            try:start=date(end.year,int(match[2]),int(match[1])).isoformat()
+            except ValueError:pass
+    extra={'startDate':start,'recognition':'structure' if structure.get('family') else 'filename','reason':structure.get('error') or structure.get('reason')}
     if len(hits)==1:
-        f=hits[0]; status='FAIL' if integ=='FAIL' else 'PASS'; return Item(str(path),path.name,f['id'],status,f['adapter'],f['datasets'],f['periodKind'],end.isoformat() if end else None,[f['id']],integ)
+        f=hits[0]; status='FAIL' if integ=='FAIL' or structure.get('error') else 'PASS'; return Item(str(path),path.name,f['id'],status,f['adapter'],f['datasets'],f['periodKind'],end.isoformat() if end else None,[f['id']],integ,**extra)
     if len(hits)>1:return Item(str(path),path.name,None,'FAIL',None,[],None,end.isoformat() if end else None,[x['id'] for x in hits],integ)
-    status='FAIL' if integ=='FAIL' else cfg['unknownFileStatus']; return Item(str(path),path.name,None,status,None,[],None,end.isoformat() if end else None,[],integ)
+    status='FAIL' if integ=='FAIL' else cfg['unknownFileStatus']; return Item(str(path),path.name,None,status,None,[],None,end.isoformat() if end else None,[],integ,**extra)
 
 def scan(folder:Path):
-    cfg=load_config(); files=sorted([p for p in folder.rglob('*') if p.is_file() and p.suffix.lower() in {'.xlsx','.xls','.csv'}]); items=[classify(p,cfg) for p in files]
+    cfg=load_config(); files=sorted([p for p in folder.rglob('*') if p.is_file() and not p.name.startswith('~$') and p.suffix.lower() in {'.xlsx','.xls','.csv'}]); items=[classify(p,cfg) for p in files]
     dup=[]; seen={}
     for i in items:
         if not i.family:continue
         key=(i.family,i.endDate)
         if key in seen:
-            dup.append({'family':i.family,'endDate':i.endDate,'files':[seen[key].name,i.name]}); i.status='FAIL'; seen[key].status='FAIL'
+            first=seen[key]
+            if i.family=='max_tmk_eln':
+                first_cumulative=bool(first.startDate and first.startDate.endswith('-01-01'))
+                current_cumulative=bool(i.startDate and i.startDate.endswith('-01-01'))
+                if first_cumulative != current_cumulative:
+                    # MAX: cumulative 01.01?cutoff is the canonical import.
+                    # A month-only file for the same cutoff is supplementary/control data.
+                    control=i if first_cumulative else first
+                    canonical=first if first_cumulative else i
+                    control.status='WARNING'
+                    seen[key]=canonical
+                    continue
+            dup.append({'family':i.family,'endDate':i.endDate,'files':[first.name,i.name]}); i.status='FAIL'; first.status='FAIL'
         else:seen[key]=i
     statuses=Counter(x.status for x in items)
     ends=[date.fromisoformat(x.endDate) for x in items if x.endDate and x.status!='FAIL']

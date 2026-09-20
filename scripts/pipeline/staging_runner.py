@@ -1,7 +1,7 @@
-#!/usr/bin/env python3
+﻿#!/usr/bin/env python3
 """Create a staging candidate from scanned weekly sources without touching ROOT/app."""
 from __future__ import annotations
-import hashlib,json,shutil,sys,subprocess,os
+import hashlib,json,shutil,sys,subprocess,os,re
 from collections import defaultdict
 from pathlib import Path
 sys.path.insert(0,str(Path(__file__).resolve().parent))
@@ -28,8 +28,8 @@ def compact_error_payload(app:Path):
 def _row_key(row:dict):
     return str(row.get('oid')) if row.get('oid') else str(row.get('name') or '').strip().lower()
 
-def preserve_same_slice_dynamics(canonical_app:Path,staging_app:Path):
-    """Make a replay of the same source cut idempotent without losing prior-week dynamics."""
+def preserve_same_slice_dynamics(canonical_app:Path,staging_app:Path,target_metric:str|None=None):
+    """Preserve same-cut dynamics only for the indicator in this transaction."""
     cumulative_warning='Накопительное значение уменьшилось; корректировка источника требует уточнения.'
     for name in ('mo-data.json','operational-mo.json','organization-status.json'):
         base_path=canonical_app/name; staged_path=staging_app/name
@@ -37,8 +37,11 @@ def preserve_same_slice_dynamics(canonical_app:Path,staging_app:Path):
         base=json.loads(base_path.read_text(encoding='utf-8'))
         staged=json.loads(staged_path.read_text(encoding='utf-8'))
         changed=False
-        for metric,new_ds in staged.items():
-            old_ds=base.get(metric)
+        for dataset_metric,new_ds in staged.items():
+            if target_metric is not None and target_metric != dataset_metric:
+                # Dataset keys are the indicator ids; do not touch sibling datasets.
+                continue
+            old_ds=base.get(dataset_metric)
             if not isinstance(new_ds,dict) or not isinstance(old_ds,dict): continue
             # A corrected methodology/source is not comparable with the prior value
             # even when the reporting cut date is identical. Do not resurrect old dynamics.
@@ -65,6 +68,8 @@ def preserve_same_slice_dynamics(canonical_app:Path,staging_app:Path):
                 changed=True
         if changed:
             staged_path.write_text(json.dumps(staged,ensure_ascii=False,indent=2)+'\n',encoding='utf-8')
+    if target_metric is not None and target_metric != 'semd228':
+        return
     base_path=canonical_app/'preventive-semd-audit.json'; staged_path=staging_app/'preventive-semd-audit.json'
     if base_path.exists() and staged_path.exists():
         base=json.loads(base_path.read_text(encoding='utf-8')); staged=json.loads(staged_path.read_text(encoding='utf-8'))
@@ -82,68 +87,11 @@ def preserve_same_slice_dynamics(canonical_app:Path,staging_app:Path):
             staged_path.write_text(json.dumps(staged,ensure_ascii=False,indent=2)+'\n',encoding='utf-8')
 
 def stage(input_dir:Path,output_dir:Path):
-    intake=scan(input_dir)
-    if intake['summary']['FAIL']:
-        return {'status':'FAIL','reason':'intake-fail','intake':intake,'adapters':[]}
-    if output_dir.exists(): shutil.rmtree(output_dir)
-    (output_dir/'app').parent.mkdir(parents=True,exist_ok=True);shutil.copytree(ROOT/'app',output_dir/'app')
-    before=tree_hashes(output_dir/'app'); by=defaultdict(list)
-    for item in intake['files']:
-        if item['family'] and item['status']!='FAIL': by[item['family']].append(item)
-    results=[]; consumed=set()
-    # paired preventive source must have same end date
-    if by.get('preventive_remd') or by.get('preventive_foms'):
-        r=max(by.get('preventive_remd',[]),key=lambda x:x.get('endDate') or '') if by.get('preventive_remd') else None
-        f=max(by.get('preventive_foms',[]),key=lambda x:x.get('endDate') or '') if by.get('preventive_foms') else None
-        if not r or not f or r.get('endDate')!=f.get('endDate'):
-            results.append(AdapterResult('preventive_pair',['preventive_remd','preventive_foms'],'FAIL',[],[x['name'] for x in [r,f] if x],{},[],['Нужны оба файла 122/228 и ФОМС за один период']).dict())
-        else:
-            try: results.append(adapt_preventive(output_dir/'app',Path(r['path']),Path(f['path']),parse_iso(r['endDate']),ROOT/'app/mo-registry.json').dict())
-            except Exception as e: results.append(AdapterResult('preventive_pair',['preventive_remd','preventive_foms'],'FAIL',[],[r['name'],f['name']],{},[],[str(e)]).dict())
-        consumed|={'preventive_remd','preventive_foms'}
-    # Hospital indicator: denominator from hospital cases, numerator strictly from REMD EGISZ workbook.
-    if by.get('hospital_cases'):
-        h=max(by.get('hospital_cases',[]),key=lambda x:x.get('endDate') or '')
-        remd_candidates=by.get('elmk',[])
-        r=max(remd_candidates,key=lambda x:x.get('endDate') or '') if remd_candidates else None
-        if not r or r.get('endDate')!=h.get('endDate'):
-            results.append(AdapterResult('hospital_pair',['hospital_cases','elmk'],'FAIL',[],[x['name'] for x in [h,r] if x],{},[],['Для показателя выписных эпикризов нужны знаменатель госпитализаций и числитель РЭМД за один период']).dict())
-        else:
-            try: results.append(adapt_hospital(output_dir/'app',Path(h['path']),parse_iso(h['endDate']),Path(r['path'])).dict())
-            except Exception as e: results.append(AdapterResult('hospital_pair',['hospital_cases','elmk'],'FAIL',[],[h['name'],r['name']],{},[],[str(e)]).dict())
-        consumed.add('hospital_cases')
-    for family,items in sorted(by.items()):
-        if family in consumed:continue
-        ordered=sorted(items,key=lambda x:x.get('endDate') or '')
-        selected=ordered if family=='electronic_waybill' else [ordered[-1]]
-        latest=selected[-1]
-        if family not in SUPPORTED_FAMILIES:
-            results.append(AdapterResult(latest.get('adapter') or 'unknown',[family],'WARNING',[],[latest['name']],{},['Adapter отсутствует в staging; reference script сохранён'],[]).dict());continue
-        for item in selected:
-            try: results.append(run_family(output_dir/'app',family,Path(item['path']),parse_iso(item['endDate']),ROOT).dict())
-            except Exception as e: results.append(AdapterResult(item.get('adapter') or family,[family],'FAIL',[],[item['name']],{},[],[str(e)]).dict())
-    try:
-        compact_error_payload(output_dir/'app')
-    except Exception as e:
-        results.append(AdapterResult('error_payload_compaction',['remd_errors'],'FAIL',[],[],{},[],[str(e)]).dict())
-    try:
-        preserve_same_slice_dynamics(ROOT/'app',output_dir/'app')
-    except Exception as e:
-        results.append(AdapterResult('same_slice_dynamics',['weekly_dynamics'],'FAIL',[],[],{},[],[str(e)]).dict())
-    after=tree_hashes(output_dir/'app'); changed=sorted(k for k in set(before)|set(after) if before.get(k)!=after.get(k))
-    fail=any(x['status']=='FAIL' for x in results); warning=any(x['status']=='WARNING' for x in results)
-    validation_dir=output_dir/'validation'
-    env=os.environ.copy();env['DASHBOARD_APP_DIR']=str(output_dir/'app');env['DASHBOARD_VALIDATION_DIR']=str(validation_dir)
-    vp=subprocess.run(['node','scripts/run-validation.mjs'],cwd=ROOT,text=True,capture_output=True,env=env)
-    validation_report=None
-    vr=validation_dir/'validation-report.json'
-    if vr.exists(): validation_report=json.loads(vr.read_text(encoding='utf-8'))
-    formal_status=(validation_report or {}).get('overallStatus','FAIL' if vp.returncode else 'PASS')
-    fail=fail or formal_status=='FAIL'; warning=warning or formal_status=='WARNING'
-    manifest={'schemaVersion':1,'status':'FAIL' if fail else ('WARNING' if warning else 'PASS'),'input':str(input_dir),'stagingApp':str(output_dir/'app'),'intake':intake['summary'],'adapters':results,'changedFiles':changed,'canonicalAppChanged':False,'formalValidation':{'status':formal_status,'code':vp.returncode,'summary':(validation_report or {}).get('summary'),'report':str(vr),'stdoutTail':vp.stdout[-1600:],'stderrTail':vp.stderr[-800:]},'historicalReplay':{'status':'PENDING_INPUTS','reason':'Исходные historical Excel отсутствуют в переданном ZIP; replay-gate закроется на реальных входных файлах.'}}
-    output_dir.mkdir(parents=True,exist_ok=True);(output_dir/'staging-manifest.json').write_text(json.dumps(manifest,ensure_ascii=False,indent=2)+'\n',encoding='utf-8')
-    return manifest
+    from transactional_stage import stage as transactional_stage
+    return transactional_stage(input_dir,output_dir)
+
 
 if __name__=='__main__':
     if len(sys.argv)!=3:raise SystemExit('usage: staging_runner.py INPUT_DIR OUTPUT_DIR')
-    result=stage(Path(sys.argv[1]),Path(sys.argv[2]));print(json.dumps({'status':result['status'],'changedFiles':result.get('changedFiles',[]),'adapters':[(a['families'],a['status']) for a in result.get('adapters',[])]},ensure_ascii=False,indent=2));raise SystemExit(2 if result['status']=='FAIL' else 0)
+    result=stage(Path(sys.argv[1]),Path(sys.argv[2]));print(json.dumps({'status':result['status'],'state':result['state'],'changedFiles':result.get('changedFiles',[]),'indicators':[(a['metric'],a['state']) for a in result.get('indicators',[])]},ensure_ascii=False,indent=2));raise SystemExit(2 if result['state']=='STOP' else 0)
+

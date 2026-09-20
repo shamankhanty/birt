@@ -97,7 +97,8 @@ const report = {
   preservedBaselineConflicts: expected.approvedStaticVsRuntimeDivergences,
   note: "PASS means the current deterministic calculation layer reproduces the approved runtime snapshot.",
 };
-fs.mkdirSync("validation", { recursive: true });
-fs.writeFileSync("validation/calculation-equivalence.json", JSON.stringify(report, null, 2) + "\n");
+const reportDir = process.env.DASHBOARD_VALIDATION_DIR || "validation";
+fs.mkdirSync(reportDir, { recursive: true });
+fs.writeFileSync(`${reportDir}/calculation-equivalence.json`, JSON.stringify(report, null, 2) + "\n");
 console.log(JSON.stringify(report, null, 2));
 if (mismatches.length) process.exit(1);

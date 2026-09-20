@@ -6,7 +6,7 @@ import path from 'node:path';
 import { spawnSync } from 'node:child_process';
 
 const root=process.cwd();
-const py=(code,args=[])=>spawnSync('python3',['-c',code,...args],{cwd:root,encoding:'utf8'});
+const py=(code,args=[])=>spawnSync(process.platform === 'win32' ? 'python' : 'python3',['-c',code,...args],{cwd:root,encoding:'utf8'});
 const classify=(name)=>{
   const code=`import sys,json;from pathlib import Path;sys.path.insert(0,'scripts/pipeline');from source_catalog import classify;i=classify(Path(sys.argv[1]));print(json.dumps(i.__dict__,ensure_ascii=False))`;
   const r=py(code,[name]); assert.equal(r.status,0,r.stderr); return JSON.parse(r.stdout);
@@ -66,8 +66,8 @@ test('closed September automatically advances full month',()=>{
 
 test('shadow pipeline leaves protected files unchanged and blocks apply',()=>{
  const d=fs.mkdtempSync(path.join(os.tmpdir(),'rt-pipe-')); makeXlsx(path.join(d,'ПР_2_07.09.2026.xlsx'));
- const report=path.join(d,'report.json'); const r=spawnSync('python3',['scripts/weekly_update_pipeline.py',d,'--report',report,'--skip-refactor-gate'],{cwd:root,encoding:'utf8'}); assert.equal(r.status,0,r.stderr); const x=JSON.parse(fs.readFileSync(report,'utf8')); assert.deepEqual(x.protectedChanged,[]); assert.equal(x.decision,'PASS');
- const r2=spawnSync('python3',['scripts/weekly_update_pipeline.py',d,'--report',report,'--skip-refactor-gate','--apply'],{cwd:root,encoding:'utf8'}); assert.equal(r2.status,2); const y=JSON.parse(fs.readFileSync(report,'utf8')); assert.equal(y.applyBlocked,true); assert.equal(y.decision,'FAIL');
+ const report=path.join(d,'report.json'); const r=spawnSync(process.platform === 'win32' ? 'python' : 'python3',['scripts/weekly_update_pipeline.py',d,'--report',report,'--skip-refactor-gate'],{cwd:root,encoding:'utf8'}); assert.equal(r.status,0,r.stderr); const x=JSON.parse(fs.readFileSync(report,'utf8')); assert.deepEqual(x.protectedChanged,[]); assert.equal(x.decision,'PASS');
+ const r2=spawnSync(process.platform === 'win32' ? 'python' : 'python3',['scripts/weekly_update_pipeline.py',d,'--report',report,'--skip-refactor-gate','--apply'],{cwd:root,encoding:'utf8'}); assert.equal(r2.status,2); const y=JSON.parse(fs.readFileSync(report,'utf8')); assert.equal(y.applyBlocked,true); assert.equal(y.decision,'FAIL');
 });
 
 test('legacy dated update scripts remain available as reference adapters',()=>{

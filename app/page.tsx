@@ -567,6 +567,8 @@ type PhysicianWeeklySnapshot = {
   source: string;
   date: string;
   period: string;
+  periods?: Record<string, { date: string; period: string; source: string }>;
+  previousPeriods?: Record<string, { date?: string; period?: string; source?: string }>;
   datasets: Record<string, Array<{ name: string; oid: string; fact: number; count: number; volume: number }>>;
   summary: Record<string, { numerator: number; denominator: number; fact: number | null }>;
   previousSource?: string | null;
@@ -3325,8 +3327,8 @@ export default function Home() {
             previous: null,
             plan: null,
             unit: "%",
-            date: physicianWeeklySnapshot.date,
-            period: physicianWeeklySnapshot.period,
+            date: physicianWeeklySnapshot.periods?.[id]?.date ?? physicianWeeklySnapshot.date,
+            period: physicianWeeklySnapshot.periods?.[id]?.period ?? physicianWeeklySnapshot.period,
             count: current?.count ?? null,
             volume: current?.volume ?? null,
             applicable: true,
@@ -4081,7 +4083,7 @@ export default function Home() {
       })
     : [];
   const displayDatasetDate = isOperationalPhysician500
-    ? physicianWeeklySnapshot.date
+    ? (physicianWeeklySnapshot.periods?.[matrixMetric]?.date ?? physicianWeeklySnapshot.date)
     : selectedDataset.date;
   const maxAnnualPlan = matrixMetric === "tmkMaxCount" ? 193000 : 99000;
   const maxAugustMonthlyDataset: MonthlyMoDataset | null = isMaxMetric
@@ -4110,10 +4112,10 @@ export default function Home() {
   const datasetOperationalPeriods =
     isOperationalPhysician500
       ? {
-          previous: physicianWeeklySnapshot.previousDate
-            ? `на ${physicianWeeklySnapshot.previousDate}`
+          previous: (physicianWeeklySnapshot.previousPeriods?.[matrixMetric]?.date ?? physicianWeeklySnapshot.previousDate)
+            ? `на ${physicianWeeklySnapshot.previousPeriods?.[matrixMetric]?.date ?? physicianWeeklySnapshot.previousDate}`
             : "предыдущая выгрузка",
-          current: `на ${physicianWeeklySnapshot.date}`,
+          current: `на ${physicianWeeklySnapshot.periods?.[matrixMetric]?.date ?? physicianWeeklySnapshot.date}`,
         }
       : selectedDataset.previousPeriod && selectedDataset.period
         ? {
@@ -4381,8 +4383,8 @@ export default function Home() {
       ? {
           numerator: physicianOperationalPreviousSummary.numerator,
           denominator: physicianOperationalPreviousSummary.denominator,
-          date: physicianWeeklySnapshot.previousDate ?? previousSnapshot,
-          source: physicianWeeklySnapshot.previousSource ?? "предыдущий оперативный срез 500+",
+          date: physicianWeeklySnapshot.previousPeriods?.[matrixMetric]?.date ?? physicianWeeklySnapshot.previousDate ?? previousSnapshot,
+          source: physicianWeeklySnapshot.previousPeriods?.[matrixMetric]?.source ?? physicianWeeklySnapshot.previousSource ?? "предыдущий оперативный срез 500+",
         }
       : isCumulativeShareMetric && !selectedDataset.comparisonReset
         ? selectedDataset.previousNumerator !== undefined &&
@@ -8376,7 +8378,7 @@ export default function Home() {
                   <b>Оперативный недельный контроль «500+»:</b>{" "}
                   {format(physicianWeeklySnapshot.summary[matrixMetric].numerator, 0)} из {format(physicianWeeklySnapshot.summary[matrixMetric].denominator, 0)}
                   {" · "}{format(physicianWeeklySnapshot.summary[matrixMetric].fact ?? 0, 2)}%
-                  {" · срез на "}{physicianWeeklySnapshot.date}. Данные не включены в месячный рейтинг; в «МО для заслушивания» используются как справочный оперативный контроль.
+                  {" · срез на "}{physicianWeeklySnapshot.periods?.[matrixMetric]?.date ?? physicianWeeklySnapshot.date}. Данные не включены в месячный рейтинг; в «МО для заслушивания» используются как справочный оперативный контроль.
                 </p>
               )}
               {preventiveTransition && (

@@ -1,4 +1,4 @@
-#!/usr/bin/env python3
+﻿#!/usr/bin/env python3
 """Single safe entrypoint for weekly dashboard source intake.
 
 Default is shadow mode: inventory -> classify -> period/dataset plan -> validation gate.
@@ -6,7 +6,7 @@ It never changes canonical metadata and never publishes. --apply is deliberately
 until an adapter can update a staging tree and all gates pass.
 """
 from __future__ import annotations
-import argparse,hashlib,json,subprocess,sys
+import argparse,hashlib,json,os,subprocess,sys
 from pathlib import Path
 sys.path.insert(0,str(Path(__file__).resolve().parent/'pipeline'))
 from source_catalog import scan
@@ -28,17 +28,20 @@ def main():
     result['mode']='apply-requested' if a.apply else ('staging' if a.stage else 'shadow'); result['protectedBefore']=before
     if a.stage and not a.apply:
         staged=stage(a.input,a.staging_dir)
-        result['staging']={'status':staged['status'],'path':str(a.staging_dir),'changedFiles':staged.get('changedFiles',[]),'adapters':staged.get('adapters',[]),'historicalReplay':staged.get('historicalReplay')}
+        result['staging']=staged
     else:
         result['staging']={'status':'SKIPPED'}
     if not a.skip_refactor_gate:
-        p=subprocess.run(['npm','run','validate:refactor'],cwd=ROOT,text=True,capture_output=True)
+        p=subprocess.run(['npm.cmd' if os.name == 'nt' else 'npm','run','validate:refactor'],cwd=ROOT,text=True,capture_output=True)
         result['refactorGate']={'status':'PASS' if p.returncode==0 else 'FAIL','code':p.returncode,'stdoutTail':p.stdout[-2500:],'stderrTail':p.stderr[-1500:]}
     else: result['refactorGate']={'status':'SKIPPED'}
     after=hashes(); result['protectedAfter']=after; result['protectedChanged']=[k for k in before if before[k]!=after[k]]
     fail=result['summary']['FAIL']>0 or result['refactorGate']['status']=='FAIL' or bool(result['protectedChanged']) or result['staging']['status']=='FAIL'
     warnings=result['summary']['WARNING'] + (1 if result['staging']['status']=='WARNING' else 0)
     result['decision']='FAIL' if fail else ('WARNING' if warnings else 'PASS')
+    if a.stage and not a.apply:
+        result['state']='STOP' if result['refactorGate']['status']=='FAIL' or result['protectedChanged'] else staged['state']
+        result['decision']={'READY':'PASS','PARTIAL':'WARNING','STOP':'FAIL'}[result['state']]
     result['aiRouting']={'send': fail, 'reason':'FAIL/методологический конфликт' if fail else 'Формальных проблем нет; ИИ не требуется'}
     if a.apply:
         result['decision']='FAIL'; result['aiRouting']={'send':True,'reason':'Запись заблокирована: live apply заблокирован до успешного real parallel replay; боевые JSON не меняются до historical replay'}
@@ -47,3 +50,5 @@ def main():
     print(json.dumps({'decision':result['decision'],**result['summary'],'ai':result['aiRouting']['send'],'report':str(a.report)},ensure_ascii=False,indent=2))
     raise SystemExit(2 if result['decision']=='FAIL' else 0)
 if __name__=='__main__':main()
+
+

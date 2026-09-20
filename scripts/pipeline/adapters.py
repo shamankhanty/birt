@@ -21,6 +21,12 @@ from pathlib import Path
 from typing import Iterable
 
 import openpyxl
+from io import BytesIO
+
+
+def open_workbook(path, **kwargs):
+    # Read the snapshot into memory so Windows does not retain source file locks.
+    return openpyxl.load_workbook(BytesIO(Path(path).read_bytes()), **kwargs)
 
 
 @dataclass
@@ -60,6 +66,38 @@ def norm(v) -> str:
     return re.sub(r'[^а-яa-z0-9№]+', ' ', s).strip()
 
 
+def is_total(value):
+    return bool(re.match(r'^\s*(?:итого|всего)(?:\s|:|$)', str(value or ''), re.I))
+
+
+def resolve_rows(rows, metric):
+    root=Path(__file__).resolve().parents[2]
+    payload={'metric':metric,'rows':rows,'registry':load(root/'app','mo-registry.json')}
+    result=subprocess.run(['node',str(root/'scripts/pipeline/resolve-organizations.mjs')],
+        input=json.dumps(payload,ensure_ascii=False),text=True,encoding='utf-8',capture_output=True,check=True)
+    return json.loads(result.stdout)
+
+
+def source_rows(rows, metric):
+    """Aggregate source facts only after the same deterministic MO resolution as the UI."""
+    grouped={}
+    for row in resolve_rows(rows,metric):
+        key=row.get('oid') or norm(row['name'])
+        if key not in grouped:
+            grouped[key]=row.copy()
+        else:
+            for field in ('count','volume'):
+                if field in row: grouped[key][field]+=row[field]
+        item=grouped[key]
+        item['fact']=(item['count']/item['volume']*100 if item['volume'] else None) if 'volume' in item else item['count']
+        if not item.get('oid') and is_external_source_name(item['name']): item['sourceStatus']='external_source'
+    return list(grouped.values())
+
+
+def previous_resolved(base, metric):
+    return previous_rows_from_dataset({'rows':resolve_rows(base.get('rows',[]),metric)})
+
+
 def is_external_source_name(name: str) -> bool:
     """Rows from providers outside the approved MO registry stay visible,
     but must not be interpreted as an unresolved state/municipal MO."""
@@ -95,7 +133,7 @@ def retain_no_source_rows(previous: dict[str, dict], rows: list[dict]) -> list[d
         rows.append({
             "name": old.get("name", "МО"), "oid": old.get("oid"),
             "fact": None, "count": None, "previous": old.get("fact"),
-            "trend": None, "sourceStatus": "no_source_row",
+            "trend": None, "sourceStatus": "external_source" if old.get('sourceStatus')=='external_source' else "no_source_row",
             "sourceWarning": "Нет строки в актуальной выгрузке; значение не заменено нулём.",
         })
     return rows
@@ -234,11 +272,11 @@ def _sheet(wb, preferred: Iterable[str]):
 
 
 def parse_egpu(path: Path, col: int) -> list[dict]:
-    wb = openpyxl.load_workbook(path, read_only=True, data_only=True)
+    wb = open_workbook(path, read_only=True, data_only=True)
     ws = _sheet(wb, ["Отчет", "Отчёт"])
     out = []
     for r in ws.iter_rows(min_row=4, values_only=True):
-        if len(r) <= col or not r[2]:
+        if len(r) <= col or not r[2] or is_total(r[2]):
             continue
         den, num = n(r[4]), n(r[col])
         out.append({"name": str(r[2]), "oid": str(r[3] or ""), "fact": num / den * 100 if den else 0, "count": num, "volume": den})
@@ -247,13 +285,14 @@ def parse_egpu(path: Path, col: int) -> list[dict]:
     return out
 
 
-def adapt_egpu(app: Path, source: Path, end: date) -> AdapterResult:
+def adapt_egpu(app: Path, source: Path, end: date, only_metric=None) -> AdapterResult:
     mo, details, oids, monthly = (load(app, x) for x in ["mo-data.json", "mo-details.json", "mo-detail-oids.json", "monthly-mo.json"])
     facts = {}
     for metric, col, title in [
         ("egpu", 5, "Доля заявлений на прикрепление с финальным статусом"),
         ("egpu2days", 6, "Доля заявлений на прикрепление, рассмотренных за 2 рабочих дня"),
     ]:
+        if only_metric and metric!=only_metric: continue
         cur = parse_egpu(source, col)
         prev = previous_rows_from_dataset(mo.get(metric, {}))
         dn, do, rows = {}, {}, []
@@ -292,11 +331,11 @@ def parse_hospital_denominators(path: Path) -> list[dict]:
     This source is authoritative only for the number of inpatient/day-hospital
     cases. The numerator must come from REMD EGISZ and is joined by MO OID.
     """
-    wb = openpyxl.load_workbook(path, read_only=True, data_only=True)
+    wb = open_workbook(path, read_only=True, data_only=True)
     ws = _sheet(wb, ["Лист3"])
     out = []
     for r in ws.iter_rows(min_row=6, values_only=True):
-        if len(r) < 4 or not r[1] or not r[2]:
+        if len(r) < 4 or not r[1] or not r[2] or is_total(r[1]):
             continue
         out.append({"name": str(r[1]), "oid": str(r[2]), "volume": n(r[3])})
     if not out:
@@ -306,7 +345,7 @@ def parse_hospital_denominators(path: Path) -> list[dict]:
 
 def parse_remd_hospital_numerators(path: Path) -> dict[str, dict]:
     """REMD numerator: maternity discharge + inpatient discharge summaries."""
-    wb = openpyxl.load_workbook(path, read_only=True, data_only=True)
+    wb = open_workbook(path, read_only=True, data_only=True)
     ws = _sheet(wb, ["Отчет РЭМД по МО", "Отчёт РЭМД по МО"])
     out: dict[str, dict] = {}
     for r in ws.iter_rows(min_row=8, values_only=True):
@@ -427,10 +466,10 @@ def adapt_hospital(app: Path, source: Path, end: date, remd_source: Path | None 
     )
 
 def parse_ambulatory_cases(path: Path) -> list[dict]:
-    wb = openpyxl.load_workbook(path, read_only=True, data_only=True)
+    wb = open_workbook(path, read_only=True, data_only=True)
     out = []
     for r in wb.active.iter_rows(min_row=5, values_only=True):
-        if len(r) < 4 or not r[0] or not r[1]:
+        if len(r) < 4 or not r[0] or not r[1] or is_total(r[0]):
             continue
         denominator, numerator = n(r[2]), n(r[3])
         out.append({"name": str(r[0]), "oid": str(r[1]), "fact": numerator / denominator * 100 if denominator else 0, "count": numerator, "volume": denominator})
@@ -466,11 +505,11 @@ def adapt_ambulatory_cases(app: Path, source: Path, end: date) -> AdapterResult:
 
 
 def parse_certificates(path: Path) -> list[dict]:
-    wb=openpyxl.load_workbook(path,read_only=True,data_only=True); ws=wb.active; g=defaultdict(lambda:[0,0]); seen=set()
+    wb=open_workbook(path,read_only=True,data_only=True); ws=wb.active; g=defaultdict(lambda:[0,0]); seen=set()
     for r in ws.iter_rows(values_only=True):
         if len(r)<4: continue
         name=str(r[0] or '').strip(); number=str(r[1] or '').strip(); state=str(r[3] or '').strip()
-        if not name or not number or name.startswith(("Учреждение","Где в столбце")): continue
+        if not name or not number or is_total(name) or name.startswith(("Учреждение","Где в столбце")): continue
         # Some cumulative files can repeat header-like rows; only actual certificate rows matter.
         if number in seen: raise ValueError(f"Дубль свидетельства {number}")
         seen.add(number); g[name][0]+=1; g[name][1]+=int(state.casefold()=="зарегистрирован")
@@ -481,9 +520,12 @@ def parse_certificates(path: Path) -> list[dict]:
 
 
 def adapt_certificates(app: Path, source: Path, end: date, metric: str, family: str) -> AdapterResult:
-    mo,details,monthly=(load(app,x) for x in ["mo-data.json","mo-details.json","monthly-mo.json"]); cur=parse_certificates(source); prev=previous_rows_from_dataset(mo.get(metric,{})); rows=[]; dn={}
+    mo,details,monthly=(load(app,x) for x in ["mo-data.json","mo-details.json","monthly-mo.json"]); cur=source_rows(parse_certificates(source),metric); prev=previous_resolved(mo.get(metric,{}),metric); rows=[]; dn={}
     for x in cur:
-        old=prev.get(norm(x["name"])); row={"name":x["name"],"fact":x["fact"],"count":x["count"],"previous":old.get("fact") if old else None,"trend":None if not old else x["fact"]-old.get("fact",0)}
+        old=prev.get(x.get('oid') or norm(x["name"]))
+        previous=old.get("fact") if old else None
+        trend=None if previous is None or x["fact"] is None else x["fact"]-previous
+        row={"name":x["name"],"oid":x.get('oid'),"fact":x["fact"],"count":x["count"],"previous":previous,"trend":trend}
         if is_external_source_name(x["name"]) or norm(x["name"]) == "спасская црб":
             row["sourceStatus"]="external_source"
             row["sourceWarning"]="Строка источника не сопоставлена с утверждённым OID; не включена в рейтинг МО."
@@ -500,21 +542,26 @@ def adapt_certificates(app: Path, source: Path, end: date, metric: str, family: 
 
 
 def parse_max(path: Path, col: int) -> list[dict]:
-    wb=openpyxl.load_workbook(path,read_only=True,data_only=True); ws=_sheet(wb,["Лист1"]); out=[]
+    wb=open_workbook(path,read_only=True,data_only=True); ws=_sheet(wb,["Лист1"]); out=[]; totals=[]
     for r in ws.iter_rows(min_row=3,values_only=True):
-        if len(r)>col and r[0]: out.append({"name":str(r[0]),"fact":n(r[col]),"count":n(r[col])})
+        if len(r)>col and is_total(r[0]) and r[col] is not None: totals.append(n(r[col]))
+        if len(r)>col and r[0] and not is_total(r[0]): out.append({"name":str(r[0]),"fact":n(r[col]),"count":n(r[col])})
+    wb.close()
     if not out: raise ValueError("ТМК_МАХ: не найдено строк данных")
+    if totals and any(total!=sum(r['count'] for r in out) for total in totals):
+        raise ValueError('MAX: строка Итого не равна сумме МО')
     return out
 
 
-def adapt_max(app: Path, source: Path, end: date) -> AdapterResult:
+def adapt_max(app: Path, source: Path, end: date, only_metric=None) -> AdapterResult:
     operational,monthly=(load(app,x) for x in ["operational-mo.json","monthly-mo.json"]); facts={}
     for metric,col in [("tmkMaxCount",3),("elnMaxCount",4)]:
+        if only_metric and metric!=only_metric: continue
         base=operational.get(metric,{})
-        cur=parse_max(source,col); prev=previous_rows_from_dataset(base); rows=[]
+        cur=source_rows(parse_max(source,col),metric); prev=previous_resolved(base,metric); rows=[]
         same_cut=base.get("date")==date_ru(end)
         for x in cur:
-            old=prev.get(norm(x["name"])); pv,trend=previous_fields(old,same_cut,x["fact"]); rows.append({"name":x["name"],"fact":x["fact"],"count":x["count"],"previous":pv,"trend":trend})
+            old=prev.get(x.get('oid') or norm(x["name"])); pv,trend=previous_fields(old,same_cut,x["fact"]); rows.append({**x,"previous":pv,"trend":trend})
         final_rows = retain_no_source_rows(prev, rows)
         if "спасская црб" in {loose_source_key(row.get("name")) for row in rows}:
             # Approved MAX source convention: this label is the contextual
@@ -540,7 +587,7 @@ def parse_errors(path: Path) -> dict:
     attributed. Registry matching is used only to choose an approved display
     name when possible.
     """
-    wb = openpyxl.load_workbook(path, read_only=True, data_only=True)
+    wb = open_workbook(path, read_only=True, data_only=True)
     ws = wb.active
     categories = Counter()
     organizations: dict[str, dict] = {}
@@ -549,7 +596,7 @@ def parse_errors(path: Path) -> dict:
     attributed_rows = 0
 
     for r in ws.iter_rows(min_row=7, values_only=True):
-        if len(r) <= 9:
+        if len(r) <= 9 or is_total(r[0]) or is_total(r[2]):
             continue
         count = n(r[9])
         # Count every actual error row. When both source MO identifiers are
@@ -653,10 +700,14 @@ def adapt_errors(app: Path, source: Path, end: date) -> AdapterResult:
 
 SPECIALTIES={"Акушер-гинеколог":"doctor500_obgyn","Врач общей практики":"doctor500_gp","Кардиолог":"doctor500_cardiologist","Онколог":"doctor500_oncologist","Офтальмолог":"doctor500_ophthalmologist","Педиатр":"doctor500_pediatrician","Стоматолог":"doctor500_dentist","Терапевт":"doctor500_therapist","Хирург":"doctor500_surgeon"}
 
-def parse_physicians(path: Path, registry_path: Path) -> dict:
-    wb=openpyxl.load_workbook(path,read_only=True,data_only=True); registry=json.loads(registry_path.read_text(encoding="utf-8"))["organizations"]; roids={str(x["oid"]) for x in registry}
+def parse_physicians(path: Path, registry_path: Path, only_metric=None) -> dict:
+    wb=open_workbook(path,read_only=True,data_only=True); registry=json.loads(registry_path.read_text(encoding="utf-8"))["organizations"]; roids={str(x["oid"]) for x in registry}
     all_rows=[r for r in wb["Все врачи_Детализация по МО"].iter_rows(min_row=9,values_only=True) if r[0]=="Республика Татарстан" and r[1]]
     specialty_rows=[r for r in wb["Врачи по спец-тям_По МО"].iter_rows(min_row=9,values_only=True) if r[0]=="Республика Татарстан" and r[1] and r[4] in SPECIALTIES]
+    if only_metric:
+        specialty_rows=[r for r in specialty_rows if SPECIALTIES[r[4]]==only_metric]
+        if only_metric.startswith('doctor500_'): all_rows=[]
+        elif only_metric=='doctorsLevel3': all_rows=[r for r in all_rows if r[3]=='III уровень']
     unmatched=({str(r[1]) for r in all_rows}|{str(r[1]) for r in specialty_rows})-roids
     if unmatched: raise ValueError(f"Врачи: неизвестные OID {sorted(unmatched)[:10]}")
     for r in specialty_rows:
@@ -671,18 +722,18 @@ def parse_physicians(path: Path, registry_path: Path) -> dict:
         subject=wb["Врачи по спец-тям_По субъекту"]
         subject_values={str(r[1]):(n(r[2]),n(r[6])) for r in subject.iter_rows(min_row=10,values_only=True) if r[0]=="Республика Татарстан" and r[1] in SPECIALTIES}
         for sp,key in SPECIALTIES.items():
-            if sp not in subject_values: continue
+            if sp not in subject_values or (only_metric and key!=only_metric): continue
             expected=subject_values[sp]; actual=(sum(x["volume"] for x in out[key]),sum(x["count"] for x in out[key]))
             if expected!=actual: raise ValueError(f"Врачи: региональная сверка не сходится {sp}: {expected} != {actual}")
-    return out
+    return {k:v for k,v in out.items() if not only_metric or k==only_metric}
 
 
-def adapt_physicians(app: Path, source: Path, end: date, registry_path: Path) -> AdapterResult:
+def adapt_physicians(app: Path, source: Path, end: date, registry_path: Path, only_metric=None) -> AdapterResult:
     # «500+» — месячный показатель. Неполный календарный месяц разрешён
     # только как отдельный недельный контроль раздела 02 и не меняет
     # утверждённые августовские datasets/rating.
     if not is_full_month(end):
-        current = parse_physicians(source, registry_path)
+        current = parse_physicians(source, registry_path, only_metric)
         facts = {
             metric: {
                 "numerator": sum(row["count"] for row in rows),
@@ -703,7 +754,7 @@ def adapt_physicians(app: Path, source: Path, end: date, registry_path: Path) ->
         save(app, "physician-weekly-snapshot.json", weekly)
         return AdapterResult("physician_weekly_snapshot", ["physicians"], "PASS", ["physician-weekly-snapshot.json"], [source.name], facts, ["Неполный сентябрь сохранён только для недельного контроля; рейтинг и полный август не изменены."], [])
 
-    phys,monthly=(load(app,x) for x in ["physician-metrics.json","monthly-mo.json"]); current=parse_physicians(source,registry_path); facts={}
+    phys,monthly=(load(app,x) for x in ["physician-metrics.json","monthly-mo.json"]); current=parse_physicians(source,registry_path,only_metric); facts={}
     for metric,cur in current.items():
         old_ds=phys.get("datasets",{}).get(metric,{}); prev=previous_rows_from_dataset(old_ds); rows=[]
         for x in cur:
@@ -722,14 +773,15 @@ def adapt_physicians(app: Path, source: Path, end: date, registry_path: Path) ->
             monthly[metric]["previousLabel"]=previous_month_label(end);monthly[metric]["currentLabel"]=month_label(end).capitalize()
         facts[metric]=ds["summary"]
     full_month = is_full_month(end)
-    phys["source"]=source.name;phys["formed"]=date_ru(end);phys["period"]=month_label(end) if full_month else period_cumulative(end);phys["periodType"]="month" if full_month else "snapshot";phys["quality"]={"allMoRows":len(current["doctorsAll"]),"specialtyRows":sum(len(current[k]) for k in SPECIALTIES.values()),"unmatchedOids":0,"categoryErrors":0}
+    if not only_metric:
+        phys["source"]=source.name;phys["formed"]=date_ru(end);phys["period"]=month_label(end) if full_month else period_cumulative(end);phys["periodType"]="month" if full_month else "snapshot";phys["quality"]={"allMoRows":len(current["doctorsAll"]),"specialtyRows":sum(len(current[k]) for k in SPECIALTIES.values()),"unmatchedOids":0,"categoryErrors":0}
     save(app,"physician-metrics.json",phys);save(app,"monthly-mo.json",monthly)
     return AdapterResult("physician_import",["physicians"],"PASS",["physician-metrics.json","monthly-mo.json"],[source.name],facts,[],[])
 
 
 def parse_remd(path: Path) -> dict:
-    wb=openpyxl.load_workbook(path,read_only=True,data_only=True); ws=_sheet(wb,["Отчет РЭМД по МО"]); out={}
-    if re.match(r"Закрытые[_ ]случаи[_ ]ДОГВН[_ ]ПМО", path.name, re.I):
+    wb=open_workbook(path,read_only=True,data_only=True); ws=_sheet(wb,["Отчет РЭМД по МО"]); out={}
+    if ws.max_column < 80:
         for r in ws.iter_rows(min_row=5,values_only=True):
             if len(r)>13 and r[1] and r[2]: out[str(r[2])]={"name":str(r[1]),"s122":n(r[9]),"s228":n(r[13])}
         if not out: raise ValueError("Закрытые случаи ДОГВН/ПМО: не найдено СЭМД 122/228")
@@ -741,9 +793,18 @@ def parse_remd(path: Path) -> dict:
 
 
 def parse_foms(path: Path) -> dict:
-    wb=openpyxl.load_workbook(path,read_only=True,data_only=True); ws=wb.active; out={}
+    wb=open_workbook(path,read_only=True,data_only=True); ws=wb.active; out={}
+    header=list(ws.iter_rows(min_row=4,max_row=4,values_only=True))[0]
+    # Current export: name / OID / encounters / registered 228. Legacy: # / name / OID / encounters.
+    modern=len(header)>1 and 'oid' in str(header[1]).lower()
+    ni,oi,di=(0,1,2) if modern else (1,2,3)
     for r in ws.iter_rows(min_row=5,values_only=True):
-        if len(r)>3 and r[1] and r[2]: out[str(r[2])]={"name":str(r[1]),"den":n(r[3])}
+        if len(r)>di and r[ni] and r[oi] and not is_total(r[ni]):
+            oid=str(r[oi]).strip()
+            if not re.fullmatch(r'\d+(?:\.\d+)+',oid): raise ValueError('ФОМС: неверный столбец OID')
+            if oid in out: raise ValueError(f'ФОМС: повтор OID {oid}')
+            if r[di] is None: raise ValueError(f'ФОМС: отсутствует знаменатель {oid}')
+            out[oid]={"name":str(r[ni]),"den":n(r[di])}
     if not out: raise ValueError("ФОМС профилактика: не найдено строк данных")
     return out
 
@@ -754,17 +815,19 @@ def adapt_preventive(app: Path, remd: Path, foms_path: Path, end: date, registry
     for oid,v in ff.items():
         rv=rr.get(oid)
         if not rv: excluded.append({"oid":oid,"name":v["name"],"denominator":v["den"]});continue
-        num=max(rv["s122"],rv["s228"]); den=v["den"]; fact=num/den*100 if den else None; old=prev.get(oid); oldfact=old.get("fact") if old else None
+        num=max(rv["s122"],rv["s228"]) if end.year<=2026 else rv['s228']; den=v["den"]; fact=num/den*100 if den else None; old=prev.get(oid); oldfact=old.get("fact") if old else None
         selected="122" if rv["s122"]>=rv["s228"] else "228"; audit_rows.append({"name":v["name"],"oid":oid,"child":oid in child_oids,"semd122":rv["s122"],"semd228":rv["s228"],"selected":num,"selectedType":selected,"foms":den,"share":fact,"oldShare":oldfact,"change":None if oldfact is None or fact is None else fact-oldfact,"issues":[] if fact is None or fact<=100 else ["Значение выше 100%"]})
-        row={"name":v["name"],"oid":oid,"fact":fact or 0,"count":num,"previous":oldfact,"trend":None if oldfact is None or fact is None else fact-oldfact}
+        row={"name":v["name"],"oid":oid,"fact":fact,"count":num,"previous":oldfact,"trend":None if oldfact is None or fact is None else fact-oldfact}
         if is_external_source_name(v["name"]): row["sourceStatus"]="external_source"
         rows.append(row);d={"volume":den,"registered":num};dn[norm(v["name"])]=d;do[oid]=d
+    if not rows: raise ValueError('СЭМД 122/228: ни один OID числителя не сопоставлен со знаменателем')
+    if excluded: raise ValueError(f'СЭМД 122/228: отсутствует числитель для {len(excluded)} МО; показатель сохранен целиком')
     num=sum(r["selected"] for r in audit_rows); den=sum(r["foms"] for r in audit_rows); share=num/den*100 if den else None
     audit={"summary":{"status":"ready","year":end.year,"formula":"MAX(СЭМД 122; СЭМД 228) по каждой МО" if end.year<=2026 else "СЭМД 228","period122":period_cumulative(end),"period228":period_cumulative(end),"source122":remd.name,"source228":remd.name,"sourceDenominator":foms_path.name,"organizations":len(rows),"numerator":num,"denominator":den,"share":share,"selected122":sum(r["selectedType"]=="122" for r in audit_rows),"selected228":sum(r["selectedType"]=="228" for r in audit_rows),"selectedEqual":sum(r["semd122"]==r["semd228"] for r in audit_rows),"over100":sum((r["share"] or 0)>100 for r in audit_rows),"missing":len(excluded),"excluded":excluded,"note":"Включены взрослые и детские МО из ФОМС; строки без соответствия РЭМД остаются в аудите и не оцениваются."},"rows":audit_rows}
     base=mo.get("semd228",{})
     mo["semd228"]={**base,"date":date_ru(end),"period":period_cumulative(end),
                     **previous_cut_metadata(base,end),**previous_summary_metadata(base,end),
-                    "numerator":num,"denominator":den,"rows":rows};details["semd228"]=dn;oids["semd228"]=do
+                    "numerator":num,"denominator":den,"rows":retain_no_source_rows(prev,rows)};details["semd228"]=dn;oids["semd228"]=do
     cur=[{"name":r["name"],"oid":r["oid"],"fact":r["share"] or 0,"count":r["selected"],"volume":r["foms"]} for r in audit_rows]
     if is_full_month(end): monthly["semd228"]=monthly_payload(prev,cur,end)
     for name,data in [("preventive-semd-audit.json",audit),("mo-data.json",mo),("mo-details.json",details),("mo-detail-oids.json",oids),("monthly-mo.json",monthly)]:save(app,name,data)
@@ -772,7 +835,7 @@ def adapt_preventive(app: Path, remd: Path, foms_path: Path, end: date, registry
 
 
 def extract_waybill(path: Path, period: str) -> dict:
-    wb=openpyxl.load_workbook(path,read_only=True,data_only=True); ws=_sheet(wb,["Лист1","Статистика"]); start=14 if ws.title=="Лист1" else 15; rows=[]
+    wb=open_workbook(path,read_only=True,data_only=True); ws=_sheet(wb,["Лист1","Статистика"]); start=14 if ws.title=="Лист1" else 15; rows=[]
     for v in ws.iter_rows(min_row=start,values_only=True):
         if len(v)<13 or not isinstance(v[0],(int,float)) or not v[1]:continue
         vehicles=n(v[2]);moved=n(v[5]);rows.append({"sourceNumber":n(v[0]),"name":str(v[1]).strip(),"vehicles":vehicles,"ambulanceVehicles":n(v[3]),"otherVehicles":n(v[4]),"moved":moved,"movementShare":moved/vehicles*100 if vehicles else None,"drivers":n(v[6]),"mechanics":n(v[7]),"medics":n(v[8]),"waybills":n(v[9]),"ambulanceWaybills":n(v[10]),"otherWaybills":n(v[11]),"driversWithWaybills":n(v[12])})
@@ -834,7 +897,7 @@ def _aggregate_unit_metric(app: Path, metric: str, units_payload: dict, end: dat
 
 
 def adapt_tvsp_subunits(app: Path, source: Path, end: date, metric: str, family: str, title: str, entity: str) -> AdapterResult:
-    wb=openpyxl.load_workbook(source,read_only=True,data_only=True)
+    wb=open_workbook(source,read_only=True,data_only=True)
     ws=_sheet(wb,["Детализация по СП"]); old_units=load(app,"unit-data.json").get(metric,{})
     old_counts={(str(r.get("moOid","")),str(r.get("buildingIds",r.get("unitOid","")))):n(r.get("count")) for r in old_units.get("rows",[])}
     rows=[]
@@ -855,7 +918,7 @@ def adapt_tvsp_subunits(app: Path, source: Path, end: date, metric: str, family:
 
 
 def adapt_tvsp_buildings(app: Path, source: Path, end: date, metric: str, family: str, title: str, entity: str, start_row: int) -> AdapterResult:
-    wb=openpyxl.load_workbook(source,read_only=True,data_only=True);ws=_sheet(wb,["Факт передачи"])
+    wb=open_workbook(source,read_only=True,data_only=True);ws=_sheet(wb,["Факт передачи"])
     old_units=load(app,"unit-data.json").get(metric,{})
     old_counts={(str(r.get("moOid","")),str(r.get("buildingIds",r.get("unitOid","")))):n(r.get("count")) for r in old_units.get("rows",[])}
     seen={}
@@ -871,10 +934,10 @@ def adapt_tvsp_buildings(app: Path, source: Path, end: date, metric: str, family
 
 
 def _elmk_counts(source: Path) -> dict[str,int]:
-    wbv=openpyxl.load_workbook(source,read_only=True,data_only=True);ws=wbv["Отчет РЭМД по МО"]
+    wbv=open_workbook(source,read_only=True,data_only=True);ws=wbv["Отчет РЭМД по МО"]
     cols=[]
     try:
-        wbf=openpyxl.load_workbook(source,read_only=True,data_only=False);h=wbf["Отчет РЭМД по МО"]
+        wbf=open_workbook(source,read_only=True,data_only=False);h=wbf["Отчет РЭМД по МО"]
         names=list(h.iter_rows(min_row=5,max_row=5,values_only=True))[0]; fmts=list(h.iter_rows(min_row=6,max_row=6,values_only=True))[0]; last=""
         for idx,(a,b) in enumerate(zip(names,fmts),start=1):
             if a: last=str(a)
@@ -892,14 +955,16 @@ def _elmk_counts(source: Path) -> dict[str,int]:
 def adapt_presence(app: Path, source: Path, end: date, family: str) -> AdapterResult:
     status=load(app,"organization-status.json")
     if family=="tmk_remd":
-        wb=openpyxl.load_workbook(source,read_only=True,data_only=True);ws=_sheet(wb,["Детализированный отчет"])
+        wb=open_workbook(source,read_only=True,data_only=True);ws=_sheet(wb,["Детализированный отчет"])
         counts={str(r[3]):n(r[4]) for r in ws.iter_rows(min_row=7,values_only=True) if len(r)>4 and str(r[1] or "").strip()=="Республика Татарстан" and r[3]}
         key="tmkRemd"
     else:
         counts=_elmk_counts(source);key="elmk"
     rows=[]
     for old in status[key]["rows"]:
-        count=counts.get(str(old.get("oid","")),0);fact=100 if count>0 else 0;prev=old.get("fact")
+        oid=str(old.get('oid',''))
+        if oid not in counts: raise ValueError(f'{key}: отсутствует строка плановой МО {oid}; отсутствие не заменяется нулем')
+        count=counts[oid];fact=100 if count>0 else 0;prev=old.get("fact")
         rows.append({**old,"count":count,"fact":fact,"previous":prev,"trend":None if prev is None else fact-prev})
     positive=sum(r["fact"]>0 for r in rows); total=len(rows)
     note=(f"Плановый перечень — {total} МО; {positive} МО передают протоколы ТМК в РЭМД." if family=="tmk_remd" else f"Плановый перечень — {total} МО. На {date_ru(end)} передача подтверждена у {positive} МО; ноль не трактуется как нарушение без проверки лицензии.")
@@ -910,14 +975,15 @@ def adapt_presence(app: Path, source: Path, end: date, family: str) -> AdapterRe
     return AdapterResult("status_detail",[family],"PASS",["organization-status.json"],[source.name],{"planOrganizations":total,"transmitting":positive},[],[])
 
 
-def adapt_short_input(app: Path, source: Path, end: date) -> AdapterResult:
-    wb=openpyxl.load_workbook(source,read_only=True,data_only=True);ws=_sheet(wb,["Краткий ввод"]);raw=[]
+def adapt_short_input(app: Path, source: Path, end: date, only_metric=None) -> AdapterResult:
+    wb=open_workbook(source,read_only=True,data_only=True);ws=_sheet(wb,["Краткий ввод"]);raw=[]
     for r in ws.iter_rows(min_row=7,values_only=True):
         if len(r)<7 or not r[0] or str(r[0]).strip().casefold().startswith("итого"): continue
         raw.append((str(r[0]).strip(),str(r[1] or "").strip(),n(r[3])+n(r[6]),n(r[4])+n(r[5])))
     if not raw: raise ValueError("Краткий ввод: не найдено строк")
     op=load(app,"operational-mo.json");facts={}
     for key,title in [("shortInput","Количество случаев краткого ввода — всего"),("shortInputAmb","Количество случаев краткого ввода — амбулаторно"),("shortInputHosp","Количество случаев краткого ввода — стационар")]:
+        if only_metric and key!=only_metric: continue
         prev=previous_rows_from_dataset(op.get(key,{}));rows=[]
         for name,oid,amb,hosp in raw:
             fact=amb+hosp if key=="shortInput" else amb if key=="shortInputAmb" else hosp;old=prev.get(oid) or prev.get(norm(name));pv=old.get("fact") if old else None
@@ -931,9 +997,9 @@ def adapt_short_input(app: Path, source: Path, end: date) -> AdapterResult:
 
 
 def adapt_fap(app: Path, source: Path, end: date) -> AdapterResult:
-    wb=openpyxl.load_workbook(source,read_only=True,data_only=True);ws=_sheet(wb,["Лист1"]);grouped=defaultdict(lambda:{"count":0,"units":0,"zero":0})
+    wb=open_workbook(source,read_only=True,data_only=True);ws=_sheet(wb,["Лист1"]);grouped=defaultdict(lambda:{"count":0,"units":0,"zero":0})
     for r in ws.iter_rows(min_row=5,values_only=True):
-        if len(r)<4 or not r[0]:continue
+        if len(r)<4 or not r[0] or is_total(r[0]):continue
         g=grouped[str(r[0])];v=n(r[3]);g["count"]+=v;g["units"]+=1;g["zero"]+=int(v==0)
     if not grouped: raise ValueError("ФАП/ФП: не найдено строк")
     op=load(app,"operational-mo.json");prev=previous_rows_from_dataset(op.get("fapSemdCount",{}));rows=[]
@@ -948,7 +1014,7 @@ def adapt_fap(app: Path, source: Path, end: date) -> AdapterResult:
 
 def _asu_rows(path: Path):
     if path.suffix.casefold()==".xlsx":
-        wb=openpyxl.load_workbook(path,read_only=False,data_only=True);ws=wb.active
+        wb=open_workbook(path,read_only=False,data_only=True);ws=wb.active
         for row in ws.iter_rows(min_row=9):
             vals=[c.value for c in row];yield vals,bool(row[0].font.bold)
         return
@@ -967,7 +1033,7 @@ def _asu_rows(path: Path):
             converted=Path(td)/(path.stem+".xlsx")
             if proc.returncode or not converted.exists():
                 raise RuntimeError(f"Не удалось прочитать legacy .xls АСУ СМП: {proc.stderr[-500:]}")
-            wb=openpyxl.load_workbook(converted,read_only=False,data_only=True);ws=wb.active
+            wb=open_workbook(converted,read_only=False,data_only=True);ws=wb.active
             for row in ws.iter_rows(min_row=9):
                 vals=[c.value for c in row];yield vals,bool(row[0].font.bold)
         return
@@ -976,7 +1042,7 @@ def _asu_rows(path: Path):
 def adapt_asu_smp(app: Path, source: Path, end: date) -> AdapterResult:
     mo,details=(load(app,x) for x in ["mo-data.json","mo-details.json"]);base=mo.get("smp",{});prev=previous_rows_from_dataset(base);rows=[];same_cut=base.get("date")==date_ru(end)
     for r,bold in _asu_rows(source):
-        if len(r)<=10 or not bold or not str(r[0] or "").strip():continue
+        if len(r)<=10 or not bold or not str(r[0] or "").strip() or is_total(r[0]):continue
         name=str(r[0]).strip();vol=n(r[1]);reg=n(r[10]);fact=reg/vol*100 if vol else 0;old=prev.get(norm(name));pv,trend=previous_fields(old,same_cut,fact)
         rows.append({"name":name,"fact":fact,"count":reg,"volume":vol,"registered":reg,"previous":pv,"trend":trend})
     if not rows:raise ValueError("АСУ СМП: не найдено итоговых строк организаций")

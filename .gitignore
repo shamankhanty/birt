@@ -11,3 +11,5 @@ offline-dist/
 offline-package/
 .env*
 !.env.example
+.local-updater-v2/
+REPORTS/

@@ -87,10 +87,16 @@ def build_sources(d:Path):
   wb_save(path,[('Факт передачи',wr)]);return path
  diag=building(f'Доля_ТВСП_диагностических_{end}.xlsx',8); smpt=building(f'Отчет_СМП_ТВСП_{end}.xlsx',7)
  tmk=d/f'Отчет_ТМК_РЭМД_{end}.xlsx'
- def tmkw(ws):ws.cell(7,2,'Республика Татарстан');ws.cell(7,3,name);ws.cell(7,4,oid);ws.cell(7,5,5)
+ def tmkw(ws):
+  planned=json.loads((ROOT/'app/organization-status.json').read_text(encoding='utf-8'))['tmkRemd']['rows']
+  for i,row in enumerate(planned,7):
+   ws.cell(i,2,'Республика Татарстан');ws.cell(i,3,row['name']);ws.cell(i,4,row['oid']);ws.cell(i,5,5 if row['oid']==oid else 0)
  wb_save(tmk,[('Детализированный отчет',tmkw)])
  elmk=d/f'Медкнижки_{end}.xlsx'
- def elmkw(ws):ws.cell(8,2,name);ws.cell(8,3,oid);ws.cell(8,10,35);ws.cell(8,11,40);ws.cell(8,126,9)
+ def elmkw(ws):
+  planned=json.loads((ROOT/'app/organization-status.json').read_text(encoding='utf-8'))['elmk']['rows']
+  for i,row in enumerate(planned,8):
+   ws.cell(i,2,row['name']);ws.cell(i,3,row['oid']);ws.cell(i,10,35 if row['oid']==oid else 0);ws.cell(i,11,40 if row['oid']==oid else 0);ws.cell(i,126,9 if row['oid']==oid else 0)
  wb_save(elmk,[('Отчет РЭМД по МО',elmkw)])
  short=d/f'Случаи краткого ввода_{end}.xlsx'
  def shortw(ws):ws.cell(7,1,name);ws.cell(7,2,oid);ws.cell(7,4,2);ws.cell(7,5,1);ws.cell(7,6,1);ws.cell(7,7,3)
@@ -136,8 +142,18 @@ def main():
     assert payload['total']==20,payload['total'];assert bd['attributedErrors']==15,bd;assert bd['unassignedErrors']==5,bd;assert bd['coveragePercent']==75.0,bd
     assert bd['organizations'][0]['oid']==test_oid,bd['organizations'][0];assert bd['organizations'][0]['topCategories'][0]['name']=='Ошибка тест'
    results.append({'adapter':label,'changed':r.changedFiles,'facts':r.facts})
+  # The valid presence fixture covers every planned OID. An absent row must
+  # still fail: fixing the fixture must never turn absence into an implicit zero.
+  missing_oid_source=d/'tmk-missing-oid.xlsx'
+  book=openpyxl.load_workbook(src['tmk']);book.active.delete_rows(7);book.save(missing_oid_source);book.close()
+  try:
+   adapt_presence(fresh(d,'app-missing-oid'),missing_oid_source,end,'tmk_remd')
+  except ValueError as error:
+   assert 'отсутствует строка плановой МО' in str(error),str(error)
+  else:
+   raise AssertionError('Missing planned OID must fail')
   # End-to-end staging can be formally PASS on a non-rating operational source.
   inp=d/'only-errors';inp.mkdir();shutil.copy2(src['errors'],inp/src['errors'].name);out=d/'candidate';m=stage(inp,out);assert m['status']!='FAIL',m;assert m['formalValidation']['status']!='FAIL',m['formalValidation'];assert not m['formalValidation']['summary']['blocking'],m['formalValidation'];assert m['changedFiles']==['error-categories.json','error-organizations.json'],m['changedFiles']
  assert sha_tree(ROOT/'app')==canonical,'canonical app changed'
- print(json.dumps({'status':'PASS','adapters':len(results),'adapterResults':results,'canonicalUnchanged':True,'endToEndStaging':'PASS'},ensure_ascii=False,indent=2))
+ print(json.dumps({'status':'PASS','adapters':len(results),'adapterResults':results,'canonicalUnchanged':True,'missingOidRejected':True,'endToEndStaging':'PASS'},ensure_ascii=False,indent=2))
 if __name__=='__main__':main()
