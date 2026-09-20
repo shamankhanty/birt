@@ -32,6 +32,7 @@ import {
 import type { MoRegistry, RegistryOrganization } from "../lib/mo-registry.js";
 import { createIndicatorRegistryRuntime } from "../lib/indicator-registry.js";
 import { createCurrentOperationalRuntime } from "../lib/current-operational-runtime.js";
+import { createReleaseRuntimeMetadata } from "../lib/release-runtime-metadata.js";
 import type { IndicatorRegistryDocument } from "../lib/indicator-registry.js";
 import {
   buildFullMonthComparison,
@@ -117,7 +118,7 @@ type FederalControlData = {
   agreement: FederalControlRow[];
   collegium: FederalControlRow[];
 };
-const DASHBOARD_VERSION = "5.4.5";
+const DASHBOARD_VERSION = "5.4.6";
 const indicatorRegistry = createIndicatorRegistryRuntime(
   indicatorRegistryRaw as IndicatorRegistryDocument,
 );
@@ -499,6 +500,10 @@ const currentOperationalRuntime = createCurrentOperationalRuntime({
   physicianMetrics: physicianMetricsRaw,
   physicianWeeklySnapshot: physicianWeeklySnapshotRaw,
   errorCategories: errorCategoriesRaw,
+});
+const releaseRuntime = createReleaseRuntimeMetadata({
+  operationalRuntime: currentOperationalRuntime,
+  physicianWeeklySnapshot: physicianWeeklySnapshotRaw,
 });
 const runtimeIndicator = (item: Indicator): Indicator => {
   const source = operationalDatasets[item.id];
@@ -988,7 +993,19 @@ const operational = [
     note: "Последняя полная неделя · 100% ошибок сопоставлены с МО · доля не рассчитана без знаменателя",
     accent: "red",
   },
-];
+].map((card, index) => {
+  const runtimeIds = ["egpu2days", "tmkMaxCount", "shortInput", "hospital", "fapSemdCount", "errors"];
+  const id = runtimeIds[index];
+  const metadata = currentOperationalRuntime[id];
+  const dataset = operationalDatasets[id] as any;
+  return {
+    ...card,
+    value: metadata?.fact ?? metadata?.total ?? card.value,
+    period: metadata?.period ?? (metadata?.date ? `на ${metadata.date}` : card.period),
+    note: metadata?.note ?? (id === "errors" ? "Оперативный недельный контроль; доля не рассчитывается без знаменателя." : "Оперативные данные принятого production-среза."),
+    source: metadata?.source ?? dataset?.source ?? null,
+  };
+});
 const sumDatasetFacts = (dataset?: MoDataset) =>
   dataset?.rows.reduce((sum, row) => sum + (row.fact ?? 0), 0) ?? 0;
 const extendedHospitalTotals = Object.values(moDetails.hospital ?? {}).reduce(
@@ -1362,29 +1379,10 @@ const fullMonthCumulativeComparison = buildFullMonthComparison(
   "cumulative",
 );
 const comparisonPeriods: Record<string, { previous: string; current: string }> =
-  {
-    // Оперативная динамика = текущая подтверждённая выгрузка к непосредственно предыдущей.
-    egpu: { previous: "01.01–07.09.2026", current: "01.01–11.09.2026" },
-    egpu2days: { previous: "01.01–07.09.2026", current: "01.01–11.09.2026" },
-    birth: { previous: "01.01–07.09.2026", current: "01.01–11.09.2026" },
-    death: { previous: "01.01–07.09.2026", current: "01.01–11.09.2026" },
-    semd228: { previous: "01.01–07.09.2026", current: "01.01–11.09.2026" },
-    ambulatoryCase: { previous: "01.01–29.08.2026", current: "01.01–11.09.2026" },
-    tvspStationary: { previous: "срез 07.09.2026", current: "срез 11.09.2026" },
-    tvspAmbulatory: { previous: "срез 07.09.2026", current: "срез 11.09.2026" },
-    tvspLaboratory: { previous: "срез 07.09.2026", current: "срез 11.09.2026" },
-    tvspDiagnostic: { previous: "01.01–07.09.2026", current: "01.01–11.09.2026" },
-    smpFederal: { previous: "01.01–07.09.2026", current: "01.01–11.09.2026" },
-    smp: { previous: "01.01–28.08.2026", current: "01.01–11.09.2026" },
-    shortInput: { previous: "01.01–07.09.2026", current: "01.01–11.09.2026" },
-    shortInputAmb: { previous: "01.01–07.09.2026", current: "01.01–11.09.2026" },
-    shortInputHosp: { previous: "01.01–07.09.2026", current: "01.01–11.09.2026" },
-    fapSemdCount: { previous: "01.01–07.09.2026", current: "01.01–11.09.2026" },
-    elmk: { previous: "01.01–07.09.2026", current: "01.01–11.09.2026" },
-    tmkRemd: { previous: "01.01–07.09.2026", current: "01.01–11.09.2026" },
-    tmkMaxCount: { previous: "01.01–07.09.2026", current: "01.01–11.09.2026" },
-    elnMaxCount: { previous: "01.01–07.09.2026", current: "01.01–11.09.2026" },
-  };
+  Object.fromEntries(Object.entries(currentOperationalRuntime).map(([id, metadata]) => [id, {
+    previous: metadata.previousPeriod ?? (metadata.previousDate ? `на ${metadata.previousDate}` : "предыдущая выгрузка"),
+    current: metadata.period ?? (metadata.date ? `на ${metadata.date}` : "текущий срез"),
+  }])) as Record<string, { previous: string; current: string }>;
 // Порядок соответствует последовательности показателей в презентации
 // «ВКС 03.08.26». Непрезентационные показатели добавляются в конец.
 const presentationMetricOrder = [
@@ -2657,6 +2655,13 @@ function hearingMetricGroupsForDisplay(row: HearingRow, filter: HearingChangeFil
 }
 
 const versionHistoryEntries = [
+  {
+  version: "5.4.6",
+  date: "20.09.2026",
+  items: [
+    "Оперативные подписи интерфейса получают период принятого production-среза из CURRENT runtime; август сохраняется последним полным рейтингом.",
+  ],
+},
   {
   version: "5.4.5",
   date: "15.09.2026",
@@ -4853,7 +4858,7 @@ export default function Home() {
           </div>
         </div>
         <div className="asof">
-          <span className="pulse" /> Версия {DASHBOARD_VERSION} · оперативные данные 11–13.09.2026 · рейтинг: август 2026
+          <span className="pulse" /> Версия {releaseRuntime.version} · оперативные данные {releaseRuntime.operationalCut.period} · рейтинг: {releaseRuntime.ratingPeriod}
         </div>
       </header>
 
