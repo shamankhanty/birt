@@ -101,13 +101,13 @@ jobs:
           if (manifest.baselineVersion !== RELEASE_VERSION) throw new Error(`current manifest ${manifest.baselineVersion} != ${RELEASE_VERSION}`);
           const version = RELEASE_VERSION;
 
-          errors = json.loads(Path("app/error-categories.json").read_text(encoding="utf-8"))
-          error_org = json.loads(Path("app/error-organizations.json").read_text(encoding="utf-8"))
-          assert errors["total"] == sum(int(item["count"]) for item in errors["items"]), "error category total mismatch"
-          assert error_org["totalErrors"] == errors["total"], "error organization total mismatch"
-          assert "organizationBreakdown" not in errors, "duplicate error organization payload must stay in error-organizations.json only"
+          const errors = JSON.parse(await readFile("app/error-categories.json", "utf8"));
+          const errorOrg = JSON.parse(await readFile("app/error-organizations.json", "utf8"));
+          if (errors.total !== errors.items.reduce((sum, item) => sum + Number(item.count), 0)) throw new Error("error category total mismatch");
+          if (errorOrg.totalErrors !== errors.total) throw new Error("error organization total mismatch");
+          if (Object.hasOwn(errors, "organizationBreakdown")) throw new Error("duplicate error organization payload must stay in error-organizations.json only");
 
-          print(f"Release consistency: PASS; version={version}; REMD errors={errors['total']}")
+          console.log(`Release consistency: PASS; version=${version}; REMD errors=${errors.total}`);
           NODE
 
       - name: Validate calculations and metadata
