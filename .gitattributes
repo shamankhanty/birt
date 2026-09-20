@@ -22,3 +22,6 @@
 /config/indicator-registry.json text eol=lf
 /OPEN_ISSUES.md text eol=lf
 /STATE.md text eol=lf
+/baseline/manifest.json text eol=lf
+/tests/baseline-lock.test.mjs text eol=lf
+/validation/*.json text eol=lf
