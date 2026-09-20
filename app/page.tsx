@@ -31,6 +31,7 @@ import {
 } from "../lib/mo-registry.js";
 import type { MoRegistry, RegistryOrganization } from "../lib/mo-registry.js";
 import { createIndicatorRegistryRuntime } from "../lib/indicator-registry.js";
+import { createCurrentOperationalRuntime } from "../lib/current-operational-runtime.js";
 import type { IndicatorRegistryDocument } from "../lib/indicator-registry.js";
 import {
   buildFullMonthComparison,
@@ -482,8 +483,42 @@ const baselineIndicators: Indicator[] = [
     lag: null,
   },
 ];
-const indicators = indicatorRegistry.applyToStaticIndicators(
-  baselineIndicators,
+// Operational facts are always read from the accepted production datasets. The
+// table above contains stable presentation fallbacks only; it is never the
+// source of a current date, period, total, numerator or denominator.
+const operationalDatasets = {
+  ...(moDataRaw as Record<string, any>),
+  ...(operationalMoRaw as Record<string, any>),
+  ...(organizationStatusRaw as Record<string, any>),
+  ...(physicianMetricsRaw.datasets as Record<string, any>),
+};
+const currentOperationalRuntime = createCurrentOperationalRuntime({
+  moData: moDataRaw,
+  operationalMo: operationalMoRaw,
+  organizationStatus: organizationStatusRaw,
+  physicianMetrics: physicianMetricsRaw,
+  physicianWeeklySnapshot: physicianWeeklySnapshotRaw,
+  errorCategories: errorCategoriesRaw,
+});
+const runtimeIndicator = (item: Indicator): Indicator => {
+  const source = operationalDatasets[item.id];
+  const metadata = currentOperationalRuntime[item.id];
+  if (!source) return item;
+  const rows = source.rows ?? [];
+  const quantity = source.quantity ?? source.total ?? rows.reduce((sum: number, row: any) => sum + Number(row.count ?? row.volume ?? row.fact ?? 0), 0);
+  const previous = source.previousDate ?? source.previousPeriod?.date;
+  return {
+    ...item,
+    fact: Number(source.fact ?? source.value ?? item.fact),
+    trend: source.trend ?? item.trend,
+    date: metadata?.date ?? source.date ?? item.date,
+    compareTo: metadata?.previousDate ?? previous ?? item.compareTo,
+    quantity: source.quantity ?? quantity,
+    quantityLabel: source.quantityLabel ?? item.quantityLabel,
+  };
+};
+const indicators = baselineIndicators.map(runtimeIndicator).map((item) =>
+  indicatorRegistry.applyToStaticIndicators([item])[0],
 ) as Indicator[];
 
 type MoRow = {

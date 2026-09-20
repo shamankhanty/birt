@@ -7,9 +7,21 @@ const weekly = JSON.parse(fs.readFileSync("app/physician-weekly-snapshot.json", 
 const monthly = JSON.parse(fs.readFileSync("app/monthly-mo.json", "utf8"));
 const physicians = JSON.parse(fs.readFileSync("app/physician-metrics.json", "utf8"));
 
+function parseOperationalPeriod(value) {
+  const match = String(value).match(/^(\d{2})\.(\d{2})(?:\.(\d{4}))?(?:\s*[–—-]\s*|\s*)(\d{2})\.(\d{2})\.(\d{4})$/u);
+  if (!match) return null;
+  const year = match[3] ?? match[6];
+  return {
+    start: new Date(`${year}-${match[2]}-${match[1]}`),
+    end: new Date(`${match[6]}-${match[5]}-${match[4]}`),
+  };
+}
+
 test("partial September 500+ is operational control and does not replace monthly rating", () => {
-  assert.equal(weekly.date, "11.09.2026");
-  assert.match(weekly.period, /01\.01–11\.09\.2026/u);
+  assert.match(weekly.date, /^\d{2}\.\d{2}\.2026$/u);
+  const period = parseOperationalPeriod(weekly.period);
+  assert.ok(period, `invalid operational period: ${weekly.period}`);
+  assert.ok(period.start <= period.end);
   assert.match(page, /physician-weekly-snapshot\.json/u);
   assert.match(page, /Оперативный недельный контроль «500\+»/u);
   assert.match(page, /В месячный рейтинг не включается/u);

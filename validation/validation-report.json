@@ -1,18 +1,18 @@
 {
   "schemaVersion": 1,
   "baselineVersion": "5.4.5",
-  "dataDate": "11.09.2026",
+  "dataDate": "17.09.2026",
   "reportingPeriod": {
     "latestFullMonth": "август 2026",
     "previousFullMonth": "июль 2026",
     "hasPartialNewerMonth": true,
-    "latestObservedDate": "11.09.2026"
+    "latestObservedDate": "17.09.2026"
   },
-  "overallStatus": "PASS",
+  "overallStatus": "WARNING",
   "summary": {
     "checks": 15,
-    "PASS": 15,
-    "WARNING": 0,
+    "PASS": 14,
+    "WARNING": 1,
     "FAIL": 0,
     "blocking": 0,
     "aiReviewItems": 0
@@ -121,9 +121,9 @@
       "status": "PASS",
       "blocking": false,
       "requiresAiReview": false,
-      "message": "1717 trend rows reconcile to fact minus previous",
+      "message": "1750 trend rows reconcile to fact minus previous",
       "details": {
-        "inspectedRows": 1717
+        "inspectedRows": 1750
       },
       "issues": []
     },
@@ -152,7 +152,7 @@
         "activeRatingIndicators": 16,
         "latestFullMonth": "август 2026",
         "previousFullMonth": "июль 2026",
-        "latestObservedDate": "11.09.2026",
+        "latestObservedDate": "17.09.2026",
         "hasPartialNewerMonth": true
       },
       "issues": []
@@ -161,15 +161,29 @@
       "id": "data.new_unresolved_organizations",
       "category": "completeness",
       "title": "Новые несопоставленные названия МО",
-      "status": "PASS",
+      "status": "WARNING",
       "blocking": false,
       "requiresAiReview": false,
-      "message": "No new unresolved organizations beyond 147 acknowledged baseline rows",
+      "message": "1 issue(s) detected",
       "details": {
-        "currentUnresolvedRows": 147,
+        "currentUnresolvedRows": 137,
         "acknowledgedBaselineRows": 147
       },
-      "issues": []
+      "issues": [
+        {
+          "kind": "unresolved_organization",
+          "scope": "mo-data",
+          "metric": "smp",
+          "organizationOid": null,
+          "organizationName": "Лаишевский(ГАУЗ ССМП г.Казань)",
+          "field": "name",
+          "fingerprint": "unresolved_organization|mo-data|smp||Лаишевский(ГАУЗ ССМП г.Казань)|name",
+          "acknowledged": false,
+          "status": "WARNING",
+          "requiresAiReview": false,
+          "reviewReason": null
+        }
+      ]
     },
     {
       "id": "data.dropped_organizations",
@@ -216,7 +230,7 @@
       "requiresAiReview": false,
       "message": "No new percentage anomalies beyond 35 acknowledged baseline cases",
       "details": {
-        "currentAnomalyRows": 35,
+        "currentAnomalyRows": 32,
         "acknowledgedBaselineCases": 35
       },
       "issues": []

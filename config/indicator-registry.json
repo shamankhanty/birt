@@ -40,9 +40,6 @@
       },
       "period": {
         "kind": "cumulative",
-        "current": "01.01–29.08.2026",
-        "date": "29.08.2026",
-        "comparisonLabel": "Июль 2026",
         "cadence": "Еженедельно; накопительно с начала года"
       },
       "plan": {
@@ -79,9 +76,6 @@
       },
       "period": {
         "kind": "cumulative",
-        "current": "01.01–31.08.2026",
-        "date": "31.08.2026",
-        "comparisonLabel": "На 31.08",
         "cadence": "Еженедельно; накопительно с начала года"
       },
       "plan": {
@@ -118,9 +112,6 @@
       },
       "period": {
         "kind": "cumulative",
-        "current": "01.01–31.08.2026",
-        "date": "31.08.2026",
-        "comparisonLabel": "На 31.08",
         "cadence": "Еженедельно; накопительно с начала года"
       },
       "plan": {
@@ -157,9 +148,6 @@
       },
       "period": {
         "kind": "monthly",
-        "current": "август 2026",
-        "date": "31.08.2026",
-        "comparisonLabel": "Август 2026",
         "cadence": null
       },
       "plan": {
@@ -200,9 +188,6 @@
       },
       "period": {
         "kind": "monthly",
-        "current": "август 2026",
-        "date": "31.08.2026",
-        "comparisonLabel": "Август 2026",
         "cadence": null
       },
       "plan": {
@@ -243,9 +228,6 @@
       },
       "period": {
         "kind": "monthly",
-        "current": "август 2026",
-        "date": "31.08.2026",
-        "comparisonLabel": "Август 2026",
         "cadence": null
       },
       "plan": {
@@ -286,9 +268,6 @@
       },
       "period": {
         "kind": "monthly",
-        "current": "август 2026",
-        "date": "31.08.2026",
-        "comparisonLabel": "Август 2026",
         "cadence": null
       },
       "plan": {
@@ -329,9 +308,6 @@
       },
       "period": {
         "kind": "monthly",
-        "current": "август 2026",
-        "date": "31.08.2026",
-        "comparisonLabel": "Август 2026",
         "cadence": null
       },
       "plan": {
@@ -372,9 +348,6 @@
       },
       "period": {
         "kind": "monthly",
-        "current": "август 2026",
-        "date": "31.08.2026",
-        "comparisonLabel": "Август 2026",
         "cadence": null
       },
       "plan": {
@@ -415,9 +388,6 @@
       },
       "period": {
         "kind": "monthly",
-        "current": "август 2026",
-        "date": "31.08.2026",
-        "comparisonLabel": "Август 2026",
         "cadence": null
       },
       "plan": {
@@ -458,9 +428,6 @@
       },
       "period": {
         "kind": "monthly",
-        "current": "август 2026",
-        "date": "31.08.2026",
-        "comparisonLabel": "Август 2026",
         "cadence": null
       },
       "plan": {
@@ -501,9 +468,6 @@
       },
       "period": {
         "kind": "monthly",
-        "current": "август 2026",
-        "date": "31.08.2026",
-        "comparisonLabel": "Август 2026",
         "cadence": null
       },
       "plan": {
@@ -544,9 +508,6 @@
       },
       "period": {
         "kind": "monthly",
-        "current": "август 2026",
-        "date": "31.08.2026",
-        "comparisonLabel": "Август 2026",
         "cadence": null
       },
       "plan": {
@@ -583,9 +544,6 @@
       },
       "period": {
         "kind": "monthly",
-        "current": "август 2026",
-        "date": "31.08.2026",
-        "comparisonLabel": "Август 2026",
         "cadence": null
       },
       "plan": {
@@ -622,9 +580,6 @@
       },
       "period": {
         "kind": "cumulative",
-        "current": "01.01–11.09.2026",
-        "date": "11.09.2026",
-        "comparisonLabel": "На 11.09",
         "cadence": "Еженедельно; накопительно с начала года"
       },
       "plan": {
@@ -661,9 +616,6 @@
       },
       "period": {
         "kind": "cumulative",
-        "current": "01.01–11.09.2026",
-        "date": "11.09.2026",
-        "comparisonLabel": "На 11.09",
         "cadence": "Еженедельно; накопительно с начала года"
       },
       "plan": {
@@ -700,9 +652,6 @@
       },
       "period": {
         "kind": "cumulative",
-        "current": "01.01–28.08.2026",
-        "date": "28.08.2026",
-        "comparisonLabel": null,
         "cadence": "Еженедельно"
       },
       "plan": {
@@ -739,9 +688,6 @@
       },
       "period": {
         "kind": "operational",
-        "current": null,
-        "date": "07.09.2026",
-        "comparisonLabel": null,
         "cadence": null
       },
       "plan": {
@@ -780,9 +726,6 @@
       },
       "period": {
         "kind": "cumulative",
-        "current": "01.01–11.09.2026",
-        "date": "11.09.2026",
-        "comparisonLabel": "На 07.09",
         "cadence": "Еженедельно и за полный месяц"
       },
       "plan": {
@@ -823,9 +766,6 @@
       },
       "period": {
         "kind": "operational",
-        "current": "07.09–13.09.2026",
-        "date": "13.09.2026",
-        "comparisonLabel": null,
         "cadence": "Еженедельно; последняя полная неделя"
       },
       "plan": {
@@ -862,9 +802,6 @@
       },
       "period": {
         "kind": "cumulative",
-        "current": "01.01–29.08.2026",
-        "date": "29.08.2026",
-        "comparisonLabel": null,
         "cadence": "Еженедельно"
       },
       "plan": {
@@ -901,9 +838,6 @@
       },
       "period": {
         "kind": "cumulative",
-        "current": "01.01–31.08.2026",
-        "date": "31.08.2026",
-        "comparisonLabel": "На 31.08",
         "cadence": "Еженедельно; накопительно с начала года"
       },
       "plan": {
@@ -940,9 +874,6 @@
       },
       "period": {
         "kind": "cumulative",
-        "current": "01.01–29.08.2026",
-        "date": "29.08.2026",
-        "comparisonLabel": null,
         "cadence": "Еженедельно и накопительно с начала года"
       },
       "plan": {
@@ -979,9 +910,6 @@
       },
       "period": {
         "kind": "monthly",
-        "current": null,
-        "date": "30.06.2026",
-        "comparisonLabel": null,
         "cadence": "Ежемесячно"
       },
       "plan": {
@@ -1018,9 +946,6 @@
       },
       "period": {
         "kind": "cumulative",
-        "current": "01.01–31.08.2026",
-        "date": "31.08.2026",
-        "comparisonLabel": "На 31.08",
         "cadence": "Еженедельно; накопительно с начала года"
       },
       "plan": {
@@ -1059,9 +984,6 @@
       },
       "period": {
         "kind": "cumulative",
-        "current": "01.01–28.08.2026",
-        "date": "28.08.2026",
-        "comparisonLabel": null,
         "cadence": "Еженедельно, накопительно с начала года"
       },
       "plan": {
@@ -1098,9 +1020,6 @@
       },
       "period": {
         "kind": "cumulative",
-        "current": "01.01–28.08.2026",
-        "date": "28.08.2026",
-        "comparisonLabel": null,
         "cadence": "Еженедельно, накопительно с начала года"
       },
       "plan": {
@@ -1137,9 +1056,6 @@
       },
       "period": {
         "kind": "cumulative",
-        "current": "01.01–28.08.2026",
-        "date": "28.08.2026",
-        "comparisonLabel": null,
         "cadence": "Еженедельно, накопительно с начала года"
       },
       "plan": {
@@ -1176,9 +1092,6 @@
       },
       "period": {
         "kind": "cumulative",
-        "current": "01.01–11.09.2026",
-        "date": "11.09.2026",
-        "comparisonLabel": "На 11.09",
         "cadence": "Еженедельно; накопительно с начала года"
       },
       "plan": {
@@ -1215,9 +1128,6 @@
       },
       "period": {
         "kind": "cumulative",
-        "current": "01.01–27.08.2026",
-        "date": "28.08.2026",
-        "comparisonLabel": null,
         "cadence": "Еженедельно"
       },
       "plan": {
@@ -1254,9 +1164,6 @@
       },
       "period": {
         "kind": "operational",
-        "current": null,
-        "date": "07.09.2026",
-        "comparisonLabel": null,
         "cadence": null
       },
       "plan": {
@@ -1295,9 +1202,6 @@
       },
       "period": {
         "kind": "cumulative",
-        "current": "01.01–11.09.2026",
-        "date": "11.09.2026",
-        "comparisonLabel": "На 07.09",
         "cadence": "Еженедельно и за полный месяц"
       },
       "plan": {
@@ -1338,9 +1242,6 @@
       },
       "period": {
         "kind": "cumulative",
-        "current": "01.01–27.08.2026",
-        "date": "28.08.2026",
-        "comparisonLabel": null,
         "cadence": "Еженедельно"
       },
       "plan": {
@@ -1377,9 +1278,6 @@
       },
       "period": {
         "kind": "cumulative",
-        "current": "январь–август 2026",
-        "date": "28.08.2026",
-        "comparisonLabel": "На 28.08.2026",
         "cadence": "Ежемесячно, нарастающим итогом"
       },
       "plan": {
@@ -1416,9 +1314,6 @@
       },
       "period": {
         "kind": "cumulative",
-        "current": "01.01–27.08.2026",
-        "date": "28.08.2026",
-        "comparisonLabel": "На 28.08.2026",
         "cadence": "Еженедельно"
       },
       "plan": {
@@ -1455,9 +1350,6 @@
       },
       "period": {
         "kind": "cumulative",
-        "current": "январь–август 2026",
-        "date": "28.08.2026",
-        "comparisonLabel": null,
         "cadence": "Еженедельно"
       },
       "plan": {
@@ -1494,9 +1386,6 @@
       },
       "period": {
         "kind": "cumulative",
-        "current": "январь–август 2026",
-        "date": "28.08.2026",
-        "comparisonLabel": "На 28.08.2026",
         "cadence": "Еженедельно"
       },
       "plan": {
@@ -1533,9 +1422,6 @@
       },
       "period": {
         "kind": "operational",
-        "current": null,
-        "date": "07.09.2026",
-        "comparisonLabel": null,
         "cadence": "Еженедельно и за полный месяц"
       },
       "plan": {

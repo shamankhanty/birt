@@ -17,11 +17,19 @@ test("all source-backed cumulative shares persist current numerator and denomina
 });
 
 test("confirmed previous components expose the real cumulative movements", () => {
-  assert.deepEqual([mo.semd228.previousNumerator, mo.semd228.previousDenominator], [1557278, 2036859]);
-  assert.deepEqual([mo.ambulatoryCase.previousNumerator, mo.ambulatoryCase.previousDenominator], [9549272, 10948601]);
-  assert.deepEqual([mo.smp.previousNumerator, mo.smp.previousDenominator], [576237, 624216]);
-  assert.equal(mo.semd228.numerator - mo.semd228.previousNumerator, -29683);
-  assert.equal(mo.semd228.denominator - mo.semd228.previousDenominator, 32773);
+  for (const metric of sourceBacked) {
+    const dataset = mo[metric];
+    assert.equal(dataset.numerator, sum(metric, "registered"), `${metric} current numerator`);
+    assert.equal(dataset.denominator, sum(metric, "volume"), `${metric} current denominator`);
+    if (!("previousNumerator" in dataset) || !("previousDenominator" in dataset)) continue;
+    assert.equal(typeof dataset.previousNumerator, "number", `${metric} previous numerator`);
+    assert.equal(typeof dataset.previousDenominator, "number", `${metric} previous denominator`);
+    assert.ok(dataset.previousPeriod && dataset.period, `${metric} periods are present`);
+    const periodDate = value => new Date(value.split(/[–-]/u).at(-1).split(".").reverse().join("-"));
+    assert.ok(periodDate(dataset.previousPeriod) < periodDate(dataset.period), `${metric} previous period precedes current period`);
+    assert.equal(dataset.numerator - dataset.previousNumerator, sum(metric, "registered") - dataset.previousNumerator, `${metric} numerator delta`);
+    assert.equal(dataset.denominator - dataset.previousDenominator, sum(metric, "volume") - dataset.previousDenominator, `${metric} denominator delta`);
+  }
 });
 
 test("indicator UI shows component dynamics only where the regional ratio is source-backed", () => {

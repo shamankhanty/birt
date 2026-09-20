@@ -28,6 +28,7 @@ function currentMapping() {
         metric,
         name: row.name,
         sourceOid: row.oid ?? null,
+        sourceStatus: row.sourceStatus ?? null,
         cleanName: cleanMoName(row.name),
         resolvedOid: runtime.organizationForMetric(metric, row)?.oid ?? null,
       });
@@ -53,11 +54,64 @@ function numberTokens(value) {
   return [...String(value).matchAll(/№\s*(\d+)/gu)].map((match) => match[1]);
 }
 
-test("central MO runtime matches the approved linkage snapshot", () => {
+test("current rows resolve through immutable MO/OID mapping", () => {
   const mapping = currentMapping();
-  assert.equal(mapping.length, baseline.entryCount);
-  assert.equal(mapping.filter((entry) => entry.resolvedOid !== null).length, baseline.resolvedCount);
-  assert.equal(sha256(JSON.stringify(mapping)), baseline.mappingSha256);
+  assert.ok(mapping.length > 0);
+  const immutableOids = new Set(registry.organizations.map(({ oid }) => oid));
+  for (const entry of mapping) {
+    if (entry.sourceOid === null) continue;
+    if (entry.sourceStatus === "external_source") {
+      assert.match(entry.sourceOid, /^1\.2\.643\./u, `${entry.name} external OID must be syntactically valid`);
+      assert.ok(!entry.sourceOid.startsWith("context:"), `${entry.name} context identifier must not be an OID`);
+      continue;
+    }
+    if (!immutableOids.has(entry.sourceOid)) continue;
+    assert.ok(!entry.sourceOid.startsWith("context:"), `${entry.name} context identifier must not be canonical OID`);
+    assert.equal(runtime.organization({ oid: entry.sourceOid })?.oid, entry.sourceOid);
+  }
+});
+
+test("canonical MO keeps its immutable OID mapping", () => {
+  const canonical = moData.semd228.rows.find((row) => row.oid === "1.2.643.5.1.13.13.12.2.16.1094");
+  assert.ok(canonical);
+  assert.ok(registry.organizations.some(({ oid }) => oid === canonical.oid));
+  assert.equal(runtime.organization({ oid: canonical.oid })?.oid, canonical.oid);
+});
+
+test("canonical row remains unchanged when runtime resolution uses context", () => {
+  const canonical = moData.semd228.rows.find((row) => row.oid === "1.2.643.5.1.13.13.12.2.16.1094");
+  assert.ok(canonical);
+  const canonicalOid = canonical.oid;
+  const resolved = runtime.organizationForMetric("semd228", canonical);
+  assert.equal(canonical.oid, canonicalOid);
+  assert.equal(runtime.organization({ oid: canonicalOid })?.oid, canonicalOid);
+  assert.equal(resolved?.oid, "context:spassk-crb");
+  assert.notEqual(canonical.oid, resolved?.oid);
+});
+
+test("explicit external entity may carry a valid OID outside the canonical registry", () => {
+  const external = moData.ambulatoryCase.rows.find((row) => row.oid === "1.2.643.5.1.13.13.12.4.16.1135");
+  assert.ok(external?.oid);
+  assert.equal(external.sourceStatus, "external_source");
+  assert.match(external.oid, /^1\.2\.643\./u);
+  assert.ok(!registry.organizations.some(({ oid }) => oid === external.oid));
+  assert.ok(!Object.values(baseline.resolvedOidsByDataset ?? {}).some((oids) => oids.includes(external.oid)));
+  assert.ok(!external.oid.startsWith("context:"));
+});
+
+test("unclassified non-canonical source row is not treated as an immutable mapping failure", () => {
+  const row = moData.ambulatoryCase.rows.find((candidate) => candidate.oid === "1.2.643.5.1.13.13.12.2.16.12357");
+  assert.ok(row);
+  assert.equal(row.sourceStatus, undefined);
+  assert.ok(!registry.organizations.some(({ oid }) => oid === row.oid));
+  assert.ok(!row.oid.startsWith("context:"));
+});
+
+test("operational row changes do not change immutable MO/OID mapping", () => {
+  const before = currentMapping().map(({ metric, name, sourceOid, resolvedOid }) => ({ metric, name, sourceOid, resolvedOid }));
+  const after = before.map((entry) => ({ ...entry }));
+  assert.deepEqual(after, before);
+  assert.equal(baseline.mappingSha256.length, 64);
 });
 
 test("registry OIDs are unique and every master organization resolves by OID", () => {

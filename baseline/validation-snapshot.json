@@ -25,9 +25,6 @@
     "percentage_above_100|mo-data|hospital|1.2.643.5.1.13.13.12.2.16.9622|Филиал РКНД МЗ РТ г.Нижнекамск|fact",
     "percentage_above_100|mo-data|hospital|1.2.643.5.1.13.13.12.2.16.9641|Филиал РКНД МЗ РТ г.Наб.Челны|fact",
     "percentage_above_100|mo-data|hospital|context:spassk-crb|Спасская ЦРБ|fact",
-    "percentage_above_100|mo-data|semd228|1.2.643.5.1.13.13.12.2.16.1039|ТЮЛЯЧИНСКАЯ ЦРБ|previous",
-    "percentage_above_100|mo-data|semd228|1.2.643.5.1.13.13.12.2.16.1072|ЗАИНСКАЯ ЦРБ|previous",
-    "percentage_above_100|mo-data|semd228|1.2.643.5.1.13.13.12.2.16.1138|НУРЛАТСКАЯ ЦРБ|previous",
     "percentage_above_100|monthly-mo|hospital|1.2.643.5.1.13.13.12.2.16.1061|ЦЕНТР РЕАБИЛИТАЦИИ СЛУХА г.Наб.Челны|july",
     "percentage_above_100|monthly-mo|hospital|1.2.643.5.1.13.13.12.2.16.1061|ЦЕНТР РЕАБИЛИТАЦИИ СЛУХА г.Наб.Челны|june",
     "percentage_above_100|monthly-mo|hospital|1.2.643.5.1.13.13.12.2.16.1122|ДГП № 4 г.Казань|july",
@@ -47,7 +44,7 @@
     "unresolved_organization|mo-data|egpu2days||ООО \"Клиника Латыпова Р.М.\" (Казань)|name",
     "unresolved_organization|mo-data|hospital||ООО \"КСМ\"|name",
     "unresolved_organization|mo-data|smp||ГАУЗ Уруссинская ЦРБ Ютазинского муниципального района РТ|name",
-    "unresolved_organization|mo-data|smp||Лаишевский|name",
+    "unresolved_organization|mo-data|smp||Лаишевский(ГАУЗ ССМП г.Казань)|name",
     "unresolved_organization|mo-data|smp||ТЦМК|name",
     "unresolved_organization|monthly-mo|birth||АО \"АВА-КАЗАНЬ\"|name",
     "unresolved_organization|monthly-mo|death||ГАУЗ \"Республиканское бюро судебно-медицинской экспертизы\"|name",
@@ -152,11 +149,6 @@
     "unresolved_organization|monthly-mo|tvspStationary||ГАУЗ \"ГОРОДСКАЯ ПОЛИКЛИНИКА №7\"|name",
     "unresolved_organization|monthly-mo|tvspStationary||ГАУЗ \"ДЕТСКАЯ ГОРОДСКАЯ ПОЛИКЛИНИКА №2\"|name",
     "unresolved_organization|operational-mo|elnMaxCount||Неизвестная МО|name",
-    "unresolved_organization|operational-mo|elnMaxCount||ООО \"КДЦ Авиастроительного района\"|name",
-    "unresolved_organization|operational-mo|elnMaxCount||ООО \"КДЦ на Четаева\"|name",
-    "unresolved_organization|operational-mo|elnMaxCount||ООО \"Ситидок-Эксперт Казань\"|name",
-    "unresolved_organization|operational-mo|elnMaxCount||ООО «ММЦ ПРОФМЕДИЦИНА-НК»|name",
-    "unresolved_organization|operational-mo|elnMaxCount||ООО МО СПАСЕНИЕ|name",
     "unresolved_organization|operational-mo|hospitalCount||ООО \"КСМ\"|name",
     "unresolved_organization|operational-mo|shortInput||АО \"АВА-КАЗАНЬ\"|name",
     "unresolved_organization|operational-mo|shortInput||ГАУЗ \"Врачебно-физкультурный диспансер\"|name",
@@ -179,12 +171,7 @@
     "unresolved_organization|operational-mo|shortInputHosp||Нефросовет ОП г.Набережные Челны|name",
     "unresolved_organization|operational-mo|shortInputHosp||Общество с ограниченной ответственностью \"Клиника диализа Закамье\"|name",
     "unresolved_organization|operational-mo|shortInputHosp||ПАО «Татнефть» им. В.Д. Шашина|name",
-    "unresolved_organization|operational-mo|tmkMaxCount||Неизвестная МО|name",
-    "unresolved_organization|operational-mo|tmkMaxCount||ООО \"КДЦ Авиастроительного района\"|name",
-    "unresolved_organization|operational-mo|tmkMaxCount||ООО \"КДЦ на Четаева\"|name",
-    "unresolved_organization|operational-mo|tmkMaxCount||ООО \"Ситидок-Эксперт Казань\"|name",
-    "unresolved_organization|operational-mo|tmkMaxCount||ООО «ММЦ ПРОФМЕДИЦИНА-НК»|name",
-    "unresolved_organization|operational-mo|tmkMaxCount||ООО МО СПАСЕНИЕ|name"
+    "unresolved_organization|operational-mo|tmkMaxCount||Неизвестная МО|name"
   ],
   "resolvedOidsByDataset": {
     "mo-data:egpu": [
@@ -4964,8 +4951,8 @@
     "physician-metrics:doctor500_surgeon": 87
   },
   "acknowledgedCounts": {
-    "unresolvedOrganizations": 147,
-    "percentageAnomalies": 35,
+    "unresolvedOrganizations": 137,
+    "percentageAnomalies": 32,
     "missingCurrentValues": 1
   }
 }

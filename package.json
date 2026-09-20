@@ -23,6 +23,8 @@
     "pipeline:shadow": "python3 scripts/weekly_update_pipeline.py",
     "pipeline:stage": "python3 scripts/weekly_update_pipeline.py --stage",
     "pipeline:replay": "python3 scripts/pipeline/replay_gate.py"
+    ,"baseline:promote": "node scripts/promote-current-production.mjs"
+    ,"baseline:rollback": "node scripts/rollback-current-production.mjs"
   },
   "dependencies": {
     "drizzle-orm": "0.45.2",

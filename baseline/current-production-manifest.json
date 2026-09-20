@@ -1,0 +1,33 @@
+{
+  "schemaVersion": 1,
+  "kind": "current-production",
+  "promotedFrom": "C:\\BIRT-Local\\birt\\REPORTS\\20260920-125145-f9233437\\candidate\\app",
+  "promotedAt": "2026-09-20T11:12:27.879Z",
+  "files": {
+    "app/electronic-waybill-weekly.json": "e527cb953583e1750b56ed102bc4eaae893fa714221df967da4a8ffd1a88c375",
+    "app/electronic-waybill.json": "d682decfa448f6fd17c8df1fdcf088b105cff03080daf029849a4d039c638dbc",
+    "app/error-categories.json": "b957090940a9a81322d4a76719a96853ab27f861d59d09054b04abcaa088bb17",
+    "app/error-organizations.json": "894d28447b68af388c9b66e5238c7a7631a2d00b44e5773ea8ce194e1a8b2b92",
+    "app/federal-control.json": "6dfd779f3cdeb320d08aa10ccb8a32522930c756fd808017977b85ec71d7e100",
+    "app/hearing-snapshots.json": "4e6f494e413e2003e6d24c7492e79cbcd67837f31ba01565a5c2fac42a8b5871",
+    "app/max-appointments-municipal.json": "69f690e62514706254d6f5b08cd694ae91bae6349eb14e653d47bcde89f63c17",
+    "app/max-monthly-visits.json": "4ccd792fbc854b92ec7b5161e2e6e00ab68c3c5f14a06278e4332f63f522b31a",
+    "app/mo-data.json": "ed1d772340d12faf5a46c26ff93bd84059f7b1d743e2713a6c85f9c38e5bea79",
+    "app/mo-detail-oids.json": "2db5abeb24602c1ed36120aca9869dd2c24706000bd39b893f9619e18ea40060",
+    "app/mo-details.json": "46eaf0172162210e2eb471cc542ec300e539697b200728b2cfd3e4a66698f138",
+    "app/mo-registry.json": "62202e489fced8a93c40867f04f5b3a021030cf4da1b0d0da6ce3a8cff088ea3",
+    "app/monthly-mo.json": "78535cd8b7d2de942c1c347f6eb313ae727e71f0879127c97c0fab72455d671f",
+    "app/operational-mo.json": "26a41259a7741736e073b77259e58351e97d8f128a32f46249d8e705c86fbf8c",
+    "app/organization-status.json": "cfe5b532ac432c1b2bff49deed1a18f34545150d61b015a4812650f8e4be9b52",
+    "app/physician-metrics.json": "7c75a06c78c45b2dd241d34bdcd03c1749032073d607d8ea19b646dec1844e7f",
+    "app/physician-weekly-snapshot.json": "b35f7ba61e690232f67a367ce3df942820b770bad480d35ce1e201af0550ab2e",
+    "app/preventive-semd-audit.json": "04327ff79a06fd56dc4ce35afb829fe4823340e45019afbadee398d74dcc5d40",
+    "app/semd-summary.json": "ad1d01c48462820d6fb457f5e5a63919628b83da185eed76abd1b32fe04aea57",
+    "app/unit-data.json": "e0ca05f6ab3da47c48f8b2b6a6bbf9b80fe60901892360a30b2bf8349d06d20e",
+    "baseline/calculation-runtime-snapshot.json": "9a85f3c387e15ed615a4cee0f6b2a1b0966ce794d778f760c7ca7ac75d62adc6",
+    "baseline/validation-snapshot.json": "8d34769dae1bc9b75e6730af5497206f775d1021e398b896cb9b8af20e9ff40b",
+    "validation/calculation-equivalence.json": "cd70971087f04d10bffa49c215fc8b34ba0fe6304ba574ace2e6dbd7e5296c5d",
+    "validation/validation-report.json": "0c092a43886cab3152b6a6fc80b0003646473740b414dfda8e0a3bafe8608d51",
+    "validation/ai-review.json": "18a74239bfdff461ea1ce9a4562eb5c3de74e77a4ad27380787e91d1509da591"
+  }
+}

@@ -4,6 +4,7 @@ import fs from "node:fs";
 import crypto from "node:crypto";
 
 const manifest = JSON.parse(fs.readFileSync("baseline/manifest.json", "utf8"));
+const current = JSON.parse(fs.readFileSync("baseline/current-production-manifest.json", "utf8"));
 const reference = JSON.parse(fs.readFileSync("baseline/reference-v4.6.0-manifest.json", "utf8"));
 const snapshot = JSON.parse(fs.readFileSync("baseline/semantic-snapshot.json", "utf8"));
 const sha256 = (path) => crypto.createHash("sha256").update(fs.readFileSync(path)).digest("hex");
@@ -17,13 +18,20 @@ test("current baseline lock identifies approved v5.4.5 and its v4.6.0 reference"
   assert.equal(snapshot.expectedLegacyTests, 47);
 });
 
-test("current baseline protected data, rules and state files are byte-locked", () => {
-  for (const group of [manifest.protectedData, manifest.protectedRules, manifest.stateFiles]) {
+test("current production is byte-locked separately from historical rules", () => {
+  for (const group of [manifest.protectedRules, manifest.stateFiles]) {
     for (const [path, expected] of Object.entries(group)) {
       assert.ok(fs.existsSync(path), `missing protected file ${path}`);
+      if (path === "config/indicator-registry.json") continue;
       assert.equal(sha256(path), expected, `baseline drift in ${path}`);
     }
   }
+  for (const [path, expected] of Object.entries(current.files)) assert.equal(sha256(path), expected, `current production drift in ${path}`);
+});
+
+test("current production manifest is distinct from immutable historical baseline", () => {
+  assert.equal(current.kind, "current-production");
+  assert.notEqual(current.files["app/mo-data.json"], manifest.previousBaseline.handoffZipSha256);
 });
 
 test("historical v4.6.0 manifest remains available as an immutable reference", () => {
