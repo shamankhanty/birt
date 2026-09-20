@@ -2,9 +2,8 @@ name: BIRT Cloud Updater v3
 
 on:
   workflow_dispatch:
-  push:
-    branches: [cloud-updater-run]
-    paths: [.github/birt-update-trigger]
+  issues:
+    types: [opened]
 
 permissions:
   contents: read
@@ -15,6 +14,7 @@ concurrency:
 
 jobs:
   update:
+    if: github.event_name == 'workflow_dispatch' || (github.event_name == 'issues' && startsWith(github.event.issue.title, 'BIRT UPDATE'))
     runs-on: ubuntu-latest
     env:
       YANDEX_DISK_TOKEN: ${{ secrets.YANDEX_DISK_TOKEN }}
