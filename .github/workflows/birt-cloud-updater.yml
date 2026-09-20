@@ -1,0 +1,82 @@
+name: BIRT Cloud Updater v3
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [cloud-updater-run]
+    paths: [.github/birt-update-trigger]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: birt-cloud-updater
+  cancel-in-progress: false
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    env:
+      YANDEX_DISK_TOKEN: ${{ secrets.YANDEX_DISK_TOKEN }}
+      BIRT_YANDEX_INBOX: "disk:/!МЗ РТ/!Синк 05 08 26/BIRT/BIRT/INBOX"
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+          cache: npm
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.13"
+
+      - name: Install dependencies
+        run: |
+          npm ci --no-audit --no-fund
+          python -m pip install --disable-pip-version-check openpyxl
+
+      - name: Download Yandex Disk INBOX
+        run: python scripts/yandex_disk_inbox.py --remote "$BIRT_YANDEX_INBOX" --output "$RUNNER_TEMP/BIRT/INBOX"
+
+      - name: Prepare cloud workspace
+        run: mkdir -p "$RUNNER_TEMP/BIRT/ARCHIVE" "$RUNNER_TEMP/BIRT/REPORTS"
+
+      - name: Run deterministic BIRT updater
+        id: updater
+        continue-on-error: true
+        run: |
+          python scripts/local_updater_v2.py --inbox "$RUNNER_TEMP/BIRT/INBOX" --output "$RUNNER_TEMP/BIRT/REPORTS" --settle 0 --force | tee "$RUNNER_TEMP/BIRT/console.txt"
+          code=${PIPESTATUS[0]}
+          echo "exit_code=$code" >> "$GITHUB_OUTPUT"
+
+      - name: Package result
+        if: always()
+        run: |
+          mkdir -p "$RUNNER_TEMP/BIRT/result"
+          cp -a "$RUNNER_TEMP/BIRT/REPORTS/." "$RUNNER_TEMP/BIRT/result/" || true
+          cp "$RUNNER_TEMP/BIRT/console.txt" "$RUNNER_TEMP/BIRT/result/console.txt" || true
+
+      - name: Upload candidate and report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: birt-cloud-update-result
+          path: ${{ runner.temp }}/BIRT/result
+          if-no-files-found: error
+          retention-days: 30
+
+      - name: Fail only on STOP/system failure
+        if: always()
+        run: |
+          code="${{ steps.updater.outputs.exit_code }}"
+          if [ -z "$code" ]; then
+            echo "Updater did not return an exit code."
+            exit 2
+          fi
+          if [ "$code" = "2" ]; then
+            echo "BIRT updater returned STOP."
+            exit 2
+          fi
+          exit 0
