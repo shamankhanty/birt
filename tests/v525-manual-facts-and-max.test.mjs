@@ -1,8 +1,10 @@
 import test from "node:test";
 import assert from "node:assert/strict";
 import fs from "node:fs";
+import { createCurrentOperationalRuntime } from "../lib/current-operational-runtime.js";
 
 const control = JSON.parse(fs.readFileSync("app/federal-control.json", "utf8"));
+const mo = JSON.parse(fs.readFileSync("app/mo-data.json", "utf8"));
 const page = fs.readFileSync("app/page.tsx", "utf8");
 const styles = fs.readFileSync("app/globals.css", "utf8");
 
@@ -30,7 +32,17 @@ test("physician applicability requires the relevant level and source role", () =
   assert.match(page, /Boolean\(physicianRow && \(physicianRow\.volume \?\? 0\) > 0\)/u);
 });
 
-test("EPGU operational comparison uses 7 and 11 September source cuts", () => {
-  assert.match(page, /egpu: \{ previous: "01\.01–07\.09\.2026", current: "01\.01–11\.09\.2026" \}/u);
-  assert.match(page, /egpu: 98\.01741119654318/u);
+test("EPGU operational comparison uses runtime source cuts", () => {
+  assert.match(page, /currentOperationalRuntime/u);
+  assert.doesNotMatch(page, /egpu: \{ previous:/u);
+  const runtime = createCurrentOperationalRuntime({ moData: mo });
+  assert.match(runtime.egpu.previousDate, /^\d{2}\.\d{2}\.2026$/u);
+  assert.equal(typeof runtime.egpu.numerator, "number");
+  assert.equal(typeof runtime.egpu.denominator, "number");
+  const previousFact = (runtime.egpu.numerator / runtime.egpu.denominator) * 100;
+  assert.equal(runtime.egpu.derivedFact, previousFact);
+  const delta = (runtime.egpu.fact ?? previousFact) - previousFact;
+  assert.equal(typeof delta, "number");
+  assert.match(page, /operationalRegionalCurrent - regionalPrevious/u);
+  assert.doesNotMatch(page, /98\.01741119654318/u);
 });

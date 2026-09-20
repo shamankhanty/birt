@@ -8,7 +8,7 @@ const transactionalStage = fs.readFileSync("scripts/pipeline/transactional_stage
 const weekly = JSON.parse(fs.readFileSync("app/physician-weekly-snapshot.json", "utf8"));
 
 test("500+ operational mode uses the weekly snapshot and history is date-aggregated", () => {
-  assert.match(page, /const DASHBOARD_VERSION = "5\.4\.6"/u);
+  assert.match(page, /const DASHBOARD_VERSION = RELEASE_VERSION/u);
   assert.match(page, /isOperationalPhysician500/u);
   assert.match(page, /physicianWeeklySnapshot\.summary\[matrixMetric\]/u);
   assert.match(page, /physicianOperationalRows/u);

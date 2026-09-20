@@ -1,7 +1,7 @@
 {
   "schemaVersion": 2,
-  "baselineVersion": "5.4.5",
-  "baselineDate": "2026-09-15",
+  "baselineVersion": "5.4.6",
+  "baselineDate": "2026-09-20",
   "previousBaseline": {
     "version": "4.6.0",
     "date": "2026-09-07",
@@ -64,9 +64,9 @@
     "ratingIndicators": 16,
     "latestFullMonth": "август 2026",
     "previousFullMonth": "июль 2026",
-    "operationalCut": "11–13.09.2026",
+    "operationalCut": "01.09.2026–17.09.2026",
     "fail": 0,
     "warnings": []
   },
-  "note": "v5.4.5: оперативный режим 500+ использует срез 11.09 отдельно от полного августа; предыдущий оперативный срез не выдумывается и будет автоматически сохранён при следующей загрузке. История обновлений группирует версии одной даты в одну карточку. Production не публиковать без отдельной команды."
+  "note": "v5.4.6: operational UI metadata is derived from CURRENT runtime; 500+ remains separate from the full August rating. Historical 5.4.5 baselines are preserved."
 }

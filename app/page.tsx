@@ -32,7 +32,7 @@ import {
 import type { MoRegistry, RegistryOrganization } from "../lib/mo-registry.js";
 import { createIndicatorRegistryRuntime } from "../lib/indicator-registry.js";
 import { createCurrentOperationalRuntime } from "../lib/current-operational-runtime.js";
-import { createReleaseRuntimeMetadata } from "../lib/release-runtime-metadata.js";
+import { createReleaseRuntimeMetadata, RELEASE_VERSION } from "../lib/release-runtime-metadata.js";
 import type { IndicatorRegistryDocument } from "../lib/indicator-registry.js";
 import {
   buildFullMonthComparison,
@@ -118,7 +118,7 @@ type FederalControlData = {
   agreement: FederalControlRow[];
   collegium: FederalControlRow[];
 };
-const DASHBOARD_VERSION = "5.4.6";
+const DASHBOARD_VERSION = RELEASE_VERSION;
 const indicatorRegistry = createIndicatorRegistryRuntime(
   indicatorRegistryRaw as IndicatorRegistryDocument,
 );
@@ -1000,7 +1000,7 @@ const operational = [
   const dataset = operationalDatasets[id] as any;
   return {
     ...card,
-    value: metadata?.fact ?? metadata?.total ?? card.value,
+    value: metadata?.fact ?? metadata?.derivedFact ?? metadata?.total ?? card.value,
     period: metadata?.period ?? (metadata?.date ? `на ${metadata.date}` : card.period),
     note: metadata?.note ?? (id === "errors" ? "Оперативный недельный контроль; доля не рассчитывается без знаменателя." : "Оперативные данные принятого production-среза."),
     source: metadata?.source ?? dataset?.source ?? null,
@@ -4341,7 +4341,6 @@ export default function Home() {
     },
   };
   const operationalRegionalPrevious: Record<string, number> = {
-    egpu: 98.01741119654318,
     egpu2days: 81.50854673698926,
     birth: 99.41902687000727,
     death: 98.63398669559959,
@@ -4393,7 +4392,8 @@ export default function Home() {
     ? (physicianOperationalPreviousSummary?.fact ?? null)
     : selectedDataset.comparisonReset
       ? null
-      : operationalRegionalPrevious[matrixMetric] ??
+      : currentOperationalRuntime[matrixMetric]?.derivedFact ??
+        operationalRegionalPrevious[matrixMetric] ??
         (isCountMetric
           ? rtIndicator?.previous ?? null
           : staticPrevious);
@@ -6851,7 +6851,7 @@ export default function Home() {
                 </div>
                 <div className="hearingPeriod">
                   <small>Последние срезы</small>
-                  <strong>срезы по 11–13.09.2026</strong>
+                  <strong>срезы по {releaseRuntime.operationalCut.period}</strong>
                   <span>период каждого показателя указан в расшифровке</span>
                 </div>
               </div>

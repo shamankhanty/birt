@@ -92,17 +92,14 @@ jobs:
 
       - name: Verify release consistency
         run: |
-          python3 - <<'PY'
-          import json
-          import re
-          from pathlib import Path
-
-          manifest = json.loads(Path("baseline/manifest.json").read_text(encoding="utf-8"))
-          page = Path("app/page.tsx").read_text(encoding="utf-8")
-          match = re.search(r'const DASHBOARD_VERSION = "([^"]+)"', page)
-          assert match, "DASHBOARD_VERSION not found"
-          version = match.group(1)
-          assert version == manifest["baselineVersion"], (version, manifest["baselineVersion"])
+          node --input-type=module <<'NODE'
+          import { readFile } from "node:fs/promises";
+          import { RELEASE_VERSION } from "./lib/release-runtime-metadata.js";
+          const manifest = JSON.parse(await readFile("baseline/manifest.json", "utf8"));
+          const page = await readFile("app/page.tsx", "utf8");
+          if (!page.includes("DASHBOARD_VERSION = RELEASE_VERSION")) throw new Error("page must use canonical RELEASE_VERSION");
+          if (manifest.baselineVersion !== RELEASE_VERSION) throw new Error(`current manifest ${manifest.baselineVersion} != ${RELEASE_VERSION}`);
+          const version = RELEASE_VERSION;
 
           errors = json.loads(Path("app/error-categories.json").read_text(encoding="utf-8"))
           error_org = json.loads(Path("app/error-organizations.json").read_text(encoding="utf-8"))
@@ -111,7 +108,7 @@ jobs:
           assert "organizationBreakdown" not in errors, "duplicate error organization payload must stay in error-organizations.json only"
 
           print(f"Release consistency: PASS; version={version}; REMD errors={errors['total']}")
-          PY
+          NODE
 
       - name: Validate calculations and metadata
         run: |

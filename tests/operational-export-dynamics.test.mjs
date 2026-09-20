@@ -18,10 +18,9 @@ test("indicator operational mode means current export versus previous export", (
 });
 
 test("current operational comparison map identifies the previous source export", () => {
-  assert.match(page, /birth: \{ previous: "01\.01–07\.09\.2026", current: "01\.01–11\.09\.2026" \}/u);
-  assert.match(page, /smp: \{ previous: "01\.01–28\.08\.2026", current: "01\.01–11\.09\.2026" \}/u);
-  assert.match(page, /tmkMaxCount: \{ previous: "01\.01–07\.09\.2026", current: "01\.01–11\.09\.2026" \}/u);
-  assert.match(page, /elnMaxCount: \{ previous: "01\.01–07\.09\.2026", current: "01\.01–11\.09\.2026" \}/u);
+  assert.match(page, /Object\.fromEntries\(Object\.entries\(currentOperationalRuntime\)/u);
+  assert.doesNotMatch(page, /birth: \{ previous:/u);
+  assert.doesNotMatch(page, /tmkMaxCount: \{ previous:/u);
 });
 
 test("regional cards use the approved previous export totals, not partial row matching", () => {
