@@ -168,6 +168,12 @@ def project_metric(current, generated, metric, item):
                 merged.setdefault(field,{})[metric]=new[field][metric]
             merged.setdefault('periods',{})[metric]={
                 'date':new_date, 'period':f"{parse_iso(item['startDate']).strftime('%d.%m.%Y') if item.get('startDate') else '?'}–{new_date}", 'source':item['name']}
+            # Keep top-level metadata aligned with the source accepted for this
+            # transaction.  Previously these fields stayed from production,
+            # while the new 500+ values were stored under per-metric periods.
+            merged['date'] = new_date
+            merged['period'] = merged['periods'][metric]['period']
+            merged['source'] = item['name']
             # Global metadata remains explicitly mixed; individual periods are authoritative.
             merged['mixedPeriods']=True
             write(path,merged)

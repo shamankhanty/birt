@@ -4,6 +4,7 @@ import assert from "node:assert/strict";
 
 const page = fs.readFileSync("app/page.tsx", "utf8");
 const adapter = fs.readFileSync("scripts/pipeline/adapters.py", "utf8");
+const transactionalStage = fs.readFileSync("scripts/pipeline/transactional_stage.py", "utf8");
 const weekly = JSON.parse(fs.readFileSync("app/physician-weekly-snapshot.json", "utf8"));
 
 test("500+ operational mode uses the weekly snapshot and history is date-aggregated", () => {
@@ -19,4 +20,11 @@ test("500+ operational mode uses the weekly snapshot and history is date-aggrega
   assert.match(adapter, /previousDatasets/u);
   assert.match(page, /const versionHistoryEntries = \[/u);
   assert.match(page, /sameDate\.items\.push/u);
+});
+
+test("accepted 500+ source period is promoted to snapshot top-level metadata", () => {
+  assert.match(transactionalStage, /merged\['date'\]\s*=\s*new_date/u);
+  assert.match(transactionalStage, /merged\['period'\]\s*=\s*merged\['periods'\]\[metric\]\['period'\]/u);
+  assert.match(transactionalStage, /merged\['source'\]\s*=\s*item\['name'\]/u);
+  assert.match(transactionalStage, /parse_iso\(item\['startDate'\]\)/u);
 });
