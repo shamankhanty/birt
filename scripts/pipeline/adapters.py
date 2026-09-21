@@ -325,21 +325,20 @@ def adapt_egpu(app: Path, source: Path, end: date, only_metric=None) -> AdapterR
     return AdapterResult("core_monthly", ["egpu_attachment"], "PASS", ["mo-data.json","mo-details.json","mo-detail-oids.json","monthly-mo.json"], [source.name], facts, [], [])
 
 
-def parse_hospital_denominators(path: Path) -> list[dict]:
-    """Hospital denominator from the regional/FOMS hospital cases workbook.
-
-    This source is authoritative only for the number of inpatient/day-hospital
-    cases. The numerator must come from REMD EGISZ and is joined by MO OID.
-    """
+def parse_hospital_cases(path: Path) -> list[dict]:
+    """Self-contained hospital export: D denominator, E+F numerator."""
     wb = open_workbook(path, read_only=True, data_only=True)
-    ws = _sheet(wb, ["Лист3"])
+    ws = _sheet(wb, ["Лист3", "2"])
     out = []
     for r in ws.iter_rows(min_row=6, values_only=True):
-        if len(r) < 4 or not r[1] or not r[2] or is_total(r[1]):
+        if len(r) < 6 or not r[1] or not r[2] or is_total(r[1]):
             continue
-        out.append({"name": str(r[1]), "oid": str(r[2]), "volume": n(r[3])})
+        volume, inpatient, maternity = n(r[3]), n(r[4]), n(r[5])
+        out.append({"name": str(r[1]), "oid": str(r[2]), "volume": volume,
+                    "inpatient": inpatient, "maternity": maternity,
+                    "count": inpatient + maternity})
     if not out:
-        raise ValueError("Госпитализации: не найдено строк знаменателя")
+        raise ValueError("Госпитализации: не найдено строк D/E/F с OID")
     return out
 
 
@@ -363,11 +362,10 @@ def parse_remd_hospital_numerators(path: Path) -> dict[str, dict]:
 
 
 def adapt_hospital(app: Path, source: Path, end: date, remd_source: Path | None = None) -> AdapterResult:
-    if remd_source is None:
-        raise ValueError("Для hospital_cases обязателен отдельный источник числителя РЭМД ЕГИСЗ")
     mo, details, oids, monthly = (load(app, x) for x in ["mo-data.json", "mo-details.json", "mo-detail-oids.json", "monthly-mo.json"])
-    denominators = parse_hospital_denominators(source)
-    numerators = parse_remd_hospital_numerators(remd_source)
+    hospital_rows = parse_hospital_cases(source)
+    denominators = hospital_rows
+    numerators = {x["oid"]: x for x in hospital_rows}
     base = mo.get("hospital", {})
     prev = previous_rows_from_dataset(base)
     same_cut = base.get("date") == date_ru(end)
@@ -438,7 +436,7 @@ def adapt_hospital(app: Path, source: Path, end: date, remd_source: Path | None 
             if comparison_reset
             else "Числитель — РЭМД ЕГИСЗ, знаменатель — случаи стационарной помощи из отчёта по госпитализациям. Сопоставление по OID МО; динамика рассчитана к непосредственно предыдущему срезу той же методики."
         ),
-        "sourceNumerator": remd_source.name,
+        "sourceNumerator": source.name,
         "sourceDenominator": source.name,
         "rows": rows,
     }
@@ -459,7 +457,7 @@ def adapt_hospital(app: Path, source: Path, end: date, remd_source: Path | None 
     return AdapterResult(
         "hospital_pair", ["hospital_cases", "elmk"], status,
         ["mo-data.json","mo-details.json","mo-detail-oids.json","monthly-mo.json"],
-        [source.name, remd_source.name],
+        [source.name],
         {"rows": len(rows), "matched": matched, "numerator": numerator_total, "denominator": denominator_total,
          "fact": (numerator_total / denominator_total * 100 if denominator_total else None)},
         warnings, []
