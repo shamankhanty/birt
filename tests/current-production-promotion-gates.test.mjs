@@ -23,6 +23,7 @@ function fixture(reportOverrides = {}) {
   const report = {
     state: "PARTIAL",
     statistics: { preparedIndicators: 1 },
+    indicators: [{ metric: "probe", state: "PREPARED" }],
     changedFiles: ["a.json"],
     formalValidation: { summary: { FAIL: 0, blocking: 0 } },
     ...reportOverrides,
@@ -30,6 +31,13 @@ function fixture(reportOverrides = {}) {
   fs.writeFileSync(path.join(root, "run", "report.json"), JSON.stringify(report));
   return { root, production, candidate, manifest };
 }
+
+test("calculation drift is allowlisted only for PREPARED indicators and never for plan", () => {
+  const source = fs.readFileSync(script, "utf8");
+  assert.match(source, /indicator\.state === "PREPARED"/);
+  assert.match(source, /!preparedIndicatorIds\.has\(mismatch\.id\) \|\| mismatch\.field === "plan"/);
+  assert.match(source, /accepted calculation snapshot verification/);
+});
 
 function run(item) {
   return spawnSync(process.execPath, [script, "--candidate", item.candidate, "--production", item.production, "--manifest", item.manifest, "--test-mode"], { cwd: item.root, encoding: "utf8" });
