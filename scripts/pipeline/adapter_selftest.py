@@ -117,7 +117,7 @@ def main():
  with tempfile.TemporaryDirectory() as td:
   d=Path(td);src=build_sources(d);end=date(2026,9,30);test_oid,_=oid_name()
   cases=[
-   ('egpu',lambda a:adapt_egpu(a,src['egpu'],end)),('hospital',lambda a:adapt_hospital(a,src['hospital'],end,src['elmk'])),('ambulatory',lambda a:adapt_ambulatory_cases(a,src['ambulatory'],end)),
+   ('egpu',lambda a:adapt_egpu(a,src['egpu'],end)),('hospital',lambda a:adapt_hospital(a,src['hospital'],end)),('ambulatory',lambda a:adapt_ambulatory_cases(a,src['ambulatory'],end)),
    ('birth',lambda a:adapt_certificates(a,src['birth'],end,'birth','birth_certificates')),('death',lambda a:adapt_certificates(a,src['death'],end,'death','death_certificates')),
    ('max',lambda a:adapt_max(a,src['max'],end)),('errors',lambda a:adapt_errors(a,src['errors'],end)),
    ('physicians',lambda a:adapt_physicians(a,src['physicians'],end,ROOT/'app/mo-registry.json')),
