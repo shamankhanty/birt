@@ -87,8 +87,9 @@ jobs:
           candidate=$(python - "$report" <<'PY'
           import json,sys
           from pathlib import Path
-          d=json.loads(Path(sys.argv[1]).read_text(encoding='utf-8'))
-          print(d['candidateDir'])
+          report=Path(sys.argv[1])
+          d=json.loads(report.read_text(encoding='utf-8'))
+          print(d.get('candidateDir') or str(report.parent/'candidate'))
           PY
           )
           manifest="$candidate/staging-manifest.json"
