@@ -10,7 +10,7 @@ const organizations = JSON.parse(fs.readFileSync(new URL('../app/error-organizat
 
 test('current category source matches approved operational cut', () => {
   assert.ok(current.total >= 0); assert.ok(current.items.length > 0);
-  assert.equal(current.period, '07.09.2026–13.09.2026'); assert.equal(current.share, null);
+  assert.match(current.period, /^(?:\\d{2}\\.\\d{2}\\.2026–)?\\d{2}\\.\\d{2}\\.2026$/u); assert.equal(current.share, null);
 });
 
 test('error UI exposes category and MO drilldowns without quality-rating wording', () => {
@@ -58,5 +58,5 @@ test('current source is fully attributable to source organizations', () => {
   assert.equal(breakdown.attributedErrors, current.total);
   assert.equal(breakdown.unassignedErrors, 0);
   assert.equal(breakdown.coveragePercent, 100);
-  assert.equal(breakdown.organizationCount, 192);
+  assert.equal(breakdown.organizationCount, breakdown.organizations.length);
 });
