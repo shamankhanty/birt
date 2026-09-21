@@ -84,38 +84,11 @@ jobs:
         run: |
           report=$(find "$RUNNER_TEMP/BIRT/REPORTS" -mindepth 2 -maxdepth 2 -name report.json | sort | tail -1)
           if [ -z "$report" ]; then echo "No updater report"; exit 2; fi
-          candidate=$(python - "$report" <<'PY'
-          import json,sys
-          from pathlib import Path
-          report=Path(sys.argv[1])
-          d=json.loads(report.read_text(encoding='utf-8'))
-          print(d.get('candidateDir') or str(report.parent/'candidate'))
-          PY
-          )
-          manifest="$candidate/staging-manifest.json"
-          python - "$manifest" <<'PY'
-          import json,sys
-          from pathlib import Path
-          d=json.loads(Path(sys.argv[1]).read_text(encoding='utf-8'))
-          if d['formalValidation']['status']=='FAIL' or d['formalValidation']['summary']['blocking']:
-              raise SystemExit('Candidate has blocking validation failures')
-          if not d.get('changedFiles'):
-              raise SystemExit('Candidate has no changes')
-          print('Promoting:', ', '.join(d['changedFiles']))
-          PY
-          python - "$manifest" "$candidate/app" app <<'PY'
-          import json,shutil,sys
-          from pathlib import Path
-          m=json.loads(Path(sys.argv[1]).read_text(encoding='utf-8'))
-          src,dst=Path(sys.argv[2]),Path(sys.argv[3])
-          for name in m['changedFiles']:
-              shutil.copy2(src/name,dst/name)
-          PY
-          node scripts/run-validation.mjs
-          npm test
+          run_dir=$(dirname "$report")
+          node scripts/promote-current-production.mjs --candidate "$run_dir"
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add app
+          git add app baseline validation
           git commit -m "Update dashboard from Yandex Disk INBOX"
           git push origin HEAD:main
 
