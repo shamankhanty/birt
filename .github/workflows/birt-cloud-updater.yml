@@ -91,8 +91,12 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add app baseline validation
-          git commit -m "Update dashboard from Yandex Disk INBOX"
-          git push origin HEAD:main
+          if git diff --cached --quiet; then
+            echo "Validated candidate matches current production; no commit required."
+          else
+            git commit -m "Update dashboard from Yandex Disk INBOX"
+            git push origin HEAD:main
+          fi
 
       - name: Trigger GitHub Pages deployment
         if: steps.promotion.outcome == 'success'
