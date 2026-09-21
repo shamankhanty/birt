@@ -57,6 +57,27 @@ jobs:
           mkdir -p "$RUNNER_TEMP/BIRT/result"
           cp -a "$RUNNER_TEMP/BIRT/REPORTS/." "$RUNNER_TEMP/BIRT/result/" || true
           cp "$RUNNER_TEMP/BIRT/console.txt" "$RUNNER_TEMP/BIRT/result/console.txt" || true
+          python - <<'PY'
+          import json, os
+          from pathlib import Path
+          from openpyxl import load_workbook
+          inbox=Path(os.environ["RUNNER_TEMP"])/"BIRT"/"INBOX"
+          out=Path(os.environ["RUNNER_TEMP"])/"BIRT"/"result"/"source-diagnostics.json"
+          result=[]
+          for p in sorted(inbox.glob("*.xlsx")):
+              if "медкниж" not in p.name.lower() and "госпитал" not in p.name.lower():
+                  continue
+              wb=load_workbook(p, read_only=True, data_only=True)
+              book={"file":p.name,"sheets":[]}
+              for ws in wb.worksheets:
+                  rows=[]
+                  for row in ws.iter_rows(min_row=1,max_row=min(ws.max_row,25),values_only=True):
+                      vals=[str(v)[:300] for v in row if v not in (None,"")]
+                      if vals: rows.append(vals)
+                  book["sheets"].append({"title":ws.title,"max_row":ws.max_row,"max_column":ws.max_column,"first_nonempty_rows":rows})
+              result.append(book)
+          out.write_text(json.dumps(result,ensure_ascii=False,indent=2),encoding="utf-8")
+          PY
 
       - name: Upload candidate and report
         if: always()
