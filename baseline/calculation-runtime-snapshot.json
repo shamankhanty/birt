@@ -4,12 +4,12 @@
   "rule": "Snapshot фиксирует утверждённый runtime после оперативного обновления источников по 11–13.09.2026; месячный рейтинг остаётся по полному августу.",
   "allIndicators": {
     "ambulatoryCase": {
-      "fact": 88.60744953158256,
+      "fact": 89.48238316212336,
       "plan": 95,
-      "date": "11.09.2026",
+      "date": "17.09.2026",
       "previous": null,
       "trend": null,
-      "quantity": 10182100,
+      "quantity": 10638480,
       "numerator": 9549272,
       "denominator": 10948601,
       "method": "ratio_components",
@@ -256,12 +256,12 @@
       "source": "mo-data"
     },
     "hospital": {
-      "fact": 89.50352519852265,
+      "fact": 84.53034042890779,
       "plan": 95,
-      "date": "11.09.2026",
+      "date": "17.09.2026",
       "previous": null,
       "trend": null,
-      "quantity": 558826,
+      "quantity": 564721,
       "numerator": 474161,
       "denominator": 611601,
       "method": "ratio_components",
@@ -462,10 +462,10 @@
   },
   "regional": {
     "ambulatoryCase": {
-      "fact": 88.60744953158256,
+      "fact": 89.48238316212336,
       "plan": 95,
-      "date": "11.09.2026",
-      "quantity": 10182100,
+      "date": "17.09.2026",
+      "quantity": 10638480,
       "numerator": 9549272,
       "denominator": 10948601,
       "method": "ratio_components",
@@ -542,10 +542,10 @@
       "source": "page-baseline"
     },
     "hospital": {
-      "fact": 89.50352519852265,
+      "fact": 84.53034042890779,
       "plan": 95,
-      "date": "11.09.2026",
-      "quantity": 558826,
+      "date": "17.09.2026",
+      "quantity": 564721,
       "numerator": 474161,
       "denominator": 611601,
       "method": "ratio_components",
