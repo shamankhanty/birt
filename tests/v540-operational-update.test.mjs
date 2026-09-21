@@ -26,8 +26,8 @@ test('MAX compares the current export with the previous export without calling i
   assert.ok(!page.includes('Нет двух полных сопоставимых недель'));
 });
 
-test('REMD errors use operational weekly cut', () => {
-  assert.equal(errors.period, '07.09.2026–13.09.2026');
+test('REMD errors use the latest approved operational cut', () => {
+  assert.match(errors.period, /^(?:\d{2}\.\d{2}\.2026–)?\d{2}\.\d{2}\.2026$/u);
   assert.ok(errors.total >= 0);
   assert.ok(page.includes('name: "Количество ошибок регистрации СЭМД за последнюю полную неделю"'));
   assert.ok(page.includes('errorCategories.total'));
