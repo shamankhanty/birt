@@ -129,11 +129,11 @@ def invoke(app, family, metric, item, partner):
     if family=='max_tmk_eln': return adapt_max(app,source,end,metric)
     if family=='short_input': return adapt_short_input(app,source,end,metric)
     if family=='physicians': return adapt_physicians(app,source,end,ROOT/'app/mo-registry.json',metric)
-    if family in ('preventive_remd','hospital_cases'):
+    if family=='preventive_remd':
         if not partner or partner['status']=='FAIL' or partner['endDate']!=item['endDate'] or partner.get('startDate')!=start:
             raise ValueError('Нет парного источника за тот же отчетный период')
-        if family=='preventive_remd': return adapt_preventive(app,source,Path(partner['path']),end,ROOT/'app/mo-registry.json')
-        return adapt_hospital(app,source,end,Path(partner['path']))
+        return adapt_preventive(app,source,Path(partner['path']),end,ROOT/'app/mo-registry.json')
+    if family=='hospital_cases': return adapt_hospital(app,source,end)
     return run_family(app,family,source,end,ROOT)
 
 
@@ -258,7 +258,7 @@ def stage(input_dir, output_dir, replay_manifest=None):
         return selected
     for family,metrics in METRICS.items():
         item=latest(family)
-        partner=latest('preventive_foms' if family=='preventive_remd' else 'elmk')
+        partner=latest('preventive_foms') if family=='preventive_remd' else None
         received=by.get(family,[])
         if family=='preventive_remd': received=received+by.get('preventive_foms',[])
         for metric in metrics:
