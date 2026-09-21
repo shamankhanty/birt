@@ -111,7 +111,7 @@ jobs:
           for name in m['changedFiles']:
               shutil.copy2(src/name,dst/name)
           PY
-          npm run validate
+          node scripts/run-validation.mjs
           npm test
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
