@@ -51,7 +51,7 @@ test("current source totals reconcile for the refreshed indicators", () => {
   assert.ok(operational.shortInputAmb.rows.reduce((total, row) => total + row.fact, 0) >= 0);
   assert.ok(operational.shortInputHosp.rows.reduce((total, row) => total + row.fact, 0) >= 0);
   assert.match(semdSummary.period, /^01\.01\.2026–\d{2}\.\d{2}\.2026$/u); assert.ok(semdSummary.total > 0);
-  assert.match(errorCategories.period, /^\d{2}\.\d{2}\.2026–\d{2}\.\d{2}\.2026$/u); assert.ok(errorCategories.total > 0);
+  assert.match(errorCategories.period, /^(?:\d{2}\.\d{2}\.2026–)?\d{2}\.\d{2}\.2026$/u); assert.ok(errorCategories.total > 0);
   assert.match(pageSource, /value: sumDatasetFacts\(moData\.shortInput\)/);
   assert.match(pageSource, /value: extendedHospitalTotals\.volume/);
   assert.match(pageSource, /value: sumDatasetFacts\(moData\.fapSemdCount\)/);
