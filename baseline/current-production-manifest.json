@@ -1,8 +1,8 @@
 {
   "schemaVersion": 1,
   "kind": "current-production",
-  "promotedFrom": "/home/runner/work/_temp/BIRT/REPORTS/20260921-083747-de9f1786/candidate/app",
-  "promotedAt": "2026-09-21T08:37:50.885Z",
+  "promotedFrom": "/home/runner/work/_temp/BIRT/REPORTS/20260921-085528-a5ccc0e0/candidate/app",
+  "promotedAt": "2026-09-21T08:55:31.410Z",
   "files": {
     "app/electronic-waybill-weekly.json": "169290974cab42fc589a1ad8b2dea3c2708c86ce65720763af9538b4f25f867a",
     "app/electronic-waybill.json": "d682decfa448f6fd17c8df1fdcf088b105cff03080daf029849a4d039c638dbc",
@@ -26,8 +26,8 @@
     "app/unit-data.json": "e0ca05f6ab3da47c48f8b2b6a6bbf9b80fe60901892360a30b2bf8349d06d20e",
     "baseline/calculation-runtime-snapshot.json": "f7fb2e161ae493e701530bedc8d8fe7eefc2c7f38191e7bddc9a5f3f952d2c24",
     "baseline/validation-snapshot.json": "6152e8d925af32961e38ab8713bdd293df08364e8f6588f8a2b0770e48e44b58",
-    "validation/calculation-equivalence.json": "c5334176b5d320ea22b22d6342f9bf00a4aa45733690dec53c68d5e3faad810c",
-    "validation/validation-report.json": "e76e885c6e5386734b08848f11aa4cb73779bd3e3c591202ed38056111d0dc1d",
-    "validation/ai-review.json": "9da9f5d855637c3bc1f519dd53320c526e38b508448db95836f87607a0d9130f"
+    "validation/calculation-equivalence.json": "8238065cc7d59bcabfe882d0974ac7dc3fd069ba87bae362e4abbd0ebe131027",
+    "validation/validation-report.json": "2c2af8c47f47d4004de4514bbe85574d19e02603c84f48cec0bcd93c6579c07f",
+    "validation/ai-review.json": "530377670c48d6a89dab1e09765f402e3ac4d5e6ad0fcd4d92b74baa1bfb69d3"
   }
 }
