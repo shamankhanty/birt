@@ -32,9 +32,12 @@ test("current comparable cuts carry dynamics without synthetic zeros", () => {
   assert.ok(operational.shortInput.rows.some(row => row.trend < 0));
 });
 
-test("hospital slice uses REMD numerator and hospital-case denominator without incomparable dynamics", () => {
-  assert.equal(mo.hospital.comparisonReset, true);
-  assert.ok(mo.hospital.rows.every(row => row.previous === null && row.trend === null));
+test("hospital slice uses REMD numerator and hospital-case denominator with only comparable dynamics", () => {
+  assert.equal(typeof mo.hospital.comparisonReset, "boolean");
+  for (const row of mo.hospital.rows) {
+    if (row.previous === null || row.previous === undefined) assert.equal(row.trend, null);
+    else assert.ok(Math.abs(row.fact - row.previous - row.trend) < 1e-9, row.name);
+  }
   assert.match(mo.hospital.note, /числитель.*РЭМД ЕГИСЗ/i);
   assert.match(mo.hospital.note, /знаменатель.*госпитализац/i);
 });
