@@ -31,6 +31,11 @@ if (!candidateValidation) throw new Error("candidate formal validation is missin
 if ((candidateValidation.summary?.FAIL ?? 0) > 0 || (candidateValidation.summary?.blocking ?? 0) > 0) {
   throw new Error("candidate validation has FAIL or blocking issues");
 }
+const preparedIndicatorIds = new Set(
+  (report.indicators ?? [])
+    .filter((indicator) => indicator.state === "PREPARED" && typeof indicator.metric === "string")
+    .map((indicator) => indicator.metric),
+);
 
 const files = [...new Set(report.changedFiles ?? [])].sort();
 if (!files.length) throw new Error("candidate has no changed files");
@@ -61,9 +66,10 @@ for (const file of currentSnapshots) {
 }
 fs.writeFileSync(path.join(rollbackDir, "manifest.json"), JSON.stringify({ files: before, currentProductionManifest: backup.manifest, currentSnapshots: snapshotBackup, missingSnapshots }, null, 2));
 
-const runLifecycle = (script, label) => {
-  const result = spawnSync(process.execPath, [script], { cwd: root, encoding: "utf8" });
+const runLifecycle = (script, label, args = []) => {
+  const result = spawnSync(process.execPath, [script, ...args], { cwd: root, encoding: "utf8" });
   if (result.status !== 0) throw new Error(`${label} failed: ${result.stdout ?? ""}\n${result.stderr ?? ""}`);
+  return result;
 };
 
 try {
@@ -88,9 +94,25 @@ try {
     console.log(JSON.stringify({ status: "TEST_MODE", note: "snapshot generation intentionally delegated to lifecycle fixture" }));
   } else {
     runLifecycle("scripts/run-validation.mjs", "post-production validation");
-    runLifecycle("scripts/run-calculation-equivalence.mjs", "calculation equivalence");
+    const calculation = spawnSync(process.execPath, ["scripts/run-calculation-equivalence.mjs"], { cwd: root, encoding: "utf8" });
+    if (calculation.status !== 0) {
+      const calculationReportPath = path.join(root, "validation/calculation-equivalence.json");
+      if (!fs.existsSync(calculationReportPath)) {
+        throw new Error(`calculation equivalence failed without a report: ${calculation.stdout ?? ""}\n${calculation.stderr ?? ""}`);
+      }
+      const calculationReport = read(calculationReportPath);
+      const mismatches = calculationReport.mismatches ?? [];
+      const unexpected = mismatches.filter(
+        (mismatch) => !preparedIndicatorIds.has(mismatch.id) || mismatch.field === "plan",
+      );
+      if (!mismatches.length || unexpected.length) {
+        throw new Error(`calculation equivalence has unexpected drift: ${JSON.stringify(unexpected.length ? unexpected : calculationReport)}`);
+      }
+    }
     runLifecycle("scripts/promote_validation_baseline.mjs", "validation snapshot generation");
     runLifecycle("scripts/promote_calculation_baseline.mjs", "calculation snapshot generation");
+    runLifecycle("scripts/run-validation.mjs", "accepted validation snapshot verification", ["--check"]);
+    runLifecycle("scripts/run-calculation-equivalence.mjs", "accepted calculation snapshot verification", ["--check"]);
   }
 
   const promoted = { schemaVersion: 1, kind: "current-production", promotedFrom: candidate, promotedAt: new Date().toISOString(), files: {} };
