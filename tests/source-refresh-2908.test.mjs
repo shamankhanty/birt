@@ -8,12 +8,12 @@ const operational = read("operational-mo.json");
 const units = read("unit-data.json");
 const status = read("organization-status.json");
 
-test("11.09 hospital report is reconciled exactly", () => {
+test("current hospital report is reconciled exactly", () => {
   assert.match(mo.hospital.date, /^\d{2}\.\d{2}\.2026$/u);
   assert.ok(mo.hospital.rows.length > 0);
   assert.ok(mo.hospital.rows.reduce((sum, row) => sum + (row.count ?? 0), 0) >= 0);
   assert.ok(Object.values(read("mo-details.json").hospital).reduce((sum, row) => sum + row.volume, 0) >= 0);
-  assert.equal(mo.hospital.comparisonReset, true);
+  for (const row of mo.hospital.rows) {\n    if (row.previous === null || row.previous === undefined) assert.equal(row.trend, null);\n    else assert.ok(Math.abs(row.fact - row.previous - row.trend) < 1e-9, row.name);\n  }
   const ndrb = mo.hospital.rows.find(row => row.oid === "1.2.643.5.1.13.13.12.2.16.1171");
   assert.ok(ndrb);
   assert.ok(ndrb.fact >= 0);
