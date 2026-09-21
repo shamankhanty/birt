@@ -5,7 +5,7 @@ import os from "node:os";
 import path from "node:path";
 import { spawnSync } from "node:child_process";
 
-const script = path.resolve("promotion-fixed.mjs");
+const script = path.resolve("scripts/promote-current-production.mjs");
 
 function fixture(reportOverrides = {}) {
   const root = fs.mkdtempSync(path.join(os.tmpdir(), "promotion-gate-"));
