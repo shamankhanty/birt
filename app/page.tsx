@@ -2432,7 +2432,15 @@ function isPhysicianMetric(id: string) {
   return id === "doctorsAll" || id === "doctorsLevel3" || id.startsWith("doctor500_");
 }
 
-function isSmallPhysicianDenominator(id: string, row: MoRow) {
+function isDentalOrganization(registry: RegistryOrganization) {
+  const text = `${registry.type ?? ""} ${registry.name ?? ""} ${registry.shortName ?? ""}`;
+  // The checked-in registry contains legacy mojibake in its Russian labels;
+  // keep the semantic match compatible with both repaired and legacy text.
+  return /стоматолог|РЎС‚РѕРјР°С‚РѕР»РѕРі/iu.test(text) || text.includes("����������������� �����������");
+}
+
+function isSmallPhysicianDenominator(id: string, row: MoRow, registry?: RegistryOrganization) {
+  if (id === "doctor500_dentist" && registry && isDentalOrganization(registry)) return false;
   return (
     indicatorRegistry.hasRowExclusion(id, "small_denominator_lt3_reference_only") &&
     (row.volume ?? 0) < 3
@@ -2928,6 +2936,7 @@ function buildUnionRating(rows: RankRow[]): UnionRatingRow[] {
 function applicableForRegistry(registry: RegistryOrganization, id: string) {
   if (id === "doctorsLevel3") return registry.level === "III уровень";
   if (isPhysicianMetric(id)) {
+    if (id === "doctor500_dentist" && isDentalOrganization(registry)) return true;
     const physicianDataset = physicianMetrics.datasets[id];
     const physicianRow = physicianDataset?.rows?.find(
       (row) => row.oid === registry.oid,
@@ -3047,6 +3056,7 @@ function buildOrganizationRating(): RankRow[] {
       if (excludedFromAttention(row.name) || isTechnicalRow(row.name)) return;
       const registry = registryOrganizationByMetricAndName(id, row.name);
       if (!registry || !evaluableForRegistry(registry, id)) return;
+      if (id === "doctor500_dentist" && isDentalOrganization(registry)) return;
       const item = byOrg.get(registry.oid);
       if (!item) return;
       const score = scoreAgainstPlan({
@@ -3075,6 +3085,29 @@ function buildOrganizationRating(): RankRow[] {
         numerator,
         denominator,
       });
+    });
+  });
+  // Dental organizations use the latest operational 500+ cut for the current
+  // rating. The historical monthly dataset remains available in its own view.
+  const operationalDentistRows = physicianWeeklySnapshot.datasets.doctor500_dentist ?? [];
+  byOrg.forEach((item) => {
+    if (!isDentalOrganization(item.registry)) return;
+    const row = operationalDentistRows.find((candidate) => candidate.oid === item.registry.oid);
+    if (!row) return;
+    const plan = indicatorRegistry.plan("doctor500_dentist", 50) ?? 50;
+    if ((row.volume ?? 0) <= 0) return;
+    const fact = row.fact;
+    item.details.push({
+      id: "doctor500_dentist",
+      name: "Доля врачей-стоматологов ПМСП, подписавших свыше 500 СЭМД — оперативный контроль",
+      fact,
+      plan,
+      score: scoreAgainstPlan({ fact, plan, direction: "higher" }) ?? 0,
+      previous: null,
+      passed: passedPlan({ fact, plan, direction: "higher" }) ?? false,
+      block: ratingBlock("doctor500_dentist"),
+      numerator: row.count ?? null,
+      denominator: row.volume ?? null,
     });
   });
   return [...byOrg.values()].map((item) => {
@@ -3233,6 +3266,7 @@ export default function Home() {
         if (!registry || registry.type === "Вне рейтинга") return;
         const owner = byOrg.get(registry.oid);
         if (!owner) return;
+        if (id === "doctor500_dentist" && isDentalOrganization(registry)) return;
         const applicable = applicableForRegistry(registry, id);
         const direction = indicatorRegistry.direction(id);
         const reverse =
@@ -3243,7 +3277,7 @@ export default function Home() {
           !blockedIndicatorIds.has(id) &&
           evaluableForRegistry(registry, id) &&
           !isUnavailableSourceRow(row) &&
-          !isSmallPhysicianDenominator(id, row);
+          !isSmallPhysicianDenominator(id, row, registry);
         const plan = hasPersonalPlan ? dataset.plan : null;
         const passed =
           plan === null ? null : reverse ? row.fact <= plan : row.fact >= plan;
@@ -3290,6 +3324,7 @@ export default function Home() {
       Object.keys(moData).forEach((id) => {
           const dataset = moData[id];
           if (!dataset || present.has(id)) return;
+          if (id === "doctor500_dentist" && isDentalOrganization(owner.registry)) return;
           const applicable = applicableForRegistry(owner.registry, id);
           const priorityDataExpected =
             applicable &&
@@ -3360,27 +3395,37 @@ export default function Home() {
           if (!applicableForRegistry(owner.registry, id)) return;
           const current = rows.find((item) => item.oid === owner.registry.oid);
           const monthlyName = physicianMetrics.datasets[id]?.name ?? id;
+          const mandatoryDental = id === "doctor500_dentist" && isDentalOrganization(owner.registry);
+          const operationalPlan = mandatoryDental ? (indicatorRegistry.plan(id, 50) ?? 50) : null;
+          const usableCurrent = current && (current.volume ?? 0) > 0 ? current : null;
+          const operationalPassed = mandatoryDental && usableCurrent
+            ? passedPlan({ fact: usableCurrent.fact, plan: operationalPlan, direction: "higher" })
+            : null;
           owner.metrics.push({
             id: `operational500_${id}`,
             name: `${monthlyName} — оперативный контроль`,
             fact: current?.fact ?? null,
             previous: null,
-            plan: null,
+            plan: operationalPlan,
             unit: "%",
             date: physicianWeeklySnapshot.periods?.[id]?.date ?? physicianWeeklySnapshot.date,
             period: physicianWeeklySnapshot.periods?.[id]?.period ?? physicianWeeklySnapshot.period,
             count: current?.count ?? null,
             volume: current?.volume ?? null,
             applicable: true,
-            affectsPriority: false,
-            passed: null,
+            affectsPriority: mandatoryDental,
+            passed: operationalPassed,
             persistent: false,
             adverseChange: false,
-            score: null,
-            detail: current
+            score: mandatoryDental && usableCurrent
+              ? scoreAgainstPlan({ fact: usableCurrent.fact, plan: operationalPlan, direction: "higher" })
+              : null,
+            detail: mandatoryDental
+              ? (usableCurrent ? "Оперативный срез dentist включён в рейтинг." : "Нет данных по обязательному показателю; Рейтинг неполный.")
+              : current
               ? "Оперативный срез 500+; нет предыдущего сопоставимого недельного значения. В месячный рейтинг не включается."
               : "Нет данных в оперативном срезе; отсутствие строки не считается невыполнением.",
-            status: "reference",
+            status: mandatoryDental ? (usableCurrent ? (operationalPassed ? "good" : "bad") : "missing") : "reference",
           });
         });
     });
@@ -8418,7 +8463,7 @@ export default function Home() {
                   <b>Оперативный недельный контроль «500+»:</b>{" "}
                   {format(physicianWeeklySnapshot.summary[matrixMetric].numerator, 0)} из {format(physicianWeeklySnapshot.summary[matrixMetric].denominator, 0)}
                   {" · "}{format(physicianWeeklySnapshot.summary[matrixMetric].fact ?? 0, 2)}%
-                  {" · срез на "}{physicianWeeklySnapshot.periods?.[matrixMetric]?.date ?? physicianWeeklySnapshot.date}. Данные не включены в месячный рейтинг; в «МО для заслушивания» используются как справочный оперативный контроль.
+                  {" · срез на "}{physicianWeeklySnapshot.periods?.[matrixMetric]?.date ?? physicianWeeklySnapshot.date}. {matrixMetric === "doctor500_dentist" ? "Для стоматологических МО это обязательный оперативный контроль и источник текущего рейтинга." : "Данные не включены в месячный рейтинг; в «МО для заслушивания» используются как справочный оперативный контроль."}
                 </p>
               )}
               {preventiveTransition && (

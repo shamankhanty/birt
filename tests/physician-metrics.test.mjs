@@ -38,7 +38,7 @@ test("small specialty denominators are reference-only in hearings", () => {
       else assert.equal(row.sourceWarning ?? null, null);
     }
   }
-  assert.match(source, /!isSmallPhysicianDenominator\(id, row\)/);
+  assert.match(source, /!isSmallPhysicianDenominator\(id, row, registry\)/);
 });
 
 test("newly heard organizations and alias search are wired", () => {
