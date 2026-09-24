@@ -1,21 +1,21 @@
 {
   "schemaVersion": 1,
   "baselineVersion": "5.4.5",
-  "dataDate": "17.09.2026",
+  "dataDate": "23.09.2026",
   "reportingPeriod": {
     "latestFullMonth": "август 2026",
     "previousFullMonth": "июль 2026",
     "hasPartialNewerMonth": true,
-    "latestObservedDate": "17.09.2026"
+    "latestObservedDate": "23.09.2026"
   },
-  "overallStatus": "PASS",
+  "overallStatus": "WARNING",
   "summary": {
     "checks": 15,
-    "PASS": 15,
-    "WARNING": 0,
+    "PASS": 12,
+    "WARNING": 3,
     "FAIL": 0,
     "blocking": 0,
-    "aiReviewItems": 0
+    "aiReviewItems": 1
   },
   "acknowledgedBaseline": {
     "unresolvedOrganizations": 137,
@@ -107,9 +107,9 @@
       "status": "PASS",
       "blocking": false,
       "requiresAiReview": false,
-      "message": "992 ratio rows reconcile to numerator/denominator components",
+      "message": "989 ratio rows reconcile to numerator/denominator components",
       "details": {
-        "inspectedRows": 992,
+        "inspectedRows": 989,
         "tolerancePercentagePoints": 0.015
       },
       "issues": []
@@ -152,7 +152,7 @@
         "activeRatingIndicators": 16,
         "latestFullMonth": "август 2026",
         "previousFullMonth": "июль 2026",
-        "latestObservedDate": "17.09.2026",
+        "latestObservedDate": "23.09.2026",
         "hasPartialNewerMonth": true
       },
       "issues": []
@@ -161,15 +161,29 @@
       "id": "data.new_unresolved_organizations",
       "category": "completeness",
       "title": "Новые несопоставленные названия МО",
-      "status": "PASS",
+      "status": "WARNING",
       "blocking": false,
       "requiresAiReview": false,
-      "message": "No new unresolved organizations beyond 137 acknowledged baseline rows",
+      "message": "1 issue(s) detected",
       "details": {
-        "currentUnresolvedRows": 137,
+        "currentUnresolvedRows": 136,
         "acknowledgedBaselineRows": 137
       },
-      "issues": []
+      "issues": [
+        {
+          "kind": "unresolved_organization",
+          "scope": "mo-data",
+          "metric": "smp",
+          "organizationOid": null,
+          "organizationName": "Лаишевский (ГАУЗ ССМП г. Казань)",
+          "field": "name",
+          "fingerprint": "unresolved_organization|mo-data|smp||Лаишевский (ГАУЗ ССМП г. Казань)|name",
+          "acknowledged": false,
+          "status": "WARNING",
+          "requiresAiReview": false,
+          "reviewReason": null
+        }
+      ]
     },
     {
       "id": "data.dropped_organizations",
@@ -186,12 +200,26 @@
       "id": "data.row_count_drop",
       "category": "completeness",
       "title": "Снижение количества строк в наборе",
-      "status": "PASS",
+      "status": "WARNING",
       "blocking": false,
       "requiresAiReview": false,
-      "message": "No dataset has fewer rows than the accepted reference",
+      "message": "1 issue(s) detected",
       "details": {},
-      "issues": []
+      "issues": [
+        {
+          "kind": "row_count_drop",
+          "scope": "mo-data",
+          "metric": "smp",
+          "field": "rows",
+          "previousCount": 45,
+          "currentCount": 44,
+          "fingerprint": "row_count_drop|mo-data|smp|||rows",
+          "acknowledged": false,
+          "status": "WARNING",
+          "requiresAiReview": false,
+          "reviewReason": null
+        }
+      ]
     },
     {
       "id": "data.missing_current_values",
@@ -211,16 +239,45 @@
       "id": "data.percentage_anomalies",
       "category": "anomaly",
       "title": "Новые аномальные процентные значения",
-      "status": "PASS",
+      "status": "WARNING",
       "blocking": false,
-      "requiresAiReview": false,
-      "message": "No new percentage anomalies beyond 36 acknowledged baseline cases",
+      "requiresAiReview": true,
+      "message": "1 issue(s) detected",
       "details": {
-        "currentAnomalyRows": 36,
+        "currentAnomalyRows": 18,
         "acknowledgedBaselineCases": 36
       },
-      "issues": []
+      "issues": [
+        {
+          "kind": "percentage_above_100",
+          "scope": "mo-data",
+          "metric": "hospital",
+          "organizationOid": "1.2.643.5.1.13.13.12.2.16.1065",
+          "organizationName": "КДМЦ г.Наб.Челны",
+          "field": "previous",
+          "value": 101.22590052384295,
+          "fingerprint": "percentage_above_100|mo-data|hospital|1.2.643.5.1.13.13.12.2.16.1065|КДМЦ г.Наб.Челны|previous",
+          "acknowledged": false,
+          "status": "WARNING",
+          "requiresAiReview": true,
+          "reviewReason": "anomaly"
+        }
+      ]
     }
   ],
-  "aiReviewItems": []
+  "aiReviewItems": [
+    {
+      "checkId": "data.percentage_anomalies",
+      "category": "anomaly",
+      "status": "WARNING",
+      "reviewReason": "anomaly",
+      "fingerprint": "percentage_above_100|mo-data|hospital|1.2.643.5.1.13.13.12.2.16.1065|КДМЦ г.Наб.Челны|previous",
+      "metric": "hospital",
+      "organizationOid": "1.2.643.5.1.13.13.12.2.16.1065",
+      "organizationName": "КДМЦ г.Наб.Челны",
+      "field": "previous",
+      "expected": null,
+      "actual": 101.22590052384295
+    }
+  ]
 }

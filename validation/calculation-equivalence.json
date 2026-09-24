@@ -1,10 +1,341 @@
 {
   "schemaVersion": 1,
   "baselineVersion": "5.4.5",
-  "status": "PASS",
+  "status": "FAIL",
   "checkedIndicators": 38,
   "registryCoverage": "38/38",
-  "mismatches": [],
+  "mismatches": [
+    {
+      "id": "ambulatoryCase",
+      "field": "fact",
+      "expected": 89.48238316212336,
+      "actual": 89.63803800346913
+    },
+    {
+      "id": "ambulatoryCase",
+      "field": "date",
+      "expected": "17.09.2026",
+      "actual": "23.09.2026"
+    },
+    {
+      "id": "ambulatoryCase",
+      "field": "quantity",
+      "expected": 10638480,
+      "actual": 10849694
+    },
+    {
+      "id": "birth",
+      "field": "fact",
+      "expected": 99.88222978277938,
+      "actual": 99.83371706318752
+    },
+    {
+      "id": "birth",
+      "field": "date",
+      "expected": "16.09.2026",
+      "actual": "22.09.2026"
+    },
+    {
+      "id": "birth",
+      "field": "quantity",
+      "expected": 22899,
+      "actual": 23415
+    },
+    {
+      "id": "death",
+      "field": "fact",
+      "expected": 99.34113952138736,
+      "actual": 99.34915390007009
+    },
+    {
+      "id": "death",
+      "field": "date",
+      "expected": "16.09.2026",
+      "actual": "22.09.2026"
+    },
+    {
+      "id": "death",
+      "field": "quantity",
+      "expected": 29100,
+      "actual": 29766
+    },
+    {
+      "id": "egpu",
+      "field": "fact",
+      "expected": 98.0463718334049,
+      "actual": 98.43723410289863
+    },
+    {
+      "id": "egpu",
+      "field": "date",
+      "expected": "11.09.2026",
+      "actual": "23.09.2026"
+    },
+    {
+      "id": "egpu",
+      "field": "quantity",
+      "expected": 31969,
+      "actual": 34707
+    },
+    {
+      "id": "egpu2days",
+      "field": "fact",
+      "expected": 81.69048641354351,
+      "actual": 82.28487151852062
+    },
+    {
+      "id": "egpu2days",
+      "field": "date",
+      "expected": "11.09.2026",
+      "actual": "23.09.2026"
+    },
+    {
+      "id": "egpu2days",
+      "field": "quantity",
+      "expected": 26636,
+      "actual": 29012
+    },
+    {
+      "id": "elnMaxCount",
+      "field": "fact",
+      "expected": 38780,
+      "actual": 40661
+    },
+    {
+      "id": "elnMaxCount",
+      "field": "date",
+      "expected": "17.09.2026",
+      "actual": "23.09.2026"
+    },
+    {
+      "id": "elnMaxCount",
+      "field": "previous",
+      "expected": 37089,
+      "actual": 38780
+    },
+    {
+      "id": "elnMaxCount",
+      "field": "trend",
+      "expected": 1691,
+      "actual": 1881
+    },
+    {
+      "id": "elnMaxCount",
+      "field": "quantity",
+      "expected": 38780,
+      "actual": 40661
+    },
+    {
+      "id": "fapSemdCount",
+      "field": "fact",
+      "expected": 3019064,
+      "actual": 3118290
+    },
+    {
+      "id": "fapSemdCount",
+      "field": "date",
+      "expected": "17.09.2026",
+      "actual": "23.09.2026"
+    },
+    {
+      "id": "fapSemdCount",
+      "field": "previous",
+      "expected": 2911671,
+      "actual": 3019064
+    },
+    {
+      "id": "fapSemdCount",
+      "field": "trend",
+      "expected": 107393,
+      "actual": 99226
+    },
+    {
+      "id": "fapSemdCount",
+      "field": "quantity",
+      "expected": 3019064,
+      "actual": 3118290
+    },
+    {
+      "id": "hospital",
+      "field": "fact",
+      "expected": 84.53034042890779,
+      "actual": 86.11668515996827
+    },
+    {
+      "id": "hospital",
+      "field": "date",
+      "expected": "17.09.2026",
+      "actual": "23.09.2026"
+    },
+    {
+      "id": "hospital",
+      "field": "quantity",
+      "expected": 564721,
+      "actual": 587513
+    },
+    {
+      "id": "semd228",
+      "field": "fact",
+      "expected": 74.20502421284552,
+      "actual": 75.44385440429117
+    },
+    {
+      "id": "semd228",
+      "field": "date",
+      "expected": "17.09.2026",
+      "actual": "23.09.2026"
+    },
+    {
+      "id": "semd228",
+      "field": "quantity",
+      "expected": 1565447,
+      "actual": 1618878
+    },
+    {
+      "id": "shortInput",
+      "field": "fact",
+      "expected": 721086,
+      "actual": 734363
+    },
+    {
+      "id": "shortInput",
+      "field": "date",
+      "expected": "17.09.2026",
+      "actual": "23.09.2026"
+    },
+    {
+      "id": "shortInput",
+      "field": "previous",
+      "expected": 708831,
+      "actual": 721445
+    },
+    {
+      "id": "shortInput",
+      "field": "trend",
+      "expected": 12255,
+      "actual": 12918
+    },
+    {
+      "id": "shortInput",
+      "field": "quantity",
+      "expected": 721086,
+      "actual": 734363
+    },
+    {
+      "id": "shortInputAmb",
+      "field": "fact",
+      "expected": 712410,
+      "actual": 725770
+    },
+    {
+      "id": "shortInputAmb",
+      "field": "date",
+      "expected": "17.09.2026",
+      "actual": "23.09.2026"
+    },
+    {
+      "id": "shortInputAmb",
+      "field": "previous",
+      "expected": 699779,
+      "actual": 712481
+    },
+    {
+      "id": "shortInputAmb",
+      "field": "trend",
+      "expected": 12631,
+      "actual": 13289
+    },
+    {
+      "id": "shortInputAmb",
+      "field": "quantity",
+      "expected": 712410,
+      "actual": 725770
+    },
+    {
+      "id": "shortInputHosp",
+      "field": "fact",
+      "expected": 8676,
+      "actual": 8593
+    },
+    {
+      "id": "shortInputHosp",
+      "field": "date",
+      "expected": "17.09.2026",
+      "actual": "23.09.2026"
+    },
+    {
+      "id": "shortInputHosp",
+      "field": "previous",
+      "expected": 9052,
+      "actual": 8964
+    },
+    {
+      "id": "shortInputHosp",
+      "field": "trend",
+      "expected": -376,
+      "actual": -371
+    },
+    {
+      "id": "shortInputHosp",
+      "field": "quantity",
+      "expected": 8676,
+      "actual": 8593
+    },
+    {
+      "id": "smp",
+      "field": "fact",
+      "expected": 91.68255101679512,
+      "actual": 92.46574747521542
+    },
+    {
+      "id": "smp",
+      "field": "date",
+      "expected": "17.09.2026",
+      "actual": "22.09.2026"
+    },
+    {
+      "id": "smp",
+      "field": "quantity",
+      "expected": 621439,
+      "actual": 638709
+    },
+    {
+      "id": "tmkMaxCount",
+      "field": "fact",
+      "expected": 23856,
+      "actual": 25106
+    },
+    {
+      "id": "tmkMaxCount",
+      "field": "date",
+      "expected": "17.09.2026",
+      "actual": "23.09.2026"
+    },
+    {
+      "id": "tmkMaxCount",
+      "field": "previous",
+      "expected": 22021,
+      "actual": 23856
+    },
+    {
+      "id": "tmkMaxCount",
+      "field": "trend",
+      "expected": 1835,
+      "actual": 1250
+    },
+    {
+      "id": "tmkMaxCount",
+      "field": "quantity",
+      "expected": 23856,
+      "actual": 25106
+    },
+    {
+      "id": "tmkRemd",
+      "field": "date",
+      "expected": "17.09.2026",
+      "actual": "23.09.2026"
+    }
+  ],
   "preservedBaselineConflicts": [],
   "note": "PASS means the current deterministic calculation layer reproduces the approved runtime snapshot."
 }
