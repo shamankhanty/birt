@@ -1071,7 +1071,7 @@ def run_family(app:Path,family:str,source:Path,end:date,root:Path)->AdapterResul
     if family=="death_certificates": return adapt_certificates(app,source,end,"death",family)
     if family=="max_tmk_eln": return adapt_max(app,source,end)
     if family=="physicians": return adapt_physicians(app,source,end,root/"app/mo-registry.json")
-    if family=="remd_errors": return adapt_errors(app,source,end,parse_iso(start) if start else None)
+    if family=="remd_errors": return adapt_errors(app,source,end,date.fromisoformat(start) if start else None)
     if family=="electronic_waybill": return adapt_waybill(app,source,end)
     if family=="tvsp_ambulatory": return adapt_tvsp_subunits(app,source,end,"tvspAmbulatory",family,"Амбулаторные ТВСП, передающие эпикриз/талон и/или протокол консультации","объект контроля с ТВСП")
     if family=="tvsp_stationary": return adapt_tvsp_subunits(app,source,end,"tvspStationary",family,"ТВСП, передающие выписные эпикризы","объект контроля с ТВСП")
