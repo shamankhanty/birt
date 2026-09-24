@@ -663,7 +663,7 @@ def adapt_errors(app: Path, source: Path, end: date, start: date | None = None) 
     attributed_errors = total - unassigned_errors
     coverage = attributed_errors / total * 100 if total else 100.0
     registry_coverage = registry_matched_errors / total * 100 if total else 100.0
-    period = source_period(source, end, "weekly")
+    period = f"{date_ru(start)}–{date_ru(end)}" if start else source_period(source, end, "weekly")
     breakdown = {
         "status": "available", "sourcePeriod": period,
         "totalErrors": total, "attributedErrors": attributed_errors,
