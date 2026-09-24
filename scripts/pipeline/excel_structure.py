@@ -71,6 +71,13 @@ def inspect_workbook(path):
         if family == 'physicians':
             formed = [v.date() for row in rows if 'Дата формирования' in str(row[0]) for v in row if isinstance(v, datetime)]
             if formed: periods.append((formed[0].replace(day=1), formed[0]))
+        if family in ('tvsp_ambulatory', 'tvsp_stationary', 'tvsp_laboratory'):
+            # BI TVSP exports encode the reporting window as year + month range
+            # (e.g. "Январь-Сентябрь") and the actual cut date as generation date.
+            # For the current cumulative year-to-date source, use 01.01 through that cut date.
+            formed = [v.date() for row in rows if 'Дата формирования' in str(row[0]) for v in row if isinstance(v, datetime)]
+            month_range = any('январь-сентябрь' in ' '.join(str(v).lower() for v in row if v is not None) for row in rows)
+            if formed and month_range: periods.append((date(formed[0].year, 1, 1), formed[0]))
         unique = sorted(set(periods))
         result = {'family': family, 'sheets': sheets}
         if len(unique) > 1:
