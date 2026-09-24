@@ -112,7 +112,19 @@ jobs:
 
       - name: Archive successfully published Yandex Disk INBOX
         if: steps.promotion.outcome == 'success' && steps.promotion.outputs.no_candidate != 'true'
-        run: python scripts/yandex_disk_inbox.py --remote "$BIRT_YANDEX_INBOX" --archive-to "$BIRT_YANDEX_ARCHIVE"
+        run: |
+          python - <<'PY'
+          import json, os, subprocess
+          from pathlib import Path
+          reports = sorted((Path(os.environ["RUNNER_TEMP"])/"BIRT"/"REPORTS").glob("*/report.json"))
+          if not reports:
+              raise SystemExit("No updater report for selective archive")
+          report = json.loads(reports[-1].read_text(encoding="utf-8"))
+          accepted = sorted({name for item in report.get("indicators", []) if item.get("state") in {"PREPARED", "UNCHANGED"} for name in item.get("sources", [])})
+          for name in accepted:
+              subprocess.run(["python", "scripts/yandex_disk_inbox.py", "--remote", os.environ["BIRT_YANDEX_INBOX"], "--archive-to", os.environ["BIRT_YANDEX_ARCHIVE"], "--name", name], check=True)
+          print(f"Selective archive: {len(accepted)} accepted source(s)")
+          PY
 
       - name: Trigger GitHub Pages deployment
         if: steps.promotion.outcome == 'success'
