@@ -4498,14 +4498,25 @@ export default function Home() {
     isCumulativeShareMetric &&
     ((numeratorChange !== null && numeratorChange < 0) ||
       (denominatorChange !== null && denominatorChange < 0));
+  // For cumulative source-backed shares, the previous regional percentage
+  // must come from the preserved previous numerator/denominator pair. Using the
+  // current runtime fact here can silently turn real dynamics into 0 p.p.
+  const componentPreviousFact =
+    previousRegionalComponents && previousRegionalComponents.denominator > 0
+      ? (previousRegionalComponents.numerator / previousRegionalComponents.denominator) * 100
+      : null;
+  const effectiveRegionalPrevious =
+    isCumulativeShareMetric && componentPreviousFact !== null
+      ? componentPreviousFact
+      : regionalPrevious;
   const regionalChange =
-    regionalPrevious === null
+    effectiveRegionalPrevious === null
       ? null
-      : operationalRegionalCurrent - regionalPrevious;
+      : operationalRegionalCurrent - effectiveRegionalPrevious;
   const regionalRelativeChange =
-    regionalPrevious === null || regionalPrevious === 0 || regionalChange === null
+    effectiveRegionalPrevious === null || effectiveRegionalPrevious === 0 || regionalChange === null
       ? null
-      : (regionalChange / regionalPrevious) * 100;
+      : (regionalChange / effectiveRegionalPrevious) * 100;
   const operationalIntervalDays = snapshotDistanceDays(
     snapshotDate(periods.previous),
     snapshotDate(periods.current),
@@ -8542,7 +8553,7 @@ export default function Home() {
                       <strong>
                         {regionalPrevious === null
                           ? "—"
-                          : `${format(regionalPrevious, isCountMetric ? 0 : 2)}${isCountMetric ? "" : "%"}`}
+                          : `${format(effectiveRegionalPrevious, isCountMetric ? 0 : 2)}${isCountMetric ? "" : "%"}`}
                       </strong>
                       <span>
                         {previousSnapshot}
