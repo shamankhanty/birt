@@ -71,11 +71,17 @@ def archive_inbox(remote_path: str, archive_root: str, token: str):
 def main():
     p = argparse.ArgumentParser()
     p.add_argument("--remote", required=True, help="Yandex Disk path, e.g. disk:/.../INBOX")
-    p.add_argument("--output", type=Path)\n    p.add_argument("--archive-to", help="Move current INBOX items to a timestamped directory under this remote path")
+    p.add_argument("--output", type=Path)
+    p.add_argument("--archive-to", help="Move current INBOX items to a timestamped directory under this remote path")
     args = p.parse_args()
     token = os.environ.get("YANDEX_DISK_TOKEN")
     if not token:
         raise SystemExit("YANDEX_DISK_TOKEN is not configured")
+    if args.archive_to:
+        archive_inbox(args.remote, args.archive_to, token)
+        return 0
+    if args.output is None:
+        raise SystemExit("--output is required unless --archive-to is used")
     args.output.mkdir(parents=True, exist_ok=True)
     count = walk(args.remote, args.output, token)
     print(f"Yandex Disk INBOX downloaded: {count} file(s)")
