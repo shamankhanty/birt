@@ -1,8 +1,8 @@
 {
   "schemaVersion": 1,
   "kind": "current-production",
-  "promotedFrom": "/home/runner/work/_temp/BIRT/REPORTS/20260921-085528-a5ccc0e0/candidate/app",
-  "promotedAt": "2026-09-21T08:55:31.410Z",
+  "promotedFrom": "/home/runner/work/_temp/BIRT/REPORTS/20260924-071520-10b5549f/candidate/app",
+  "promotedAt": "2026-09-24T07:15:24.638Z",
   "files": {
     "app/electronic-waybill-weekly.json": "169290974cab42fc589a1ad8b2dea3c2708c86ce65720763af9538b4f25f867a",
     "app/electronic-waybill.json": "d682decfa448f6fd17c8df1fdcf088b105cff03080daf029849a4d039c638dbc",
