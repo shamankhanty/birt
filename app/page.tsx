@@ -3546,6 +3546,7 @@ export default function Home() {
         persistentCount,
         quantityGap,
         regionalContribution,
+        snapshotPotential,
         severity,
       };
     });
