@@ -39,10 +39,39 @@ def walk(remote_path: str, local_root: Path, token: str, relative=Path(".")):
         if not items or offset >= embedded.get("total", offset):
             return count
 
+def request_empty(url: str, token: str, method="POST"):
+    req = urllib.request.Request(url, method=method, headers={"Authorization": f"OAuth {token}", "Accept": "application/json"})
+    with urllib.request.urlopen(req, timeout=60) as response:
+        return response.status
+
+def archive_inbox(remote_path: str, archive_root: str, token: str):
+    """Move every non-temporary top-level INBOX item after confirmed publish."""
+    from datetime import datetime, timezone
+    stamp = datetime.now(timezone.utc).strftime("%Y-%m-%d_%H%M%S")
+    target_dir = archive_root.rstrip("/") + "/" + stamp
+    q = urllib.parse.urlencode({"path": target_dir})
+    try:
+        request_empty(f"{API}?{q}", token, "PUT")
+    except urllib.error.HTTPError as e:
+        if e.code != 409:
+            raise
+    q = urllib.parse.urlencode({"path": remote_path, "limit": 1000, "fields": "_embedded.items.name,_embedded.items.path,_embedded.items.type,_embedded.total"})
+    data = request_json(f"{API}?{q}", token)
+    moved = 0
+    for item in data.get("_embedded", {}).get("items", []):
+        if item["name"].startswith("~$"):
+            continue
+        dst = target_dir + "/" + item["name"]
+        mq = urllib.parse.urlencode({"from": item["path"], "path": dst, "overwrite": "false"})
+        request_empty(f"{API}/move?{mq}", token)
+        moved += 1
+    print(f"Yandex Disk INBOX archived: {moved} item(s) -> {target_dir}")
+    return moved
+
 def main():
     p = argparse.ArgumentParser()
     p.add_argument("--remote", required=True, help="Yandex Disk path, e.g. disk:/.../INBOX")
-    p.add_argument("--output", type=Path, required=True)
+    p.add_argument("--output", type=Path)\n    p.add_argument("--archive-to", help="Move current INBOX items to a timestamped directory under this remote path")
     args = p.parse_args()
     token = os.environ.get("YANDEX_DISK_TOKEN")
     if not token:
