@@ -100,13 +100,17 @@ def main():
     p = argparse.ArgumentParser()
     p.add_argument("--remote", required=True, help="Yandex Disk path, e.g. disk:/.../INBOX")
     p.add_argument("--output", type=Path)
-    p.add_argument("--archive-to", help="Move current INBOX items to a timestamped directory under this remote path")\n    p.add_argument("--name", action="append", default=[], help="Archive only this verified top-level INBOX filename; repeatable")
+    p.add_argument("--archive-to", help="Move current INBOX items to a timestamped directory under this remote path")
+    p.add_argument("--name", action="append", default=[], help="Archive only this verified top-level INBOX filename; repeatable")
     args = p.parse_args()
     token = os.environ.get("YANDEX_DISK_TOKEN")
     if not token:
         raise SystemExit("YANDEX_DISK_TOKEN is not configured")
     if args.archive_to:
-        archive_inbox(args.remote, args.archive_to, token)
+        if args.name:
+            archive_selected(args.remote, args.archive_to, token, args.name)
+        else:
+            archive_inbox(args.remote, args.archive_to, token)
         return 0
     if args.output is None:
         raise SystemExit("--output is required unless --archive-to is used")
