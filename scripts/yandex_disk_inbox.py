@@ -33,7 +33,17 @@ def walk(remote_path: str, local_root: Path, token: str, relative=Path(".")):
             if item["type"] == "dir":
                 count += walk(item["path"], local_root, token, rel)
             elif not item["name"].startswith("~$"):
-                download_file(item["path"], local_root / rel, token)
+                local_path = local_root / rel
+                if len(item["name"].encode("utf-8")) > 240:
+                    import hashlib
+                    suffix = Path(item["name"]).suffix
+                    stem = Path(item["name"]).stem
+                    digest = hashlib.sha256(item["name"].encode("utf-8")).hexdigest()[:12]
+                    safe_stem = stem.encode("utf-8")[:180].decode("utf-8", "ignore")
+                    safe_name = safe_stem + "__" + digest + suffix
+                    local_path = local_root / relative / safe_name
+                    print(f"Long source filename mapped locally: {item['name']} -> {safe_name}")
+                download_file(item["path"], local_path, token)
                 count += 1
         offset += len(items)
         if not items or offset >= embedded.get("total", offset):
