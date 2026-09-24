@@ -86,7 +86,11 @@ jobs:
         if: github.event_name == 'issues' && startsWith(github.event.issue.title, 'BIRT PUBLISH') && steps.updater.outputs.exit_code == '0'
         run: |
           report=$(find "$RUNNER_TEMP/BIRT/REPORTS" -mindepth 2 -maxdepth 2 -name report.json | sort | tail -1)
-          if [ -z "$report" ]; then echo "No updater report"; exit 2; fi
+          if [ -z "$report" ]; then
+            echo "No updater report: INBOX produced no candidate. Skipping promotion; current production remains unchanged."
+            echo "no_candidate=true" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
           run_dir=$(dirname "$report")
           node scripts/promote-current-production.mjs --candidate "$run_dir"
           git config user.name "github-actions[bot]"
@@ -107,7 +111,7 @@ jobs:
             --name "Отчет_по_законченному_случаю_амбулаторный_ - 01.01.2026-17.09.2026.xlsx"
 
       - name: Archive successfully published Yandex Disk INBOX
-        if: steps.promotion.outcome == 'success'
+        if: steps.promotion.outcome == 'success' && steps.promotion.outputs.no_candidate != 'true'
         run: python scripts/yandex_disk_inbox.py --remote "$BIRT_YANDEX_INBOX" --archive-to "$BIRT_YANDEX_ARCHIVE"
 
       - name: Trigger GitHub Pages deployment
