@@ -3565,6 +3565,7 @@ export default function Home() {
           persistentCount,
           quantityGap,
           regionalContribution,
+          snapshotPotential,
           severity,
         }) => {
           const failedCount = failed.length;
