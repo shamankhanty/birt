@@ -1063,7 +1063,7 @@ SUPPORTED_FAMILIES={
     "tvsp_ambulatory","tvsp_stationary","tvsp_laboratory","tvsp_diagnostic","smp_tvsp","tmk_remd","elmk","short_input","fap_fp","asu_smp"
 }
 
-def run_family(app:Path,family:str,source:Path,end:date,root:Path)->AdapterResult:
+def run_family(app:Path,family:str,source:Path,end:date,root:Path,start:date|None=None)->AdapterResult:
     if family=="egpu_attachment": return adapt_egpu(app,source,end)
     if family=="hospital_cases": return adapt_hospital(app,source,end)
     if family=="ambulatory_cases": return adapt_ambulatory_cases(app,source,end)
