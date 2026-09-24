@@ -193,7 +193,13 @@ def source_period(path: Path, end: date, kind: str = "cumulative") -> str:
             return f"{date_ru(start)}–{date_ru(finish)}"
         except ValueError:
             pass
-    return period_cumulative(end) if kind == "cumulative" else date_ru(end)
+    if kind == "weekly":
+        # If the catalog has already established a non-standard explicit period
+        # (for example a 4-day operational REMD slice), the caller should pass it
+        # through rather than collapsing it to the end date. Filename parsing above
+        # remains the preferred source when the range is encoded in the name.
+        return date_ru(end)
+    return period_cumulative(end)
 
 def previous_fields(old: dict | None, same_cut: bool, current_fact):
     if not old:
