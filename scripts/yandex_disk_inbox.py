@@ -68,11 +68,39 @@ def archive_inbox(remote_path: str, archive_root: str, token: str):
     print(f"Yandex Disk INBOX archived: {moved} item(s) -> {target_dir}")
     return moved
 
+def archive_selected(remote_path: str, archive_root: str, token: str, names: list[str]):
+    """Move only explicitly verified top-level INBOX files."""
+    from datetime import datetime, timezone
+    if not names:
+        print("Yandex Disk INBOX archived: 0 item(s); no verified files")
+        return 0
+    stamp = datetime.now(timezone.utc).strftime("%Y-%m-%d_%H%M%S")
+    target_dir = archive_root.rstrip("/") + "/" + stamp
+    q = urllib.parse.urlencode({"path": target_dir})
+    try:
+        request_empty(f"{API}?{q}", token, "PUT")
+    except urllib.error.HTTPError as e:
+        if e.code != 409:
+            raise
+    q = urllib.parse.urlencode({"path": remote_path, "limit": 1000, "fields": "_embedded.items.name,_embedded.items.path,_embedded.items.type,_embedded.total"})
+    data = request_json(f"{API}?{q}", token)
+    items = {x["name"]: x for x in data.get("_embedded", {}).get("items", [])}
+    missing = [name for name in names if name not in items]
+    if missing:
+        raise RuntimeError("Verified INBOX file disappeared before archive: " + ", ".join(missing))
+    for name in names:
+        item = items[name]
+        dst = target_dir + "/" + name
+        mq = urllib.parse.urlencode({"from": item["path"], "path": dst, "overwrite": "false"})
+        request_empty(f"{API}/move?{mq}", token)
+    print(f"Yandex Disk INBOX archived: {len(names)} verified item(s) -> {target_dir}")
+    return len(names)
+
 def main():
     p = argparse.ArgumentParser()
     p.add_argument("--remote", required=True, help="Yandex Disk path, e.g. disk:/.../INBOX")
     p.add_argument("--output", type=Path)
-    p.add_argument("--archive-to", help="Move current INBOX items to a timestamped directory under this remote path")
+    p.add_argument("--archive-to", help="Move current INBOX items to a timestamped directory under this remote path")\n    p.add_argument("--name", action="append", default=[], help="Archive only this verified top-level INBOX filename; repeatable")
     args = p.parse_args()
     token = os.environ.get("YANDEX_DISK_TOKEN")
     if not token:
