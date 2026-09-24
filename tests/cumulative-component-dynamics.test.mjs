@@ -49,3 +49,10 @@ test("pipeline carries component baselines forward without reconstructing missin
   assert.match(adapters, /corrected_baseline_exists/u);
   assert.match(adapters, /comparison_reset = base\.get\("comparisonReset", True\) if same_cut else not corrected_baseline_exists/u);
 });
+
+
+test("UI derives previous cumulative regional fact from preserved components", () => {
+  assert.match(page, /componentPreviousFact/u);
+  assert.match(page, /previousRegionalComponents\.numerator \/ previousRegionalComponents\.denominator/u);
+  assert.match(page, /effectiveRegionalPrevious/u);
+});
