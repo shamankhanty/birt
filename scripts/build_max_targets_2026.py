@@ -36,6 +36,28 @@ def norm(value: str) -> str:
     return value.replace(" г ", " ").replace("г.", " ")
 
 
+# The approved documents omit a city or use a legacy name for these rows.
+# Keep these mappings explicit: numbered Kazan and Naberezhnye Chelny
+# organizations must never be resolved by number alone.
+MANUAL_OIDS = {
+    norm('ГАУЗ "Городская поликлиника №7"'): "1.2.643.5.1.13.13.12.2.16.1153",
+    norm('ГАУЗ "Городская поликлиника №4"'): "1.2.643.5.1.13.13.12.2.16.1147",
+    norm('ГАУЗ "Городская поликлиника №7" г. Н.Челны'): "1.2.643.5.1.13.13.12.2.16.1115",
+    norm('ГАУЗ «Детская городская больница с перинатальным центром»'): "1.2.643.5.1.13.13.12.2.16.1171",
+    norm('ГАУЗ "Камскополянская районная больница"'): "1.2.643.5.1.13.13.12.2.16.1165",
+    norm('ГАУЗ "Альметьевская детская городская больница с перинатальным центром"'): "1.2.643.5.1.13.13.12.2.16.1146",
+    norm('ГАУЗ "Елабужская ЦРБ"'): "1.2.643.5.1.13.13.12.2.16.1093",
+    norm('ГАУЗ "Кайбицкая ЦРБ"'): "1.2.643.5.1.13.13.12.2.16.1131",
+    norm('Филиал ГАУЗ «Республиканская клиническая больница Министерства здравоохранения Республики Татарстан» - «Спасская ЦРБ»'): "1.2.643.5.1.13.13.12.2.16.18650",
+    norm('ГАУЗ «Городская детская поликлиника №7» г.Казани'): "1.2.643.5.1.13.13.12.2.16.1113",
+    norm('ГАУЗ «Городская детская поликлиника №6» г.Набережные Челны'): "1.2.643.5.1.13.13.12.2.16.1066",
+    norm('ГАУЗ «Детская городская поликлиника №3» г.Набережные Челны'): "1.2.643.5.1.13.13.12.2.16.1067",
+    norm('ГАУЗ «Детская городская поликлиника №4 им. Ф.Г. Ахмеровой» г.Набережные Челны'): "1.2.643.5.1.13.13.12.2.16.1127",
+    norm('ГАУЗ "Детская городская поликлиника №6"'): "1.2.643.5.1.13.13.12.2.16.1090",
+    norm('ГАУЗ «Детская республиканская клиническая больница» (поликлиника 3) г.Казани'): "1.2.643.5.1.13.13.12.2.16.1155",
+}
+
+
 def tokens(value: str) -> set[str]:
     return set(norm(value).split())
 
@@ -53,6 +75,7 @@ def table_rows(path: Path) -> list[list[str]]:
 
 def main() -> None:
     registry = json.loads((ROOT / "app/mo-registry.json").read_text(encoding="utf-8"))["organizations"]
+    by_oid = {org["oid"]: org for org in registry}
     by_name: dict[str, list[dict]] = {}
     for org in registry:
         for value in [org.get("name"), org.get("shortName"), *(org.get("aliases") or [])]:
@@ -67,8 +90,12 @@ def main() -> None:
             name, *values = cells
             if "целевые значения" in name.lower() or not values[0].replace(" ", "").isdigit():
                 continue
-            candidates = by_name.get(norm(name), [])
-            if len(candidates) == 1:
+            manual_oid = MANUAL_OIDS.get(norm(name))
+            candidates = [by_oid.get(manual_oid, {"oid": manual_oid, "name": name})] if manual_oid else by_name.get(norm(name), [])
+            if manual_oid:
+                org = candidates[0]
+                match = "approved-manual"
+            elif len(candidates) == 1:
                 org = candidates[0]
                 match = "exact-normalized"
             else:
@@ -96,6 +123,14 @@ def main() -> None:
                     "2026-11": int(values[2].replace(" ", "")), "2026-12": int(values[3].replace(" ", "")),
                 }
             audits[metric].append(audit)
+        unresolved = [row["sourceName"] for row in audits[metric] if "oid" not in row]
+        oid_counts = {oid: sum(row.get("oid") == oid for row in audits[metric]) for oid in plans}
+        duplicate_oids = sorted(oid for oid, count in oid_counts.items() if count > 1)
+        if len(audits[metric]) != 85 or unresolved or duplicate_oids:
+            raise ValueError(
+                f"{metric}: rows={len(audits[metric])}, mapped={len(audits[metric]) - len(unresolved)}, "
+                f"unresolved={unresolved}, duplicate OIDs={duplicate_oids}"
+            )
     output = {
         "version": 2,
         "basis": "approved cumulative MAX control points for 2026",
@@ -106,7 +141,7 @@ def main() -> None:
         "methodology": {"tmk": "Проведенных ТМК в МАХ (накопленным итогом)", "eln": "Закрытые больничные через МАХ (накопленным итогом)", "sourceColumns": {"tmk": 3, "eln": 4}, "periodKind": "cumulative"},
         "organizationPlans": plans,
         "audit": audits,
-        "validation": {"sourceOrganizationRows": 85, "matchedOrganizations": len(plans), "ambiguous": sum(sum(x["match"] == "ambiguous" for x in rows) for rows in audits.values()), "unmatched": sum(sum(x["match"] == "unmatched" for x in rows) for rows in audits.values()), "noRedistribution": True},
+        "validation": {"sourceOrganizationRows": 85, "matchedOrganizations": len(plans), "ambiguous": sum(sum(x["match"] == "ambiguous" for x in rows) for rows in audits.values()), "unmatched": sum(sum(x["match"] == "unmatched" for x in rows) for rows in audits.values()), "duplicateOidCollisions": 0, "noRedistribution": True},
     }
     (ROOT / "config/max-targets-2026.json").write_text(json.dumps(output, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
     print(json.dumps(output["validation"], ensure_ascii=False))
