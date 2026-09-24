@@ -684,6 +684,33 @@ const {
   organizationForMetric: registryOrganizationForMetric,
   organizationByMetricAndName: registryOrganizationByMetricAndName,
 } = createMoRegistryRuntime(moRegistry);
+
+function compactMoDisplayName(name: string) {
+  return cleanMoName(name)
+    .replace(/№\s*(\d+)/gu, "№$1")
+    .replace(/\s*,\s*(?:Казань|Наб\.\s*Челны)$/iu, "")
+    .replace(/\s+г\.?\s*(?:Казань|Наб\.\s*Челны)$/iu, "")
+    .replace(/\s+г\.?\s*Наб\.\s*Челны$/iu, "")
+    .trim();
+}
+
+const compactMoNameCounts = (() => {
+  const counts = new Map<string, number>();
+  for (const organization of moRegistry.organizations) {
+    const key = compactMoDisplayName(organization.shortName);
+    counts.set(key, (counts.get(key) ?? 0) + 1);
+  }
+  return counts;
+})();
+
+function displayMoName(name: string, oid?: string | null) {
+  const organization = oid ? registryByOid.get(oid) : null;
+  if (!organization) return cleanMoName(name);
+  const compact = compactMoDisplayName(organization.shortName);
+  if ((compactMoNameCounts.get(compact) ?? 0) < 2) return compact;
+  const city = organization.district === "Набережные Челны" ? "Наб. Челны" : organization.district;
+  return city ? `${compact}, ${city}` : compact;
+}
 const monthlyMoData = monthlyMoRaw as Record<string, MonthlyMoDataset>;
 const maxAppointmentsMunicipal = maxAppointmentsMunicipalRaw as MaxAppointmentMunicipalData;
 const maxTargets = maxTargetsRaw as {
@@ -6517,7 +6544,7 @@ export default function Home() {
                             {union.members.map((row, memberIndex) => (
                               <p key={row.key}>
                                 <i>{memberIndex + 1}</i>
-                                <span>{cleanMoName(row.name)}</span>
+                                <span>{displayMoName(row.name, row.key)}</span>
                                 <b>
                                   {row.score === null
                                     ? "Нет данных"
@@ -6857,7 +6884,7 @@ export default function Home() {
                                 <b className="rank">{place ?? "—"}</b>
                               </td>
                               <td>
-                                <strong>{cleanMoName(r.name)}</strong>
+                                <strong>{displayMoName(r.name, r.key)}</strong>
                                 <details className="ratingBreakdown">
                                   <summary>
                                     Расшифровка: {r.dataCount} из {r.total}{" "}
@@ -7071,7 +7098,7 @@ export default function Home() {
                     <p key={row.key}>
                       <b>{index + 1}</b>
                       <span>
-                        {cleanMoName(row.name)} — индекс {format(row.regionalContribution, 3)}
+                        {displayMoName(row.name, row.key)} — индекс {format(row.regionalContribution, 3)}
                       </span>
                     </p>
                   ))}
@@ -7172,7 +7199,7 @@ export default function Home() {
                       <div className="hearingRank">
                         <i>{index + 1}</i>
                         <div>
-                          <h2>{cleanMoName(row.name)}</h2>
+                          <h2>{displayMoName(row.name, row.key)}</h2>
                           <p>{row.type}</p>
                         </div>
                         <strong>
@@ -7805,7 +7832,7 @@ export default function Home() {
                       <div key={row.name}>
                         <span className="miniRank">{index + 1}</span>
                         <p title={cleanMoName(row.name)}>
-                          {cleanMoName(row.name)}
+                          {displayMoName(row.name, row.oid)}
                         </p>
                         <b>{row.moved} движ.</b>
                         <strong>
@@ -7837,7 +7864,7 @@ export default function Home() {
                         <div key={row.sourceNumber}>
                           <span className="miniRank">{index + 1}</span>
                           <p title={cleanMoName(row.name)}>
-                            {cleanMoName(row.name)}
+                          {displayMoName(row.name, row.oid)}
                             {persistent && <small>0% вторую неделю</small>}
                           </p>
                           <b>{idle} без движ.</b>
@@ -8069,7 +8096,7 @@ export default function Home() {
                             <b className="rank">{index + 1}</b>
                           </td>
                           <td>
-                            <strong>{cleanMoName(row.name)}</strong>
+                            <strong>{displayMoName(row.name, row.oid)}</strong>
                             <small>
                               {row.ambulanceVehicles} автомобилей СМП ·{" "}
                               {row.otherVehicles} остальных ТС
@@ -10064,7 +10091,7 @@ function PreventiveAuditTable({
             {rows.map((row) => (
               <tr key={`${row.oid}-${row.name}`}>
                 <td>
-                  <strong>{cleanMoName(row.name)}</strong>
+                  <strong>{displayMoName(row.name, row.oid)}</strong>
                 </td>
                 <td>
                   <b>
@@ -10251,7 +10278,7 @@ function UnitMoOverview({ dataset }: { dataset: UnitDataset }) {
             <div className="unitMoRank" key={g.key}>
               <i>{i + 1}</i>
               <span>
-                {cleanMoName(g.mo)}
+                {displayMoName(g.mo, g.oid)}
                 <small>
                   {format(g.fact, 0)} из {format(g.plan, 0)} {entity}
                 </small>
@@ -10273,7 +10300,7 @@ function UnitMoOverview({ dataset }: { dataset: UnitDataset }) {
               <div className="unitMoRank" key={g.key}>
                 <i>{i + 1}</i>
                 <span>
-                  {cleanMoName(g.mo)}
+                {displayMoName(g.mo, g.oid)}
                   <small>
                     {format(g.fact, 0)} из {format(g.plan, 0)} {entity}
                   </small>
@@ -10372,7 +10399,7 @@ function UnitMoOverview({ dataset }: { dataset: UnitDataset }) {
                       onClick={() => setOpenMo(opened ? null : g.key)}
                     >
                       <span>{opened ? "▾" : "▸"}</span>
-                      <strong>{cleanMoName(g.mo)}</strong>
+                      <strong>{displayMoName(g.mo, g.oid)}</strong>
                       <small>{g.oid || "OID не указан"}</small>
                     </button>
                   </td>
@@ -10545,7 +10572,7 @@ function UnitDetail({
                   <b className="rank">{index + 1}</b>
                 </td>
                 <td>
-                  <strong>{cleanMoName(row.mo)}</strong>
+                  <strong>{displayMoName(row.mo, row.oid)}</strong>
                   <small>{row.moOid}</small>
                 </td>
                 <td>
@@ -10923,7 +10950,7 @@ function MonthlyMoView({
                     <b className="rank">{i + 1}</b>
                   </td>
                   <td>
-                    <strong>{cleanMoName(r.name)}</strong>
+                    <strong>{displayMoName(r.name, r.oid)}</strong>
                     <small>помесячные исходники</small>
                   </td>
                   <td>
@@ -11024,7 +11051,7 @@ function RatingPanel({
         {rows.map((row, index) => (
           <li key={row.key}>
             <i>{index + 1}</i>
-            <span title={cleanMoName(row.name)}>{cleanMoName(row.name)}</span>
+            <span title={cleanMoName(row.name)}>{displayMoName(row.name, row.oid)}</span>
             <b>
               {showChange
                 ? row.change === null
@@ -11162,7 +11189,7 @@ function RankingBlock({
           rows.map((r, i) => {
             const displayName = metric
               ? reportMoName(metric, r.name)
-              : cleanMoName(r.name);
+              : displayMoName(r.name, r.oid);
             const target =
               r.volume === null || r.volume === undefined
                 ? null
