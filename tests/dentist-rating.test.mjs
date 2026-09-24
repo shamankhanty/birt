@@ -14,13 +14,13 @@ function evaluate(row, dental = true) {
   return { fact, passed: fact >= 50, status: fact >= 50 ? "good" : "bad" };
 }
 
-test("dentist is mandatory and uses the operational 17.09 cut", () => {
+test("dentist is mandatory and uses the latest operational September cut", () => {
   assert.equal(registry.indicators.doctor500_dentist.plan.value, 50);
   assert.equal(registry.indicators.doctor500_dentist.rating.policy, "include");
   assert.equal(registry.indicators.doctor500_dentist.rating.block, "readiness");
   assert.deepEqual(registry.indicators.doctor500_dentist.rowExclusionRules, ["small_denominator_lt3_reference_only"]);
-  assert.equal(weekly.date, "17.09.2026");
-  assert.match(weekly.period, /01\.09.*17\.09/u);
+  assert.equal(weekly.date, "23.09.2026");
+  assert.match(weekly.period, /01\.09.*23\.09/u);
   assert.ok(weekly.source);
   assert.ok(monthly.doctor500_dentist.rows.length > 0);
   assert.ok(monthly.doctor500_dentist.previousLabel);
