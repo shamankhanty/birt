@@ -137,7 +137,7 @@ def invoke(app, family, metric, item, partner):
             raise ValueError('Нет парного источника за тот же отчетный период')
         return adapt_preventive(app,source,Path(partner['path']),end,ROOT/'app/mo-registry.json')
     if family=='hospital_cases': return adapt_hospital(app,source,end)
-    return run_family(app,family,source,end,ROOT)
+    return run_family(app,family,source,end,ROOT,parse_iso(start) if start else None)
 
 
 def project_metric(current, generated, metric, item):
