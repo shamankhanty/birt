@@ -19,7 +19,8 @@ jobs:
     runs-on: ubuntu-latest
     env:
       YANDEX_DISK_TOKEN: ${{ secrets.YANDEX_DISK_TOKEN }}
-      BIRT_YANDEX_INBOX: "disk:/!МЗ РТ/!Синк 05 08 26/BIRT/BIRT/INBOX"\n      BIRT_YANDEX_ARCHIVE: "disk:/!МЗ РТ/!Синк 05 08 26/BIRT/BIRT/ARCHIVE"
+      BIRT_YANDEX_INBOX: "disk:/!МЗ РТ/!Синк 05 08 26/BIRT/BIRT/INBOX"
+      BIRT_YANDEX_ARCHIVE: "disk:/!МЗ РТ/!Синк 05 08 26/BIRT/BIRT/ARCHIVE"
     steps:
       - uses: actions/checkout@v4
 
