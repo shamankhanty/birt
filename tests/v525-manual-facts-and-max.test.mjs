@@ -43,6 +43,6 @@ test("EPGU operational comparison uses runtime source cuts", () => {
   assert.equal(runtime.egpu.derivedFact, previousFact);
   const delta = (runtime.egpu.fact ?? previousFact) - previousFact;
   assert.equal(typeof delta, "number");
-  assert.match(page, /operationalRegionalCurrent - regionalPrevious/u);
+  assert.match(page, /operationalRegionalCurrent - effectiveRegionalPrevious/u);
   assert.doesNotMatch(page, /98\.01741119654318/u);
 });
