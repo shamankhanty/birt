@@ -123,8 +123,11 @@ def invoke(app, family, metric, item, partner):
                 if key not in cumulative or row['count']>cumulative[key]:
                     raise ValueError(f'MAX: месячный контроль превышает накопительный или МО отсутствует: {row["name"]}')
     if family=='remd_errors' and start:
-        if (end-parse_iso(start)).days != 6:
-            raise ValueError('Выгрузка отказов не за полную неделю; накопительные отказы не заменяют недельный срез')
+        # Operational REMD-error monitoring may use an explicitly supplied partial
+        # period (for example 20.09-24.09). Preserve the exact source period instead
+        # of rejecting it as not being a full calendar week.
+        if parse_iso(start) > end:
+            raise ValueError('Некорректный период выгрузки отказов РЭМД')
     if family=='egpu_attachment': return adapt_egpu(app,source,end,metric)
     if family=='max_tmk_eln': return adapt_max(app,source,end,metric)
     if family=='short_input': return adapt_short_input(app,source,end,metric)
