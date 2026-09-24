@@ -21,6 +21,7 @@ import preventiveSemdAuditRaw from "./preventive-semd-audit.json";
 import physicianMetricsRaw from "./physician-metrics.json";
 import physicianWeeklySnapshotRaw from "./physician-weekly-snapshot.json";
 import indicatorRegistryRaw from "../config/indicator-registry.json";
+import maxTargetsRaw from "../config/max-targets-2026.json";
 import {
   cleanMoName,
   createMoRegistryRuntime,
@@ -61,8 +62,11 @@ type MaxServiceValue = {
 
 type MaxMonthlyRow = {
   name: string;
+  oid?: string;
   tmk: MaxServiceValue;
   eln: MaxServiceValue;
+  targets?: { tmk: Record<string, number>; eln: Record<string, number> };
+  current?: { tmk: number | null; eln: number | null; date: string | null };
 };
 type MonthlyMaxSourceRow = {
   name: string;
@@ -682,6 +686,22 @@ const {
 } = createMoRegistryRuntime(moRegistry);
 const monthlyMoData = monthlyMoRaw as Record<string, MonthlyMoDataset>;
 const maxAppointmentsMunicipal = maxAppointmentsMunicipalRaw as MaxAppointmentMunicipalData;
+const maxTargets = maxTargetsRaw as {
+  months: string[];
+  republic: Record<string, Record<string, number>>;
+  organizationPlans: Record<string, { name: string; oid: string; tmk: Record<string, number>; eln: Record<string, number> }>;
+};
+
+function maxTargetForName(name: string) {
+  const key = moKey(name);
+  return Object.values(maxTargets.organizationPlans).find((plan) => moKey(plan.name) === key);
+}
+
+function maxOperationalRow(metric: "tmkMaxCount" | "elnMaxCount", name: string) {
+  const rows = ((operationalMoRaw as Record<string, { rows?: Array<{ name: string; oid?: string; fact?: number; count?: number }> }>)[metric]?.rows ?? []);
+  const key = moKey(name);
+  return rows.find((row) => moKey(row.name) === key);
+}
 
 function buildAugustMaxRows(): MaxMonthlyRow[] {
   const tmkRows = (monthlyMoData.tmkMaxCount?.rows ?? []) as MonthlyMaxSourceRow[];
@@ -701,11 +721,23 @@ function buildAugustMaxRows(): MaxMonthlyRow[] {
   };
   const rows = [...byName.values()]
     .filter((row) => !isMaxProfileInapplicable(row.name))
-    .map((row) => ({
+    .map((row) => {
+      const target = maxTargetForName(row.name);
+      const tmkSource = maxOperationalRow("tmkMaxCount", row.name);
+      const elnSource = maxOperationalRow("elnMaxCount", row.name);
+      return {
       name: cleanMoName(row.name),
+      oid: target?.oid ?? tmkSource?.oid ?? elnSource?.oid,
       tmk: monthlyValue(row.tmk),
       eln: monthlyValue(row.eln),
-    }));
+      targets: target ? { tmk: target.tmk, eln: target.eln } : undefined,
+      current: {
+        tmk: tmkSource?.fact ?? tmkSource?.count ?? null,
+        eln: elnSource?.fact ?? elnSource?.count ?? null,
+        date: (operationalMoRaw as any)["tmkMaxCount"]?.date ?? null,
+      },
+      };
+    });
   const tmkTotal = rows.reduce((sum, row) => sum + (row.tmk.value ?? 0), 0);
   const elnTotal = rows.reduce((sum, row) => sum + (row.eln.value ?? 0), 0);
   return rows.map((row) => ({
@@ -2528,6 +2560,9 @@ type HearingRow = {
   coverage: number;
   quantityGap: number;
   regionalContribution: number;
+  snapshotPotential: number | null;
+  currentPotential: number;
+  potentialChange: number | null;
   affecting: HearingMetric[];
   mainProblem: HearingMetric | null;
   level: "mandatory" | "control";
@@ -3488,6 +3523,14 @@ export default function Home() {
         (sum, metric) => sum + (metric.regionalContribution ?? 0),
         0,
       );
+      const snapshot = hearingSnapshots.organizations[registry.oid];
+      const snapshotPotential = snapshot
+        ? Object.entries(snapshot.metrics).reduce((sum, [id, metric]) => {
+            const denominator = regionalDenominators.get(id) ?? 0;
+            if (!metric || metric.count == null || metric.volume == null || metric.plan == null || denominator <= 0) return sum;
+            return sum + (Math.max(0, (metric.plan / 100) * metric.volume - metric.count) / denominator) * 100;
+          }, 0)
+        : null;
       const deficits = failed.map((metric) => 100 - (metric.score ?? 0));
       const severity = deficits.length
         ? Math.max(...deficits) * 0.6 +
@@ -3503,6 +3546,7 @@ export default function Home() {
         persistentCount,
         quantityGap,
         regionalContribution,
+        snapshotPotential,
         severity,
       };
     });
@@ -3521,6 +3565,7 @@ export default function Home() {
           persistentCount,
           quantityGap,
           regionalContribution,
+          snapshotPotential,
           severity,
         }) => {
           const failedCount = failed.length;
@@ -3569,6 +3614,9 @@ export default function Home() {
               100,
             quantityGap,
             regionalContribution,
+            snapshotPotential,
+            currentPotential: regionalContribution,
+            potentialChange: snapshotPotential === null ? null : regionalContribution - snapshotPotential,
             affecting,
             mainProblem:
               [...affecting].sort(
@@ -5437,6 +5485,36 @@ export default function Home() {
 
               {maxService !== "visit" && (
                 <>
+              {maxMonth === "2026-08" && (
+                <section className="maxTargetControl" data-testid="max-target-control">
+                  <h3>Контрольные точки МАХ · накопительный план МО</h3>
+                  <p>Планы МО взяты из утверждённых документов; строка РТ хранится отдельно. ТМК и ЛВН не складываются.</p>
+                  <div className="maxTableWrap">
+                    <table className="maxTable">
+                      <thead><tr><th>МО</th><th>План сентября</th><th>Факт</th><th>% выполнения</th><th>Осталось</th><th>Следующая контрольная точка</th></tr></thead>
+                      <tbody>
+                        {[...augustMaxRows].sort((a, b) => {
+                          const service = maxService === "tmk" ? "tmk" : "eln";
+                          const ap = a.targets?.[service]?.["2026-09"];
+                          const bp = b.targets?.[service]?.["2026-09"];
+                          const af = a.current?.[service] ?? null;
+                          const bf = b.current?.[service] ?? null;
+                          return ((ap == null || af == null) ? -1 : af / ap) - ((bp == null || bf == null) ? -1 : bf / bp);
+                        }).map((row) => {
+                          const service = maxService === "tmk" ? "tmk" : "eln";
+                          const plan = row.targets?.[service]?.["2026-09"] ?? null;
+                          const fact = row.current?.[service] ?? null;
+                          const completion = plan && fact != null ? fact / plan * 100 : null;
+                          const remaining = plan != null && fact != null ? Math.max(plan - fact, 0) : null;
+                          const next = row.targets?.[service]?.["2026-10"] ?? null;
+                          return <tr key={`${row.oid ?? row.name}-${service}`}><td><strong>{row.name}</strong></td><td>{plan == null ? "нет данных" : format(plan, 0)}</td><td>{fact == null ? "нет данных" : format(fact, 0)}</td><td>{completion == null ? "нет данных" : `${format(completion, 2)}%`}</td><td>{remaining == null ? "нет данных" : format(remaining, 0)}</td><td>{next == null ? "нет данных" : format(next, 0)}</td></tr>;
+                        })}
+                      </tbody>
+                    </table>
+                  </div>
+                  <p>РТ: план сентября {format(maxTargets.republic[maxService === "tmk" ? "tmk" : "eln"]["2026-09"], 0)}; следующий ориентир октября {format(maxTargets.republic[maxService === "tmk" ? "tmk" : "eln"]["2026-10"], 0)}.</p>
+                </section>
+              )}
               <div className="maxMonthlyHead">
                 <div>
                   <p className="eyebrow">{maxService === "tmk" ? "ТМК" : "ЛВН"}</p>
@@ -7186,7 +7264,9 @@ export default function Home() {
                         <p>
                           <small>Потенциально до цели</small>
                           <b>
-                            {row.quantityGap > 0
+                            {row.heard && row.snapshotPotential !== null
+                              ? `${format(row.currentPotential, 3)} п.п. (на дату заслушивания ${format(row.snapshotPotential, 3)} п.п.; изменение ${format(row.potentialChange ?? 0, 3)} п.п.)`
+                              : row.quantityGap > 0
                               ? format(row.quantityGap, 0)
                               : "не определён"}
                           </b>
