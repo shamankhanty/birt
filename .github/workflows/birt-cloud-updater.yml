@@ -15,7 +15,7 @@ concurrency:
 
 jobs:
   update:
-    if: github.event_name == 'workflow_dispatch' || (github.event_name == 'issues' && (startsWith(github.event.issue.title, 'BIRT UPDATE') || startsWith(github.event.issue.title, 'BIRT PUBLISH')))
+    if: github.event_name == 'workflow_dispatch' || (github.event_name == 'issues' && (startsWith(github.event.issue.title, 'BIRT UPDATE') || startsWith(github.event.issue.title, 'BIRT PUBLISH') || startsWith(github.event.issue.title, 'BIRT ARCHIVE VERIFIED')))
     runs-on: ubuntu-latest
     env:
       YANDEX_DISK_TOKEN: ${{ secrets.YANDEX_DISK_TOKEN }}
@@ -98,6 +98,13 @@ jobs:
             git commit -m "Update dashboard from Yandex Disk INBOX"
             git push origin HEAD:main
           fi
+
+      - name: Archive verified unchanged legacy INBOX files
+        if: github.event_name == 'issues' && startsWith(github.event.issue.title, 'BIRT ARCHIVE VERIFIED') && steps.updater.outputs.exit_code == '0'
+        run: |
+          python scripts/yandex_disk_inbox.py --remote "$BIRT_YANDEX_INBOX" --archive-to "$BIRT_YANDEX_ARCHIVE" \
+            --name "Отчет_по_госпитализациям__-_01.01.2026-17.09.2026.xlsx" \
+            --name "Отчет_по_законченному_случаю_амбулаторный_ - 01.01.2026-17.09.2026.xlsx"
 
       - name: Archive successfully published Yandex Disk INBOX
         if: steps.promotion.outcome == 'success'
