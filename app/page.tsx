@@ -66,7 +66,7 @@ type MaxMonthlyRow = {
   tmk: MaxServiceValue;
   eln: MaxServiceValue;
   targets?: { tmk: Record<string, number>; eln: Record<string, number> };
-  current?: { tmk: number | null; eln: number | null; date: string | null };
+  current?: { tmk: number | null; eln: number | null; previousTmk: number | null; previousEln: number | null; date: string | null };
 };
 type MonthlyMaxSourceRow = {
   name: string;
@@ -724,8 +724,41 @@ function maxTargetForName(name: string) {
   return Object.values(maxTargets.organizationPlans).find((plan) => moKey(plan.name) === key);
 }
 
+function maxTargetForRow(name: string, oid?: string | null) {
+  return (oid ? maxTargets.organizationPlans[oid] : undefined) ?? maxTargetForName(name);
+}
+
+function monthKeyFromRussianDate(value: string) {
+  const match = value.match(/^(\d{2})\.(\d{2})\.(\d{4})$/u);
+  return match ? `${match[3]}-${match[2]}` : null;
+}
+
+function russianMonthLabel(monthKey: string) {
+  const month = Number(monthKey.slice(5, 7));
+  const year = Number(monthKey.slice(0, 4));
+  return new Intl.DateTimeFormat("ru-RU", { month: "long", year: "numeric" })
+    .format(new Date(Date.UTC(year, month - 1, 1)))
+    .replace(/^./u, (letter) => letter.toUpperCase());
+}
+
+function nextMonthKey(monthKey: string) {
+  const month = Number(monthKey.slice(5, 7));
+  const year = Number(monthKey.slice(0, 4));
+  const next = new Date(Date.UTC(year, month, 1));
+  return `${next.getUTCFullYear()}-${String(next.getUTCMonth() + 1).padStart(2, "0")}`;
+}
+
+function daysRemainingInCutMonth(date: string) {
+  const match = date.match(/^(\d{2})\.(\d{2})\.(\d{4})$/u);
+  if (!match) return null;
+  const day = Number(match[1]);
+  const month = Number(match[2]);
+  const year = Number(match[3]);
+  return new Date(Date.UTC(year, month, 0)).getUTCDate() - day;
+}
+
 function maxOperationalRow(metric: "tmkMaxCount" | "elnMaxCount", name: string) {
-  const rows = ((operationalMoRaw as Record<string, { rows?: Array<{ name: string; oid?: string; fact?: number; count?: number }> }>)[metric]?.rows ?? []);
+  const rows = ((operationalMoRaw as Record<string, { rows?: Array<{ name: string; oid?: string; fact?: number; count?: number; previous?: number | null }> }>)[metric]?.rows ?? []);
   const key = moKey(name);
   return rows.find((row) => moKey(row.name) === key);
 }
@@ -761,6 +794,8 @@ function buildAugustMaxRows(): MaxMonthlyRow[] {
       current: {
         tmk: tmkSource?.fact ?? tmkSource?.count ?? null,
         eln: elnSource?.fact ?? elnSource?.count ?? null,
+        previousTmk: tmkSource?.previous ?? null,
+        previousEln: elnSource?.previous ?? null,
         date: (operationalMoRaw as any)["tmkMaxCount"]?.date ?? null,
       },
       };
@@ -4245,7 +4280,6 @@ export default function Home() {
   const displayDatasetDate = isOperationalPhysician500
     ? (physicianWeeklySnapshot.periods?.[matrixMetric]?.date ?? physicianWeeklySnapshot.date)
     : selectedDataset.date;
-  const maxAnnualPlan = matrixMetric === "tmkMaxCount" ? 193000 : 99000;
   const maxAugustMonthlyDataset: MonthlyMoDataset | null = isMaxMetric
     ? {
         unit: "count",
@@ -4596,6 +4630,147 @@ export default function Home() {
     snapshotDate(periods.previous),
     snapshotDate(periods.current),
   );
+  const maxServiceKey = matrixMetric === "tmkMaxCount" ? "tmk" : "eln";
+  const maxCurrentMonthKey = isMaxMetric
+    ? monthKeyFromRussianDate(selectedDataset.date)
+    : null;
+  const maxNextControlMonthKey = maxCurrentMonthKey
+    ? nextMonthKey(maxCurrentMonthKey)
+    : null;
+  const maxCurrentMonthPlan =
+    maxCurrentMonthKey && maxTargets.republic[maxServiceKey]?.[maxCurrentMonthKey]
+      ? maxTargets.republic[maxServiceKey][maxCurrentMonthKey]
+      : null;
+  const maxNextControlPlan =
+    maxNextControlMonthKey && maxTargets.republic[maxServiceKey]?.[maxNextControlMonthKey]
+      ? maxTargets.republic[maxServiceKey][maxNextControlMonthKey]
+      : null;
+  const maxPlanAchievement =
+    maxCurrentMonthPlan && isMaxMetric
+      ? (operationalRegionalCurrent / maxCurrentMonthPlan) * 100
+      : null;
+  const maxPlanRemaining =
+    maxCurrentMonthPlan && isMaxMetric
+      ? Math.max(maxCurrentMonthPlan - operationalRegionalCurrent, 0)
+      : null;
+  const maxDaysRemaining = isMaxMetric
+    ? daysRemainingInCutMonth(selectedDataset.date)
+    : null;
+  const maxRequiredDailyPace =
+    maxPlanRemaining !== null && maxDaysRemaining && maxDaysRemaining > 0
+      ? maxPlanRemaining / maxDaysRemaining
+      : null;
+  const maxRecentDailyPace =
+    isMaxMetric && regionalChange !== null && operationalIntervalDays && operationalIntervalDays > 0
+      ? regionalChange / operationalIntervalDays
+      : null;
+  const maxPlanRows = isMaxMetric
+    ? Object.values(maxTargets.organizationPlans)
+        .map((target) => {
+          const current = selectedDataset.rows.find(
+            (row) => row.oid === target.oid || moKey(row.name) === moKey(target.name),
+          );
+          const plan = maxCurrentMonthKey
+            ? target[maxServiceKey]?.[maxCurrentMonthKey] ?? null
+            : null;
+          const nextPlan = maxNextControlMonthKey
+            ? target[maxServiceKey]?.[maxNextControlMonthKey] ?? null
+            : null;
+          const fact = current?.fact ?? null;
+          const previous = current?.previous ?? null;
+          const growth = fact !== null && previous !== null ? fact - previous : null;
+          const achievement = plan && fact !== null ? (fact / plan) * 100 : null;
+          const remaining = plan !== null && fact !== null ? Math.max(plan - fact, 0) : null;
+          const requiredDaily =
+            remaining !== null && maxDaysRemaining && maxDaysRemaining > 0
+              ? remaining / maxDaysRemaining
+              : null;
+          const recentDaily =
+            growth !== null && operationalIntervalDays && operationalIntervalDays > 0
+              ? growth / operationalIntervalDays
+              : null;
+          const status =
+            achievement === null
+              ? "Нет данных"
+              : achievement >= 100
+                ? "План достигнут ✓"
+                : recentDaily !== null && requiredDaily !== null && recentDaily >= requiredDaily
+                  ? "Темп достаточен"
+                  : achievement >= 90
+                    ? "Риск"
+                    : "Отставание";
+          return { target, current, plan, nextPlan, fact, previous, growth, achievement, remaining, requiredDaily, recentDaily, status };
+        })
+        .filter(({ target }) => moOwnership === "all" || !isPrivateOrganization(target.name))
+        .filter(({ target }) =>
+          `${target.name} ${target.oid}`.toLocaleLowerCase("ru").includes(query.toLocaleLowerCase("ru")),
+        )
+        .sort((a, b) =>
+          (a.achievement ?? -1) - (b.achievement ?? -1) ||
+          a.target.name.localeCompare(b.target.name, "ru"),
+        )
+    : [];
+  // The MAX tab is its own screen (rather than the generic matrix screen), so it
+  // needs the same plan-first view model as the matrix drilldown.  Keep its
+  // period, facts, and targets derived from the current operational export and
+  // the approved target registry.
+  const maxDashboardServiceKey = maxService === "tmk" ? "tmk" : "eln";
+  const maxDashboardMetric = maxService === "tmk" ? "tmkMaxCount" : "elnMaxCount";
+  const maxDashboardDataset = moData[maxDashboardMetric];
+  const maxDashboardMonthKey = monthKeyFromRussianDate(maxDashboardDataset.date);
+  const maxDashboardNextMonthKey = maxDashboardMonthKey
+    ? nextMonthKey(maxDashboardMonthKey)
+    : null;
+  const maxDashboardPlan = maxDashboardMonthKey
+    ? maxTargets.republic[maxDashboardServiceKey]?.[maxDashboardMonthKey] ?? null
+    : null;
+  const maxDashboardNextPlan = maxDashboardNextMonthKey
+    ? maxTargets.republic[maxDashboardServiceKey]?.[maxDashboardNextMonthKey] ?? null
+    : null;
+  const maxDashboardFact = calculatedIndicatorById[maxDashboardMetric]?.fact ??
+    maxDashboardDataset.rows.reduce((sum, row) => sum + (row.fact ?? 0), 0);
+  const maxDashboardAchievement = maxDashboardPlan
+    ? (maxDashboardFact / maxDashboardPlan) * 100
+    : null;
+  const maxDashboardRemaining = maxDashboardPlan === null
+    ? null
+    : Math.max(maxDashboardPlan - maxDashboardFact, 0);
+  const maxDashboardDaysRemaining = daysRemainingInCutMonth(maxDashboardDataset.date);
+  const maxDashboardRequiredPace = maxDashboardRemaining !== null && maxDashboardDaysRemaining && maxDashboardDaysRemaining > 0
+    ? maxDashboardRemaining / maxDashboardDaysRemaining
+    : null;
+  const maxDashboardRows = Object.values(maxTargets.organizationPlans)
+    .map((target) => {
+      const current = maxDashboardDataset.rows.find(
+        (row) => row.oid === target.oid || moKey(row.name) === moKey(target.name),
+      );
+      const plan = maxDashboardMonthKey
+        ? target[maxDashboardServiceKey]?.[maxDashboardMonthKey] ?? null
+        : null;
+      const fact = current?.fact ?? null;
+      const previous = current?.previous ?? null;
+      const growth = fact !== null && previous !== null ? fact - previous : null;
+      const achievement = plan !== null && fact !== null ? (fact / plan) * 100 : null;
+      const remaining = plan !== null && fact !== null ? Math.max(plan - fact, 0) : null;
+      const requiredPace = remaining !== null && maxDashboardDaysRemaining && maxDashboardDaysRemaining > 0
+        ? remaining / maxDashboardDaysRemaining
+        : null;
+      const nextPlan = maxDashboardNextMonthKey
+        ? target[maxDashboardServiceKey]?.[maxDashboardNextMonthKey] ?? null
+        : null;
+      const status = achievement === null
+        ? "Нет данных"
+        : achievement >= 100
+          ? "План достигнут ✓"
+          : achievement >= 90
+            ? "Риск"
+            : "Отставание";
+      return { row: target, plan, fact, growth, achievement, remaining, requiredPace, nextPlan, status };
+    })
+    .sort((a, b) =>
+      (a.achievement ?? Number.POSITIVE_INFINITY) - (b.achievement ?? Number.POSITIVE_INFINITY) ||
+      a.row.name.localeCompare(b.row.name, "ru"),
+    );
   type MonthlyBenchmark = {
     june: number;
     july: number;
@@ -4714,6 +4889,33 @@ export default function Home() {
   );
   const sidebarMetricValue = (id: string) => {
     const dataset = moData[id];
+    if (id === "tmkMaxCount" || id === "elnMaxCount") {
+      const service = id === "tmkMaxCount" ? "tmk" : "eln";
+      const monthKey = monthKeyFromRussianDate(dataset.date);
+      const plan = monthKey ? maxTargets.republic[service]?.[monthKey] ?? null : null;
+      const fact = calculatedIndicatorById[id]?.fact ?? 0;
+      const achievement = plan ? (fact / plan) * 100 : null;
+      return (
+        <>
+          <em>{achievement === null ? "—" : `${format(achievement, 1)}%`}</em>
+          <small>{format(fact, 0)} / {plan === null ? "—" : format(plan, 0)} · {monthKey ? russianMonthLabel(monthKey).replace(/\s+\d{4}$/u, "") : "период"}</small>
+        </>
+      );
+    }
+    if (id.startsWith("doctor500_") && physicianMetrics.datasets[id]) {
+      const monthly = physicianMetrics.datasets[id].summary;
+      const operational = physicianWeeklySnapshot.summary[id];
+      const operationalFact = operational?.denominator
+        ? (operational.numerator / operational.denominator) * 100
+        : null;
+      const operationalDate = physicianWeeklySnapshot.periods?.[id]?.date ?? physicianWeeklySnapshot.date;
+      return (
+        <>
+          <em>{format(monthly.fact, 2)}%</em>
+          <small>{latestMonthName} · Оперативно {operationalDate.slice(0, 5)} — {operationalFact === null ? "—" : `${format(operationalFact, 2)}%`}</small>
+        </>
+      );
+    }
     if (dataset.mode === "count")
       return `${format(calculatedIndicatorById[id]?.fact ?? 0, 0)}`;
     const indicator = calculatedIndicatorById[id];
@@ -5079,7 +5281,7 @@ export default function Home() {
                       title={metricDisplayName(id)}
                     >
                       <span>{metricDisplayName(id)}</span>
-                      <b>{sidebarMetricValue(id)}</b>
+                      <b className={id.startsWith("doctor500_") || id === "tmkMaxCount" || id === "elnMaxCount" ? "periodValue" : ""}>{sidebarMetricValue(id)}</b>
                     </button>
                   ))}
                 </div>
@@ -5512,35 +5714,34 @@ export default function Home() {
 
               {maxService !== "visit" && (
                 <>
-              {maxMonth === "2026-08" && (
-                <section className="maxTargetControl" data-testid="max-target-control">
-                  <h3>Контрольные точки МАХ · накопительный план МО</h3>
-                  <p>Планы МО взяты из утверждённых документов; строка РТ хранится отдельно. ТМК и ЛВН не складываются.</p>
-                  <div className="maxTableWrap">
-                    <table className="maxTable">
-                      <thead><tr><th>МО</th><th>План сентября</th><th>Факт</th><th>% выполнения</th><th>Осталось</th><th>Следующая контрольная точка</th></tr></thead>
-                      <tbody>
-                        {[...augustMaxRows].sort((a, b) => {
-                          const service = maxService === "tmk" ? "tmk" : "eln";
-                          const ap = a.targets?.[service]?.["2026-09"];
-                          const bp = b.targets?.[service]?.["2026-09"];
-                          const af = a.current?.[service] ?? null;
-                          const bf = b.current?.[service] ?? null;
-                          return ((ap == null || af == null) ? -1 : af / ap) - ((bp == null || bf == null) ? -1 : bf / bp);
-                        }).map((row) => {
-                          const service = maxService === "tmk" ? "tmk" : "eln";
-                          const plan = row.targets?.[service]?.["2026-09"] ?? null;
-                          const fact = row.current?.[service] ?? null;
-                          const completion = plan && fact != null ? fact / plan * 100 : null;
-                          const remaining = plan != null && fact != null ? Math.max(plan - fact, 0) : null;
-                          const next = row.targets?.[service]?.["2026-10"] ?? null;
-                          return <tr key={`${row.oid ?? row.name}-${service}`}><td><strong>{row.name}</strong></td><td>{plan == null ? "нет данных" : format(plan, 0)}</td><td>{fact == null ? "нет данных" : format(fact, 0)}</td><td>{completion == null ? "нет данных" : `${format(completion, 2)}%`}</td><td>{remaining == null ? "нет данных" : format(remaining, 0)}</td><td>{next == null ? "нет данных" : format(next, 0)}</td></tr>;
-                        })}
-                      </tbody>
-                    </table>
-                  </div>
-                  <p>РТ: план сентября {format(maxTargets.republic[maxService === "tmk" ? "tmk" : "eln"]["2026-09"], 0)}; следующий ориентир октября {format(maxTargets.republic[maxService === "tmk" ? "tmk" : "eln"]["2026-10"], 0)}.</p>
-                </section>
+              {maxDashboardMonthKey && maxDashboardPlan !== null && (
+                <>
+                  <section className="planControlHero" data-testid="max-plan-summary">
+                    <header>
+                      <div>
+                        <p className="eyebrow">ВЫПОЛНЕНИЕ НАКОПИТЕЛЬНОГО ПЛАНА</p>
+                        <h2>{russianMonthLabel(maxDashboardMonthKey)} · {maxDashboardServiceKey === "tmk" ? "ТМК" : "ЛВН после ТМК"}</h2>
+                      </div>
+                      <span className={`statusChip ${(maxDashboardAchievement ?? 0) >= 100 ? "good" : (maxDashboardAchievement ?? 0) >= 90 ? "warn" : "bad"}`}>
+                        {(maxDashboardAchievement ?? 0) >= 100 ? "План достигнут ✓" : "План требует контроля"}
+                      </span>
+                    </header>
+                    <div className="planControlCards">
+                      <article><small>Факт накопительно на {maxDashboardDataset.date}</small><strong>{format(maxDashboardFact, 0)}</strong></article>
+                      <article><small>План на {russianMonthLabel(maxDashboardMonthKey).replace(/\s+\d{4}$/u, "")}</small><strong>{format(maxDashboardPlan, 0)}</strong></article>
+                      <article><small>Выполнение плана</small><strong>{format(maxDashboardAchievement ?? 0, 2)}%</strong></article>
+                      <article><small>{(maxDashboardAchievement ?? 0) >= 100 ? `Контрольная точка ${maxDashboardNextMonthKey ? russianMonthLabel(maxDashboardNextMonthKey).replace(/\s+\d{4}$/u, "") : "следующего месяца"}` : "Осталось до плана"}</small><strong>{(maxDashboardAchievement ?? 0) >= 100 ? (maxDashboardNextPlan === null ? "—" : format(maxDashboardNextPlan, 0)) : format(maxDashboardRemaining ?? 0, 0)}</strong></article>
+                      <article><small>Требуемый среднесуточный темп</small><strong>{maxDashboardRequiredPace === null ? "—" : format(maxDashboardRequiredPace, 0)}</strong></article>
+                    </div>
+                    <p>ТМК и ЛВН контролируются раздельно; значения получены из текущей выгрузки и утверждённого плана.</p>
+                  </section>
+                  <section className="maxPlanOrganizations" data-testid="max-plan-organization-table">
+                    <div className="allMosHead"><div><p className="eyebrow">КОНТРОЛЬ ПЛАНА ПО МО</p><h2>От наибольшего риска к выполнению</h2><p>Сортировка задана по степени невыполнения плана, а не по абсолютному объёму.</p></div><span>{maxDashboardRows.length} МО</span></div>
+                    <div className="tableWrap"><table className="matrix maxPlanTable"><thead><tr><th>МО</th><th>План {russianMonthLabel(maxDashboardMonthKey).replace(/\s+\d{4}$/u, "")}</th><th>Факт</th><th>Выполнение, %</th><th>Осталось</th><th>Прирост с предыдущей выгрузки</th><th>Требуется в день</th><th>Статус</th></tr></thead><tbody>
+                      {maxDashboardRows.map(({ row, plan, fact, growth, achievement, remaining, requiredPace, nextPlan, status }) => <tr key={`${row.oid ?? row.name}-${maxDashboardServiceKey}`}><td><strong>{row.name}</strong></td><td>{plan === null ? "—" : format(plan, 0)}</td><td>{fact === null ? "—" : format(fact, 0)}</td><td>{achievement === null ? "—" : `${format(achievement, 2)}%`}</td><td>{remaining === null ? "—" : format(remaining, 0)}</td><td>{growth === null ? "—" : `${growth > 0 ? "+" : ""}${format(growth, 0)}`}</td><td>{requiredPace === null ? "—" : format(requiredPace, 0)}</td><td><span className={`statusChip ${status === "План достигнут ✓" ? "good" : status === "Риск" ? "warn" : status === "Нет данных" ? "na" : "bad"}`}>{status}</span>{status === "План достигнут ✓" && <small>Следующая контрольная точка: {nextPlan === null ? "—" : format(nextPlan, 0)}</small>}</td></tr>)}
+                    </tbody></table></div>
+                  </section>
+                </>
               )}
               <div className="maxMonthlyHead">
                 <div>
@@ -8536,14 +8737,14 @@ export default function Home() {
                 >
                   <small>
                     {isMaxMetric
-                      ? "Годовой план РТ"
+                      ? "План текущего месяца"
                       : isCountMetric
                         ? "Период"
                         : "Плановый показатель"}
                   </small>
                   <strong>
                     {isMaxMetric
-                      ? format(maxAnnualPlan, 0)
+                      ? (maxCurrentMonthPlan === null ? "—" : format(maxCurrentMonthPlan, 0))
                       : isCountMetric
                         ? (selectedDataset.period ?? selectedDataset.date)
                         : selectedDataset.plan === null
@@ -8552,7 +8753,7 @@ export default function Home() {
                   </strong>
                   <span>
                     {isMaxMetric
-                      ? `официальный план · факт накопительно на ${selectedDataset.date}`
+                      ? `${maxPlanAchievement === null ? "—" : `${format(maxPlanAchievement, 1)}%`} · факт ${format(operationalRegionalCurrent, 0)} на ${selectedDataset.date}`
                       : `актуальность ${displayDatasetDate}`}
                   </span>
                 </div>
@@ -8576,13 +8777,93 @@ export default function Home() {
                   <b>Источник и ограничение:</b> {selectedDataset.note}
                 </p>
               )}
+              {isMaxMetric && maxCurrentMonthKey && maxCurrentMonthPlan !== null && (
+                <section className="planControlHero" data-testid="max-plan-summary">
+                  <header>
+                    <div>
+                      <p className="eyebrow">ВЫПОЛНЕНИЕ НАКОПИТЕЛЬНОГО ПЛАНА</p>
+                      <h2>{russianMonthLabel(maxCurrentMonthKey)} · {maxServiceKey === "tmk" ? "ТМК" : "ЛВН после ТМК"}</h2>
+                    </div>
+                    <span className={`statusChip ${(maxPlanAchievement ?? 0) >= 100 ? "good" : (maxPlanAchievement ?? 0) >= 90 ? "warn" : "bad"}`}>
+                      {(maxPlanAchievement ?? 0) >= 100 ? "План достигнут ✓" : "План требует контроля"}
+                    </span>
+                  </header>
+                  <div className="planControlCards">
+                    <article><small>Факт накопительно на {selectedDataset.date}</small><strong>{format(operationalRegionalCurrent, 0)}</strong></article>
+                    <article><small>План на {russianMonthLabel(maxCurrentMonthKey).replace(/\s+\d{4}$/u, "")}</small><strong>{format(maxCurrentMonthPlan, 0)}</strong></article>
+                    <article><small>Выполнение плана</small><strong>{format(maxPlanAchievement ?? 0, 2)}%</strong></article>
+                    <article><small>{(maxPlanAchievement ?? 0) >= 100 ? `Контрольная точка ${maxNextControlMonthKey ? russianMonthLabel(maxNextControlMonthKey).replace(/\s+\d{4}$/u, "") : "следующего месяца"}` : "Осталось до плана"}</small><strong>{(maxPlanAchievement ?? 0) >= 100 ? (maxNextControlPlan === null ? "—" : format(maxNextControlPlan, 0)) : format(maxPlanRemaining ?? 0, 0)}</strong></article>
+                    <article><small>Требуемый среднесуточный темп</small><strong>{maxRequiredDailyPace === null ? "—" : format(maxRequiredDailyPace, 0)}</strong><span>{maxRecentDailyPace === null ? "недостаточно динамики" : `последний темп ${format(maxRecentDailyPace, 0)} в день`}</span></article>
+                  </div>
+                  <p>ТМК и ЛВН контролируются раздельно. Динамика предыдущей и текущей выгрузок приведена ниже как дополнительный оперативный контекст.</p>
+                </section>
+              )}
+              {isMaxMetric && maxCurrentMonthKey && (
+                <section className="maxPlanOrganizations" data-testid="max-plan-organization-table">
+                  <div className="allMosHead">
+                    <div>
+                      <p className="eyebrow">КОНТРОЛЬ ПЛАНА ПО МО</p>
+                      <h2>От наибольшего риска к выполнению</h2>
+                      <p>Сортировка задана по степени невыполнения плана, а не по абсолютному объёму.</p>
+                    </div>
+                    <span>{maxPlanRows.length} МО</span>
+                  </div>
+                  <div className="toolbar">
+                    <input value={query} onChange={(event) => setQuery(event.target.value)} placeholder="Поиск медицинской организации" />
+                    <select value={moOwnership} onChange={(event) => setMoOwnership(event.target.value as "state" | "all")} aria-label="Форма собственности MAX">
+                      <option value="state">Только государственные МО</option>
+                      <option value="all">Все МО, включая частные</option>
+                    </select>
+                    <span className="sortHint">Контрольная сортировка: выполнение плана по возрастанию</span>
+                  </div>
+                  <div className="tableWrap">
+                    <table className="matrix maxPlanTable">
+                      <thead><tr><th>МО</th><th>План {russianMonthLabel(maxCurrentMonthKey).replace(/\s+\d{4}$/u, "")}</th><th>Факт</th><th>Выполнение, %</th><th>Осталось</th><th>Прирост с предыдущей выгрузки</th><th>Требуется в день</th><th>Статус</th></tr></thead>
+                      <tbody>
+                        {maxPlanRows.map((row) => (
+                          <tr key={`${row.target.oid}-${maxServiceKey}`}>
+                            <td><strong>{displayMoName(row.target.name, row.target.oid)}</strong><small>{row.target.oid}</small></td>
+                            <td>{row.plan === null ? "—" : format(row.plan, 0)}</td>
+                            <td>{row.fact === null ? "—" : format(row.fact, 0)}</td>
+                            <td>{row.achievement === null ? "—" : `${format(row.achievement, 2)}%`}</td>
+                            <td>{row.remaining === null ? "—" : format(row.remaining, 0)}</td>
+                            <td>{row.growth === null ? "—" : `${row.growth > 0 ? "+" : ""}${format(row.growth, 0)}`}</td>
+                            <td>{row.requiredDaily === null ? "—" : format(row.requiredDaily, 0)}</td>
+                            <td>
+                              <span className={`statusChip ${row.status === "План достигнут ✓" || row.status === "Темп достаточен" ? "good" : row.status === "Риск" ? "warn" : row.status === "Нет данных" ? "na" : "bad"}`}>{row.status}</span>
+                              {row.status === "План достигнут ✓" && <small>Следующая контрольная точка: {row.nextPlan === null ? "—" : format(row.nextPlan, 0)}</small>}
+                            </td>
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
+                  </div>
+                </section>
+              )}
               {matrixMetric.startsWith("doctor500_") && physicianWeeklySnapshot.summary[matrixMetric] && (
-                <p className="sourceDataNote weeklyPhysicianNote">
-                  <b>Оперативный недельный контроль «500+»:</b>{" "}
-                  {format(physicianWeeklySnapshot.summary[matrixMetric].numerator, 0)} из {format(physicianWeeklySnapshot.summary[matrixMetric].denominator, 0)}
-                  {" · "}{format(physicianWeeklySnapshot.summary[matrixMetric].fact ?? 0, 2)}%
-                  {" · срез на "}{physicianWeeklySnapshot.periods?.[matrixMetric]?.date ?? physicianWeeklySnapshot.date}. {matrixMetric === "doctor500_dentist" ? "Для стоматологических МО это обязательный оперативный контроль и источник текущего рейтинга." : "Данные не включены в месячный рейтинг; в «МО для заслушивания» используются как справочный оперативный контроль."}
-                </p>
+                <section className="physicianDualSummary" data-testid="physician-monthly-operational-summary">
+                  <article>
+                    <small>Месячный результат</small>
+                    <h2>{latestFullMonth.label}</h2>
+                    <strong>{format(physicianMetrics.datasets[matrixMetric].summary.fact, 2)}%</strong>
+                    <span>{format(physicianMetrics.datasets[matrixMetric].summary.numerator, 0)} / {format(physicianMetrics.datasets[matrixMetric].summary.denominator, 0)} · используется в рейтинге</span>
+                  </article>
+                  <article aria-label="Оперативный недельный контроль «500+»">
+                    <small>Оперативный контроль {russianMonthLabel(monthKeyFromRussianDate(physicianWeeklySnapshot.periods?.[matrixMetric]?.date ?? physicianWeeklySnapshot.date) ?? "2026-09").replace(/\s+\d{4}$/u, "").toLocaleLowerCase("ru")}</small>
+                    <h2>{physicianWeeklySnapshot.previousPeriods?.[matrixMetric]?.date ?? physicianWeeklySnapshot.previousDate ?? "предыдущий срез"} → {physicianWeeklySnapshot.periods?.[matrixMetric]?.date ?? physicianWeeklySnapshot.date}</h2>
+                    <strong>
+                      {physicianWeeklySnapshot.previousSummary?.[matrixMetric]?.denominator
+                        ? format((physicianWeeklySnapshot.previousSummary[matrixMetric].numerator / physicianWeeklySnapshot.previousSummary[matrixMetric].denominator) * 100, 2)
+                        : "—"}% → {format((physicianWeeklySnapshot.summary[matrixMetric].numerator / physicianWeeklySnapshot.summary[matrixMetric].denominator) * 100, 2)}%
+                    </strong>
+                    <span>
+                      {format(physicianWeeklySnapshot.previousSummary?.[matrixMetric]?.numerator ?? 0, 0)} / {format(physicianWeeklySnapshot.previousSummary?.[matrixMetric]?.denominator ?? 0, 0)} → {format(physicianWeeklySnapshot.summary[matrixMetric].numerator, 0)} / {format(physicianWeeklySnapshot.summary[matrixMetric].denominator, 0)}
+                      {physicianWeeklySnapshot.previousSummary?.[matrixMetric]?.denominator
+                        ? ` · ${((physicianWeeklySnapshot.summary[matrixMetric].numerator / physicianWeeklySnapshot.summary[matrixMetric].denominator) * 100) - ((physicianWeeklySnapshot.previousSummary[matrixMetric].numerator / physicianWeeklySnapshot.previousSummary[matrixMetric].denominator) * 100) >= 0 ? "+" : ""}${format(((physicianWeeklySnapshot.summary[matrixMetric].numerator / physicianWeeklySnapshot.summary[matrixMetric].denominator) * 100) - ((physicianWeeklySnapshot.previousSummary[matrixMetric].numerator / physicianWeeklySnapshot.previousSummary[matrixMetric].denominator) * 100), 2)} п.п.`
+                        : " · нет предыдущего сопоставимого среза"}
+                    </span>
+                  </article>
+                </section>
               )}
               {preventiveTransition && (
                 <section className="registrationErrors preventiveTransition">
@@ -8811,7 +9092,7 @@ export default function Home() {
                       </strong>
                       <span>
                         {isMaxMetric
-                          ? `${format((regionalFact / Math.max(1, maxAnnualPlan)) * 100, 1)}% годового плана РТ · `
+                          ? `${maxCurrentMonthPlan ? format((regionalFact / maxCurrentMonthPlan) * 100, 1) : "—"}% плана текущего месяца · `
                           : ""}
                         на {selectedDataset.date} · в итог месяца не включён
                       </span>
@@ -8877,7 +9158,7 @@ export default function Home() {
                         setSort={setUnitSort}
                       />
                     </>
-                  ) : (
+                  ) : isMaxMetric ? null : (
                     <>
                       <div className="moStats five">
                         <article>

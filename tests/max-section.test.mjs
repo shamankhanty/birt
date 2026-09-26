@@ -54,9 +54,9 @@ test("missing rows are not converted to zero", () => {
 
 test("MAX separates export-to-export operational dynamics from monthly values", () => {
   assert.match(page, /Официальный накопительный результат не смешивается с оперативной динамикой между выгрузками/u);
-  assert.match(page, /Годовой план РТ/u);
-  assert.match(page, /193000/u);
-  assert.match(page, /99000/u);
+  assert.match(page, /ВЫПОЛНЕНИЕ НАКОПИТЕЛЬНОГО ПЛАНА/u);
+  assert.match(page, /maxTargets\.republic\[maxDashboardServiceKey\]/u);
+  assert.match(page, /maxTargets\.organizationPlans/u);
   assert.match(page, /Оперативно — текущая выгрузка к предыдущей/u);
   assert.match(page, /Предыдущая выгрузка/u);
   assert.match(page, /Текущая выгрузка/u);
