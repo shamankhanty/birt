@@ -1,7 +1,7 @@
 {
   "schemaVersion": 2,
-  "baselineVersion": "5.4.7",
-  "baselineDate": "2026-09-20",
+  "baselineVersion": "5.4.8",
+  "baselineDate": "2026-09-26",
   "previousBaseline": {
     "version": "4.6.0",
     "date": "2026-09-07",
@@ -9,7 +9,7 @@
     "handoffZipSha256": "90003a0098165ce484118a8bd661dc03e9471c5759a88dfb5e806800ce7df8b9",
     "manifest": "baseline/reference-v4.6.0-manifest.json"
   },
-  "changeClass": "Оперативный 500+: отдельный текущий срез; история версий агрегируется по дате",
+  "changeClass": "MAX: контроль утверждённого накопительного плана; 500+: раздельные месячный рейтинг и текущий оперативный срез",
   "protectedData": {
     "app/electronic-waybill-weekly.json": "e527cb953583e1750b56ed102bc4eaae893fa714221df967da4a8ffd1a88c375",
     "app/electronic-waybill.json": "d682decfa448f6fd17c8df1fdcf088b105cff03080daf029849a4d039c638dbc",
@@ -43,8 +43,8 @@
     "OPEN_ISSUES.md": "4c5a91f72cd6011ff2297fcb8644e39dec751e99e99a06a538ecb2ed6c90a3ee"
   },
   "keyCode": {
-    "app/page.tsx": "368d2f468e2ecce2267e783238d2d77b39d04250812040831143de6123f336d0",
-    "app/globals.css": "a0e67c624d6e6877dad6cb5c44c59264dfa1799c33cc4a3a5eb6c0ab8cbc4dbe",
+    "app/page.tsx": "48ca55757caf589fda2a9436d99b155b33196b0e8913a98c5ce7c62380ae7175",
+    "app/globals.css": "e825cdf793f6b03058b5e082789c74806076d3b0599f984dca357c86bfabffc9",
     "lib/calculation-engine.js": "2addca9323803eb45f66fca94fe78a72c4d77eed53c7bd05c224dd9aa9f2f0e7",
     "lib/indicator-registry.js": "484857b41858c082fad05172793ff24f422008a6178257006d4512b0c12d1996",
     "lib/mo-registry.js": "9fe16e52a33111d44fb143f8f3879f3d0960821ac176a149c02d0d0bb14d3cab",
@@ -56,7 +56,7 @@
     "scripts/pipeline/staging_runner.py": "09d904a06acf11a8c3a685df64fd41d8af228d59c7621c3ebc600345e4f81dbd"
   },
   "regression": {
-    "nodeTests": "152/152 PASS",
+    "nodeTests": "202/202 PASS",
     "validation": "15/15 PASS",
     "calculationEquivalence": "38/38 PASS",
     "metadataEquivalence": "38/38 PASS",
@@ -68,5 +68,5 @@
     "fail": 0,
     "warnings": []
   },
-  "note": "v5.4.7: approved MAX control points, separate operational/monthly 500+ views, cumulative component dynamics and immutable hearing snapshots. Historical monthly baselines are preserved."
+  "note": "v5.4.8: MAX TMK and LVN use approved monthly cumulative targets with separate risk-sorted MO plan control; 500+ preserves the completed August rating alongside the September operational cut. Historical monthly baselines, source data, methods, OID mapping, and approved MAX plans are unchanged."
 }

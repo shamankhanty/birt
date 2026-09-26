@@ -18,7 +18,15 @@ test("MAX target documents preserve separate RT plans and MO control points", ()
   assert.equal(Object.keys(targets.organizationPlans).length, 85);
   assert.ok(Object.values(targets.organizationPlans).every((row) => row.oid && Object.keys(row.tmk).length === 4 && Object.keys(row.eln).length === 4));
   assert.match(page, /max-targets-2026\.json/u);
-  assert.match(page, /data-testid="max-target-control"/u);
+  assert.match(page, /data-testid="max-plan-summary"/u);
+  assert.match(page, /data-testid="max-plan-organization-table"/u);
+  assert.match(page, /maxDashboardServiceKey/u);
+  assert.match(page, /maxDashboardFact/u);
+  assert.match(page, /maxDashboardAchievement/u);
+  assert.match(page, /maxDashboardRemaining/u);
+  assert.match(page, /maxDashboardRequiredPace/u);
+  assert.match(page, /План требует контроля/u);
+  assert.match(page, /Следующая контрольная точка/u);
 });
 
 test("MAX approved source rows keep exact OIDs and Sep-Dec control points", () => {
@@ -47,6 +55,7 @@ test("MAX approved source rows keep exact OIDs and Sep-Dec control points", () =
 });
 
 test("MAX target calculations never use a combined TMK plus ELN value", () => {
-  assert.match(page, /maxTargets\.republic\[maxService === "tmk" \? "tmk" : "eln"\]/u);
+  assert.match(page, /maxDashboardMetric = maxService === "tmk" \? "tmkMaxCount" : "elnMaxCount"/u);
+  assert.match(page, /maxDashboardServiceKey = maxService === "tmk" \? "tmk" : "eln"/u);
   assert.doesNotMatch(page, /tmk.*\+.*eln|eln.*\+.*tmk/u);
 });
