@@ -16,7 +16,7 @@ const testMode = process.argv.includes("--test-mode");
 const candidate = path.basename(candidateInput) === "app" ? candidateInput : path.join(candidateInput, "candidate", "app");
 const production = path.resolve(arg("--production", path.join(root, "app")));
 const manifestPath = path.resolve(arg("--manifest", path.join(root, "baseline/current-production-manifest.json")));
-const currentSnapshots = ["baseline/calculation-runtime-snapshot.json", "baseline/validation-snapshot.json", "validation/calculation-equivalence.json", "validation/validation-report.json", "validation/ai-review.json"];
+const currentSnapshots = ["baseline/calculation-runtime-snapshot.json", "baseline/validation-snapshot.json", "baseline/indicator-metadata-snapshot.json", "validation/calculation-equivalence.json", "validation/indicator-metadata-equivalence.json", "validation/validation-report.json", "validation/ai-review.json"];
 if (!candidateInput) throw new Error("--candidate is required");
 
 const reportPath = path.join(candidate, "..", "..", "report.json");
@@ -111,8 +111,10 @@ try {
     }
     runLifecycle("scripts/promote_validation_baseline.mjs", "validation snapshot generation");
     runLifecycle("scripts/promote_calculation_baseline.mjs", "calculation snapshot generation");
+    runLifecycle("scripts/promote_indicator_metadata_baseline.mjs", "indicator metadata snapshot generation");
     runLifecycle("scripts/run-validation.mjs", "accepted validation snapshot verification", ["--check"]);
     runLifecycle("scripts/run-calculation-equivalence.mjs", "accepted calculation snapshot verification", ["--check"]);
+    runLifecycle("scripts/run-indicator-metadata-equivalence.mjs", "accepted indicator metadata verification", ["--check"]);
   }
 
   const promoted = { schemaVersion: 1, kind: "current-production", promotedFrom: candidate, promotedAt: new Date().toISOString(), files: {} };

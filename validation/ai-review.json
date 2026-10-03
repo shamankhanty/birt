@@ -1,23 +1,9 @@
 {
   "schemaVersion": 1,
   "baselineVersion": "5.4.5",
-  "dataDate": "23.09.2026",
+  "dataDate": "30.09.2026",
   "sourceOverallStatus": "WARNING",
-  "reviewCount": 1,
+  "reviewCount": 0,
   "rule": "AI receives only FAIL items, new anomalies and methodological conflicts; PASS and ordinary WARNING items are excluded.",
-  "items": [
-    {
-      "checkId": "data.percentage_anomalies",
-      "category": "anomaly",
-      "status": "WARNING",
-      "reviewReason": "anomaly",
-      "fingerprint": "percentage_above_100|mo-data|hospital|1.2.643.5.1.13.13.12.2.16.1065|КДМЦ г.Наб.Челны|previous",
-      "metric": "hospital",
-      "organizationOid": "1.2.643.5.1.13.13.12.2.16.1065",
-      "organizationName": "КДМЦ г.Наб.Челны",
-      "field": "previous",
-      "expected": null,
-      "actual": 101.22590052384295
-    }
-  ]
+  "items": []
 }

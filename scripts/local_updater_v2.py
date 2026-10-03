@@ -90,10 +90,23 @@ def process(inbox, output, settle, force=False):
     run = output / (datetime.now().strftime('%Y%m%d-%H%M%S-') + uuid4().hex[:8])
     snapshot = run / 'input'
     snapshot.mkdir(parents=True)
-    for name in before:
-        target = snapshot / name
-        target.parent.mkdir(parents=True, exist_ok=True)
-        shutil.copy2(inbox / name, target)
+    try:
+        for name in before:
+            target = snapshot / name
+            target.parent.mkdir(parents=True, exist_ok=True)
+            source_path = inbox / name
+            # Long/non-ASCII Yandex filenames can fail through the legacy
+            # Windows path layer; the extended path prefix keeps the exact
+            # source filename while avoiding WinError 3.
+            source_for_copy = ('\\\\?\\' + str(source_path)) if os.name == 'nt' else str(source_path)
+            target_for_copy = ('\\\\?\\' + str(target)) if os.name == 'nt' else str(target)
+            shutil.copy2(source_for_copy, target_for_copy)
+    except FileNotFoundError as error:
+        # Yandex.Disk may briefly hide a file while synchronising.  Treat this
+        # as an incomplete intake, not as a fatal updater error; the next run
+        # will retry after the source inventory stabilises.
+        print(f'PARTIAL: не удалось скопировать {name}: {error}; повторите после завершения синхронизации.', flush=True)
+        return 3
     if inventory(snapshot) != before or inventory(inbox) != before:
         print('PARTIAL: источник изменился при копировании; обновление отложено.', flush=True)
         return 3
@@ -101,7 +114,11 @@ def process(inbox, output, settle, force=False):
     from transactional_stage import stage
     try:
         report=stage(snapshot,run/'candidate',inbox.parent/'ARCHIVE/historical-replay.json')
-        env={**os.environ,'DASHBOARD_APP_DIR':str(run/'candidate/app'),
+        node_bin = Path.home() / '.cache' / 'codex-runtimes' / 'codex-primary-runtime' / 'dependencies' / 'node' / 'bin'
+        # Prefer the bundled runtime when the Windows node shim or npm PATH is
+        # unavailable; this avoids WinError 3 during local candidate builds.
+        path_parts = [str(node_bin), str(ROOT / '.tools'), os.environ.get('PATH','')]
+        env={**os.environ,'PATH':os.pathsep.join(path_parts),'DASHBOARD_APP_DIR':str(run/'candidate/app'),
              'OFFLINE_OUTPUT_DIR':str(run/'dashboard'),'OFFLINE_WORK_DIR':str(run/'build'),'PYTHON':sys.executable,
              'UPDATER_REPORT_PATH':str(run/'candidate/staging-manifest.json')}
         with (run/'build.log').open('w',encoding='utf-8') as log:

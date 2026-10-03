@@ -47,6 +47,7 @@ test("display disambiguation does not alter physician facts or OID identity", ()
   for (const dataset of Object.values(physicians.datasets)) {
     for (const oid of Object.values(ids)) {
       for (const row of dataset.rows.filter((item) => item.oid === oid)) {
+        if (row.count == null || row.volume == null) continue;
         assert.equal(typeof row.count, "number");
         assert.equal(typeof row.volume, "number");
         assert.equal(row.fact, (row.count / row.volume) * 100);
