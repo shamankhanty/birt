@@ -76,4 +76,3 @@ test("MAX plan screen exposes sortable analytics, change markers, and forecast d
   assert.match(page, /changePill/u);
   assert.match(page, /не прогнозируется/u);
 });
-

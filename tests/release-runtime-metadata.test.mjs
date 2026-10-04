@@ -32,4 +32,3 @@ test("legacy previous operational values remain an explicit bounded allowlist", 
   for (const value of allowed) assert.match(previousBlock, new RegExp(value.replace(".", "\\.")));
   assert.doesNotMatch(previousBlock, /2046140|624362|2911671/u);
 });
-

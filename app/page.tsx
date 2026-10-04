@@ -868,8 +868,7 @@ const sourceQuantityNouns: Record<string, string> = {
   tvspDiagnostic: "ТВСП",
   smpFederal: "станций и подстанций",
 };
-// Региональное значение каждого показателя рассчитывается
- один раз в
+// Региональное значение каждого показателя рассчитывается один раз в
 // deterministic calculation layer и затем переиспользуется всеми разделами.
 const calculationRuntime = createIndicatorCalculationRuntime({
   staticIndicators: indicators,
@@ -1606,11 +1605,7 @@ const calcErrors = [
     fix: "Строка помечена как требующая уточнения; эти кабинеты не использовать для санкций до ответа владельца федеральной методики/ФРМО.",
   },
   {
-    severity: "cri
-Warning: truncated output (original token count: 11131)
-Total output lines: 524
-
-tical",
+    severity: "critical",
     status: "Расчёт приостановлен",
     source: "СЭМД профилактического осмотра (диспансеризации)",
     issue:
@@ -1876,7 +1871,54 @@ const vitacoreInstructions: Record<string, VitacoreInstruction> = {
     form: "Результат выполненного лабораторного исследования.",
     path: "Диагностика → Проведённые исследования → исследование пациента.",
     action: "Заполнить результаты, рекомендации, заключение и сведения о материале; выбрать «Мед. документация».",
-    result: "СЭМД 186 «Протокол лабораторного и…1131 tokens truncated…r:
+    result: "СЭМД 186 «Протокол лабораторного исследования».",
+    control: "Подписать документ и проверить регистрацию в РЭМД от правильного OID КДЛ.",
+    source: "https://wiki.vitacore.ru/plugins/viewsource/viewpagesrc.action?pageId=491749393",
+  },
+  tvspDiagnostic: {
+    form: "Результат выполненного инструментального диагностического исследования.",
+    path: "Диагностика → Проведённые исследования → Медицинская документация.",
+    action: "Заполнить протокол, описание и заключение исследования; сформировать и подписать документ.",
+    result: "СЭМД «Протокол инструментального диагностического исследования».",
+    control: "Проверить регистрацию в РЭМД и соответствие OID диагностического ТВСП.",
+  },
+  tvspAmbulatory: {
+    form: "Законченный амбулаторный случай, талон амбулаторного пациента либо консультация врача.",
+    path: "Случай обращения / дневник врача → закрытие случая или медицинская документация консультации.",
+    action: "Корректно завершить случай или консультацию, заполнить исход и обязательные разделы документа.",
+    result: "СЭМД 233, «Талон амбулаторного пациента» либо СЭМД 119 «Протокол консультации».",
+    control: "Проверить подпись, регистрацию в РЭМД и OID амбулаторного ТВСП.",
+  },
+  oncologyCouncil: {
+    form: "Протокол онкологического консилиума.",
+    path: "Онкологическая маршрутная карта / решение консилиума → Медицинская документация.",
+    action: "Оформить состав консилиума, решение и рекомендации; сформировать и подписать протокол.",
+    result: "СЭМД 190 «Протокол консилиума врачей (онкологического)».",
+    control: "Проверить регистрацию в РЭМД от МО и подразделения планового перечня.",
+  },
+  tmkRemd: {
+    form: "Протокол завершённой телемедицинской консультации.",
+    path: "Случай ТМК → протокол консультации → Медицинская документация.",
+    action: "Заполнить результат и рекомендации ТМК, сформировать и подписать протокол.",
+    result: "СЭМД 40 «Протокол телемедицинской консультации».",
+    control: "Проверить успешную регистрацию протокола в РЭМД.",
+  },
+  elmk: {
+    form: "Медицинский осмотр работника и итоговое медицинское заключение.",
+    path: "Профессиональные медицинские осмотры → заключение по результатам осмотра → Медицинская документация.",
+    action: "Заполнить вид и профиль работы, результаты осмотра, заключение и дату следующего осмотра.",
+    result: "СЭМД 230 для предоставления в подсистему ЭЛМК.",
+    control: "Проверить подписание и регистрацию СЭМД 230 в РЭМД.",
+    source: "https://wiki.vitacore.ru/pages/viewpage.action?pageId=458588660",
+  },
+};
+const methodologies: Methodology[] = [
+  {
+    id: "organizationRating",
+    name: "Интегральный рейтинг медицинских организаций",
+    formula:
+      "70% × балл полноты сопровождения случаев + 20% × балл цифровых услуг + 10% × балл технической готовности",
+    numerator:
       "Средние нормированные баллы применимых показателей внутри трёх блоков. Балл отдельного показателя: факт / план × 100; для обратных показателей: план / факт × 100; максимум 100 баллов.",
     denominator:
       "В расчёт включаются только применимые к МО показатели. Если блок неприменим, его вес исключается, остальные веса нормируются.",
@@ -2086,8 +2128,7 @@ const vitacoreInstructions: Record<string, VitacoreInstruction> = {
     formula: "(МО с зарегистрированным протоколом ТМК / плановые МО) × 100%",
     numerator:
       "МО, от которых зарегистрирован СЭМД «Протокол телемедицинской консультации».",
-    denomin
-ator:
+    denominator:
       "Медицинские организации, обязанные передавать данный вид СЭМД.",
     source: "Федеральная BI / ФРМО / РЭМД",
     cadence: "Еженедельно",
@@ -2796,8 +2837,7 @@ const versionHistoryEntries = [
       "Исправлены даты актуальности в шапке и динамике МАХ; история обновлений агрегирована для пользователей без технических CI-итераций.",
       "Исправлен расчёт выписных эпикризов: числитель берётся из РЭМД ЕГИСЗ, знаменатель — из случаев госпитализации; сопоставление по OID, прежняя несопоставимая динамика сброшена.",
       "Верхние плашки «Расширенной сводки» синхронизированы с актуальными источниками: краткий ввод, госпитализации, ФАП/ФП и СЭМД — по 11.09; ошибки РЭМД — за полную неделю 07–13.09.",
-   
- ],
+    ],
   },
   {
     version: "5.0–5.3",
@@ -3516,8 +3556,7 @@ export default function Home() {
             passed: operationalPassed,
             persistent: false,
             adverseChange: false,
-            score: mandat
-oryDental && usableCurrent
+            score: mandatoryDental && usableCurrent
               ? scoreAgainstPlan({ fact: usableCurrent.fact, plan: operationalPlan, direction: "higher" })
               : null,
             detail: mandatoryDental
@@ -4295,8 +4334,7 @@ oryDental && usableCurrent
             june: null,
             july: value.value,
             change: null,
-  
-          juneQuantity: null,
+            juneQuantity: null,
             julyQuantity: value.value === null ? null : format(value.value, 0),
             sourceWarning:
               "Август рассчитан как накопительный срез 31.08 минус 31.07. Для сравнения июля с августом по МО нужен сопоставимый срез на 30.06; его в текущем наборе нет.",
@@ -4968,8 +5006,7 @@ oryDental && usableCurrent
       return (
         <>
           <em>{format(monthly.fact, 2)}%</em>
-          <small>{latestMonthName} · Оперативно {operationalDate
-.slice(0, 5)} — {operationalFact === null ? "—" : `${format(operationalFact, 2)}%`}</small>
+          <small>{latestMonthName} · Оперативно {operationalDate.slice(0, 5)} — {operationalFact === null ? "—" : `${format(operationalFact, 2)}%`}</small>
         </>
       );
     }
@@ -5683,8 +5720,7 @@ oryDental && usableCurrent
                         <strong>{format(item.fact, 0)}</strong>
                         <p>Годовой план <b>{format(item.plan ?? 0, 0)}</b></p>
                         <div className="maxProgress"><i style={{ width: `${Math.min(completion ?? 0, 100)}%` }} /></div>
-          
-              <footer><b>{completion == null ? "—" : `${format(completion, 2)}%`}</b><span>исполнения плана</span></footer>
+                        <footer><b>{completion == null ? "—" : `${format(completion, 2)}%`}</b><span>исполнения плана</span></footer>
                       </article>
                     );
                   })}
@@ -6191,8 +6227,7 @@ oryDental && usableCurrent
                                 <small>
                                   {item.source === "collegium"
                                     ? "Только коллегия"
-                                 
-   : row.type}
+                                    : row.type}
                                 </small>
                               )}
                             </span>
@@ -6790,8 +6825,7 @@ oryDental && usableCurrent
                             </strong>
                           </p>
                         </div>
-   
-                     {union.provisional && (
+                        {union.provisional && (
                           <div className="unionWarning">
                             Предварительный результат: полнота данных ниже 80%
                           </div>
@@ -7392,8 +7426,7 @@ oryDental && usableCurrent
                   <button
                     className={hearingLevel === "mandatory" ? "active" : ""}
                     onClick={() => setHearingLevel("mandatory")}
-                  >
-
+                  >
                     Заслушать
                   </button>
                   <button
@@ -7987,8 +8020,7 @@ oryDental && usableCurrent
                           0,
                         )}
                       </strong>
-                      <s
-pan>при наличии транспорта</span>
+                      <span>при наличии транспорта</span>
                     </article>
                     <article>
                       <small>Создано путевых листов</small>
@@ -8618,8 +8650,7 @@ pan>при наличии транспорта</span>
               </section>
 
               <p className="prototypeNote">
-                Региональная динамика сравнивает итоговые строк
-и за 17–23.08 и
+                Региональная динамика сравнивает итоговые строки за 17–23.08 и
                 24–30.08.2026. Детализация текущей недели включает дочерние
                 строки без номера; динамика отдельных МО временно не
                 рассчитывается до второго сопоставимого среза. В месячном режиме
@@ -9088,8 +9119,7 @@ pan>при наличии транспорта</span>
                       <strong>
                         {operationalIntervalDays === null
                           ? "—"
-                          : `${operationalIntervalDays} ${operationa
-lIntervalDays === 1 ? "день" : operationalIntervalDays >= 2 && operationalIntervalDays <= 4 ? "дня" : "дней"}`}
+                          : `${operationalIntervalDays} ${operationalIntervalDays === 1 ? "день" : operationalIntervalDays >= 2 && operationalIntervalDays <= 4 ? "дня" : "дней"}`}
                       </strong>
                       <span>
                         {selectedDataset.comparisonReset
@@ -9650,8 +9680,7 @@ lIntervalDays === 1 ? "день" : operationalIntervalDays >= 2 && operationalIn
                                         {sortMark(
                                           moSortKey === "quantity",
                                           moSortDirection,
-                          
-              )}
+                                        )}
                                       </i>
                                       <small>результат / объём</small>
                                     </button>
@@ -10201,8 +10230,7 @@ lIntervalDays === 1 ? "день" : operationalIntervalDays >= 2 && operationalIn
                               <div key={category.name}>
                                 <b>{idx + 1}</b>
                                 <p>{category.name}</p>
-                      
-          <strong>{format(category.count, 0)}</strong>
+                                <strong>{format(category.count, 0)}</strong>
                                 <span>
                                   {format(
                                     (category.count / activeErrorOrganization.count) * 100,
@@ -10957,8 +10985,7 @@ function UnitDetail({
                   <span className="oidCell">
                     ID здания: {row.buildingIds || "—"}
                   </span>
-                  <small
- className="oidList">
+                  <small className="oidList">
                     OID СП: {row.unitOid || "—"}
                   </small>
                 </td>
@@ -11627,4 +11654,3 @@ function RankingBlock({
     </article>
   );
 }
-

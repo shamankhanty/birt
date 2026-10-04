@@ -45,4 +45,3 @@ test("baseline semantic anchors preserve approved preventive calculation", () =>
   assert.equal(snapshot.preventiveSemd.denominator, 2069632);
   assert.ok(Math.abs(snapshot.preventiveSemd.share - 73.80998167790216) < 1e-12);
 });
-

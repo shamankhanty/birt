@@ -56,4 +56,3 @@ snapshot.baselineVersion = "5.4.10";
 snapshot.rule = "Snapshot фиксирует утверждённый runtime после обновления источников за сентябрь 2026; месячный рейтинг использует последний полный месяц.";
 fs.writeFileSync("baseline/calculation-runtime-snapshot.json", JSON.stringify(snapshot, null, 2) + "\n");
 console.log(JSON.stringify({ status: "PASS", baselineVersion: snapshot.baselineVersion }));
-
