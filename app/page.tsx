@@ -564,6 +564,15 @@ type MoSortKey =
   | "current"
   | "previous";
 type SortDirection = "asc" | "desc";
+type MaxPlanSortKey =
+  | "name"
+  | "plan"
+  | "fact"
+  | "achievement"
+  | "remaining"
+  | "growth"
+  | "forecastDays"
+  | "status";
 type MoDataset = {
   name: string;
   plan: number | null;
@@ -2417,6 +2426,18 @@ function snapshotDistanceDays(previous: string, current: string) {
   return Math.round((currentTs - previousTs) / 86_400_000);
 }
 
+function addDaysToRussianDate(value: string, days: number) {
+  const match = value.match(/^(\d{2})\.(\d{2})\.(\d{4})$/u);
+  if (!match || !Number.isFinite(days) || days < 0) return null;
+  const date = new Date(Date.UTC(Number(match[3]), Number(match[2]) - 1, Number(match[1])));
+  date.setUTCDate(date.getUTCDate() + Math.ceil(days));
+  return [
+    String(date.getUTCDate()).padStart(2, "0"),
+    String(date.getUTCMonth() + 1).padStart(2, "0"),
+    date.getUTCFullYear(),
+  ].join(".");
+}
+
 function moSearchText(metric: string, row: MoRow) {
   const registry = registryOrganizationForMetric(metric, row);
   return [
@@ -2761,6 +2782,15 @@ function hearingMetricGroupsForDisplay(row: HearingRow, filter: HearingChangeFil
 }
 
 const versionHistoryEntries = [
+  {
+  version: "5.4.10",
+  date: "04.10.2026",
+  items: [
+    "Разделы ТМК и ЛВН дополнены прогнозом количества дней и ориентировочной даты достижения текущего утверждённого плана по темпу последних сопоставимых выгрузок.",
+    "Добавлены управленческие блоки лидеров, наибольшего прироста и зон внимания, графические полосы выполнения и цветовое выделение изменений.",
+    "Таблица контроля плана по МО получила интерактивную сортировку по каждому показателю без изменения утверждённых планов, фактов и mapping.",
+  ],
+},
   {
   version: "5.4.9",
   date: "03.10.2026",
@@ -3285,6 +3315,8 @@ export default function Home() {
   const [moOwnership, setMoOwnership] = useState<"state" | "all">("state");
   const [moSortKey, setMoSortKey] = useState<MoSortKey>("fact");
   const [moSortDirection, setMoSortDirection] = useState<SortDirection>("desc");
+  const [maxPlanSortKey, setMaxPlanSortKey] = useState<MaxPlanSortKey>("achievement");
+  const [maxPlanSortDirection, setMaxPlanSortDirection] = useState<SortDirection>("asc");
   const [semdQuery, setSemdQuery] = useState("");
   const [semdOnlyRegistered, setSemdOnlyRegistered] = useState(true);
   const [errorView, setErrorView] = useState<"categories" | "organizations">(
@@ -4674,6 +4706,14 @@ export default function Home() {
     isMaxMetric && regionalChange !== null && operationalIntervalDays && operationalIntervalDays > 0
       ? regionalChange / operationalIntervalDays
       : null;
+  const maxForecastDays =
+    maxPlanRemaining === 0
+      ? 0
+      : maxPlanRemaining !== null && maxRecentDailyPace !== null && maxRecentDailyPace > 0
+        ? Math.ceil(maxPlanRemaining / maxRecentDailyPace)
+        : null;
+  const maxForecastDate =
+    maxForecastDays === null ? null : addDaysToRussianDate(selectedDataset.date, maxForecastDays);
   const maxPlanRows = isMaxMetric
     ? Object.values(maxTargets.organizationPlans)
         .map((target) => {
@@ -4699,6 +4739,14 @@ export default function Home() {
             growth !== null && operationalIntervalDays && operationalIntervalDays > 0
               ? growth / operationalIntervalDays
               : null;
+          const forecastDays =
+            remaining === 0
+              ? 0
+              : remaining !== null && recentDaily !== null && recentDaily > 0
+                ? Math.ceil(remaining / recentDaily)
+                : null;
+          const forecastDate =
+            forecastDays === null ? null : addDaysToRussianDate(selectedDataset.date, forecastDays);
           const status =
             achievement === null
               ? "Нет данных"
@@ -4709,17 +4757,53 @@ export default function Home() {
                   : achievement >= 90
                     ? "Риск"
                     : "Отставание";
-          return { target, current, plan, nextPlan, fact, previous, growth, achievement, remaining, requiredDaily, recentDaily, status };
+          return { target, current, plan, nextPlan, fact, previous, growth, achievement, remaining, requiredDaily, recentDaily, forecastDays, forecastDate, status };
         })
         .filter(({ target }) => moOwnership === "all" || !isPrivateOrganization(target.name))
         .filter(({ target }) =>
           `${target.name} ${target.oid}`.toLocaleLowerCase("ru").includes(query.toLocaleLowerCase("ru")),
         )
-        .sort((a, b) =>
-          (a.achievement ?? -1) - (b.achievement ?? -1) ||
-          a.target.name.localeCompare(b.target.name, "ru"),
-        )
+        .sort((a, b) => {
+          const statusRank = (value: string) => ({ "Отставание": 0, "Риск": 1, "Темп достаточен": 2, "План достигнут ✓": 3, "Нет данных": 4 })[value] ?? 5;
+          const values = (row: typeof a) => ({
+            name: row.target.name,
+            plan: row.plan,
+            fact: row.fact,
+            achievement: row.achievement,
+            remaining: row.remaining,
+            growth: row.growth,
+            forecastDays: row.forecastDays,
+            status: statusRank(row.status),
+          });
+          const left = values(a)[maxPlanSortKey];
+          const right = values(b)[maxPlanSortKey];
+          let comparison = 0;
+          if (typeof left === "string" && typeof right === "string") comparison = left.localeCompare(right, "ru");
+          else if (left === null) comparison = 1;
+          else if (right === null) comparison = -1;
+          else comparison = Number(left) - Number(right);
+          return (maxPlanSortDirection === "asc" ? comparison : -comparison) || a.target.name.localeCompare(b.target.name, "ru");
+        })
     : [];
+  const maxPlanLeaders = [...maxPlanRows]
+    .filter((row) => row.achievement !== null)
+    .sort((a, b) => (b.achievement ?? 0) - (a.achievement ?? 0))
+    .slice(0, 5);
+  const maxPlanGrowthLeaders = [...maxPlanRows]
+    .filter((row) => row.growth !== null)
+    .sort((a, b) => (b.growth ?? 0) - (a.growth ?? 0))
+    .slice(0, 5);
+  const maxPlanAttention = [...maxPlanRows]
+    .filter((row) => row.achievement === null || row.achievement < 100)
+    .sort((a, b) => (a.achievement ?? -1) - (b.achievement ?? -1))
+    .slice(0, 5);
+  const changeMaxPlanSort = (key: MaxPlanSortKey) => {
+    if (maxPlanSortKey === key) setMaxPlanSortDirection((direction) => direction === "asc" ? "desc" : "asc");
+    else {
+      setMaxPlanSortKey(key);
+      setMaxPlanSortDirection(key === "name" || key === "achievement" || key === "status" ? "asc" : "desc");
+    }
+  };
   // The MAX tab is its own screen (rather than the generic matrix screen), so it
   // needs the same plan-first view model as the matrix drilldown.  Keep its
   // period, facts, and targets derived from the current operational export and
@@ -8803,13 +8887,33 @@ export default function Home() {
                     <article><small>План на {russianMonthLabel(maxCurrentMonthKey).replace(/\s+\d{4}$/u, "")}</small><strong>{format(maxCurrentMonthPlan, 0)}</strong></article>
                     <article><small>Выполнение плана</small><strong>{format(maxPlanAchievement ?? 0, 2)}%</strong></article>
                     <article><small>{(maxPlanAchievement ?? 0) >= 100 ? `Контрольная точка ${maxNextControlMonthKey ? russianMonthLabel(maxNextControlMonthKey).replace(/\s+\d{4}$/u, "") : "следующего месяца"}` : "Осталось до плана"}</small><strong>{(maxPlanAchievement ?? 0) >= 100 ? (maxNextControlPlan === null ? "—" : format(maxNextControlPlan, 0)) : format(maxPlanRemaining ?? 0, 0)}</strong></article>
-                    <article><small>Требуемый среднесуточный темп</small><strong>{maxRequiredDailyPace === null ? "—" : format(maxRequiredDailyPace, 0)}</strong><span>{maxRecentDailyPace === null ? "недостаточно динамики" : `последний темп ${format(maxRecentDailyPace, 0)} в день`}</span></article>
+                    <article className={maxForecastDays === null ? "forecastCard stalled" : "forecastCard"}><small>Прогноз до текущего плана</small><strong>{maxForecastDays === null ? "—" : `${format(maxForecastDays, 0)} дн.`}</strong><span>{maxForecastDate ? `ориентир ${maxForecastDate}` : "при текущем темпе не прогнозируется"}</span></article>
                   </div>
-                  <p>ТМК и ЛВН контролируются раздельно. Динамика предыдущей и текущей выгрузок приведена ниже как дополнительный оперативный контекст.</p>
+                  <div className="planTempoLine">
+                    <span>Изменение за {operationalIntervalDays ?? "—"} дн.</span>
+                    <b className={(regionalChange ?? 0) > 0 ? "deltaUp" : (regionalChange ?? 0) < 0 ? "deltaDown" : ""}>{regionalChange === null ? "—" : `${regionalChange > 0 ? "+" : ""}${format(regionalChange, 0)}`}</b>
+                    <span>Текущий темп</span><b>{maxRecentDailyPace === null ? "—" : `${format(maxRecentDailyPace, 0)} в день`}</b>
+                    <span>Нужно было до конца месяца</span><b>{maxRequiredDailyPace === null ? "период завершён" : `${format(maxRequiredDailyPace, 0)} в день`}</b>
+                  </div>
+                  <p>Прогноз рассчитан до утверждённого плана текущего месяца по темпу между двумя последними сопоставимыми выгрузками. Это производный ориентир, а не новый план. ТМК и ЛВН считаются раздельно.</p>
                 </section>
               )}
               {isMaxMetric && maxCurrentMonthKey && (
                 <section className="maxPlanOrganizations" data-testid="max-plan-organization-table">
+                  <div className="maxPlanInsights" data-testid="max-plan-insights">
+                    {[
+                      { title: "Лидеры по выполнению", note: "доля утверждённого плана", rows: maxPlanLeaders, kind: "good" },
+                      { title: "Наибольший прирост", note: `изменение за ${operationalIntervalDays ?? "—"} дн.`, rows: maxPlanGrowthLeaders, kind: "growth" },
+                      { title: "Требуют внимания", note: "минимальное выполнение плана", rows: maxPlanAttention, kind: "bad" },
+                    ].map((panel) => (
+                      <article className={panel.kind} key={panel.title}>
+                        <header><span><b>{panel.title}</b><small>{panel.note}</small></span><strong>{panel.rows.length}</strong></header>
+                        <ol>{panel.rows.map((row, index) => (
+                          <li key={`${panel.title}-${row.target.oid}`}><i>{index + 1}</i><span>{displayMoName(row.target.name, row.target.oid)}</span><b>{panel.kind === "growth" ? (row.growth === null ? "—" : `${row.growth > 0 ? "+" : ""}${format(row.growth, 0)}`) : row.achievement === null ? "—" : `${format(row.achievement, 1)}%`}</b></li>
+                        ))}</ol>
+                      </article>
+                    ))}
+                  </div>
                   <div className="allMosHead">
                     <div>
                       <p className="eyebrow">КОНТРОЛЬ ПЛАНА ПО МО</p>
@@ -8824,21 +8928,23 @@ export default function Home() {
                       <option value="state">Только государственные МО</option>
                       <option value="all">Все МО, включая частные</option>
                     </select>
-                    <span className="sortHint">Контрольная сортировка: выполнение плана по возрастанию</span>
+                    <span className="sortHint">Нажмите заголовок столбца для сортировки</span>
                   </div>
                   <div className="tableWrap">
                     <table className="matrix maxPlanTable">
-                      <thead><tr><th>МО</th><th>План {russianMonthLabel(maxCurrentMonthKey).replace(/\s+\d{4}$/u, "")}</th><th>Факт</th><th>Выполнение, %</th><th>Осталось</th><th>Прирост с предыдущей выгрузки</th><th>Требуется в день</th><th>Статус</th></tr></thead>
+                      <thead><tr>{[
+                        ["name", "МО"], ["plan", `План ${russianMonthLabel(maxCurrentMonthKey).replace(/\s+\d{4}$/u, "")}`], ["fact", "Факт"], ["achievement", "Выполнение, %"], ["remaining", "Осталось"], ["growth", "Изменение"], ["forecastDays", "Прогноз до плана"], ["status", "Статус"],
+                      ].map(([key, label]) => <th key={key}><button type="button" className={maxPlanSortKey === key ? "sorted" : ""} onClick={() => changeMaxPlanSort(key as MaxPlanSortKey)}>{label}<i>{maxPlanSortKey === key ? (maxPlanSortDirection === "asc" ? "↑" : "↓") : "↕"}</i></button></th>)}</tr></thead>
                       <tbody>
                         {maxPlanRows.map((row) => (
                           <tr key={`${row.target.oid}-${maxServiceKey}`}>
                             <td><strong>{displayMoName(row.target.name, row.target.oid)}</strong><small>{row.target.oid}</small></td>
                             <td>{row.plan === null ? "—" : format(row.plan, 0)}</td>
                             <td>{row.fact === null ? "—" : format(row.fact, 0)}</td>
-                            <td>{row.achievement === null ? "—" : `${format(row.achievement, 2)}%`}</td>
+                            <td>{row.achievement === null ? "—" : <div className="achievementCell"><b>{format(row.achievement, 2)}%</b><span><i style={{ width: `${Math.min(Math.max(row.achievement, 0), 100)}%` }} /></span></div>}</td>
                             <td>{row.remaining === null ? "—" : format(row.remaining, 0)}</td>
-                            <td>{row.growth === null ? "—" : `${row.growth > 0 ? "+" : ""}${format(row.growth, 0)}`}</td>
-                            <td>{row.requiredDaily === null ? "—" : format(row.requiredDaily, 0)}</td>
+                            <td><span className={`changePill ${row.growth === null || row.growth === 0 ? "neutral" : row.growth > 0 ? "up" : "down"}`}>{row.growth === null ? "—" : `${row.growth > 0 ? "↑ +" : row.growth < 0 ? "↓ " : ""}${format(row.growth, 0)}`}</span></td>
+                            <td>{row.forecastDays === null ? <span className="forecastMissing">не прогнозируется</span> : row.forecastDays === 0 ? <b className="deltaUp">достигнут</b> : <><b>{format(row.forecastDays, 0)} дн.</b><small>ориентир {row.forecastDate}</small></>}</td>
                             <td>
                               <span className={`statusChip ${row.status === "План достигнут ✓" || row.status === "Темп достаточен" ? "good" : row.status === "Риск" ? "warn" : row.status === "Нет данных" ? "na" : "bad"}`}>{row.status}</span>
                               {row.status === "План достигнут ✓" && <small>Следующая контрольная точка: {row.nextPlan === null ? "—" : format(row.nextPlan, 0)}</small>}

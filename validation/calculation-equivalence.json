@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "baselineVersion": "5.4.9",
+  "baselineVersion": "5.4.10",
   "status": "PASS",
   "checkedIndicators": 38,
   "registryCoverage": "38/38",

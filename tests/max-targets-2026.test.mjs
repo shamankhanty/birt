@@ -59,3 +59,20 @@ test("MAX target calculations never use a combined TMK plus ELN value", () => {
   assert.match(page, /maxDashboardServiceKey = maxService === "tmk" \? "tmk" : "eln"/u);
   assert.doesNotMatch(page, /tmk.*\+.*eln|eln.*\+.*tmk/u);
 });
+
+test("MAX plan screen exposes sortable analytics, change markers, and forecast days", () => {
+  assert.match(page, /type MaxPlanSortKey/u);
+  assert.match(page, /setMaxPlanSortKey/u);
+  assert.match(page, /changeMaxPlanSort/u);
+  assert.match(page, /Math\.ceil\(maxPlanRemaining \/ maxRecentDailyPace\)/u);
+  assert.match(page, /Math\.ceil\(remaining \/ recentDaily\)/u);
+  assert.match(page, /addDaysToRussianDate/u);
+  assert.match(page, /Прогноз до текущего плана/u);
+  assert.match(page, /data-testid="max-plan-insights"/u);
+  assert.match(page, /Лидеры по выполнению/u);
+  assert.match(page, /Наибольший прирост/u);
+  assert.match(page, /Требуют внимания/u);
+  assert.match(page, /achievementCell/u);
+  assert.match(page, /changePill/u);
+  assert.match(page, /не прогнозируется/u);
+});
