@@ -1,6 +1,6 @@
 {
   "schemaVersion": 2,
-  "baselineVersion": "5.4.8",
+  "baselineVersion": "5.4.9",
   "baselineDate": "2026-09-26",
   "previousBaseline": {
     "version": "4.6.0",
@@ -36,7 +36,7 @@
     "config/indicator-registry.json": "08fc0adce893f879bddd28c5bbc51c58bfe031e8a1e426dd3b05f7c0c9754eb2",
     "app/mo-registry.json": "62202e489fced8a93c40867f04f5b3a021030cf4da1b0d0da6ce3a8cff088ea3",
     "app/hearing-snapshots.json": "4e6f494e413e2003e6d24c7492e79cbcd67837f31ba01565a5c2fac42a8b5871",
-    "config/import-pipeline.json": "46e5e5ac343aad5ddc06a377fe7cf3e94890bc7f6e4c5012fb11ee1e7f20af62"
+    "config/import-pipeline.json": "ba8de31c4c56293fffe4de187886a04da6f4824591f437eeb8990cb41a50189d"
   },
   "stateFiles": {
     "STATE.md": "d84b776ef652edb56fbfeda66ceab59aad6d9097658588a48858ec1583f32ffb",

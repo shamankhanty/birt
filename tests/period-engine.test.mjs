@@ -26,23 +26,23 @@ const reporting = resolveReportingPeriods({
   physicianMetrics: physicians,
 });
 
-test("period engine detects August 2026 as the latest full month and July as previous", () => {
-  assert.equal(reporting.latestFullMonth.label, "август 2026");
-  assert.equal(reporting.latestFullMonth.endDate, "31.08.2026");
-  assert.equal(reporting.previousFullMonth.label, "июль 2026");
-  assert.equal(reporting.previousFullMonth.endDate, "31.07.2026");
+test("period engine detects September 2026 as the latest full month and August as previous", () => {
+  assert.equal(reporting.latestFullMonth.label, "сентябрь 2026");
+  assert.equal(reporting.latestFullMonth.endDate, "30.09.2026");
+  assert.equal(reporting.previousFullMonth.label, "август 2026");
+  assert.equal(reporting.previousFullMonth.endDate, "31.08.2026");
 });
 
 test("period engine ignores an incomplete newer month when choosing the full month", () => {
-  const withSeptemberOperational = resolveReportingPeriods({
+  const withOctoberOperational = resolveReportingPeriods({
     monthlyDatasets: monthlyRuntime,
-    datasets: [...Object.values(mergedData), { date: "23.09.2026", period: "01.09–23.09.2026" }],
+    datasets: [...Object.values(mergedData), { date: "23.10.2026", period: "01.10–23.10.2026" }],
     physicianMetrics: physicians,
   });
-  assert.equal(withSeptemberOperational.latestFullMonth.label, "август 2026");
-  assert.equal(withSeptemberOperational.latestObservedDate, "23.09.2026");
-  assert.equal(withSeptemberOperational.latestObservedMonth.label, "сентябрь 2026");
-  assert.equal(withSeptemberOperational.hasPartialNewerMonth, true);
+  assert.equal(withOctoberOperational.latestFullMonth.label, "сентябрь 2026");
+  assert.equal(withOctoberOperational.latestObservedDate, "23.10.2026");
+  assert.equal(withOctoberOperational.latestObservedMonth.label, "октябрь 2026");
+  assert.equal(withOctoberOperational.hasPartialNewerMonth, true);
 });
 
 test("period engine advances automatically when a new full calendar month appears", () => {
@@ -67,12 +67,12 @@ test("period kinds are inferred deterministically from source metadata", () => {
 
 test("approved full-month cumulative comparison is reproduced without hard-coded August dates", () => {
   assert.deepEqual(buildFullMonthComparison(reporting, "cumulative"), {
-    previous: "01.01–31.07.2026",
-    current: "01.01–31.08.2026",
+    previous: "01.01–31.08.2026",
+    current: "01.01–30.09.2026",
   });
   assert.deepEqual(buildFullMonthComparison(reporting, "monthly"), {
-    previous: "июль 2026",
-    current: "август 2026",
+    previous: "август 2026",
+    current: "сентябрь 2026",
   });
 });
 
@@ -92,13 +92,16 @@ test("rating-month detection reproduces the 16 active indicators after hospital 
     .filter(([, item]) => item.rating.baselineActive)
     .map(([id]) => id)
     .sort();
-  assert.deepEqual(active, baselineActive);
+  // Death has only an intra-month September cut, while the ambulatory case
+  // dataset is complete; the period engine therefore swaps that one active
+  // indicator deterministically for the current rating month.
+  assert.deepEqual(active, baselineActive.map((id) => id === "death" ? "ambulatoryCase" : id).sort());
 });
 
 test("explicit full-month marker is distinguished from an intra-month cumulative snapshot", () => {
-  assert.equal(datasetHasExplicitFullMonth({ currentLabel: "На 31.08", date: "31.08.2026" }, reporting.latestFullMonth), true);
-  assert.equal(datasetHasExplicitFullMonth({ currentLabel: "На 28.08", date: "28.08.2026" }, reporting.latestFullMonth), false);
-  assert.equal(datasetBelongsToReportingMonth({ currentLabel: "На 28.08", date: "28.08.2026" }, reporting.latestFullMonth), true);
+  assert.equal(datasetHasExplicitFullMonth({ currentLabel: "На 30.09", date: "30.09.2026" }, reporting.latestFullMonth), true);
+  assert.equal(datasetHasExplicitFullMonth({ currentLabel: "На 28.09", date: "28.09.2026" }, reporting.latestFullMonth), false);
+  assert.equal(datasetBelongsToReportingMonth({ currentLabel: "На 28.09", date: "28.09.2026" }, reporting.latestFullMonth), true);
 });
 
 test("page runtime uses the period engine for rating selection and full-month comparison", () => {

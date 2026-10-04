@@ -10,13 +10,15 @@ test("release UI metadata follows runtime operational cut", () => {
   assert.equal(first.operationalCut.period, "01.09.2026–11.09.2026");
   assert.equal(next.operationalCut.period, "01.09.2026–17.09.2026");
   assert.equal(next.ratingPeriod, "август 2026");
+  const closed = createReleaseRuntimeMetadata({ physicianWeeklySnapshot: { date: "30.09.2026", period: "01.09.2026–30.09.2026" }, ratingPeriod: "сентябрь 2026" });
+  assert.equal(closed.ratingPeriod, "сентябрь 2026");
 });
 
 test("release version has one canonical source and preserves historical baseline references", async () => {
   const page = await readFile(new URL("../app/page.tsx", import.meta.url), "utf8");
   const manifest = JSON.parse(await readFile(new URL("../baseline/manifest.json", import.meta.url), "utf8"));
   const historical = await readFile(new URL("../baseline/RELEASE_5.4.5.md", import.meta.url), "utf8");
-  assert.equal(RELEASE_VERSION, "5.4.8");
+  assert.equal(RELEASE_VERSION, "5.4.9");
   assert.match(page, /DASHBOARD_VERSION\s*=\s*RELEASE_VERSION/u);
   assert.doesNotMatch(page, /DASHBOARD_VERSION\s*=\s*"5\.4\.6"/u);
   assert.equal(manifest.baselineVersion, RELEASE_VERSION);

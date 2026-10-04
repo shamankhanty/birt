@@ -1,5 +1,5 @@
 {
-  "baselineVersion": "5.4.5",
+  "baselineVersion": "5.4.9",
   "sourceStage": "stage5_calculation_engine",
   "staticIndicators": {
     "egpu": {
@@ -324,7 +324,7 @@
       "visitMax": "readiness"
     },
     "activeIds": [
-      "death",
+      "ambulatoryCase",
       "doctor500_cardiologist",
       "doctor500_dentist",
       "doctor500_gp",

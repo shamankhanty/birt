@@ -24,11 +24,11 @@ test("МАХ preserves the regional visit indicator while showing the new factua
 
 test("August TMC and ELN monthly values are derived from equal-boundary cumulative snapshots", () => {
   for (const id of ["tmkMaxCount", "elnMaxCount"]) {
-    assert.equal(monthly[id].previousLabel, "На 31.07");
-    assert.equal(monthly[id].currentLabel, "На 31.08");
+    assert.equal(monthly[id].previousLabel, "На 31.08");
+    assert.equal(monthly[id].currentLabel, "На 30.09");
   }
   assert.match(page, /row\.july - row\.june/u);
-  assert.match(page, /Срез на 31\.07 нельзя выдавать за месячный объём июля/u);
+  assert.match(page, /Предыдущий накопительный срез нельзя выдавать за месячный объём августа/u);
 });
 
 test("doctor appointments through MAX are factual municipal data without MO attribution", () => {

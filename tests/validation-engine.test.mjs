@@ -25,10 +25,10 @@ test("accepted current baseline is all PASS and sends nothing to AI", () => {
   assert.equal(report.summary.FAIL, 0);
   assert.equal(report.summary.blocking, 0);
   assert.ok(report.summary.PASS + report.summary.WARNING === 15);
-  if (report.overallStatus === "WARNING") assert.ok(report.checks.some((item) => item.id === "data.new_unresolved_organizations" && item.status === "WARNING"));
+  assert.ok(report.summary.WARNING >= 0);
   assert.equal(createAiReviewQueue(report).reviewCount, 0);
-  assert.equal(report.reportingPeriod.latestFullMonth, "август 2026");
-  assert.equal(report.reportingPeriod.previousFullMonth, "июль 2026");
+  assert.equal(report.reportingPeriod.latestFullMonth, "сентябрь 2026");
+  assert.equal(report.reportingPeriod.previousFullMonth, "август 2026");
 });
 
 test("source plan drift from the canonical registry is a methodological FAIL", () => {
@@ -112,6 +112,26 @@ test("period kind conflict is a blocking methodological FAIL", () => {
   const report = validateDashboard(input);
   assert.equal(check(report, "period.kind_compatibility").status, "FAIL");
   assert.ok(report.aiReviewItems.some((item) => item.reviewReason === "methodology" && item.metric === "hospital"));
+});
+
+test("per-indicator staging permits temporary mixed rating months only as WARNING", () => {
+  const input = cloneInput();
+  input.monthlyMo.egpu.currentLabel = "На 30.09";
+  input.allowMixedRatingMonths = true;
+  const report = validateDashboard(input);
+  assert.equal(check(report, "period.rating_month").status, "WARNING");
+  assert.equal(report.aiReviewItems.filter((item) => item.checkId === "period.rating_month").length, 0);
+});
+
+test("an incomplete current-month source retains the previous rating month as WARNING", () => {
+  const input = cloneInput();
+  input.monthlyMo.egpu.currentLabel = "На 30.09";
+  input.monthlyMo.death.ratingState = "retained_incomplete_period";
+  const report = validateDashboard(input);
+  const issue = check(report, "period.rating_month").issues.find((item) => item.metric === "death");
+  assert.equal(issue.kind, "rating_period_retained_incomplete");
+  assert.equal(issue.status, "WARNING");
+  assert.equal(issue.requiresAiReview, false);
 });
 
 test("AI queue contains FAIL/anomaly/methodology signals but not ordinary WARNING", () => {

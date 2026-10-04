@@ -1,6 +1,7 @@
 import importlib.util
 import json
 from pathlib import Path
+import shutil
 import sys
 import tempfile
 import unittest
@@ -122,7 +123,7 @@ class TransactionTests(unittest.TestCase):
         patches=[patch.object(tx,'ROOT',self.root),patch.object(tx,'METRICS',{'egpu_attachment':['egpu','egpu2days']}),patch.object(tx,'scan',return_value={'files':[self.item]}),patch.object(tx,'validate',side_effect=self.validate),patch.object(tx.subprocess,'run',return_value=SimpleNamespace(returncode=0,stdout='',stderr=''))]
         for p in patches: p.start(); self.addCleanup(p.stop)
 
-    def validate(self,app,out):
+    def validate(self,app,out,**_kwargs):
         out.mkdir(parents=True,exist_ok=True)
         return {'overallStatus':'PASS','summary':{},'checks':[]}
 
@@ -205,6 +206,25 @@ class TransactionTests(unittest.TestCase):
             tx.write(expected/'mo-data.json',self.original)
             self.assertEqual(tx.historical_replay(self.root/'replay2',manifest)['status'],'FAIL')
             invoke.assert_called_once()
+
+    def test_historical_batch_qualification_covers_metrics_with_exact_allowances(self):
+        import hashlib
+        source=self.root/'history.xlsx'; source.write_bytes(b'fixture')
+        expected=self.root/'expected'; candidate=self.root/'candidate-app'
+        shutil.copytree(self.app,expected); shutil.copytree(self.app,candidate)
+        data=tx.read(candidate/'mo-data.json'); data['qualificationNote']='reviewed'; tx.write(candidate/'mo-data.json',data)
+        manifest=self.root/'history-batch.json'
+        tx.write(manifest,{'batchCases':[{
+            'id':'approved-release','metrics':['egpu2days'],'baselineApp':str(self.app),
+            'expectedApp':str(expected),'candidateApp':str(candidate),'files':['mo-data.json'],
+            'sources':[{'path':str(source),'sha256':hashlib.sha256(source.read_bytes()).hexdigest()}],
+            'allowedDifferences':[{'file':'mo-data.json','pathRegex':'^\\$\\.qualificationNote$',
+                                   'expected':'<missing>','actual':'reviewed','count':1}]
+        }]})
+        result=tx.historical_replay(self.root/'batch-replay',manifest)
+        self.assertEqual(result['status'],'PASS')
+        self.assertEqual(result['cases'][0]['metric'],'egpu2days')
+        self.assertEqual(result['batchResults'][0]['allowedMismatchCount'],1)
 
 
 if __name__=='__main__': unittest.main()

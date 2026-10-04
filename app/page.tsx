@@ -505,10 +505,6 @@ const currentOperationalRuntime = createCurrentOperationalRuntime({
   physicianWeeklySnapshot: physicianWeeklySnapshotRaw,
   errorCategories: errorCategoriesRaw,
 });
-const releaseRuntime = createReleaseRuntimeMetadata({
-  operationalRuntime: currentOperationalRuntime,
-  physicianWeeklySnapshot: physicianWeeklySnapshotRaw,
-});
 const runtimeIndicator = (item: Indicator): Indicator => {
   const source = operationalDatasets[item.id];
   const metadata = currentOperationalRuntime[item.id];
@@ -827,6 +823,11 @@ const previousMonthDative = previousFullMonth.dative.replace(/\s+\d{4}$/u, "");
 const previousMonthInstrumental = previousFullMonth.instrumental.replace(/\s+\d{4}$/u, "");
 const latestMonthGenitive = latestFullMonth.genitive.replace(/\s+\d{4}$/u, "");
 const ratingPeriodShort = `${latestFullMonth.startDate.slice(0, 5)}–${latestFullMonth.endDate.slice(0, 5)}`;
+const releaseRuntime = createReleaseRuntimeMetadata({
+  operationalRuntime: currentOperationalRuntime,
+  physicianWeeklySnapshot: physicianWeeklySnapshotRaw,
+  ratingPeriod: latestFullMonth.label,
+});
 type MoDetail = { volume: number; registered: number };
 const moDetails = moDetailsRaw as Record<string, Record<string, MoDetail>>;
 const moDetailOids = moDetailOidsRaw as Record<
@@ -2761,6 +2762,15 @@ function hearingMetricGroupsForDisplay(row: HearingRow, filter: HearingChangeFil
 
 const versionHistoryEntries = [
   {
+  version: "5.4.9",
+  date: "03.10.2026",
+  items: [
+    "Данные обновлены по поступившим выгрузкам за сентябрь: полный сентябрь стал периодом рейтинга там, где источник закрывает календарный месяц; неполные срезы 29.09 остаются оперативными.",
+    "Внешние и частные организации сохранены в списках, но исключены из рейтингов государственных медицинских организаций.",
+    "Отсутствующий файл ЭПЛ больше не блокирует обновление остальных показателей: на сайте сохраняется предыдущий подтверждённый срез с явным напоминанием.",
+  ],
+},
+  {
   version: "5.4.6",
   date: "20.09.2026",
   items: [
@@ -3262,7 +3272,7 @@ export default function Home() {
     | "methods"
     | "history"
   >("unified");
-  const [maxMonth, setMaxMonth] = useState<"2026-07" | "2026-08">("2026-08");
+  const [maxMonth, setMaxMonth] = useState<"2026-08" | "2026-09">("2026-09");
   const [maxService, setMaxService] = useState<"visit" | "tmk" | "eln">("visit");
   const [maxFilter, setMaxFilter] = useState<"volume" | "growth" | "decline" | "zero" | "missing">("volume");
   const [maxSelectedMo, setMaxSelectedMo] = useState<string | null>(null);
@@ -3328,7 +3338,7 @@ export default function Home() {
   const [hearingChangeFilter, setHearingChangeFilter] =
     useState<HearingChangeFilter>("all");
   const visibleMaxRows = useMemo(() => {
-    if (maxMonth === "2026-07") return [] as MaxMonthlyRow[];
+    if (maxMonth === "2026-08") return [] as MaxMonthlyRow[];
     const rows = [...augustMaxRows];
     const serviceValue = (row: MaxMonthlyRow) =>
       maxService === "tmk" ? row.tmk : row.eln;
@@ -5747,11 +5757,11 @@ export default function Home() {
                 <div>
                   <p className="eyebrow">{maxService === "tmk" ? "ТМК" : "ЛВН"}</p>
                   <h2>{maxService === "tmk" ? "ТМК: работа МО за полный месяц" : "ЛВН после ТМК: работа МО за полный месяц"}</h2>
-                  <p>Август рассчитан как разность накопительных срезов на 31.08 и 31.07. Накопительные значения в месячную таблицу не подставляются.</p>
+                  <p>Сентябрь рассчитан как разность накопительных срезов на 30.09 и 31.08. Накопительные значения в месячную таблицу не подставляются.</p>
                 </div>
                 <div className="maxMonthSwitch" aria-label="Выбранный полный месяц">
-                  <button className={maxMonth === "2026-07" ? "active" : ""} onClick={() => setMaxMonth("2026-07")}>Июль</button>
                   <button className={maxMonth === "2026-08" ? "active" : ""} onClick={() => setMaxMonth("2026-08")}>Август</button>
+                  <button className={maxMonth === "2026-09" ? "active" : ""} onClick={() => setMaxMonth("2026-09")}>Сентябрь</button>
                 </div>
               </div>
 
@@ -5767,20 +5777,20 @@ export default function Home() {
                 ))}
               </div>
 
-              {maxMonth === "2026-07" ? (
+              {maxMonth === "2026-08" ? (
                 <div className="maxDataGap">
-                  <strong>Июль 2026 пока не рассчитывается</strong>
-                  <span>В baseline нет накопительного среза на 30.06.2026 или отдельной июльской выгрузки. Срез на 31.07 нельзя выдавать за месячный объём июля.</span>
+                  <strong>Август 2026 недоступен в текущей паре срезов</strong>
+                  <span>В текущем наборе сохранены границы 31.08 и 30.09 для расчёта сентября. Предыдущий накопительный срез нельзя выдавать за месячный объём августа.</span>
                 </div>
               ) : (maxFilter === "growth" || maxFilter === "decline") ? (
                 <div className="maxDataGap">
-                  <strong>Для динамики нужен полный июль</strong>
-                  <span>Рост и падение будут рассчитаны после появления сопоставимого июльского месяца. Отсутствующие данные не заменяются нулём.</span>
+                  <strong>Для динамики нужен полный август</strong>
+                  <span>Рост и падение будут рассчитаны при наличии отдельного сопоставимого месячного объёма августа. Отсутствующие данные не заменяются нулём.</span>
                 </div>
               ) : (
                 <div className="maxTableWrap">
                   <table className="maxTable">
-                    <thead><tr><th>МО</th><th>{maxService === "tmk" ? "ТМК" : "ЛВН"}</th><th>к июлю</th></tr></thead>
+                      <thead><tr><th>МО</th><th>{maxService === "tmk" ? "ТМК" : "ЛВН"}</th><th>к августу</th></tr></thead>
                     <tbody>
                       {visibleMaxRows.map((row) => (
                         <tr key={row.name} onClick={() => setMaxSelectedMo(row.name)}>

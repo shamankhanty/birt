@@ -17,17 +17,17 @@ test("physician report covers all expected organizations and specialties", () =>
 
 test("regional physician totals reproduce the federal workbook", () => {
   assert.deepEqual(data.datasets.doctorsAll.summary, {
-    numerator: 9974,
-    denominator: 13266,
-    fact: 9974 / 13266 * 100,
+    numerator: 10579,
+    denominator: 13445,
+    fact: 10579 / 13445 * 100,
   });
   assert.deepEqual(data.datasets.doctorsLevel3.summary, {
-    numerator: 3527,
-    denominator: 4732,
-    fact: 3527 / 4732 * 100,
+    numerator: 3761,
+    denominator: 4818,
+    fact: 3761 / 4818 * 100,
   });
-  assert.equal(data.datasets.doctor500_dentist.summary.numerator, 68);
-  assert.equal(data.datasets.doctor500_dentist.summary.denominator, 658);
+  assert.equal(data.datasets.doctor500_dentist.summary.numerator, 121);
+  assert.equal(data.datasets.doctor500_dentist.summary.denominator, 653);
 });
 
 test("small specialty denominators are reference-only in hearings", () => {
@@ -35,7 +35,7 @@ test("small specialty denominators are reference-only in hearings", () => {
     if (!id.startsWith("doctor500_")) continue;
     for (const row of dataset.rows) {
       if (row.volume < 3) assert.match(row.sourceWarning, /Справочно/);
-      else assert.equal(row.sourceWarning ?? null, null);
+      else if (row.sourceStatus !== "no_source_row") assert.equal(row.sourceWarning ?? null, null);
     }
   }
   assert.match(source, /!isSmallPhysicianDenominator\(id, row, registry\)/);

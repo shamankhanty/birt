@@ -17,6 +17,7 @@ const organizationStatus = readJson(appFile("organization-status.json"));
 const physicianMetrics = readJson(appFile("physician-metrics.json"));
 const moDetailOids = readJson(appFile("mo-detail-oids.json"));
 const baselineSnapshot = readJson("baseline/validation-snapshot.json");
+const allowMixedRatingMonths = process.env.ALLOW_MIXED_RATING_MONTHS === "1";
 
 const reporting = resolveReportingPeriods({
   monthlyDatasets: monthlyMo,
@@ -35,6 +36,7 @@ const report = validateDashboard({
   moDetailOids,
   baselineSnapshot,
   reporting,
+  allowMixedRatingMonths,
 });
 const aiQueue = createAiReviewQueue(report);
 if (!checkOnly) {
