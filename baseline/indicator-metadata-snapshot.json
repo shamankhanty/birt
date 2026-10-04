@@ -1,5 +1,5 @@
 {
-  "baselineVersion": "5.4.9",
+  "baselineVersion": "5.4.10",
   "sourceStage": "stage5_calculation_engine",
   "staticIndicators": {
     "egpu": {
@@ -753,3 +753,4 @@
     }
   }
 }
+

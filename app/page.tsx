@@ -564,6 +564,15 @@ type MoSortKey =
   | "current"
   | "previous";
 type SortDirection = "asc" | "desc";
+type MaxPlanSortKey =
+  | "name"
+  | "plan"
+  | "fact"
+  | "achievement"
+  | "remaining"
+  | "growth"
+  | "forecastDays"
+  | "status";
 type MoDataset = {
   name: string;
   plan: number | null;
@@ -859,7 +868,8 @@ const sourceQuantityNouns: Record<string, string> = {
   tvspDiagnostic: "ТВСП",
   smpFederal: "станций и подстанций",
 };
-// Региональное значение каждого показателя рассчитывается один раз в
+// Региональное значение каждого показателя рассчитывается
+ один раз в
 // deterministic calculation layer и затем переиспользуется всеми разделами.
 const calculationRuntime = createIndicatorCalculationRuntime({
   staticIndicators: indicators,
@@ -1596,7 +1606,11 @@ const calcErrors = [
     fix: "Строка помечена как требующая уточнения; эти кабинеты не использовать для санкций до ответа владельца федеральной методики/ФРМО.",
   },
   {
-    severity: "critical",
+    severity: "cri
+Warning: truncated output (original token count: 11131)
+Total output lines: 524
+
+tical",
     status: "Расчёт приостановлен",
     source: "СЭМД профилактического осмотра (диспансеризации)",
     issue:
@@ -1862,54 +1876,7 @@ const vitacoreInstructions: Record<string, VitacoreInstruction> = {
     form: "Результат выполненного лабораторного исследования.",
     path: "Диагностика → Проведённые исследования → исследование пациента.",
     action: "Заполнить результаты, рекомендации, заключение и сведения о материале; выбрать «Мед. документация».",
-    result: "СЭМД 186 «Протокол лабораторного исследования».",
-    control: "Подписать документ и проверить регистрацию в РЭМД от правильного OID КДЛ.",
-    source: "https://wiki.vitacore.ru/plugins/viewsource/viewpagesrc.action?pageId=491749393",
-  },
-  tvspDiagnostic: {
-    form: "Результат выполненного инструментального диагностического исследования.",
-    path: "Диагностика → Проведённые исследования → Медицинская документация.",
-    action: "Заполнить протокол, описание и заключение исследования; сформировать и подписать документ.",
-    result: "СЭМД «Протокол инструментального диагностического исследования».",
-    control: "Проверить регистрацию в РЭМД и соответствие OID диагностического ТВСП.",
-  },
-  tvspAmbulatory: {
-    form: "Законченный амбулаторный случай, талон амбулаторного пациента либо консультация врача.",
-    path: "Случай обращения / дневник врача → закрытие случая или медицинская документация консультации.",
-    action: "Корректно завершить случай или консультацию, заполнить исход и обязательные разделы документа.",
-    result: "СЭМД 233, «Талон амбулаторного пациента» либо СЭМД 119 «Протокол консультации».",
-    control: "Проверить подпись, регистрацию в РЭМД и OID амбулаторного ТВСП.",
-  },
-  oncologyCouncil: {
-    form: "Протокол онкологического консилиума.",
-    path: "Онкологическая маршрутная карта / решение консилиума → Медицинская документация.",
-    action: "Оформить состав консилиума, решение и рекомендации; сформировать и подписать протокол.",
-    result: "СЭМД 190 «Протокол консилиума врачей (онкологического)».",
-    control: "Проверить регистрацию в РЭМД от МО и подразделения планового перечня.",
-  },
-  tmkRemd: {
-    form: "Протокол завершённой телемедицинской консультации.",
-    path: "Случай ТМК → протокол консультации → Медицинская документация.",
-    action: "Заполнить результат и рекомендации ТМК, сформировать и подписать протокол.",
-    result: "СЭМД 40 «Протокол телемедицинской консультации».",
-    control: "Проверить успешную регистрацию протокола в РЭМД.",
-  },
-  elmk: {
-    form: "Медицинский осмотр работника и итоговое медицинское заключение.",
-    path: "Профессиональные медицинские осмотры → заключение по результатам осмотра → Медицинская документация.",
-    action: "Заполнить вид и профиль работы, результаты осмотра, заключение и дату следующего осмотра.",
-    result: "СЭМД 230 для предоставления в подсистему ЭЛМК.",
-    control: "Проверить подписание и регистрацию СЭМД 230 в РЭМД.",
-    source: "https://wiki.vitacore.ru/pages/viewpage.action?pageId=458588660",
-  },
-};
-const methodologies: Methodology[] = [
-  {
-    id: "organizationRating",
-    name: "Интегральный рейтинг медицинских организаций",
-    formula:
-      "70% × балл полноты сопровождения случаев + 20% × балл цифровых услуг + 10% × балл технической готовности",
-    numerator:
+    result: "СЭМД 186 «Протокол лабораторного и…1131 tokens truncated…r:
       "Средние нормированные баллы применимых показателей внутри трёх блоков. Балл отдельного показателя: факт / план × 100; для обратных показателей: план / факт × 100; максимум 100 баллов.",
     denominator:
       "В расчёт включаются только применимые к МО показатели. Если блок неприменим, его вес исключается, остальные веса нормируются.",
@@ -2119,7 +2086,8 @@ const methodologies: Methodology[] = [
     formula: "(МО с зарегистрированным протоколом ТМК / плановые МО) × 100%",
     numerator:
       "МО, от которых зарегистрирован СЭМД «Протокол телемедицинской консультации».",
-    denominator:
+    denomin
+ator:
       "Медицинские организации, обязанные передавать данный вид СЭМД.",
     source: "Федеральная BI / ФРМО / РЭМД",
     cadence: "Еженедельно",
@@ -2415,6 +2383,18 @@ function snapshotDistanceDays(previous: string, current: string) {
   if (previousTs === null || currentTs === null || currentTs < previousTs)
     return null;
   return Math.round((currentTs - previousTs) / 86_400_000);
+}
+
+function addDaysToRussianDate(value: string, days: number) {
+  const match = value.match(/^(\d{2})\.(\d{2})\.(\d{4})$/u);
+  if (!match || !Number.isFinite(days) || days < 0) return null;
+  const date = new Date(Date.UTC(Number(match[3]), Number(match[2]) - 1, Number(match[1])));
+  date.setUTCDate(date.getUTCDate() + Math.ceil(days));
+  return [
+    String(date.getUTCDate()).padStart(2, "0"),
+    String(date.getUTCMonth() + 1).padStart(2, "0"),
+    date.getUTCFullYear(),
+  ].join(".");
 }
 
 function moSearchText(metric: string, row: MoRow) {
@@ -2762,6 +2742,15 @@ function hearingMetricGroupsForDisplay(row: HearingRow, filter: HearingChangeFil
 
 const versionHistoryEntries = [
   {
+  version: "5.4.10",
+  date: "04.10.2026",
+  items: [
+    "Разделы ТМК и ЛВН дополнены прогнозом количества дней и ориентировочной даты достижения текущего утверждённого плана по темпу последних сопоставимых выгрузок.",
+    "Добавлены управленческие блоки лидеров, наибольшего прироста и зон внимания, графические полосы выполнения и цветовое выделение изменений.",
+    "Таблица контроля плана по МО получила интерактивную сортировку по каждому показателю без изменения утверждённых планов, фактов и mapping.",
+  ],
+},
+  {
   version: "5.4.9",
   date: "03.10.2026",
   items: [
@@ -2807,7 +2796,8 @@ const versionHistoryEntries = [
       "Исправлены даты актуальности в шапке и динамике МАХ; история обновлений агрегирована для пользователей без технических CI-итераций.",
       "Исправлен расчёт выписных эпикризов: числитель берётся из РЭМД ЕГИСЗ, знаменатель — из случаев госпитализации; сопоставление по OID, прежняя несопоставимая динамика сброшена.",
       "Верхние плашки «Расширенной сводки» синхронизированы с актуальными источниками: краткий ввод, госпитализации, ФАП/ФП и СЭМД — по 11.09; ошибки РЭМД — за полную неделю 07–13.09.",
-    ],
+   
+ ],
   },
   {
     version: "5.0–5.3",
@@ -3285,6 +3275,8 @@ export default function Home() {
   const [moOwnership, setMoOwnership] = useState<"state" | "all">("state");
   const [moSortKey, setMoSortKey] = useState<MoSortKey>("fact");
   const [moSortDirection, setMoSortDirection] = useState<SortDirection>("desc");
+  const [maxPlanSortKey, setMaxPlanSortKey] = useState<MaxPlanSortKey>("achievement");
+  const [maxPlanSortDirection, setMaxPlanSortDirection] = useState<SortDirection>("asc");
   const [semdQuery, setSemdQuery] = useState("");
   const [semdOnlyRegistered, setSemdOnlyRegistered] = useState(true);
   const [errorView, setErrorView] = useState<"categories" | "organizations">(
@@ -3524,7 +3516,8 @@ export default function Home() {
             passed: operationalPassed,
             persistent: false,
             adverseChange: false,
-            score: mandatoryDental && usableCurrent
+            score: mandat
+oryDental && usableCurrent
               ? scoreAgainstPlan({ fact: usableCurrent.fact, plan: operationalPlan, direction: "higher" })
               : null,
             detail: mandatoryDental
@@ -4302,7 +4295,8 @@ export default function Home() {
             june: null,
             july: value.value,
             change: null,
-            juneQuantity: null,
+  
+          juneQuantity: null,
             julyQuantity: value.value === null ? null : format(value.value, 0),
             sourceWarning:
               "Август рассчитан как накопительный срез 31.08 минус 31.07. Для сравнения июля с августом по МО нужен сопоставимый срез на 30.06; его в текущем наборе нет.",
@@ -4674,6 +4668,14 @@ export default function Home() {
     isMaxMetric && regionalChange !== null && operationalIntervalDays && operationalIntervalDays > 0
       ? regionalChange / operationalIntervalDays
       : null;
+  const maxForecastDays =
+    maxPlanRemaining === 0
+      ? 0
+      : maxPlanRemaining !== null && maxRecentDailyPace !== null && maxRecentDailyPace > 0
+        ? Math.ceil(maxPlanRemaining / maxRecentDailyPace)
+        : null;
+  const maxForecastDate =
+    maxForecastDays === null ? null : addDaysToRussianDate(selectedDataset.date, maxForecastDays);
   const maxPlanRows = isMaxMetric
     ? Object.values(maxTargets.organizationPlans)
         .map((target) => {
@@ -4699,6 +4701,14 @@ export default function Home() {
             growth !== null && operationalIntervalDays && operationalIntervalDays > 0
               ? growth / operationalIntervalDays
               : null;
+          const forecastDays =
+            remaining === 0
+              ? 0
+              : remaining !== null && recentDaily !== null && recentDaily > 0
+                ? Math.ceil(remaining / recentDaily)
+                : null;
+          const forecastDate =
+            forecastDays === null ? null : addDaysToRussianDate(selectedDataset.date, forecastDays);
           const status =
             achievement === null
               ? "Нет данных"
@@ -4709,17 +4719,53 @@ export default function Home() {
                   : achievement >= 90
                     ? "Риск"
                     : "Отставание";
-          return { target, current, plan, nextPlan, fact, previous, growth, achievement, remaining, requiredDaily, recentDaily, status };
+          return { target, current, plan, nextPlan, fact, previous, growth, achievement, remaining, requiredDaily, recentDaily, forecastDays, forecastDate, status };
         })
         .filter(({ target }) => moOwnership === "all" || !isPrivateOrganization(target.name))
         .filter(({ target }) =>
           `${target.name} ${target.oid}`.toLocaleLowerCase("ru").includes(query.toLocaleLowerCase("ru")),
         )
-        .sort((a, b) =>
-          (a.achievement ?? -1) - (b.achievement ?? -1) ||
-          a.target.name.localeCompare(b.target.name, "ru"),
-        )
+        .sort((a, b) => {
+          const statusRank = (value: string) => ({ "Отставание": 0, "Риск": 1, "Темп достаточен": 2, "План достигнут ✓": 3, "Нет данных": 4 })[value] ?? 5;
+          const values = (row: typeof a) => ({
+            name: row.target.name,
+            plan: row.plan,
+            fact: row.fact,
+            achievement: row.achievement,
+            remaining: row.remaining,
+            growth: row.growth,
+            forecastDays: row.forecastDays,
+            status: statusRank(row.status),
+          });
+          const left = values(a)[maxPlanSortKey];
+          const right = values(b)[maxPlanSortKey];
+          let comparison = 0;
+          if (typeof left === "string" && typeof right === "string") comparison = left.localeCompare(right, "ru");
+          else if (left === null) comparison = 1;
+          else if (right === null) comparison = -1;
+          else comparison = Number(left) - Number(right);
+          return (maxPlanSortDirection === "asc" ? comparison : -comparison) || a.target.name.localeCompare(b.target.name, "ru");
+        })
     : [];
+  const maxPlanLeaders = [...maxPlanRows]
+    .filter((row) => row.achievement !== null)
+    .sort((a, b) => (b.achievement ?? 0) - (a.achievement ?? 0))
+    .slice(0, 5);
+  const maxPlanGrowthLeaders = [...maxPlanRows]
+    .filter((row) => row.growth !== null)
+    .sort((a, b) => (b.growth ?? 0) - (a.growth ?? 0))
+    .slice(0, 5);
+  const maxPlanAttention = [...maxPlanRows]
+    .filter((row) => row.achievement === null || row.achievement < 100)
+    .sort((a, b) => (a.achievement ?? -1) - (b.achievement ?? -1))
+    .slice(0, 5);
+  const changeMaxPlanSort = (key: MaxPlanSortKey) => {
+    if (maxPlanSortKey === key) setMaxPlanSortDirection((direction) => direction === "asc" ? "desc" : "asc");
+    else {
+      setMaxPlanSortKey(key);
+      setMaxPlanSortDirection(key === "name" || key === "achievement" || key === "status" ? "asc" : "desc");
+    }
+  };
   // The MAX tab is its own screen (rather than the generic matrix screen), so it
   // needs the same plan-first view model as the matrix drilldown.  Keep its
   // period, facts, and targets derived from the current operational export and
@@ -4922,7 +4968,8 @@ export default function Home() {
       return (
         <>
           <em>{format(monthly.fact, 2)}%</em>
-          <small>{latestMonthName} · Оперативно {operationalDate.slice(0, 5)} — {operationalFact === null ? "—" : `${format(operationalFact, 2)}%`}</small>
+          <small>{latestMonthName} · Оперативно {operationalDate
+.slice(0, 5)} — {operationalFact === null ? "—" : `${format(operationalFact, 2)}%`}</small>
         </>
       );
     }
@@ -5636,7 +5683,8 @@ export default function Home() {
                         <strong>{format(item.fact, 0)}</strong>
                         <p>Годовой план <b>{format(item.plan ?? 0, 0)}</b></p>
                         <div className="maxProgress"><i style={{ width: `${Math.min(completion ?? 0, 100)}%` }} /></div>
-                        <footer><b>{completion == null ? "—" : `${format(completion, 2)}%`}</b><span>исполнения плана</span></footer>
+          
+              <footer><b>{completion == null ? "—" : `${format(completion, 2)}%`}</b><span>исполнения плана</span></footer>
                       </article>
                     );
                   })}
@@ -6143,7 +6191,8 @@ export default function Home() {
                                 <small>
                                   {item.source === "collegium"
                                     ? "Только коллегия"
-                                    : row.type}
+                                 
+   : row.type}
                                 </small>
                               )}
                             </span>
@@ -6741,7 +6790,8 @@ export default function Home() {
                             </strong>
                           </p>
                         </div>
-                        {union.provisional && (
+   
+                     {union.provisional && (
                           <div className="unionWarning">
                             Предварительный результат: полнота данных ниже 80%
                           </div>
@@ -7342,7 +7392,8 @@ export default function Home() {
                   <button
                     className={hearingLevel === "mandatory" ? "active" : ""}
                     onClick={() => setHearingLevel("mandatory")}
-                  >
+                  >
+
                     Заслушать
                   </button>
                   <button
@@ -7936,7 +7987,8 @@ export default function Home() {
                           0,
                         )}
                       </strong>
-                      <span>при наличии транспорта</span>
+                      <s
+pan>при наличии транспорта</span>
                     </article>
                     <article>
                       <small>Создано путевых листов</small>
@@ -8566,7 +8618,8 @@ export default function Home() {
               </section>
 
               <p className="prototypeNote">
-                Региональная динамика сравнивает итоговые строки за 17–23.08 и
+                Региональная динамика сравнивает итоговые строк
+и за 17–23.08 и
                 24–30.08.2026. Детализация текущей недели включает дочерние
                 строки без номера; динамика отдельных МО временно не
                 рассчитывается до второго сопоставимого среза. В месячном режиме
@@ -8803,13 +8856,33 @@ export default function Home() {
                     <article><small>План на {russianMonthLabel(maxCurrentMonthKey).replace(/\s+\d{4}$/u, "")}</small><strong>{format(maxCurrentMonthPlan, 0)}</strong></article>
                     <article><small>Выполнение плана</small><strong>{format(maxPlanAchievement ?? 0, 2)}%</strong></article>
                     <article><small>{(maxPlanAchievement ?? 0) >= 100 ? `Контрольная точка ${maxNextControlMonthKey ? russianMonthLabel(maxNextControlMonthKey).replace(/\s+\d{4}$/u, "") : "следующего месяца"}` : "Осталось до плана"}</small><strong>{(maxPlanAchievement ?? 0) >= 100 ? (maxNextControlPlan === null ? "—" : format(maxNextControlPlan, 0)) : format(maxPlanRemaining ?? 0, 0)}</strong></article>
-                    <article><small>Требуемый среднесуточный темп</small><strong>{maxRequiredDailyPace === null ? "—" : format(maxRequiredDailyPace, 0)}</strong><span>{maxRecentDailyPace === null ? "недостаточно динамики" : `последний темп ${format(maxRecentDailyPace, 0)} в день`}</span></article>
+                    <article className={maxForecastDays === null ? "forecastCard stalled" : "forecastCard"}><small>Прогноз до текущего плана</small><strong>{maxForecastDays === null ? "—" : `${format(maxForecastDays, 0)} дн.`}</strong><span>{maxForecastDate ? `ориентир ${maxForecastDate}` : "при текущем темпе не прогнозируется"}</span></article>
                   </div>
-                  <p>ТМК и ЛВН контролируются раздельно. Динамика предыдущей и текущей выгрузок приведена ниже как дополнительный оперативный контекст.</p>
+                  <div className="planTempoLine">
+                    <span>Изменение за {operationalIntervalDays ?? "—"} дн.</span>
+                    <b className={(regionalChange ?? 0) > 0 ? "deltaUp" : (regionalChange ?? 0) < 0 ? "deltaDown" : ""}>{regionalChange === null ? "—" : `${regionalChange > 0 ? "+" : ""}${format(regionalChange, 0)}`}</b>
+                    <span>Текущий темп</span><b>{maxRecentDailyPace === null ? "—" : `${format(maxRecentDailyPace, 0)} в день`}</b>
+                    <span>Нужно было до конца месяца</span><b>{maxRequiredDailyPace === null ? "период завершён" : `${format(maxRequiredDailyPace, 0)} в день`}</b>
+                  </div>
+                  <p>Прогноз рассчитан до утверждённого плана текущего месяца по темпу между двумя последними сопоставимыми выгрузками. Это производный ориентир, а не новый план. ТМК и ЛВН считаются раздельно.</p>
                 </section>
               )}
               {isMaxMetric && maxCurrentMonthKey && (
                 <section className="maxPlanOrganizations" data-testid="max-plan-organization-table">
+                  <div className="maxPlanInsights" data-testid="max-plan-insights">
+                    {[
+                      { title: "Лидеры по выполнению", note: "доля утверждённого плана", rows: maxPlanLeaders, kind: "good" },
+                      { title: "Наибольший прирост", note: `изменение за ${operationalIntervalDays ?? "—"} дн.`, rows: maxPlanGrowthLeaders, kind: "growth" },
+                      { title: "Требуют внимания", note: "минимальное выполнение плана", rows: maxPlanAttention, kind: "bad" },
+                    ].map((panel) => (
+                      <article className={panel.kind} key={panel.title}>
+                        <header><span><b>{panel.title}</b><small>{panel.note}</small></span><strong>{panel.rows.length}</strong></header>
+                        <ol>{panel.rows.map((row, index) => (
+                          <li key={`${panel.title}-${row.target.oid}`}><i>{index + 1}</i><span>{displayMoName(row.target.name, row.target.oid)}</span><b>{panel.kind === "growth" ? (row.growth === null ? "—" : `${row.growth > 0 ? "+" : ""}${format(row.growth, 0)}`) : row.achievement === null ? "—" : `${format(row.achievement, 1)}%`}</b></li>
+                        ))}</ol>
+                      </article>
+                    ))}
+                  </div>
                   <div className="allMosHead">
                     <div>
                       <p className="eyebrow">КОНТРОЛЬ ПЛАНА ПО МО</p>
@@ -8824,21 +8897,23 @@ export default function Home() {
                       <option value="state">Только государственные МО</option>
                       <option value="all">Все МО, включая частные</option>
                     </select>
-                    <span className="sortHint">Контрольная сортировка: выполнение плана по возрастанию</span>
+                    <span className="sortHint">Нажмите заголовок столбца для сортировки</span>
                   </div>
                   <div className="tableWrap">
                     <table className="matrix maxPlanTable">
-                      <thead><tr><th>МО</th><th>План {russianMonthLabel(maxCurrentMonthKey).replace(/\s+\d{4}$/u, "")}</th><th>Факт</th><th>Выполнение, %</th><th>Осталось</th><th>Прирост с предыдущей выгрузки</th><th>Требуется в день</th><th>Статус</th></tr></thead>
+                      <thead><tr>{[
+                        ["name", "МО"], ["plan", `План ${russianMonthLabel(maxCurrentMonthKey).replace(/\s+\d{4}$/u, "")}`], ["fact", "Факт"], ["achievement", "Выполнение, %"], ["remaining", "Осталось"], ["growth", "Изменение"], ["forecastDays", "Прогноз до плана"], ["status", "Статус"],
+                      ].map(([key, label]) => <th key={key}><button type="button" className={maxPlanSortKey === key ? "sorted" : ""} onClick={() => changeMaxPlanSort(key as MaxPlanSortKey)}>{label}<i>{maxPlanSortKey === key ? (maxPlanSortDirection === "asc" ? "↑" : "↓") : "↕"}</i></button></th>)}</tr></thead>
                       <tbody>
                         {maxPlanRows.map((row) => (
                           <tr key={`${row.target.oid}-${maxServiceKey}`}>
                             <td><strong>{displayMoName(row.target.name, row.target.oid)}</strong><small>{row.target.oid}</small></td>
                             <td>{row.plan === null ? "—" : format(row.plan, 0)}</td>
                             <td>{row.fact === null ? "—" : format(row.fact, 0)}</td>
-                            <td>{row.achievement === null ? "—" : `${format(row.achievement, 2)}%`}</td>
+                            <td>{row.achievement === null ? "—" : <div className="achievementCell"><b>{format(row.achievement, 2)}%</b><span><i style={{ width: `${Math.min(Math.max(row.achievement, 0), 100)}%` }} /></span></div>}</td>
                             <td>{row.remaining === null ? "—" : format(row.remaining, 0)}</td>
-                            <td>{row.growth === null ? "—" : `${row.growth > 0 ? "+" : ""}${format(row.growth, 0)}`}</td>
-                            <td>{row.requiredDaily === null ? "—" : format(row.requiredDaily, 0)}</td>
+                            <td><span className={`changePill ${row.growth === null || row.growth === 0 ? "neutral" : row.growth > 0 ? "up" : "down"}`}>{row.growth === null ? "—" : `${row.growth > 0 ? "↑ +" : row.growth < 0 ? "↓ " : ""}${format(row.growth, 0)}`}</span></td>
+                            <td>{row.forecastDays === null ? <span className="forecastMissing">не прогнозируется</span> : row.forecastDays === 0 ? <b className="deltaUp">достигнут</b> : <><b>{format(row.forecastDays, 0)} дн.</b><small>ориентир {row.forecastDate}</small></>}</td>
                             <td>
                               <span className={`statusChip ${row.status === "План достигнут ✓" || row.status === "Темп достаточен" ? "good" : row.status === "Риск" ? "warn" : row.status === "Нет данных" ? "na" : "bad"}`}>{row.status}</span>
                               {row.status === "План достигнут ✓" && <small>Следующая контрольная точка: {row.nextPlan === null ? "—" : format(row.nextPlan, 0)}</small>}
@@ -9013,7 +9088,8 @@ export default function Home() {
                       <strong>
                         {operationalIntervalDays === null
                           ? "—"
-                          : `${operationalIntervalDays} ${operationalIntervalDays === 1 ? "день" : operationalIntervalDays >= 2 && operationalIntervalDays <= 4 ? "дня" : "дней"}`}
+                          : `${operationalIntervalDays} ${operationa
+lIntervalDays === 1 ? "день" : operationalIntervalDays >= 2 && operationalIntervalDays <= 4 ? "дня" : "дней"}`}
                       </strong>
                       <span>
                         {selectedDataset.comparisonReset
@@ -9574,7 +9650,8 @@ export default function Home() {
                                         {sortMark(
                                           moSortKey === "quantity",
                                           moSortDirection,
-                                        )}
+                          
+              )}
                                       </i>
                                       <small>результат / объём</small>
                                     </button>
@@ -10124,7 +10201,8 @@ export default function Home() {
                               <div key={category.name}>
                                 <b>{idx + 1}</b>
                                 <p>{category.name}</p>
-                                <strong>{format(category.count, 0)}</strong>
+                      
+          <strong>{format(category.count, 0)}</strong>
                                 <span>
                                   {format(
                                     (category.count / activeErrorOrganization.count) * 100,
@@ -10879,7 +10957,8 @@ function UnitDetail({
                   <span className="oidCell">
                     ID здания: {row.buildingIds || "—"}
                   </span>
-                  <small className="oidList">
+                  <small
+ className="oidList">
                     OID СП: {row.unitOid || "—"}
                   </small>
                 </td>
@@ -11548,3 +11627,4 @@ function RankingBlock({
     </article>
   );
 }
+

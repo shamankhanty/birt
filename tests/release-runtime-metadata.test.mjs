@@ -18,7 +18,7 @@ test("release version has one canonical source and preserves historical baseline
   const page = await readFile(new URL("../app/page.tsx", import.meta.url), "utf8");
   const manifest = JSON.parse(await readFile(new URL("../baseline/manifest.json", import.meta.url), "utf8"));
   const historical = await readFile(new URL("../baseline/RELEASE_5.4.5.md", import.meta.url), "utf8");
-  assert.equal(RELEASE_VERSION, "5.4.9");
+  assert.equal(RELEASE_VERSION, "5.4.10");
   assert.match(page, /DASHBOARD_VERSION\s*=\s*RELEASE_VERSION/u);
   assert.doesNotMatch(page, /DASHBOARD_VERSION\s*=\s*"5\.4\.6"/u);
   assert.equal(manifest.baselineVersion, RELEASE_VERSION);
@@ -32,3 +32,4 @@ test("legacy previous operational values remain an explicit bounded allowlist", 
   for (const value of allowed) assert.match(previousBlock, new RegExp(value.replace(".", "\\.")));
   assert.doesNotMatch(previousBlock, /2046140|624362|2911671/u);
 });
+
