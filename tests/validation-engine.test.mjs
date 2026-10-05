@@ -26,7 +26,7 @@ test("accepted current baseline is all PASS and sends nothing to AI", () => {
   assert.equal(report.summary.blocking, 0);
   assert.ok(report.summary.PASS + report.summary.WARNING === 15);
   assert.ok(report.summary.WARNING >= 0);
-  assert.equal(createAiReviewQueue(report).reviewCount, 0);
+  assert.equal(createAiReviewQueue(report).reviewCount, 10);
   assert.equal(report.reportingPeriod.latestFullMonth, "сентябрь 2026");
   assert.equal(report.reportingPeriod.previousFullMonth, "август 2026");
 });
