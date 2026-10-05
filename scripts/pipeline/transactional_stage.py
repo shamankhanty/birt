@@ -50,11 +50,9 @@ def hashes(folder):
             for p in sorted(folder.rglob('*')) if p.is_file()}
 
 
-def validate(app, output, allow_mixed_rating_months=False):
+def validate(app, output):
     output.mkdir(parents=True, exist_ok=True)
     env = {**os.environ, 'DASHBOARD_APP_DIR': str(app), 'DASHBOARD_VALIDATION_DIR': str(output)}
-    if allow_mixed_rating_months:
-        env['ALLOW_MIXED_RATING_MONTHS'] = '1'
     result = subprocess.run(['node', str(ROOT/'scripts/run-validation.mjs')], cwd=ROOT,
                             env=env, capture_output=True, text=True, encoding='utf-8')
     (output/'console.log').write_text(result.stdout+'\n'+result.stderr, encoding='utf-8')
@@ -139,6 +137,14 @@ def invoke(app, family, metric, item, partner):
             raise ValueError('Нет парного источника за тот же отчетный период')
         return adapt_preventive(app,source,Path(partner['path']),end,ROOT/'app/mo-registry.json')
     if family=='hospital_cases': return adapt_hospital(app,source,end)
+    if family=='electronic_waybill' and item.get('previous'):
+        previous=item['previous']
+        if previous['status']=='FAIL': raise ValueError('ЭЛП: предыдущий недельный источник поврежден')
+        previous_end=parse_iso(previous['endDate'])
+        if (end-previous_end).days != 7:
+            raise ValueError('ЭЛП: источники не являются смежными недельными срезами')
+        from adapters import adapt_waybill
+        return adapt_waybill(app,source,end,Path(previous['path']),previous_end)
     return run_family(app,family,source,end,ROOT,parse_iso(start) if start else None)
 
 
@@ -189,11 +195,11 @@ def historical_replay(output, manifest_path=None):
     if not manifest_path or not Path(manifest_path).is_file():
         result={'status':'UNAVAILABLE','reason':'В ARCHIVE нет подтвержденного historical-replay.json с исходниками и эталоном. Публикация заблокирована.'}
     else:
-        manifest=read(Path(manifest_path)); cases=[]; batch_results=[]
+        manifest=read(Path(manifest_path)); cases=[]
         # Qualify this implementation once. Reuse the proof only while its code,
         # rules, baseline, reference artifacts and source bytes still match.
         implementation_root=Path(__file__).resolve().parents[2]
-        evidence={'manifest':manifest,'implementation':{},'cases':[],'batchCases':[]}
+        evidence={'manifest':manifest,'implementation':{},'cases':[]}
         for folder in ('scripts/pipeline','lib','config'):
             for path in sorted((implementation_root/folder).rglob('*')):
                 if path.is_file() and path.suffix in ('.py','.js','.mjs','.json'):
@@ -206,25 +212,6 @@ def historical_replay(output, manifest_path=None):
             evidence['cases'].append({'baseline':hashes(Path(case['baselineApp'])),
                 'expected':hashes(Path(case['expectedApp'])),
                 'sources':{str(path):hashlib.sha256(path.read_bytes()).hexdigest() for path in source_paths}})
-        for case in manifest.get('batchCases',[]):
-            source_paths=[Path(source['path']) for source in case.get('sources',[])]
-            source_root=Path(case['sourceDir']) if case.get('sourceDir') else None
-            if source_root:
-                source_paths.extend(path for path in sorted(source_root.rglob('*')) if path.is_file())
-            source_hashes={str(path):hashlib.sha256(path.read_bytes()).hexdigest() for path in source_paths}
-            for source in case.get('sources',[]):
-                if source.get('sha256') and source_hashes[source['path']]!=source['sha256']:
-                    raise RuntimeError('Historical replay: хеш источника batch-квалификации не совпадает')
-            if source_root:
-                relative_hashes={path.relative_to(source_root).as_posix():source_hashes[str(path)] for path in source_paths}
-                source_tree_sha=hashlib.sha256(json.dumps(relative_hashes,sort_keys=True).encode('utf-8')).hexdigest()
-                if source_tree_sha!=case.get('sourceTreeSha256'):
-                    raise RuntimeError('Historical replay: хеш каталога исторических источников не совпадает')
-            item={'expected':hashes(Path(case['expectedApp'])),
-                  'candidate':hashes(Path(case['candidateApp'])),
-                  'sources':source_hashes}
-            if case.get('baselineApp'): item['baseline']=hashes(Path(case['baselineApp']))
-            evidence['batchCases'].append(item)
         fingerprint=hashlib.sha256(json.dumps(evidence,sort_keys=True).encode('utf-8')).hexdigest()
         receipt_path=ROOT/'REPORTS/historical-qualification.json'
         if receipt_path.is_file():
@@ -245,18 +232,7 @@ def historical_replay(output, manifest_path=None):
             invoke(target,source['family'],metric,source,case.get('partner'))
             result_case=compare_trees(Path(case['expectedApp']),target,case['files'])
             cases.append({'metric':metric,**result_case})
-        for case in manifest.get('batchCases',[]):
-            if not case.get('files'): raise ValueError('Historical replay batch: не указан перечень проверяемых файлов')
-            if not case.get('metrics'): raise ValueError('Historical replay batch: не указано покрытие показателей')
-            result_case=compare_trees(Path(case['expectedApp']),Path(case['candidateApp']),
-                                      case['files'],case.get('allowedDifferences'))
-            batch_id=case.get('id','batch-'+str(len(cases)))
-            batch_results.append({'id':batch_id,**{key:value for key,value in result_case.items()
-                                                   if key!='allowedMismatches'}})
-            for metric in case['metrics']:
-                cases.append({'metric':metric,'batch':batch_id,'status':result_case['status']})
         result={'status':'PASS' if cases and all(c['status']=='PASS' for c in cases) else 'FAIL','cases':cases}
-        if batch_results: result['batchResults']=batch_results
         if result['status']=='PASS':
             write(receipt_path,{'schemaVersion':1,'fingerprint':fingerprint,
                 'origin':str(Path(manifest_path).resolve()),'result':result,'evidence':evidence})
@@ -288,6 +264,10 @@ def stage(input_dir, output_dir, replay_manifest=None):
         items=by.get(family,[])
         if family=='max_tmk_eln': items=[i for i in items if (i.get('startDate') or '').endswith('-01-01')]
         selected=max(items,key=lambda i:i.get('endDate') or '') if items else None
+        if selected and family=='electronic_waybill':
+            prior=[i for i in items if i is not selected and i.get('endDate') and parse_iso(i['endDate']) < parse_iso(selected['endDate'])]
+            if prior:
+                selected={**selected,'previous':max(prior,key=lambda i:i['endDate'])}
         if selected and family=='max_tmk_eln':
             selected={**selected,'controls':[i for i in by[family] if i.get('startDate') and not i['startDate'].endswith('-01-01') and i['endDate']==selected['endDate']]}
         return selected
@@ -314,12 +294,7 @@ def stage(input_dir, output_dir, replay_manifest=None):
                 compact_error_payload(raw)
                 preserve_same_slice_dynamics(current,raw,metric)
                 project_metric(current,raw,metric,item)
-                # A per-indicator transaction is intentionally intermediate:
-                # some September datasets have advanced while their siblings
-                # still show August.  The final candidate is validated again
-                # without this allowance, so mixed rating months can never be
-                # published.
-                validation=validate(raw,tx/'validation',allow_mixed_rating_months=True)
+                validation=validate(raw,tx/'validation')
                 if validation['overallStatus']=='FAIL': raise ValueError('; '.join(gate_errors(validation)))
                 # Deterministic repeat from exactly the same accepted baseline.
                 replay=tx/'repeat'; shutil.copytree(current,replay)
@@ -349,10 +324,6 @@ def stage(input_dir, output_dir, replay_manifest=None):
         historical={'status':'FAIL','reason':str(error)}
         write(output_dir/'replay/historical-replay.json',historical)
     unknown=[i for i in intake['files'] if not i['family']]
-    # A missing report is an allowed partial update: keep the production value
-    # and surface the metric as a warning.  It must not block other accepted
-    # source updates (for example, the weekly electronic waybill).
-    missing_reports=[r for r in results if r['state']=='RETAINED' and not r['sources']]
     active_retained=[r for r in results if r['state']=='RETAINED' and r['sources']]
     covered={c['metric'] for c in historical.get('cases',[]) if c['status']=='PASS'}
     prepared={r['metric'] for r in results if r['state']=='PREPARED'}
@@ -362,7 +333,6 @@ def stage(input_dir, output_dir, replay_manifest=None):
     manifest={'schemaVersion':2,'state':state,'status':'WARNING' if state=='PARTIAL' else 'PASS',
               'statistics':indicator_statistics(results),
               'sourceCount':len(intake['files']),'indicators':results,'unknownSources':unknown,
-              'missingReports':[{'metric':r['metric'],'label':r['label'],'message':'Источник не поступил — сохранено предыдущее значение'} for r in missing_reports],
               'changedFiles':changed,'canonicalAppChanged':False,'stagingApp':str(current),
               'formalValidation':{'status':formal['overallStatus'],'summary':formal['summary']},
               'historicalReplay':historical,'publicationAllowed':False,'adapters':results}
