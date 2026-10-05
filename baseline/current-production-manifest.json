@@ -2,7 +2,7 @@
   "schemaVersion": 1,
   "kind": "current-production",
   "promotedFrom": "fix/gp7-remd-2026-09-30",
-  "promotedAt": "2026-10-05T12:49:11.351Z",
+  "promotedAt": "2026-10-05T12:56:37.721Z",
   "files": {
     "app/electronic-waybill-weekly.json": "2cadce1e15a2cdee355e24f03976251ae542945661129d28064abfb8418f2a6b",
     "app/electronic-waybill.json": "d682decfa448f6fd17c8df1fdcf088b105cff03080daf029849a4d039c638dbc",
@@ -15,7 +15,7 @@
     "app/mo-data.json": "ff74f1750c6b8d8597acd586ee0bd6a2e6988a65a2c83bd6bed07ce8f33c7726",
     "app/mo-detail-oids.json": "bb387471a9ef7216fa755ea513e9239a554ac42e70852b5ce2de5481656720ea",
     "app/mo-details.json": "4df69aa4f70ad7770ddca7ce937e0be6e435e81039c00626ee8911c8c9d98f3a",
-    "app/mo-registry.json": "23db5cbbfbf7b34df18f3b8cf79b5a1213b943e591b3bb09b73e81a7552f4389",
+    "app/mo-registry.json": "ce01e85e63d1a99123e985085525631a68c6a6ee860e44fd1de28e0325e53ca0",
     "app/monthly-mo.json": "e8a36070fd4890b1300bdd2f0b2289071cbc9c65e18d0036fed31c4c2391690c",
     "app/operational-mo.json": "01f6c427b248510434179c2f470aaf8481ec98f1246140892ad63947305eeb49",
     "app/organization-status.json": "9ff089df1ef9bfca47556a1275200d85bc91124f2ae31c7d0e3d5498e112482d",
