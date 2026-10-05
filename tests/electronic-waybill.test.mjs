@@ -53,3 +53,14 @@ test("weekly EPL comparison uses the latest two comparable weeks", () => {
   assert.ok(kazan.waybills >= 0);
   assert.match(weekly.comparisonRule, /по номеру группы/);
 });
+
+test("weekly EPL preserves the source regional totals for the two supplied weeks", () => {
+  assert.equal(weekly.previous.period, "21.09.2026–27.09.2026");
+  assert.deepEqual(weekly.previous.systemSummary, {
+    organizations: 126, vehicles: 1712, vehiclesWithWaybills: 1009, vehiclesWithMovement: 827,
+  });
+  assert.equal(weekly.current.period, "28.09.2026–04.10.2026");
+  assert.deepEqual(weekly.current.systemSummary, {
+    organizations: 126, vehicles: 1707, vehiclesWithWaybills: 971, vehiclesWithMovement: 798,
+  });
+});
