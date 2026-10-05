@@ -2,7 +2,7 @@
   "schemaVersion": 1,
   "kind": "current-production",
   "promotedFrom": "fix/gp7-remd-2026-09-30",
-  "promotedAt": "2026-10-05T12:56:37.721Z",
+  "promotedAt": "2026-10-05T12:58:14.990Z",
   "files": {
     "app/electronic-waybill-weekly.json": "2cadce1e15a2cdee355e24f03976251ae542945661129d28064abfb8418f2a6b",
     "app/electronic-waybill.json": "d682decfa448f6fd17c8df1fdcf088b105cff03080daf029849a4d039c638dbc",
@@ -24,7 +24,7 @@
     "app/preventive-semd-audit.json": "79279e20e527d6037443b30c49046f38669d346b9d9bd2c2b39bb053d5ed9642",
     "app/semd-summary.json": "ad1d01c48462820d6fb457f5e5a63919628b83da185eed76abd1b32fe04aea57",
     "app/unit-data.json": "37cd75aee17af332d39f78b483119f2b6463c11723a03ded810f3f30f29c0e5d",
-    "baseline/calculation-runtime-snapshot.json": "4e3714ffee8521622b21103404243d47c8aeabc4e6693df2b0f254a1ce0440ca",
+    "baseline/calculation-runtime-snapshot.json": "82cd5c03d1d61946b0cddf5975a1f6e3e16255a33cfd3c35cf06d495d222b4fc",
     "baseline/validation-snapshot.json": "03edad99fc65346fc0c08cb50c47ef1e919db31295076159b3d43e7ef8f43e9f",
     "baseline/indicator-metadata-snapshot.json": "e35d166a46e0a7b703de313dfc8eabac3cc75d9777974a395a4ef8b447d0d3c2",
     "validation/calculation-equivalence.json": "f706e01d20072641a6cc5f687ce408ed9ee4898ae96b01acb8676d64d02e28a2",
