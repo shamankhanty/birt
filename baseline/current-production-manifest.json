@@ -2,7 +2,7 @@
   "schemaVersion": 1,
   "kind": "current-production",
   "promotedFrom": "fix/gp7-remd-2026-09-30",
-  "promotedAt": "2026-10-05T13:05:16.647Z",
+  "promotedAt": "2026-10-05T13:06:23.339Z",
   "files": {
     "app/electronic-waybill-weekly.json": "2cadce1e15a2cdee355e24f03976251ae542945661129d28064abfb8418f2a6b",
     "app/electronic-waybill.json": "d682decfa448f6fd17c8df1fdcf088b105cff03080daf029849a4d039c638dbc",
@@ -21,7 +21,7 @@
     "app/organization-status.json": "9ff089df1ef9bfca47556a1275200d85bc91124f2ae31c7d0e3d5498e112482d",
     "app/physician-metrics.json": "098dfc03107ce89c1289dcf53d75cd68670c4698af4774b4245cce44dd14fac4",
     "app/physician-weekly-snapshot.json": "dab4a424f82f3c2ccad0a53535b0dca55f61ec7127c88f8a0a9bb790928a8976",
-    "app/preventive-semd-audit.json": "79279e20e527d6037443b30c49046f38669d346b9d9bd2c2b39bb053d5ed9642",
+    "app/preventive-semd-audit.json": "10396ee1b6c6863b5f5a0b3fa6500f9c44bee86ee0f0b205311cecb8c09a87fe",
     "app/semd-summary.json": "ad1d01c48462820d6fb457f5e5a63919628b83da185eed76abd1b32fe04aea57",
     "app/unit-data.json": "37cd75aee17af332d39f78b483119f2b6463c11723a03ded810f3f30f29c0e5d",
     "baseline/calculation-runtime-snapshot.json": "82cd5c03d1d61946b0cddf5975a1f6e3e16255a33cfd3c35cf06d495d222b4fc",
