@@ -70,7 +70,8 @@ def build_sources(d:Path):
  way=d/f'Отчёт_по_использованию_системы_24.09.2026_30.09.2026.xlsx'
  def wayw(ws):ws['B2']='тест';vals=[1,name,10,4,6,8,5,1,1,12,5,7,4];
  def fillway(ws):
-  ws['B2']='тест'; vals=[1,name,10,4,6,8,5,1,1,12,5,7,4]
+  ws['B2']='Отчет по использованию Системы "Электронный путевой лист"'; ws.cell(6,2,'Организации');ws.cell(6,3,1);ws.cell(7,2,'Транспортные средства');ws.cell(7,3,10);ws.cell(7,5,8);ws.cell(7,8,8)
+  ws.cell(13,1,'№ п/п');ws.cell(13,2,'Наименование организации'); vals=[1,name,10,4,6,8,5,1,1,12,5,7,4]
   for j,v in enumerate(vals,1):ws.cell(14,j,v)
  wb_save(way,[('Лист1',fillway)])
  def spfile(filename):
