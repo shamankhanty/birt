@@ -256,13 +256,13 @@
       "source": "mo-data"
     },
     "hospital": {
-      "fact": 88.36744349094971,
+      "fact": 93.16476331892166,
       "plan": 95,
       "date": "30.09.2026",
       "previous": null,
       "trend": null,
-      "quantity": 620115,
-      "numerator": 620115,
+      "quantity": 653780,
+      "numerator": 653780,
       "denominator": 701746,
       "method": "ratio_components",
       "source": "mo-details"
@@ -292,14 +292,14 @@
       "source": "page-baseline"
     },
     "semd228": {
-      "fact": 77.85453573804581,
+      "fact": 79.57771792451673,
       "plan": 95,
       "date": "30.09.2026",
       "previous": null,
       "trend": null,
-      "quantity": 1713242,
-      "numerator": 1713242,
-      "denominator": 2200568,
+      "quantity": 1751161,
+      "numerator": 1751161,
+      "denominator": 2200567,
       "method": "ratio_components",
       "source": "mo-details"
     },
@@ -753,5 +753,5 @@
     }
   },
   "approvedStaticVsRuntimeDivergences": [],
-  "sha256": "2c108be8a4fa1d71b8f0674a369851d46c4a08137ab336660a60879fc84da42f"
+  "sha256": "ae6cc98df66821f2a66f8863203b509be524d4b18bd7854ac87eeb75bd12ff61"
 }
