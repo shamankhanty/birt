@@ -292,7 +292,7 @@
       "source": "page-baseline"
     },
     "semd228": {
-      "fact": 79.57771792451673,
+      "fact": 79.57771792451672,
       "plan": 95,
       "date": "30.09.2026",
       "previous": null,
@@ -753,5 +753,5 @@
     }
   },
   "approvedStaticVsRuntimeDivergences": [],
-  "sha256": "ae6cc98df66821f2a66f8863203b509be524d4b18bd7854ac87eeb75bd12ff61"
+  "sha256": "313dde4497918a2081f24ebfd7483652b6b3ad57a489abcf35e02474336a5c48"
 }
