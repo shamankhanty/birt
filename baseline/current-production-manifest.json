@@ -1,10 +1,10 @@
 {
   "schemaVersion": 1,
   "kind": "current-production",
-  "promotedFrom": "C:\\Users\\Андрей\\Documents\\Codex\\2026-09-26\\referenced-chatgpt-conversation-this-is-an\\work\\birt\\temp34\\candidate\\app",
-  "promotedAt": "2026-10-03T17:21:58.640Z",
+  "promotedFrom": "data/epl-weekly-2026-10-04",
+  "promotedAt": "2026-10-05T08:43:00.000Z",
   "files": {
-    "app/electronic-waybill-weekly.json": "169290974cab42fc589a1ad8b2dea3c2708c86ce65720763af9538b4f25f867a",
+    "app/electronic-waybill-weekly.json": "2cadce1e15a2cdee355e24f03976251ae542945661129d28064abfb8418f2a6b",
     "app/electronic-waybill.json": "d682decfa448f6fd17c8df1fdcf088b105cff03080daf029849a4d039c638dbc",
     "app/error-categories.json": "15ffc2f787af4f54d6e91f47eeaafb97c09e63aa7eb1c0c764b2da9654d57bc9",
     "app/error-organizations.json": "ecf9f63a519a5c35b3d80ed87f2dbaab717a6fb303222c1c6ad2fdfbe0c5d7f2",
