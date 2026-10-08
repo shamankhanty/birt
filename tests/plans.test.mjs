@@ -34,6 +34,6 @@ test("ELMK planned organizations have unique OIDs", () => {
   assert.equal(new Set(rows.map(row => row.oid)).size, 74);
   const gp18 = rows.find(row => row.name === "ГОРОДСКАЯ ПОЛИКЛИНИКА №18 г. Казань");
   assert.equal(gp18?.oid, "1.2.643.5.1.13.13.12.2.16.1080");
-  assert.equal(gp18?.count, 19);
+  assert.equal(gp18?.count, 79);
   assert.equal(gp18?.fact, 100);
 });
