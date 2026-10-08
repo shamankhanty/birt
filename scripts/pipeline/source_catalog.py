@@ -46,7 +46,10 @@ def parse_dates(text:str):
     for d,m,y in re.findall(r'(?<!\d)(\d{1,2})[._-](\d{1,2})[._-](20\d{2})(?!\d)',text):
         try: out.append(date(int(y),int(m),int(d)))
         except ValueError: pass
-    for d,m,y2 in re.findall(r'(?<!\d)(\d{1,2})[._-](\d{1,2})[._-](\d{2})(?!\d)',text):
+    # Do not treat the end-day in a compact range such as ``01.09-30.09``
+    # as a two-digit year (2030).  A real abbreviated year may be followed
+    # by a range separator or the end of the token, but never by ``.MM``.
+    for d,m,y2 in re.findall(r'(?<!\d)(\d{1,2})[._-](\d{1,2})[.](\d{2})(?![.\d])',text):
         try: out.append(date(2000+int(y2),int(m),int(d)))
         except ValueError: pass
     return out
@@ -61,10 +64,13 @@ def month_hint(text:str,year=2026):
     return date(y,hits[-1],calendar.monthrange(y,hits[-1])[1])
 
 def infer_end(path:Path):
-    short=short_range_end(path.name)
-    if short:return short
+    # Full dates, including two-digit years, take precedence over the compact
+    # range matcher.  Otherwise ``01.01.26-06.10.26`` is incorrectly read as
+    # a range ending on 06.01.2027.
     ds=parse_dates(path.name)
     if ds:return max(ds)
+    short=short_range_end(path.name)
+    if short:return short
     # Cumulative ranges without a year, e.g. 01.01.-17.09.
     # Use the baseline year; do not borrow a date from another source file.
     ranges=re.findall(r'(?<!\d)(\d{1,2})[._](\d{1,2})[._]?\s*[-–]\s*(\d{1,2})[._](\d{1,2})[.]?(?![_-]?\d)',path.name)
@@ -91,7 +97,8 @@ def classify(path:Path,cfg=None):
     cfg=cfg or load_config(); hits=[]
     for fam in cfg['families']:
         if any(re.search(p,path.name,re.I) for p in fam['patterns']): hits.append(fam)
-    end=infer_end(path); integ=integrity(path)
+    filename_end=infer_end(path)
+    end=filename_end; integ=integrity(path)
     structure={}
     if path.exists() and path.suffix.lower()=='.xlsx' and integ=='PASS':
         try:
@@ -106,6 +113,15 @@ def classify(path:Path,cfg=None):
             hits=structural
         if structure.get('endDate'): end=date.fromisoformat(structure['endDate'])
     start=structure.get('startDate')
+    # Physician reports carry their reporting cut in the filename, while the
+    # workbook's formation date is usually one day later.  The latter must not
+    # turn the complete September file into an October snapshot.
+    if structure.get('family') == 'physicians' and filename_end:
+        end=filename_end
+        range_start=re.search(r'(?<!\d)(\d{1,2})[._](\d{1,2})(?:[._](?:20)?\d{2})?\s*[-–]',path.name)
+        if range_start:
+            day,month=map(int,range_start.groups())
+            start=date(end.year,month,day).isoformat()
     if not start:
         match=re.search(r'(?<!\d)(\d{2})[._](\d{2})[.]?(?:20\d{2})?\s*[-–]',path.name)
         if match and end:

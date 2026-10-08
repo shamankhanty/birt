@@ -21,17 +21,17 @@ test("MAX UI uses the approved target registry and keeps TMK and ELN independent
   assert.match(page, /Сортировка задана по степени невыполнения плана/u);
   assert.match(page, /\(a\.achievement \?\? -1\) - \(b\.achievement \?\? -1\)/u);
 
-  assert.equal(countTotal("tmkMaxCount"), 58_236);
+  assert.equal(countTotal("tmkMaxCount"), 60_015);
   // One source row is explicitly "Неизвестная МО" and is not part of the
   // resolved plan perimeter shown by the UI.
   assert.match(page, /calculatedIndicatorById\[maxDashboardMetric\]/u);
-  assert.equal(countTotal("elnMaxCount"), 43_318);
+  assert.equal(countTotal("elnMaxCount"), 45_937);
   assert.equal(targets.republic.tmk["2026-09"], 145_000);
   assert.equal(targets.republic.eln["2026-09"], 74_000);
-  assert.equal(Number((58_236 / 145_000 * 100).toFixed(2)), 40.16);
-  assert.equal(Number((43_318 / 74_000 * 100).toFixed(2)), 58.54);
-  assert.equal(145_000 - 58_236, 86_764);
-  assert.equal(74_000 - 43_318, 30_682);
+  assert.equal(Number((60_015 / 145_000 * 100).toFixed(2)), 41.39);
+  assert.equal(Number((45_937 / 74_000 * 100).toFixed(2)), 62.08);
+  assert.equal(145_000 - 60_015, 84_985);
+  assert.equal(74_000 - 45_937, 28_063);
   assert.match(page, /maxDashboardRows/u);
   assert.match(page, /Number\.POSITIVE_INFINITY/u);
   assert.match(page, /От наибольшего риска к выполнению/u);
@@ -57,9 +57,9 @@ test("every 500+ category exposes the closed month beside numerator-derived oper
   const currentDentist = weekly.summary.doctor500_dentist;
   const previousDentist = weekly.previousSummary.doctor500_dentist;
   assert.deepEqual([monthlyDentist.numerator, monthlyDentist.denominator], [121, 653]);
-  assert.deepEqual([previousDentist.numerator, previousDentist.denominator], [41, 653]);
-  assert.deepEqual([currentDentist.numerator, currentDentist.denominator], [121, 653]);
+  assert.deepEqual([previousDentist.numerator, previousDentist.denominator], [121, 653]);
+  assert.deepEqual([currentDentist.numerator, currentDentist.denominator], [3, 653]);
   assert.equal(Number(monthlyDentist.fact.toFixed(2)), 18.53);
-  assert.equal(Number(previousDentist.fact.toFixed(2)), 6.28);
-  assert.equal(Number(currentDentist.fact.toFixed(2)), 18.53);
+  assert.equal(Number(previousDentist.fact.toFixed(2)), 18.53);
+  assert.equal(Number(currentDentist.fact.toFixed(2)), 0.46);
 });
