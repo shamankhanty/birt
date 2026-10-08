@@ -185,7 +185,8 @@ jobs:
           path: _site
 
   deploy:
-    if: github.event_name == 'workflow_dispatch'
+    # PRs validate the artifact only; the approved main branch is published.
+    if: github.event_name != 'pull_request'
     needs: build
     runs-on: ubuntu-latest
     environment:
