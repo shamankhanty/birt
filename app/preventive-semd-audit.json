@@ -1234,9 +1234,9 @@
       "selected": 0,
       "selectedType": "122",
       "foms": 811,
-      "share": 0.0,
+      "share": 0,
       "oldShare": 0,
-      "change": 0.0,
+      "change": 0,
       "issues": []
     },
     {
@@ -1262,9 +1262,9 @@
       "selected": 0,
       "selectedType": "122",
       "foms": 1392,
-      "share": 0.0,
+      "share": 0,
       "oldShare": 0,
-      "change": 0.0,
+      "change": 0,
       "issues": []
     },
     {
@@ -1304,7 +1304,7 @@
       "selected": 0,
       "selectedType": "122",
       "foms": 4675,
-      "share": 0.0,
+      "share": 0,
       "oldShare": 0.02139495079161318,
       "change": -0.02139495079161318,
       "issues": []
@@ -1346,7 +1346,7 @@
       "selected": 0,
       "selectedType": "122",
       "foms": 1,
-      "share": 0.0,
+      "share": 0,
       "oldShare": null,
       "change": null,
       "issues": []
@@ -1365,5 +1365,6 @@
       "change": 1.4727893754706116,
       "issues": []
     }
-  ]
+  ],
+  "excluded": []
 }
