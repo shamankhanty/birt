@@ -47,7 +47,7 @@ jobs:
           changed="$(git diff --name-only HEAD^ HEAD)"
           printf '%s\n' "$changed"
 
-          if printf '%s\n' "$changed" | grep -Eq '^(app/.*\.(ts|tsx|css)|config/(indicator-registry|max-targets-2026)\.json|lib/|offline/|package(-lock)?\.json|scripts/build-offline\.mjs|scripts/build-verified\.sh|scripts/sites-env\.sh|scripts/validate-artifact\.sh|tests/rendered-html\.test\.mjs)'; then
+          if printf '%s\n' "$changed" | grep -Eq '^(app/.*\.(ts|tsx|css)|config/(indicator-registry|max-targets-2026|mo-reorganizations)\.json|lib/|offline/|package(-lock)?\.json|scripts/build-offline\.mjs|scripts/build-reorganizations\.mjs|scripts/build-verified\.sh|scripts/sites-env\.sh|scripts/validate-artifact\.sh|tests/rendered-html\.test\.mjs)'; then
             echo "code=true" >> "$GITHUB_OUTPUT"
           else
             echo "code=false" >> "$GITHUB_OUTPUT"
@@ -150,12 +150,15 @@ jobs:
           rm -rf _site
           mkdir -p _site
           OFFLINE_OUTPUT_DIR=_site OFFLINE_BASENAME=index node scripts/build-offline.mjs
+          node scripts/build-reorganizations.mjs _site/reorganizations/index.html
           rm -f _site/index.zip
           touch _site/.nojekyll
 
       - name: Verify Pages artifact
         run: |
           test -s _site/index.html
+          test -s _site/reorganizations/index.html
+          grep -Fq 'Реестр реорганизаций МО' _site/reorganizations/index.html
           VERSION="$(python3 -c 'import json; print(json.load(open("baseline/manifest.json", encoding="utf-8"))["baselineVersion"])')"
           grep -Fq "$VERSION" _site/index.html
           grep -q 'hearingMetricGroup' _site/index.html
