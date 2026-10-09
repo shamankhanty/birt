@@ -1,0 +1,28 @@
+{
+  "schemaVersion": 1,
+  "updatedAt": "2026-10-09",
+  "groups": [
+    {
+      "id": "almetyevsk-crb-2026-10",
+      "name": "Альметьевская ЦРБ (после реорганизации)",
+      "effectiveDate": "2026-10-01",
+      "status": "verification_pending",
+      "statusLabel": "Реорганизация подтверждена письмом, идентификаторы ФРМО/ФРМР проверяются",
+      "historicalPolicy": "Периоды до 01.10.2026 сохраняются за прежними МО и OID; факты, рейтинги и ответственность не переписываются.",
+      "analyticsPolicy": "Сумма предшественников допустима только как аналитическая агрегация после подтверждения всех связок. Она не является исходным фактом и не используется для динамики, рейтинга или ответственности.",
+      "document": {
+        "title": "Письмо ГАУЗ «Альметьевская центральная районная больница» заместителю министра здравоохранения Республики Татарстан А.А. Ефремову",
+        "basis": "Постановление Кабинета Министров Республики Татарстан от 29.05.2026 №751 «О реорганизации государственных автономных учреждений здравоохранения»",
+        "effectiveDate": "2026-10-01",
+        "status": "confirmed"
+      },
+      "predecessors": [
+        {"name":"Альметьевская городская поликлиника №3","oldOid":"1.2.643.5.1.13.13.12.2.16.1107","successorOid":null,"frmoStatus":"pending","frmrStatus":"pending","sourceStatus":"pending"},
+        {"name":"Альметьевская детская районная больница с перинатальным центром","oldOid":"1.2.643.5.1.13.13.12.2.16.1146","successorOid":null,"frmoStatus":"pending","frmrStatus":"pending","sourceStatus":"pending"},
+        {"name":"Альметьевская стоматологическая поликлиника","oldOid":"1.2.643.5.1.13.13.12.2.16.1100","successorOid":null,"frmoStatus":"pending","frmrStatus":"pending","sourceStatus":"pending"},
+        {"name":"Альметьевская станция скорой медицинской помощи","oldOid":"1.2.643.5.1.13.13.12.2.16.1057","successorOid":null,"frmoStatus":"pending","frmrStatus":"pending","sourceStatus":"pending"},
+        {"name":"Альметьевский центр общественного здоровья и медицинской профилактики","oldOid":"1.2.643.5.1.13.13.12.2.16.1128","successorOid":null,"frmoStatus":"pending","frmrStatus":"pending","sourceStatus":"pending"}
+      ]
+    }
+  ]
+}
