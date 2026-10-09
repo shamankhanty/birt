@@ -7,7 +7,7 @@ import crypto from "node:crypto";
 import { spawnSync } from "node:child_process";
 
 const sha = (file) => crypto.createHash("sha256").update(fs.readFileSync(file)).digest("hex");
-const copyTree = (from, to) => { fs.mkdirSync(to, { recursive: true }); for (const name of fs.readdirSync(from)) fs.copyFileSync(path.join(from, name), path.join(to, name)); };
+const copyTree = (from, to) => fs.cpSync(from, to, { recursive: true });
 
 test("promotion advances current snapshot while historical baseline remains byte-identical", () => {
   const temp = fs.mkdtempSync(path.join(os.tmpdir(), "current-production-promotion-"));
