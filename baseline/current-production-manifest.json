@@ -1,8 +1,8 @@
 {
   "schemaVersion": 1,
   "kind": "current-production",
-  "promotedFrom": "/workspace/scratch/12db41845f49/birt/.promotion-approved-20261008/candidate/app",
-  "promotedAt": "2026-10-08T15:13:00.255Z",
+  "promotedFrom": "/tmp/birt-hospital-promotion-FvJv9n/promotion/candidate/app",
+  "promotedAt": "2026-10-10T13:52:44.403Z",
   "files": {
     "app/electronic-waybill-weekly.json": "2cadce1e15a2cdee355e24f03976251ae542945661129d28064abfb8418f2a6b",
     "app/electronic-waybill.json": "d682decfa448f6fd17c8df1fdcf088b105cff03080daf029849a4d039c638dbc",
@@ -12,9 +12,9 @@
     "app/hearing-snapshots.json": "4e6f494e413e2003e6d24c7492e79cbcd67837f31ba01565a5c2fac42a8b5871",
     "app/max-appointments-municipal.json": "69f690e62514706254d6f5b08cd694ae91bae6349eb14e653d47bcde89f63c17",
     "app/max-monthly-visits.json": "4ccd792fbc854b92ec7b5161e2e6e00ab68c3c5f14a06278e4332f63f522b31a",
-    "app/mo-data.json": "9c2884322f0d8d512aae1b58fc8e9ca5c7ae56933be6f981a1b50e3bbb0ebf63",
-    "app/mo-detail-oids.json": "6f0cf05240d22abfeeeabd21eb9b0ce7d8034e70d0f14411e161a2faf833a4eb",
-    "app/mo-details.json": "e60060d370b994a83576f6ec1d7531fa624ddf8a75e9d452808a2bc680cc8890",
+    "app/mo-data.json": "86301492829fd655a1c6bbf7fb90ce2a994c95bac3a538e0f91b13207978b1b2",
+    "app/mo-detail-oids.json": "c906c382b052ff6f98b391f65ae0a14c6615b910bfaccd6646e06bd8622a897a",
+    "app/mo-details.json": "d27561647210c855a9348f834219507cdaeaa2135b2dff8ce4b12aff2bb6318e",
     "app/mo-registry.json": "62202e489fced8a93c40867f04f5b3a021030cf4da1b0d0da6ce3a8cff088ea3",
     "app/monthly-mo.json": "e8a36070fd4890b1300bdd2f0b2289071cbc9c65e18d0036fed31c4c2391690c",
     "app/operational-mo.json": "640301d49d81ff2be14c1b42b328b6abf817ead7fa70a8250984c6a8a9e97ec2",
@@ -24,12 +24,12 @@
     "app/preventive-semd-audit.json": "56b6aee1d0008dd11df00974d663eb53faca5c16c3fd5647240c3ea903bad59b",
     "app/semd-summary.json": "ad1d01c48462820d6fb457f5e5a63919628b83da185eed76abd1b32fe04aea57",
     "app/unit-data.json": "89da877450c93abc3bd04c64062b6b72f2a2f20182cf077363b333126579452f",
-    "baseline/calculation-runtime-snapshot.json": "19a58a35908157a9a21733b26ad8fe5eabf5e64d49029edc2688410ca9b9050f",
-    "baseline/validation-snapshot.json": "f3764caad7556a66154c3c16b6090bebdef6173f29e9007b4a19c188b40a3d94",
+    "baseline/calculation-runtime-snapshot.json": "780ec65ccddfeb4f5ef35365951408df91ed120fee289d53c330073984c8cf89",
+    "baseline/validation-snapshot.json": "f04d028cd0fc0fb045841b06bd8918c012e5ffda37bde898860d49034d1ff4f0",
     "baseline/indicator-metadata-snapshot.json": "e35d166a46e0a7b703de313dfc8eabac3cc75d9777974a395a4ef8b447d0d3c2",
-    "validation/calculation-equivalence.json": "1706cfb3d719cd90cb1e29e6509fabd360ccc7c41d6130ccaf5b87b19ee9bbfc",
+    "validation/calculation-equivalence.json": "10e8c47a7f3f406e44fad4d8c5c78e241d19e8936d7cfc6d13d12591df320f63",
     "validation/indicator-metadata-equivalence.json": "fd6df447f8dbe3aeffad2979f7f53337d0abee50b0e6f18382940f88c9148b44",
-    "validation/validation-report.json": "fb74c93703f5d1411e7a03ce389f2c67e832f3c3b212347d64166c0838ed33f3",
-    "validation/ai-review.json": "a957b850cdcd3e61ccb5b07a7210e3ddea6ec0fb1a13ce58516687f50a40242b"
+    "validation/validation-report.json": "a843d77030ca63115dc43714f12b730d779f446b83e82c50995dccd6904acca7",
+    "validation/ai-review.json": "edbf13bc25f0bfc57209866815b55caee12e8d64f6291b851d495791355d4b04"
   }
 }

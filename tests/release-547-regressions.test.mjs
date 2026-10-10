@@ -23,7 +23,7 @@ test("cumulative ratios use the previous numerator and denominator pair", () => 
   assert.equal(Number((mo.semd228.numerator / mo.semd228.denominator * 100).toFixed(2)), 80.16);
   assert.equal(Number((mo.semd228.previousNumerator / mo.semd228.previousDenominator * 100).toFixed(2)), 79.58);
   assert.equal(Number((mo.ambulatoryCase.numerator / mo.ambulatoryCase.denominator * 100).toFixed(2)), 90.51);
-  assert.deepEqual([mo.hospital.numerator, mo.hospital.denominator], [632330, 742328]);
+  assert.deepEqual([mo.hospital.numerator, mo.hospital.denominator], [655826, 751797]);
   assert.match(page, /componentPreviousFact/u);
 });
 

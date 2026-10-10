@@ -334,7 +334,7 @@ def adapt_egpu(app: Path, source: Path, end: date, only_metric=None) -> AdapterR
 def parse_hospital_cases(path: Path) -> list[dict]:
     """Self-contained hospital export: D denominator, E+F numerator."""
     wb = open_workbook(path, read_only=True, data_only=True)
-    ws = _sheet(wb, ["Лист3", "2"])
+    ws = _sheet(wb, ["Лист3", "2", "v2"])
     out = []
     for r in ws.iter_rows(min_row=6, values_only=True):
         if len(r) < 6 or not r[1] or not r[2] or is_total(r[1]):
