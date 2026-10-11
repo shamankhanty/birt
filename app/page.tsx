@@ -531,6 +531,10 @@ type MoRow = {
   fact: number;
   previous: number | null;
   trend: number | null;
+  /** Изменение места среди МО с двумя сопоставимыми срезами: + — выше. */
+  rankChange?: number | null;
+  currentRank?: number | null;
+  previousRank?: number | null;
   count?: number | null;
   volume?: number | null;
   oid?: string;
@@ -5091,7 +5095,6 @@ export default function Home() {
       );
     })
     .slice(0, 10);
-  const displayedLeaders = leaders;
   const attentionRows = evaluableManagementRows
     .filter((r) => !excludedFromAttention(r.name))
     .map((row) =>
@@ -5150,18 +5153,56 @@ export default function Home() {
             .filter((r) => r.fact < (selectedDataset.plan ?? 0))
             .sort((a, b) => a.fact - b.fact)
             .slice(0, 10));
-  const deterioration = [...attentionRows]
-    .filter(
-      (r) =>
-        r.trend !== null &&
-        (lowerIsBetter ? (r.trend ?? 0) > 0 : (r.trend ?? 0) < 0),
-    )
-    .sort((a, b) =>
-      lowerIsBetter
-        ? (b.trend ?? 0) - (a.trend ?? 0)
-        : (a.trend ?? 0) - (b.trend ?? 0),
-    )
-    .slice(0, 10);
+  // Место сравниваем только между МО, у которых есть оба сопоставимых среза.
+  // Так новая строка, реорганизация или отсутствие выгрузки не создают фиктивного
+  // «роста» либо «падения» в списке лучших и требующих внимания.
+  const comparableRankRows = evaluableManagementRows.filter(
+    (row) => row.previous !== null && row.trend !== null,
+  );
+  const sortForRank = (left: MoRow, right: MoRow, field: "fact" | "previous") => {
+    const leftValue = left[field] ?? 0;
+    const rightValue = right[field] ?? 0;
+    const primary = lowerIsBetter
+      ? leftValue - rightValue
+      : rightValue - leftValue;
+    return primary || cleanMoName(left.name).localeCompare(cleanMoName(right.name), "ru");
+  };
+  const currentRankByMo = new Map(
+    [...comparableRankRows]
+      .sort((left, right) => sortForRank(left, right, "fact"))
+      .map((row, index) => [moKey(row.name), index + 1]),
+  );
+  const previousRankByMo = new Map(
+    [...comparableRankRows]
+      .sort((left, right) => sortForRank(left, right, "previous"))
+      .map((row, index) => [moKey(row.name), index + 1]),
+  );
+  const withRankChange = (row: MoRow): MoRow => {
+    const key = moKey(row.name);
+    const currentRank = currentRankByMo.get(key) ?? null;
+    const previousRank = previousRankByMo.get(key) ?? null;
+    return {
+      ...row,
+      currentRank,
+      previousRank,
+      rankChange:
+        currentRank === null || previousRank === null
+          ? null
+          : previousRank - currentRank,
+    };
+  };
+  const comparableLeaders = leaders.map(withRankChange);
+  const comparableLaggards = laggards.map(withRankChange);
+  const rankImproved = comparableRankRows
+    .map(withRankChange)
+    .filter((row) => (row.rankChange ?? 0) > 0)
+    .sort((left, right) => (right.rankChange ?? 0) - (left.rankChange ?? 0))
+    .slice(0, 5);
+  const rankWorsened = comparableRankRows
+    .map(withRankChange)
+    .filter((row) => (row.rankChange ?? 0) < 0)
+    .sort((left, right) => (left.rankChange ?? 0) - (right.rankChange ?? 0))
+    .slice(0, 5);
   const visibleSemd = semdSummary.items
     .filter((i) => !semdOnlyRegistered || i.count > 0)
     .filter((i) => i.name.toLowerCase().includes(semdQuery.toLowerCase()))
@@ -9405,12 +9446,13 @@ export default function Home() {
                               ? "выполнившие план — по объёму; остальные — по проценту"
                               : "10 медицинских организаций"
                           }
-                          rows={displayedLeaders}
+                          rows={comparableLeaders}
                           plan={selectedDataset.plan ?? 0}
                           tone="good"
                           countMode={isCountMetric}
                           lowerIsBetter={lowerIsBetter}
                           gapMode={componentRanking}
+                          showRankChange={!componentRanking}
                         />
                         <RankingBlock
                           metric={matrixMetric}
@@ -9426,27 +9468,21 @@ export default function Home() {
                               ? "по количеству, недостающему до плана"
                               : "10 медицинских организаций"
                           }
-                          rows={laggards}
+                          rows={comparableLaggards}
                           plan={selectedDataset.plan ?? 0}
                           tone="bad"
                           countMode={isCountMetric}
                           lowerIsBetter={lowerIsBetter}
                           gapMode={componentRanking}
+                          showRankChange={!componentRanking}
                         />
-                        <RankingBlock
+                        <RankMovementBlock
                           metric={matrixMetric}
-                          title={
-                            lowerIsBetter
-                              ? "Наибольший рост — ухудшение"
-                              : "Наибольшее снижение"
-                          }
-                          subtitle={`Выгрузка ${previousSnapshot} → ${currentSnapshot}`}
-                          rows={deterioration}
-                          plan={selectedDataset.plan ?? 0}
-                          tone="warn"
-                          showTrend
-                          countMode={isCountMetric}
-                          lowerIsBetter={lowerIsBetter}
+                          previousSnapshot={previousSnapshot}
+                          currentSnapshot={currentSnapshot}
+                          improved={rankImproved}
+                          worsened={rankWorsened}
+                          comparableCount={comparableRankRows.length}
                         />
                       </div>
                       {selectedGuidance && (
@@ -11542,6 +11578,64 @@ function sortMarkStatic(active: boolean, direction: SortDirection) {
   return active ? (direction === "asc" ? "↑" : "↓") : "↕";
 }
 
+function RankMovementBlock({
+  metric,
+  previousSnapshot,
+  currentSnapshot,
+  improved,
+  worsened,
+  comparableCount,
+}: {
+  metric: string;
+  previousSnapshot: string;
+  currentSnapshot: string;
+  improved: MoRow[];
+  worsened: MoRow[];
+  comparableCount: number;
+}) {
+  const renderRow = (row: MoRow, index: number, tone: "up" | "down") => {
+    const displayName = reportMoName(metric, row.name);
+    const places = Math.abs(row.rankChange ?? 0);
+    return (
+      <div key={`${tone}-${row.name}`}>
+        <span className="miniRank">{index + 1}</span>
+        <p title={displayName}>{displayName}</p>
+        <b className={tone === "up" ? "rankUp" : "rankDown"}>
+          {tone === "up" ? "↑" : "↓"} {places} мест
+        </b>
+        <strong>
+          {row.previousRank} → {row.currentRank}
+        </strong>
+      </div>
+    );
+  };
+  return (
+    <article className="rankingBlock movementBlock warn">
+      <div className="rankingTitle">
+        <div>
+          <h3>Динамика мест</h3>
+          <span>срез {previousSnapshot} → {currentSnapshot}</span>
+        </div>
+        <b>{comparableCount}</b>
+      </div>
+      {comparableCount === 0 ? (
+        <p className="emptyRanking">Нет сопоставимых строк МО для расчёта места</p>
+      ) : (
+        <div className="movementRows">
+          <section>
+            <header><b>Стали выше</b><small>наибольший подъём</small></header>
+            {improved.length ? improved.map((row, index) => renderRow(row, index, "up")) : <p>Перемещений вверх нет</p>}
+          </section>
+          <section>
+            <header><b>Стали ниже</b><small>наибольшее падение</small></header>
+            {worsened.length ? worsened.map((row, index) => renderRow(row, index, "down")) : <p>Перемещений вниз нет</p>}
+          </section>
+        </div>
+      )}
+    </article>
+  );
+}
+
 function RankingBlock({
   metric,
   title,
@@ -11553,6 +11647,7 @@ function RankingBlock({
   countMode = false,
   lowerIsBetter = false,
   gapMode = false,
+  showRankChange = false,
   emptyText = "Нет данных для сравнения периодов",
 }: {
   metric?: string;
@@ -11565,6 +11660,7 @@ function RankingBlock({
   countMode?: boolean;
   lowerIsBetter?: boolean;
   gapMode?: boolean;
+  showRankChange?: boolean;
   emptyText?: string;
 }) {
   const max = Math.max(...rows.map((r) => r.fact), 1);
@@ -11612,6 +11708,11 @@ function RankingBlock({
                     {gap !== null && gap > 0 && (
                       <small>не хватает {format(gap, 0)}</small>
                     )}
+                    {showRankChange && r.rankChange !== null && r.rankChange !== undefined && (
+                      <small className={r.rankChange > 0 ? "rankUp" : r.rankChange < 0 ? "rankDown" : "rankStable"}>
+                        {r.rankChange > 0 ? "↑" : r.rankChange < 0 ? "↓" : "→"} {Math.abs(r.rankChange)} мест
+                      </small>
+                    )}
                   </b>
                 ) : showTrend ? (
                   <b
@@ -11644,6 +11745,11 @@ function RankingBlock({
                     {showTrend && r.trend !== null
                       ? `${r.trend > 0 ? "↑" : r.trend < 0 ? "↓" : "→"} ${format(Math.abs(r.trend), countMode ? 0 : 2)}${countMode ? "" : " п.п."}`
                       : `${format(r.fact, countMode ? 0 : 2)}${countMode ? "" : "%"}`}
+                    {showRankChange && r.rankChange !== null && r.rankChange !== undefined && (
+                      <small className={r.rankChange > 0 ? "rankUp" : r.rankChange < 0 ? "rankDown" : "rankStable"}>
+                        {r.rankChange > 0 ? "↑" : r.rankChange < 0 ? "↓" : "→"} {Math.abs(r.rankChange)} мест
+                      </small>
+                    )}
                   </strong>
                 )}
               </div>
