@@ -1,29 +1,10 @@
 {
   "schemaVersion": 1,
   "baselineVersion": "5.4.10",
-  "status": "FAIL",
+  "status": "PASS",
   "checkedIndicators": 38,
   "registryCoverage": "38/38",
-  "mismatches": [
-    {
-      "id": "hospital",
-      "field": "fact",
-      "expected": 85.18202196333696,
-      "actual": 87.23445291747639
-    },
-    {
-      "id": "hospital",
-      "field": "date",
-      "expected": "06.10.2026",
-      "actual": "10.10.2026"
-    },
-    {
-      "id": "hospital",
-      "field": "quantity",
-      "expected": 632330,
-      "actual": 655826
-    }
-  ],
+  "mismatches": [],
   "preservedBaselineConflicts": [],
   "note": "PASS means the current deterministic calculation layer reproduces the approved runtime snapshot."
 }

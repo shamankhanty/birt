@@ -756,7 +756,7 @@ def adapt_physicians(app: Path, source: Path, end: date, registry_path: Path, on
             weekly["previousSummary"] = weekly.get("summary", {})
         weekly.update({"source": source.name, "date": new_date, "period": period_cumulative(end), "datasets": current, "summary": facts})
         save(app, "physician-weekly-snapshot.json", weekly)
-        return AdapterResult("physician_weekly_snapshot", ["physicians"], "PASS", ["physician-weekly-snapshot.json"], [source.name], facts, ["Неполный сентябрь сохранён только для недельного контроля; рейтинг и полный август не изменены."], [])
+        return AdapterResult("physician_weekly_snapshot", ["physicians"], "PASS", ["physician-weekly-snapshot.json"], [source.name], facts, ["Неполный текущий месяц сохранён только для оперативного контроля; рейтинг и последний полный месяц не изменены."], [])
 
     phys,monthly=(load(app,x) for x in ["physician-metrics.json","monthly-mo.json"]); current=parse_physicians(source,registry_path,only_metric); facts={}
     for metric,cur in current.items():
