@@ -1,5 +1,5 @@
 """Workbook signatures and reporting periods, independent of filenames."""
-from datetime import date, datetime
+from datetime import date, datetime, timedelta
 import re
 import openpyxl
 
@@ -70,7 +70,9 @@ def inspect_workbook(path):
             if len(bounds) >= 2: periods.append((min(bounds), max(bounds)))
         if family == 'physicians':
             formed = [v.date() for row in rows if 'Дата формирования' in str(row[0]) for v in row if isinstance(v, datetime)]
-            if formed: periods.append((formed[0].replace(day=1), formed[0]))
+            if formed:
+                cut = formed[0] - timedelta(days=1)
+                periods.append((cut.replace(day=1), cut))
         if family in ('tvsp_ambulatory', 'tvsp_stationary', 'tvsp_laboratory'):
             # BI TVSP exports encode the reporting window as year + month range
             # (e.g. "Январь-Сентябрь") and the actual cut date as generation date.

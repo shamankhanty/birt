@@ -6,14 +6,14 @@ const weekly = JSON.parse(fs.readFileSync("app/physician-weekly-snapshot.json", 
 const mo = JSON.parse(fs.readFileSync("app/mo-data.json", "utf8"));
 const page = fs.readFileSync("app/page.tsx", "utf8");
 
-test("500+ keeps August rating and exposes the October operational delta", () => {
-  const august = JSON.parse(fs.readFileSync("app/physician-metrics.json", "utf8")).datasets.doctor500_pediatrician.summary;
+test("500+ keeps September rating and exposes the October operational delta", () => {
+  const september = JSON.parse(fs.readFileSync("app/physician-metrics.json", "utf8")).datasets.doctor500_pediatrician.summary;
   const current = weekly.summary.doctor500_pediatrician;
   const previous = weekly.previousSummary.doctor500_pediatrician;
-  assert.equal(august.fact, 58.90613451589062);
-  assert.deepEqual([current.numerator, current.denominator], [121, 1357]);
-  assert.deepEqual([previous.numerator, previous.denominator], [797, 1353]);
-  assert.equal(Number((current.fact - previous.fact).toFixed(2)), -49.99);
+  assert.equal(september.fact, 58.90613451589062);
+  assert.deepEqual([current.numerator, current.denominator], [301, 1324]);
+  assert.deepEqual([previous.numerator, previous.denominator], [121, 1357]);
+  assert.equal(Number((current.fact - previous.fact).toFixed(2)), 13.82);
   assert.match(page, /physicianWeeklySnapshot\.previousSummary/u);
   assert.match(page, /dynamicsMode === "month"/u);
 });
