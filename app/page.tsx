@@ -717,9 +717,14 @@ function displayMoName(name: string, oid?: string | null) {
   if (!organization) return cleanMoName(name);
   const compact = compactMoDisplayName(organization.shortName);
   if ((compactMoNameCounts.get(compact) ?? 0) < 2) return compact;
-  const city = organization.district === "Набережные Челны" ? "Наб. Челны" : organization.district;
+  const city = /^Набережные Челны$/iu.test(organization.district ?? "") ? "Наб. Челны" : organization.district;
   return city ? `${compact}, ${city}` : compact;
 }
+function displayReportMoName(metric: string, row: MoRow) {
+  const organization = registryOrganizationForMetric(metric, row);
+  return displayMoName(reportMoName(metric, row.name), organization?.oid);
+}
+
 const monthlyMoData = monthlyMoRaw as Record<string, MonthlyMoDataset>;
 const maxAppointmentsMunicipal = maxAppointmentsMunicipalRaw as MaxAppointmentMunicipalData;
 const maxTargets = maxTargetsRaw as {
@@ -4436,7 +4441,7 @@ export default function Home() {
     const value = (row: MoRow) => {
       const detail = getMoDetail(matrixMetric, row);
       if (moSortKey === "name")
-        return cleanMoName(row.name).toLocaleLowerCase("ru");
+        return displayReportMoName(matrixMetric, row).toLocaleLowerCase("ru");
       if (moSortKey === "quantity")
         return row.count ?? detail?.registered ?? -1;
       if (moSortKey === "previous") return row.previous ?? -Infinity;
@@ -4462,7 +4467,7 @@ export default function Home() {
           : Number(av) - Number(bv);
       return (
         (moSortDirection === "asc" ? compared : -compared) ||
-        cleanMoName(a.name).localeCompare(cleanMoName(b.name), "ru")
+        displayReportMoName(matrixMetric, a).localeCompare(displayReportMoName(matrixMetric, b), "ru")
       );
     });
   }, [
@@ -9909,7 +9914,7 @@ export default function Home() {
                                   </td>
                                   <td>
                                     <strong>
-                                      {reportMoName(matrixMetric, o.name)}
+                                      {displayReportMoName(matrixMetric, o)}
                                     </strong>
                                     <small>
                                       {o.sourceWarning ??
@@ -11674,7 +11679,7 @@ function RankMovementBlock({
   comparableCount: number;
 }) {
   const renderRow = (row: MoRow, index: number, tone: "up" | "down") => {
-    const displayName = reportMoName(metric, row.name);
+    const displayName = displayReportMoName(metric, row);
     const places = Math.abs(row.rankChange ?? 0);
     return (
       <div className="movementRow" key={`${tone}-${row.name}`}>
@@ -11766,7 +11771,7 @@ function RankingBlock({
         ) : (
           rows.map((r, i) => {
             const displayName = metric
-              ? reportMoName(metric, r.name)
+              ? displayReportMoName(metric, r)
               : displayMoName(r.name, r.oid);
             const target =
               r.volume === null || r.volume === undefined
