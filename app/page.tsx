@@ -4499,6 +4499,33 @@ export default function Home() {
       ? 0
       : evaluableIndicatorRows.filter((r) => r.fact >= selectedDataset.plan!)
           .length;
+  const comparablePlanStatusRows = evaluableIndicatorRows.filter(
+    (row) => row.previous !== null && row.previous !== undefined,
+  );
+  const hasPlanStatusComparison =
+    comparablePlanStatusRows.length > 0 &&
+    (isPresenceMetric || selectedDataset.plan !== null);
+  const currentAchievedComparable = hasPlanStatusComparison
+    ? comparablePlanStatusRows.filter((row) =>
+        isPresenceMetric
+          ? row.fact > 0
+          : row.fact >= selectedDataset.plan!,
+      ).length
+    : 0;
+  const previousAchievedComparable = hasPlanStatusComparison
+    ? comparablePlanStatusRows.filter((row) =>
+        isPresenceMetric
+          ? Number(row.previous) > 0
+          : Number(row.previous) >= selectedDataset.plan!,
+      ).length
+    : 0;
+  const achievedMosChange = hasPlanStatusComparison
+    ? currentAchievedComparable - previousAchievedComparable
+    : null;
+  const notAchievedMosChange = hasPlanStatusComparison
+    ? (comparablePlanStatusRows.length - currentAchievedComparable) -
+      (comparablePlanStatusRows.length - previousAchievedComparable)
+    : null;
   const improvedMos = indicatorRows.filter(
     (r) => r.trend !== null && (lowerIsBetter ? r.trend < 0 : r.trend > 0),
   ).length;
@@ -9376,12 +9403,24 @@ export default function Home() {
                           <>
                             <article>
                               <small>Зарегистрировали СЭМД</small>
-                              <strong className="green">{achievedMos}</strong>
+                              <strong className="green">
+                                {achievedMos}
+                                {achievedMosChange !== null && (
+                                  <em className={achievedMosChange >= 0 ? "moStatChange green" : "moStatChange red"}>
+                                    ({achievedMosChange > 0 ? "+" : ""}{achievedMosChange})
+                                  </em>
+                                )}
+                              </strong>
                             </article>
                             <article>
                               <small>Не зарегистрировали ни одного</small>
                               <strong className="red">
                                 {evaluableIndicatorRows.length - achievedMos}
+                                {notAchievedMosChange !== null && (
+                                  <em className={notAchievedMosChange <= 0 ? "moStatChange green" : "moStatChange red"}>
+                                    ({notAchievedMosChange > 0 ? "+" : ""}{notAchievedMosChange})
+                                  </em>
+                                )}
                               </strong>
                             </article>
                           </>
@@ -9389,12 +9428,24 @@ export default function Home() {
                           <>
                             <article>
                               <small>Выполнили план</small>
-                              <strong className="green">{achievedMos}</strong>
+                              <strong className="green">
+                                {achievedMos}
+                                {achievedMosChange !== null && (
+                                  <em className={achievedMosChange >= 0 ? "moStatChange green" : "moStatChange red"}>
+                                    ({achievedMosChange > 0 ? "+" : ""}{achievedMosChange})
+                                  </em>
+                                )}
+                              </strong>
                             </article>
                             <article>
                               <small>Не выполнили план</small>
                               <strong className="red">
                                 {evaluableIndicatorRows.length - achievedMos}
+                                {notAchievedMosChange !== null && (
+                                  <em className={notAchievedMosChange <= 0 ? "moStatChange green" : "moStatChange red"}>
+                                    ({notAchievedMosChange > 0 ? "+" : ""}{notAchievedMosChange})
+                                  </em>
+                                )}
                               </strong>
                             </article>
                           </>
