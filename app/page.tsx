@@ -11662,28 +11662,6 @@ function RankingBlock({
   plan: number;
   tone: string;
   showTrend?: boolean;
-
-function RankingBlock({
-  metric,
-  title,
-  subtitle,
-  rows,
-  plan,
-  tone,
-  showTrend = false,
-  countMode = false,
-  lowerIsBetter = false,
-  gapMode = false,
-  showRankChange = false,
-  emptyText = "Нет данных для сравнения периодов",
-}: {
-  metric?: string;
-  title: string;
-  subtitle: string;
-  rows: MoRow[];
-  plan: number;
-  tone: string;
-  showTrend?: boolean;
   countMode?: boolean;
   lowerIsBetter?: boolean;
   gapMode?: boolean;
