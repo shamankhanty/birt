@@ -11597,15 +11597,17 @@ function RankMovementBlock({
     const displayName = reportMoName(metric, row.name);
     const places = Math.abs(row.rankChange ?? 0);
     return (
-      <div key={`${tone}-${row.name}`}>
+      <div className="movementRow" key={`${tone}-${row.name}`}>
         <span className="miniRank">{index + 1}</span>
         <p title={displayName}>{displayName}</p>
-        <b className={tone === "up" ? "rankUp" : "rankDown"}>
-          {tone === "up" ? "↑" : "↓"} {places} мест
-        </b>
-        <strong>
-          {row.previousRank} → {row.currentRank}
-        </strong>
+        <div className="movementDelta">
+          <b className={tone === "up" ? "rankUp" : "rankDown"}>
+            {tone === "up" ? "↑" : "↓"} {places} мест
+          </b>
+          <strong>
+            {row.previousRank} → {row.currentRank}
+          </strong>
+        </div>
       </div>
     );
   };
@@ -11616,18 +11618,21 @@ function RankMovementBlock({
           <h3>Динамика мест</h3>
           <span>срез {previousSnapshot} → {currentSnapshot}</span>
         </div>
-        <b>{comparableCount}</b>
+        <div className="movementCount" aria-label={`${comparableCount} сопоставимых медицинских организаций`}>
+          <b>{comparableCount}</b>
+          <span>сопоставимых МО</span>
+        </div>
       </div>
       {comparableCount === 0 ? (
         <p className="emptyRanking">Нет сопоставимых строк МО для расчёта места</p>
       ) : (
         <div className="movementRows">
           <section>
-            <header><b>Стали выше</b><small>наибольший подъём</small></header>
+            <header><b>Стали выше</b><small>Наибольший подъём в рейтинге</small></header>
             {improved.length ? improved.map((row, index) => renderRow(row, index, "up")) : <p>Перемещений вверх нет</p>}
           </section>
           <section>
-            <header><b>Стали ниже</b><small>наибольшее падение</small></header>
+            <header><b>Стали ниже</b><small>Наибольшее падение в рейтинге</small></header>
             {worsened.length ? worsened.map((row, index) => renderRow(row, index, "down")) : <p>Перемещений вниз нет</p>}
           </section>
         </div>
@@ -11635,6 +11640,28 @@ function RankMovementBlock({
     </article>
   );
 }
+
+function RankingBlock({
+  metric,
+  title,
+  subtitle,
+  rows,
+  plan,
+  tone,
+  showTrend = false,
+  countMode = false,
+  lowerIsBetter = false,
+  gapMode = false,
+  showRankChange = false,
+  emptyText = "Нет данных для сравнения периодов",
+}: {
+  metric?: string;
+  title: string;
+  subtitle: string;
+  rows: MoRow[];
+  plan: number;
+  tone: string;
+  showTrend?: boolean;
 
 function RankingBlock({
   metric,
