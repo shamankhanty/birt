@@ -57,3 +57,47 @@ test("display disambiguation does not alter physician facts or OID identity", ()
   }
   assert.match(page, /displayMoName\(row\.name, row\.oid\)/);
 });
+
+import { cleanMoName, reportMoName, createMoRegistryRuntime } from "../lib/mo-registry.js";
+
+const weekly = JSON.parse(fs.readFileSync("app/physician-weekly-snapshot.json", "utf8"));
+const runtime = createMoRegistryRuntime(registry);
+const displaySource = page.slice(
+  page.indexOf("function compactMoDisplayName("),
+  page.indexOf("const monthlyMoData ="),
+).replace("name: string, oid?: string | null", "name, oid")
+ .replace("metric: string, row: MoRow", "metric, row")
+ .replace("name: string", "name")
+ .replace("new Map<string, number>()", "new Map()");
+const displayReport = new Function(
+  "cleanMoName", "reportMoName", "moRegistry", "registryByOid", "registryOrganizationForMetric",
+  displaySource + "\nreturn displayReportMoName;",
+)(cleanMoName, reportMoName, registry, runtime.byOid, runtime.organizationForMetric);
+
+test("operational GP No. 7 rows show the correct city from their OID", () => {
+  const rows = weekly.datasets.doctor500_dentist;
+  const kazan = rows.find((row) => row.oid === "1.2.643.5.1.13.13.12.2.16.1153");
+  const chelny = rows.find((row) => row.oid === "1.2.643.5.1.13.13.12.2.16.1115");
+  assert.ok(kazan && chelny);
+  const before = JSON.stringify([kazan, chelny]);
+  assert.equal(cleanMoName(kazan.name), cleanMoName(chelny.name));
+  assert.equal(displayReport("doctor500_dentist", kazan), "ГП №7, Казань");
+  assert.equal(displayReport("doctor500_dentist", chelny), "ГП №7, Наб. Челны");
+  assert.equal(displayReport("doctor500_dentist", {...kazan, name: "ГП №7"}), "ГП №7, Казань");
+  assert.equal(displayReport("doctor500_dentist", {...chelny, name: "ГП №7"}), "ГП №7, Наб. Челны");
+  assert.equal(JSON.stringify([kazan, chelny]), before);
+});
+
+test("contextual report naming is preserved and ambiguous city-free names are not guessed", () => {
+  assert.equal(displayReport("egpu", {name: "РКБ", oid: "1.2.643.5.1.13.13.12.2.16.1094"}), "Спасская ЦРБ");
+  assert.equal(displayReport("doctor500_dentist", {name: "ГП №7"}), "ГП №7");
+  assert.equal(displayReport("doctorsAll", {name: org(ids.kazan).name, oid: ids.kazan}), "ДГП №6, Казань");
+  assert.equal(displayReport("doctorsAll", {name: org(ids.nabDgp).name, oid: ids.nabDgp}), "ДГП №6, Наб. Челны");
+});
+
+test("indicator table and ranking cards use the same OID-aware report display", () => {
+  assert.match(page, /\{displayReportMoName\(matrixMetric, o\)\}/u);
+  assert.doesNotMatch(page, /\{reportMoName\(matrixMetric, o\.name\)\}/u);
+  assert.match(page, /const displayName = displayReportMoName\(metric, row\)/u);
+  assert.match(page, /\? displayReportMoName\(metric, r\)/u);
+});
