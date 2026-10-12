@@ -80,7 +80,7 @@ type MaxAppointmentMunicipalData = {
   dimension: "municipality";
   bindingToMedicalOrganization: false;
   note: string;
-  months: Array<{ id: string; label: string; complete: boolean }>;
+  months: Array<{ id: string; label: string; complete: boolean; asOf?: string }>;
   totals: Record<string, number>;
   grandTotal: number;
   rows: Array<{
@@ -3321,6 +3321,8 @@ export default function Home() {
   const [moSortDirection, setMoSortDirection] = useState<SortDirection>("desc");
   const [maxPlanSortKey, setMaxPlanSortKey] = useState<MaxPlanSortKey>("achievement");
   const [maxPlanSortDirection, setMaxPlanSortDirection] = useState<SortDirection>("asc");
+  const [maxAppointmentSortKey, setMaxAppointmentSortKey] = useState<string>("2026-10");
+  const [maxAppointmentSortDirection, setMaxAppointmentSortDirection] = useState<SortDirection>("desc");
   const [semdQuery, setSemdQuery] = useState("");
   const [semdOnlyRegistered, setSemdOnlyRegistered] = useState(true);
   const [errorView, setErrorView] = useState<"categories" | "organizations">(
@@ -3386,6 +3388,31 @@ export default function Home() {
     if (maxFilter === "growth" || maxFilter === "decline") return rows.filter(() => false);
     return rows.sort((a, b) => (serviceValue(b).value ?? 0) - (serviceValue(a).value ?? 0));
   }, [maxMonth, maxFilter, maxService]);
+  const sortedMaxAppointmentRows = useMemo(() => {
+    const valueFor = (row: MaxAppointmentMunicipalData["rows"][number]) =>
+      maxAppointmentSortKey === "municipality" ? row.municipality
+        : maxAppointmentSortKey === "total" ? row.total
+          : row.values[maxAppointmentSortKey] ?? null;
+    return [...maxAppointmentsMunicipal.rows].sort((leftRow, rightRow) => {
+      const left = valueFor(leftRow);
+      const right = valueFor(rightRow);
+      if (left === null) return 1;
+      if (right === null) return -1;
+      const comparison = typeof left === "string" && typeof right === "string"
+        ? left.localeCompare(right, "ru")
+        : Number(left) - Number(right);
+      return (maxAppointmentSortDirection === "asc" ? comparison : -comparison)
+        || leftRow.municipality.localeCompare(rightRow.municipality, "ru");
+    });
+  }, [maxAppointmentSortDirection, maxAppointmentSortKey]);
+  const changeMaxAppointmentSort = (key: string) => {
+    if (maxAppointmentSortKey === key) {
+      setMaxAppointmentSortDirection((direction) => direction === "asc" ? "desc" : "asc");
+      return;
+    }
+    setMaxAppointmentSortKey(key);
+    setMaxAppointmentSortDirection(key === "municipality" ? "asc" : "desc");
+  };
   const selectedMaxRow = augustMaxRows.find((row) => row.name === maxSelectedMo) ?? null;
   const hearingRows = useMemo<HearingRow[]>(() => {
     const registrationErrorsByOid = new Map(
@@ -5815,14 +5842,14 @@ export default function Home() {
                 <div>
                   <p className="eyebrow">ЗАПИСЬ НА ПРИЁМ К ВРАЧУ</p>
                   <h2>Фактические записи через МАХ по муниципалитетам</h2>
-                  <p>Показываются данные источника как есть: муниципалитет × месяц. Привязка к медицинским организациям не выполняется.</p>
+                  <p>Показываются данные источника как есть: муниципалитет × месяц. Октябрь — на 12.10.2026. Привязка к медицинским организациям не выполняется.</p>
                 </div>
               </div>
 
               <div className="maxRegionalCards maxMonthCards">
                 {maxAppointmentsMunicipal.months.map((month) => (
                   <article key={month.id}>
-                    <small>{month.complete ? "Полный месяц" : "Текущий неполный месяц"}</small>
+                    <small>{month.complete ? "Полный месяц" : month.asOf ? `На ${month.asOf}` : "Текущий неполный месяц"}</small>
                     <h2>{month.label}</h2>
                     <strong>{format(maxAppointmentsMunicipal.totals[month.id] ?? 0, 0)}</strong>
                     <p>фактических записей</p>
@@ -5834,15 +5861,15 @@ export default function Home() {
                 <table className="maxTable">
                   <thead>
                     <tr>
-                      <th>Муниципалитет</th>
+                      <th><button type="button" className={maxAppointmentSortKey === "municipality" ? "sorted" : ""} onClick={() => changeMaxAppointmentSort("municipality")}>Муниципалитет<i>{maxAppointmentSortKey === "municipality" ? (maxAppointmentSortDirection === "asc" ? "↑" : "↓") : "↕"}</i></button></th>
                       {maxAppointmentsMunicipal.months.map((month) => (
-                        <th key={month.id}>{month.label.replace(" 2026", "")}</th>
+                        <th key={month.id}><button type="button" className={maxAppointmentSortKey === month.id ? "sorted" : ""} onClick={() => changeMaxAppointmentSort(month.id)}>{month.label.replace(" 2026", "")}<i>{maxAppointmentSortKey === month.id ? (maxAppointmentSortDirection === "asc" ? "↑" : "↓") : "↕"}</i></button></th>
                       ))}
-                      <th>Итого</th>
+                      <th><button type="button" className={maxAppointmentSortKey === "total" ? "sorted" : ""} onClick={() => changeMaxAppointmentSort("total")}>Итого<i>{maxAppointmentSortKey === "total" ? (maxAppointmentSortDirection === "asc" ? "↑" : "↓") : "↕"}</i></button></th>
                     </tr>
                   </thead>
                   <tbody>
-                    {maxAppointmentsMunicipal.rows.map((row) => (
+                    {sortedMaxAppointmentRows.map((row) => (
                       <tr key={row.municipality}>
                         <td><strong>{row.municipality}</strong></td>
                         {maxAppointmentsMunicipal.months.map((month) => (
@@ -5870,6 +5897,7 @@ export default function Home() {
                 <strong>Без привязки к МО</strong>
                 <span>Источник не содержит идентификатор медицинской организации. Поэтому значения не распределяются между поликлиниками и больницами и не участвуют в рейтинге МО.</span>
               </div>
+              <p className="methodNote"><b>Источник:</b> «статистика здрав.xlsx». Сентябрь — полный месяц, октябрь — на 12.10.2026.</p>
 
                 </>
               )}
