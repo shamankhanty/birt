@@ -19,7 +19,7 @@ test("МАХ preserves the regional visit indicator while showing the new factua
   assert.match(registry.indicators.visitMax.name, /записей к врачу на телеконсультацию посредством МАХ/u);
   assert.match(page, /Запись к врачу посредством МАХ/u);
   assert.match(page, /Фактические записи через МАХ по муниципалитетам/u);
-  assert.match(page, /Статистика записей к врачу\.xlsx/u);
+  assert.match(page, /статистика здрав\.xlsx/u);
 });
 
 test("August TMC and ELN monthly values are derived from equal-boundary cumulative snapshots", () => {
@@ -34,13 +34,21 @@ test("August TMC and ELN monthly values are derived from equal-boundary cumulati
 test("doctor appointments through MAX are factual municipal data without MO attribution", () => {
   assert.equal(appointments.dimension, "municipality");
   assert.equal(appointments.bindingToMedicalOrganization, false);
-  assert.equal(appointments.totals["2026-08"], 6482);
-  assert.equal(appointments.totals["2026-09"], 1848);
-  assert.equal(appointments.grandTotal, 30486);
+  assert.equal(appointments.totals["2026-08"], 6537);
+  assert.equal(appointments.totals["2026-09"], 12228);
+  assert.equal(appointments.totals["2026-10"], 4646);
+  assert.equal(appointments.grandTotal, 45567);
+  assert.equal(appointments.months.find((month) => month.id === "2026-10")?.asOf, "12.10.2026");
   const kazan = appointments.rows.find((row) => row.municipality === "Казань");
   assert.ok(kazan);
   assert.equal(kazan.values["2026-08"], 2805);
+  assert.equal(kazan.values["2026-10"], 2006);
+  const unassigned = appointments.rows.find((row) => row.municipality === "Район не определен");
+  assert.ok(unassigned);
+  assert.equal(unassigned.values["2026-10"], 2);
   assert.match(page, /Привязка к медицинским организациям не выполняется/u);
+  assert.match(page, /sortedMaxAppointmentRows/u);
+  assert.match(page, /changeMaxAppointmentSort/u);
   assert.doesNotMatch(page, /selectedMaxRow\.visit/u);
   assert.doesNotMatch(page, /row\.visit/u);
 });
