@@ -2,6 +2,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import {spawnSync} from 'node:child_process';
+import {aggregateQuantityPairs} from '../lib/calculation-engine.js';
 const read=p=>JSON.parse(fs.readFileSync(p,'utf8'));
 test('month name does not advance a partial physician export to month end',()=>{
  const code=`import sys,tempfile,types
@@ -38,4 +39,16 @@ test('approved statuses and current methodology audit are wired into the page',(
  const audit=read('app/methodology-audit.json');assert.equal(audit.checkedAt,'14.10.2026');
  assert.ok(audit.items.some(r=>r.source.includes('Профилактика')&&r.issue.includes('12 и 13')));
  assert.ok(audit.items.some(r=>r.source.includes('МБТ 37')&&r.status==='Исправлена'));
+});
+test('physician month comparison uses full-month components rather than October facts',()=>{
+ const rows=read('app/monthly-mo.json').doctor500_pediatrician.rows;
+ const previous=aggregateQuantityPairs(rows,'juneQuantity');
+ const current=aggregateQuantityPairs(rows,'julyQuantity');
+ assert.deepEqual([previous.numerator,previous.denominator],[797,1353]);
+ assert.deepEqual([current.numerator,current.denominator],[833,1357]);
+ const page=fs.readFileSync('app/page.tsx','utf8');
+ assert.match(page,/june: physicianPreviousMonth\.fact/u);
+ assert.match(page,/july: physicianCurrentMonth\.fact/u);
+ assert.match(page,/monthlyDataset\?\.previousLabel/u);
+ assert.match(page,/monthlyDataset\?\.currentLabel/u);
 });

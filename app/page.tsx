@@ -5020,8 +5020,22 @@ export default function Home() {
   };
   const adultJune = aggregatePreventiveMonth("juneQuantity"),
     adultJuly = aggregatePreventiveMonth("julyQuantity");
+  const physicianMonthRows = matrixMetric.startsWith("doctor")
+    ? monthlyMoData[matrixMetric]?.rows ?? []
+    : [];
+  const physicianPreviousMonth = aggregateQuantityPairs(physicianMonthRows, "juneQuantity");
+  const physicianCurrentMonth = aggregateQuantityPairs(physicianMonthRows, "julyQuantity");
   const monthBenchmark =
-    matrixMetric === "semd228"
+    matrixMetric.startsWith("doctor") && physicianPreviousMonth.denominator > 0 && physicianCurrentMonth.denominator > 0
+      ? {
+          june: physicianPreviousMonth.fact,
+          july: physicianCurrentMonth.fact,
+          unit: "%" as const,
+          juneQuantity: `${format(physicianPreviousMonth.numerator, 0)} из ${format(physicianPreviousMonth.denominator, 0)}`,
+          julyQuantity: `${format(physicianCurrentMonth.numerator, 0)} из ${format(physicianCurrentMonth.denominator, 0)}`,
+          source: "Два полных месячных источника по врачам",
+        }
+      : matrixMetric === "semd228"
       ? {
           june: adultJune.fact,
           july: adultJuly.fact,
@@ -9257,7 +9271,7 @@ export default function Home() {
                         {monthBenchmark.unit === "%" ? "%" : ""}
                       </strong>
                       <span>
-                        Июль 2026
+                        {matrixMetric.startsWith("doctor") ? monthlyDataset?.previousLabel : "Июль 2026"}
                         {monthBenchmark.juneQuantity
                           ? ` · ${monthBenchmark.juneQuantity}`
                           : ""}
@@ -9273,7 +9287,7 @@ export default function Home() {
                         {monthBenchmark.unit === "%" ? "%" : ""}
                       </strong>
                       <span>
-                        Август 2026
+                        {matrixMetric.startsWith("doctor") ? monthlyDataset?.currentLabel : "Август 2026"}
                         {monthBenchmark.julyQuantity
                           ? ` · ${monthBenchmark.julyQuantity}`
                           : ""}
@@ -9290,7 +9304,7 @@ export default function Home() {
                           : "negative"
                       }
                     >
-                          <small>Изменение: август к июлю</small>
+                          <small>{matrixMetric.startsWith("doctor") ? `Изменение: ${monthlyDataset?.currentLabel} к ${monthlyDataset?.previousLabel}` : "Изменение: август к июлю"}</small>
                       <strong>
                         {monthBenchmark.july > monthBenchmark.june
                           ? "↑"
@@ -9309,7 +9323,7 @@ export default function Home() {
                           : monthBenchmark.source}
                       </span>
                     </article>
-                    <article className="preliminary">
+                    {!matrixMetric.startsWith("doctor") && <article className="preliminary">
                       <small>Сентябрь · оперативный срез</small>
                       <strong>
                         {format(regionalFact, isCountMetric ? 0 : 2)}
@@ -9321,15 +9335,14 @@ export default function Home() {
                           : ""}
                         на {selectedDataset.date} · в итог месяца не включён
                       </span>
-                    </article>
+                    </article>}
                   </div>
                 ) : (
                   <div className="monthEmpty">
                     <b>Нет двух полных месячных исходников</b>
                     <span>
-                      Для этого показателя нет двух сопоставимых срезов на
-                      31.07 и 31.08. Накопительный или сентябрьский оперативный
-                      факт не подменяется месячным значением.
+                      Для этого показателя нет двух подтвержденных полных месячных источников.
+                      Оперативный факт не подменяется месячным значением.
                     </span>
                   </div>
                 )}
@@ -11368,7 +11381,7 @@ function MonthlyMoView({
         <div>
           <p className="eyebrow">ПОМЕСЯЧНАЯ ДЕТАЛИЗАЦИЯ ПО ОРГАНИЗАЦИЯМ</p>
           <h2>Все медицинские организации</h2>
-          <p>{hasPrevious ? `Два полных месяца: ${previousMonth.toLowerCase()} и ${currentMonth.toLowerCase()} 2026 года` : `Полный месяц: ${currentMonth.toLowerCase()} 2026 года; сравнение появится после загрузки ${previousMonth.toLowerCase()}`}</p>
+          <p>{hasPrevious ? `Два полных месяца: ${previousMonth.toLowerCase()} и ${currentMonth.toLowerCase()}` : `Полный месяц: ${currentMonth.toLowerCase()}; сравнение появится после загрузки ${previousMonth.toLowerCase()}`}</p>
         </div>
         <span>{visible.length} МО</span>
       </div>
