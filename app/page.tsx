@@ -5,6 +5,7 @@ import moDataRaw from "./mo-data.json";
 import moDetailsRaw from "./mo-details.json";
 import moDetailOidsRaw from "./mo-detail-oids.json";
 import semdSummaryRaw from "./semd-summary.json";
+import methodologyAudit from "./methodology-audit.json";
 import operationalMoRaw from "./operational-mo.json";
 import errorCategoriesRaw from "./error-categories.json";
 import errorOrganizationsRaw from "./error-organizations.json";
@@ -1534,7 +1535,7 @@ const metricIds = [
     (id) => !presentationMetricOrder.includes(id),
   ),
 ];
-const calcErrors = [
+const historicalCalcErrors = [
   {
     severity: "critical",
     status: "Исправлена",
@@ -1813,6 +1814,8 @@ const calcErrors = [
       "Загрузить закрытую месячную выгрузку в начале сентября; подтвердить расчёт по назначениям врач–МО и строгий порог 501+.",
   },
 ];
+
+const calcErrors: typeof historicalCalcErrors = methodologyAudit.items;
 
 type Methodology = {
   id: string;
@@ -4005,7 +4008,7 @@ export default function Home() {
     if (!item.row.regionalId) return;
     setExtendedReturn({ point: item.row.id, scrollY: window.scrollY });
     setMatrixMetric(item.row.regionalId);
-    setDynamicsMode("operational");
+    setDynamicsMode(item.row.regionalId.startsWith("doctor") ? "month" : "operational");
     setTab("matrix");
     setShowMatrixSections(false);
     window.scrollTo({ top: 0, behavior: "auto" });
@@ -5017,8 +5020,22 @@ export default function Home() {
   };
   const adultJune = aggregatePreventiveMonth("juneQuantity"),
     adultJuly = aggregatePreventiveMonth("julyQuantity");
+  const physicianMonthRows = matrixMetric.startsWith("doctor")
+    ? monthlyMoData[matrixMetric]?.rows ?? []
+    : [];
+  const physicianPreviousMonth = aggregateQuantityPairs(physicianMonthRows, "juneQuantity");
+  const physicianCurrentMonth = aggregateQuantityPairs(physicianMonthRows, "julyQuantity");
   const monthBenchmark =
-    matrixMetric === "semd228"
+    matrixMetric.startsWith("doctor") && physicianPreviousMonth.denominator > 0 && physicianCurrentMonth.denominator > 0
+      ? {
+          june: physicianPreviousMonth.fact,
+          july: physicianCurrentMonth.fact,
+          unit: "%" as const,
+          juneQuantity: `${format(physicianPreviousMonth.numerator, 0)} из ${format(physicianPreviousMonth.denominator, 0)}`,
+          julyQuantity: `${format(physicianCurrentMonth.numerator, 0)} из ${format(physicianCurrentMonth.denominator, 0)}`,
+          source: "Два полных месячных источника по врачам",
+        }
+      : matrixMetric === "semd228"
       ? {
           june: adultJune.fact,
           july: adultJuly.fact,
@@ -5472,7 +5489,7 @@ export default function Home() {
                     <button
                       key={id}
                       className={`sideMetricButton ${sidebarMetricTone(id)} ${matrixMetric === id ? "active" : ""}`}
-                      onClick={() => setMatrixMetric(id)}
+                      onClick={() => { setMatrixMetric(id); setDynamicsMode(id.startsWith("doctor") ? "month" : "operational"); }}
                       title={metricDisplayName(id)}
                     >
                       <span>{metricDisplayName(id)}</span>
@@ -6579,7 +6596,11 @@ export default function Home() {
                         planMetric.value !== null &&
                         ((regionalIsPercent && planMetric.unit === "%") ||
                           (!regionalIsPercent && planMetric.unit === "count"));
-                      const regionalStatus = regionalComparableToPlan
+                      const regionalStatus = row.regionalManualStatus === "achieved"
+                        ? "good"
+                        : row.regionalManualStatus === "notAchieved"
+                          ? "bad"
+                          : regionalComparableToPlan
                         ? statusFor(
                             regionalValue,
                             planMetric.value,
@@ -6749,7 +6770,7 @@ export default function Home() {
                                 className={`federalStatus ${regionalStatus}`}
                               >
                                 {regionalStatus === "good"
-                                  ? "План достигнут"
+                                  ? "Достигнут"
                                   : regionalStatus === "na"
                                     ? "Нет сопоставимого плана"
                                     : "Отклонение"}
@@ -8959,7 +8980,7 @@ export default function Home() {
                 <select
                   id="mobile-metric"
                   value={matrixMetric}
-                  onChange={(e) => setMatrixMetric(e.target.value)}
+                  onChange={(e) => { setMatrixMetric(e.target.value); setDynamicsMode(e.target.value.startsWith("doctor") ? "month" : "operational"); }}
                 >
                   {metricIds.map((id) => (
                     <option key={id} value={id}>
@@ -9250,7 +9271,7 @@ export default function Home() {
                         {monthBenchmark.unit === "%" ? "%" : ""}
                       </strong>
                       <span>
-                        Июль 2026
+                        {matrixMetric.startsWith("doctor") ? monthlyDataset?.previousLabel : "Июль 2026"}
                         {monthBenchmark.juneQuantity
                           ? ` · ${monthBenchmark.juneQuantity}`
                           : ""}
@@ -9266,7 +9287,7 @@ export default function Home() {
                         {monthBenchmark.unit === "%" ? "%" : ""}
                       </strong>
                       <span>
-                        Август 2026
+                        {matrixMetric.startsWith("doctor") ? monthlyDataset?.currentLabel : "Август 2026"}
                         {monthBenchmark.julyQuantity
                           ? ` · ${monthBenchmark.julyQuantity}`
                           : ""}
@@ -9283,7 +9304,7 @@ export default function Home() {
                           : "negative"
                       }
                     >
-                          <small>Изменение: август к июлю</small>
+                          <small>{matrixMetric.startsWith("doctor") ? `Изменение: ${monthlyDataset?.currentLabel} к ${monthlyDataset?.previousLabel}` : "Изменение: август к июлю"}</small>
                       <strong>
                         {monthBenchmark.july > monthBenchmark.june
                           ? "↑"
@@ -9302,7 +9323,7 @@ export default function Home() {
                           : monthBenchmark.source}
                       </span>
                     </article>
-                    <article className="preliminary">
+                    {!matrixMetric.startsWith("doctor") && <article className="preliminary">
                       <small>Сентябрь · оперативный срез</small>
                       <strong>
                         {format(regionalFact, isCountMetric ? 0 : 2)}
@@ -9314,15 +9335,14 @@ export default function Home() {
                           : ""}
                         на {selectedDataset.date} · в итог месяца не включён
                       </span>
-                    </article>
+                    </article>}
                   </div>
                 ) : (
                   <div className="monthEmpty">
                     <b>Нет двух полных месячных исходников</b>
                     <span>
-                      Для этого показателя нет двух сопоставимых срезов на
-                      31.07 и 31.08. Накопительный или сентябрьский оперативный
-                      факт не подменяется месячным значением.
+                      Для этого показателя нет двух подтвержденных полных месячных источников.
+                      Оперативный факт не подменяется месячным значением.
                     </span>
                   </div>
                 )}
@@ -10137,9 +10157,7 @@ export default function Home() {
                   <p className="eyebrow">КОНТРОЛЬ МЕТОДИК И РАСЧЁТОВ</p>
                   <h1>Ошибки методик</h1>
                   <p>
-                    Последняя проверка: 31.08.2026 · новые источники по
-                    28–30.08.2026; каждый риск содержит временное правило и
-                    требуемое уточнение
+                    Последняя проверка: {methodologyAudit.checkedAt} · {methodologyAudit.note}
                   </p>
                 </div>
                 <div className="errorBadge">
@@ -10456,6 +10474,18 @@ export default function Home() {
                   </article>
                 ))}
               </div>
+              <details className="methodologyHistory">
+                <summary>Архив ранее выявленных замечаний — {historicalCalcErrors.length}</summary>
+                <p>Исторические наблюдения с исходными датами и значениями. Для замечаний, не вошедших в актуальную проверку, устранение не подтверждено.</p>
+                {historicalCalcErrors.map((item) => (
+                  <article key={item.source + item.issue}>
+                    <small>{item.source}</small>
+                    <h3>{item.issue}</h3>
+                    <p>{item.impact}</p>
+                    <p>{item.fix}</p>
+                  </article>
+                ))}
+              </details>
               </>}
             </>
           )}
@@ -11351,7 +11381,7 @@ function MonthlyMoView({
         <div>
           <p className="eyebrow">ПОМЕСЯЧНАЯ ДЕТАЛИЗАЦИЯ ПО ОРГАНИЗАЦИЯМ</p>
           <h2>Все медицинские организации</h2>
-          <p>{hasPrevious ? `Два полных месяца: ${previousMonth.toLowerCase()} и ${currentMonth.toLowerCase()} 2026 года` : `Полный месяц: ${currentMonth.toLowerCase()} 2026 года; сравнение появится после загрузки ${previousMonth.toLowerCase()}`}</p>
+          <p>{hasPrevious ? `Два полных месяца: ${previousMonth.toLowerCase()} и ${currentMonth.toLowerCase()}` : `Полный месяц: ${currentMonth.toLowerCase()}; сравнение появится после загрузки ${previousMonth.toLowerCase()}`}</p>
         </div>
         <span>{visible.length} МО</span>
       </div>

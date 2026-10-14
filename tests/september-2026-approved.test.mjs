@@ -18,10 +18,10 @@ test('all eleven September metrics reconcile to source and retain missing data',
 });
 test('approved MBT 37–39 preserve independent cumulative period and plans',()=>{
   const rows=read('app/federal-control.json').agreement;
-  for(const [id,n] of [['37',2031],['38',12153],['39',1144012]]){
+  for(const [id,n] of [['37',2258],['38',14399],['39',1308250]]){
     const r=rows.find(r=>r.id===id);
     assert.equal(Number(r.regionalFact.replace(/\D/g,'')),n);
-    assert.equal(r.regionalPeriod,'01.01–11.09.2026');
+    assert.equal(r.regionalPeriod,'01.01–13.10.2026');
     assert.equal(r.status,'Достигнут');assert.equal(r.regionalManualStatus,'achieved');assert.equal(r.plan,'Да');
   }
 });

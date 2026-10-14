@@ -11,9 +11,9 @@ test("500+ keeps September rating and exposes the October operational delta", ()
   const current = weekly.summary.doctor500_pediatrician;
   const previous = weekly.previousSummary.doctor500_pediatrician;
   assert.equal(september.fact, 833 / 1357 * 100);
-  assert.deepEqual([current.numerator, current.denominator], [301, 1324]);
-  assert.deepEqual([previous.numerator, previous.denominator], [121, 1357]);
-  assert.equal(Number((current.fact - previous.fact).toFixed(2)), 13.82);
+  assert.deepEqual([current.numerator, current.denominator], [415, 1328]);
+  assert.deepEqual([previous.numerator, previous.denominator], [301, 1324]);
+  assert.equal(Number((current.fact - previous.fact).toFixed(2)), 8.52);
   assert.match(page, /physicianWeeklySnapshot\.previousSummary/u);
   assert.match(page, /dynamicsMode === "month"/u);
 });
@@ -22,8 +22,8 @@ test("cumulative ratios use the previous numerator and denominator pair", () => 
   assert.deepEqual([mo.semd228.previousNumerator, mo.semd228.previousDenominator], [1751161, 2200567]);
   assert.equal(Number((mo.semd228.numerator / mo.semd228.denominator * 100).toFixed(2)), 80.16);
   assert.equal(Number((mo.semd228.previousNumerator / mo.semd228.previousDenominator * 100).toFixed(2)), 79.58);
-  assert.equal(Number((mo.ambulatoryCase.numerator / mo.ambulatoryCase.denominator * 100).toFixed(2)), 90.51);
-  assert.deepEqual([mo.hospital.numerator, mo.hospital.denominator], [655826, 751797]);
+  assert.equal(Number((mo.ambulatoryCase.numerator / mo.ambulatoryCase.denominator * 100).toFixed(2)), 90.87);
+  assert.deepEqual([mo.hospital.numerator, mo.hospital.denominator], [661560, 748273]);
   assert.match(page, /componentPreviousFact/u);
 });
 

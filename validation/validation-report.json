@@ -1,21 +1,21 @@
 {
   "schemaVersion": 1,
   "baselineVersion": "5.4.5",
-  "dataDate": "10.10.2026",
+  "dataDate": "14.10.2026",
   "reportingPeriod": {
     "latestFullMonth": "сентябрь 2026",
     "previousFullMonth": "август 2026",
     "hasPartialNewerMonth": true,
-    "latestObservedDate": "10.10.2026"
+    "latestObservedDate": "14.10.2026"
   },
   "overallStatus": "WARNING",
   "summary": {
     "checks": 15,
-    "PASS": 14,
-    "WARNING": 1,
+    "PASS": 13,
+    "WARNING": 2,
     "FAIL": 0,
     "blocking": 0,
-    "aiReviewItems": 0
+    "aiReviewItems": 2
   },
   "acknowledgedBaseline": {
     "unresolvedOrganizations": 102,
@@ -94,9 +94,9 @@
       "status": "PASS",
       "blocking": false,
       "requiresAiReview": false,
-      "message": "5088 rows contain no duplicate organization within a dataset",
+      "message": "5089 rows contain no duplicate organization within a dataset",
       "details": {
-        "inspectedRows": 5088
+        "inspectedRows": 5089
       },
       "issues": []
     },
@@ -121,9 +121,9 @@
       "status": "PASS",
       "blocking": false,
       "requiresAiReview": false,
-      "message": "1880 trend rows reconcile to fact minus previous",
+      "message": "1886 trend rows reconcile to fact minus previous",
       "details": {
-        "inspectedRows": 1880
+        "inspectedRows": 1886
       },
       "issues": []
     },
@@ -152,7 +152,7 @@
         "activeRatingIndicators": 16,
         "latestFullMonth": "сентябрь 2026",
         "previousFullMonth": "август 2026",
-        "latestObservedDate": "10.10.2026",
+        "latestObservedDate": "14.10.2026",
         "hasPartialNewerMonth": true
       },
       "issues": [
@@ -224,16 +224,72 @@
       "id": "data.percentage_anomalies",
       "category": "anomaly",
       "title": "Новые аномальные процентные значения",
-      "status": "PASS",
+      "status": "WARNING",
       "blocking": false,
-      "requiresAiReview": false,
-      "message": "No new percentage anomalies beyond 21 acknowledged baseline cases",
+      "requiresAiReview": true,
+      "message": "2 issue(s) detected",
       "details": {
-        "currentAnomalyRows": 21,
+        "currentAnomalyRows": 22,
         "acknowledgedBaselineCases": 21
       },
-      "issues": []
+      "issues": [
+        {
+          "kind": "percentage_above_100",
+          "scope": "mo-data",
+          "metric": "hospital",
+          "organizationOid": "1.2.643.5.1.13.13.12.2.16.1092",
+          "organizationName": "АКТАНЫШСКАЯ ЦРБ",
+          "field": "previous",
+          "value": 100.1333688983729,
+          "fingerprint": "percentage_above_100|mo-data|hospital|1.2.643.5.1.13.13.12.2.16.1092|АКТАНЫШСКАЯ ЦРБ|previous",
+          "acknowledged": false,
+          "status": "WARNING",
+          "requiresAiReview": true,
+          "reviewReason": "anomaly"
+        },
+        {
+          "kind": "percentage_above_100",
+          "scope": "mo-data",
+          "metric": "hospital",
+          "organizationOid": "1.2.643.5.1.13.13.12.2.16.1231",
+          "organizationName": "ФГАОУВО КФУ",
+          "field": "fact",
+          "value": 103.28571428571429,
+          "fingerprint": "percentage_above_100|mo-data|hospital|1.2.643.5.1.13.13.12.2.16.1231|ФГАОУВО КФУ|fact",
+          "acknowledged": false,
+          "status": "WARNING",
+          "requiresAiReview": true,
+          "reviewReason": "anomaly"
+        }
+      ]
     }
   ],
-  "aiReviewItems": []
+  "aiReviewItems": [
+    {
+      "checkId": "data.percentage_anomalies",
+      "category": "anomaly",
+      "status": "WARNING",
+      "reviewReason": "anomaly",
+      "fingerprint": "percentage_above_100|mo-data|hospital|1.2.643.5.1.13.13.12.2.16.1092|АКТАНЫШСКАЯ ЦРБ|previous",
+      "metric": "hospital",
+      "organizationOid": "1.2.643.5.1.13.13.12.2.16.1092",
+      "organizationName": "АКТАНЫШСКАЯ ЦРБ",
+      "field": "previous",
+      "expected": null,
+      "actual": 100.1333688983729
+    },
+    {
+      "checkId": "data.percentage_anomalies",
+      "category": "anomaly",
+      "status": "WARNING",
+      "reviewReason": "anomaly",
+      "fingerprint": "percentage_above_100|mo-data|hospital|1.2.643.5.1.13.13.12.2.16.1231|ФГАОУВО КФУ|fact",
+      "metric": "hospital",
+      "organizationOid": "1.2.643.5.1.13.13.12.2.16.1231",
+      "organizationName": "ФГАОУВО КФУ",
+      "field": "fact",
+      "expected": null,
+      "actual": 103.28571428571429
+    }
+  ]
 }

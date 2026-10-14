@@ -6,136 +6,334 @@
   "registryCoverage": "38/38",
   "mismatches": [
     {
-      "id": "doctor500_cardiologist",
+      "id": "ambulatoryCase",
       "field": "fact",
-      "expected": 54.41176470588235,
-      "actual": 56.310679611650485
+      "expected": 90.51123297690832,
+      "actual": 90.87129498141883
     },
     {
-      "id": "doctor500_cardiologist",
+      "id": "ambulatoryCase",
+      "field": "date",
+      "expected": "04.10.2026",
+      "actual": "12.10.2026"
+    },
+    {
+      "id": "ambulatoryCase",
       "field": "quantity",
-      "expected": 111,
-      "actual": 116
+      "expected": 11765719,
+      "actual": 12101304
     },
     {
-      "id": "doctor500_dentist",
+      "id": "birth",
       "field": "fact",
-      "expected": 18.529862174578867,
-      "actual": 23.31288343558282
+      "expected": 99.9149453219927,
+      "actual": 99.81835413046912
     },
     {
-      "id": "doctor500_dentist",
+      "id": "birth",
+      "field": "date",
+      "expected": "06.10.2026",
+      "actual": "13.10.2026"
+    },
+    {
+      "id": "birth",
       "field": "quantity",
-      "expected": 121,
-      "actual": 152
+      "expected": 24669,
+      "actual": 25278
     },
     {
-      "id": "doctor500_gp",
+      "id": "death",
       "field": "fact",
-      "expected": 85.47854785478548,
-      "actual": 87.08609271523179
+      "expected": 99.33191907038596,
+      "actual": 99.26583996545129
     },
     {
-      "id": "doctor500_gp",
+      "id": "death",
+      "field": "date",
+      "expected": "06.10.2026",
+      "actual": "13.10.2026"
+    },
+    {
+      "id": "death",
       "field": "quantity",
-      "expected": 259,
-      "actual": 263
+      "expected": 31372,
+      "actual": 32180
     },
     {
-      "id": "doctor500_obgyn",
+      "id": "egpu",
       "field": "fact",
-      "expected": 56.067961165048544,
-      "actual": 57.6271186440678
+      "expected": 99.41992631496433,
+      "actual": 99.47795678781065
     },
     {
-      "id": "doctor500_obgyn",
+      "id": "egpu",
+      "field": "date",
+      "expected": "07.10.2026",
+      "actual": "13.10.2026"
+    },
+    {
+      "id": "egpu",
       "field": "quantity",
-      "expected": 231,
-      "actual": 238
+      "expected": 38049,
+      "actual": 39826
     },
     {
-      "id": "doctor500_oncologist",
+      "id": "egpu2days",
       "field": "fact",
-      "expected": 61.206896551724135,
-      "actual": 62.06896551724138
+      "expected": 83.32680097201536,
+      "actual": 83.91407518421381
     },
     {
-      "id": "doctor500_oncologist",
+      "id": "egpu2days",
+      "field": "date",
+      "expected": "07.10.2026",
+      "actual": "13.10.2026"
+    },
+    {
+      "id": "egpu2days",
       "field": "quantity",
-      "expected": 142,
-      "actual": 144
+      "expected": 31890,
+      "actual": 33595
     },
     {
-      "id": "doctor500_ophthalmologist",
+      "id": "elmk",
+      "field": "date",
+      "expected": "07.10.2026",
+      "actual": "13.10.2026"
+    },
+    {
+      "id": "elnMaxCount",
       "field": "fact",
-      "expected": 46.808510638297875,
-      "actual": 50.85470085470085
+      "expected": 45937,
+      "actual": 48758
     },
     {
-      "id": "doctor500_ophthalmologist",
+      "id": "elnMaxCount",
+      "field": "date",
+      "expected": "06.10.2026",
+      "actual": "13.10.2026"
+    },
+    {
+      "id": "elnMaxCount",
+      "field": "previous",
+      "expected": 43318,
+      "actual": 45937
+    },
+    {
+      "id": "elnMaxCount",
+      "field": "trend",
+      "expected": 2619,
+      "actual": 2821
+    },
+    {
+      "id": "elnMaxCount",
       "field": "quantity",
-      "expected": 110,
-      "actual": 119
+      "expected": 45937,
+      "actual": 48758
     },
     {
-      "id": "doctor500_pediatrician",
+      "id": "fapSemdCount",
       "field": "fact",
-      "expected": 58.90613451589062,
-      "actual": 61.385408990420046
+      "expected": 3305579,
+      "actual": 3439709
     },
     {
-      "id": "doctor500_pediatrician",
+      "id": "fapSemdCount",
+      "field": "date",
+      "expected": "04.10.2026",
+      "actual": "12.10.2026"
+    },
+    {
+      "id": "fapSemdCount",
+      "field": "previous",
+      "expected": 3232785,
+      "actual": 3305579
+    },
+    {
+      "id": "fapSemdCount",
+      "field": "trend",
+      "expected": 72794,
+      "actual": 134130
+    },
+    {
+      "id": "fapSemdCount",
       "field": "quantity",
-      "expected": 797,
-      "actual": 833
+      "expected": 3305579,
+      "actual": 3439709
     },
     {
-      "id": "doctor500_surgeon",
+      "id": "hospital",
       "field": "fact",
-      "expected": 47.08029197080292,
-      "actual": 49.458483754512635
+      "expected": 87.23445291747639,
+      "actual": 88.41158240374837
     },
     {
-      "id": "doctor500_surgeon",
+      "id": "hospital",
+      "field": "date",
+      "expected": "10.10.2026",
+      "actual": "12.10.2026"
+    },
+    {
+      "id": "hospital",
       "field": "quantity",
-      "expected": 129,
-      "actual": 137
+      "expected": 655826,
+      "actual": 661560
     },
     {
-      "id": "doctor500_therapist",
+      "id": "shortInput",
       "field": "fact",
-      "expected": 60.2158273381295,
-      "actual": 62.121212121212125
+      "expected": 767214,
+      "actual": 783539
     },
     {
-      "id": "doctor500_therapist",
+      "id": "shortInput",
+      "field": "date",
+      "expected": "06.10.2026",
+      "actual": "13.10.2026"
+    },
+    {
+      "id": "shortInput",
+      "field": "previous",
+      "expected": 754646,
+      "actual": 767603
+    },
+    {
+      "id": "shortInput",
+      "field": "trend",
+      "expected": 12568,
+      "actual": 15936
+    },
+    {
+      "id": "shortInput",
       "field": "quantity",
-      "expected": 837,
-      "actual": 861
+      "expected": 767214,
+      "actual": 783539
     },
     {
-      "id": "doctorsAll",
+      "id": "shortInputAmb",
       "field": "fact",
-      "expected": 78.68352547415395,
-      "actual": 78.8214443952149
+      "expected": 758483,
+      "actual": 774862
     },
     {
-      "id": "doctorsAll",
+      "id": "shortInputAmb",
+      "field": "date",
+      "expected": "06.10.2026",
+      "actual": "13.10.2026"
+    },
+    {
+      "id": "shortInputAmb",
+      "field": "previous",
+      "expected": 745757,
+      "actual": 758568
+    },
+    {
+      "id": "shortInputAmb",
+      "field": "trend",
+      "expected": 12726,
+      "actual": 16294
+    },
+    {
+      "id": "shortInputAmb",
       "field": "quantity",
-      "expected": 10579,
-      "actual": 10674
+      "expected": 758483,
+      "actual": 774862
     },
     {
-      "id": "doctorsLevel3",
+      "id": "shortInputHosp",
       "field": "fact",
-      "expected": 78.06143628061436,
-      "actual": 78.94080996884735
+      "expected": 8731,
+      "actual": 8677
     },
     {
-      "id": "doctorsLevel3",
+      "id": "shortInputHosp",
+      "field": "date",
+      "expected": "06.10.2026",
+      "actual": "13.10.2026"
+    },
+    {
+      "id": "shortInputHosp",
+      "field": "previous",
+      "expected": 8889,
+      "actual": 9035
+    },
+    {
+      "id": "shortInputHosp",
+      "field": "trend",
+      "expected": -158,
+      "actual": -358
+    },
+    {
+      "id": "shortInputHosp",
       "field": "quantity",
-      "expected": 3761,
-      "actual": 3801
+      "expected": 8731,
+      "actual": 8677
+    },
+    {
+      "id": "smp",
+      "field": "fact",
+      "expected": 93.91208338688037,
+      "actual": 94.42077212347483
+    },
+    {
+      "id": "smp",
+      "field": "date",
+      "expected": "07.10.2026",
+      "actual": "14.10.2026"
+    },
+    {
+      "id": "smp",
+      "field": "quantity",
+      "expected": 679607,
+      "actual": 698015
+    },
+    {
+      "id": "tmkMaxCount",
+      "field": "fact",
+      "expected": 60014,
+      "actual": 63462
+    },
+    {
+      "id": "tmkMaxCount",
+      "field": "date",
+      "expected": "06.10.2026",
+      "actual": "13.10.2026"
+    },
+    {
+      "id": "tmkMaxCount",
+      "field": "previous",
+      "expected": 58235,
+      "actual": 60014
+    },
+    {
+      "id": "tmkMaxCount",
+      "field": "trend",
+      "expected": 1779,
+      "actual": 3448
+    },
+    {
+      "id": "tmkMaxCount",
+      "field": "quantity",
+      "expected": 60014,
+      "actual": 63462
+    },
+    {
+      "id": "tmkRemd",
+      "field": "fact",
+      "expected": 97.5,
+      "actual": 100
+    },
+    {
+      "id": "tmkRemd",
+      "field": "date",
+      "expected": "08.10.2026",
+      "actual": "13.10.2026"
+    },
+    {
+      "id": "tmkRemd",
+      "field": "quantity",
+      "expected": 39,
+      "actual": 40
     }
   ],
   "preservedBaselineConflicts": [],

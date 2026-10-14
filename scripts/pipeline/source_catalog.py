@@ -117,7 +117,11 @@ def classify(path:Path,cfg=None):
     # workbook's formation date is usually one day later.  The latter must not
     # turn the complete September file into an October snapshot.
     if structure.get('family') == 'physicians' and filename_end:
-        end=filename_end
+        # A month name is not proof of a completed month: October exported
+        # on October 14 must stay operational through the source cut.
+        if not (structure.get('endDate') and filename_end > date.fromisoformat(structure['endDate'])
+                and filename_end.day == calendar.monthrange(filename_end.year, filename_end.month)[1]):
+            end=filename_end
         range_start=re.search(r'(?<!\d)(\d{1,2})[._](\d{1,2})(?:[._](?:20)?\d{2})?\s*[-–]',path.name)
         if range_start:
             day,month=map(int,range_start.groups())
