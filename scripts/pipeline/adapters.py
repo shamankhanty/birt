@@ -814,7 +814,7 @@ def parse_foms(path: Path) -> dict:
     return out
 
 
-def adapt_preventive(app: Path, remd: Path, foms_path: Path, end: date, registry_path: Path) -> AdapterResult:
+def adapt_preventive(app: Path, remd: Path, foms_path: Path, end: date, registry_path: Path, approved_missing_oids=()) -> AdapterResult:
     rr,ff=parse_remd(remd),parse_foms(foms_path); mo,details,oids,monthly=(load(app,x) for x in ["mo-data.json","mo-details.json","mo-detail-oids.json","monthly-mo.json"]); prev=previous_rows_from_dataset(mo.get("semd228",{})); rows=[]; audit_rows=[]; dn={};do={};excluded=[]
     child_oids={str(o["oid"]) for o in json.loads(registry_path.read_text(encoding="utf-8"))["organizations"] if re.search(r"детск|\b(?:адрб|дркб|ндрб|кдмц)\b",(str(o.get("type",""))+" "+str(o.get("name",""))).casefold())}
     for oid,v in ff.items():
@@ -826,7 +826,8 @@ def adapt_preventive(app: Path, remd: Path, foms_path: Path, end: date, registry
         if is_external_source_name(v["name"]): row["sourceStatus"]="external_source"
         rows.append(row);d={"volume":den,"registered":num};dn[norm(v["name"])]=d;do[oid]=d
     if not rows: raise ValueError('СЭМД 122/228: ни один OID числителя не сопоставлен со знаменателем')
-    if excluded: raise ValueError(f'СЭМД 122/228: отсутствует числитель для {len(excluded)} МО; показатель сохранен целиком')
+    unapproved = [r for r in excluded if r['oid'] not in approved_missing_oids]
+    if unapproved: raise ValueError(f'СЭМД 122/228: отсутствует числитель для {len(unapproved)} МО; показатель сохранен целиком')
     num=sum(r["selected"] for r in audit_rows); den=sum(r["foms"] for r in audit_rows); share=num/den*100 if den else None
     audit={"summary":{"status":"ready","year":end.year,"formula":"MAX(СЭМД 122; СЭМД 228) по каждой МО" if end.year<=2026 else "СЭМД 228","period122":period_cumulative(end),"period228":period_cumulative(end),"source122":remd.name,"source228":remd.name,"sourceDenominator":foms_path.name,"organizations":len(rows),"numerator":num,"denominator":den,"share":share,"selected122":sum(r["selectedType"]=="122" for r in audit_rows),"selected228":sum(r["selectedType"]=="228" for r in audit_rows),"selectedEqual":sum(r["semd122"]==r["semd228"] for r in audit_rows),"over100":sum((r["share"] or 0)>100 for r in audit_rows),"missing":len(excluded),"excluded":excluded,"note":"Включены взрослые и детские МО из ФОМС; строки без соответствия РЭМД остаются в аудите и не оцениваются."},"excluded":excluded,"rows":audit_rows}
     base=mo.get("semd228",{})

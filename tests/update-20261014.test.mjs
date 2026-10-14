@@ -37,7 +37,7 @@ test('approved statuses and current methodology audit are wired into the page',(
  assert.match(page,/setDynamicsMode\(id\.startsWith\("doctor"\) \? "month"/u);
  assert.match(page,/const calcErrors: typeof historicalCalcErrors = methodologyAudit\.items/u);
  const audit=read('app/methodology-audit.json');assert.equal(audit.checkedAt,'14.10.2026');
- assert.ok(audit.items.some(r=>r.source.includes('Профилактика')&&r.issue.includes('12 и 13')));
+ assert.ok(audit.items.some(r=>r.source.includes('Профилактика')&&r.issue.includes('сопоставимая пара')&&r.status==='Исправлена'));
  assert.ok(audit.items.some(r=>r.source.includes('МБТ 37')&&r.status==='Исправлена'));
 });
 test('physician month comparison uses full-month components rather than October facts',()=>{

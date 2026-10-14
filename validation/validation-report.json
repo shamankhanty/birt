@@ -15,11 +15,11 @@
     "WARNING": 2,
     "FAIL": 0,
     "blocking": 0,
-    "aiReviewItems": 2
+    "aiReviewItems": 4
   },
   "acknowledgedBaseline": {
     "unresolvedOrganizations": 102,
-    "percentageAnomalies": 21,
+    "percentageAnomalies": 22,
     "missingCurrentValues": 0
   },
   "checks": [
@@ -107,9 +107,9 @@
       "status": "PASS",
       "blocking": false,
       "requiresAiReview": false,
-      "message": "1012 ratio rows reconcile to numerator/denominator components",
+      "message": "1011 ratio rows reconcile to numerator/denominator components",
       "details": {
-        "inspectedRows": 1012,
+        "inspectedRows": 1011,
         "tolerancePercentagePoints": 0.015
       },
       "issues": []
@@ -227,21 +227,21 @@
       "status": "WARNING",
       "blocking": false,
       "requiresAiReview": true,
-      "message": "2 issue(s) detected",
+      "message": "4 issue(s) detected",
       "details": {
-        "currentAnomalyRows": 22,
-        "acknowledgedBaselineCases": 21
+        "currentAnomalyRows": 24,
+        "acknowledgedBaselineCases": 22
       },
       "issues": [
         {
           "kind": "percentage_above_100",
           "scope": "mo-data",
-          "metric": "hospital",
-          "organizationOid": "1.2.643.5.1.13.13.12.2.16.1092",
-          "organizationName": "АКТАНЫШСКАЯ ЦРБ",
-          "field": "previous",
-          "value": 100.1333688983729,
-          "fingerprint": "percentage_above_100|mo-data|hospital|1.2.643.5.1.13.13.12.2.16.1092|АКТАНЫШСКАЯ ЦРБ|previous",
+          "metric": "semd228",
+          "organizationOid": "1.2.643.5.1.13.13.12.2.16.1072",
+          "organizationName": "ЗАИНСКАЯ ЦРБ",
+          "field": "fact",
+          "value": 101.79903096692648,
+          "fingerprint": "percentage_above_100|mo-data|semd228|1.2.643.5.1.13.13.12.2.16.1072|ЗАИНСКАЯ ЦРБ|fact",
           "acknowledged": false,
           "status": "WARNING",
           "requiresAiReview": true,
@@ -250,12 +250,40 @@
         {
           "kind": "percentage_above_100",
           "scope": "mo-data",
-          "metric": "hospital",
-          "organizationOid": "1.2.643.5.1.13.13.12.2.16.1231",
-          "organizationName": "ФГАОУВО КФУ",
+          "metric": "semd228",
+          "organizationOid": "1.2.643.5.1.13.13.12.2.16.1144",
+          "organizationName": "КУКМОРСКАЯ ЦРБ",
           "field": "fact",
-          "value": 103.28571428571429,
-          "fingerprint": "percentage_above_100|mo-data|hospital|1.2.643.5.1.13.13.12.2.16.1231|ФГАОУВО КФУ|fact",
+          "value": 101.05456391829082,
+          "fingerprint": "percentage_above_100|mo-data|semd228|1.2.643.5.1.13.13.12.2.16.1144|КУКМОРСКАЯ ЦРБ|fact",
+          "acknowledged": false,
+          "status": "WARNING",
+          "requiresAiReview": true,
+          "reviewReason": "anomaly"
+        },
+        {
+          "kind": "percentage_above_100",
+          "scope": "mo-data",
+          "metric": "semd228",
+          "organizationOid": "1.2.643.5.1.13.13.12.2.16.1138",
+          "organizationName": "НУРЛАТСКАЯ ЦРБ",
+          "field": "fact",
+          "value": 100.48679605472479,
+          "fingerprint": "percentage_above_100|mo-data|semd228|1.2.643.5.1.13.13.12.2.16.1138|НУРЛАТСКАЯ ЦРБ|fact",
+          "acknowledged": false,
+          "status": "WARNING",
+          "requiresAiReview": true,
+          "reviewReason": "anomaly"
+        },
+        {
+          "kind": "percentage_above_100",
+          "scope": "mo-data",
+          "metric": "semd228",
+          "organizationOid": "1.2.643.5.1.13.13.12.2.16.1039",
+          "organizationName": "ТЮЛЯЧИНСКАЯ ЦРБ",
+          "field": "fact",
+          "value": 103.4160106935987,
+          "fingerprint": "percentage_above_100|mo-data|semd228|1.2.643.5.1.13.13.12.2.16.1039|ТЮЛЯЧИНСКАЯ ЦРБ|fact",
           "acknowledged": false,
           "status": "WARNING",
           "requiresAiReview": true,
@@ -270,26 +298,52 @@
       "category": "anomaly",
       "status": "WARNING",
       "reviewReason": "anomaly",
-      "fingerprint": "percentage_above_100|mo-data|hospital|1.2.643.5.1.13.13.12.2.16.1092|АКТАНЫШСКАЯ ЦРБ|previous",
-      "metric": "hospital",
-      "organizationOid": "1.2.643.5.1.13.13.12.2.16.1092",
-      "organizationName": "АКТАНЫШСКАЯ ЦРБ",
-      "field": "previous",
+      "fingerprint": "percentage_above_100|mo-data|semd228|1.2.643.5.1.13.13.12.2.16.1072|ЗАИНСКАЯ ЦРБ|fact",
+      "metric": "semd228",
+      "organizationOid": "1.2.643.5.1.13.13.12.2.16.1072",
+      "organizationName": "ЗАИНСКАЯ ЦРБ",
+      "field": "fact",
       "expected": null,
-      "actual": 100.1333688983729
+      "actual": 101.79903096692648
     },
     {
       "checkId": "data.percentage_anomalies",
       "category": "anomaly",
       "status": "WARNING",
       "reviewReason": "anomaly",
-      "fingerprint": "percentage_above_100|mo-data|hospital|1.2.643.5.1.13.13.12.2.16.1231|ФГАОУВО КФУ|fact",
-      "metric": "hospital",
-      "organizationOid": "1.2.643.5.1.13.13.12.2.16.1231",
-      "organizationName": "ФГАОУВО КФУ",
+      "fingerprint": "percentage_above_100|mo-data|semd228|1.2.643.5.1.13.13.12.2.16.1144|КУКМОРСКАЯ ЦРБ|fact",
+      "metric": "semd228",
+      "organizationOid": "1.2.643.5.1.13.13.12.2.16.1144",
+      "organizationName": "КУКМОРСКАЯ ЦРБ",
       "field": "fact",
       "expected": null,
-      "actual": 103.28571428571429
+      "actual": 101.05456391829082
+    },
+    {
+      "checkId": "data.percentage_anomalies",
+      "category": "anomaly",
+      "status": "WARNING",
+      "reviewReason": "anomaly",
+      "fingerprint": "percentage_above_100|mo-data|semd228|1.2.643.5.1.13.13.12.2.16.1138|НУРЛАТСКАЯ ЦРБ|fact",
+      "metric": "semd228",
+      "organizationOid": "1.2.643.5.1.13.13.12.2.16.1138",
+      "organizationName": "НУРЛАТСКАЯ ЦРБ",
+      "field": "fact",
+      "expected": null,
+      "actual": 100.48679605472479
+    },
+    {
+      "checkId": "data.percentage_anomalies",
+      "category": "anomaly",
+      "status": "WARNING",
+      "reviewReason": "anomaly",
+      "fingerprint": "percentage_above_100|mo-data|semd228|1.2.643.5.1.13.13.12.2.16.1039|ТЮЛЯЧИНСКАЯ ЦРБ|fact",
+      "metric": "semd228",
+      "organizationOid": "1.2.643.5.1.13.13.12.2.16.1039",
+      "organizationName": "ТЮЛЯЧИНСКАЯ ЦРБ",
+      "field": "fact",
+      "expected": null,
+      "actual": 103.4160106935987
     }
   ]
 }
