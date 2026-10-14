@@ -2550,6 +2550,7 @@ function isMaxProfileInapplicable(name: string) {
 function isUnavailableSourceRow(row: MoRow) {
   const warning = row.sourceWarning?.toLocaleLowerCase("ru") ?? "";
   return (
+    row.fact === null || row.fact === undefined || row.sourceStatus === "no_source_row" ||
     warning.startsWith("нет строки в исходном перечне") ||
     warning.startsWith("нет строки в выгрузке") ||
     warning.startsWith("нет данных для корректного расчёта")
@@ -9120,7 +9121,8 @@ export default function Home() {
                     <b>Федеральная формула 2026 года:</b> MAX(СЭМД 122; СЭМД
                     228) по каждой МО ÷ обращения ФОМС с профилактической целью × 100%.
                     СЭМД не суммируются. Динамика к прежнему файлу не
-                    подменяется месячным приростом: сравниваются накопительные срезы на 31.07 и 31.08.
+                    подменяется месячным приростом: сравниваются накопительные срезы
+                    на {selectedDataset.previousDate ?? "предыдущую дату"} и {selectedDataset.date}.
                   </p>
                   <div className="errorSummary">
                     <div>
@@ -9405,7 +9407,10 @@ export default function Home() {
                               ? "МО в плановом перечне"
                               : "МО в исходнике"}
                           </small>
-                          <strong>{indicatorRows.length}</strong>
+                          <strong>{evaluableIndicatorRows.length}</strong>
+                          {evaluableIndicatorRows.length < indicatorRows.length && (
+                            <span>{indicatorRows.length - evaluableIndicatorRows.length} МО без данных; в оценку выполнения не включены</span>
+                          )}
                         </article>
                         {isCountMetric ? (
                           <>

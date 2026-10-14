@@ -19,9 +19,9 @@ test("500+ keeps September rating and exposes the October operational delta", ()
 });
 
 test("cumulative ratios use the previous numerator and denominator pair", () => {
-  assert.deepEqual([mo.semd228.previousNumerator, mo.semd228.previousDenominator], [1751161, 2200567]);
-  assert.equal(Number((mo.semd228.numerator / mo.semd228.denominator * 100).toFixed(2)), 80.16);
-  assert.equal(Number((mo.semd228.previousNumerator / mo.semd228.previousDenominator * 100).toFixed(2)), 79.58);
+  assert.deepEqual([mo.semd228.previousNumerator, mo.semd228.previousDenominator], [1792708, 2236503]);
+  assert.equal(Number((mo.semd228.numerator / mo.semd228.denominator * 100).toFixed(2)), 83.96);
+  assert.equal(Number((mo.semd228.previousNumerator / mo.semd228.previousDenominator * 100).toFixed(2)), 80.16);
   assert.equal(Number((mo.ambulatoryCase.numerator / mo.ambulatoryCase.denominator * 100).toFixed(2)), 90.87);
   assert.deepEqual([mo.hospital.numerator, mo.hospital.denominator], [661560, 748273]);
   assert.match(page, /componentPreviousFact/u);

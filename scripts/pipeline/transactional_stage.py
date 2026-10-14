@@ -135,7 +135,8 @@ def invoke(app, family, metric, item, partner):
     if family=='preventive_remd':
         if not partner or partner['status']=='FAIL' or partner['endDate']!=item['endDate'] or partner.get('startDate')!=start:
             raise ValueError('Нет парного источника за тот же отчетный период')
-        return adapt_preventive(app,source,Path(partner['path']),end,ROOT/'app/mo-registry.json')
+        approved_missing_oids = [r['oid'] for r in read(app/'preventive-semd-audit.json').get('excluded', [])]
+        return adapt_preventive(app,source,Path(partner['path']),end,ROOT/'app/mo-registry.json',approved_missing_oids)
     if family=='hospital_cases': return adapt_hospital(app,source,end)
     if family=='electronic_waybill' and item.get('previous'):
         previous=item['previous']
@@ -274,8 +275,17 @@ def stage(input_dir, output_dir, replay_manifest=None):
     for family,metrics in METRICS.items():
         item=latest(family)
         partner=latest('preventive_foms') if family=='preventive_remd' else None
+        if family=='preventive_remd' and partner and (not item or item.get('endDate')!=partner.get('endDate') or item.get('startDate')!=partner.get('startDate')):
+            # The general REMD export used for ELMK also contains registered
+            # SEMD 122 and 228 by MO. Prefer a same-period pair to a stale
+            # specialized report; never combine different reporting dates.
+            paired=[r for r in by.get('elmk',[]) if r.get('status')=='PASS' and r.get('endDate')==partner.get('endDate') and r.get('startDate')==partner.get('startDate')]
+            if len(paired)==1:
+                item={**paired[0], 'family':'preventive_remd'}
         received=by.get(family,[])
-        if family=='preventive_remd': received=received+by.get('preventive_foms',[])
+        if family=='preventive_remd':
+            received=received+by.get('preventive_foms',[])
+            if item and item['path'] not in {r['path'] for r in received}: received=received+[item]
         for metric in metrics:
             entry={'metric':metric,'label':metric_label(production,metric),'family':family,'state':'RETAINED','previousPeriod':period_metadata(production,metric),'sources':[source['name'] for source in received],'errors':[]}
             if not item:
