@@ -40,7 +40,7 @@ test("remaining 11.09 federal sources are synchronized", () => {
   assert.ok(units.tvspDiagnostic.plan >= units.tvspDiagnostic.fact && units.tvspDiagnostic.fact >= 0); assert.match(units.tvspDiagnostic.date, /^\d{2}\.\d{2}\.2026$/u);
   assert.ok(units.smpFederal.plan >= units.smpFederal.fact && units.smpFederal.fact >= 0); assert.match(units.smpFederal.date, /^\d{2}\.\d{2}\.2026$/u);
   assert.match(status.tmkRemd.date, /^\d{2}\.\d{2}\.2026$/u);
-  assert.equal(status.tmkRemd.rows.filter(row => row.fact > 0).length, 39);
+  assert.equal(status.tmkRemd.rows.filter(row => row.fact > 0).length, 40);
   assert.match(status.elmk.period, /^01\.01–\d{2}\.\d{2}\.2026$/u);
 });
 

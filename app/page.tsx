@@ -5,6 +5,7 @@ import moDataRaw from "./mo-data.json";
 import moDetailsRaw from "./mo-details.json";
 import moDetailOidsRaw from "./mo-detail-oids.json";
 import semdSummaryRaw from "./semd-summary.json";
+import methodologyAudit from "./methodology-audit.json";
 import operationalMoRaw from "./operational-mo.json";
 import errorCategoriesRaw from "./error-categories.json";
 import errorOrganizationsRaw from "./error-organizations.json";
@@ -1534,7 +1535,7 @@ const metricIds = [
     (id) => !presentationMetricOrder.includes(id),
   ),
 ];
-const calcErrors = [
+const historicalCalcErrors = [
   {
     severity: "critical",
     status: "Исправлена",
@@ -1813,6 +1814,8 @@ const calcErrors = [
       "Загрузить закрытую месячную выгрузку в начале сентября; подтвердить расчёт по назначениям врач–МО и строгий порог 501+.",
   },
 ];
+
+const calcErrors: typeof historicalCalcErrors = methodologyAudit.items;
 
 type Methodology = {
   id: string;
@@ -4005,7 +4008,7 @@ export default function Home() {
     if (!item.row.regionalId) return;
     setExtendedReturn({ point: item.row.id, scrollY: window.scrollY });
     setMatrixMetric(item.row.regionalId);
-    setDynamicsMode("operational");
+    setDynamicsMode(item.row.regionalId.startsWith("doctor") ? "month" : "operational");
     setTab("matrix");
     setShowMatrixSections(false);
     window.scrollTo({ top: 0, behavior: "auto" });
@@ -5472,7 +5475,7 @@ export default function Home() {
                     <button
                       key={id}
                       className={`sideMetricButton ${sidebarMetricTone(id)} ${matrixMetric === id ? "active" : ""}`}
-                      onClick={() => setMatrixMetric(id)}
+                      onClick={() => { setMatrixMetric(id); setDynamicsMode(id.startsWith("doctor") ? "month" : "operational"); }}
                       title={metricDisplayName(id)}
                     >
                       <span>{metricDisplayName(id)}</span>
@@ -6579,7 +6582,11 @@ export default function Home() {
                         planMetric.value !== null &&
                         ((regionalIsPercent && planMetric.unit === "%") ||
                           (!regionalIsPercent && planMetric.unit === "count"));
-                      const regionalStatus = regionalComparableToPlan
+                      const regionalStatus = row.regionalManualStatus === "achieved"
+                        ? "good"
+                        : row.regionalManualStatus === "notAchieved"
+                          ? "bad"
+                          : regionalComparableToPlan
                         ? statusFor(
                             regionalValue,
                             planMetric.value,
@@ -6749,7 +6756,7 @@ export default function Home() {
                                 className={`federalStatus ${regionalStatus}`}
                               >
                                 {regionalStatus === "good"
-                                  ? "План достигнут"
+                                  ? "Достигнут"
                                   : regionalStatus === "na"
                                     ? "Нет сопоставимого плана"
                                     : "Отклонение"}
@@ -8959,7 +8966,7 @@ export default function Home() {
                 <select
                   id="mobile-metric"
                   value={matrixMetric}
-                  onChange={(e) => setMatrixMetric(e.target.value)}
+                  onChange={(e) => { setMatrixMetric(e.target.value); setDynamicsMode(e.target.value.startsWith("doctor") ? "month" : "operational"); }}
                 >
                   {metricIds.map((id) => (
                     <option key={id} value={id}>
@@ -10137,9 +10144,7 @@ export default function Home() {
                   <p className="eyebrow">КОНТРОЛЬ МЕТОДИК И РАСЧЁТОВ</p>
                   <h1>Ошибки методик</h1>
                   <p>
-                    Последняя проверка: 31.08.2026 · новые источники по
-                    28–30.08.2026; каждый риск содержит временное правило и
-                    требуемое уточнение
+                    Последняя проверка: {methodologyAudit.checkedAt} · {methodologyAudit.note}
                   </p>
                 </div>
                 <div className="errorBadge">
@@ -10456,6 +10461,18 @@ export default function Home() {
                   </article>
                 ))}
               </div>
+              <details className="methodologyHistory">
+                <summary>Архив ранее выявленных замечаний — {historicalCalcErrors.length}</summary>
+                <p>Исторические наблюдения с исходными датами и значениями. Для замечаний, не вошедших в актуальную проверку, устранение не подтверждено.</p>
+                {historicalCalcErrors.map((item) => (
+                  <article key={item.source + item.issue}>
+                    <small>{item.source}</small>
+                    <h3>{item.issue}</h3>
+                    <p>{item.impact}</p>
+                    <p>{item.fix}</p>
+                  </article>
+                ))}
+              </details>
               </>}
             </>
           )}

@@ -1,9 +1,36 @@
 {
   "schemaVersion": 1,
   "baselineVersion": "5.4.5",
-  "dataDate": "10.10.2026",
+  "dataDate": "14.10.2026",
   "sourceOverallStatus": "WARNING",
-  "reviewCount": 0,
+  "reviewCount": 2,
   "rule": "AI receives only FAIL items, new anomalies and methodological conflicts; PASS and ordinary WARNING items are excluded.",
-  "items": []
+  "items": [
+    {
+      "checkId": "data.percentage_anomalies",
+      "category": "anomaly",
+      "status": "WARNING",
+      "reviewReason": "anomaly",
+      "fingerprint": "percentage_above_100|mo-data|hospital|1.2.643.5.1.13.13.12.2.16.1092|АКТАНЫШСКАЯ ЦРБ|previous",
+      "metric": "hospital",
+      "organizationOid": "1.2.643.5.1.13.13.12.2.16.1092",
+      "organizationName": "АКТАНЫШСКАЯ ЦРБ",
+      "field": "previous",
+      "expected": null,
+      "actual": 100.1333688983729
+    },
+    {
+      "checkId": "data.percentage_anomalies",
+      "category": "anomaly",
+      "status": "WARNING",
+      "reviewReason": "anomaly",
+      "fingerprint": "percentage_above_100|mo-data|hospital|1.2.643.5.1.13.13.12.2.16.1231|ФГАОУВО КФУ|fact",
+      "metric": "hospital",
+      "organizationOid": "1.2.643.5.1.13.13.12.2.16.1231",
+      "organizationName": "ФГАОУВО КФУ",
+      "field": "fact",
+      "expected": null,
+      "actual": 103.28571428571429
+    }
+  ]
 }

@@ -11,12 +11,14 @@ const styles = fs.readFileSync("app/globals.css", "utf8");
 test("v5.2.5 marks agreed RT facts as manual until primary reports arrive", () => {
   const byId = new Map(control.agreement.map((row) => [row.id, row]));
   assert.equal(byId.get("24").regionalFact, "35 из 35 · 100%");
-  for (const id of ["1.1", "18", "20", "25", "26", "29", "34", "36", "39.2", "40", "41", "42", "43"]) {
+  for (const id of ["1.1", "18", "20", "25", "26", "29", "34", "36", "40", "41", "42", "43"]) {
     assert.match(byId.get(id).sourceNote, /Ручной ввод/u, id);
     assert.match(byId.get(id).regionalPeriod, /2026/u, id);
   }
   assert.equal(byId.get("19").regionalFact, "Нет");
   assert.equal(byId.get("29").regionalFact, "14,25%");
+  assert.match(byId.get("39.2").sourceNote, /Подтвержденное количество/u);
+  assert.equal(byId.get("39.2").regionalFact, "17 246 СЭМД");
 });
 
 test("MAX separates official RT results from operational MO monitoring", () => {

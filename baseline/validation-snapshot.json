@@ -4,9 +4,10 @@
   "acknowledgedFingerprints": [
     "percentage_above_100|mo-data|hospital|1.2.643.5.1.13.13.12.2.16.1065|КДМЦ г.Наб.Челны|fact",
     "percentage_above_100|mo-data|hospital|1.2.643.5.1.13.13.12.2.16.1065|КДМЦ г.Наб.Челны|previous",
-    "percentage_above_100|mo-data|hospital|1.2.643.5.1.13.13.12.2.16.1092|АКТАНЫШСКАЯ ЦРБ|fact",
+    "percentage_above_100|mo-data|hospital|1.2.643.5.1.13.13.12.2.16.1092|АКТАНЫШСКАЯ ЦРБ|previous",
     "percentage_above_100|mo-data|hospital|1.2.643.5.1.13.13.12.2.16.1171|НДРБ С ПЦ г.Нижнекамск|fact",
     "percentage_above_100|mo-data|hospital|1.2.643.5.1.13.13.12.2.16.1171|НДРБ С ПЦ г.Нижнекамск|previous",
+    "percentage_above_100|mo-data|hospital|1.2.643.5.1.13.13.12.2.16.1231|ФГАОУВО КФУ|fact",
     "percentage_above_100|mo-data|semd228|1.2.643.5.1.13.13.12.2.16.1039|ТЮЛЯЧИНСКАЯ ЦРБ|previous",
     "percentage_above_100|mo-data|semd228|1.2.643.5.1.13.13.12.2.16.1072|ЗАИНСКАЯ ЦРБ|previous",
     "percentage_above_100|monthly-mo|hospital|1.2.643.5.1.13.13.12.2.16.1042|БУГУЛЬМИНСКАЯ ЦРБ|july",
@@ -925,6 +926,7 @@
       "1.2.643.5.1.13.13.12.2.16.1074",
       "1.2.643.5.1.13.13.12.2.16.1078",
       "1.2.643.5.1.13.13.12.2.16.1079",
+      "1.2.643.5.1.13.13.12.2.16.1080",
       "1.2.643.5.1.13.13.12.2.16.1081",
       "1.2.643.5.1.13.13.12.2.16.1082",
       "1.2.643.5.1.13.13.12.2.16.1084",
@@ -5050,7 +5052,7 @@
     "mo-data:ambulatoryCase": 144,
     "mo-data:tvspStationary": 93,
     "mo-data:tvspAmbulatory": 112,
-    "mo-data:tvspLaboratory": 83,
+    "mo-data:tvspLaboratory": 84,
     "mo-data:tvspDiagnostic": 107,
     "mo-data:smpFederal": 43,
     "mo-data:egpu2days": 84,
@@ -5101,7 +5103,7 @@
   },
   "acknowledgedCounts": {
     "unresolvedOrganizations": 102,
-    "percentageAnomalies": 21,
+    "percentageAnomalies": 22,
     "missingCurrentValues": 0
   }
 }
