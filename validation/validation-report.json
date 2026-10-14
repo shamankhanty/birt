@@ -94,9 +94,9 @@
       "status": "PASS",
       "blocking": false,
       "requiresAiReview": false,
-      "message": "5084 rows contain no duplicate organization within a dataset",
+      "message": "5088 rows contain no duplicate organization within a dataset",
       "details": {
-        "inspectedRows": 5084
+        "inspectedRows": 5088
       },
       "issues": []
     },

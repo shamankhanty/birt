@@ -1,0 +1,71 @@
+{
+  "source": "Отчёт_по_врачам_сформировавших_СЭМД 14-10.xlsx",
+  "sha256": "0d7f90eebbfe598bd8c7f580bf3455bc17ada7f49acb806289e63e52f82c3a40",
+  "period": "01.09–30.09.2026",
+  "formed": "14.10.2026",
+  "quality": {
+    "allMoRows": 126,
+    "specialtyRows": 728,
+    "unmatchedOids": 0,
+    "categoryErrors": 0,
+    "allMoOids": 126,
+    "specialtyMoOids": 115
+  },
+  "facts": {
+    "doctorsAll": {
+      "numerator": 10674,
+      "denominator": 13542,
+      "fact": 78.8214443952149
+    },
+    "doctorsLevel3": {
+      "numerator": 3801,
+      "denominator": 4815,
+      "fact": 78.94080996884735
+    },
+    "doctor500_obgyn": {
+      "numerator": 238,
+      "denominator": 413,
+      "fact": 57.6271186440678
+    },
+    "doctor500_gp": {
+      "numerator": 263,
+      "denominator": 302,
+      "fact": 87.08609271523179
+    },
+    "doctor500_cardiologist": {
+      "numerator": 116,
+      "denominator": 206,
+      "fact": 56.310679611650485
+    },
+    "doctor500_oncologist": {
+      "numerator": 144,
+      "denominator": 232,
+      "fact": 62.06896551724138
+    },
+    "doctor500_ophthalmologist": {
+      "numerator": 119,
+      "denominator": 234,
+      "fact": 50.85470085470085
+    },
+    "doctor500_pediatrician": {
+      "numerator": 833,
+      "denominator": 1357,
+      "fact": 61.385408990420046
+    },
+    "doctor500_dentist": {
+      "numerator": 152,
+      "denominator": 652,
+      "fact": 23.31288343558282
+    },
+    "doctor500_therapist": {
+      "numerator": 861,
+      "denominator": 1386,
+      "fact": 62.121212121212125
+    },
+    "doctor500_surgeon": {
+      "numerator": 137,
+      "denominator": 277,
+      "fact": 49.458483754512635
+    }
+  }
+}

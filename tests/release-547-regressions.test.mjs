@@ -10,7 +10,7 @@ test("500+ keeps September rating and exposes the October operational delta", ()
   const september = JSON.parse(fs.readFileSync("app/physician-metrics.json", "utf8")).datasets.doctor500_pediatrician.summary;
   const current = weekly.summary.doctor500_pediatrician;
   const previous = weekly.previousSummary.doctor500_pediatrician;
-  assert.equal(september.fact, 58.90613451589062);
+  assert.equal(september.fact, 833 / 1357 * 100);
   assert.deepEqual([current.numerator, current.denominator], [301, 1324]);
   assert.deepEqual([previous.numerator, previous.denominator], [121, 1357]);
   assert.equal(Number((current.fact - previous.fact).toFixed(2)), 13.82);

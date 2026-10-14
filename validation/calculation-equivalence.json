@@ -1,10 +1,143 @@
 {
   "schemaVersion": 1,
   "baselineVersion": "5.4.10",
-  "status": "PASS",
+  "status": "FAIL",
   "checkedIndicators": 38,
   "registryCoverage": "38/38",
-  "mismatches": [],
+  "mismatches": [
+    {
+      "id": "doctor500_cardiologist",
+      "field": "fact",
+      "expected": 54.41176470588235,
+      "actual": 56.310679611650485
+    },
+    {
+      "id": "doctor500_cardiologist",
+      "field": "quantity",
+      "expected": 111,
+      "actual": 116
+    },
+    {
+      "id": "doctor500_dentist",
+      "field": "fact",
+      "expected": 18.529862174578867,
+      "actual": 23.31288343558282
+    },
+    {
+      "id": "doctor500_dentist",
+      "field": "quantity",
+      "expected": 121,
+      "actual": 152
+    },
+    {
+      "id": "doctor500_gp",
+      "field": "fact",
+      "expected": 85.47854785478548,
+      "actual": 87.08609271523179
+    },
+    {
+      "id": "doctor500_gp",
+      "field": "quantity",
+      "expected": 259,
+      "actual": 263
+    },
+    {
+      "id": "doctor500_obgyn",
+      "field": "fact",
+      "expected": 56.067961165048544,
+      "actual": 57.6271186440678
+    },
+    {
+      "id": "doctor500_obgyn",
+      "field": "quantity",
+      "expected": 231,
+      "actual": 238
+    },
+    {
+      "id": "doctor500_oncologist",
+      "field": "fact",
+      "expected": 61.206896551724135,
+      "actual": 62.06896551724138
+    },
+    {
+      "id": "doctor500_oncologist",
+      "field": "quantity",
+      "expected": 142,
+      "actual": 144
+    },
+    {
+      "id": "doctor500_ophthalmologist",
+      "field": "fact",
+      "expected": 46.808510638297875,
+      "actual": 50.85470085470085
+    },
+    {
+      "id": "doctor500_ophthalmologist",
+      "field": "quantity",
+      "expected": 110,
+      "actual": 119
+    },
+    {
+      "id": "doctor500_pediatrician",
+      "field": "fact",
+      "expected": 58.90613451589062,
+      "actual": 61.385408990420046
+    },
+    {
+      "id": "doctor500_pediatrician",
+      "field": "quantity",
+      "expected": 797,
+      "actual": 833
+    },
+    {
+      "id": "doctor500_surgeon",
+      "field": "fact",
+      "expected": 47.08029197080292,
+      "actual": 49.458483754512635
+    },
+    {
+      "id": "doctor500_surgeon",
+      "field": "quantity",
+      "expected": 129,
+      "actual": 137
+    },
+    {
+      "id": "doctor500_therapist",
+      "field": "fact",
+      "expected": 60.2158273381295,
+      "actual": 62.121212121212125
+    },
+    {
+      "id": "doctor500_therapist",
+      "field": "quantity",
+      "expected": 837,
+      "actual": 861
+    },
+    {
+      "id": "doctorsAll",
+      "field": "fact",
+      "expected": 78.68352547415395,
+      "actual": 78.8214443952149
+    },
+    {
+      "id": "doctorsAll",
+      "field": "quantity",
+      "expected": 10579,
+      "actual": 10674
+    },
+    {
+      "id": "doctorsLevel3",
+      "field": "fact",
+      "expected": 78.06143628061436,
+      "actual": 78.94080996884735
+    },
+    {
+      "id": "doctorsLevel3",
+      "field": "quantity",
+      "expected": 3761,
+      "actual": 3801
+    }
+  ],
   "preservedBaselineConflicts": [],
   "note": "PASS means the current deterministic calculation layer reproduces the approved runtime snapshot."
 }

@@ -56,10 +56,10 @@ test("every 500+ category exposes the closed month beside numerator-derived oper
   const monthlyDentist = physicians.datasets.doctor500_dentist.summary;
   const currentDentist = weekly.summary.doctor500_dentist;
   const previousDentist = weekly.previousSummary.doctor500_dentist;
-  assert.deepEqual([monthlyDentist.numerator, monthlyDentist.denominator], [121, 653]);
+  assert.deepEqual([monthlyDentist.numerator, monthlyDentist.denominator], [152, 652]);
   assert.deepEqual([previousDentist.numerator, previousDentist.denominator], [3, 653]);
   assert.deepEqual([currentDentist.numerator, currentDentist.denominator], [12, 635]);
-  assert.equal(Number(monthlyDentist.fact.toFixed(2)), 18.53);
+  assert.equal(Number(monthlyDentist.fact.toFixed(2)), 23.31);
   assert.equal(Number(previousDentist.fact.toFixed(2)), 0.46);
   assert.equal(Number(currentDentist.fact.toFixed(2)), 1.89);
 });

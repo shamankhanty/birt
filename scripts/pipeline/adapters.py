@@ -706,7 +706,7 @@ SPECIALTIES={"Акушер-гинеколог":"doctor500_obgyn","Врач об�
 
 def parse_physicians(path: Path, registry_path: Path, only_metric=None) -> dict:
     wb=open_workbook(path,read_only=True,data_only=True); registry=json.loads(registry_path.read_text(encoding="utf-8"))["organizations"]; roids={str(x["oid"]) for x in registry}
-    all_rows=[r for r in wb["Все врачи_Детализация по МО"].iter_rows(min_row=9,values_only=True) if r[0]=="Республика Татарстан" and r[1]]
+    all_rows=[r for r in wb["Все врачи_Детализация по МО"].iter_rows(values_only=True) if r[0]=="Республика Татарстан" and r[1]]
     specialty_rows=[r for r in wb["Врачи по спец-тям_По МО"].iter_rows(min_row=9,values_only=True) if r[0]=="Республика Татарстан" and r[1] and r[4] in SPECIALTIES]
     if only_metric:
         specialty_rows=[r for r in specialty_rows if SPECIALTIES[r[4]]==only_metric]
@@ -763,7 +763,8 @@ def adapt_physicians(app: Path, source: Path, end: date, registry_path: Path, on
         old_ds=phys.get("datasets",{}).get(metric,{}); prev=previous_rows_from_dataset(old_ds); rows=[]
         for x in cur:
             old=prev.get(x["oid"]); warning="Справочно: в МО только 1–2 врача этой специальности; в заслушивании не оценивается." if metric.startswith("doctor500_") and x["volume"]<3 else None
-            rows.append({**x,"previous":old.get("fact") if old else None,"trend":None if not old else x["fact"]-old.get("fact",0),"sourceWarning":warning})
+            previous = old.get("fact") if old else None
+            rows.append({**x,"previous":previous,"trend":None if previous is None else x["fact"]-previous,"sourceWarning":warning})
         num=sum(x["count"] for x in cur); den=sum(x["volume"] for x in cur)
         full_month = is_full_month(end)
         period = month_label(end) if full_month else period_cumulative(end)
