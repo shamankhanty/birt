@@ -2550,6 +2550,7 @@ function isMaxProfileInapplicable(name: string) {
 function isUnavailableSourceRow(row: MoRow) {
   const warning = row.sourceWarning?.toLocaleLowerCase("ru") ?? "";
   return (
+    row.fact === null || row.fact === undefined || row.sourceStatus === "no_source_row" ||
     warning.startsWith("нет строки в исходном перечне") ||
     warning.startsWith("нет строки в выгрузке") ||
     warning.startsWith("нет данных для корректного расчёта")
@@ -9406,7 +9407,10 @@ export default function Home() {
                               ? "МО в плановом перечне"
                               : "МО в исходнике"}
                           </small>
-                          <strong>{indicatorRows.length}</strong>
+                          <strong>{evaluableIndicatorRows.length}</strong>
+                          {evaluableIndicatorRows.length < indicatorRows.length && (
+                            <span>{indicatorRows.length - evaluableIndicatorRows.length} МО без данных; в оценку выполнения не включены</span>
+                          )}
                         </article>
                         {isCountMetric ? (
                           <>
