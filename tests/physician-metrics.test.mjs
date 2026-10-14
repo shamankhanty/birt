@@ -6,10 +6,10 @@ const data = JSON.parse(fs.readFileSync(new URL("../app/physician-metrics.json",
 const source = fs.readFileSync(new URL("../app/page.tsx", import.meta.url), "utf8");
 
 test("physician report covers all expected organizations and specialties", () => {
-  assert.equal(data.quality.allMoRows, 125);
-  assert.equal(data.quality.allMoOids, 125);
-  assert.equal(data.quality.specialtyRows, 726);
-  assert.equal(data.quality.specialtyMoOids, 116);
+  assert.equal(data.quality.allMoRows, 126);
+  assert.equal(data.quality.allMoOids, 126);
+  assert.equal(data.quality.specialtyRows, 728);
+  assert.equal(data.quality.specialtyMoOids, 115);
   assert.equal(data.quality.unmatchedOids, 0);
   assert.equal(data.quality.categoryErrors, 0);
   assert.equal(Object.keys(data.datasets).length, 11);
@@ -17,17 +17,17 @@ test("physician report covers all expected organizations and specialties", () =>
 
 test("regional physician totals reproduce the federal workbook", () => {
   assert.deepEqual(data.datasets.doctorsAll.summary, {
-    numerator: 10579,
-    denominator: 13445,
-    fact: 10579 / 13445 * 100,
+    numerator: 10674,
+    denominator: 13542,
+    fact: 10674 / 13542 * 100,
   });
   assert.deepEqual(data.datasets.doctorsLevel3.summary, {
-    numerator: 3761,
-    denominator: 4818,
-    fact: 3761 / 4818 * 100,
+    numerator: 3801,
+    denominator: 4815,
+    fact: 3801 / 4815 * 100,
   });
-  assert.equal(data.datasets.doctor500_dentist.summary.numerator, 121);
-  assert.equal(data.datasets.doctor500_dentist.summary.denominator, 653);
+  assert.equal(data.datasets.doctor500_dentist.summary.numerator, 152);
+  assert.equal(data.datasets.doctor500_dentist.summary.denominator, 652);
 });
 
 test("small specialty denominators are reference-only in hearings", () => {
