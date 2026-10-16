@@ -6282,7 +6282,9 @@ export default function Home() {
                             : regional.fact - regional.plan
                           : null;
                       const federalDelta =
-                        regionalFile?.unit === "%" &&
+                        (row.id === "20" && item.source === "agreement")
+                          ? null
+                          : regionalFile?.unit === "%" &&
                         federal.unit === "%" &&
                         regionalFile.value !== null &&
                         federal.value !== null
@@ -6434,8 +6436,9 @@ export default function Home() {
                               </button>
                             ) : (
                               <span>
-                                Сопоставимый региональный расчёт по методике
-                                показателя не представлен
+                                {regionalFile?.value != null
+                                  ? "Факт внесён вручную; первичный расчёт с числителем и знаменателем пока не представлен"
+                                  : "Сопоставимый региональный расчёт по методике показателя не представлен"}
                               </span>
                             )}
                             {regional && (
