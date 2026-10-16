@@ -10,6 +10,7 @@ import operationalMoRaw from "./operational-mo.json";
 import errorCategoriesRaw from "./error-categories.json";
 import errorOrganizationsRaw from "./error-organizations.json";
 import errorCumulativeRaw from "./error-cumulative.json";
+import errorGuidanceRaw from "./error-guidance.json";
 import monthlyMoRaw from "./monthly-mo.json";
 import maxAppointmentsMunicipalRaw from "./max-appointments-municipal.json";
 import unitDataRaw from "./unit-data.json";
@@ -5319,6 +5320,13 @@ export default function Home() {
     setSelectedErrorOrganization(null);
     setErrorOrganizationQuery("");
   };
+  const activeErrorGuide = errorGuidanceRaw.items.find(
+    (item) => item.names.includes(selectedErrorCategory ?? ""),
+  );
+  const showErrorGuide = (name: string) => {
+    setSelectedErrorCategory(name);
+    requestAnimationFrame(() => document.getElementById("remd-error-guide")?.scrollIntoView({ behavior: "smooth", block: "start" }));
+  };
   const errorBreakdown = selectedErrorData.organizationBreakdown;
   const unassignedErrorOrganization: ErrorOrganization | null =
     errorBreakdown && errorBreakdown.unassignedErrors > 0
@@ -10286,11 +10294,9 @@ export default function Home() {
                           type="button"
                           className={selectedErrorCategory === e.name ? "selected" : ""}
                           key={e.name}
-                          onClick={() =>
-                            setSelectedErrorCategory((current) =>
-                              current === e.name ? null : e.name,
-                            )
-                          }
+                          aria-controls="remd-error-guide"
+                          aria-pressed={selectedErrorCategory === e.name}
+                          onClick={() => showErrorGuide(e.name)}
                         >
                           <b>{idx + 1}</b>
                           <p>{e.name}</p>
@@ -10403,7 +10409,7 @@ export default function Home() {
                             {activeErrorOrganization.categories.map((category, idx) => (
                               <div key={category.name}>
                                 <b>{idx + 1}</b>
-                                <p>{category.name}</p>
+                                <p><button type="button" className="errorGuideLink" aria-controls="remd-error-guide" onClick={() => showErrorGuide(category.name)}>{category.name}</button></p>
                                 <strong>{format(category.count, 0)}</strong>
                                 <span>
                                   {format(
@@ -10440,6 +10446,37 @@ export default function Home() {
                   выгрузке отсутствует знаменатель всех обработанных запросов.
                 </p>
               </div>
+              <section className="errorGuide" id="remd-error-guide" aria-labelledby="remd-error-guide-title">
+                <p className="eyebrow">ПОМОЩЬ ПО ОШИБКАМ</p>
+                <h2 id="remd-error-guide-title">Что означает ошибка и как её устранить</h2>
+                <label htmlFor="remd-error-guide-select">Выберите категорию ошибки</label>
+                <select id="remd-error-guide-select" value={selectedErrorCategory ?? ""}
+                  onChange={(event) => setSelectedErrorCategory(event.target.value || null)}>
+                  <option value="">Выберите ошибку из списка</option>
+                  {selectedErrorData.items.map((item) => <option key={item.name} value={item.name}>{item.name}</option>)}
+                </select>
+                {selectedErrorCategory ? (
+                  <div className="errorGuideBody" aria-live="polite">
+                    <h3>{selectedErrorCategory}</h3>
+                    {activeErrorGuide ? <>
+                      <p className="errorGuideCode">Код: {activeErrorGuide.code}</p>
+                      <p><b>Описание. </b>{activeErrorGuide.description}</p>
+                      {activeErrorGuide.needsDetails && <p className="dataWarning">Для уточнения причины нужен полный ответ сервиса: код, поле и отклонённое значение. Одна категория может объединять разные ситуации.</p>}
+                      <h4>Что проверить и сделать</h4>
+                      <ol>{activeErrorGuide.steps.map((step) => <li key={step}>{step}</li>)}</ol>
+                      <div className="errorGuideMeta">
+                        <p><b>К кому обратиться</b><span>{activeErrorGuide.owner}</span></p>
+                        <p><b>Повторная отправка</b><span>{activeErrorGuide.retry}</span></p>
+                      </div>
+                    </> : <>
+                      <p>Для новой категории инструкция пока не сопоставлена.</p>
+                      <p>Получите полный ответ сервиса, идентификатор документа и время запроса; передайте их администратору МИС для диагностики. Повторная отправка зависит от причины и текущего статуса регистрации.</p>
+                    </>}
+                  </div>
+                ) : <p>Нажмите категорию в общем списке, в детализации МО или выберите её здесь.</p>}
+                <p className="errorGuideSource"><a href={errorGuidanceRaw.sourceUrl} target="_blank" rel="noopener noreferrer">Справочник РТ МИС: ошибки РЭМД и способы устранения</a> · проверено {errorGuidanceRaw.checkedAt}</p>
+                <small>{errorGuidanceRaw.note} Ответственные указаны как рекомендуемый маршрут обращения.</small>
+              </section>
               </>}
               {tab === "errors" && <>
               <div className="errorSummary">
