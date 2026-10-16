@@ -9,6 +9,7 @@ import methodologyAudit from "./methodology-audit.json";
 import operationalMoRaw from "./operational-mo.json";
 import errorCategoriesRaw from "./error-categories.json";
 import errorOrganizationsRaw from "./error-organizations.json";
+import errorCumulativeRaw from "./error-cumulative.json";
 import monthlyMoRaw from "./monthly-mo.json";
 import maxAppointmentsMunicipalRaw from "./max-appointments-municipal.json";
 import unitDataRaw from "./unit-data.json";
@@ -3335,6 +3336,7 @@ export default function Home() {
   const [maxAppointmentSortDirection, setMaxAppointmentSortDirection] = useState<SortDirection>("desc");
   const [semdQuery, setSemdQuery] = useState("");
   const [semdOnlyRegistered, setSemdOnlyRegistered] = useState(true);
+  const [errorPeriod, setErrorPeriod] = useState<"cumulative" | "weekly">("weekly");
   const [errorView, setErrorView] = useState<"categories" | "organizations">(
     "categories",
   );
@@ -5308,7 +5310,16 @@ export default function Home() {
       return semdSortDirection === "asc" ? compared : -compared;
     });
 
-  const errorBreakdown = errorCategories.organizationBreakdown;
+  const selectedErrorData = errorPeriod === "cumulative"
+    ? errorCumulativeRaw as typeof errorCategories
+    : errorCategories;
+  const changeErrorPeriod = (period: "cumulative" | "weekly") => {
+    setErrorPeriod(period);
+    setSelectedErrorCategory(null);
+    setSelectedErrorOrganization(null);
+    setErrorOrganizationQuery("");
+  };
+  const errorBreakdown = selectedErrorData.organizationBreakdown;
   const unassignedErrorOrganization: ErrorOrganization | null =
     errorBreakdown && errorBreakdown.unassignedErrors > 0
       ? {
@@ -10181,21 +10192,40 @@ export default function Home() {
                   </p>
                 </div>
                 <div className="errorBadge">
-                  <strong>{format(errorCategories.total, 0)}</strong>
+                  <strong>{format(selectedErrorData.total, 0)}</strong>
                   <span>отказов регистрации</span>
                 </div>
               </div>
+              <div className="errorViewTabs" role="tablist" aria-label="Период ошибок РЭМД">
+                <button type="button" role="tab"
+                  aria-selected={errorPeriod === "cumulative"}
+                  className={errorPeriod === "cumulative" ? "active" : ""}
+                  onClick={() => changeErrorPeriod("cumulative")}>
+                  Накопительно с начала года
+                </button>
+                <button type="button" role="tab"
+                  aria-selected={errorPeriod === "weekly"}
+                  className={errorPeriod === "weekly" ? "active" : ""}
+                  onClick={() => changeErrorPeriod("weekly")}>
+                  Оперативно за неделю
+                </button>
+              </div>
+              <p className="dataWarning">
+                {errorPeriod === "cumulative"
+                  ? `Накопительный срез: ${selectedErrorData.period}. Дата окончания — по последней доступной годовой выгрузке. Недельные отчёты к ней не прибавляются.`
+                  : `Оперативный срез за неделю: ${selectedErrorData.period}.`}
+              </p>
               <div className="registrationErrors">
                 <div className="registrationHead">
                   <div>
                     <p className="eyebrow">ОТКАЗЫ ФЕДЕРАЛЬНОЙ РЕГИСТРАЦИИ</p>
                     <h2>Категории ошибок регистрации СЭМД</h2>
                     <p>
-                      {errorCategories.period} · всего{" "}
-                      {format(errorCategories.total, 0)} ошибок
+                      {selectedErrorData.period} · всего{" "}
+                      {format(selectedErrorData.total, 0)} ошибок
                     </p>
                   </div>
-                  <span>{errorCategories.items.length} категории</span>
+                  <span>{selectedErrorData.items.length} категории</span>
                 </div>
 
                 <div className="errorViewTabs" role="tablist" aria-label="Разрез ошибок регистрации">
@@ -10251,7 +10281,7 @@ export default function Home() {
                       <span>Структура</span>
                     </div>
                     <div className="errorCategoryList">
-                      {errorCategories.items.map((e, idx) => (
+                      {selectedErrorData.items.map((e, idx) => (
                         <button
                           type="button"
                           className={selectedErrorCategory === e.name ? "selected" : ""}
@@ -10266,11 +10296,11 @@ export default function Home() {
                           <p>{e.name}</p>
                           <strong>{format(e.count, 0)}</strong>
                           <span title="Удельный вес категории в общем массиве ошибок, не показатель качества МО">
-                            {format((e.count / errorCategories.total) * 100, 2)}%
+                            {format((e.count / selectedErrorData.total) * 100, 2)}%
                           </span>
                           <i
                             style={{
-                              width: `${(e.count / errorCategories.items[0].count) * 100}%`,
+                              width: `${(e.count / selectedErrorData.items[0].count) * 100}%`,
                             }}
                           />
                         </button>
