@@ -549,3 +549,16 @@ body{font-size:14px}
 /* Ручная сортировка таблицы фактических записей через МАХ. */
 .maxTable th{padding:0!important}.maxTable th button{display:flex;align-items:center;justify-content:center;gap:4px;width:100%;min-height:42px;padding:11px 10px;border:0;background:transparent;color:inherit;font:inherit;font-weight:800;cursor:pointer}.maxTable th:first-child button{justify-content:flex-start}.maxTable th button i{display:inline-grid;place-items:center;width:16px;height:16px;border-radius:5px;background:#dce9e4;font-size:10px;font-style:normal}.maxTable th button.sorted{color:#0c7057}.maxTable th button.sorted i{background:#176b54;color:#fff}
 .maxPlanInsights{gap:12px}.maxPlanInsights article{border-color:#d7e4df;border-radius:16px;box-shadow:0 10px 28px rgba(23,67,54,.055)}.maxPlanInsights article:before{height:5px}.maxPlanInsights header{padding:15px 16px 12px}.maxPlanInsights header span{gap:3px}.maxPlanInsights header b{font-size:17px}.maxPlanInsights header small{font-size:11px}.maxPlanInsights ol{padding:7px 14px 12px}.maxPlanInsights li{grid-template-columns:24px minmax(0,1fr) 72px;gap:8px;min-height:43px;font-size:12px}.maxPlanInsights li i{font-size:11px}.maxPlanInsights li b{font-size:12px}
+
+/* REMD guidance shared by both reporting periods and MO drilldowns. */
+.errorGuide{scroll-margin-top:24px;background:#fff;border:1px solid var(--line);border-radius:17px;padding:22px;margin:18px 0;color:var(--ink)}
+.errorGuide h2{font-size:22px;margin:0 0 18px}.errorGuide label{display:block;font-size:13px;margin-bottom:7px;color:var(--muted)}
+.errorGuide select{width:100%;max-width:100%;font:inherit;font-size:14px;padding:12px;border:1px solid #aacbbf;border-radius:9px;background:#f8fcfa;color:inherit}
+.errorGuide h3{font-size:19px;line-height:1.4;margin:20px 0 8px;overflow-wrap:anywhere}.errorGuide p,.errorGuide li{font-size:14px;line-height:1.6}
+.errorGuide h4{font-size:15px;margin:18px 0 8px}.errorGuide ol{padding-left:24px}.errorGuide li{padding:3px 0}
+.errorGuideCode{color:var(--muted);overflow-wrap:anywhere}.errorGuideMeta{display:grid;grid-template-columns:1fr 1fr;gap:14px;border-top:1px solid var(--line);margin-top:18px}
+.errorGuideMeta b,.errorGuideMeta span{display:block}.errorGuideMeta span{margin-top:5px}.errorGuideSource{margin-top:18px}.errorGuideSource a{color:#176c53;text-decoration:underline}
+.errorGuide small{display:block;font-size:12px;line-height:1.5;color:var(--muted)}
+.errorGuideLink{border:0;background:none;color:#176c53;text-align:left;text-decoration:underline;font:inherit;padding:0;cursor:pointer}
+.errorGuideLink:focus-visible,.errorGuide select:focus-visible{outline:2px solid #176c53;outline-offset:3px}
+@media(max-width:700px){.errorGuide{padding:16px}.errorGuideMeta{grid-template-columns:1fr}.errorGuide h2{font-size:19px}}
