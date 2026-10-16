@@ -28,9 +28,9 @@ function validate(data) {
 test("both error periods reconcile by category and organization independently", () => {
   validate(weekly);
   validate(cumulative);
-  assert.equal(cumulative.total, 14374432);
-  assert.equal(cumulative.period, "01.01.2026–17.09.2026");
-  assert.equal(cumulative.organizationBreakdown.organizationCount, 312);
+  assert.equal(cumulative.total, 15567378);
+  assert.equal(cumulative.period, "01.01.2026–13.10.2026");
+  assert.equal(cumulative.organizationBreakdown.organizationCount, 324);
   assert.equal(cumulative.share, null);
   assert.equal(cumulative.periodKind, "cumulative");
 });
