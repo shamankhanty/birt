@@ -1,0 +1,148 @@
+{
+  "checkedAt": "18.10.2026",
+  "status": "WARNING",
+  "sources": [
+    {
+      "name": "Количество_СЭМД_Результаты_профилактического_медицинского_осмотрадиспансеризации - 18.10.xlsx",
+      "sha256": "fe35406168eb7ed22f5e13948f55b77c6a0a8610a0d63c8a127d6c4bd7c2da9c"
+    },
+    {
+      "name": "Отчет_Доля_ТВСП_СЭМД_Эпикриз по законченному случаю амбулаторный_Талон амбулаторного пациента и Протокол консультации (8).xlsx",
+      "sha256": "2f71120a69b4e9f2265cc337847844b7a74eefb858aef7876e4eedd160d424db"
+    },
+    {
+      "name": "Отчет_Доля_ТВСП_СЭМД_Эпикриз_в_стационаре_выписной_или_Выписной (10).xlsx",
+      "sha256": "0833e07248e54de75013a08cb1b8c050dbf4eea1c0f669b681955d25a1f46f30"
+    },
+    {
+      "name": "Отчет по госпитализациям_v2 - d071fba8-c21f-44f2-a598-dfd8b81754ad.xlsx",
+      "sha256": "6524303e8852fe2fc5fc7a99fd85590b5ec43d72c7c48441cbc6d0a738a8dedd"
+    },
+    {
+      "name": "Отчёт_по_врачам_сформировавших_СЭМД (3).xlsx",
+      "sha256": "cdc4b965bc772a61152255b98fcb0ed159e42ce372442cf9bb2d92af55827f6e"
+    },
+    {
+      "name": "Закрытые случаи ДОГВН ПМО и зарегистрированные СЭМД 122 и 228 - b94dec99-393b-4b59-a982-294874c0ef32.xlsx",
+      "sha256": "180dce1d270e837b4f76f4d3a087440722ee26d4a9df07d73cfcc1fde8472994"
+    }
+  ],
+  "accepted": {
+    "hospital": {
+      "date": "17.10.2026",
+      "rows": 130,
+      "numerator": 677367,
+      "denominator": 761865,
+      "fact": 88.90905869150046,
+      "organizationsAbove100Percent": 3,
+      "duplicateOids": [
+        {
+          "oid": "1.2.643.5.1.13.13.12.2.16.15115",
+          "rows": 2,
+          "denominators": [
+            153,
+            472
+          ]
+        }
+      ]
+    },
+    "tvspAmbulatory": {
+      "date": "17.10.2026",
+      "objects": 458,
+      "plan": 458,
+      "fact": 458,
+      "subunits": 896,
+      "registeredSubunits": 795
+    },
+    "tvspStationary": {
+      "date": "17.10.2026",
+      "objects": 273,
+      "plan": 273,
+      "fact": 270,
+      "subunits": 844,
+      "registeredSubunits": 686
+    },
+    "physicianWeekly": {
+      "date": "17.10.2026",
+      "period": "01.10.2026–17.10.2026",
+      "summary": {
+        "doctorsAll": {
+          "numerator": 10241,
+          "denominator": 13626,
+          "fact": 75.15778658447087
+        },
+        "doctorsLevel3": {
+          "numerator": 3688,
+          "denominator": 4871,
+          "fact": 75.7134058714843
+        },
+        "doctor500_obgyn": {
+          "numerator": 160,
+          "denominator": 420,
+          "fact": 38.095238095238095
+        },
+        "doctor500_gp": {
+          "numerator": 210,
+          "denominator": 300,
+          "fact": 70
+        },
+        "doctor500_cardiologist": {
+          "numerator": 63,
+          "denominator": 212,
+          "fact": 29.71698113207547
+        },
+        "doctor500_oncologist": {
+          "numerator": 99,
+          "denominator": 237,
+          "fact": 41.77215189873418
+        },
+        "doctor500_ophthalmologist": {
+          "numerator": 61,
+          "denominator": 236,
+          "fact": 25.847457627118644
+        },
+        "doctor500_pediatrician": {
+          "numerator": 562,
+          "denominator": 1352,
+          "fact": 41.56804733727811
+        },
+        "doctor500_dentist": {
+          "numerator": 35,
+          "denominator": 607,
+          "fact": 5.766062602965404
+        },
+        "doctor500_therapist": {
+          "numerator": 671,
+          "denominator": 1415,
+          "fact": 47.42049469964664
+        },
+        "doctor500_surgeon": {
+          "numerator": 81,
+          "denominator": 282,
+          "fact": 28.723404255319153
+        }
+      },
+      "quality": {
+        "allMoRows": 124,
+        "specialtyRows": 721,
+        "allMoOids": 124,
+        "specialtyMoOids": 113
+      }
+    }
+  },
+  "retained": {
+    "semd228": {
+      "dashboardDate": "13.10.2026",
+      "numerator": 1915517,
+      "denominator": 2281382,
+      "reason": "Новые парные источники несопоставимы по дате: СЭМД 17.10.2026, ФОМС 18.10.2026. По правилу same-period показатель не пересчитан.",
+      "candidateDiagnostics": {
+        "semdDate": "17.10.2026",
+        "fomsDate": "18.10.2026",
+        "selectedMax122or228": 1928178,
+        "closedCases": 2301502,
+        "fomsEncounters": 2307465
+      }
+    }
+  }
+}

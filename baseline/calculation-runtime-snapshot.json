@@ -256,14 +256,14 @@
       "source": "mo-data"
     },
     "hospital": {
-      "fact": 88.41158240374837,
+      "fact": 88.90905869150046,
       "plan": 95,
-      "date": "12.10.2026",
+      "date": "17.10.2026",
       "previous": null,
       "trend": null,
-      "quantity": 661560,
-      "numerator": 661560,
-      "denominator": 748273,
+      "quantity": 677367,
+      "numerator": 677367,
+      "denominator": 761865,
       "method": "ratio_components",
       "source": "mo-details"
     },
