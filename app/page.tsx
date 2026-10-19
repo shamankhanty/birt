@@ -620,18 +620,26 @@ type PhysicianMetricsData = {
   datasets: Record<string, PhysicianMetricDataset>;
 };
 const physicianMetricsSource = physicianMetricsRaw as PhysicianMetricsData;
+type PhysicianWeeklyRow = {
+  name: string;
+  oid: string;
+  fact: number;
+  count: number;
+  volume: number;
+  sourceWarning?: string | null;
+};
 type PhysicianWeeklySnapshot = {
   source: string;
   date: string;
   period: string;
   periods?: Record<string, { date: string; period: string; source: string }>;
   previousPeriods?: Record<string, { date?: string; period?: string; source?: string }>;
-  datasets: Record<string, Array<{ name: string; oid: string; fact: number; count: number; volume: number }>>;
+  datasets: Record<string, PhysicianWeeklyRow[]>;
   summary: Record<string, { numerator: number; denominator: number; fact: number | null }>;
   previousSource?: string | null;
   previousDate?: string | null;
   previousPeriod?: string | null;
-  previousDatasets?: Record<string, Array<{ name: string; oid: string; fact: number; count: number; volume: number }>>;
+  previousDatasets?: Record<string, PhysicianWeeklyRow[]>;
   previousSummary?: Record<string, { numerator: number; denominator: number; fact: number | null }>;
 };
 const physicianWeeklySnapshot = physicianWeeklySnapshotRaw as PhysicianWeeklySnapshot;
