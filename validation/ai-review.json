@@ -1,62 +1,9 @@
 {
   "schemaVersion": 1,
   "baselineVersion": "5.4.5",
-  "dataDate": "14.10.2026",
+  "dataDate": "19.10.2026",
   "sourceOverallStatus": "WARNING",
-  "reviewCount": 4,
+  "reviewCount": 0,
   "rule": "AI receives only FAIL items, new anomalies and methodological conflicts; PASS and ordinary WARNING items are excluded.",
-  "items": [
-    {
-      "checkId": "data.percentage_anomalies",
-      "category": "anomaly",
-      "status": "WARNING",
-      "reviewReason": "anomaly",
-      "fingerprint": "percentage_above_100|mo-data|semd228|1.2.643.5.1.13.13.12.2.16.1072|ЗАИНСКАЯ ЦРБ|fact",
-      "metric": "semd228",
-      "organizationOid": "1.2.643.5.1.13.13.12.2.16.1072",
-      "organizationName": "ЗАИНСКАЯ ЦРБ",
-      "field": "fact",
-      "expected": null,
-      "actual": 101.79903096692648
-    },
-    {
-      "checkId": "data.percentage_anomalies",
-      "category": "anomaly",
-      "status": "WARNING",
-      "reviewReason": "anomaly",
-      "fingerprint": "percentage_above_100|mo-data|semd228|1.2.643.5.1.13.13.12.2.16.1144|КУКМОРСКАЯ ЦРБ|fact",
-      "metric": "semd228",
-      "organizationOid": "1.2.643.5.1.13.13.12.2.16.1144",
-      "organizationName": "КУКМОРСКАЯ ЦРБ",
-      "field": "fact",
-      "expected": null,
-      "actual": 101.05456391829082
-    },
-    {
-      "checkId": "data.percentage_anomalies",
-      "category": "anomaly",
-      "status": "WARNING",
-      "reviewReason": "anomaly",
-      "fingerprint": "percentage_above_100|mo-data|semd228|1.2.643.5.1.13.13.12.2.16.1138|НУРЛАТСКАЯ ЦРБ|fact",
-      "metric": "semd228",
-      "organizationOid": "1.2.643.5.1.13.13.12.2.16.1138",
-      "organizationName": "НУРЛАТСКАЯ ЦРБ",
-      "field": "fact",
-      "expected": null,
-      "actual": 100.48679605472479
-    },
-    {
-      "checkId": "data.percentage_anomalies",
-      "category": "anomaly",
-      "status": "WARNING",
-      "reviewReason": "anomaly",
-      "fingerprint": "percentage_above_100|mo-data|semd228|1.2.643.5.1.13.13.12.2.16.1039|ТЮЛЯЧИНСКАЯ ЦРБ|fact",
-      "metric": "semd228",
-      "organizationOid": "1.2.643.5.1.13.13.12.2.16.1039",
-      "organizationName": "ТЮЛЯЧИНСКАЯ ЦРБ",
-      "field": "fact",
-      "expected": null,
-      "actual": 103.4160106935987
-    }
-  ]
+  "items": []
 }

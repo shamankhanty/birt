@@ -8,16 +8,14 @@ const updater=await readFile(new URL("../scripts/refresh_preventive_semd.py",imp
 
 test("federal 2026 calculation uses per-organization MAX from REMD and FOMS",async()=>{
   assert.equal(audit.summary.status,"ready");
-  assert.equal(audit.summary.organizations,95);
-  assert.equal(audit.summary.numerator,1915517);
-  assert.equal(audit.summary.denominator,2281382);
-  assert.equal(audit.summary.period122,'01.01–13.10.2026');
-  assert.equal(audit.summary.period228,'01.01–13.10.2026');
-  assert.deepEqual(audit.excluded.map(r=>[r.oid,r.denominator]),[['1.2.643.5.1.13.13.12.2.18.1384',1]]);
+  assert.equal(audit.summary.organizations,96);
+  assert.equal(audit.summary.numerator,1953316);
+  assert.equal(audit.summary.denominator,2308096);
+  assert.equal(audit.summary.period122,'01.01–18.10.2026');
+  assert.equal(audit.summary.period228,'01.01–18.10.2026');
+  assert.deepEqual(audit.excluded,[]);
   const dataset=JSON.parse(await readFile(new URL('../app/mo-data.json',import.meta.url),'utf8')).semd228;
-  const missing=dataset.rows.find(r=>r.oid===audit.excluded[0].oid);
-  assert.equal(missing.fact,null);
-  assert.equal(missing.count,null);
+  assert.equal(dataset.rows.filter(r=>r.fact===null || r.count===null).length,0);
   assert.ok(audit.summary.numerator > 0);
   assert.ok(audit.summary.denominator > 0);
   assert.equal(audit.summary.share, audit.summary.numerator / audit.summary.denominator * 100);

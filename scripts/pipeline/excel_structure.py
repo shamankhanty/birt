@@ -78,7 +78,11 @@ def inspect_workbook(path):
             # (e.g. "Январь-Сентябрь") and the actual cut date as generation date.
             # For the current cumulative year-to-date source, use 01.01 through that cut date.
             formed = [v.date() for row in rows if 'Дата формирования' in str(row[0]) for v in row if isinstance(v, datetime)]
-            month_range = any('январь-сентябрь' in ' '.join(str(v).lower() for v in row if v is not None) for row in rows)
+            month_range = any(
+                re.search(r'январь\s*[-–]\s*(?:февраль|март|апрель|май|июнь|июль|август|сентябрь|октябрь|ноябрь|декабрь)',
+                          ' '.join(str(v).lower() for v in row if v is not None))
+                for row in rows
+            )
             if formed and month_range: periods.append((date(formed[0].year, 1, 1), formed[0]))
         unique = sorted(set(periods))
         result = {'family': family, 'sheets': sheets}
