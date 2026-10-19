@@ -23,6 +23,8 @@ from typing import Iterable
 import openpyxl
 from io import BytesIO
 
+from .physician500_audit import reconcile_physician500_detail
+
 
 def open_workbook(path, **kwargs):
     # Read the snapshot into memory so Windows does not retain source file locks.
@@ -730,6 +732,14 @@ def parse_physicians(path: Path, registry_path: Path, only_metric=None) -> dict:
             if sp not in subject_values or (only_metric and key!=only_metric): continue
             expected=subject_values[sp]; actual=(sum(x["volume"] for x in out[key]),sum(x["count"] for x in out[key]))
             if expected!=actual: raise ValueError(f"Врачи: региональная сверка не сходится {sp}: {expected} != {actual}")
+    # Quality control only: compare aggregated physician results with the
+    # worker-OID detail, but NEVER recalculate approved numerator/denominator.
+    # Differences in the FRMR population / eligibility require manual review.
+    detail_sheet = wb["Все врачи_Детализация по врачам"] if "Все врачи_Детализация по врачам" in wb.sheetnames else None
+    reconcile_physician500_detail(
+        detail_sheet.iter_rows(min_row=8, values_only=True) if detail_sheet else None,
+        out,
+    )
     return {k:v for k,v in out.items() if not only_metric or k==only_metric}
 
 
@@ -766,7 +776,7 @@ def adapt_physicians(app: Path, source: Path, end: date, registry_path: Path, on
         for x in cur:
             old=prev.get(x["oid"]); warning="Справочно: в МО только 1–2 врача этой специальности; в заслушивании не оценивается." if metric.startswith("doctor500_") and x["volume"]<3 else None
             previous = old.get("fact") if old else None
-            rows.append({**x,"previous":previous,"trend":None if previous is None else x["fact"]-previous,"sourceWarning":warning})
+            rows.append({**x,"previous":previous,"trend":None if previous is None else x["fact"]-previous,"sourceWarning":" ".join(p for p in (warning,x.get("sourceWarning")) if p) or None})
         num=sum(x["count"] for x in cur); den=sum(x["volume"] for x in cur)
         full_month = is_full_month(end)
         period = month_label(end) if full_month else period_cumulative(end)
