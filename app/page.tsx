@@ -23,6 +23,7 @@ import hearingSnapshotsRaw from "./hearing-snapshots.json";
 import preventiveSemdAuditRaw from "./preventive-semd-audit.json";
 import physicianMetricsRaw from "./physician-metrics.json";
 import physicianWeeklySnapshotRaw from "./physician-weekly-snapshot.json";
+import physician500ReviewsRaw from "../config/physician-500-reviews.json";
 import indicatorRegistryRaw from "../config/indicator-registry.json";
 import maxTargetsRaw from "../config/max-targets-2026.json";
 import {
@@ -619,18 +620,26 @@ type PhysicianMetricsData = {
   datasets: Record<string, PhysicianMetricDataset>;
 };
 const physicianMetricsSource = physicianMetricsRaw as PhysicianMetricsData;
+type PhysicianWeeklyRow = {
+  name: string;
+  oid: string;
+  fact: number;
+  count: number;
+  volume: number;
+  sourceWarning?: string | null;
+};
 type PhysicianWeeklySnapshot = {
   source: string;
   date: string;
   period: string;
   periods?: Record<string, { date: string; period: string; source: string }>;
   previousPeriods?: Record<string, { date?: string; period?: string; source?: string }>;
-  datasets: Record<string, Array<{ name: string; oid: string; fact: number; count: number; volume: number }>>;
+  datasets: Record<string, PhysicianWeeklyRow[]>;
   summary: Record<string, { numerator: number; denominator: number; fact: number | null }>;
   previousSource?: string | null;
   previousDate?: string | null;
   previousPeriod?: string | null;
-  previousDatasets?: Record<string, Array<{ name: string; oid: string; fact: number; count: number; volume: number }>>;
+  previousDatasets?: Record<string, PhysicianWeeklyRow[]>;
   previousSummary?: Record<string, { numerator: number; denominator: number; fact: number | null }>;
 };
 const physicianWeeklySnapshot = physicianWeeklySnapshotRaw as PhysicianWeeklySnapshot;
@@ -3586,6 +3595,11 @@ export default function Home() {
         .forEach(([id, rows]) => {
           if (!applicableForRegistry(owner.registry, id)) return;
           const current = rows.find((item) => item.oid === owner.registry.oid);
+          const qualityReview = physician500ReviewsRaw.reviews.find((review) =>
+            review.metric === id && review.moOid === owner.registry.oid &&
+            review.sourceDate === (physicianWeeklySnapshot.periods?.[id]?.date ?? physicianWeeklySnapshot.date) &&
+            review.sourceNumerator === current?.count && review.sourceDenominator === current?.volume,
+          );
           const monthlyName = physicianMetrics.datasets[id]?.name ?? id;
           const mandatoryDental = id === "doctor500_dentist" && isDentalOrganization(owner.registry);
           const operationalPlan = mandatoryDental ? (indicatorRegistry.plan(id, 50) ?? 50) : null;
@@ -3612,11 +3626,11 @@ export default function Home() {
             score: mandatoryDental && usableCurrent
               ? scoreAgainstPlan({ fact: usableCurrent.fact, plan: operationalPlan, direction: "higher" })
               : null,
-            detail: mandatoryDental
+            detail: qualityReview?.warning ?? current?.sourceWarning ?? (mandatoryDental
               ? (usableCurrent ? "Оперативный срез dentist включён в рейтинг." : "Нет данных по обязательному показателю; Рейтинг неполный.")
               : current
               ? "Оперативный срез 500+; нет предыдущего сопоставимого недельного значения. В месячный рейтинг не включается."
-              : "Нет данных в оперативном срезе; отсутствие строки не считается невыполнением.",
+              : "Нет данных в оперативном срезе; отсутствие строки не считается невыполнением."),
             status: mandatoryDental ? (usableCurrent ? (operationalPassed ? "good" : "bad") : "missing") : "reference",
           });
         });
@@ -4365,8 +4379,14 @@ export default function Home() {
   const physicianOperationalRows: MoRow[] = isOperationalPhysician500
     ? (physicianWeeklySnapshot.datasets[matrixMetric] ?? []).map((row) => {
         const previous = previousPhysicianOperationalByOid.get(row.oid);
+        const review = physician500ReviewsRaw.reviews.find((item) =>
+          item.metric === matrixMetric && item.moOid === row.oid &&
+          item.sourceDate === (physicianWeeklySnapshot.periods?.[matrixMetric]?.date ?? physicianWeeklySnapshot.date) &&
+          item.sourceNumerator === row.count && item.sourceDenominator === row.volume,
+        );
         return {
           ...row,
+          sourceWarning: [row.sourceWarning, review?.warning].filter(Boolean).join(" ") || undefined,
           previous: previous?.fact ?? null,
           trend: previous ? row.fact - previous.fact : null,
         };
