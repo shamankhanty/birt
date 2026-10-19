@@ -290,7 +290,12 @@ def stage(input_dir, output_dir, replay_manifest=None):
             entry={'metric':metric,'label':metric_label(production,metric),'family':family,'state':'RETAINED','previousPeriod':period_metadata(production,metric),'sources':[source['name'] for source in received],'errors':[]}
             if not item:
                 entry['errors']=['Нет подходящего основного источника (накопительного/парного)' if received else 'Нет входного источника показателя']; results.append(entry); continue
-            tx=output_dir/'transactions'/metric; raw=tx/'app'; shutil.copytree(current,raw)
+            tx=output_dir/'transactions'/metric
+            # Freeze one accepted base for both executions.  Validation of an
+            # indicator must not observe files accepted by another transaction
+            # between the first run and its deterministic replay.
+            base=tx/'base'; raw=tx/'app'
+            shutil.copytree(current,base); shutil.copytree(base,raw)
             try:
                 if item['status']=='FAIL': raise ValueError(item.get('reason') or 'Источник поврежден или дублирует период')
                 prior=entry['previousPeriod'].get('date')
@@ -302,20 +307,22 @@ def stage(input_dir, output_dir, replay_manifest=None):
                 result=invoke(raw,family,metric,item,partner)
                 if result.status=='FAIL' or result.errors: raise ValueError('; '.join(result.errors))
                 compact_error_payload(raw)
-                preserve_same_slice_dynamics(current,raw,metric)
-                project_metric(current,raw,metric,item)
+                preserve_same_slice_dynamics(base,raw,metric)
+                project_metric(base,raw,metric,item)
                 validation=validate(raw,tx/'validation')
                 if validation['overallStatus']=='FAIL': raise ValueError('; '.join(gate_errors(validation)))
                 # Deterministic repeat from exactly the same accepted baseline.
-                replay=tx/'repeat'; shutil.copytree(current,replay)
+                replay=tx/'repeat'; shutil.copytree(base,replay)
                 invoke(replay,family,metric,item,partner)
-                compact_error_payload(replay); preserve_same_slice_dynamics(current,replay,metric)
-                project_metric(current,replay,metric,item)
-                accepted_hashes=hashes(current)
+                compact_error_payload(replay); preserve_same_slice_dynamics(base,replay,metric)
+                project_metric(base,replay,metric,item)
+                accepted_hashes=hashes(base)
                 changed=[name for name,value in hashes(raw).items() if accepted_hashes.get(name)!=value]
                 replay_result=compare_trees(raw,replay,[n for n in changed if n.endswith('.json')])
                 write(tx/'repeatability.json',replay_result)
                 if replay_result['status']!='PASS': raise ValueError('Повторная обработка дала другой результат')
+                if hashes(current)!=accepted_hashes:
+                    raise SystemicError('Принятый staging-кандидат изменился вне транзакции')
                 # Commit to the unpublished candidate only after every gate passes.
                 for name in changed: shutil.copy2(raw/name,current/name)
                 entry.update(state='PREPARED' if changed else 'UNCHANGED',changedFiles=changed,

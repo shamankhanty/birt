@@ -11,11 +11,51 @@ CONFIG=ROOT/'config/import-pipeline.json'
 MONTHS={'январ':1,'феврал':2,'март':3,'апрел':4,'май':5,'мая':5,'июн':6,'июл':7,'август':8,'сентябр':9,'октябр':10,'ноябр':11,'декабр':12}
 
 def baseline_year():
+    current=baseline_full_month()
+    if current:return current.year
     try:
         payload=json.loads((ROOT/'baseline/period-engine-snapshot.json').read_text(encoding='utf-8'))
         return int(payload['latestFullMonth']['endDate'].split('.')[-1])
     except Exception:
         return 2026
+
+def baseline_full_month():
+    """Resolve the accepted rating month from current monthly datasets.
+
+    The historical period-engine snapshot is intentionally immutable and can
+    lag behind a later approved monthly import.  Intake must therefore prefer
+    the dates already present in the production monthly datasets.
+    """
+    try:
+        report=json.loads((ROOT/'validation/validation-report.json').read_text(encoding='utf-8'))
+        label=report.get('reportingPeriod',{}).get('latestFullMonth','').casefold()
+        year_match=re.search(r'20\d{2}',label)
+        month=next((number for stem,number in MONTHS.items() if stem in label),None)
+        if year_match and month:
+            year=int(year_match.group())
+            return date(year,month,calendar.monthrange(year,month)[1])
+    except (OSError,ValueError,TypeError):
+        pass
+    try:
+        payload=json.loads((ROOT/'app/monthly-mo.json').read_text(encoding='utf-8'))
+        dates=[]
+        for dataset in payload.values():
+            if not isinstance(dataset,dict):continue
+            raw=dataset.get('date')
+            if not isinstance(raw,str):continue
+            try:
+                parsed=date.fromisoformat(raw) if '-' in raw else date(*reversed([int(x) for x in raw.split('.')]))
+            except (ValueError,TypeError):continue
+            if parsed.day==calendar.monthrange(parsed.year,parsed.month)[1]:dates.append(parsed)
+        if dates:return max(dates)
+    except (OSError,ValueError,TypeError):
+        pass
+    try:
+        payload=json.loads((ROOT/'baseline/period-engine-snapshot.json').read_text(encoding='utf-8'))
+        d,m,y=map(int,payload['latestFullMonth']['endDate'].split('.'))
+        return date(y,m,d)
+    except Exception:
+        return None
 
 def short_range_end(text:str):
     year=baseline_year()
@@ -163,9 +203,7 @@ def scan(folder:Path):
     inferred=max(ends).isoformat() if ends else None
     full_ends=[d for d in ends if d.day==calendar.monthrange(d.year,d.month)[1]]
     input_full=max(full_ends) if full_ends else None
-    baseline=json.loads((ROOT/'baseline/period-engine-snapshot.json').read_text(encoding='utf-8'))
-    bday,bmonth,byear=map(int,baseline['latestFullMonth']['endDate'].split('.'))
-    baseline_full=date(byear,bmonth,bday)
+    baseline_full=baseline_full_month() or date(2026,8,31)
     effective=max([d for d in [baseline_full,input_full] if d])
     previous_month=effective.month-1 or 12; previous_year=effective.year if effective.month>1 else effective.year-1
     previous_end=date(previous_year,previous_month,calendar.monthrange(previous_year,previous_month)[1])

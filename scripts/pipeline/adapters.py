@@ -435,6 +435,7 @@ def adapt_hospital(app: Path, source: Path, end: date, remd_source: Path | None 
         **previous_meta,
         "numerator": numerator_total,
         "denominator": denominator_total,
+        "fact": (numerator_total / denominator_total * 100 if denominator_total else None),
         "comparisonReset": comparison_reset,
         "note": (
             "Числитель — РЭМД ЕГИСЗ, знаменатель — случаи стационарной помощи из отчёта по госпитализациям. "
@@ -754,7 +755,8 @@ def adapt_physicians(app: Path, source: Path, end: date, registry_path: Path, on
             weekly["previousPeriod"] = weekly.get("period")
             weekly["previousDatasets"] = weekly.get("datasets", {})
             weekly["previousSummary"] = weekly.get("summary", {})
-        weekly.update({"source": source.name, "date": new_date, "period": period_cumulative(end), "datasets": current, "summary": facts})
+        operational_period = f"01.{end.month:02d}.{end.year}–{new_date}"
+        weekly.update({"source": source.name, "date": new_date, "period": operational_period, "datasets": current, "summary": facts})
         save(app, "physician-weekly-snapshot.json", weekly)
         return AdapterResult("physician_weekly_snapshot", ["physicians"], "PASS", ["physician-weekly-snapshot.json"], [source.name], facts, ["Неполный текущий месяц сохранён только для оперативного контроля; рейтинг и последний полный месяц не изменены."], [])
 
@@ -833,7 +835,8 @@ def adapt_preventive(app: Path, remd: Path, foms_path: Path, end: date, registry
     base=mo.get("semd228",{})
     mo["semd228"]={**base,"date":date_ru(end),"period":period_cumulative(end),
                     **previous_cut_metadata(base,end),**previous_summary_metadata(base,end),
-                    "numerator":num,"denominator":den,"rows":retain_no_source_rows(prev,rows)};details["semd228"]=dn;oids["semd228"]=do
+                    "numerator":num,"denominator":den,"fact":share,
+                    "rows":retain_no_source_rows(prev,rows)};details["semd228"]=dn;oids["semd228"]=do
     cur=[{"name":r["name"],"oid":r["oid"],"fact":r["share"] or 0,"count":r["selected"],"volume":r["foms"]} for r in audit_rows]
     if is_full_month(end): monthly["semd228"]=monthly_payload(prev,cur,end)
     for name,data in [("preventive-semd-audit.json",audit),("mo-data.json",mo),("mo-details.json",details),("mo-detail-oids.json",oids),("monthly-mo.json",monthly)]:save(app,name,data)

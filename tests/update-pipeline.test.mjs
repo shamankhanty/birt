@@ -52,16 +52,23 @@ test('duplicate same family and period becomes FAIL',()=>{
  const r=py(code,[d]); assert.equal(r.status,0,r.stderr); const x=JSON.parse(r.stdout); assert.equal(x.summary.FAIL,2); assert.equal(x.duplicates.length,1);
 });
 
-test('partial September does not replace August full-month baseline',()=>{
+test('partial source does not regress the accepted full-month baseline',()=>{
  const d=fs.mkdtempSync(path.join(os.tmpdir(),'rt-pipe-')); makeXlsx(path.join(d,'ПР_2_07.09.2026.xlsx'));
  const code=`import sys,json;from pathlib import Path;sys.path.insert(0,'scripts/pipeline');from source_catalog import scan;print(json.dumps(scan(Path(sys.argv[1])),ensure_ascii=False))`;
- const r=py(code,[d]); const x=JSON.parse(r.stdout); assert.equal(x.summary.effectiveLatestFullMonthEnd,'2026-08-31'); assert.equal(x.summary.previousComparableMonthEnd,'2026-07-31'); assert.equal(x.summary.hasPartialNewerMonth,true);
+ const r=py(code,[d]); const x=JSON.parse(r.stdout); assert.equal(x.summary.effectiveLatestFullMonthEnd,'2026-09-30'); assert.equal(x.summary.previousComparableMonthEnd,'2026-08-31'); assert.equal(x.summary.hasPartialNewerMonth,false);
 });
 
 test('closed September automatically advances full month',()=>{
  const d=fs.mkdtempSync(path.join(os.tmpdir(),'rt-pipe-')); makeXlsx(path.join(d,'ПР_2_30.09.2026.xlsx'));
  const code=`import sys,json;from pathlib import Path;sys.path.insert(0,'scripts/pipeline');from source_catalog import scan;print(json.dumps(scan(Path(sys.argv[1])),ensure_ascii=False))`;
  const r=py(code,[d]); const x=JSON.parse(r.stdout); assert.equal(x.summary.effectiveLatestFullMonthEnd,'2026-09-30'); assert.equal(x.summary.previousComparableMonthEnd,'2026-08-31');
+});
+
+test('current TVSP month range uses workbook formation date instead of month end',()=>{
+ const d=fs.mkdtempSync(path.join(os.tmpdir(),'rt-pipe-')); const f=path.join(d,'Отчет_Доля_ТВСП_СЭМД_Протокол лабор исследования_Январь-Октябрь.xlsx');
+ const code=`from openpyxl import Workbook;from datetime import datetime;import sys\nw=Workbook();s=w.active;s.title='Сводный';s.append(['Наименование отчета:','','Отчет по КДЛ и ТВСП, передающим СЭМД «Протокол лабораторного исследования»']);s.append(['Период формирования отчета:','', 'Год:',2026,'Период:','10.Январь-Октябрь']);s.append(['Дата формирования отчета:','',datetime(2026,10,19)]);s2=w.create_sheet('Детализация по СП');w.save(sys.argv[1])`;
+ const made=py(code,[f]); assert.equal(made.status,0,made.stderr); const x=classify(f);
+ assert.equal(x.status,'PASS'); assert.equal(x.family,'tvsp_laboratory'); assert.equal(x.startDate,'2026-01-01'); assert.equal(x.endDate,'2026-10-19');
 });
 
 test('shadow pipeline leaves protected files unchanged and blocks apply',()=>{
