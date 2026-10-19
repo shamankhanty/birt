@@ -23,7 +23,10 @@ from typing import Iterable
 import openpyxl
 from io import BytesIO
 
-from .physician500_audit import reconcile_physician500_detail
+if __package__:
+    from .physician500_audit import reconcile_physician500_detail
+else:
+    from physician500_audit import reconcile_physician500_detail
 
 
 def open_workbook(path, **kwargs):
