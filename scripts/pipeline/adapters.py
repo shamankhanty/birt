@@ -23,6 +23,11 @@ from typing import Iterable
 import openpyxl
 from io import BytesIO
 
+if __package__:
+    from .physician500_audit import reconcile_physician500_detail
+else:
+    from physician500_audit import reconcile_physician500_detail
+
 
 def open_workbook(path, **kwargs):
     # Read the snapshot into memory so Windows does not retain source file locks.
@@ -705,7 +710,7 @@ def adapt_errors(app: Path, source: Path, end: date, start: date | None = None) 
 
 SPECIALTIES={"Акушер-гинеколог":"doctor500_obgyn","Врач общей практики":"doctor500_gp","Кардиолог":"doctor500_cardiologist","Онколог":"doctor500_oncologist","Офтальмолог":"doctor500_ophthalmologist","Педиатр":"doctor500_pediatrician","Стоматолог":"doctor500_dentist","Терапевт":"doctor500_therapist","Хирург":"doctor500_surgeon"}
 
-def parse_physicians(path: Path, registry_path: Path, only_metric=None) -> dict:
+def parse_physicians(path: Path, registry_path: Path, only_metric=None, audit_out=None) -> dict:
     wb=open_workbook(path,read_only=True,data_only=True); registry=json.loads(registry_path.read_text(encoding="utf-8"))["organizations"]; roids={str(x["oid"]) for x in registry}
     all_rows=[r for r in wb["Все врачи_Детализация по МО"].iter_rows(values_only=True) if r[0]=="Республика Татарстан" and r[1]]
     specialty_rows=[r for r in wb["Врачи по спец-тям_По МО"].iter_rows(min_row=9,values_only=True) if r[0]=="Республика Татарстан" and r[1] and r[4] in SPECIALTIES]
@@ -730,6 +735,16 @@ def parse_physicians(path: Path, registry_path: Path, only_metric=None) -> dict:
             if sp not in subject_values or (only_metric and key!=only_metric): continue
             expected=subject_values[sp]; actual=(sum(x["volume"] for x in out[key]),sum(x["count"] for x in out[key]))
             if expected!=actual: raise ValueError(f"Врачи: региональная сверка не сходится {sp}: {expected} != {actual}")
+    # Quality control only: compare aggregated physician results with the
+    # worker-OID detail, but NEVER recalculate approved numerator/denominator.
+    # Differences in the FRMR population / eligibility require manual review.
+    detail_sheet = wb["Все врачи_Детализация по врачам"] if "Все врачи_Детализация по врачам" in wb.sheetnames else None
+    audit = reconcile_physician500_detail(
+        detail_sheet.iter_rows(min_row=8, values_only=True) if detail_sheet else None,
+        out,
+    )
+    if audit_out is not None:
+        audit_out.update(audit)
     return {k:v for k,v in out.items() if not only_metric or k==only_metric}
 
 
@@ -738,7 +753,8 @@ def adapt_physicians(app: Path, source: Path, end: date, registry_path: Path, on
     # только как отдельный недельный контроль раздела 02 и не меняет
     # утверждённые августовские datasets/rating.
     if not is_full_month(end):
-        current = parse_physicians(source, registry_path, only_metric)
+        physician_audit = {}
+        current = parse_physicians(source, registry_path, only_metric, physician_audit)
         facts = {
             metric: {
                 "numerator": sum(row["count"] for row in rows),
@@ -758,15 +774,28 @@ def adapt_physicians(app: Path, source: Path, end: date, registry_path: Path, on
         operational_period = f"01.{end.month:02d}.{end.year}–{new_date}"
         weekly.update({"source": source.name, "date": new_date, "period": operational_period, "datasets": current, "summary": facts})
         save(app, "physician-weekly-snapshot.json", weekly)
-        return AdapterResult("physician_weekly_snapshot", ["physicians"], "PASS", ["physician-weekly-snapshot.json"], [source.name], facts, ["Неполный текущий месяц сохранён только для оперативного контроля; рейтинг и последний полный месяц не изменены."], [])
+        save(app, "physician500-audit.json", {
+            "schemaVersion": 1,
+            "sourceFile": source.name,
+            "date": new_date,
+            "period": operational_period,
+            "statusSummary": physician_audit.get("statusSummary", {}),
+            "skippedDetailRows": physician_audit.get("skippedDetailRows", 0),
+            "issues": [
+                {**item, "period": operational_period, "sourceFile": source.name}
+                for item in physician_audit.get("issues", [])
+            ],
+        })
+        return AdapterResult("physician_weekly_snapshot", ["physicians"], "PASS", ["physician-weekly-snapshot.json", "physician500-audit.json"], [source.name], facts, ["Неполный текущий месяц сохранён только для оперативного контроля; рейтинг и последний полный месяц не изменены."], [])
 
-    phys,monthly=(load(app,x) for x in ["physician-metrics.json","monthly-mo.json"]); current=parse_physicians(source,registry_path,only_metric); facts={}
+    physician_audit = {}
+    phys,monthly=(load(app,x) for x in ["physician-metrics.json","monthly-mo.json"]); current=parse_physicians(source,registry_path,only_metric,physician_audit); facts={}
     for metric,cur in current.items():
         old_ds=phys.get("datasets",{}).get(metric,{}); prev=previous_rows_from_dataset(old_ds); rows=[]
         for x in cur:
             old=prev.get(x["oid"]); warning="Справочно: в МО только 1–2 врача этой специальности; в заслушивании не оценивается." if metric.startswith("doctor500_") and x["volume"]<3 else None
             previous = old.get("fact") if old else None
-            rows.append({**x,"previous":previous,"trend":None if previous is None else x["fact"]-previous,"sourceWarning":warning})
+            rows.append({**x,"previous":previous,"trend":None if previous is None else x["fact"]-previous,"sourceWarning":" ".join(p for p in (warning,x.get("sourceWarning")) if p) or None})
         num=sum(x["count"] for x in cur); den=sum(x["volume"] for x in cur)
         full_month = is_full_month(end)
         period = month_label(end) if full_month else period_cumulative(end)
@@ -783,7 +812,20 @@ def adapt_physicians(app: Path, source: Path, end: date, registry_path: Path, on
     if not only_metric:
         phys["source"]=source.name;phys["formed"]=date_ru(end);phys["period"]=month_label(end) if full_month else period_cumulative(end);phys["periodType"]="month" if full_month else "snapshot";phys["quality"]={"allMoRows":len(current["doctorsAll"]),"specialtyRows":sum(len(current[k]) for k in SPECIALTIES.values()),"unmatchedOids":0,"categoryErrors":0}
     save(app,"physician-metrics.json",phys);save(app,"monthly-mo.json",monthly)
-    return AdapterResult("physician_import",["physicians"],"PASS",["physician-metrics.json","monthly-mo.json"],[source.name],facts,[],[])
+    audit_period = month_label(end)
+    save(app, "physician500-audit.json", {
+        "schemaVersion": 1,
+        "sourceFile": source.name,
+        "date": date_ru(end),
+        "period": audit_period,
+        "statusSummary": physician_audit.get("statusSummary", {}),
+        "skippedDetailRows": physician_audit.get("skippedDetailRows", 0),
+        "issues": [
+            {**item, "period": audit_period, "sourceFile": source.name}
+            for item in physician_audit.get("issues", [])
+        ],
+    })
+    return AdapterResult("physician_import",["physicians"],"PASS",["physician-metrics.json","monthly-mo.json","physician500-audit.json"],[source.name],facts,[],[])
 
 
 def parse_remd(path: Path) -> dict:
