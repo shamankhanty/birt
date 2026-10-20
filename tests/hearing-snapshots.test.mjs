@@ -28,7 +28,7 @@ test("hearing UI compares current metrics with the restored baseline",()=>{
 });
 
 test("missing source data is neutral in hearing influence",()=>{
-  assert.match(source,/status: applicable \? "missing" : "reference"/);
+  assert.match(source,/status: applicable && \(priorityDataExpected \|\| monthlyDataExpected\) \? "missing" : "reference"/);
   assert.match(source,/passed: null/);
   assert.match(source,/regionalContribution: null/);
 });

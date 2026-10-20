@@ -48,7 +48,7 @@ test('hearing cards include reference-only REMD errors without changing priority
     'status: "reference"',
     'ТОП ошибок',
   ]) assert.ok(page.includes(token), `missing hearing error contract: ${token}`);
-  assert.match(pageFlat, /regionalContribution !== null/);
+  assert.match(pageFlat, /weightedImpact !== null/);
 });
 
 test('current source is fully attributable to source organizations', () => {

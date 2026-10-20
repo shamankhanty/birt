@@ -27,7 +27,7 @@ test("indicator registry is the active runtime metadata source in stage 6", () =
   assert.equal(page.includes("const excludedRatingIds = new Set"), false);
   assert.equal(page.includes("const excludedPriorityIds = new Set"), false);
   assert.equal(page.includes("care: 0.7"), false);
-  assert.match(page, /indicatorRegistry\.affectsHearingPriority\(id\)/);
+  assert.match(page, /isOperationalHearingMetric\(id\)/);
   assert.match(page, /indicatorRegistry\.hasRowExclusion/);
 });
 

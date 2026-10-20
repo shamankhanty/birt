@@ -40,9 +40,9 @@ test('operational 500+ is reference-only in hearings and does not replace monthl
 });
 
 test('hearing aggregate is labeled as an index while individual contribution stays in pp', () => {
-  assert.ok(page.includes('суммарного индекса влияния на цели РТ'));
-  assert.ok(page.includes('Текущий индекс влияния'));
-  assert.ok(page.includes('вклад в недостижение РТ'));
+  assert.ok(page.includes('взвешенного оперативного недостижения'));
+  assert.ok(page.includes('Текущий приоритет'));
+  assert.ok(page.includes('Влияет на оперативный приоритет'));
 });
 
 test('EPGU current cut has a previous comparable source cut', () => {

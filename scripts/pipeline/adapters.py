@@ -817,22 +817,26 @@ def parse_foms(path: Path) -> dict:
 
 
 def adapt_preventive(app: Path, remd: Path, foms_path: Path, end: date, registry_path: Path, approved_missing_oids=()) -> AdapterResult:
-    rr,ff=parse_remd(remd),parse_foms(foms_path); mo,details,oids,monthly=(load(app,x) for x in ["mo-data.json","mo-details.json","mo-detail-oids.json","monthly-mo.json"]); prev=previous_rows_from_dataset(mo.get("semd228",{})); rows=[]; audit_rows=[]; dn={};do={};excluded=[]
+    rr,ff=parse_remd(remd),parse_foms(foms_path); mo,details,oids,monthly=(load(app,x) for x in ["mo-data.json","mo-details.json","mo-detail-oids.json","monthly-mo.json"]); base=mo.get("semd228",{}); same_cut=base.get("date")==date_ru(end); prev=previous_rows_from_dataset(base); rows=[]; audit_rows=[]; dn={};do={};excluded=[]
     child_oids={str(o["oid"]) for o in json.loads(registry_path.read_text(encoding="utf-8"))["organizations"] if re.search(r"детск|\b(?:адрб|дркб|ндрб|кдмц)\b",(str(o.get("type",""))+" "+str(o.get("name",""))).casefold())}
     for oid,v in ff.items():
         rv=rr.get(oid)
         if not rv: excluded.append({"oid":oid,"name":v["name"],"denominator":v["den"]});continue
-        num=max(rv["s122"],rv["s228"]) if end.year<=2026 else rv['s228']; den=v["den"]; fact=num/den*100 if den else None; old=prev.get(oid); oldfact=old.get("fact") if old else None
+        num=max(rv["s122"],rv["s228"]) if end.year<=2026 else rv['s228']; den=v["den"]; fact=num/den*100 if den else None; old=prev.get(oid); oldfact=(old.get("previous") if same_cut else old.get("fact")) if old else None
         selected="122" if rv["s122"]>=rv["s228"] else "228"; audit_rows.append({"name":v["name"],"oid":oid,"child":oid in child_oids,"semd122":rv["s122"],"semd228":rv["s228"],"selected":num,"selectedType":selected,"foms":den,"share":fact,"oldShare":oldfact,"change":None if oldfact is None or fact is None else fact-oldfact,"issues":[] if fact is None or fact<=100 else ["Значение выше 100%"]})
         row={"name":v["name"],"oid":oid,"fact":fact,"count":num,"previous":oldfact,"trend":None if oldfact is None or fact is None else fact-oldfact}
         if is_external_source_name(v["name"]): row["sourceStatus"]="external_source"
         rows.append(row);d={"volume":den,"registered":num};dn[norm(v["name"])]=d;do[oid]=d
     if not rows: raise ValueError('СЭМД 122/228: ни один OID числителя не сопоставлен со знаменателем')
-    unapproved = [r for r in excluded if r['oid'] not in approved_missing_oids]
+    # An organization outside the regional source perimeter may legitimately be
+    # present only in the FOMS denominator.  Keep it visible in the audit as
+    # missing data; never turn that absence into a synthetic zero numerator.
+    unapproved = [r for r in excluded
+                  if r['oid'] not in approved_missing_oids
+                  and not is_external_source_name(r['name'])]
     if unapproved: raise ValueError(f'СЭМД 122/228: отсутствует числитель для {len(unapproved)} МО; показатель сохранен целиком')
-    num=sum(r["selected"] for r in audit_rows); den=sum(r["foms"] for r in audit_rows); share=num/den*100 if den else None
-    audit={"summary":{"status":"ready","year":end.year,"formula":"MAX(СЭМД 122; СЭМД 228) по каждой МО" if end.year<=2026 else "СЭМД 228","period122":period_cumulative(end),"period228":period_cumulative(end),"source122":remd.name,"source228":remd.name,"sourceDenominator":foms_path.name,"organizations":len(rows),"numerator":num,"denominator":den,"share":share,"selected122":sum(r["selectedType"]=="122" for r in audit_rows),"selected228":sum(r["selectedType"]=="228" for r in audit_rows),"selectedEqual":sum(r["semd122"]==r["semd228"] for r in audit_rows),"over100":sum((r["share"] or 0)>100 for r in audit_rows),"missing":len(excluded),"excluded":excluded,"note":"Включены взрослые и детские МО из ФОМС; строки без соответствия РЭМД остаются в аудите и не оцениваются."},"excluded":excluded,"rows":audit_rows}
-    base=mo.get("semd228",{})
+    assessed=len(rows); num=sum(r["selected"] for r in audit_rows); den=sum(r["foms"] for r in audit_rows); share=num/den*100 if den else None
+    audit={"summary":{"status":"ready","year":end.year,"formula":"MAX(СЭМД 122; СЭМД 228) по каждой МО" if end.year<=2026 else "СЭМД 228","period122":period_cumulative(end),"period228":period_cumulative(end),"source122":remd.name,"source228":remd.name,"sourceDenominator":foms_path.name,"organizations":assessed,"numerator":num,"denominator":den,"share":share,"selected122":sum(r["selectedType"]=="122" for r in audit_rows),"selected228":sum(r["selectedType"]=="228" for r in audit_rows),"selectedEqual":sum(r["semd122"]==r["semd228"] for r in audit_rows),"over100":sum((r["share"] or 0)>100 for r in audit_rows),"missing":len(excluded),"excluded":excluded,"note":"Включены взрослые и детские МО из ФОМС; строки без соответствия РЭМД остаются в аудите и не оцениваются."},"excluded":excluded,"rows":audit_rows}
     mo["semd228"]={**base,"date":date_ru(end),"period":period_cumulative(end),
                     **previous_cut_metadata(base,end),**previous_summary_metadata(base,end),
                     "numerator":num,"denominator":den,"fact":share,
@@ -840,7 +844,7 @@ def adapt_preventive(app: Path, remd: Path, foms_path: Path, end: date, registry
     cur=[{"name":r["name"],"oid":r["oid"],"fact":r["share"] or 0,"count":r["selected"],"volume":r["foms"]} for r in audit_rows]
     if is_full_month(end): monthly["semd228"]=monthly_payload(prev,cur,end)
     for name,data in [("preventive-semd-audit.json",audit),("mo-data.json",mo),("mo-details.json",details),("mo-detail-oids.json",oids),("monthly-mo.json",monthly)]:save(app,name,data)
-    return AdapterResult("preventive_pair",["preventive_remd","preventive_foms"],"PASS",["preventive-semd-audit.json","mo-data.json","mo-details.json","mo-detail-oids.json","monthly-mo.json"],[remd.name,foms_path.name],{"organizations":len(rows),"numerator":num,"denominator":den,"share":share,"excluded":len(excluded)},["Есть строки ФОМС без РЭМД; сохранены в audit" ] if excluded else [],[])
+    return AdapterResult("preventive_pair",["preventive_remd","preventive_foms"],"PASS",["preventive-semd-audit.json","mo-data.json","mo-details.json","mo-detail-oids.json","monthly-mo.json"],[remd.name,foms_path.name],{"organizations":assessed,"numerator":num,"denominator":den,"share":share,"excluded":len(excluded)},["Есть строки ФОМС без РЭМД; сохранены в audit" ] if excluded else [],[])
 
 
 def extract_waybill(path: Path, period: str) -> dict:
