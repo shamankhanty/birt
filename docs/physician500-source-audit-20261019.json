@@ -1,0 +1,43 @@
+{
+  "schemaVersion": 1,
+  "sourceFile": "Отчёт_по_врачам_сформировавших_СЭМД _01.10.-19.10.(Выгрузка из BI 19.10.).xlsx",
+  "sha256": "57a377e5963e87cc30acb60e8b10268611f0a176aa53d282314f9a171cba8289",
+  "reportPeriod": "01.10.2026–19.10.2026",
+  "checkedAt": "20.10.2026",
+  "checks": {
+    "medicalOrganizations": 124,
+    "medicalOrganizationsReconciled": 124,
+    "detailRows": 21515,
+    "uniqueOrganizationPhysicianPairs": 13646,
+    "registeredSemd": 4869925,
+    "doctorsSignedSemd": 10431,
+    "specialtyRows": 720,
+    "specialtyCategoryRowsValid": 720,
+    "regionalSpecialtySummariesReconciled": 9,
+    "regionalSpecialtySummaryTotal": 9,
+    "dashboardSpecialtyRowsCompared": 720,
+    "dashboardSpecialtyRowsIdentical": 720
+  },
+  "githubSnapshot": {
+    "date": "19.10.2026",
+    "sourceMatchRows": 720,
+    "normalizedRowsFNV1a32": 2817170786
+  },
+  "sabinDental": {
+    "moOid": "1.2.643.5.1.13.13.12.2.16.1126",
+    "sourceNumerator": 2,
+    "sourceDenominator": 5,
+    "sourcePercent": 40,
+    "detailDistinctDentalRoleStaff": 9,
+    "detailDentalRoleStaffWithAnySemd": 6,
+    "detailDentalRoleStaffOver500": 4,
+    "possibleExplanation": "Смешение должностей врач-стоматолог, стоматолог-терапевт, стоматолог детский с врачом-стоматологом-хирургом/ортопедом, а также типами структурных подразделений. Исключение двух стоматологов-хирургов с 709 и 540 СЭМД и двух ортопедов с нулём даёт 2/5; это гипотеза, не официальная методика."
+  },
+  "qualification": {
+    "aggregatedData": "PASS",
+    "organizationDetailReconciliation": "PASS",
+    "independentSpecialtyStaffClassification": "UNVERIFIED",
+    "reason": "Не получено утвержденное правило включения должностей и типов подразделений ФРМР в девять специальностей ПМСП; не выводить официальный статус из простого поиска названия должности."
+  },
+  "issue": "https://github.com/shamankhanty/birt/issues/96"
+}
