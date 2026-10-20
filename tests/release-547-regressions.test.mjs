@@ -20,15 +20,15 @@ test("500+ keeps September rating and exposes the October operational delta", ()
 
 test("cumulative ratios use the previous numerator and denominator pair", () => {
   assert.deepEqual([mo.semd228.previousNumerator, mo.semd228.previousDenominator], [1915517, 2281382]);
-  assert.equal(Number((mo.semd228.numerator / mo.semd228.denominator * 100).toFixed(2)), 84.63);
+  assert.equal(Number((mo.semd228.numerator / mo.semd228.denominator * 100).toFixed(2)), 86.85);
   assert.equal(Number((mo.semd228.previousNumerator / mo.semd228.previousDenominator * 100).toFixed(2)), 83.96);
   assert.equal(Number((mo.ambulatoryCase.numerator / mo.ambulatoryCase.denominator * 100).toFixed(2)), 90.94);
   assert.deepEqual([mo.hospital.numerator, mo.hospital.denominator], [683451, 763032]);
   assert.match(page, /componentPreviousFact/u);
 });
 
-test("hearing rows retain snapshot and current potential separately", () => {
+test("heard organizations retain metric snapshots without comparing obsolete aggregate formulas", () => {
   assert.match(page, /snapshotPotential/u);
   assert.match(page, /potentialChange/u);
-  assert.match(page, /на дату заслушивания/u);
+  assert.match(page, /исторический приоритет не пересчитывается задним числом/u);
 });

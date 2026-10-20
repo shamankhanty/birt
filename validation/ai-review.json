@@ -3,7 +3,99 @@
   "baselineVersion": "5.4.5",
   "dataDate": "19.10.2026",
   "sourceOverallStatus": "WARNING",
-  "reviewCount": 0,
+  "reviewCount": 7,
   "rule": "AI receives only FAIL items, new anomalies and methodological conflicts; PASS and ordinary WARNING items are excluded.",
-  "items": []
+  "items": [
+    {
+      "checkId": "data.percentage_anomalies",
+      "category": "anomaly",
+      "status": "WARNING",
+      "reviewReason": "anomaly",
+      "fingerprint": "percentage_above_100|mo-data|semd228|1.2.643.5.1.13.13.12.2.16.1182|ДГП № 2 г.Казань|fact",
+      "metric": "semd228",
+      "organizationOid": "1.2.643.5.1.13.13.12.2.16.1182",
+      "organizationName": "ДГП № 2 г.Казань",
+      "field": "fact",
+      "expected": null,
+      "actual": 100.17559262510976
+    },
+    {
+      "checkId": "data.percentage_anomalies",
+      "category": "anomaly",
+      "status": "WARNING",
+      "reviewReason": "anomaly",
+      "fingerprint": "percentage_above_100|mo-data|semd228|1.2.643.5.1.13.13.12.2.16.1072|ЗАИНСКАЯ ЦРБ|fact",
+      "metric": "semd228",
+      "organizationOid": "1.2.643.5.1.13.13.12.2.16.1072",
+      "organizationName": "ЗАИНСКАЯ ЦРБ",
+      "field": "fact",
+      "expected": null,
+      "actual": 101.45566461487275
+    },
+    {
+      "checkId": "data.percentage_anomalies",
+      "category": "anomaly",
+      "status": "WARNING",
+      "reviewReason": "anomaly",
+      "fingerprint": "percentage_above_100|mo-data|semd228|1.2.643.5.1.13.13.12.2.16.1044|КАМСКО-УСТЬИНСКАЯ ЦРБ|fact",
+      "metric": "semd228",
+      "organizationOid": "1.2.643.5.1.13.13.12.2.16.1044",
+      "organizationName": "КАМСКО-УСТЬИНСКАЯ ЦРБ",
+      "field": "fact",
+      "expected": null,
+      "actual": 100.3194558944765
+    },
+    {
+      "checkId": "data.percentage_anomalies",
+      "category": "anomaly",
+      "status": "WARNING",
+      "reviewReason": "anomaly",
+      "fingerprint": "percentage_above_100|mo-data|semd228|1.2.643.5.1.13.13.12.2.16.1144|КУКМОРСКАЯ ЦРБ|fact",
+      "metric": "semd228",
+      "organizationOid": "1.2.643.5.1.13.13.12.2.16.1144",
+      "organizationName": "КУКМОРСКАЯ ЦРБ",
+      "field": "fact",
+      "expected": null,
+      "actual": 100.78852219401493
+    },
+    {
+      "checkId": "data.percentage_anomalies",
+      "category": "anomaly",
+      "status": "WARNING",
+      "reviewReason": "anomaly",
+      "fingerprint": "percentage_above_100|mo-data|semd228|1.2.643.5.1.13.13.12.2.16.1073|ЛЕНИНОГОРСКАЯ ЦРБ|fact",
+      "metric": "semd228",
+      "organizationOid": "1.2.643.5.1.13.13.12.2.16.1073",
+      "organizationName": "ЛЕНИНОГОРСКАЯ ЦРБ",
+      "field": "fact",
+      "expected": null,
+      "actual": 100.24108793858109
+    },
+    {
+      "checkId": "data.percentage_anomalies",
+      "category": "anomaly",
+      "status": "WARNING",
+      "reviewReason": "anomaly",
+      "fingerprint": "percentage_above_100|mo-data|semd228|1.2.643.5.1.13.13.12.2.16.1138|НУРЛАТСКАЯ ЦРБ|fact",
+      "metric": "semd228",
+      "organizationOid": "1.2.643.5.1.13.13.12.2.16.1138",
+      "organizationName": "НУРЛАТСКАЯ ЦРБ",
+      "field": "fact",
+      "expected": null,
+      "actual": 100.67546240767629
+    },
+    {
+      "checkId": "data.percentage_anomalies",
+      "category": "anomaly",
+      "status": "WARNING",
+      "reviewReason": "anomaly",
+      "fingerprint": "percentage_above_100|mo-data|semd228|1.2.643.5.1.13.13.12.2.16.1039|ТЮЛЯЧИНСКАЯ ЦРБ|fact",
+      "metric": "semd228",
+      "organizationOid": "1.2.643.5.1.13.13.12.2.16.1039",
+      "organizationName": "ТЮЛЯЧИНСКАЯ ЦРБ",
+      "field": "fact",
+      "expected": null,
+      "actual": 102.32114000293815
+    }
+  ]
 }

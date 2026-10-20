@@ -71,6 +71,16 @@ test('current TVSP month range uses workbook formation date instead of month end
  assert.equal(x.status,'PASS'); assert.equal(x.family,'tvsp_laboratory'); assert.equal(x.startDate,'2026-01-01'); assert.equal(x.endDate,'2026-10-19');
 });
 
+test('preventive indicator prefers same-period general REMD over combined report',()=>{
+ const code=`import sys,json;sys.path.insert(0,'scripts/pipeline');from transactional_stage import preferred_preventive_source
+combined={'name':'combined.xlsx','path':'/combined','family':'preventive_remd','status':'PASS','startDate':'2026-01-01','endDate':'2026-10-18'}
+foms={'name':'foms.xlsx','path':'/foms','family':'preventive_foms','status':'PASS','startDate':'2026-01-01','endDate':'2026-10-18'}
+general={'name':'general-remd.xlsx','path':'/general','family':'elmk','status':'PASS','startDate':'2026-01-01','endDate':'2026-10-18'}
+print(json.dumps(preferred_preventive_source(combined,foms,[general]),ensure_ascii=False))`;
+ const r=py(code); assert.equal(r.status,0,r.stderr); const selected=JSON.parse(r.stdout);
+ assert.equal(selected.name,'general-remd.xlsx'); assert.equal(selected.family,'preventive_remd');
+});
+
 test('shadow pipeline leaves protected files unchanged and blocks apply',()=>{
  const d=fs.mkdtempSync(path.join(os.tmpdir(),'rt-pipe-')); makeXlsx(path.join(d,'ПР_2_07.09.2026.xlsx'));
  const report=path.join(d,'report.json'); const r=spawnSync(process.platform === 'win32' ? 'python' : 'python3',['scripts/weekly_update_pipeline.py',d,'--report',report,'--skip-refactor-gate'],{cwd:root,encoding:'utf8'}); assert.equal(r.status,0,r.stderr); const x=JSON.parse(fs.readFileSync(report,'utf8')); assert.deepEqual(x.protectedChanged,[]); assert.equal(x.decision,'PASS');

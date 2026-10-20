@@ -105,6 +105,21 @@ def indicator_statistics(indicators):
     }
 
 
+def preferred_preventive_source(item, partner, general_remd_sources):
+    """Use the same-period general REMD export when it can be paired with FOMS.
+
+    The combined closed-cases workbook is a useful fallback, but its 122/228
+    counters can lag behind the direct REMD export produced for the same cut.
+    """
+    if not partner:
+        return item
+    paired = [source for source in general_remd_sources
+              if source.get('status') == 'PASS'
+              and source.get('endDate') == partner.get('endDate')
+              and source.get('startDate') == partner.get('startDate')]
+    return {**paired[0], 'family': 'preventive_remd'} if len(paired) == 1 else item
+
+
 def invoke(app, family, metric, item, partner):
     source, end = Path(item['path']), parse_iso(item['endDate'])
     if not end: raise ValueError('Не установлен отчетный период источника')
@@ -275,13 +290,10 @@ def stage(input_dir, output_dir, replay_manifest=None):
     for family,metrics in METRICS.items():
         item=latest(family)
         partner=latest('preventive_foms') if family=='preventive_remd' else None
-        if family=='preventive_remd' and partner and (not item or item.get('endDate')!=partner.get('endDate') or item.get('startDate')!=partner.get('startDate')):
-            # The general REMD export used for ELMK also contains registered
-            # SEMD 122 and 228 by MO. Prefer a same-period pair to a stale
-            # specialized report; never combine different reporting dates.
-            paired=[r for r in by.get('elmk',[]) if r.get('status')=='PASS' and r.get('endDate')==partner.get('endDate') and r.get('startDate')==partner.get('startDate')]
-            if len(paired)==1:
-                item={**paired[0], 'family':'preventive_remd'}
+        if family=='preventive_remd':
+            # The direct general REMD export is authoritative for registered
+            # SEMD 122/228.  The combined closed-cases report remains a fallback.
+            item=preferred_preventive_source(item,partner,by.get('elmk',[]))
         received=by.get(family,[])
         if family=='preventive_remd':
             received=received+by.get('preventive_foms',[])

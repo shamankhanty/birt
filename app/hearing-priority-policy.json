@@ -1,0 +1,53 @@
+{
+  "schemaVersion": 1,
+  "scoreWeights": {
+    "impact": 0.6,
+    "persistence": 0.2,
+    "decline": 0.1,
+    "breadth": 0.1
+  },
+  "blocks": {
+    "care": {
+      "name": "Передача сведений об оказанной помощи",
+      "weight": 0.7,
+      "metrics": {
+        "semd228": 0.25,
+        "hospital": 0.25,
+        "ambulatoryCase": 0.25,
+        "smp": 0.25
+      }
+    },
+    "services": {
+      "name": "Цифровые сервисы и регистрация",
+      "weight": 0.2,
+      "metrics": {
+        "egpu": 0.25,
+        "egpu2days": 0.25,
+        "birth": 0.25,
+        "death": 0.25
+      }
+    },
+    "readiness": {
+      "name": "Готовность и техническая передача",
+      "weight": 0.1,
+      "metrics": {
+        "tvspStationary": 0.35,
+        "tvspAmbulatory": 0.35,
+        "tvspDiagnostic": 0.2,
+        "smpFederal": 0.1
+      }
+    }
+  },
+  "monthlyWorkforce": {
+    "prefixes": ["doctor500_"],
+    "metrics": ["doctorsAll", "doctorsLevel3"],
+    "partialPrefixes": ["operational500_"]
+  },
+  "mandatory": {
+    "impactRank": 5,
+    "extendedImpactRank": 10,
+    "persistentFailures": 2,
+    "failedBlocks": 3,
+    "missingMetrics": 2
+  }
+}

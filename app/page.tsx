@@ -20,6 +20,7 @@ import electronicWaybillRaw from "./electronic-waybill.json";
 import electronicWaybillWeeklyRaw from "./electronic-waybill-weekly.json";
 import federalControlRaw from "./federal-control.json";
 import hearingSnapshotsRaw from "./hearing-snapshots.json";
+import hearingPriorityPolicyRaw from "./hearing-priority-policy.json";
 import preventiveSemdAuditRaw from "./preventive-semd-audit.json";
 import physicianMetricsRaw from "./physician-metrics.json";
 import physicianWeeklySnapshotRaw from "./physician-weekly-snapshot.json";
@@ -2639,6 +2640,8 @@ type HearingMetric = {
   deficitCount?: number | null;
   regionalDenominator?: number | null;
   regionalContribution?: number | null;
+  deficitShare?: number | null;
+  weightedImpact?: number | null;
   status: "good" | "bad" | "reference" | "missing";
 };
 type HearingRow = {
@@ -2659,6 +2662,13 @@ type HearingRow = {
   coverage: number;
   quantityGap: number;
   regionalContribution: number;
+  operationalImpact: number;
+  impactRank: number;
+  failedBlocks: number;
+  monthlyFailedCount: number;
+  monthlyTotal: number;
+  monthlyScore: number;
+  monthlyMainProblem: HearingMetric | null;
   snapshotPotential: number | null;
   currentPotential: number;
   potentialChange: number | null;
@@ -2689,6 +2699,36 @@ type HearingSnapshotData = {
   >;
 };
 const hearingSnapshots = hearingSnapshotsRaw as HearingSnapshotData;
+
+type HearingBlockCode = "care" | "services" | "readiness";
+type HearingPriorityPolicy = {
+  scoreWeights: { impact: number; persistence: number; decline: number; breadth: number };
+  blocks: Record<
+    HearingBlockCode,
+    { name: string; weight: number; metrics: Record<string, number> }
+  >;
+  monthlyWorkforce: { prefixes: string[]; metrics: string[]; partialPrefixes: string[] };
+  mandatory: {
+    impactRank: number;
+    extendedImpactRank: number;
+    persistentFailures: number;
+    failedBlocks: number;
+    missingMetrics: number;
+  };
+};
+const hearingPriorityPolicy = hearingPriorityPolicyRaw as HearingPriorityPolicy;
+const operationalHearingMetric = new Map(
+  Object.entries(hearingPriorityPolicy.blocks).flatMap(([block, config]) =>
+    Object.entries(config.metrics).map(([id, weight]) => [
+      id,
+      { block: block as HearingBlockCode, weight, blockWeight: config.weight },
+    ] as const),
+  ),
+);
+const isOperationalHearingMetric = (id: string) => operationalHearingMetric.has(id);
+const isMonthlyWorkforceMetric = (id: string) =>
+  hearingPriorityPolicy.monthlyWorkforce.metrics.includes(id) ||
+  hearingPriorityPolicy.monthlyWorkforce.prefixes.some((prefix) => id.startsWith(prefix));
 
 function hearingMetricChange(rowKey: string, metric: HearingMetric) {
   const baseline = hearingSnapshots.organizations[rowKey]?.metrics[metric.id];
@@ -3393,6 +3433,9 @@ export default function Home() {
   const [hearingLevel, setHearingLevel] = useState<
     "all" | "mandatory" | "control" | "heard"
   >("all");
+  const [hearingQueue, setHearingQueue] = useState<
+    "operational" | "monthly" | "heard"
+  >("operational");
   const [hearingType, setHearingType] = useState("Все типы МО");
   const [hearingQuery, setHearingQuery] = useState("");
   const [hearingChangeFilter, setHearingChangeFilter] =
@@ -3458,19 +3501,21 @@ export default function Home() {
         if (!registry || registry.type === "Вне рейтинга") return;
         const owner = byOrg.get(registry.oid);
         if (!owner) return;
-        if (id === "doctor500_dentist" && isDentalOrganization(registry)) return;
         const applicable = applicableForRegistry(registry, id);
         const direction = indicatorRegistry.direction(id);
         const reverse =
           direction === "lower" || calculatedIndicatorById[id]?.reverse === true;
-        const hasPersonalPlan =
+        const isOperationalMetric = isOperationalHearingMetric(id);
+        const isMonthlyMetric = isMonthlyWorkforceMetric(id);
+        const hasComparablePlan =
           dataset.plan !== null &&
-          indicatorRegistry.affectsHearingPriority(id) &&
           !blockedIndicatorIds.has(id) &&
           evaluableForRegistry(registry, id) &&
           !isUnavailableSourceRow(row) &&
           !isSmallPhysicianDenominator(id, row, registry);
-        const plan = hasPersonalPlan ? dataset.plan : null;
+        const plan = hasComparablePlan && (isOperationalMetric || isMonthlyMetric)
+          ? dataset.plan
+          : null;
         const passed =
           plan === null ? null : reverse ? row.fact <= plan : row.fact >= plan;
         const previousPassed =
@@ -3500,14 +3545,14 @@ export default function Home() {
           count: typeof row.count === "number" ? row.count : null,
           volume: detail?.volume ?? null,
           applicable,
-          affectsPriority: hasPersonalPlan,
+          affectsPriority: isOperationalMetric && plan !== null,
           passed,
           persistent: passed === false && previousPassed === false,
           adverseChange:
             row.previous !== null &&
             (reverse ? row.fact > row.previous : row.fact < row.previous),
           score,
-          status: hasPersonalPlan ? (passed ? "good" : "bad") : "reference",
+          status: plan !== null ? (passed ? "good" : "bad") : "reference",
         });
       }),
     );
@@ -3516,19 +3561,25 @@ export default function Home() {
       Object.keys(moData).forEach((id) => {
           const dataset = moData[id];
           if (!dataset || present.has(id)) return;
-          if (id === "doctor500_dentist" && isDentalOrganization(owner.registry)) return;
           const applicable = applicableForRegistry(owner.registry, id);
+          const isOperationalMetric = isOperationalHearingMetric(id);
+          const isMonthlyMetric = isMonthlyWorkforceMetric(id);
           const priorityDataExpected =
             applicable &&
-            indicatorRegistry.affectsHearingPriority(id) &&
             !blockedIndicatorIds.has(id) &&
-            dataset.plan !== null;
+            dataset.plan !== null &&
+            isOperationalMetric;
+          const monthlyDataExpected =
+            applicable &&
+            !blockedIndicatorIds.has(id) &&
+            dataset.plan !== null &&
+            isMonthlyMetric;
           owner.metrics.push({
             id,
             name: dataset.name,
             fact: null,
             previous: null,
-            plan: priorityDataExpected ? dataset.plan : null,
+            plan: priorityDataExpected || monthlyDataExpected ? dataset.plan : null,
             unit: dataset.unit,
             date: dataset.date,
             period: dataset.period ?? dataset.date,
@@ -3543,7 +3594,7 @@ export default function Home() {
             detail: applicable
               ? "Нет строки в актуальной выгрузке"
               : "Показатель неприменим к профилю МО",
-            status: applicable ? "missing" : "reference",
+            status: applicable && (priorityDataExpected || monthlyDataExpected) ? "missing" : "reference",
           });
         });
 
@@ -3587,37 +3638,27 @@ export default function Home() {
           if (!applicableForRegistry(owner.registry, id)) return;
           const current = rows.find((item) => item.oid === owner.registry.oid);
           const monthlyName = physicianMetrics.datasets[id]?.name ?? id;
-          const mandatoryDental = id === "doctor500_dentist" && isDentalOrganization(owner.registry);
-          const operationalPlan = mandatoryDental ? (indicatorRegistry.plan(id, 50) ?? 50) : null;
-          const usableCurrent = current && (current.volume ?? 0) > 0 ? current : null;
-          const operationalPassed = mandatoryDental && usableCurrent
-            ? passedPlan({ fact: usableCurrent.fact, plan: operationalPlan, direction: "higher" })
-            : null;
           owner.metrics.push({
             id: `operational500_${id}`,
             name: `${monthlyName} — оперативный контроль`,
             fact: current?.fact ?? null,
             previous: null,
-            plan: operationalPlan,
+            plan: null,
             unit: "%",
             date: physicianWeeklySnapshot.periods?.[id]?.date ?? physicianWeeklySnapshot.date,
             period: physicianWeeklySnapshot.periods?.[id]?.period ?? physicianWeeklySnapshot.period,
             count: current?.count ?? null,
             volume: current?.volume ?? null,
             applicable: true,
-            affectsPriority: mandatoryDental,
-            passed: operationalPassed,
+            affectsPriority: false,
+            passed: null,
             persistent: false,
             adverseChange: false,
-            score: mandatoryDental && usableCurrent
-              ? scoreAgainstPlan({ fact: usableCurrent.fact, plan: operationalPlan, direction: "higher" })
-              : null,
-            detail: mandatoryDental
-              ? (usableCurrent ? "Оперативный срез dentist включён в рейтинг." : "Нет данных по обязательному показателю; Рейтинг неполный.")
-              : current
+            score: null,
+            detail: current
               ? "Оперативный срез 500+; нет предыдущего сопоставимого недельного значения. В месячный рейтинг не включается."
               : "Нет данных в оперативном срезе; отсутствие строки не считается невыполнением.",
-            status: mandatoryDental ? (usableCurrent ? (operationalPassed ? "good" : "bad") : "missing") : "reference",
+            status: "reference",
           });
         });
     });
@@ -3626,14 +3667,14 @@ export default function Home() {
     byOrg.forEach(({ metrics }) =>
       metrics.forEach((metric) => {
         if (
+          isOperationalHearingMetric(metric.id) &&
           metric.affectsPriority &&
           metric.unit === "%" &&
           metric.volume !== null &&
           metric.volume > 0 &&
           metric.count !== null &&
           metric.plan !== null &&
-          metric.plan >= 0 &&
-          metric.id !== "tvspLaboratory"
+          metric.plan >= 0
         ) {
           regionalDenominators.set(
             metric.id,
@@ -3642,10 +3683,12 @@ export default function Home() {
         }
       }),
     );
-    const prepared = [...byOrg.values()].map(({ registry, metrics: sourceMetrics }) => {
-      const metrics = sourceMetrics.map((metric) => {
+    const withDeficits = [...byOrg.values()].map(({ registry, metrics: sourceMetrics }) => ({
+      registry,
+      metrics: sourceMetrics.map((metric) => {
         const regionalDenominator = regionalDenominators.get(metric.id) ?? null;
         if (
+          !isOperationalHearingMetric(metric.id) ||
           regionalDenominator === null ||
           metric.volume === null ||
           metric.count === null ||
@@ -3661,9 +3704,45 @@ export default function Home() {
           regionalDenominator,
           regionalContribution: (deficitCount / regionalDenominator) * 100,
         };
+      }),
+    }));
+    const regionalDeficits = new Map<string, number>();
+    withDeficits.forEach(({ metrics }) =>
+      metrics.forEach((metric) => {
+        if ((metric.deficitCount ?? 0) > 0)
+          regionalDeficits.set(
+            metric.id,
+            (regionalDeficits.get(metric.id) ?? 0) + (metric.deficitCount ?? 0),
+          );
+      }),
+    );
+    const activeMetricWeightByBlock = new Map<HearingBlockCode, number>();
+    operationalHearingMetric.forEach((config, id) => {
+      if ((regionalDeficits.get(id) ?? 0) <= 0) return;
+      activeMetricWeightByBlock.set(
+        config.block,
+        (activeMetricWeightByBlock.get(config.block) ?? 0) + config.weight,
+      );
+    });
+    const prepared = withDeficits.map(({ registry, metrics: sourceMetrics }) => {
+      const metrics = sourceMetrics.map((metric) => {
+        const config = operationalHearingMetric.get(metric.id);
+        const regionalDeficit = regionalDeficits.get(metric.id) ?? 0;
+        const activeMetricWeight = config
+          ? activeMetricWeightByBlock.get(config.block) ?? 0
+          : 0;
+        if (!config || regionalDeficit <= 0 || activeMetricWeight <= 0)
+          return { ...metric, deficitShare: null, weightedImpact: null };
+        const deficitShare = ((metric.deficitCount ?? 0) / regionalDeficit) * 100;
+        return {
+          ...metric,
+          deficitShare,
+          weightedImpact:
+            deficitShare * config.blockWeight * (config.weight / activeMetricWeight),
+        };
       });
       const affecting = metrics.filter(
-        (metric) => metric.regionalContribution !== null && metric.regionalContribution !== undefined,
+        (metric) => metric.affectsPriority,
       );
       const failed = affecting.filter((metric) => metric.passed === false);
       const missing = metrics.filter(
@@ -3676,18 +3755,25 @@ export default function Home() {
         (sum, metric) => sum + (metric.deficitCount ?? 0),
         0,
       );
-      const regionalContribution = affecting.reduce(
-        (sum, metric) => sum + (metric.regionalContribution ?? 0),
+      const operationalImpact = affecting.reduce(
+        (sum, metric) => sum + (metric.weightedImpact ?? 0),
         0,
       );
-      const snapshot = hearingSnapshots.organizations[registry.oid];
-      const snapshotPotential = snapshot
-        ? Object.entries(snapshot.metrics).reduce((sum, [id, metric]) => {
-            const denominator = regionalDenominators.get(id) ?? 0;
-            if (!metric || metric.count == null || metric.volume == null || metric.plan == null || denominator <= 0) return sum;
-            return sum + (Math.max(0, (metric.plan / 100) * metric.volume - metric.count) / denominator) * 100;
-          }, 0)
-        : null;
+      const monthlyMetrics = metrics.filter(
+        (metric) =>
+          isMonthlyWorkforceMetric(metric.id) &&
+          !metric.id.startsWith("operational500_") &&
+          metric.applicable &&
+          metric.plan !== null,
+      );
+      const monthlyFailed = monthlyMetrics.filter(
+        (metric) => metric.status === "bad" || metric.status === "missing",
+      );
+      const failedBlocks = new Set(
+        failed
+          .map((metric) => operationalHearingMetric.get(metric.id)?.block)
+          .filter((block): block is HearingBlockCode => Boolean(block)),
+      ).size;
       const deficits = failed.map((metric) => 100 - (metric.score ?? 0));
       const severity = deficits.length
         ? Math.max(...deficits) * 0.6 +
@@ -3700,16 +3786,24 @@ export default function Home() {
         affecting,
         failed,
         missing,
+        monthlyMetrics,
+        monthlyFailed,
+        failedBlocks,
         persistentCount,
         quantityGap,
-        regionalContribution,
-        snapshotPotential,
+        operationalImpact,
         severity,
       };
     });
     const maxLog = Math.max(
       1,
       ...prepared.map((item) => Math.log1p(item.quantityGap)),
+    );
+    const maxImpact = Math.max(1, ...prepared.map((item) => item.operationalImpact));
+    const impactRanks = new Map(
+      [...prepared]
+        .sort((a, b) => b.operationalImpact - a.operationalImpact)
+        .map((item, index) => [item.registry.oid, index + 1]),
     );
     return prepared
       .map(
@@ -3719,10 +3813,12 @@ export default function Home() {
           affecting,
           failed,
           missing,
+          monthlyMetrics,
+          monthlyFailed,
+          failedBlocks,
           persistentCount,
           quantityGap,
-          regionalContribution,
-          snapshotPotential,
+          operationalImpact,
           severity,
         }) => {
           const failedCount = failed.length;
@@ -3735,12 +3831,24 @@ export default function Home() {
             (metric) => metric.adverseChange,
           ).length;
           const decline = failedCount ? (adverse / failedCount) * 100 : 0;
-          const priority = regionalContribution;
+          const impactNormalized = (operationalImpact / maxImpact) * 100;
+          const priority =
+            impactNormalized * hearingPriorityPolicy.scoreWeights.impact +
+            persistence * hearingPriorityPolicy.scoreWeights.persistence +
+            decline * hearingPriorityPolicy.scoreWeights.decline +
+            breadth * hearingPriorityPolicy.scoreWeights.breadth;
+          const impactRank = impactRanks.get(registry.oid) ?? prepared.length;
+          const zeroCritical = failed.some(
+            (metric) => metric.fact === 0 && metric.plan !== null && metric.plan > 0,
+          );
           const level: HearingRow["level"] =
-            priority >= 55 ||
-            failedCount >= 3 ||
-            persistentCount >= 2 ||
-            missing.length >= 2
+            impactRank <= hearingPriorityPolicy.mandatory.impactRank ||
+            (impactRank <= hearingPriorityPolicy.mandatory.extendedImpactRank &&
+              (persistentCount > 0 || adverse > 0)) ||
+            persistentCount >= hearingPriorityPolicy.mandatory.persistentFailures ||
+            failedBlocks >= hearingPriorityPolicy.mandatory.failedBlocks ||
+            zeroCritical ||
+            missing.length >= hearingPriorityPolicy.mandatory.missingMetrics
               ? "mandatory"
               : "control";
           const order = { bad: 0, missing: 1, good: 2, reference: 3 };
@@ -3770,14 +3878,26 @@ export default function Home() {
                 Math.max(1, affecting.length)) *
               100,
             quantityGap,
-            regionalContribution,
-            snapshotPotential,
-            currentPotential: regionalContribution,
-            potentialChange: snapshotPotential === null ? null : regionalContribution - snapshotPotential,
+            regionalContribution: operationalImpact,
+            operationalImpact,
+            impactRank,
+            failedBlocks,
+            monthlyFailedCount: monthlyFailed.length,
+            monthlyTotal: monthlyMetrics.length,
+            monthlyScore: monthlyMetrics.length
+              ? Math.min(...monthlyMetrics.map((metric) => metric.score ?? 0))
+              : 0,
+            monthlyMainProblem:
+              [...monthlyFailed].sort(
+                (a, b) => (a.score ?? -1) - (b.score ?? -1),
+              )[0] ?? null,
+            snapshotPotential: null,
+            currentPotential: operationalImpact,
+            potentialChange: null,
             affecting,
             mainProblem:
               [...affecting].sort(
-                (a, b) => (b.regionalContribution ?? 0) - (a.regionalContribution ?? 0),
+                (a, b) => (b.weightedImpact ?? 0) - (a.weightedImpact ?? 0),
               )[0] ??
               null,
             level,
@@ -3786,16 +3906,19 @@ export default function Home() {
           };
         },
       )
-      .filter((row) => row.failedCount > 0 || row.heard)
+      .filter((row) => row.failedCount > 0 || row.monthlyFailedCount > 0 || row.heard)
       .sort(
         (a, b) =>
-          b.regionalContribution - a.regionalContribution ||
+          b.priority - a.priority ||
+          b.operationalImpact - a.operationalImpact ||
           b.failedCount - a.failedCount ||
           a.name.localeCompare(b.name, "ru"),
       );
   }, []);
   const hearingImpactSummary = useMemo(() => {
-    const ranked = hearingRows.filter((row) => row.regionalContribution > 0);
+    const ranked = hearingRows
+      .filter((row) => row.operationalImpact > 0)
+      .sort((a, b) => b.operationalImpact - a.operationalImpact);
     const total = ranked.reduce((sum, row) => sum + row.regionalContribution, 0);
     const topTen = ranked.slice(0, 10);
     const topTenContribution = topTen.reduce(
@@ -3823,22 +3946,37 @@ export default function Home() {
     [hearingRows],
   );
   const visibleHearingRows = useMemo(
-    () =>
-      hearingRows.filter((row) => {
-        const matchesLevel =
-          hearingLevel === "all" ||
-          (hearingLevel === "heard"
+    () => {
+      const rows = hearingRows.filter((row) => {
+        const matchesQueue =
+          hearingQueue === "heard"
             ? row.heard
-            : !row.heard && row.level === hearingLevel);
+            : hearingQueue === "monthly"
+              ? !row.heard && row.monthlyFailedCount > 0
+              : !row.heard && row.failedCount > 0;
+        const matchesLevel =
+          hearingQueue === "heard" ||
+          hearingLevel === "all" ||
+          row.level === hearingLevel;
         return (
+          matchesQueue &&
           matchesLevel &&
           (hearingType === "Все типы МО" || row.type === hearingType) &&
           cleanMoName(row.name)
             .toLocaleLowerCase("ru")
             .includes(hearingQuery.toLocaleLowerCase("ru"))
         );
-      }),
-    [hearingRows, hearingLevel, hearingType, hearingQuery],
+      });
+      if (hearingQueue === "monthly")
+        return rows.sort(
+          (a, b) =>
+            b.monthlyFailedCount - a.monthlyFailedCount ||
+            a.monthlyScore - b.monthlyScore ||
+            a.name.localeCompare(b.name, "ru"),
+        );
+      return rows;
+    },
+    [hearingRows, hearingQueue, hearingLevel, hearingType, hearingQuery],
   );
   const unionRatingRows = useMemo(
     () => buildUnionRating(ratingRows),
@@ -7453,8 +7591,8 @@ export default function Home() {
                   <p className="eyebrow">ОПЕРАТИВНЫЙ УПРАВЛЕНЧЕСКИЙ КОНТРОЛЬ</p>
                   <h1>МО для заслушивания</h1>
                   <p>
-                    В первую очередь — МО с наибольшим вкладом в недостижение
-                    региональных целей; полный профиль показателей сохранён
+                    Три очереди: оперативные антилидеры, закрытый месячный
+                    контроль кадровых показателей и повторный контроль заслушанных МО
                   </p>
                 </div>
                 <div className="hearingPeriod">
@@ -7469,7 +7607,7 @@ export default function Home() {
                   <strong className="red">
                     {format(hearingImpactSummary.topTenShare, 1)}%
                   </strong>
-                  <span>суммарного индекса влияния на цели РТ</span>
+                  <span>взвешенного оперативного недостижения</span>
                 </article>
                 <article className="heard">
                   <small>Заслушаны</small>
@@ -7483,7 +7621,7 @@ export default function Home() {
                   <strong className="red">
                     {
                       hearingRows.filter(
-                        (row) => row.level === "mandatory" && !row.heard,
+                        (row) => row.failedCount > 0 && row.level === "mandatory" && !row.heard,
                       ).length
                     }
                   </strong>
@@ -7494,16 +7632,16 @@ export default function Home() {
                   <strong className="amber">
                     {
                       hearingRows.filter(
-                        (row) => row.level === "control" && !row.heard,
+                        (row) => row.failedCount > 0 && row.level === "control" && !row.heard,
                       ).length
                     }
                   </strong>
                   <span>предупредить и проверить</span>
                 </article>
                 <article>
-                  <small>Плохие, но мало влияют</small>
-                  <strong>{hearingImpactSummary.severeLowImpact.length}</strong>
-                  <span>≥3 проблем, вклад менее 0,1 п.п.</span>
+                  <small>Месячный контроль 500+</small>
+                  <strong>{hearingRows.filter((row) => row.monthlyFailedCount > 0 && !row.heard).length}</strong>
+                  <span>МО ниже плана закрытого месяца</span>
                 </article>
                 <article>
                   <small>Нет полных данных</small>
@@ -7526,14 +7664,21 @@ export default function Home() {
                   </p>
                   <p>
                     <b>3</b>
-                    <span>вклад, п.п. = дефицит МО ÷ знаменатель РТ × 100</span>
+                    <span>доля дефицита МО = дефицит МО ÷ дефицит РТ</span>
+                  </p>
+                  <p>
+                    <b>4</b>
+                    <span>оперативный вес блоков: помощь 70%, сервисы 20%, готовность 10%</span>
+                  </p>
+                  <p>
+                    <b>5</b>
+                    <span>приоритет: влияние 60%, устойчивость 20%, ухудшение 10%, широта 10%</span>
                   </p>
                 </div>
                 <em>
-                  В расчёт входят только долевые показатели с планом и
-                  достоверными числителем и знаменателями МО и РТ. Ошибки РЭМД,
-                  краткий ввод, КДЛ и другие исключённые показатели остаются в
-                  полном профиле как справочные сигналы риска.
+                  500+ не входит в оперативный приоритет: закрытый месяц показан
+                  отдельной очередью, неполный текущий месяц — только как траектория.
+                  Отсутствие обязательных данных считается отдельным риском, а не нулём.
                 </em>
               </details>
               <details className="hearingMethod hearingTopTen" open>
@@ -7545,15 +7690,38 @@ export default function Home() {
                     <p key={row.key}>
                       <b>{index + 1}</b>
                       <span>
-                        {displayMoName(row.name, row.key)} — индекс {format(row.regionalContribution, 3)}
+                        {displayMoName(row.name, row.key)} — влияние {format(row.operationalImpact, 2)} из 100
                       </span>
                     </p>
                   ))}
                 </div>
                 <em>
-                  ТОП-10: индекс {format(hearingImpactSummary.topTenContribution, 3)}, или {format(hearingImpactSummary.topTenShare, 1)}% суммарного индекса влияния.
+                  ТОП-10: {format(hearingImpactSummary.topTenContribution, 2)} из 100, или {format(hearingImpactSummary.topTenShare, 1)}% взвешенного оперативного недостижения.
                 </em>
               </details>
+              <div className="hearingQueue" role="group" aria-label="Очередь заслушивания">
+                <button
+                  className={hearingQueue === "operational" ? "active" : ""}
+                  onClick={() => { setHearingQueue("operational"); setHearingLevel("all"); }}
+                >
+                  Оперативные антилидеры
+                  <small>{hearingRows.filter((row) => row.failedCount > 0 && !row.heard).length} МО</small>
+                </button>
+                <button
+                  className={hearingQueue === "monthly" ? "active" : ""}
+                  onClick={() => { setHearingQueue("monthly"); setHearingLevel("all"); }}
+                >
+                  Месячный контроль 500+
+                  <small>{hearingRows.filter((row) => row.monthlyFailedCount > 0 && !row.heard).length} МО</small>
+                </button>
+                <button
+                  className={hearingQueue === "heard" ? "active" : ""}
+                  onClick={() => { setHearingQueue("heard"); setHearingLevel("all"); }}
+                >
+                  Заслушаны — повторный контроль
+                  <small>{hearingRows.filter((row) => row.heard).length} МО</small>
+                </button>
+              </div>
               <div className="hearingToolbar">
                 <input
                   value={hearingQuery}
@@ -7587,16 +7755,10 @@ export default function Home() {
                   >
                     Контроль
                   </button>
-                  <button
-                    className={hearingLevel === "heard" ? "active" : ""}
-                    onClick={() => setHearingLevel("heard")}
-                  >
-                    Заслушаны
-                  </button>
                 </div>
                 <span>{visibleHearingRows.length} МО</span>
               </div>
-              <div className="hearingChangeToolbar">
+              {hearingQueue === "heard" && <div className="hearingChangeToolbar">
                 <b>Динамика показателей заслушанных МО</b>
                 <div role="group" aria-label="Динамика показателей">
                   <button
@@ -7634,7 +7796,7 @@ export default function Home() {
                     → Без изменений
                   </button>
                 </div>
-              </div>
+              </div>}
               <div className="hearingList">
                 {visibleHearingRows.map((row, index) => {
                   const snapshotSummary = hearingSnapshotSummary(row);
@@ -7650,8 +7812,10 @@ export default function Home() {
                           <p>{row.type}</p>
                         </div>
                         <strong>
-                          {format(row.regionalContribution, 3)} п.п.
-                          <small>потенциал для РТ</small>
+                          {hearingQueue === "monthly"
+                            ? `${row.monthlyFailedCount} из ${row.monthlyTotal}`
+                            : format(row.priority, 1)}
+                          <small>{hearingQueue === "monthly" ? "месячных показателей ниже плана" : "приоритет из 100"}</small>
                         </strong>
                         <span>
                           {row.heard
@@ -7688,22 +7852,22 @@ export default function Home() {
                             <b>{snapshotSummary.comparable}</b>
                           </p>
                           <p>
-                            <small>Текущий индекс влияния</small>
-                            <b>{format(row.regionalContribution, 3)}</b>
-                            <span>исторический знаменатель РТ в baseline не сохранён</span>
+                            <small>Текущий приоритет</small>
+                            <b>{format(row.priority, 1)} из 100</b>
+                            <span>исторический приоритет не пересчитывается задним числом</span>
                           </p>
                         </div>
                       )}
                       <div className="hearingSignals">
                         <p>
-                          <small>Критических показателей</small>
+                          <small>{hearingQueue === "monthly" ? "Месячных ниже плана" : "Оперативных ниже плана"}</small>
                           <b>
-                            {row.failedCount} из {row.total}
+                            {hearingQueue === "monthly" ? row.monthlyFailedCount : row.failedCount} из {hearingQueue === "monthly" ? row.monthlyTotal : row.total}
                           </b>
                         </p>
                         <p>
-                          <small>Показателей, влияющих на РТ</small>
-                          <b>{row.affecting.filter((metric) => (metric.regionalContribution ?? 0) > 0).length}</b>
+                          <small>{hearingQueue === "monthly" ? "Минимальное выполнение плана" : "Проблемных блоков"}</small>
+                          <b>{hearingQueue === "monthly" ? `${format(row.monthlyScore, 0)}%` : `${row.failedBlocks} из 3`}</b>
                         </p>
                         <p>
                           <small>Показателей с данными</small>
@@ -7724,25 +7888,26 @@ export default function Home() {
                         <div>
                           <small>Главная причина включения</small>
                           <b>
-                            {row.mainProblem?.name ??
+                            {(hearingQueue === "monthly" ? row.monthlyMainProblem : row.mainProblem)?.name ??
                               "Обязательные данные не представлены"}
                           </b>
-                          {row.mainProblem && (
+                          {(hearingQueue === "monthly" ? row.monthlyMainProblem : row.mainProblem) && (() => {
+                            const problem = hearingQueue === "monthly" ? row.monthlyMainProblem : row.mainProblem;
+                            return problem ? (
                             <span>
-                              {row.mainProblem.fact === null
+                              {problem.fact === null
                                 ? "нет актуальной строки в источнике"
-                                : `${row.mainProblem.count !== null && row.mainProblem.volume !== null ? `${format(row.mainProblem.count, 0)} из ${format(row.mainProblem.volume, 0)} · ` : ""}${format(row.mainProblem.fact, 2)}${row.mainProblem.unit} при плане ${format(row.mainProblem.plan, 2)}${row.mainProblem.unit} · вклад ${format(row.mainProblem.regionalContribution ?? 0, 3)} п.п.`}
+                                : `${problem.count !== null && problem.volume !== null ? `${format(problem.count, 0)} из ${format(problem.volume, 0)} · ` : ""}${format(problem.fact, 2)}${problem.unit} при плане ${format(problem.plan, 2)}${problem.unit}${hearingQueue === "monthly" ? " · закрытый месяц" : ` · влияние ${format(problem.weightedImpact ?? 0, 2)} из 100`}`}
                             </span>
-                          )}
+                            ) : null;
+                          })()}
                         </div>
                         <p>
-                          <small>Потенциально до цели</small>
+                          <small>{hearingQueue === "monthly" ? "Контур оценки" : "Взвешенное влияние"}</small>
                           <b>
-                            {row.heard && row.snapshotPotential !== null
-                              ? `${format(row.currentPotential, 3)} п.п. (на дату заслушивания ${format(row.snapshotPotential, 3)} п.п.; изменение ${format(row.potentialChange ?? 0, 3)} п.п.)`
-                              : row.quantityGap > 0
-                              ? format(row.quantityGap, 0)
-                              : "не определён"}
+                            {hearingQueue === "monthly"
+                              ? "закрытый полный месяц"
+                              : `${format(row.operationalImpact, 2)} из 100 · место по влиянию ${row.impactRank}`}
                           </b>
                         </p>
                       </div>
@@ -7785,11 +7950,13 @@ export default function Home() {
                                       ? "Неприменимо"
                                       : metric.status === "missing"
                                         ? "Нет данных"
-                                        : metric.regionalContribution !== null && metric.regionalContribution !== undefined
-                                          ? "Влияет на приоритет"
+                                        : metric.weightedImpact !== null && metric.weightedImpact !== undefined
+                                          ? "Влияет на оперативный приоритет"
+                                          : isMonthlyWorkforceMetric(metric.id) && !metric.id.startsWith("operational500_")
+                                            ? "Месячный контроль"
                                           : "Справочно"}
-                                    {metric.regionalContribution !== null && metric.regionalContribution !== undefined
-                                      ? ` · вклад в недостижение РТ ${format(metric.regionalContribution, 3)} п.п.`
+                                    {metric.weightedImpact !== null && metric.weightedImpact !== undefined
+                                      ? ` · влияние ${format(metric.weightedImpact, 2)} из 100`
                                       : ""}
                                   </small>
                                   {row.heard && comparison.baseline && (

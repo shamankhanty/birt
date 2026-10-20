@@ -41,7 +41,7 @@ test("dentist threshold cases are evaluated, including denominator 1", () => {
 test("missing row and zero denominator are not converted to zero", () => {
   assert.deepEqual(evaluate(undefined), { fact: null, passed: null, status: "missing" });
   assert.deepEqual(evaluate({ count: 0, volume: 0 }), { fact: null, passed: null, status: "missing" });
-  assert.match(page, /Рейтинг неполный/u);
+  assert.match(page, /отсутствие строки не считается невыполнением/u);
 });
 
 test("other specialty rules remain unchanged", () => {
