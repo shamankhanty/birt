@@ -11,7 +11,6 @@ const expected = new Map([
   ["20", "92,73%"],
   ["25", "55,76%"],
   ["26", "99%"],
-  ["29", "17,44%"],
   ["34", "98%"],
   ["36", "99%"],
 ]);
@@ -23,6 +22,14 @@ test("new non-empty regional facts use the September 2026 period", () => {
     assert.equal(row?.regionalPeriod, "январь–сентябрь 2026", `indicator ${id}`);
     assert.match(row?.sourceNote ?? "", /числитель и знаменатель не представлены/iu, `indicator ${id}`);
   }
+});
+
+test("REMD error share has a newer October cut while September facts remain unchanged", () => {
+  const row = rows.get("29");
+  assert.equal(row?.regionalFact, "16,96%");
+  assert.equal(row?.regionalPeriod, "01.01.2026–15.10.2026");
+  assert.match(row?.sourceNote ?? "", /скриншот/u);
+  assert.match(row?.sourceNote ?? "", /без первичной регулярной выгрузки/u);
 });
 
 test("blank September cells do not overwrite previously confirmed values", () => {
