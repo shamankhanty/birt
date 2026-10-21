@@ -5040,6 +5040,124 @@ export default function Home() {
   const maxDashboardServiceKey = maxService === "tmk" ? "tmk" : "eln";
   const maxDashboardMetric = maxService === "tmk" ? "tmkMaxCount" : "elnMaxCount";
   const maxPeriodViews = maxPeriodViewsRaw as any;
+  const maxIndicatorServiceKey = matrixMetric === "tmkMaxCount" ? "tmk" : "eln";
+  const maxIndicatorSlice = maxPeriodView === "operational" ? maxPeriodViews.operational : maxPeriodViews.cumulative;
+  const maxIndicatorMetricData = maxIndicatorSlice.metrics[maxIndicatorServiceKey];
+  const maxIndicatorPlan = maxIndicatorMetricData.republicPlan as number;
+  const maxIndicatorFact = maxIndicatorMetricData.plannedMoFact as number;
+  const maxIndicatorPreviousFact = maxPeriodView === "operational"
+    ? maxIndicatorMetricData.previousPlannedMoFact as number
+    : null;
+  const maxIndicatorAchievement = maxIndicatorPlan
+    ? (maxIndicatorFact / maxIndicatorPlan) * 100
+    : null;
+  const maxIndicatorRemaining = maxIndicatorPlan === null
+    ? null
+    : Math.max(maxIndicatorPlan - maxIndicatorFact, 0);
+  const maxIndicatorDaysRemaining = maxPeriodView === "operational"
+    ? daysRemainingInCutMonth(maxIndicatorSlice.date)
+    : null;
+  const maxIndicatorIntervalDays = maxPeriodView === "operational"
+    ? snapshotDistanceDays(maxIndicatorSlice.previousDate, maxIndicatorSlice.date)
+    : null;
+  const maxIndicatorGrowth = maxIndicatorPreviousFact === null
+    ? null
+    : maxIndicatorFact - maxIndicatorPreviousFact;
+  const maxIndicatorRecentPace = maxIndicatorGrowth !== null && maxIndicatorIntervalDays
+    ? maxIndicatorGrowth / maxIndicatorIntervalDays
+    : null;
+  const maxIndicatorRequiredPace = maxIndicatorRemaining !== null && maxIndicatorDaysRemaining && maxIndicatorDaysRemaining > 0
+    ? maxIndicatorRemaining / maxIndicatorDaysRemaining
+    : null;
+  const maxIndicatorForecast = maxPeriodView === "operational" && maxIndicatorRecentPace !== null && maxIndicatorDaysRemaining !== null
+    ? maxIndicatorFact + Math.max(0, maxIndicatorRecentPace) * maxIndicatorDaysRemaining
+    : null;
+  const maxIndicatorRows = (maxIndicatorMetricData.rows as Array<any>)
+    .map((sourceRow) => {
+      const plan = sourceRow.plan as number | null;
+      const fact = sourceRow.fact as number | null;
+      const previous = maxPeriodView === "operational" ? sourceRow.previous as number | null : null;
+      const growth = fact !== null && previous !== null ? fact - previous : null;
+      const achievement = plan !== null && fact !== null ? (fact / plan) * 100 : null;
+      const remaining = plan !== null && fact !== null ? Math.max(plan - fact, 0) : null;
+      const requiredPace = remaining !== null && maxIndicatorDaysRemaining && maxIndicatorDaysRemaining > 0
+        ? remaining / maxIndicatorDaysRemaining
+        : null;
+      const recentPace = growth !== null && maxIndicatorIntervalDays
+        ? growth / maxIndicatorIntervalDays
+        : null;
+      const forecast = maxPeriodView === "operational" && fact !== null && maxIndicatorDaysRemaining !== null && recentPace !== null
+        ? fact + Math.max(0, recentPace) * maxIndicatorDaysRemaining
+        : null;
+      const forecastAchievement = plan && forecast !== null ? (forecast / plan) * 100 : null;
+      const status = achievement === null
+        ? "Нет данных"
+        : achievement >= 100
+          ? "План достигнут ✓"
+          : maxPeriodView === "operational" && forecastAchievement !== null && forecastAchievement >= 100
+            ? "Темп достаточен"
+            : maxPeriodView === "operational"
+              ? "Отставание"
+              : "План не достигнут";
+      return {
+        row: sourceRow,
+        plan,
+        fact,
+        growth,
+        achievement,
+        remaining,
+        requiredPace,
+        forecast,
+        forecastAchievement,
+        forecastDays: forecast,
+        status,
+      };
+    })
+    .filter(({ row }) => moOwnership === "all" || !isPrivateOrganization(row.name))
+    .filter(({ row }) => `${row.name} ${row.oid ?? ""}`.toLocaleLowerCase("ru").includes(query.toLocaleLowerCase("ru")))
+    .sort((a, b) => {
+      const statusRank = (value: string) => ({ "Отставание": 0, "План не достигнут": 0, "Темп достаточен": 1, "План достигнут ✓": 2, "Нет данных": 3 })[value] ?? 4;
+      const values = (item: typeof a) => ({
+        name: item.row.name as string,
+        plan: item.plan,
+        fact: item.fact,
+        achievement: item.achievement,
+        remaining: item.remaining,
+        growth: item.growth,
+        forecastDays: item.forecast,
+        status: statusRank(item.status),
+      });
+      const left = values(a)[maxPlanSortKey];
+      const right = values(b)[maxPlanSortKey];
+      let comparison = 0;
+      if (typeof left === "string" && typeof right === "string") comparison = left.localeCompare(right, "ru");
+      else if (left === null) comparison = 1;
+      else if (right === null) comparison = -1;
+      else comparison = Number(left) - Number(right);
+      return (maxPlanSortDirection === "asc" ? comparison : -comparison) || a.row.name.localeCompare(b.row.name, "ru");
+    });
+  const maxIndicatorLeaders = [...maxIndicatorRows]
+    .filter((item) => item.achievement !== null)
+    .sort((a, b) => (b.achievement ?? 0) - (a.achievement ?? 0))
+    .slice(0, 5);
+  const maxIndicatorGrowthLeaders = [...maxIndicatorRows]
+    .filter((item) => item.growth !== null)
+    .sort((a, b) => (b.growth ?? 0) - (a.growth ?? 0))
+    .slice(0, 5);
+  const maxIndicatorGapLeaders = [...maxIndicatorRows]
+    .filter((item) => item.remaining !== null)
+    .sort((a, b) => (b.remaining ?? 0) - (a.remaining ?? 0))
+    .slice(0, 5);
+  const maxIndicatorAttention = [...maxIndicatorRows]
+    .filter((item) => item.achievement === null || item.achievement < 100)
+    .sort((a, b) => {
+      const left = maxPeriodView === "operational" ? a.forecastAchievement : a.achievement;
+      const right = maxPeriodView === "operational" ? b.forecastAchievement : b.achievement;
+      if (left === null) return -1;
+      if (right === null) return 1;
+      return left - right || (b.remaining ?? 0) - (a.remaining ?? 0);
+    })
+    .slice(0, 5);
   const maxDashboardSlice = maxPeriodView === "operational" ? maxPeriodViews.operational : maxPeriodViews.cumulative;
   const maxDashboardMetricData = maxDashboardSlice.metrics[maxDashboardServiceKey];
   const maxDashboardMonthKey = maxPeriodViews.month as string;
@@ -9166,14 +9284,14 @@ export default function Home() {
                 >
                   <small>
                     {isMaxMetric
-                      ? "План текущего месяца"
+                      ? (maxPeriodView === "operational" ? "Месячный план" : "Накопительный план")
                       : isCountMetric
                         ? "Период"
                         : "Плановый показатель"}
                   </small>
                   <strong>
                     {isMaxMetric
-                      ? (maxCurrentMonthPlan === null ? "—" : format(maxCurrentMonthPlan, 0))
+                      ? format(maxIndicatorPlan, 0)
                       : isCountMetric
                         ? (selectedDataset.period ?? selectedDataset.date)
                         : selectedDataset.plan === null
@@ -9182,11 +9300,20 @@ export default function Home() {
                   </strong>
                   <span>
                     {isMaxMetric
-                      ? `${maxPlanAchievement === null ? "—" : `${format(maxPlanAchievement, 1)}%`} · факт ${format(operationalRegionalCurrent, 0)} на ${selectedDataset.date}`
+                      ? `${maxIndicatorAchievement === null ? "—" : `${format(maxIndicatorAchievement, 1)}%`} · факт ${format(maxIndicatorFact, 0)} на ${maxIndicatorSlice.date}`
                       : `актуальность ${displayDatasetDate}`}
                   </span>
                 </div>
               </div>
+              {isMaxMetric && (
+                <div className="indicatorPeriodBar" data-testid="max-indicator-period-switch">
+                  <div className="maxPeriodSwitch" role="group" aria-label="Период показателя МАХ">
+                    <button className={maxPeriodView === "operational" ? "active" : ""} onClick={() => setMaxPeriodView("operational")}>Оперативно</button>
+                    <button className={maxPeriodView === "cumulative" ? "active" : ""} onClick={() => setMaxPeriodView("cumulative")}>Накопительно</button>
+                  </div>
+                  <span>{maxPeriodView === "operational" ? `${maxIndicatorSlice.period} · текущий месяц` : `${maxIndicatorSlice.period} · с начала года`}</span>
+                </div>
+              )}
               <div className="mobileMetricSelect">
                 <label htmlFor="mobile-metric">Показатель</label>
                 <select
@@ -9201,51 +9328,67 @@ export default function Home() {
                   ))}
                 </select>
               </div>
-              {selectedDataset.note && matrixMetric !== "semd228" && (
+              {isMaxMetric ? (
+                <p className="sourceDataNote">
+                  <b>Источник и ограничение:</b> {maxIndicatorSlice.source}. В выполнение включены 85 МО утверждённого планового периметра; контрольный итог всего исходного файла — {format(maxIndicatorMetricData.sourceTotal, 0)}. Отсутствие строки не заменяется нулём.
+                </p>
+              ) : selectedDataset.note && matrixMetric !== "semd228" && (
                 <p className="sourceDataNote">
                   <b>Источник и ограничение:</b> {selectedDataset.note}
                 </p>
               )}
-              {isMaxMetric && maxCurrentMonthKey && maxCurrentMonthPlan !== null && (
-                <section className="planControlHero" data-testid="max-plan-summary">
+              {isMaxMetric && (
+                <section className="planControlHero" data-testid="max-indicator-summary">
                   <header>
                     <div>
-                      <p className="eyebrow">ВЫПОЛНЕНИЕ НАКОПИТЕЛЬНОГО ПЛАНА</p>
-                      <h2>{russianMonthLabel(maxCurrentMonthKey)} · {maxServiceKey === "tmk" ? "ТМК" : "ЛВН после ТМК"}</h2>
+                      <p className="eyebrow">{maxPeriodView === "operational" ? "ОПЕРАТИВНЫЙ МЕСЯЧНЫЙ СРЕЗ" : "НАКОПИТЕЛЬНЫЙ СРЕЗ"}</p>
+                      <h2>{maxPeriodViews.monthLabel} · {maxIndicatorServiceKey === "tmk" ? "ТМК" : "ЛВН после ТМК"}</h2>
                     </div>
-                    <span className={`statusChip ${(maxPlanAchievement ?? 0) >= 100 ? "good" : (maxPlanAchievement ?? 0) >= 90 ? "warn" : "bad"}`}>
-                      {(maxPlanAchievement ?? 0) >= 100 ? "План достигнут ✓" : "План требует контроля"}
+                    <span className={`statusChip ${(maxIndicatorAchievement ?? 0) >= 100 ? "good" : maxPeriodView === "operational" && (maxIndicatorForecast ?? 0) >= maxIndicatorPlan ? "warn" : "bad"}`}>
+                      {(maxIndicatorAchievement ?? 0) >= 100 ? "План достигнут ✓" : maxPeriodView === "operational" && (maxIndicatorForecast ?? 0) >= maxIndicatorPlan ? "Темп достаточен" : "Отставание"}
                     </span>
                   </header>
                   <div className="planControlCards">
-                    <article><small>Факт накопительно на {selectedDataset.date}</small><strong>{format(operationalRegionalCurrent, 0)}</strong></article>
-                    <article><small>План на {russianMonthLabel(maxCurrentMonthKey).replace(/\s+\d{4}$/u, "")}</small><strong>{format(maxCurrentMonthPlan, 0)}</strong></article>
-                    <article><small>Выполнение плана</small><strong>{format(maxPlanAchievement ?? 0, 2)}%</strong></article>
-                    <article><small>{(maxPlanAchievement ?? 0) >= 100 ? `Контрольная точка ${maxNextControlMonthKey ? russianMonthLabel(maxNextControlMonthKey).replace(/\s+\d{4}$/u, "") : "следующего месяца"}` : "Осталось до плана"}</small><strong>{(maxPlanAchievement ?? 0) >= 100 ? (maxNextControlPlan === null ? "—" : format(maxNextControlPlan, 0)) : format(maxPlanRemaining ?? 0, 0)}</strong></article>
-                    <article className={maxForecastDays === null ? "forecastCard stalled" : "forecastCard"}><small>Прогноз до текущего плана</small><strong>{maxForecastDays === null ? "—" : `${format(maxForecastDays, 0)} дн.`}</strong><span>{maxForecastDate ? `ориентир ${maxForecastDate}` : "при текущем темпе не прогнозируется"}</span></article>
+                    <article><small>{maxPeriodView === "operational" ? `Факт за месяц на ${maxIndicatorSlice.date}` : `Факт накопительно на ${maxIndicatorSlice.date}`}</small><strong>{format(maxIndicatorFact, 0)}</strong></article>
+                    <article><small>{maxPeriodView === "operational" ? "План на месяц" : "Накопительный план"}</small><strong>{format(maxIndicatorPlan, 0)}</strong></article>
+                    <article><small>Выполнение плана</small><strong>{maxIndicatorAchievement === null ? "—" : `${format(maxIndicatorAchievement, 2)}%`}</strong></article>
+                    <article><small>Осталось до плана</small><strong>{maxIndicatorRemaining === null ? "—" : format(maxIndicatorRemaining, 0)}</strong></article>
+                    {maxPeriodView === "operational" ? (
+                      <article className="forecastCard"><small>Прогноз к концу месяца</small><strong>{maxIndicatorForecast === null ? "—" : format(maxIndicatorForecast, 0)}</strong><span>{maxIndicatorForecast === null ? "нет сопоставимой динамики" : `${format((maxIndicatorForecast / maxIndicatorPlan) * 100, 1)}% плана`}</span></article>
+                    ) : (
+                      <article><small>Периметр расчёта</small><strong>85 МО</strong><span>утверждённый план</span></article>
+                    )}
                   </div>
-                  <div className="planTempoLine">
-                    <span>Изменение за {operationalIntervalDays ?? "—"} дн.</span>
-                    <b className={(regionalChange ?? 0) > 0 ? "deltaUp" : (regionalChange ?? 0) < 0 ? "deltaDown" : ""}>{regionalChange === null ? "—" : `${regionalChange > 0 ? "+" : ""}${format(regionalChange, 0)}`}</b>
-                    <span>Текущий темп</span><b>{maxRecentDailyPace === null ? "—" : `${format(maxRecentDailyPace, 0)} в день`}</b>
-                    <span>Нужно было до конца месяца</span><b>{maxRequiredDailyPace === null ? "период завершён" : `${format(maxRequiredDailyPace, 0)} в день`}</b>
-                  </div>
-                  <p>Прогноз рассчитан до утверждённого плана текущего месяца по темпу между двумя последними сопоставимыми выгрузками. Это производный ориентир, а не новый план. ТМК и ЛВН считаются раздельно.</p>
+                  {maxPeriodView === "operational" && (
+                    <div className="planTempoLine">
+                      <span>Изменение {maxIndicatorSlice.previousDate} → {maxIndicatorSlice.date}</span><b className={(maxIndicatorGrowth ?? 0) > 0 ? "deltaUp" : ""}>{maxIndicatorGrowth === null ? "—" : `${maxIndicatorGrowth > 0 ? "+" : ""}${format(maxIndicatorGrowth, 0)}`}</b>
+                      <span>Текущий темп</span><b>{maxIndicatorRecentPace === null ? "—" : `${format(maxIndicatorRecentPace, 1)} в день`}</b>
+                      <span>Нужно до конца месяца</span><b>{maxIndicatorRequiredPace === null ? "—" : `${format(maxIndicatorRequiredPace, 1)} в день`}</b>
+                    </div>
+                  )}
+                  <p>{maxPeriodView === "operational" ? "Факт взят напрямую из октябрьского отчёта; накопительный факт сентября из него не вычитается. Прогноз рассчитан по темпу между двумя октябрьскими выгрузками." : "Факт с начала года сопоставлен с накопительным планом на октябрь. Этот срез не смешивается с оперативным результатом текущего месяца."}</p>
                 </section>
               )}
-              {isMaxMetric && maxCurrentMonthKey && (
-                <section className="maxPlanOrganizations" data-testid="max-plan-organization-table">
-                  <div className="maxPlanInsights" data-testid="max-plan-insights">
+              {isMaxMetric && (
+                <section className="maxPlanOrganizations" data-testid="max-indicator-organization-table">
+                  <div className="maxPlanInsights" data-testid="max-indicator-insights">
                     {[
-                      { title: "Лидеры по выполнению", note: "доля утверждённого плана", rows: maxPlanLeaders, kind: "good" },
-                      { title: "Наибольший прирост", note: `изменение за ${operationalIntervalDays ?? "—"} дн.`, rows: maxPlanGrowthLeaders, kind: "growth" },
-                      { title: "Требуют внимания", note: "минимальное выполнение плана", rows: maxPlanAttention, kind: "bad" },
+                      { title: "Лидеры по выполнению", note: maxPeriodView === "operational" ? "факт к месячному плану" : "факт к накопительному плану", rows: maxIndicatorLeaders, kind: "good", value: "achievement" },
+                      { title: maxPeriodView === "operational" ? "Наибольший прирост" : "Наибольший разрыв", note: maxPeriodView === "operational" ? `изменение за ${maxIndicatorIntervalDays ?? "—"} дн.` : "осталось до накопительного плана", rows: maxPeriodView === "operational" ? maxIndicatorGrowthLeaders : maxIndicatorGapLeaders, kind: "growth", value: maxPeriodView === "operational" ? "growth" : "remaining" },
+                      { title: "Требуют внимания", note: maxPeriodView === "operational" ? "минимальный прогноз выполнения" : "минимальное выполнение плана", rows: maxIndicatorAttention, kind: "bad", value: maxPeriodView === "operational" ? "forecast" : "achievement" },
                     ].map((panel) => (
                       <article className={panel.kind} key={panel.title}>
                         <header><span><b>{panel.title}</b><small>{panel.note}</small></span><strong>{panel.rows.length}</strong></header>
-                        <ol>{panel.rows.map((row, index) => (
-                          <li key={`${panel.title}-${row.target.oid}`}><i>{index + 1}</i><span>{displayMoName(row.target.name, row.target.oid)}</span><b>{panel.kind === "growth" ? (row.growth === null ? "—" : `${row.growth > 0 ? "+" : ""}${format(row.growth, 0)}`) : row.achievement === null ? "—" : `${format(row.achievement, 1)}%`}</b></li>
-                        ))}</ol>
+                        <ol>{panel.rows.map((item, index) => {
+                          const panelValue = panel.value === "growth"
+                            ? item.growth === null ? "—" : `${item.growth > 0 ? "+" : ""}${format(item.growth, 0)}`
+                            : panel.value === "remaining"
+                              ? item.remaining === null ? "—" : format(item.remaining, 0)
+                              : panel.value === "forecast"
+                                ? item.forecastAchievement === null ? "—" : `${format(item.forecastAchievement, 1)}%`
+                                : item.achievement === null ? "—" : `${format(item.achievement, 1)}%`;
+                          return <li key={`${panel.title}-${item.row.oid ?? item.row.name}`}><i>{index + 1}</i><span>{displayMoName(item.row.name, item.row.oid)}</span><b>{panelValue}</b></li>;
+                        })}</ol>
                       </article>
                     ))}
                   </div>
@@ -9253,9 +9396,9 @@ export default function Home() {
                     <div>
                       <p className="eyebrow">КОНТРОЛЬ ПЛАНА ПО МО</p>
                       <h2>От наибольшего риска к выполнению</h2>
-                      <p>Сортировка задана по степени невыполнения плана, а не по абсолютному объёму.</p>
+                      <p>{maxPeriodView === "operational" ? "Приоритет определяется по прогнозному выполнению месячного плана." : "Приоритет определяется по выполнению накопительного плана и количественному разрыву."}</p>
                     </div>
-                    <span>{maxPlanRows.length} МО</span>
+                    <span>{maxIndicatorRows.length} МО</span>
                   </div>
                   <div className="toolbar">
                     <input value={query} onChange={(event) => setQuery(event.target.value)} placeholder="Поиск медицинской организации" />
@@ -9268,25 +9411,19 @@ export default function Home() {
                   <div className="tableWrap">
                     <table className="matrix maxPlanTable">
                       <thead><tr>{[
-                        ["name", "МО"], ["plan", `План ${russianMonthLabel(maxCurrentMonthKey).replace(/\s+\d{4}$/u, "")}`], ["fact", "Факт"], ["achievement", "Выполнение, %"], ["remaining", "Осталось"], ["growth", "Изменение"], ["forecastDays", "Прогноз до плана"], ["status", "Статус"],
+                        ["name", "МО"], ["plan", maxPeriodView === "operational" ? "План месяца" : "План накопительно"], ["fact", "Факт"], ["achievement", "Выполнение, %"], ["remaining", "Осталось"], ...(maxPeriodView === "operational" ? [["growth", "Динамика"], ["forecastDays", "Прогноз"]] : []), ["status", "Статус"],
                       ].map(([key, label]) => <th key={key}><button type="button" className={maxPlanSortKey === key ? "sorted" : ""} onClick={() => changeMaxPlanSort(key as MaxPlanSortKey)}>{label}<i>{maxPlanSortKey === key ? (maxPlanSortDirection === "asc" ? "↑" : "↓") : "↕"}</i></button></th>)}</tr></thead>
-                      <tbody>
-                        {maxPlanRows.map((row) => (
-                          <tr key={`${row.target.oid}-${maxServiceKey}`}>
-                            <td><strong>{displayMoName(row.target.name, row.target.oid)}</strong><small>{row.target.oid}</small></td>
-                            <td>{row.plan === null ? "—" : format(row.plan, 0)}</td>
-                            <td>{row.fact === null ? "—" : format(row.fact, 0)}</td>
-                            <td>{row.achievement === null ? "—" : <div className="achievementCell"><b>{format(row.achievement, 2)}%</b><span><i style={{ width: `${Math.min(Math.max(row.achievement, 0), 100)}%` }} /></span></div>}</td>
-                            <td>{row.remaining === null ? "—" : format(row.remaining, 0)}</td>
-                            <td><span className={`changePill ${row.growth === null || row.growth === 0 ? "neutral" : row.growth > 0 ? "up" : "down"}`}>{row.growth === null ? "—" : `${row.growth > 0 ? "↑ +" : row.growth < 0 ? "↓ " : ""}${format(row.growth, 0)}`}</span></td>
-                            <td>{row.forecastDays === null ? <span className="forecastMissing">не прогнозируется</span> : row.forecastDays === 0 ? <b className="deltaUp">достигнут</b> : <><b>{format(row.forecastDays, 0)} дн.</b><small>ориентир {row.forecastDate}</small></>}</td>
-                            <td>
-                              <span className={`statusChip ${row.status === "План достигнут ✓" || row.status === "Темп достаточен" ? "good" : row.status === "Риск" ? "warn" : row.status === "Нет данных" ? "na" : "bad"}`}>{row.status}</span>
-                              {row.status === "План достигнут ✓" && <small>Следующая контрольная точка: {row.nextPlan === null ? "—" : format(row.nextPlan, 0)}</small>}
-                            </td>
-                          </tr>
-                        ))}
-                      </tbody>
+                      <tbody>{maxIndicatorRows.map((item) => (
+                        <tr key={`${item.row.oid ?? item.row.name}-${maxIndicatorServiceKey}`}>
+                          <td><strong>{displayMoName(item.row.name, item.row.oid)}</strong><small>{item.row.oid}</small></td>
+                          <td>{item.plan === null ? "—" : format(item.plan, 0)}</td>
+                          <td>{item.fact === null ? "Нет данных" : format(item.fact, 0)}</td>
+                          <td>{item.achievement === null ? "—" : <div className="achievementCell"><b>{format(item.achievement, 2)}%</b><span><i style={{ width: `${Math.min(Math.max(item.achievement, 0), 100)}%` }} /></span></div>}</td>
+                          <td>{item.remaining === null ? "—" : format(item.remaining, 0)}</td>
+                          {maxPeriodView === "operational" && <><td><span className={`changePill ${item.growth === null || item.growth === 0 ? "neutral" : item.growth > 0 ? "up" : "down"}`}>{item.growth === null ? "—" : `${item.growth > 0 ? "+" : ""}${format(item.growth, 0)} за ${maxIndicatorIntervalDays ?? "—"} дн.`}</span></td><td>{item.forecast === null ? "—" : <><b>{format(item.forecast, 0)}</b><small>{format(item.forecastAchievement ?? 0, 1)}% плана</small></>}</td></>}
+                          <td><span className={`statusChip ${item.status === "План достигнут ✓" || item.status === "Темп достаточен" ? "good" : item.status === "Нет данных" ? "na" : "bad"}`}>{item.status}</span></td>
+                        </tr>
+                      ))}</tbody>
                     </table>
                   </div>
                 </section>

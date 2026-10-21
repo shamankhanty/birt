@@ -25,8 +25,8 @@ test("MAX target documents preserve separate RT plans and MO control points", ()
   assert.match(page, /maxDashboardAchievement/u);
   assert.match(page, /maxDashboardRemaining/u);
   assert.match(page, /maxDashboardRequiredPace/u);
-  assert.match(page, /План требует контроля/u);
-  assert.match(page, /Следующая контрольная точка/u);
+  assert.match(page, /План достигнут ✓/u);
+  assert.match(page, /Темп достаточен/u);
 });
 
 test("MAX approved source rows keep exact OIDs and Sep-Dec control points", () => {
@@ -67,12 +67,12 @@ test("MAX plan screen exposes sortable analytics, change markers, and forecast d
   assert.match(page, /Math\.ceil\(maxPlanRemaining \/ maxRecentDailyPace\)/u);
   assert.match(page, /Math\.ceil\(remaining \/ recentDaily\)/u);
   assert.match(page, /addDaysToRussianDate/u);
-  assert.match(page, /Прогноз до текущего плана/u);
-  assert.match(page, /data-testid="max-plan-insights"/u);
+  assert.match(page, /Прогноз к концу месяца/u);
+  assert.match(page, /data-testid="max-indicator-insights"/u);
   assert.match(page, /Лидеры по выполнению/u);
   assert.match(page, /Наибольший прирост/u);
   assert.match(page, /Требуют внимания/u);
   assert.match(page, /achievementCell/u);
   assert.match(page, /changePill/u);
-  assert.match(page, /не прогнозируется/u);
+  assert.match(page, /нет сопоставимой динамики/u);
 });
