@@ -6483,7 +6483,14 @@ export default function Home() {
                             : deviation >= 0
                               ? `↑ ${format(Math.abs(deviation), 2)} п.п. выше плана`
                               : `↓ ${format(Math.abs(deviation), 2)} п.п. до плана`;
-                      const regionalTrend = regional?.trend ?? null;
+                      // A methodology correction (for example, removing an
+                      // inapplicable organisation from the denominator) is not
+                      // operational dynamics and must not be labelled as an
+                      // improvement or deterioration in the federal-control
+                      // card.
+                      const regionalTrend = regional?.comparisonReset
+                        ? null
+                        : (regional?.trend ?? null);
                       const trendGood =
                         regionalTrend !== null &&
                         (regional?.reverse
