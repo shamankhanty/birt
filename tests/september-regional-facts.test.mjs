@@ -7,7 +7,6 @@ const rows = new Map(federal.agreement.map((row) => [row.id, row]));
 
 const expected = new Map([
   ["1.1", "99%"],
-  ["18", "20,09%"],
   ["20", "92,73%"],
   ["25", "55,76%"],
   ["26", "99%"],
@@ -24,12 +23,14 @@ test("new non-empty regional facts use the September 2026 period", () => {
   }
 });
 
-test("REMD error share has a newer October cut while September facts remain unchanged", () => {
-  const row = rows.get("29");
-  assert.equal(row?.regionalFact, "16,96%");
-  assert.equal(row?.regionalPeriod, "01.01.2026–15.10.2026");
-  assert.match(row?.sourceNote ?? "", /скриншот/u);
-  assert.match(row?.sourceNote ?? "", /без первичной регулярной выгрузки/u);
+test("EPGU and REMD error shares use 21 October cuts, independently of September source", () => {
+  for (const [id, fact] of [["18", "21,34%"], ["29", "16,62%"]]) {
+    const row = rows.get(id);
+    assert.equal(row?.regionalFact, fact, `indicator ${id}`);
+    assert.equal(row?.regionalPeriod, "01.01.2026–21.10.2026", `indicator ${id}`);
+    assert.match(row?.sourceNote ?? "", /без первичной регулярной выгрузки|Первичная регулярная выгрузка/u, `indicator ${id}`);
+    assert.equal(row?.status, "Отклонение", `indicator ${id}`);
+  }
 });
 
 test("blank September cells do not overwrite previously confirmed values", () => {

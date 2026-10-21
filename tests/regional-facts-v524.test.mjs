@@ -19,8 +19,8 @@ test("confirmed v5.2.4 facts remain traceable after v5.2.5 manual additions", ()
 
 test("manual rate of REMD registration errors remains explicitly provisional", () => {
   const errors = agreement.get("29");
-  assert.equal(errors.regionalFact, "16,96%");
-  assert.equal(errors.regionalPeriod, "01.01.2026–15.10.2026");
-  assert.match(errors.sourceNote, /внесено по скриншоту/u);
+  assert.equal(errors.regionalFact, "16,62%");
+  assert.equal(errors.regionalPeriod, "01.01.2026–21.10.2026");
+  assert.match(errors.sourceNote, /Ручной ввод по сообщённому значению/u);
   assert.match(errors.sourceNote, /без первичной регулярной выгрузки с числителем и знаменателем/u);
 });
