@@ -22,6 +22,7 @@ test("MKDC is not counted in the current ELMK denominator", () => {
 test("the composition correction is not shown as indicator dynamics", () => {
   assert.equal(status.elmk.comparisonReset, true);
   assert.match(status.elmk.comparisonResetReason, /несопоставим/u);
+  assert.match(page, /comparisonReset: source\.comparisonReset \?\? item\.comparisonReset/u);
   assert.match(page, /const regionalTrend = regional\?\.comparisonReset\s*\? null/u);
 });
 
