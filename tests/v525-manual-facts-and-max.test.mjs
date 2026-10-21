@@ -16,7 +16,7 @@ test("v5.2.5 marks agreed RT facts as manual until primary reports arrive", () =
     assert.match(byId.get(id).regionalPeriod, /2026/u, id);
   }
   assert.equal(byId.get("19").regionalFact, "Нет");
-  assert.equal(byId.get("29").regionalFact, "14,25%");
+  assert.equal(byId.get("29").regionalFact, "17,44%");
   assert.match(byId.get("39.2").sourceNote, /Подтвержденное количество/u);
   assert.equal(byId.get("39.2").regionalFact, "17 246 СЭМД");
 });

@@ -196,14 +196,14 @@
       "source": "mo-details"
     },
     "elmk": {
-      "fact": 98.64864864864865,
+      "fact": 100,
       "plan": 100,
       "date": "13.10.2026",
       "previous": null,
       "trend": null,
       "quantity": 73,
       "numerator": 73,
-      "denominator": 74,
+      "denominator": 73,
       "method": "presence_rows",
       "source": "mo-data"
     },
@@ -512,7 +512,7 @@
       "source": "mo-details"
     },
     "elmk": {
-      "fact": 98.64864864864865,
+      "fact": 100,
       "plan": 100,
       "date": "13.10.2026",
       "quantity": 73,
