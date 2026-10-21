@@ -5,6 +5,7 @@ import { readFile } from "node:fs/promises";
 const status = JSON.parse(await readFile(new URL("../app/organization-status.json", import.meta.url), "utf8"));
 const federal = JSON.parse(await readFile(new URL("../app/federal-control.json", import.meta.url), "utf8"));
 const adapters = await readFile(new URL("../scripts/pipeline/adapters.py", import.meta.url), "utf8");
+const page = await readFile(new URL("../app/page.tsx", import.meta.url), "utf8");
 
 const mkdcOid = "1.2.643.5.1.13.13.12.2.16.1079";
 
@@ -21,6 +22,7 @@ test("MKDC is not counted in the current ELMK denominator", () => {
 test("the composition correction is not shown as indicator dynamics", () => {
   assert.equal(status.elmk.comparisonReset, true);
   assert.match(status.elmk.comparisonResetReason, /несопоставим/u);
+  assert.match(page, /const regionalTrend = regional\?\.comparisonReset\s*\? null/u);
 });
 
 test("future ELMK imports preserve the explicit applicability rule", () => {
