@@ -13,6 +13,7 @@ import errorCumulativeRaw from "./error-cumulative.json";
 import errorGuidanceRaw from "./error-guidance.json";
 import monthlyMoRaw from "./monthly-mo.json";
 import maxAppointmentsMunicipalRaw from "./max-appointments-municipal.json";
+import maxPeriodViewsRaw from "./max-period-views.json";
 import unitDataRaw from "./unit-data.json";
 import organizationStatusRaw from "./organization-status.json";
 import moRegistryRaw from "./mo-registry.json";
@@ -3379,7 +3380,8 @@ export default function Home() {
     | "history"
   >("unified");
   const [maxMonth, setMaxMonth] = useState<"2026-08" | "2026-09">("2026-09");
-  const [maxService, setMaxService] = useState<"visit" | "tmk" | "eln">("visit");
+  const [maxService, setMaxService] = useState<"visit" | "tmk" | "eln">("tmk");
+  const [maxPeriodView, setMaxPeriodView] = useState<"cumulative" | "operational">("operational");
   const [maxFilter, setMaxFilter] = useState<"volume" | "growth" | "decline" | "zero" | "missing">("volume");
   const [maxSelectedMo, setMaxSelectedMo] = useState<string | null>(null);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -5033,65 +5035,56 @@ export default function Home() {
       setMaxPlanSortDirection(key === "name" || key === "achievement" || key === "status" ? "asc" : "desc");
     }
   };
-  // The MAX tab is its own screen (rather than the generic matrix screen), so it
-  // needs the same plan-first view model as the matrix drilldown.  Keep its
-  // period, facts, and targets derived from the current operational export and
-  // the approved target registry.
+  // MAX has two independent source-backed views: cumulative control points and
+  // the current calendar month. Missing source rows remain missing.
   const maxDashboardServiceKey = maxService === "tmk" ? "tmk" : "eln";
   const maxDashboardMetric = maxService === "tmk" ? "tmkMaxCount" : "elnMaxCount";
-  const maxDashboardDataset = moData[maxDashboardMetric];
-  const maxDashboardMonthKey = monthKeyFromRussianDate(maxDashboardDataset.date);
-  const maxDashboardNextMonthKey = maxDashboardMonthKey
-    ? nextMonthKey(maxDashboardMonthKey)
-    : null;
-  const maxDashboardPlan = maxDashboardMonthKey
-    ? maxTargets.republic[maxDashboardServiceKey]?.[maxDashboardMonthKey] ?? null
-    : null;
-  const maxDashboardNextPlan = maxDashboardNextMonthKey
-    ? maxTargets.republic[maxDashboardServiceKey]?.[maxDashboardNextMonthKey] ?? null
-    : null;
-  const maxDashboardFact = calculatedIndicatorById[maxDashboardMetric]?.fact ??
-    maxDashboardDataset.rows.reduce((sum, row) => sum + (row.fact ?? 0), 0);
+  const maxPeriodViews = maxPeriodViewsRaw as any;
+  const maxDashboardSlice = maxPeriodView === "operational" ? maxPeriodViews.operational : maxPeriodViews.cumulative;
+  const maxDashboardMetricData = maxDashboardSlice.metrics[maxDashboardServiceKey];
+  const maxDashboardMonthKey = maxPeriodViews.month as string;
+  const maxDashboardPlan = maxDashboardMetricData.republicPlan as number;
+  const maxDashboardFact = maxDashboardMetricData.plannedMoFact as number;
+  const maxDashboardPreviousFact = maxPeriodView === "operational" ? maxDashboardMetricData.previousPlannedMoFact as number : null;
   const maxDashboardAchievement = maxDashboardPlan
     ? (maxDashboardFact / maxDashboardPlan) * 100
     : null;
   const maxDashboardRemaining = maxDashboardPlan === null
     ? null
     : Math.max(maxDashboardPlan - maxDashboardFact, 0);
-  const maxDashboardDaysRemaining = daysRemainingInCutMonth(maxDashboardDataset.date);
+  const maxDashboardDaysRemaining = maxPeriodView === "operational" ? daysRemainingInCutMonth(maxDashboardSlice.date) : null;
+  const maxDashboardIntervalDays = maxPeriodView === "operational" ? snapshotDistanceDays(maxDashboardSlice.previousDate, maxDashboardSlice.date) : null;
+  const maxDashboardGrowth = maxDashboardPreviousFact === null ? null : maxDashboardFact - maxDashboardPreviousFact;
+  const maxDashboardRecentPace = maxDashboardGrowth !== null && maxDashboardIntervalDays ? maxDashboardGrowth / maxDashboardIntervalDays : null;
   const maxDashboardRequiredPace = maxDashboardRemaining !== null && maxDashboardDaysRemaining && maxDashboardDaysRemaining > 0
     ? maxDashboardRemaining / maxDashboardDaysRemaining
     : null;
-  const maxDashboardRows = Object.values(maxTargets.organizationPlans)
-    .map((target) => {
-      const current = maxDashboardDataset.rows.find(
-        (row) => row.oid === target.oid || moKey(row.name) === moKey(target.name),
-      );
-      const plan = maxDashboardMonthKey
-        ? target[maxDashboardServiceKey]?.[maxDashboardMonthKey] ?? null
-        : null;
-      const fact = current?.fact ?? null;
-      const previous = current?.previous ?? null;
+  const maxDashboardForecast = maxPeriodView === "operational" && maxDashboardRecentPace !== null && maxDashboardDaysRemaining !== null ? maxDashboardFact + Math.max(0,maxDashboardRecentPace)*maxDashboardDaysRemaining : null;
+  const maxDashboardRows = (maxDashboardMetricData.rows as Array<any>)
+    .map((sourceRow) => {
+      const plan = sourceRow.plan as number | null;
+      const fact = sourceRow.fact as number | null;
+      const previous = maxPeriodView === "operational" ? sourceRow.previous as number | null : null;
       const growth = fact !== null && previous !== null ? fact - previous : null;
       const achievement = plan !== null && fact !== null ? (fact / plan) * 100 : null;
       const remaining = plan !== null && fact !== null ? Math.max(plan - fact, 0) : null;
       const requiredPace = remaining !== null && maxDashboardDaysRemaining && maxDashboardDaysRemaining > 0
         ? remaining / maxDashboardDaysRemaining
         : null;
-      const nextPlan = maxDashboardNextMonthKey
-        ? target[maxDashboardServiceKey]?.[maxDashboardNextMonthKey] ?? null
-        : null;
+      const recentPace = growth !== null && maxDashboardIntervalDays ? growth/maxDashboardIntervalDays : null;
+      const forecast = maxPeriodView === "operational" && fact !== null && maxDashboardDaysRemaining !== null && recentPace !== null ? fact+Math.max(0,recentPace)*maxDashboardDaysRemaining : null;
+      const forecastAchievement = plan && forecast !== null ? forecast/plan*100 : null;
       const status = achievement === null
         ? "Нет данных"
         : achievement >= 100
           ? "План достигнут ✓"
-          : achievement >= 90
-            ? "Риск"
-            : "Отставание";
-      return { row: target, plan, fact, growth, achievement, remaining, requiredPace, nextPlan, status };
+          : maxPeriodView === "operational" && forecastAchievement !== null && forecastAchievement >= 100
+            ? "Темп достаточен"
+            : maxPeriodView === "operational" ? "Отставание" : "План не достигнут";
+      return { row: sourceRow, plan, fact, growth, achievement, remaining, requiredPace, forecast, forecastAchievement, status };
     })
     .sort((a, b) =>
-      (a.achievement ?? Number.POSITIVE_INFINITY) - (b.achievement ?? Number.POSITIVE_INFINITY) ||
+      ((a.forecastAchievement ?? a.achievement) ?? Number.POSITIVE_INFINITY) - ((b.forecastAchievement ?? b.achievement) ?? Number.POSITIVE_INFINITY) ||
       a.row.name.localeCompare(b.row.name, "ru"),
     );
   type MonthlyBenchmark = {
@@ -6027,9 +6020,9 @@ export default function Home() {
                 <header>
                   <div>
                     <p className="eyebrow">ОПЕРАТИВНО ПО МО</p>
-                    <h2>Недельная и месячная активность</h2>
+                    <h2>Выполнение утверждённых планов ТМК и ЛВН</h2>
                   </div>
-                  <span>ТМК и ЛВН: ориентир РТ 10 000 в месяц. План МО не установлен.</span>
+                  <span>Индивидуальные планы МО · приказ № 2291 от 28.09.2026</span>
                 </header>
               <div className="maxServiceSwitch" role="group" aria-label="Сервис МАХ">
                 <button className={maxService === "visit" ? "active" : ""} onClick={() => setMaxService("visit")}>Запись к врачу</button>
@@ -6105,31 +6098,36 @@ export default function Home() {
 
               {maxService !== "visit" && (
                 <>
+              <div className="maxPeriodSwitch" role="group" aria-label="Период контроля МАХ">
+                <button className={maxPeriodView === "cumulative" ? "active" : ""} onClick={() => setMaxPeriodView("cumulative")}>Накопительно</button>
+                <button className={maxPeriodView === "operational" ? "active" : ""} onClick={() => setMaxPeriodView("operational")}>Оперативно</button>
+              </div>
               {maxDashboardMonthKey && maxDashboardPlan !== null && (
                 <>
                   <section className="planControlHero" data-testid="max-plan-summary">
                     <header>
                       <div>
-                        <p className="eyebrow">ВЫПОЛНЕНИЕ НАКОПИТЕЛЬНОГО ПЛАНА</p>
-                        <h2>{russianMonthLabel(maxDashboardMonthKey)} · {maxDashboardServiceKey === "tmk" ? "ТМК" : "ЛВН после ТМК"}</h2>
+                        <p className="eyebrow">{maxPeriodView === "operational" ? "ОПЕРАТИВНЫЙ МЕСЯЧНЫЙ СРЕЗ" : "НАКОПИТЕЛЬНЫЙ СРЕЗ"}</p>
+                        <h2>{maxPeriodViews.monthLabel} · {maxDashboardServiceKey === "tmk" ? "ТМК" : "ЛВН после ТМК"}</h2>
                       </div>
-                      <span className={`statusChip ${(maxDashboardAchievement ?? 0) >= 100 ? "good" : (maxDashboardAchievement ?? 0) >= 90 ? "warn" : "bad"}`}>
-                        {(maxDashboardAchievement ?? 0) >= 100 ? "План достигнут ✓" : "План требует контроля"}
+                      <span className={`statusChip ${(maxDashboardAchievement ?? 0) >= 100 ? "good" : maxPeriodView === "operational" && (maxDashboardForecast ?? 0) >= maxDashboardPlan ? "warn" : "bad"}`}>
+                        {(maxDashboardAchievement ?? 0) >= 100 ? "План достигнут ✓" : maxPeriodView === "operational" && (maxDashboardForecast ?? 0) >= maxDashboardPlan ? "Темп достаточен" : "Отставание"}
                       </span>
                     </header>
                     <div className="planControlCards">
-                      <article><small>Факт накопительно на {maxDashboardDataset.date}</small><strong>{format(maxDashboardFact, 0)}</strong></article>
-                      <article><small>План на {russianMonthLabel(maxDashboardMonthKey).replace(/\s+\d{4}$/u, "")}</small><strong>{format(maxDashboardPlan, 0)}</strong></article>
+                      <article><small>{maxPeriodView === "operational" ? `Факт за месяц на ${maxDashboardSlice.date}` : `Факт накопительно на ${maxDashboardSlice.date}`}</small><strong>{format(maxDashboardFact, 0)}</strong></article>
+                      <article><small>{maxPeriodView === "operational" ? "План на месяц" : "Накопительный план"}</small><strong>{format(maxDashboardPlan, 0)}</strong></article>
                       <article><small>Выполнение плана</small><strong>{format(maxDashboardAchievement ?? 0, 2)}%</strong></article>
-                      <article><small>{(maxDashboardAchievement ?? 0) >= 100 ? `Контрольная точка ${maxDashboardNextMonthKey ? russianMonthLabel(maxDashboardNextMonthKey).replace(/\s+\d{4}$/u, "") : "следующего месяца"}` : "Осталось до плана"}</small><strong>{(maxDashboardAchievement ?? 0) >= 100 ? (maxDashboardNextPlan === null ? "—" : format(maxDashboardNextPlan, 0)) : format(maxDashboardRemaining ?? 0, 0)}</strong></article>
-                      <article><small>Требуемый среднесуточный темп</small><strong>{maxDashboardRequiredPace === null ? "—" : format(maxDashboardRequiredPace, 0)}</strong></article>
+                      <article><small>Осталось до плана</small><strong>{format(maxDashboardRemaining ?? 0, 0)}</strong></article>
+                      {maxPeriodView === "operational" ? <article className="forecastCard"><small>Прогноз к концу месяца</small><strong>{maxDashboardForecast === null ? "—" : format(maxDashboardForecast, 0)}</strong><span>{maxDashboardForecast === null ? "нет сопоставимой динамики" : `${format((maxDashboardForecast/maxDashboardPlan)*100,1)}% плана`}</span></article> : <article><small>Периметр расчёта</small><strong>85 МО</strong><span>утверждённый план</span></article>}
                     </div>
-                    <p>ТМК и ЛВН контролируются раздельно; значения получены из текущей выгрузки и утверждённого плана.</p>
+                    {maxPeriodView === "operational" && <div className="planTempoLine"><span>Изменение {maxDashboardSlice.previousDate} → {maxDashboardSlice.date}</span><b>{maxDashboardGrowth === null ? "—" : `${maxDashboardGrowth>0?"+":""}${format(maxDashboardGrowth,0)}`}</b><span>Текущий темп</span><b>{maxDashboardRecentPace === null ? "—" : `${format(maxDashboardRecentPace,1)} в день`}</b><span>Нужно до конца месяца</span><b>{maxDashboardRequiredPace === null ? "—" : `${format(maxDashboardRequiredPace,1)} в день`}</b></div>}
+                    <p>В выполнение включены только 85 МО из утверждённого плана. Контрольный итог исходного файла — {format(maxDashboardMetricData.sourceTotal,0)}; частные и внеплановые строки не подменяют плановый периметр.</p>
                   </section>
                   <section className="maxPlanOrganizations" data-testid="max-plan-organization-table">
-                    <div className="allMosHead"><div><p className="eyebrow">КОНТРОЛЬ ПЛАНА ПО МО</p><h2>От наибольшего риска к выполнению</h2><p>Сортировка задана по степени невыполнения плана, а не по абсолютному объёму.</p></div><span>{maxDashboardRows.length} МО</span></div>
-                    <div className="tableWrap"><table className="matrix maxPlanTable"><thead><tr><th>МО</th><th>План {russianMonthLabel(maxDashboardMonthKey).replace(/\s+\d{4}$/u, "")}</th><th>Факт</th><th>Выполнение, %</th><th>Осталось</th><th>Прирост с предыдущей выгрузки</th><th>Требуется в день</th><th>Статус</th></tr></thead><tbody>
-                      {maxDashboardRows.map(({ row, plan, fact, growth, achievement, remaining, requiredPace, nextPlan, status }) => <tr key={`${row.oid ?? row.name}-${maxDashboardServiceKey}`}><td><strong>{row.name}</strong></td><td>{plan === null ? "—" : format(plan, 0)}</td><td>{fact === null ? "—" : format(fact, 0)}</td><td>{achievement === null ? "—" : `${format(achievement, 2)}%`}</td><td>{remaining === null ? "—" : format(remaining, 0)}</td><td>{growth === null ? "—" : `${growth > 0 ? "+" : ""}${format(growth, 0)}`}</td><td>{requiredPace === null ? "—" : format(requiredPace, 0)}</td><td><span className={`statusChip ${status === "План достигнут ✓" ? "good" : status === "Риск" ? "warn" : status === "Нет данных" ? "na" : "bad"}`}>{status}</span>{status === "План достигнут ✓" && <small>Следующая контрольная точка: {nextPlan === null ? "—" : format(nextPlan, 0)}</small>}</td></tr>)}
+                    <div className="allMosHead"><div><p className="eyebrow">КОНТРОЛЬ ПЛАНА ПО МО</p><h2>От наибольшего риска к выполнению</h2><p>{maxPeriodView === "operational" ? "Рейтинг по прогнозному выполнению месячного плана." : "Рейтинг по выполнению накопительного плана."}</p></div><span>{maxDashboardRows.length} МО</span></div>
+                    <div className="tableWrap"><table className="matrix maxPlanTable"><thead><tr><th>МО</th><th>{maxPeriodView === "operational" ? "План месяца" : "План накопительно"}</th><th>Факт</th><th>Выполнение, %</th><th>Осталось</th>{maxPeriodView === "operational" && <><th>Динамика</th><th>Прогноз</th></>}<th>Статус</th></tr></thead><tbody>
+                      {maxDashboardRows.map(({ row, plan, fact, growth, achievement, remaining, forecast, forecastAchievement, status }) => <tr key={`${row.oid ?? row.name}-${maxDashboardServiceKey}`}><td><strong>{displayMoName(row.name,row.oid)}</strong><small>{row.oid}</small></td><td>{plan===null?"—":format(plan,0)}</td><td>{fact===null?"Нет данных":format(fact,0)}</td><td>{achievement===null?"—":`${format(achievement,2)}%`}</td><td>{remaining===null?"—":format(remaining,0)}</td>{maxPeriodView === "operational" && <><td>{growth===null?"—":`${growth>0?"+":""}${format(growth,0)} за ${maxDashboardIntervalDays??"—"} дн.`}</td><td>{forecast===null?"—":<><b>{format(forecast,0)}</b><small>{format(forecastAchievement??0,1)}% плана</small></>}</td></>}<td><span className={`statusChip ${status==="План достигнут ✓"||status==="Темп достаточен"?"good":status==="Нет данных"?"na":"bad"}`}>{status}</span></td></tr>)}
                     </tbody></table></div>
                   </section>
                 </>
@@ -6199,7 +6197,7 @@ export default function Home() {
                 </div>
               )}
 
-              <details className="maxMethod"><summary>Источник и ограничения текущей версии</summary><p><b>ТМК и ЛВН:</b> файл «ТМК_МАХ», листы 1–3, разрез по МО. Полный август получен из одинаковых накопительных срезов 31.07 → 31.08.</p><p><b>Запись на приём к врачу:</b> файл «Статистика записей к врачу.xlsx», разрез муниципалитет × месяц. Данные показываются по факту без привязки к медицинским организациям. Сентябрь — текущий неполный месяц.</p><p><b>Важно:</b> годовые планы РТ не применяются к отдельным МО; отсутствие строки не считается нулевой активностью.</p></details>
+              <details className="maxMethod"><summary>Источник и методика</summary><p><b>Накопительно:</b> факт 01.01–18.10 сопоставляется с индивидуальной контрольной точкой октября из приказа № 2291.</p><p><b>Оперативно:</b> факт 01.10–21.10 сопоставляется с месячным планом — разницей октябрьской и сентябрьской накопительных контрольных точек. Динамика — к выгрузке 01.10–19.10.</p><p><b>Важно:</b> отсутствие строки остаётся «Нет данных»; частные и внеплановые строки не включаются в выполнение плана 85 МО.</p></details>
                 </>
               )}
               </section>

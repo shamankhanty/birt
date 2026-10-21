@@ -6,13 +6,19 @@ const page = fs.readFileSync(new URL("../app/page.tsx", import.meta.url), "utf8"
 const monthly = JSON.parse(fs.readFileSync(new URL("../app/monthly-mo.json", import.meta.url), "utf8"));
 const appointments = JSON.parse(fs.readFileSync(new URL("../app/max-appointments-municipal.json", import.meta.url), "utf8"));
 const registry = JSON.parse(fs.readFileSync(new URL("../config/indicator-registry.json", import.meta.url), "utf8"));
+const periodViews = JSON.parse(fs.readFileSync(new URL("../app/max-period-views.json", import.meta.url), "utf8"));
 
-test("МАХ keeps annual regional plans separate from monthly MO activity", () => {
+test("МАХ keeps annual, cumulative-control, and monthly operational plans separate", () => {
   assert.equal(registry.indicators.visitMax.plan.value, 654000);
   assert.equal(registry.indicators.tmkMax.plan.value, 193000);
   assert.equal(registry.indicators.elnMax.plan.value, 99000);
   assert.match(page, /Официальный накопительный результат не смешивается с оперативной динамикой между выгрузками и с месячной динамикой МО/u);
-  assert.match(page, /годовые планы РТ не применяются к отдельным МО/u);
+  assert.match(page, /Накопительно/u);
+  assert.match(page, /Оперативно/u);
+  assert.equal(periodViews.operational.metrics.tmk.republicPlan, 16000);
+  assert.equal(periodViews.operational.metrics.eln.republicPlan, 8000);
+  assert.equal(periodViews.cumulative.metrics.tmk.republicPlan, 161000);
+  assert.equal(periodViews.cumulative.metrics.eln.republicPlan, 82000);
 });
 
 test("МАХ preserves the regional visit indicator while showing the new factual appointment source separately", () => {
@@ -62,9 +68,10 @@ test("missing rows are not converted to zero", () => {
 
 test("MAX separates export-to-export operational dynamics from monthly values", () => {
   assert.match(page, /Официальный накопительный результат не смешивается с оперативной динамикой между выгрузками/u);
-  assert.match(page, /ВЫПОЛНЕНИЕ НАКОПИТЕЛЬНОГО ПЛАНА/u);
-  assert.match(page, /maxTargets\.republic\[maxDashboardServiceKey\]/u);
-  assert.match(page, /maxTargets\.organizationPlans/u);
+  assert.match(page, /НАКОПИТЕЛЬНЫЙ СРЕЗ/u);
+  assert.match(page, /ОПЕРАТИВНЫЙ МЕСЯЧНЫЙ СРЕЗ/u);
+  assert.match(page, /maxPeriodViews\.operational/u);
+  assert.match(page, /maxPeriodViews\.cumulative/u);
   assert.match(page, /Оперативно — текущая выгрузка к предыдущей/u);
   assert.match(page, /Предыдущая выгрузка/u);
   assert.match(page, /Текущая выгрузка/u);
@@ -77,6 +84,16 @@ test("MAX separates export-to-export operational dynamics from monthly values", 
   assert.match(page, /ТМК посредством МАХ/u);
   assert.match(page, /ЛВН после ТМК посредством МАХ/u);
   assert.doesNotMatch(page, /Месячный план[\s\S]{0,250}10 000 в месяц/u);
+});
+
+test("Agriz control case uses independent cumulative and October facts", () => {
+  const oid = "1.2.643.5.1.13.13.12.2.16.1088";
+  const cT = periodViews.cumulative.metrics.tmk.rows.find((row) => row.oid === oid);
+  const cE = periodViews.cumulative.metrics.eln.rows.find((row) => row.oid === oid);
+  const oT = periodViews.operational.metrics.tmk.rows.find((row) => row.oid === oid);
+  const oE = periodViews.operational.metrics.eln.rows.find((row) => row.oid === oid);
+  assert.deepEqual([cT.fact,cT.plan],[510,1024]); assert.deepEqual([cE.fact,cE.plan],[300,521]);
+  assert.deepEqual([oT.previous,oT.fact,oT.plan],[21,22,102]); assert.deepEqual([oE.previous,oE.fact,oE.plan],[16,18,50]);
 });
 
 
