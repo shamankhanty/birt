@@ -7,6 +7,7 @@ const targets = JSON.parse(fs.readFileSync("config/max-targets-2026.json", "utf8
 const operational = JSON.parse(fs.readFileSync("app/operational-mo.json", "utf8"));
 const physicians = JSON.parse(fs.readFileSync("app/physician-metrics.json", "utf8"));
 const weekly = JSON.parse(fs.readFileSync("app/physician-weekly-snapshot.json", "utf8"));
+const periodViews = JSON.parse(fs.readFileSync("app/max-period-views.json", "utf8"));
 
 const countTotal = (id) => operational[id].rows.reduce((sum, row) => sum + row.fact, 0);
 
@@ -16,15 +17,16 @@ test("MAX UI uses the approved target registry and keeps TMK and ELN independent
   assert.match(page, /data-testid="max-plan-organization-table"/u);
   assert.match(page, /План текущего месяца/u);
   assert.match(page, /Выполнение, %/u);
-  assert.match(page, /Прирост с предыдущей выгрузки/u);
-  assert.match(page, /Требуется в день/u);
-  assert.match(page, /Сортировка задана по степени невыполнения плана/u);
-  assert.match(page, /\(a\.achievement \?\? -1\) - \(b\.achievement \?\? -1\)/u);
+  assert.match(page, /Динамика/u);
+  assert.match(page, /Нужно до конца месяца/u);
+  assert.match(page, /Рейтинг по прогнозному выполнению месячного плана/u);
+  assert.match(page, /forecastAchievement/u);
 
   assert.equal(countTotal("tmkMaxCount"), 65_798);
   // One source row is explicitly "Неизвестная МО" and is not part of the
   // resolved plan perimeter shown by the UI.
-  assert.match(page, /calculatedIndicatorById\[maxDashboardMetric\]/u);
+  assert.equal(periodViews.operational.metrics.tmk.plannedMoFact, 9590);
+  assert.equal(periodViews.operational.metrics.eln.plannedMoFact, 8168);
   assert.equal(countTotal("elnMaxCount"), 50_373);
   assert.equal(targets.republic.tmk["2026-09"], 145_000);
   assert.equal(targets.republic.eln["2026-09"], 74_000);
