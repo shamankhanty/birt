@@ -222,6 +222,7 @@ type Indicator = {
   quantityLabel?: string;
   compareTo?: string;
   provisional?: boolean;
+  comparisonReset?: boolean;
   planPeriod?: string;
   periodKind?: "monthly" | "cumulative" | "operational" | "snapshot";
 };
@@ -524,6 +525,7 @@ const runtimeIndicator = (item: Indicator): Indicator => {
     compareTo: metadata?.previousDate ?? previous ?? item.compareTo,
     quantity: source.quantity ?? quantity,
     quantityLabel: source.quantityLabel ?? item.quantityLabel,
+    comparisonReset: source.comparisonReset ?? item.comparisonReset,
   };
 };
 const indicators = baselineIndicators.map(runtimeIndicator).map((item) =>
