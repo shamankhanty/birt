@@ -1033,18 +1033,30 @@ def adapt_presence(app: Path, source: Path, end: date, family: str) -> AdapterRe
         key="tmkRemd"
     else:
         counts=_elmk_counts(source);key="elmk"
+    elmk_inapplicable_oids = {
+        "1.2.643.5.1.13.13.12.2.16.1079": "МКДЦ: лицензия отозвана",
+    }
     rows=[]
     for old in status[key]["rows"]:
         oid=str(old.get('oid',''))
+        if family == "elmk" and oid in elmk_inapplicable_oids:
+            continue
         if oid not in counts: raise ValueError(f'{key}: отсутствует строка плановой МО {oid}; отсутствие не заменяется нулем')
         count=counts[oid];fact=100 if count>0 else 0;prev=old.get("fact")
         rows.append({**old,"count":count,"fact":fact,"previous":prev,"trend":None if prev is None else fact-prev})
     positive=sum(r["fact"]>0 for r in rows); total=len(rows)
-    note=(f"Плановый перечень — {total} МО; {positive} МО передают протоколы ТМК в РЭМД." if family=="tmk_remd" else f"Плановый перечень — {total} МО. На {date_ru(end)} передача подтверждена у {positive} МО; ноль не трактуется как нарушение без проверки лицензии.")
+    note=(f"Плановый перечень — {total} МО; {positive} МО передают протоколы ТМК в РЭМД." if family=="tmk_remd" else f"Применимый перечень — {total} МО. МКДЦ исключён после отзыва лицензии. На {date_ru(end)} передача подтверждена у {positive} МО.")
     base=status[key]
+    same_cut = base.get("date") == date_ru(end)
+    comparison_reset = bool(base.get("comparisonReset")) if same_cut else False
     status[key].update({"date":date_ru(end),"period":period_cumulative(end),
                         **previous_cut_metadata(base,end),**previous_summary_metadata(base,end),
-                        "numerator":positive,"denominator":total,"note":note,"rows":rows});save(app,"organization-status.json",status)
+                        "fact": positive / total * 100 if total else None,
+                        "quantity": positive,
+                        "quantityLabel": f"из {total} применимых медицинских организаций" if family == "elmk" else f"из {total} медицинских организаций",
+                        "numerator":positive,"denominator":total,
+                        "comparisonReset":comparison_reset,
+                        "note":note,"rows":rows});save(app,"organization-status.json",status)
     return AdapterResult("status_detail",[family],"PASS",["organization-status.json"],[source.name],{"planOrganizations":total,"transmitting":positive},[],[])
 
 

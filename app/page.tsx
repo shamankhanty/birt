@@ -334,7 +334,7 @@ const baselineIndicators: Indicator[] = [
     date: "07.09.2026",
     lag: 3,
     quantity: 71,
-    quantityLabel: "из 74 медицинских организаций",
+    quantityLabel: "из 73 применимых медицинских организаций",
     compareTo: "28.08.2026",
   },
   {
@@ -1641,11 +1641,12 @@ const historicalCalcErrors = [
   },
   {
     severity: "high",
+    status: "Исправлена",
     source: "ЭЛМК — применимость",
     issue: "Нулевая передача не доказывает обязанность МО формировать ЭЛМК",
     impact:
       "МО без соответствующей лицензии или функции могут ошибочно попасть в отстающие.",
-    fix: "Сохранён плановый перечень 74 МО; ноль не считается нарушением до подтверждения применимости. OID номерных МО подлежат контрольной сверке.",
+    fix: "МКДЦ исключён из знаменателя после отзыва лицензии. Применимый перечень сокращён с 74 до 73 МО; пересчёт состава не показывается как динамика.",
   },
   {
     severity: "medium",
@@ -1683,7 +1684,7 @@ const historicalCalcErrors = [
   {
     severity: "critical",
     status: "Исправлена",
-    source: "ЭЛМК — плановый перечень 74 МО",
+    source: "ЭЛМК — применимый перечень МО",
     issue: "Повторяющиеся чужие OID у семи строк",
     impact:
       "Факт нескольких номерных поликлиник относился к ГП №8; в заслушиваниях появлялось ложное «Нет данных».",
@@ -2059,10 +2060,10 @@ const methodologies: Methodology[] = [
       "(МО с зарегистрированным СЭМД для ЭЛМК / МО утверждённого планового перечня) × 100%",
     numerator:
       "Медицинские организации из планового перечня, от которых зарегистрирован требуемый СЭМД.",
-    denominator: "Утверждённый плановый перечень 74 медицинских организаций.",
+    denominator: "73 применимые медицинские организации; МКДЦ исключён после отзыва лицензии.",
     source: "Федеральная BI / ФРМО / РЭМД",
     cadence: "Еженедельно",
-    note: "На 28.08.2026 передача подтверждена у 67 из 74 МО — 90,54%. Нулевой результат требует проверки лицензии и не считается нарушением автоматически.",
+    note: "На 13.10.2026 передача подтверждена у 73 из 73 применимых МО — 100%. Изменение состава знаменателя не считается динамикой показателя.",
   },
   {
     id: "oncologyCouncil",
@@ -4167,7 +4168,7 @@ export default function Home() {
     if (!item.row.regionalId) return;
     setExtendedReturn({ point: item.row.id, scrollY: window.scrollY });
     setMatrixMetric(item.row.regionalId);
-    setDynamicsMode(item.row.regionalId.startsWith("doctor") ? "month" : "operational");
+    setDynamicsMode("operational");
     setTab("matrix");
     setShowMatrixSections(false);
     window.scrollTo({ top: 0, behavior: "auto" });
@@ -5664,7 +5665,7 @@ export default function Home() {
                     <button
                       key={id}
                       className={`sideMetricButton ${sidebarMetricTone(id)} ${matrixMetric === id ? "active" : ""}`}
-                      onClick={() => { setMatrixMetric(id); setDynamicsMode(id.startsWith("doctor") ? "month" : "operational"); }}
+                      onClick={() => { setMatrixMetric(id); setDynamicsMode("operational"); }}
                       title={metricDisplayName(id)}
                     >
                       <span>{metricDisplayName(id)}</span>
@@ -9184,7 +9185,7 @@ export default function Home() {
                 <select
                   id="mobile-metric"
                   value={matrixMetric}
-                  onChange={(e) => { setMatrixMetric(e.target.value); setDynamicsMode(e.target.value.startsWith("doctor") ? "month" : "operational"); }}
+                  onChange={(e) => { setMatrixMetric(e.target.value); setDynamicsMode("operational"); }}
                 >
                   {metricIds.map((id) => (
                     <option key={id} value={id}>

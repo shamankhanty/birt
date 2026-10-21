@@ -529,7 +529,9 @@
       "ratingPolicy": "not_applicable",
       "ratingActive": false,
       "ratingBlock": "readiness",
-      "exclusions": []
+      "exclusions": [
+        "МКДЦ (OID 1.2.643.5.1.13.13.12.2.16.1079): лицензия отозвана, организация не входит в знаменатель показателя."
+      ]
     },
     "elnMax": {
       "plan": 99000,

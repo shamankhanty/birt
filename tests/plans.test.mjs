@@ -30,10 +30,22 @@ test("static UI indicator definitions no longer duplicate numeric plans", () => 
 
 test("ELMK planned organizations have unique OIDs", () => {
   const rows = status.elmk.rows;
-  assert.equal(rows.length, 74);
-  assert.equal(new Set(rows.map(row => row.oid)).size, 74);
+  assert.equal(rows.length, 73);
+  assert.equal(new Set(rows.map(row => row.oid)).size, 73);
+  assert.equal(rows.some(row => row.oid === "1.2.643.5.1.13.13.12.2.16.1079"), false);
+  assert.equal(status.elmk.numerator, 73);
+  assert.equal(status.elmk.denominator, 73);
+  assert.equal(status.elmk.fact, 100);
+  assert.equal(status.elmk.comparisonReset, true);
   const gp18 = rows.find(row => row.name === "ГОРОДСКАЯ ПОЛИКЛИНИКА №18 г. Казань");
   assert.equal(gp18?.oid, "1.2.643.5.1.13.13.12.2.16.1080");
   assert.equal(gp18?.count, 79);
   assert.equal(gp18?.fact, 100);
+});
+
+test("ELMK methodology excludes MKDC after license revocation", () => {
+  const elmk = registry.indicators.elmk;
+  assert.match(elmk.denominator, /73 применимые/u);
+  assert.match(elmk.exclusions.join(" "), /1\.2\.643\.5\.1\.13\.13\.12\.2\.16\.1079/u);
+  assert.match(elmk.notes, /73 из 73/u);
 });
