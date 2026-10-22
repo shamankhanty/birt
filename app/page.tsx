@@ -6610,7 +6610,7 @@ export default function Home() {
               <div className="federalPlanCardsIntro">
                 <div>
                   <h2>{federalPlanBand === "all" ? "Все показатели: от худших к выполненным" : (
-                    { critical: "Критическое отставание", lag: "Есть отставание", near: "Близко к плану", achieved: "План достигнут", other: "В контракте" }[federalPlanBand]
+                    { critical: "Критическое отставание", lag: "Есть отставание", near: "Близко к плану", achieved: "План достигнут", other: "В контракте", reference: "Справочно" }[federalPlanBand]
                   )}</h2>
                   <p>
                     Показано {federalPlanVisible.length} из {federalPlanAll.length} самостоятельных показателей.
