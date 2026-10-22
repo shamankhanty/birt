@@ -2434,6 +2434,120 @@ function quantityDenominator(label?: string) {
   return match ? Number(match[1].replace(/\s/gu, "")) : null;
 }
 
+
+type FederalPlanZone = "critical" | "lag" | "near" | "achieved" | "other";
+type FederalPlanAssessment = {
+  zone: FederalPlanZone;
+  score: number | null;
+  fact: string;
+  plan: string;
+  period: string;
+  deviation: string;
+  volume: string | null;
+  shortage: number | null;
+  warning: string | null;
+};
+
+function assessFederalPlan(row: FederalControlRow): FederalPlanAssessment {
+  const regional = row.regionalId
+    ? calculatedIndicatorById[row.regionalId]
+    : undefined;
+  const file = !regional && row.regionalFact
+    ? federalMetric(row.regionalFact)
+    : null;
+  const plan = federalMetric(row.plan);
+  const fileValue = file?.value ?? null;
+  const sourceValue = regional
+    ? regional.unit === "%"
+      ? regional.fact
+      : (regional.quantity ?? regional.fact)
+    : fileValue;
+  const value = typeof sourceValue === "number" && Number.isFinite(sourceValue)
+    ? sourceValue
+    : null;
+  const unit = regional ? (regional.unit === "%" ? "%" : "count") : (file?.unit ?? "text");
+  const lower = federalLowerIsBetter(row);
+  const period = regional?.date
+    ? "на " + regional.date
+    : (row.regionalPeriod ?? "период не указан");
+  const planLabel = plan.value !== null
+    ? (lower ? "≤ " : "") + plan.display
+    : row.plan;
+  const volumePair = row.regionalFact?.match(/([\d\s]+)\s+из\s+([\d\s]+)/u);
+  const fallbackNumerator = volumePair
+    ? Number(volumePair[1].replace(/\s/gu, ""))
+    : null;
+  const fallbackDenominator = volumePair
+    ? Number(volumePair[2].replace(/\s/gu, ""))
+    : null;
+  const numerator = typeof regional?.quantity === "number"
+    ? regional.quantity
+    : fallbackNumerator;
+  const denominator = quantityDenominator(regional?.quantityLabel)
+    ?? fallbackDenominator;
+  const volume = numerator !== null && denominator !== null
+    ? format(numerator, 0) + " из " + format(denominator, 0)
+    : typeof regional?.quantity === "number" && regional.quantityLabel
+      ? format(regional.quantity, 0) + " " + regional.quantityLabel
+      : volumePair ? row.regionalFact ?? null : null;
+  const isBoolean = row.plan.trim() === "Да";
+  const manual = row.regionalManualStatus;
+  const booleanFact = manual === "achieved" ? true
+    : manual === "notAchieved" ? false
+      : /^Да$/iu.test(row.regionalFact?.trim() ?? "") ? true
+        : /^Нет$/iu.test(row.regionalFact?.trim() ?? "") ? false : null;
+  const warning = row.sourceNote ?? null;
+  const otherwise = (fact: string): FederalPlanAssessment => ({
+    zone: "other", score: null, fact, plan: planLabel, period,
+    deviation: manual === "reference" ? "Справочно: план и факт несопоставимы" : "Нет сопоставимого расчёта",
+    volume: null, shortage: null, warning,
+  });
+  if (manual === "reference") {
+    return otherwise(file?.display ?? (row.regionalFact || "—"));
+  }
+  if (isBoolean) {
+    if (booleanFact === null) return otherwise("—");
+    return {
+      zone: booleanFact ? "achieved" : "critical",
+      score: null, fact: booleanFact ? "Да" : "Нет",
+      plan: "Да", period,
+      deviation: booleanFact ? "Условие выполнено" : "Условие не выполнено",
+      volume: null, shortage: null, warning,
+    };
+  }
+  if (value === null || plan.value === null || unit !== plan.unit || plan.value <= 0) {
+    return otherwise(file?.display ?? "—");
+  }
+  const rawScore = lower
+    ? (value <= 0 ? 100 : (plan.value / value) * 100)
+    : (value / plan.value) * 100;
+  const score = Number.isFinite(rawScore) ? Math.max(0, rawScore) : null;
+  if (score === null) return otherwise("—");
+  const zone: FederalPlanZone = score >= 100 ? "achieved"
+    : score >= 95 ? "near"
+      : score >= 80 ? "lag" : "critical";
+  const difference = lower ? plan.value - value : value - plan.value;
+  const suffix = unit === "%" ? " п.п." : " ед.";
+  const deviation = lower
+    ? difference >= 0
+      ? "Ниже предела на " + format(difference, 2) + suffix
+      : "Выше допустимого на " + format(-difference, 2) + suffix
+    : difference >= 0
+      ? "Выше плана на " + format(difference, 2) + suffix
+      : "Не хватает " + format(-difference, 2) + suffix;
+  const shortage = !lower && unit === "%" && numerator !== null && denominator !== null && denominator > 0
+    ? Math.max(0, Math.ceil(denominator * plan.value / 100) - numerator)
+    : null;
+  return {
+    zone, score,
+    fact: unit === "%" ? format(value, 2) + "%" : format(value, 0),
+    plan: planLabel, period, deviation, volume, shortage,
+    warning: unit === "%" && value > 100
+      ? "Доля превышает 100%: необходимо проверить числитель и знаменатель. " + (warning ?? "")
+      : warning,
+  };
+}
+
 function snapshotDate(period: string) {
   return (
     period.match(/(\d{2}\.\d{2}\.\d{4})$/)?.[1] ??
@@ -3419,6 +3533,7 @@ export default function Home() {
   );
   const [federalStatus, setFederalStatus] = useState("all");
   const [federalQuery, setFederalQuery] = useState("");
+  const [federalPlanBand, setFederalPlanBand] = useState<FederalPlanZone | "all">("all");
   const [unifiedMode, setUnifiedMode] = useState<"compact" | "detail">(
     "compact",
   );
@@ -4037,6 +4152,36 @@ export default function Home() {
       }),
     [federalSet, federalStatus, federalQuery],
   );
+
+  const federalPlanAll = useMemo(
+    () => federalControl[federalSet]
+      .filter((row) => row.type !== "Компонент")
+      .map((row) => ({ row, assessment: assessFederalPlan(row) })),
+    [federalSet],
+  );
+  const federalPlanCounts = useMemo(() => federalPlanAll.reduce(
+    (acc, item) => {
+      acc[item.assessment.zone] += 1;
+      return acc;
+    },
+    { critical: 0, lag: 0, near: 0, achieved: 0, other: 0 },
+  ), [federalPlanAll]);
+  const federalPlanVisible = useMemo(() => {
+    const selectedIds = new Set(federalRows.map((row) => row.id));
+    const rank: Record<FederalPlanZone, number> = {
+      critical: 0, lag: 1, near: 2, achieved: 3, other: 4,
+    };
+    return federalPlanAll
+      .filter((item) =>
+        selectedIds.has(item.row.id) &&
+        (federalPlanBand === "all" || item.assessment.zone === federalPlanBand),
+      )
+      .sort((a, b) =>
+        rank[a.assessment.zone] - rank[b.assessment.zone] ||
+        (a.assessment.score ?? -1) - (b.assessment.score ?? -1) ||
+        a.row.id.localeCompare(b.row.id, "ru", { numeric: true }),
+      );
+  }, [federalPlanAll, federalRows, federalPlanBand]);
   const unifiedCatalog = useMemo<UnifiedRow[]>(() => {
     const rows: UnifiedRow[] = [];
     const byRegional = new Map<string, UnifiedRow>();
@@ -6823,45 +6968,27 @@ export default function Home() {
                   <span>показатели МАХ исключены</span>
                 </div>
               </div>
-              <div className="federalSummary">
-                <article>
-                  <small>Всего показателей</small>
-                  <strong>{federalSummaryStats.total}</strong>
-                  <span>в выбранном контуре</span>
-                </article>
-                <article>
-                  <small>Достигнуто по оценке РФ</small>
-                  <strong className="blue">
-                    {federalSummaryStats.federalAchieved}
-                  </strong>
-                  <span>федеральный срез за 6 месяцев</span>
-                </article>
-                <article>
-                  <small>Выполнено по данным РТ</small>
-                  <strong className="green">
-                    {federalSummaryStats.regionalAchieved}
-                  </strong>
-                  <span>актуальные сопоставимые данные</span>
-                </article>
-                <article>
-                  <small>Не выполнено по данным РТ</small>
-                  <strong className="red">
-                    {federalSummaryStats.regionalNotAchieved}
-                  </strong>
-                  <span>план не достигнут</span>
-                </article>
-                <article>
-                  <small>В контракте</small>
-                  <strong className="contractNumber">
-                    {federalSummaryStats.contract}
-                  </strong>
-                  <span>ожидается реализация</span>
-                </article>
-                <article>
-                  <small>Нет данных РТ</small>
-                  <strong>{federalSummaryStats.noData}</strong>
-                  <span>нет сопоставимого факта</span>
-                </article>
+
+              <div className="federalPlanSummary" aria-label="Исполнение плана по группам">
+                {([
+                  ["critical", "Критическое", "Менее 80% плана"],
+                  ["lag", "Отставание", "80–94,9% плана"],
+                  ["near", "Близко к плану", "95–99,9% плана"],
+                  ["achieved", "План достигнут", "100% и более"],
+                  ["other", "Нет оценки", "Нет данных / справочно"],
+                ] as const).map(([zone, label, description]) => (
+                  <button
+                    type="button"
+                    key={zone}
+                    className={"federalPlanTile " + zone + (federalPlanBand === zone ? " active" : "")}
+                    onClick={() => setFederalPlanBand(federalPlanBand === zone ? "all" : zone)}
+                    aria-pressed={federalPlanBand === zone}
+                  >
+                    <span>{label}</span>
+                    <strong>{federalPlanCounts[zone]}</strong>
+                    <small>{description}</small>
+                  </button>
+                ))}
               </div>
               <div
                 className="federalSwitch"
@@ -6893,7 +7020,7 @@ export default function Home() {
                   value={federalStatus}
                   onChange={(event) => setFederalStatus(event.target.value)}
                 >
-                  <option value="all">Все статусы</option>
+                  <option value="all">Все статусы исходного перечня</option>
                   <option value="except-contract">
                     Все, кроме «В контракте»
                   </option>
@@ -6911,6 +7038,84 @@ export default function Home() {
                 числитель, знаменатель и количество, необходимое для достижения
                 плана.
               </div>
+
+              <div className="federalPlanCardsIntro">
+                <div>
+                  <h2>{federalPlanBand === "all" ? "Все показатели: от худших к выполненным" : (
+                    { critical: "Критическое отставание", lag: "Есть отставание", near: "Близко к плану", achieved: "План достигнут", other: "Без сопоставимых данных" }[federalPlanBand]
+                  )}</h2>
+                  <p>
+                    Показано {federalPlanVisible.length} из {federalPlanAll.length} самостоятельных показателей.
+                    Цвет отражает исполнение индивидуального плана, а не абсолютный процент факта.
+                  </p>
+                </div>
+                {federalPlanBand !== "all" && (
+                  <button type="button" onClick={() => setFederalPlanBand("all")}>Показать все</button>
+                )}
+              </div>
+              <div className="federalPlanCardGrid">
+                {federalPlanVisible.map(({ row, assessment }) => (
+                  <article className={"federalPlanCard " + assessment.zone} key={federalSet + "-" + row.id}>
+                    <div className="federalPlanCardTop">
+                      <span>{federalSet === "agreement" ? "С" : "К"} № {row.id} · {federalSet === "agreement" ? "Соглашение" : "Коллегия"}</span>
+                      <b>{({
+                        critical: "Критическое отставание",
+                        lag: "Есть отставание",
+                        near: "Близко к плану",
+                        achieved: "План достигнут",
+                        other: "Нет оценки",
+                      } as const)[assessment.zone]}</b>
+                    </div>
+                    <h3>{row.name}</h3>
+                    <div className="federalPlanFacts">
+                      <div>
+                        <small>Факт РТ · {assessment.period}</small>
+                        <strong>{assessment.fact}</strong>
+                      </div>
+                      <div>
+                        <small>План</small>
+                        <strong>{assessment.plan}</strong>
+                      </div>
+                    </div>
+                    <div
+                      className="federalPlanTrack"
+                      role="progressbar"
+                      aria-label="Выполнение плана"
+                      aria-valuemin={0}
+                      aria-valuemax={100}
+                      aria-valuenow={assessment.score === null ? undefined : Math.min(100, Math.max(0, assessment.score))}
+                    >
+                      <span style={{ width: (assessment.score === null ? 0 : Math.min(100, Math.max(0, assessment.score))) + "%" }} />
+                    </div>
+                    <div className="federalPlanProgress">
+                      <span>{assessment.score === null ? "Оценка выполнения недоступна" : "Исполнение плана: " + format(assessment.score, 2) + "%"}</span>
+                      <b>{assessment.deviation}</b>
+                    </div>
+                    {(assessment.volume || assessment.shortage !== null) && (
+                      <p className="federalPlanCount">
+                        {assessment.volume ?? ""}
+                        {assessment.shortage !== null && assessment.shortage > 0
+                          ? " · До плана ещё " + format(assessment.shortage, 0) + " ед."
+                          : ""}
+                      </p>
+                    )}
+                    <details className="federalPlanCardAudit">
+                      <summary>Источник и федеральный срез</summary>
+                      <div>
+                        <p><strong>План:</strong> {row.plan}</p>
+                        <p><strong>Федеральная оценка за 6 месяцев:</strong> {row.federal}</p>
+                        <p><strong>Период РТ:</strong> {assessment.period}</p>
+                        {assessment.warning && <p className="federalPlanWarning">{assessment.warning}</p>}
+                      </div>
+                    </details>
+                  </article>
+                ))}
+              </div>
+              {federalPlanVisible.length === 0 && (
+                <p className="federalPlanEmpty">Нет показателей для выбранной комбинации фильтров. Измените диапазон, статус или поиск.</p>
+              )}
+              <details className="federalPlanOriginal">
+                <summary>Исходная таблица и сравнение с федеральной оценкой (6 месяцев)</summary>
               <div className="tableWrap federalTableWrap">
                 <table className="matrix federalTable">
                   <thead>
@@ -7153,6 +7358,7 @@ export default function Home() {
                   </tbody>
                 </table>
               </div>
+              </details>
               <p className="prototypeNote">
                 Федеральная оценка: {federalControl.source}.
                 {federalSet === "collegium" && (
