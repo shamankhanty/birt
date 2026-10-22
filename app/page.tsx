@@ -5335,18 +5335,27 @@ export default function Home() {
       .toLowerCase()
       .includes(metricQuery.trim().toLowerCase()),
   );
+  const maxSidebarSnapshot = (id: string) => {
+    const service = id === "tmkMaxCount" ? "tmk" : "eln";
+    const slice = maxPeriodView === "operational" ? maxPeriodViews.operational : maxPeriodViews.cumulative;
+    const metric = slice.metrics[service];
+    const fact = metric.plannedMoFact as number;
+    const plan = metric.republicPlan as number;
+    const achievement = plan > 0 ? (fact / plan) * 100 : null;
+    const intervalDays = maxPeriodView === "operational" ? snapshotDistanceDays(slice.previousDate, slice.date) : null;
+    const daysRemaining = maxPeriodView === "operational" ? daysRemainingInCutMonth(slice.date) : null;
+    const recentPace = intervalDays && intervalDays > 0 ? (fact - metric.previousPlannedMoFact) / intervalDays : null;
+    const forecast = recentPace !== null && daysRemaining !== null ? fact + Math.max(0, recentPace) * daysRemaining : null;
+    return { achievement, fact, forecast, label: maxPeriodView === "operational" ? `Оперативно ${slice.date.slice(0, 5)}` : `Накопительно ${slice.date.slice(0, 5)}`, plan };
+  };
   const sidebarMetricValue = (id: string) => {
     const dataset = moData[id];
     if (id === "tmkMaxCount" || id === "elnMaxCount") {
-      const service = id === "tmkMaxCount" ? "tmk" : "eln";
-      const monthKey = monthKeyFromRussianDate(dataset.date);
-      const plan = monthKey ? maxTargets.republic[service]?.[monthKey] ?? null : null;
-      const fact = calculatedIndicatorById[id]?.fact ?? 0;
-      const achievement = plan ? (fact / plan) * 100 : null;
+      const { achievement, fact, label, plan } = maxSidebarSnapshot(id);
       return (
         <>
           <em>{achievement === null ? "—" : `${format(achievement, 1)}%`}</em>
-          <small>{format(fact, 0)} / {plan === null ? "—" : format(plan, 0)} · {monthKey ? russianMonthLabel(monthKey).replace(/\s+\d{4}$/u, "") : "период"}</small>
+          <small>{format(fact, 0)} / {format(plan, 0)} · {label}</small>
         </>
       );
     }
@@ -5372,7 +5381,12 @@ export default function Home() {
     return `${format(fact, 2)}%`;
   };
   const sidebarMetricTone = (id: string) => {
-    if (id === "tmkMaxCount" || id === "elnMaxCount") return "neutral";
+    if (id === "tmkMaxCount" || id === "elnMaxCount") {
+      const { achievement, forecast, plan } = maxSidebarSnapshot(id);
+      if ((achievement ?? 0) >= 100) return "good";
+      if (maxPeriodView === "operational" && (forecast ?? 0) >= plan) return "warn";
+      return "bad";
+    }
     const dataset = moData[id];
     if (dataset.mode === "count" || dataset.plan === null) return "neutral";
     const indicator = calculatedIndicatorById[id];
