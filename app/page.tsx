@@ -6505,7 +6505,7 @@ export default function Home() {
 
           {tab === "unified" && (
             <>
-              <div className="operationalGrid extendedOperationalGrid">
+              <div className="operationalGrid extendedOperationalGrid unifiedFederalTop" aria-label="Оперативные показатели Республики Татарстан">
                 {extendedOperational.map((o) => (
                   <article
                     key={o.title}
@@ -6654,7 +6654,7 @@ export default function Home() {
                       <span style={{ width: (assessment.score === null ? 0 : Math.min(100, Math.max(0, assessment.score))) + "%" }} />
                     </div>
                     <div className="federalPlanProgress">
-                      <span>{assessment.score === null ? "Оценка выполнения недоступна" : "Исполнение плана: " + format(assessment.score, 2) + "%"}</span>
+                      <span>{assessment.score === null ? "В контракте · расчёт не представлен" : "Исполнение плана: " + format(assessment.score, 2) + "%"}</span>
                       <b>{assessment.deviation}</b>
                     </div>
                     {(assessment.volume || assessment.shortage !== null) && (
