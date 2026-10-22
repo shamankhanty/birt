@@ -23,7 +23,12 @@ test("the composition correction is not shown as indicator dynamics", () => {
   assert.equal(status.elmk.comparisonReset, true);
   assert.match(status.elmk.comparisonResetReason, /несопоставим/u);
   assert.match(page, /comparisonReset: source\.comparisonReset \?\? item\.comparisonReset/u);
-  assert.match(page, /const regionalTrend = regional\?\.comparisonReset\s*\? null/u);
+  const start = page.indexOf('{tab === "unified" && (');
+  const end = page.indexOf('{tab === "ranking" && (', start);
+  const summary = page.slice(start, end);
+  assert.ok(start >= 0 && end > start);
+  assert.doesNotMatch(summary, /regionalTrend|trendGood|trendBad/u);
+  assert.match(summary, /Исполнение плана/u);
 });
 
 test("future ELMK imports preserve the explicit applicability rule", () => {
