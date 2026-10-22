@@ -2435,7 +2435,7 @@ function quantityDenominator(label?: string) {
 }
 
 
-type FederalPlanZone = "critical" | "lag" | "near" | "achieved" | "other";
+type FederalPlanZone = "critical" | "lag" | "near" | "achieved" | "other" | "reference";
 type FederalPlanAssessment = {
   zone: FederalPlanZone;
   score: number | null;
@@ -2498,7 +2498,7 @@ function assessFederalPlan(row: FederalControlRow): FederalPlanAssessment {
         : /^Нет$/iu.test(row.regionalFact?.trim() ?? "") ? false : null;
   const warning = row.sourceNote ?? null;
   const otherwise = (fact: string): FederalPlanAssessment => ({
-    zone: "other", score: null, fact, plan: planLabel, period,
+    zone: manual === "reference" ? "reference" : "other", score: null, fact, plan: planLabel, period,
     deviation: manual === "reference" ? "Справочно: план и факт несопоставимы" : "Сопоставимый региональный расчёт по методике показателя не представлен",
     volume: null, shortage: null, warning,
   });
@@ -4164,12 +4164,12 @@ export default function Home() {
       acc[item.assessment.zone] += 1;
       return acc;
     },
-    { critical: 0, lag: 0, near: 0, achieved: 0, other: 0 },
+    { critical: 0, lag: 0, near: 0, achieved: 0, other: 0, reference: 0 },
   ), [federalPlanAll]);
   const federalPlanVisible = useMemo(() => {
     const selectedIds = new Set(federalRows.map((row) => row.id));
     const rank: Record<FederalPlanZone, number> = {
-      critical: 0, lag: 1, near: 2, achieved: 3, other: 4,
+      critical: 0, lag: 1, near: 2, achieved: 3, other: 4, reference: 5,
     };
     return federalPlanAll
       .filter((item) =>
@@ -6541,7 +6541,8 @@ export default function Home() {
                   ["lag", "Отставание", "80–94,9% плана"],
                   ["near", "Близко к плану", "95–99,9% плана"],
                   ["achieved", "План достигнут", "100% и более"],
-                  ["other", "В контракте", "Нет сопоставимого факта / справочно"],
+                  ["other", "В контракте", "Нет сопоставимого факта"],
+                  ["reference", "Справочно", "Нет сопоставимого планового значения"],
                 ] as const).map(([zone, label, description]) => (
                   <button
                     type="button"
@@ -6630,7 +6631,7 @@ export default function Home() {
                         lag: "Есть отставание",
                         near: "Близко к плану",
                         achieved: "План достигнут",
-                        other: "В контракте",
+                        other: "В контракте", reference: "Справочно",
                       } as const)[assessment.zone]}</b>
                     </div>
                     <h3>{row.name}</h3>
