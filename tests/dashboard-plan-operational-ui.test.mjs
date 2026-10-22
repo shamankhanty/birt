@@ -15,7 +15,7 @@ test("MAX UI uses the approved target registry and keeps TMK and ELN independent
   assert.match(page, /max-targets-2026\.json/u);
   assert.match(page, /data-testid="max-plan-summary"/u);
   assert.match(page, /data-testid="max-plan-organization-table"/u);
-  assert.match(page, /План текущего месяца/u);
+  assert.match(page, /Месячный план/u);
   assert.match(page, /Выполнение, %/u);
   assert.match(page, /Динамика/u);
   assert.match(page, /Нужно до конца месяца/u);
@@ -38,6 +38,22 @@ test("MAX UI uses the approved target registry and keeps TMK and ELN independent
   assert.match(page, /Number\.POSITIVE_INFINITY/u);
   assert.match(page, /От наибольшего риска к выполнению/u);
   assert.doesNotMatch(page, /tmk.*\+.*eln|eln.*\+.*tmk/u);
+});
+
+test("block 02 MAX indicators use direct monthly and cumulative source-backed views", () => {
+  assert.match(page, /data-testid="max-indicator-period-switch"/u);
+  assert.match(page, /data-testid="max-indicator-summary"/u);
+  assert.match(page, /data-testid="max-indicator-organization-table"/u);
+  assert.match(page, /Факт взят напрямую из октябрьского отчёта; накопительный факт сентября из него не вычитается/u);
+  assert.match(page, /maxIndicatorSlice = maxPeriodView === "operational" \? maxPeriodViews\.operational : maxPeriodViews\.cumulative/u);
+  assert.equal(periodViews.operational.metrics.tmk.plannedMoFact, 9590);
+  assert.equal(periodViews.operational.metrics.tmk.republicPlan, 16000);
+  assert.equal(periodViews.operational.metrics.eln.plannedMoFact, 8168);
+  assert.equal(periodViews.operational.metrics.eln.republicPlan, 8000);
+  assert.equal(periodViews.cumulative.metrics.tmk.plannedMoFact, 64265);
+  assert.equal(periodViews.cumulative.metrics.tmk.republicPlan, 161000);
+  assert.equal(periodViews.cumulative.metrics.eln.plannedMoFact, 49902);
+  assert.equal(periodViews.cumulative.metrics.eln.republicPlan, 82000);
 });
 
 test("every 500+ category exposes the closed month beside numerator-derived operational control", () => {

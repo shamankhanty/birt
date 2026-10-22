@@ -506,6 +506,7 @@ body{font-size:14px}
 .maxServiceSwitch button{border:0;border-radius:9px;padding:8px 14px;background:transparent;color:#587168;font:inherit;font-size:11px;font-weight:850;cursor:pointer;white-space:nowrap}
 .maxServiceSwitch button.active{background:#fff;color:#116e54;box-shadow:0 2px 8px rgba(20,70,55,.12)}
 .maxPeriodSwitch{display:flex;gap:5px;width:max-content;margin:14px 0;padding:4px;border-radius:12px;background:#eaf1ef}.maxPeriodSwitch button{border:0;border-radius:9px;padding:9px 18px;background:transparent;color:#587168;font:inherit;font-size:11px;font-weight:850;cursor:pointer}.maxPeriodSwitch button.active{background:#176b54;color:#fff;box-shadow:0 2px 8px rgba(20,70,55,.18)}
+.indicatorPeriodBar{display:flex;align-items:center;justify-content:space-between;gap:14px;margin:0 0 12px;padding:7px 10px;border:1px solid #d6e4df;border-radius:14px;background:#f8fbfa}.indicatorPeriodBar .maxPeriodSwitch{margin:0}.indicatorPeriodBar>span{color:#647a72;font-size:10px;text-align:right}
 .maxServiceCard{cursor:pointer;transition:transform .12s ease,box-shadow .12s ease,border-color .12s ease}
 .maxServiceCard:hover{transform:translateY(-1px);box-shadow:0 5px 16px rgba(20,70,55,.08)}
 .maxServiceCard.active{border-color:#58a98a;box-shadow:0 0 0 2px rgba(31,128,97,.10)}
@@ -529,7 +530,7 @@ body{font-size:14px}
 .maxMoMetrics{grid-template-columns:1fr;max-width:420px;margin-top:10px}
 .maxMoMetrics article{min-height:72px;padding:10px 12px}
 @media(max-width:1250px){.maxMonthCards{grid-template-columns:repeat(3,minmax(0,1fr))}}
-@media(max-width:720px){.maxServiceSwitch,.maxPeriodSwitch{width:100%;overflow:auto}.maxServiceSwitch button,.maxPeriodSwitch button{flex:1}.maxMonthCards{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:720px){.maxServiceSwitch,.maxPeriodSwitch{width:100%;overflow:auto}.maxServiceSwitch button,.maxPeriodSwitch button{flex:1}.maxMonthCards{grid-template-columns:repeat(2,minmax(0,1fr))}.indicatorPeriodBar{align-items:stretch;flex-direction:column}.indicatorPeriodBar>span{text-align:left}}
 
 
 /* v5.2.3 hearing TOP-10 readability */
