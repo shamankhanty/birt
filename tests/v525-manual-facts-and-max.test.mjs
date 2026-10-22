@@ -23,7 +23,7 @@ test("v5.2.5 marks agreed RT facts as manual until primary reports arrive", () =
   assert.match(byId.get("29").sourceNote, /Ручной ввод по сообщённому значению/u);
   assert.match(byId.get("29").sourceNote, /без первичной регулярной выгрузки/u);
   assert.match(byId.get("39.2").sourceNote, /Подтвержденное количество/u);
-  assert.equal(byId.get("39.2").regionalFact, "17 246 СЭМД");
+  assert.equal(byId.get("39.2").regionalFact, "18 777 СЭМД");
 });
 
 test("AI imaging shares use source numerators/denominators and one-decimal rounding", () => {

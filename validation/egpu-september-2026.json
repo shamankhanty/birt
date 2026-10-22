@@ -1,0 +1,47 @@
+{
+  "generatedAt": "2026-10-22",
+  "status": "PASS",
+  "scope": "staging",
+  "productionPublished": false,
+  "sources": [
+    {
+      "name": "Исходники (7)(1).rar",
+      "sha256": "e700cd9809f4b2daac54c127d8a477599918695daff3b0a1c806e7f356ef05f3",
+      "role": "накопительный срез 01.01–22.10.2026"
+    },
+    {
+      "name": "ПР_2_Кол-во заявл на прикр. от ЕГПУ за период. ИП ООГУЗ. Обраб. 2 суток. 01.09.26-30.09.26 (Выгрузка из ГИС ЭЗ РТ 22.10.26)(1).xlsx",
+      "sha256": "01ae1eb1c5b21ac55b8b4ae12277383a79404ee7bc1ccc9108aaa79da2e68a61",
+      "role": "полный сентябрь 01.09–30.09.2026"
+    }
+  ],
+  "checks": {
+    "cumulative": {
+      "organizations": 84,
+      "denominator": 42321,
+      "finalStatusNumerator": 41904,
+      "finalStatusPercent": 99.0146735663146,
+      "twoDaysNumerator": 35682,
+      "twoDaysPercent": 84.31275253420287
+    },
+    "september": {
+      "organizations": 77,
+      "denominator": 6690,
+      "finalStatusNumerator": 6684,
+      "finalStatusPercent": 99.91031390134529,
+      "twoDaysNumerator": 6077,
+      "twoDaysPercent": 90.83707025411061
+    },
+    "duplicateOids": 0,
+    "numeratorOverDenominator": 0
+  },
+  "methodology": {
+    "finalStatusColumn": "Количество заявлений по которым получен финальный статус",
+    "twoDaysColumn": "Количество заявлений рассмотрены в 2 рабочих дня",
+    "ignoredSourceFields": [
+      "Не обработано",
+      "Более 2-х рабочих дней с момента поступления заявления в ГИС ЭЗ РТ"
+    ],
+    "missingRows": "Не заменяются нулём"
+  }
+}

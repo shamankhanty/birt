@@ -5392,20 +5392,20 @@ export default function Home() {
   };
   const monthlyBenchmarks: Record<string, MonthlyBenchmark> = {
     egpu: {
-      june: 96.9075,
-      july: 95.6268,
+      june: 95.6268,
+      july: 99.91031390134529,
       unit: "%",
-      juneQuantity: "3 071 из 3 169",
-      julyQuantity: "3 936 из 4 116",
-      source: "Заявления о прикреплении через ЕПГУ",
+      juneQuantity: "3 936 из 4 116",
+      julyQuantity: "6 684 из 6 690",
+      source: "Заявления о прикреплении через ЕПГУ с финальным статусом",
     },
     egpu2days: {
-      june: 67.5607,
-      july: 67.0311,
+      june: 67.0311,
+      july: 90.83707025411061,
       unit: "%",
-      juneQuantity: "2 141 из 3 169",
-      julyQuantity: "2 759 из 4 116",
-      source: "Заявления, рассмотренные за 2 суток",
+      juneQuantity: "2 759 из 4 116",
+      julyQuantity: "6 077 из 6 690",
+      source: "Заявления о прикреплении, рассмотренные за 2 рабочих дня",
     },
     birth: {
       june: 99.8906,
@@ -5501,6 +5501,8 @@ export default function Home() {
       : isMaxMetric
         ? maxAugustMonthlyDataset
         : monthlyMoData[matrixMetric];
+  const usesDatasetMonthLabels =
+    matrixMetric.startsWith("doctor") || matrixMetric === "egpu" || matrixMetric === "egpu2days";
   const metricDisplayName = (id: string) =>
     id === "tmkMaxCount"
       ? "ТМК посредством МАХ"
@@ -9468,7 +9470,7 @@ export default function Home() {
                         {monthBenchmark.unit === "%" ? "%" : ""}
                       </strong>
                       <span>
-                        {matrixMetric.startsWith("doctor") ? monthlyDataset?.previousLabel : "Июль 2026"}
+                        {usesDatasetMonthLabels ? monthlyDataset?.previousLabel : "Июль 2026"}
                         {monthBenchmark.juneQuantity
                           ? ` · ${monthBenchmark.juneQuantity}`
                           : ""}
@@ -9484,7 +9486,7 @@ export default function Home() {
                         {monthBenchmark.unit === "%" ? "%" : ""}
                       </strong>
                       <span>
-                        {matrixMetric.startsWith("doctor") ? monthlyDataset?.currentLabel : "Август 2026"}
+                        {usesDatasetMonthLabels ? monthlyDataset?.currentLabel : "Август 2026"}
                         {monthBenchmark.julyQuantity
                           ? ` · ${monthBenchmark.julyQuantity}`
                           : ""}
@@ -9501,7 +9503,7 @@ export default function Home() {
                           : "negative"
                       }
                     >
-                          <small>{matrixMetric.startsWith("doctor") ? `Изменение: ${monthlyDataset?.currentLabel} к ${monthlyDataset?.previousLabel}` : "Изменение: август к июлю"}</small>
+                          <small>{usesDatasetMonthLabels ? `Изменение: ${monthlyDataset?.currentLabel} к ${monthlyDataset?.previousLabel}` : "Изменение: август к июлю"}</small>
                       <strong>
                         {monthBenchmark.july > monthBenchmark.june
                           ? "↑"

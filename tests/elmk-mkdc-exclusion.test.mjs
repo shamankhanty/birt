@@ -20,8 +20,8 @@ test("MKDC is not counted in the current ELMK denominator", () => {
 });
 
 test("the composition correction is not shown as indicator dynamics", () => {
-  assert.equal(status.elmk.comparisonReset, true);
-  assert.match(status.elmk.comparisonResetReason, /несопоставим/u);
+  assert.equal(status.elmk.comparisonReset, false);
+  assert.equal(status.elmk.comparisonResetReason, null);
   assert.match(page, /comparisonReset: source\.comparisonReset \?\? item\.comparisonReset/u);
   const start = page.indexOf('{tab === "unified" && (');
   const end = page.indexOf('{tab === "ranking" && (', start);

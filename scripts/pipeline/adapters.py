@@ -1045,7 +1045,7 @@ def adapt_presence(app: Path, source: Path, end: date, family: str) -> AdapterRe
         count=counts[oid];fact=100 if count>0 else 0;prev=old.get("fact")
         rows.append({**old,"count":count,"fact":fact,"previous":prev,"trend":None if prev is None else fact-prev})
     positive=sum(r["fact"]>0 for r in rows); total=len(rows)
-    note=(f"Плановый перечень — {total} МО; {positive} МО передают протоколы ТМК в РЭМД." if family=="tmk_remd" else f"Применимый перечень — {total} МО. МКДЦ исключён после отзыва лицензии. На {date_ru(end)} передача подтверждена у {positive} МО.")
+    note=(f"Плановый перечень — {total} МО; {positive} МО передают протоколы ТМК в РЭМД." if family=="tmk_remd" else f"Применимый перечень — {total} МО. МКДЦ исключён: лицензия отозвана. На {date_ru(end)} передача подтверждена у {positive} МО.")
     base=status[key]
     same_cut = base.get("date") == date_ru(end)
     comparison_reset = bool(base.get("comparisonReset")) if same_cut else False
@@ -1056,15 +1056,19 @@ def adapt_presence(app: Path, source: Path, end: date, family: str) -> AdapterRe
                         "quantityLabel": f"из {total} применимых медицинских организаций" if family == "elmk" else f"из {total} медицинских организаций",
                         "numerator":positive,"denominator":total,
                         "comparisonReset":comparison_reset,
+                        "comparisonResetReason": base.get("comparisonResetReason") if comparison_reset else None,
                         "note":note,"rows":rows});save(app,"organization-status.json",status)
     return AdapterResult("status_detail",[family],"PASS",["organization-status.json"],[source.name],{"planOrganizations":total,"transmitting":positive},[],[])
 
 
 def adapt_short_input(app: Path, source: Path, end: date, only_metric=None) -> AdapterResult:
-    wb=open_workbook(source,read_only=True,data_only=True);ws=_sheet(wb,["Краткий ввод"]);raw=[]
+    wb=open_workbook(source,read_only=True,data_only=True);ws=_sheet(wb,["Краткий ввод"]);grouped={}
     for r in ws.iter_rows(min_row=7,values_only=True):
         if len(r)<7 or not r[0] or str(r[0]).strip().casefold().startswith("итого"): continue
-        raw.append((str(r[0]).strip(),str(r[1] or "").strip(),n(r[3])+n(r[6]),n(r[4])+n(r[5])))
+        name,oid=str(r[0]).strip(),str(r[1] or "").strip();key=oid or norm(name)
+        item=grouped.setdefault(key,[name,oid,0,0])
+        item[2]+=n(r[3])+n(r[6]);item[3]+=n(r[4])+n(r[5])
+    raw=list(grouped.values())
     if not raw: raise ValueError("Краткий ввод: не найдено строк")
     op=load(app,"operational-mo.json");facts={}
     for key,title in [("shortInput","Количество случаев краткого ввода — всего"),("shortInputAmb","Количество случаев краткого ввода — амбулаторно"),("shortInputHosp","Количество случаев краткого ввода — стационар")]:

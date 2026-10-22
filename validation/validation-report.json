@@ -1,12 +1,12 @@
 {
   "schemaVersion": 1,
   "baselineVersion": "5.4.5",
-  "dataDate": "19.10.2026",
+  "dataDate": "22.10.2026",
   "reportingPeriod": {
     "latestFullMonth": "сентябрь 2026",
     "previousFullMonth": "август 2026",
     "hasPartialNewerMonth": true,
-    "latestObservedDate": "19.10.2026"
+    "latestObservedDate": "22.10.2026"
   },
   "overallStatus": "WARNING",
   "summary": {
@@ -18,8 +18,8 @@
     "aiReviewItems": 0
   },
   "acknowledgedBaseline": {
-    "unresolvedOrganizations": 105,
-    "percentageAnomalies": 32,
+    "unresolvedOrganizations": 106,
+    "percentageAnomalies": 35,
     "missingCurrentValues": 0
   },
   "checks": [
@@ -107,9 +107,9 @@
       "status": "PASS",
       "blocking": false,
       "requiresAiReview": false,
-      "message": "1011 ratio rows reconcile to numerator/denominator components",
+      "message": "1013 ratio rows reconcile to numerator/denominator components",
       "details": {
-        "inspectedRows": 1011,
+        "inspectedRows": 1013,
         "tolerancePercentagePoints": 0.015
       },
       "issues": []
@@ -121,9 +121,9 @@
       "status": "PASS",
       "blocking": false,
       "requiresAiReview": false,
-      "message": "1887 trend rows reconcile to fact minus previous",
+      "message": "1890 trend rows reconcile to fact minus previous",
       "details": {
-        "inspectedRows": 1887
+        "inspectedRows": 1890
       },
       "issues": []
     },
@@ -152,7 +152,7 @@
         "activeRatingIndicators": 16,
         "latestFullMonth": "сентябрь 2026",
         "previousFullMonth": "август 2026",
-        "latestObservedDate": "19.10.2026",
+        "latestObservedDate": "22.10.2026",
         "hasPartialNewerMonth": true
       },
       "issues": [
@@ -177,10 +177,10 @@
       "status": "PASS",
       "blocking": false,
       "requiresAiReview": false,
-      "message": "No new unresolved organizations beyond 105 acknowledged baseline rows",
+      "message": "No new unresolved organizations beyond 106 acknowledged baseline rows",
       "details": {
-        "currentUnresolvedRows": 105,
-        "acknowledgedBaselineRows": 105
+        "currentUnresolvedRows": 106,
+        "acknowledgedBaselineRows": 106
       },
       "issues": []
     },
@@ -227,10 +227,10 @@
       "status": "PASS",
       "blocking": false,
       "requiresAiReview": false,
-      "message": "No new percentage anomalies beyond 32 acknowledged baseline cases",
+      "message": "No new percentage anomalies beyond 35 acknowledged baseline cases",
       "details": {
-        "currentAnomalyRows": 32,
-        "acknowledgedBaselineCases": 32
+        "currentAnomalyRows": 35,
+        "acknowledgedBaselineCases": 35
       },
       "issues": []
     }

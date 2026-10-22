@@ -36,10 +36,10 @@ test("ELMK planned organizations have unique OIDs", () => {
   assert.equal(status.elmk.numerator, 73);
   assert.equal(status.elmk.denominator, 73);
   assert.equal(status.elmk.fact, 100);
-  assert.equal(status.elmk.comparisonReset, true);
+  assert.equal(status.elmk.comparisonReset, false);
   const gp18 = rows.find(row => row.name === "ГОРОДСКАЯ ПОЛИКЛИНИКА №18 г. Казань");
   assert.equal(gp18?.oid, "1.2.643.5.1.13.13.12.2.16.1080");
-  assert.equal(gp18?.count, 79);
+  assert.equal(gp18?.count, 110);
   assert.equal(gp18?.fact, 100);
 });
 
