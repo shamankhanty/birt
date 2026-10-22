@@ -6644,18 +6644,26 @@ export default function Home() {
                         <strong>{assessment.plan}</strong>
                       </div>
                     </div>
-                    <div
-                      className="federalPlanTrack"
-                      role="progressbar"
-                      aria-label="Выполнение плана"
-                      aria-valuemin={0}
-                      aria-valuemax={100}
-                      aria-valuenow={assessment.score === null ? undefined : Math.min(100, Math.max(0, assessment.score))}
-                    >
-                      <span style={{ width: (assessment.score === null ? 0 : Math.min(100, Math.max(0, assessment.score))) + "%" }} />
-                    </div>
+                    {assessment.plan === "Да" ? (
+                      <div className="federalPlanQualitative" aria-label="Качественный критерий">
+                        {assessment.fact === "Да" ? "✓ Условие выполнено" :
+                          assessment.fact === "Нет" ? "✕ Условие не выполнено" :
+                          "Нет подтверждённого значения"}
+                      </div>
+                    ) : (
+                      <div
+                        className="federalPlanTrack"
+                        role="progressbar"
+                        aria-label="Выполнение плана"
+                        aria-valuemin={0}
+                        aria-valuemax={100}
+                        aria-valuenow={assessment.score === null ? undefined : Math.min(100, Math.max(0, assessment.score))}
+                      >
+                        <span style={{ width: (assessment.score === null ? 0 : Math.min(100, Math.max(0, assessment.score))) + "%" }} />
+                      </div>
+                    )}
                     <div className="federalPlanProgress">
-                      <span>{assessment.score === null ? "В контракте · расчёт не представлен" : "Исполнение плана: " + format(assessment.score, 2) + "%"}</span>
+                      <span>{assessment.plan === "Да" ? "Качественный критерий" : assessment.score === null ? "В контракте · расчёт не представлен" : "Исполнение плана: " + format(assessment.score, 2) + "%"}</span>
                       <b>{assessment.deviation}</b>
                     </div>
                     {(assessment.volume || assessment.shortage !== null) && (
