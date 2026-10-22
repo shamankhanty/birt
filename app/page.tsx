@@ -2499,7 +2499,7 @@ function assessFederalPlan(row: FederalControlRow): FederalPlanAssessment {
   const warning = row.sourceNote ?? null;
   const otherwise = (fact: string): FederalPlanAssessment => ({
     zone: "other", score: null, fact, plan: planLabel, period,
-    deviation: manual === "reference" ? "Справочно: план и факт несопоставимы" : "Нет сопоставимого расчёта",
+    deviation: manual === "reference" ? "Справочно: план и факт несопоставимы" : "Сопоставимый региональный расчёт по методике показателя не представлен",
     volume: null, shortage: null, warning,
   });
   if (manual === "reference") {
@@ -6583,6 +6583,7 @@ export default function Home() {
                   placeholder="Найти показатель или номер"
                 />
                 <select
+                  aria-label="Статус показателя"
                   value={federalStatus}
                   onChange={(event) => setFederalStatus(event.target.value)}
                 >
