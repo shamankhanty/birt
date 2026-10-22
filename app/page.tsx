@@ -6596,7 +6596,7 @@ export default function Home() {
                   <option>В контракте</option>
                   <option>Справочно</option>
                 </select>
-                <span>{federalRows.length} показателей</span>
+                <span>{federalPlanVisible.length} из {federalPlanAll.length} самостоятельных показателей</span>
               </div>
               <div className="federalNote">
                 <b>Правило сопоставления:</b> разница с федеральным уровнем не
@@ -6670,7 +6670,7 @@ export default function Home() {
                       <p className="federalPlanCount">
                         {assessment.volume ?? ""}
                         {assessment.shortage !== null && assessment.shortage > 0
-                          ? " · До плана ещё " + format(assessment.shortage, 0) + " ед."
+                          ? " · До плана ещё " + format(assessment.shortage, 0) + (/(?:врач|врачей|хирург|стоматолог|педиатр|терапевт|кардиолог|онколог|офтальмолог|гинеколог)/iu.test(row.name) ? (assessment.shortage % 10 === 1 && assessment.shortage % 100 !== 11 ? " врач" : [2, 3, 4].includes(assessment.shortage % 10) && ![12, 13, 14].includes(assessment.shortage % 100) ? " врача" : " врачей") : " ед.")
                           : ""}
                       </p>
                     )}
