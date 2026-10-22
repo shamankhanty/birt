@@ -44,6 +44,9 @@ test("block 02 MAX indicators use direct monthly and cumulative source-backed vi
   assert.match(page, /data-testid="max-indicator-period-switch"/u);
   assert.match(page, /data-testid="max-indicator-summary"/u);
   assert.match(page, /data-testid="max-indicator-organization-table"/u);
+  assert.match(page, /const maxSidebarSnapshot = \(id: string\)/u);
+  assert.match(page, /Оперативно \$\{slice\.date\.slice\(0, 5\)\}/u);
+  assert.match(page, /Накопительно \$\{slice\.date\.slice\(0, 5\)\}/u);
   assert.match(page, /Факт взят напрямую из октябрьского отчёта; накопительный факт сентября из него не вычитается/u);
   assert.match(page, /maxIndicatorSlice = maxPeriodView === "operational" \? maxPeriodViews\.operational : maxPeriodViews\.cumulative/u);
   assert.equal(periodViews.operational.metrics.tmk.plannedMoFact, 9590);
