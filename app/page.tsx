@@ -154,21 +154,12 @@ type ExtendedStatus =
   | "notAchieved"
   | "contract"
   | "noData";
+type ExtendedFactRange = "all" | "lt50" | "50to70" | "70to90";
 type ExtendedCardItem = {
   key: string;
   row: FederalControlRow;
   source: "agreement" | "collegium";
   collegium?: FederalControlRow;
-};
-type PlanProgressItem = {
-  key: string;
-  row: FederalControlRow;
-  fact: number;
-  plan: number;
-  unit: "%" | "count";
-  progress: number;
-  gap: number;
-  period: string;
 };
 const federalControl = federalControlRaw as FederalControlData;
 type PreventiveAuditRow = {
@@ -3440,6 +3431,8 @@ export default function Home() {
     useState<ExtendedCategory>("all");
   const [extendedStatusFilter, setExtendedStatusFilter] =
     useState<ExtendedStatus>("all");
+  const [extendedFactRange, setExtendedFactRange] =
+    useState<ExtendedFactRange>("all");
   const [extendedReturn, setExtendedReturn] = useState<{
     point: string;
     scrollY: number;
@@ -4134,24 +4127,53 @@ export default function Home() {
       }));
     return [...agreement, ...collegium];
   }, []);
+  const extendedRegionalFactPercent = (item: ExtendedCardItem) => {
+    const { row } = item;
+    const regional = row.regionalId
+      ? calculatedIndicatorById[row.regionalId]
+      : undefined;
+    if (regional?.unit === "%") return regional.fact;
+    const regionalSourceRow =
+      item.source === "collegium" ? row : (item.collegium ?? row);
+    const metric = regionalSourceRow.regionalFact
+      ? federalMetric(regionalSourceRow.regionalFact)
+      : null;
+    return metric?.unit === "%" ? metric.value : null;
+  };
   const extendedRows = useMemo(
     () =>
       extendedCatalog.filter((item) => {
         const { row } = item;
         const category = federalCategory(row),
-          status = regionalControlStatus(row, item.collegium);
+          status = regionalControlStatus(row, item.collegium),
+          regionalFactPercent = extendedRegionalFactPercent(item);
+        const factRangeMatches =
+          extendedFactRange === "all" ||
+          (regionalFactPercent !== null &&
+            (extendedFactRange === "lt50"
+              ? regionalFactPercent < 50
+              : extendedFactRange === "50to70"
+                ? regionalFactPercent >= 50 && regionalFactPercent < 70
+                : regionalFactPercent >= 70 && regionalFactPercent < 90));
         return (
           (extendedCategory === "all" || category === extendedCategory) &&
           (extendedStatusFilter === "all" ||
             (extendedStatusFilter === "exceptContract"
               ? status !== "contract"
               : status === extendedStatusFilter)) &&
+          factRangeMatches &&
           (row.id + " " + row.name + " " + (item.collegium?.id ?? ""))
             .toLowerCase()
             .includes(unifiedQuery.toLowerCase())
         );
       }),
-    [extendedCatalog, extendedCategory, extendedStatusFilter, unifiedQuery],
+    [
+      extendedCatalog,
+      extendedCategory,
+      extendedFactRange,
+      extendedStatusFilter,
+      unifiedQuery,
+    ],
   );
   const extendedAgreementRows = extendedRows.filter(
     (item) => item.source === "agreement",
@@ -4178,77 +4200,6 @@ export default function Home() {
       (row) => row.status === "Достигнут",
     ).length,
   };
-  const planProgressGroups = useMemo(() => {
-    const collegiumByKey = new Map(
-      federalControl.collegium.map((row) => [strictIndicatorKey(row), row]),
-    );
-    const collect = (
-      rows: FederalControlRow[],
-      source: "agreement" | "collegium",
-    ) =>
-      rows
-        .map((row): PlanProgressItem | null => {
-          if (row.regionalManualStatus === "reference") return null;
-          const alternate =
-            source === "agreement"
-              ? collegiumByKey.get(strictIndicatorKey(row))
-              : undefined;
-          const regional = row.regionalId
-            ? calculatedIndicatorById[row.regionalId]
-            : undefined;
-          const planMetric = federalMetric(row.plan);
-          const factMetric = federalMetric(
-            row.regionalFact ?? alternate?.regionalFact ?? "",
-          );
-          const plan = regional?.plan ?? planMetric.value;
-          const fact = regional?.fact ?? factMetric.value;
-          const unit = regional
-            ? regional.unit === "%"
-              ? "%"
-              : "count"
-            : planMetric.unit === factMetric.unit && planMetric.unit !== "text"
-              ? planMetric.unit
-              : null;
-          const reverse = regional?.reverse ?? federalLowerIsBetter(row);
-          if (
-            plan === null ||
-            plan <= 0 ||
-            fact === null ||
-            unit === null ||
-            regionalControlStatus(row, alternate) !== "notAchieved"
-          )
-            return null;
-          const progress = reverse
-            ? fact <= 0
-              ? 100
-              : (plan / fact) * 100
-            : (fact / plan) * 100;
-          if (progress <= 50 || progress >= 100) return null;
-          return {
-            key: `${source}-${row.id}`,
-            row,
-            fact,
-            plan,
-            unit,
-            progress,
-            gap: reverse ? fact - plan : plan - fact,
-            period:
-              row.regionalPeriod ??
-              alternate?.regionalPeriod ??
-              regional?.date ??
-              "период не указан",
-          };
-        })
-        .filter((item): item is PlanProgressItem => item !== null)
-        .sort(
-          (a, b) =>
-            b.progress - a.progress || a.row.id.localeCompare(b.row.id),
-        );
-    return {
-      agreement: collect(federalControl.agreement, "agreement"),
-      collegium: collect(federalControl.collegium, "collegium"),
-    };
-  }, []);
   const openExtendedMetric = (item: ExtendedCardItem) => {
     if (!item.row.regionalId) return;
     setExtendedReturn({ point: item.row.id, scrollY: window.scrollY });
@@ -6474,86 +6425,6 @@ export default function Home() {
                   <span>нет сопоставимого факта</span>
                 </article>
               </div>
-              <section
-                className="planProgressFocus"
-                data-testid="plan-progress-focus"
-              >
-                <div className="planProgressFocusHead">
-                  <div>
-                    <p className="eyebrow">ФОКУС ДО ВЫПОЛНЕНИЯ ПЛАНА</p>
-                    <h2>Показатели с достижением более 50%</h2>
-                    <p>
-                      Показаны только сопоставимые числовые показатели, которые
-                      прошли половину пути, но ещё не достигли планового значения.
-                    </p>
-                  </div>
-                </div>
-                <div className="planProgressColumns">
-                  {([
-                    ["agreement", "Субсидия", "Показатели соглашения"],
-                    ["collegium", "Коллегия", "Показатели протокола"],
-                  ] as const).map(([key, title, note]) => {
-                    const items = planProgressGroups[key];
-                    return (
-                      <article className="planProgressGroup" key={key}>
-                        <header>
-                          <div>
-                            <small>{note}</small>
-                            <h3>{title}</h3>
-                          </div>
-                          <b>{items.length}</b>
-                        </header>
-                        <div className="planProgressList">
-                          {items.length ? (
-                            items.map((item) => (
-                              <div className="planProgressRow" key={item.key}>
-                                <div className="planProgressTitle">
-                                  <small>
-                                    Пункт {item.row.id} · {item.period}
-                                  </small>
-                                  <strong>{item.row.name}</strong>
-                                </div>
-                                <div className="planProgressValues">
-                                  <b>{format(item.progress, 1)}%</b>
-                                  <span>
-                                    факт {format(item.fact, 2)}
-                                    {item.unit === "%" ? "%" : ""} · план{" "}
-                                    {format(item.plan, 2)}
-                                    {item.unit === "%" ? "%" : ""}
-                                  </span>
-                                  <small>
-                                    до плана {format(item.gap, 2)}
-                                    {item.unit === "%" ? " п.п." : ""}
-                                  </small>
-                                </div>
-                                <div
-                                  className="planProgressBar"
-                                  aria-label={`Достижение плана ${format(item.progress, 1)}%`}
-                                >
-                                  <span
-                                    style={{
-                                      width: `${Math.min(item.progress, 100)}%`,
-                                    }}
-                                  />
-                                </div>
-                              </div>
-                            ))
-                          ) : (
-                            <p className="planProgressEmpty">
-                              Нет показателей в диапазоне более 50% и менее
-                              100%.
-                            </p>
-                          )}
-                        </div>
-                      </article>
-                    );
-                  })}
-                </div>
-                <p className="planProgressMethod">
-                  Для показателей «меньше — лучше» прогресс рассчитывается как
-                  план / факт; отсутствие данных не заменяется нулём.
-                </p>
-              </section>
               <div className="extendedFilters">
                 <div className="extendedSearch">
                   <input
@@ -6612,6 +6483,25 @@ export default function Home() {
                     >
                       Нет данных РТ
                     </button>
+                  </div>
+                </div>
+                <div>
+                  <small>Факт РТ</small>
+                  <div role="group" aria-label="Диапазон факта Татарстана">
+                    {([
+                      ["all", "Все"],
+                      ["lt50", "До 50%"],
+                      ["50to70", "50–70%"],
+                      ["70to90", "70–90%"],
+                    ] as const).map(([value, label]) => (
+                      <button
+                        className={extendedFactRange === value ? "active" : ""}
+                        key={value}
+                        onClick={() => setExtendedFactRange(value)}
+                      >
+                        {label}
+                      </button>
+                    ))}
                   </div>
                 </div>
                 <div>
