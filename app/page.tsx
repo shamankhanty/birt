@@ -2435,7 +2435,7 @@ function quantityDenominator(label?: string) {
 }
 
 
-type FederalPlanZone = "critical" | "lag" | "near" | "achieved" | "other";
+type FederalPlanZone = "critical" | "lag" | "near" | "achieved" | "other" | "reference";
 type FederalPlanAssessment = {
   zone: FederalPlanZone;
   score: number | null;
@@ -2498,8 +2498,8 @@ function assessFederalPlan(row: FederalControlRow): FederalPlanAssessment {
         : /^Нет$/iu.test(row.regionalFact?.trim() ?? "") ? false : null;
   const warning = row.sourceNote ?? null;
   const otherwise = (fact: string): FederalPlanAssessment => ({
-    zone: "other", score: null, fact, plan: planLabel, period,
-    deviation: manual === "reference" ? "Справочно: план и факт несопоставимы" : "Нет сопоставимого расчёта",
+    zone: manual === "reference" ? "reference" : "other", score: null, fact, plan: planLabel, period,
+    deviation: manual === "reference" ? "Справочно: план и факт несопоставимы" : "Сопоставимый региональный расчёт по методике показателя не представлен",
     volume: null, shortage: null, warning,
   });
   if (manual === "reference") {
@@ -4164,12 +4164,12 @@ export default function Home() {
       acc[item.assessment.zone] += 1;
       return acc;
     },
-    { critical: 0, lag: 0, near: 0, achieved: 0, other: 0 },
+    { critical: 0, lag: 0, near: 0, achieved: 0, other: 0, reference: 0 },
   ), [federalPlanAll]);
   const federalPlanVisible = useMemo(() => {
     const selectedIds = new Set(federalRows.map((row) => row.id));
     const rank: Record<FederalPlanZone, number> = {
-      critical: 0, lag: 1, near: 2, achieved: 3, other: 4,
+      critical: 0, lag: 1, near: 2, achieved: 3, other: 4, reference: 5,
     };
     return federalPlanAll
       .filter((item) =>
@@ -5910,7 +5910,6 @@ export default function Home() {
               ["waybill", "Электронный путевой лист", "06"],
               ["remdErrors", "Ошибки РЭМД", "07"],
               ["divider", "В разработке", ""],
-              ["federal", "Показатели на контроле РФ", "08"],
               ["methods", "Методики расчёта", "09"],
               ["history", "История обновлений", "10"],
               ["semd", "Все виды СЭМД", "11"],
@@ -6045,15 +6044,6 @@ export default function Home() {
               <div className="sideDevelopment">
                 <span>В разработке</span>
               </div>
-              <button
-                className={`developmentSection ${tab === "federal" ? "active" : ""}`}
-                onClick={() => {
-                  setTab("federal");
-                  setShowMatrixSections(false);
-                }}
-              >
-                <span>08</span> Показатели на контроле РФ
-              </button>
               <button
                 className={`developmentSection ${tab === "methods" ? "active" : ""}`}
                 onClick={() => {
@@ -6515,7 +6505,7 @@ export default function Home() {
 
           {tab === "unified" && (
             <>
-              <div className="operationalGrid extendedOperationalGrid">
+              <div className="operationalGrid extendedOperationalGrid unifiedFederalTop" aria-label="Оперативные показатели Республики Татарстан">
                 {extendedOperational.map((o) => (
                   <article
                     key={o.title}
@@ -6526,440 +6516,16 @@ export default function Home() {
                       <span>{o.period}</span>
                     </div>
                     <strong>{format(o.value, 0)}</strong>
-                    <p>{o.note}</p>
                   </article>
                 ))}
               </div>
-              <div className="extendedStats six">
-                <article>
-                  <small>Всего показателей</small>
-                  <strong>{extendedCatalog.length}</strong>
-                  <span>карточек без дублей</span>
-                </article>
-                <article className="federalAchieved">
-                  <small>Достигнуты по контрольным срезам</small>
-                  <strong className="blue">
-                    {extendedFederalAchieved.agreement +
-                      extendedFederalAchieved.collegium}
-                  </strong>
-                  <span>
-                    МБТ — {extendedFederalAchieved.agreement} · коллегия —{" "}
-                    {extendedFederalAchieved.collegium}
-                  </span>
-                </article>
-                <article>
-                  <small>Выполнены по данным РТ</small>
-                  <strong className="green">{extendedStats.achieved}</strong>
-                  <span>есть сопоставимый факт РТ</span>
-                </article>
-                <article>
-                  <small>Не выполнены по данным РТ</small>
-                  <strong className="red">{extendedStats.notAchieved}</strong>
-                  <span>есть сопоставимый факт РТ</span>
-                </article>
-                <article>
-                  <small>В контракте</small>
-                  <strong className="contractNumber">
-                    {extendedStats.contract}
-                  </strong>
-                  <span>ожидается реализация</span>
-                </article>
-                <article>
-                  <small>Нет данных РТ</small>
-                  <strong>{extendedStats.noData}</strong>
-                  <span>нет сопоставимого факта</span>
-                </article>
-              </div>
-              <div className="extendedFilters">
-                <div className="extendedSearch">
-                  <input
-                    value={unifiedQuery}
-                    onChange={(event) => setUnifiedQuery(event.target.value)}
-                    placeholder="Найти показатель или номер пункта"
-                  />
-                  <span>{extendedRows.length}</span>
-                </div>
-                <div>
-                  <small>По статусу</small>
-                  <div role="group" aria-label="Статус показателя">
-                    <button
-                      className={extendedStatusFilter === "all" ? "active" : ""}
-                      onClick={() => setExtendedStatusFilter("all")}
-                    >
-                      Все
-                    </button>
-                    <button
-                      className={
-                        extendedStatusFilter === "exceptContract" ? "active" : ""
-                      }
-                      onClick={() => setExtendedStatusFilter("exceptContract")}
-                    >
-                      Все, кроме «В контракте»
-                    </button>
-                    <button
-                      className={
-                        extendedStatusFilter === "achieved" ? "active" : ""
-                      }
-                      onClick={() => setExtendedStatusFilter("achieved")}
-                    >
-                      Выполнены
-                    </button>
-                    <button
-                      className={
-                        extendedStatusFilter === "notAchieved" ? "active" : ""
-                      }
-                      onClick={() => setExtendedStatusFilter("notAchieved")}
-                    >
-                      Не выполнены
-                    </button>
-                    <button
-                      className={
-                        extendedStatusFilter === "contract" ? "active" : ""
-                      }
-                      onClick={() => setExtendedStatusFilter("contract")}
-                    >
-                      В контракте
-                    </button>
-                    <button
-                      className={
-                        extendedStatusFilter === "noData" ? "active" : ""
-                      }
-                      onClick={() => setExtendedStatusFilter("noData")}
-                    >
-                      Нет данных РТ
-                    </button>
-                  </div>
-                </div>
-                <div>
-                  <small>Факт РТ</small>
-                  <div role="group" aria-label="Диапазон факта Татарстана">
-                    {([
-                      ["all", "Все"],
-                      ["lt50", "До 50%"],
-                      ["50to70", "50–70%"],
-                      ["70to90", "70–90%"],
-                    ] as const).map(([value, label]) => (
-                      <button
-                        className={extendedFactRange === value ? "active" : ""}
-                        key={value}
-                        onClick={() => setExtendedFactRange(value)}
-                      >
-                        {label}
-                      </button>
-                    ))}
-                  </div>
-                </div>
-                <div>
-                  <small>Группа показателей</small>
-                  <div role="group" aria-label="Группа показателей">
-                    <button
-                      className={extendedCategory === "all" ? "active" : ""}
-                      onClick={() => setExtendedCategory("all")}
-                    >
-                      Все
-                    </button>
-                    <button
-                      className={
-                        extendedCategory === "integration" ? "active" : ""
-                      }
-                      onClick={() => setExtendedCategory("integration")}
-                    >
-                      Интеграция и инфраструктура
-                    </button>
-                    <button
-                      className={
-                        extendedCategory === "services" ? "active" : ""
-                      }
-                      onClick={() => setExtendedCategory("services")}
-                    >
-                      Цифровые услуги гражданам
-                    </button>
-                    <button
-                      className={
-                        extendedCategory === "documents" ? "active" : ""
-                      }
-                      onClick={() => setExtendedCategory("documents")}
-                    >
-                      СЭМД и регистры
-                    </button>
-                    <button
-                      className={
-                        extendedCategory === "transfer" ? "active" : ""
-                      }
-                      onClick={() => setExtendedCategory("transfer")}
-                    >
-                      ТВСП и передача документов
-                    </button>
-                    <button
-                      className={extendedCategory === "doctors" ? "active" : ""}
-                      onClick={() => setExtendedCategory("doctors")}
-                    >
-                      Врачи и электронная подпись
-                    </button>
-                    <button
-                      className={
-                        extendedCategory === "medicines" ? "active" : ""
-                      }
-                      onClick={() => setExtendedCategory("medicines")}
-                    >
-                      Лекарственное обеспечение
-                    </button>
-                    <button
-                      className={extendedCategory === "ai" ? "active" : ""}
-                      onClick={() => setExtendedCategory("ai")}
-                    >
-                      Искусственный интеллект
-                    </button>
-                  </div>
-                </div>
-              </div>
-              {[
-                {
-                  title: "Показатели МБТ",
-                  note: "В порядке пунктов соглашения",
-                  rows: extendedAgreementRows,
-                },
-                {
-                  title: "Дополнительные показатели коллегии",
-                  note: "Только показатели, не представленные в МБТ",
-                  rows: extendedCollegiumRows,
-                },
-              ].map((block) => (
-                <section className="extendedSection" key={block.title}>
-                  <div className="extendedSectionHead">
-                    <div>
-                      <h2>{block.title}</h2>
-                      <p>{block.note}</p>
-                    </div>
-                    <b>{block.rows.length}</b>
-                  </div>
-                  <div className="extendedGrid">
-                    {block.rows.map((item) => {
-                      const { row } = item;
-                      const regionalSourceRow =
-                        item.source === "collegium" ? row : (item.collegium ?? row);
-                      const regional = row.regionalId
-                        ? calculatedIndicatorById[row.regionalId]
-                        : undefined;
-                      const regionalFile =
-                        !regional && regionalSourceRow?.regionalFact
-                          ? federalMetric(regionalSourceRow.regionalFact)
-                          : null;
-                      const plan = federalMetric(row.plan),
-                        federal = federalMetric(row.federal);
-                      const regionalFileComparable =
-                        regionalFile?.value !== null &&
-                        regionalFile?.unit === plan.unit &&
-                        plan.value !== null;
-                      const regionalStatus = regionalControlStatus(
-                        row,
-                        item.collegium,
-                      );
-                      const status = regionalStatus;
-                      const deviation = regionalFileComparable
-                        ? federalLowerIsBetter(row)
-                          ? plan.value! - regionalFile!.value!
-                          : regionalFile!.value! - plan.value!
-                        : regional && regional.plan !== null
-                          ? regional.reverse
-                            ? regional.plan - regional.fact
-                            : regional.fact - regional.plan
-                          : null;
-                      const federalDelta =
-                        regionalFile?.unit === "%" &&
-                        federal.unit === "%" &&
-                        regionalFile.value !== null &&
-                        federal.value !== null
-                          ? regionalFile.value - federal.value
-                          : regional &&
-                              regional.unit === "%" &&
-                              federal.unit === "%" &&
-                              federal.value !== null
-                            ? regional.fact - federal.value
-                            : null;
-                      const statusLabel = status === "achieved"
-                          ? "Выполнен по данным РТ"
-                          : status === "notAchieved"
-                            ? "Не выполнен"
-                            : status === "contract"
-                              ? "В контракте"
-                              : "Нет данных РТ";
-                      const primaryRegional =
-                        regionalFile?.value != null
-                          ? regionalFile.display
-                          : regional
-                            ? regional.unit === "%"
-                              ? `${format(regional.fact, 2)}%`
-                              : format(regional.quantity ?? regional.fact, 0)
-                            : "—";
-                      const quantityText =
-                        regionalFile?.value != null
-                          ? (regionalSourceRow?.regionalPeriod ??
-                            "период не указан")
-                          : regional?.quantity !== undefined
-                            ? `${format(regional.quantity, 0)} ${regional.quantityLabel ?? ""}`.trim()
-                            : regional
-                              ? regional.quantityLabel
-                              : "Сопоставимый региональный расчёт по методике показателя не представлен";
-                      const planChip =
-                        deviation === null
-                          ? "Отклонение от плана —"
-                          : regional?.reverse
-                            ? deviation >= 0
-                              ? `↓ ${format(Math.abs(deviation), 2)} п.п. ниже предела`
-                              : `↑ ${format(Math.abs(deviation), 2)} п.п. выше допустимого`
-                            : deviation >= 0
-                              ? `↑ ${format(Math.abs(deviation), 2)} п.п. выше плана`
-                              : `↓ ${format(Math.abs(deviation), 2)} п.п. до плана`;
-                      // A methodology correction (for example, removing an
-                      // inapplicable organisation from the denominator) is not
-                      // operational dynamics and must not be labelled as an
-                      // improvement or deterioration in the federal-control
-                      // card.
-                      const regionalTrend = regional?.comparisonReset
-                        ? null
-                        : (regional?.trend ?? null);
-                      const trendGood =
-                        regionalTrend !== null &&
-                        (regional?.reverse
-                          ? regionalTrend < 0
-                          : regionalTrend > 0);
-                      const trendBad =
-                        regionalTrend !== null &&
-                        (regional?.reverse
-                          ? regionalTrend > 0
-                          : regionalTrend < 0);
-                      const trendLabel =
-                        regionalTrend === null
-                          ? null
-                          : regionalTrend === 0
-                            ? "→ без изменения"
-                            : trendGood
-                              ? `↑ улучшение на ${format(Math.abs(regionalTrend), 2)} п.п.`
-                              : `↓ ухудшение на ${format(Math.abs(regionalTrend), 2)} п.п.`;
-                      return (
-                        <article
-                          className={`extendedCard ${status}`}
-                          key={item.key}
-                        >
-                          <div className="extendedCardHead">
-                            <span>
-                              <b>
-                                {item.source === "agreement"
-                                  ? `МБТ · пункт ${row.id}`
-                                  : `Коллегия · пункт ${row.id}`}
-                              </b>
-                              {item.collegium ? (
-                                <small className="dualControl">
-                                  МБТ + Коллегия · пункт {item.collegium.id}
-                                </small>
-                              ) : (
-                                <small>
-                                  {item.source === "collegium"
-                                    ? "Только коллегия"
-                                    : row.type}
-                                </small>
-                              )}
-                            </span>
-                            <i>{statusLabel}</i>
-                          </div>
-                          <h2>{row.name}</h2>
-                          {regionalSourceRow?.sourceNote && (
-                            <p className="sourceWarning">
-                              {regionalSourceRow.sourceNote}
-                            </p>
-                          )}
-                          <div className="extendedValues">
-                            <section>
-                              <small>План</small>
-                              <strong>{plan.display}</strong>
-                              {plan.detail && <span>{plan.detail}</span>}
-                            </section>
-                            <section className="federalReference">
-                              <small>Федеральный срез · 6 месяцев</small>
-                              <strong>{federal.display}</strong>
-                              <span>{federal.detail}</span>
-                            </section>
-                            <section
-                              className={
-                                regionalFile || regional ? status : "noData"
-                              }
-                            >
-                              <small>Факт Татарстана</small>
-                              <strong>{primaryRegional}</strong>
-                              <span>{quantityText}</span>
-                              {trendLabel && (
-                                <em
-                                  className={`regionalTrend ${trendGood ? "improved" : trendBad ? "worsened" : "same"}`}
-                                >
-                                  {trendLabel}
-                                  <small>
-                                    к срезу на {regional?.compareTo}
-                                  </small>
-                                </em>
-                              )}
-                            </section>
-                          </div>
-                          <div className="extendedDeviations">
-                            <span
-                              className={
-                                deviation === null
-                                  ? "neutral"
-                                  : deviation >= 0
-                                    ? "positive"
-                                    : "negative"
-                              }
-                            >
-                              {planChip}
-                            </span>
-                            <span className="federalDelta">
-                              {federalDelta === null
-                                ? "Сравнение с федеральным срезом —"
-                                : `${federalDelta >= 0 ? "↑" : "↓"} ${format(Math.abs(federalDelta), 2)} п.п. к федеральному срезу`}
-                            </span>
-                          </div>
-                          <div className="extendedFoot">
-                            {regional ? (
-                              <button onClick={() => openExtendedMetric(item)}>
-                                Открыть по медицинским организациям →
-                              </button>
-                            ) : (
-                              <span>
-                                Сопоставимый региональный расчёт по методике
-                                показателя не представлен
-                              </span>
-                            )}
-                            {regional && (
-                              <time>актуальность: {regional.date}</time>
-                            )}
-                          </div>
-                        </article>
-                      );
-                    })}
-                  </div>
-                </section>
-              ))}
-              {extendedRows.length === 0 && (
-                <div className="unifiedEmpty">
-                  <b>По выбранным фильтрам показателей нет</b>
-                  <span>
-                    Измените статус, смысловую группу или строку поиска.
-                  </span>
-                </div>
-              )}
-            </>
-          )}
-
-          {tab === "federal" && (
-            <>
               <div className="pageHead federalHead">
                 <div>
-                  <p className="eyebrow">ФЕДЕРАЛЬНЫЙ КОНТРОЛЬ</p>
-                  <h1>Показатели на контроле Российской Федерации</h1>
+                  <p className="eyebrow">01 · ОПЕРАТИВНАЯ СВОДКА И ФЕДЕРАЛЬНЫЙ КОНТРОЛЬ</p>
+                  <h1>Расширенная сводка</h1>
                   <p>
-                    План на 2026 год · федеральная оценка за 6 месяцев ·
-                    актуальные данные Республики Татарстан при полном совпадении
-                    методики
+                    Оперативные показатели РТ · исполнение соглашения МБТ и
+                    показателей коллегии по актуальным сопоставимым срезам
                   </p>
                 </div>
                 <div className="federalSource">
@@ -6975,7 +6541,8 @@ export default function Home() {
                   ["lag", "Отставание", "80–94,9% плана"],
                   ["near", "Близко к плану", "95–99,9% плана"],
                   ["achieved", "План достигнут", "100% и более"],
-                  ["other", "Нет оценки", "Нет данных / справочно"],
+                  ["other", "В контракте", "Нет сопоставимого факта"],
+                  ["reference", "Справочно", "Нет сопоставимого планового значения"],
                 ] as const).map(([zone, label, description]) => (
                   <button
                     type="button"
@@ -7017,6 +6584,7 @@ export default function Home() {
                   placeholder="Найти показатель или номер"
                 />
                 <select
+                  aria-label="Статус показателя"
                   value={federalStatus}
                   onChange={(event) => setFederalStatus(event.target.value)}
                 >
@@ -7029,7 +6597,7 @@ export default function Home() {
                   <option>В контракте</option>
                   <option>Справочно</option>
                 </select>
-                <span>{federalRows.length} показателей</span>
+                <span>{federalPlanVisible.length} из {federalPlanAll.length} самостоятельных показателей</span>
               </div>
               <div className="federalNote">
                 <b>Правило сопоставления:</b> разница с федеральным уровнем не
@@ -7042,7 +6610,7 @@ export default function Home() {
               <div className="federalPlanCardsIntro">
                 <div>
                   <h2>{federalPlanBand === "all" ? "Все показатели: от худших к выполненным" : (
-                    { critical: "Критическое отставание", lag: "Есть отставание", near: "Близко к плану", achieved: "План достигнут", other: "Без сопоставимых данных" }[federalPlanBand]
+                    { critical: "Критическое отставание", lag: "Есть отставание", near: "Близко к плану", achieved: "План достигнут", other: "В контракте", reference: "Справочно" }[federalPlanBand]
                   )}</h2>
                   <p>
                     Показано {federalPlanVisible.length} из {federalPlanAll.length} самостоятельных показателей.
@@ -7063,7 +6631,7 @@ export default function Home() {
                         lag: "Есть отставание",
                         near: "Близко к плану",
                         achieved: "План достигнут",
-                        other: "Нет оценки",
+                        other: "В контракте", reference: "Справочно",
                       } as const)[assessment.zone]}</b>
                     </div>
                     <h3>{row.name}</h3>
@@ -7077,25 +6645,33 @@ export default function Home() {
                         <strong>{assessment.plan}</strong>
                       </div>
                     </div>
-                    <div
-                      className="federalPlanTrack"
-                      role="progressbar"
-                      aria-label="Выполнение плана"
-                      aria-valuemin={0}
-                      aria-valuemax={100}
-                      aria-valuenow={assessment.score === null ? undefined : Math.min(100, Math.max(0, assessment.score))}
-                    >
-                      <span style={{ width: (assessment.score === null ? 0 : Math.min(100, Math.max(0, assessment.score))) + "%" }} />
-                    </div>
+                    {assessment.plan === "Да" ? (
+                      <div className="federalPlanQualitative" aria-label="Качественный критерий">
+                        {assessment.fact === "Да" ? "✓ Условие выполнено" :
+                          assessment.fact === "Нет" ? "✕ Условие не выполнено" :
+                          "Нет подтверждённого значения"}
+                      </div>
+                    ) : (
+                      <div
+                        className="federalPlanTrack"
+                        role="progressbar"
+                        aria-label="Выполнение плана"
+                        aria-valuemin={0}
+                        aria-valuemax={100}
+                        aria-valuenow={assessment.score === null ? undefined : Math.min(100, Math.max(0, assessment.score))}
+                      >
+                        <span style={{ width: (assessment.score === null ? 0 : Math.min(100, Math.max(0, assessment.score))) + "%" }} />
+                      </div>
+                    )}
                     <div className="federalPlanProgress">
-                      <span>{assessment.score === null ? "Оценка выполнения недоступна" : "Исполнение плана: " + format(assessment.score, 2) + "%"}</span>
+                      <span>{assessment.plan === "Да" ? "Качественный критерий" : assessment.score === null ? "В контракте · расчёт не представлен" : "Исполнение плана: " + format(assessment.score, 2) + "%"}</span>
                       <b>{assessment.deviation}</b>
                     </div>
                     {(assessment.volume || assessment.shortage !== null) && (
                       <p className="federalPlanCount">
                         {assessment.volume ?? ""}
                         {assessment.shortage !== null && assessment.shortage > 0
-                          ? " · До плана ещё " + format(assessment.shortage, 0) + " ед."
+                          ? " · До плана ещё " + format(assessment.shortage, 0) + (/(?:врач|врачей|хирург|стоматолог|педиатр|терапевт|кардиолог|онколог|офтальмолог|гинеколог)/iu.test(row.name) ? (assessment.shortage % 10 === 1 && assessment.shortage % 100 !== 11 ? " врач" : [2, 3, 4].includes(assessment.shortage % 10) && ![12, 13, 14].includes(assessment.shortage % 100) ? " врача" : " врачей") : " ед.")
                           : ""}
                       </p>
                     )}
