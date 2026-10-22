@@ -7,10 +7,10 @@ const start = page.indexOf('{tab === "unified" && (');
 const end = page.indexOf('{tab === "ranking" && (', start);
 const summary = page.slice(start, end);
 
-test("section 01 shows four plan-attainment bands plus the contract category", () => {
+test("section 01 shows four plan-attainment bands plus contract and reference categories", () => {
   assert.ok(start >= 0 && end > start, "section 01 must render");
-  assert.match(page, /type FederalPlanZone = "critical" \| "lag" \| "near" \| "achieved" \| "other"/u);
-  for (const label of ["Критическое", "Отставание", "Близко к плану", "План достигнут", "В контракте"]) {
+  assert.match(page, /type FederalPlanZone = "critical" \| "lag" \| "near" \| "achieved" \| "other" \| "reference"/u);
+  for (const label of ["Критическое", "Отставание", "Близко к плану", "План достигнут", "В контракте", "Справочно"]) {
     assert.ok(summary.includes(label), "summary must include " + label);
   }
   assert.match(summary, /Менее 80% плана/u);
@@ -42,6 +42,6 @@ test("section 01 retains the five top KPI values but removes their explanatory p
 test("missing values are not converted into zero in the plan-attainment group", () => {
   assert.match(page, /useState<FederalPlanZone \| "all">\("all"\)/u);
   assert.match(page, /if \(value === null \|\| plan\.value === null/u);
-  assert.match(page, /zone: "other", score: null/u);
+  assert.match(page, /zone: manual === "reference" \? "reference" : "other", score: null/u);
   assert.match(summary, /В контракте · расчёт не представлен/u);
 });
