@@ -5,11 +5,17 @@ import fs from "node:fs";
 const page = fs.readFileSync(new URL("../app/page.tsx", import.meta.url), "utf8");
 const css = fs.readFileSync(new URL("../app/globals.css", import.meta.url), "utf8");
 
-test("extended summary exposes a visible all-except-contract button", () => {
-  assert.match(
-    page,
-    /aria-label="Статус показателя"[\s\S]*?setExtendedStatusFilter\("all"\)[\s\S]*?setExtendedStatusFilter\("exceptContract"\)[\s\S]*?Все, кроме «В контракте»[\s\S]*?setExtendedStatusFilter\("achieved"\)/u,
-  );
+test("relocated summary provides the all-except-contract status filter and the contract band", () => {
+  const start = page.indexOf('{tab === "unified" && (');
+  const end = page.indexOf('{tab === "ranking" && (', start);
+  const summary = page.slice(start, end);
+  assert.ok(start >= 0 && end > start);
+  assert.match(summary, /aria-label="Статус показателя"/u);
+  assert.match(summary, /onChange=\{\(event\) => setFederalStatus\(event\.target\.value\)\}/u);
+  assert.match(summary, /<option value="except-contract">[\s\S]*?Все, кроме «В контракте»/u);
+  assert.match(summary, /<option>В контракте<\/option>/u);
+  assert.match(summary, /\["other", "В контракте"/u);
+  assert.doesNotMatch(page, /<span>08<\/span> Показатели на контроле РФ/u);
 });
 
 test("duplicate MAX regional block is removed", () => {
