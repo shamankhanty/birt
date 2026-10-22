@@ -2,7 +2,7 @@ import fs from "node:fs";
 import test from "node:test";
 import assert from "node:assert/strict";
 
-const report = JSON.parse(fs.readFileSync("docs/physician500-reconciliation-20261019.json", "utf8"));
+const report = JSON.parse(fs.readFileSync("docs/physician500-reconciliation-20261021.json", "utf8"));
 const snapshot = JSON.parse(fs.readFileSync("app/physician-weekly-snapshot.json", "utf8"));
 
 test("primary workbook audit covers every source MO and all nine 500+ specialties", () => {
@@ -12,9 +12,9 @@ test("primary workbook audit covers every source MO and all nine 500+ specialtie
   assert.equal(report.coverage.medicalOrganizationsWithSpecialtyRows, 112);
   assert.equal(report.coverage.medicalOrganizationsOutsideSpecialtySource, 12);
   assert.equal(report.coverage.specialties, 9);
-  assert.equal(report.coverage.checks, 720);
-  assert.equal(report.checks.length, 720);
-  assert.deepEqual(report.statusSummary, { PASS: 381, WARN: 339, FAIL: 0 });
+  assert.equal(report.coverage.checks, 718);
+  assert.equal(report.checks.length, 718);
+  assert.deepEqual(report.statusSummary, { PASS: 383, WARN: 335, FAIL: 0 });
   assert.equal(report.regionalReconciliation.length, 9);
   assert.ok(report.regionalReconciliation.every((item) => item.status === "PASS"));
 });

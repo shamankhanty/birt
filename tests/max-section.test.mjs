@@ -92,8 +92,8 @@ test("Agriz control case uses independent cumulative and October facts", () => {
   const cE = periodViews.cumulative.metrics.eln.rows.find((row) => row.oid === oid);
   const oT = periodViews.operational.metrics.tmk.rows.find((row) => row.oid === oid);
   const oE = periodViews.operational.metrics.eln.rows.find((row) => row.oid === oid);
-  assert.deepEqual([cT.fact,cT.plan],[510,1024]); assert.deepEqual([cE.fact,cE.plan],[300,521]);
-  assert.deepEqual([oT.previous,oT.fact,oT.plan],[21,22,102]); assert.deepEqual([oE.previous,oE.fact,oE.plan],[16,18,50]);
+  assert.deepEqual([cT.fact,cT.plan],[511,1024]); assert.deepEqual([cE.fact,cE.plan],[302,521]);
+  assert.deepEqual([oT.previous,oT.fact,oT.plan],[22,22,102]); assert.deepEqual([oE.previous,oE.fact,oE.plan],[18,18,50]);
 });
 
 
