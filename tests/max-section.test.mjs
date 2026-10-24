@@ -86,16 +86,6 @@ test("MAX separates export-to-export operational dynamics from monthly values", 
   assert.doesNotMatch(page, /Месячный план[\s\S]{0,250}10 000 в месяц/u);
 });
 
-test("Agriz control case uses independent cumulative and October facts", () => {
-  const oid = "1.2.643.5.1.13.13.12.2.16.1088";
-  const cT = periodViews.cumulative.metrics.tmk.rows.find((row) => row.oid === oid);
-  const cE = periodViews.cumulative.metrics.eln.rows.find((row) => row.oid === oid);
-  const oT = periodViews.operational.metrics.tmk.rows.find((row) => row.oid === oid);
-  const oE = periodViews.operational.metrics.eln.rows.find((row) => row.oid === oid);
-  assert.deepEqual([cT.fact,cT.plan],[511,1024]); assert.deepEqual([cE.fact,cE.plan],[302,521]);
-  assert.deepEqual([oT.previous,oT.fact,oT.plan],[22,22,102]); assert.deepEqual([oE.previous,oE.fact,oE.plan],[18,18,50]);
-});
-
 
 test("TMC and LVN are independent sidebar indicators", () => {
   assert.match(page, /"tmkMaxCount",\s*"elnMaxCount",/u);

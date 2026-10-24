@@ -53,30 +53,33 @@ def update_federal(summary):
         row.update(regionalFact=f"{match['count']:,} СЭМД".replace(",", " "), regionalPeriod="01.01–22.10.2026", sourceNote=f"Источник: {summary['source']}, лист «Отчет РЭМД». Подтвержденное количество зарегистрированных СЭМД за 01.01–22.10.2026.")
     write(ROOT/"app/federal-control.json", control)
 
-def update_max_views(archive):
+def update_max_views(archive, monthly_previous, cumulative_previous):
     import sys
     sys.path.insert(0, str(ROOT/"scripts/pipeline"))
     from adapters import parse_max, source_rows
     cumulative = next(archive.glob("ТМК_МАХ 01.01.-22.10*.xlsx"))
     current = next(archive.glob("ТМК_МАХ 01.10.-22.10*.xlsx"))
+    assert monthly_previous.is_file(), monthly_previous
+    assert cumulative_previous.is_file(), cumulative_previous
     targets = read(ROOT/"config/max-targets-2026.json")
     old = read(ROOT/"app/max-period-views.json")
     def idx(path, metric_id, col): return {x.get("oid") or x["name"]: x for x in source_rows(parse_max(path, col), metric_id)}
     out = {**old, "month": "2026-10", "monthLabel": "Октябрь 2026"}
-    out["cumulative"] = {**old["cumulative"], "date": "22.10.2026", "period": "01.01–22.10.2026", "source": cumulative.name, "metrics": {}}
-    out["operational"] = {**old["operational"], "date": "22.10.2026", "period": "01.10–22.10.2026", "previousDate": old["operational"]["date"], "previousPeriod": old["operational"]["period"], "source": current.name, "previousSource": old["operational"]["source"], "metrics": {}}
+    out["cumulative"] = {**old["cumulative"], "date": "22.10.2026", "period": "01.01–22.10.2026", "previousDate": "13.10.2026", "previousPeriod": "01.01–13.10.2026", "source": cumulative.name, "previousSource": cumulative_previous.name, "metrics": {}}
+    out["operational"] = {**old["operational"], "date": "22.10.2026", "period": "01.10–22.10.2026", "previousDate": "14.10.2026", "previousPeriod": "01.10–14.10.2026", "source": current.name, "previousSource": monthly_previous.name, "metrics": {}}
     for service, (metric_id, col) in {"tmk": ("tmkMaxCount", 3), "eln": ("elnMaxCount", 4)}.items():
-        ci, mi = idx(cumulative, metric_id, col), idx(current, metric_id, col)
-        old_rows = {x["oid"]: x for x in old["operational"]["metrics"][service]["rows"]}
+        ci, cpi = idx(cumulative, metric_id, col), idx(cumulative_previous, metric_id, col)
+        mi, pi = idx(current, metric_id, col), idx(monthly_previous, metric_id, col)
         cr, mr = [], []
         for oid, target in targets["organizationPlans"].items():
-            c, m, previous = ci.get(oid), mi.get(oid), old_rows.get(oid)
+            c, cumulative_previous_row = ci.get(oid), cpi.get(oid)
+            m, previous = mi.get(oid), pi.get(oid)
             cumulative_plan = target[service]["2026-10"]
             monthly_plan = cumulative_plan - target[service]["2026-09"]
-            cr.append({"name": target["name"], "oid": oid, "fact": c.get("fact") if c else None, "plan": cumulative_plan})
+            cr.append({"name": target["name"], "oid": oid, "fact": c.get("fact") if c else None, "previous": cumulative_previous_row.get("fact") if cumulative_previous_row else None, "plan": cumulative_plan})
             mr.append({"name": target["name"], "oid": oid, "fact": m.get("fact") if m else None, "previous": previous.get("fact") if previous else None, "plan": monthly_plan})
-        out["cumulative"]["metrics"][service] = {"sourceTotal": sum(x["count"] for x in parse_max(cumulative, col)), "plannedMoFact": sum(x["fact"] for x in cr if x["fact"] is not None), "republicPlan": targets["republic"][service]["2026-10"], "rows": cr}
-        out["operational"]["metrics"][service] = {"sourceTotal": sum(x["count"] for x in parse_max(current, col)), "previousSourceTotal": old["operational"]["metrics"][service]["sourceTotal"], "plannedMoFact": sum(x["fact"] for x in mr if x["fact"] is not None), "previousPlannedMoFact": sum(x["previous"] for x in mr if x["previous"] is not None), "republicPlan": targets["republic"][service]["2026-10"]-targets["republic"][service]["2026-09"], "rows": mr}
+        out["cumulative"]["metrics"][service] = {"sourceTotal": sum(x["count"] for x in parse_max(cumulative, col)), "previousSourceTotal": sum(x["count"] for x in parse_max(cumulative_previous, col)), "plannedMoFact": sum(x["fact"] for x in cr if x["fact"] is not None), "previousPlannedMoFact": sum(x["previous"] for x in cr if x["previous"] is not None), "republicPlan": targets["republic"][service]["2026-10"], "rows": cr}
+        out["operational"]["metrics"][service] = {"sourceTotal": sum(x["count"] for x in parse_max(current, col)), "previousSourceTotal": sum(x["count"] for x in parse_max(monthly_previous, col)), "plannedMoFact": sum(x["fact"] for x in mr if x["fact"] is not None), "previousPlannedMoFact": sum(x["previous"] for x in mr if x["previous"] is not None), "republicPlan": targets["republic"][service]["2026-10"]-targets["republic"][service]["2026-09"], "rows": mr}
     write(ROOT/"app/max-period-views.json", out)
 
 def main():
@@ -85,6 +88,8 @@ def main():
     parser.add_argument("--full-stage", type=Path, required=True)
     parser.add_argument("--weekly-errors-stage", type=Path, required=True)
     parser.add_argument("--cumulative-errors-stage", type=Path, required=True)
+    parser.add_argument("--max-monthly-previous", type=Path, required=True)
+    parser.add_argument("--max-cumulative-previous", type=Path, required=True)
     args = parser.parse_args()
     manifest = read(args.full_stage/"staging-manifest.json")
     assert manifest["formalValidation"]["summary"]["FAIL"] == 0
@@ -101,7 +106,7 @@ def main():
     write(ROOT/"app/error-cumulative.json", cumulative_payload)
     source = next(args.archive.glob("1.Отчет СЭМД_РЭМД - 01.01.-22.10*.xlsx"))
     summary = semd_summary(source); write(ROOT/"app/semd-summary.json", summary); update_federal(summary)
-    update_max_views(args.archive)
+    update_max_views(args.archive, args.max_monthly_previous, args.max_cumulative_previous)
     evidence = {
         "checkedAt": "22.10.2026", "sourceFiles": {p.name: sha(p) for p in sorted(args.archive.glob("*.xlsx"))},
         "statistics": manifest["statistics"], "prepared": [x["metric"] for x in manifest["indicators"] if x["state"] == "PREPARED"],
