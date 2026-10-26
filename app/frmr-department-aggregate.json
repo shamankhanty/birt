@@ -1,0 +1,1 @@
+{"schemaVersion":1,"sourceCut":"22.10.2026","unit":"должностные записи","privacy":"Only aggregates, no employee identifiers","columns":["organizationOidSuffix","departmentOidSuffix","departmentName","departmentIssueCount","roles"],"rows":[["1094","0.324401","Родильное отделение",25,[["Врач-акушер-гинеколог",25,[[1,24]]]]]]}
