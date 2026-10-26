@@ -22,6 +22,7 @@ import electronicWaybillWeeklyRaw from "./electronic-waybill-weekly.json";
 import federalControlRaw from "./federal-control.json";
 import hearingSnapshotsRaw from "./hearing-snapshots.json";
 import hearingPriorityPolicyRaw from "./hearing-priority-policy.json";
+import FrmrReconciliation from "./frmr-reconciliation";
 import preventiveSemdAuditRaw from "./preventive-semd-audit.json";
 import physicianMetricsRaw from "./physician-metrics.json";
 import physicianWeeklySnapshotRaw from "./physician-weekly-snapshot.json";
@@ -3487,6 +3488,7 @@ export default function Home() {
     | "ranking"
     | "hearings"
     | "incident38"
+    | "frmr"
     | "waybill"
     | "semd"
     | "remdErrors"
@@ -5917,6 +5919,7 @@ export default function Home() {
               ["waybill", "Электронный путевой лист", "06"],
               ["remdErrors", "Ошибки РЭМД", "07"],
               ["divider", "В разработке", ""],
+              ["frmr", "ФРМР ↔ ГИС · кадровые должности", "13"],
               ["methods", "Методики расчёта", "09"],
               ["history", "История обновлений", "10"],
               ["semd", "Все виды СЭМД", "11"],
@@ -6052,6 +6055,12 @@ export default function Home() {
                 <span>В разработке</span>
               </div>
               <button
+                className={`developmentSection ${tab === "frmr" ? "active" : ""}`}
+                onClick={() => {setTab("frmr"); setShowMatrixSections(false);}}
+              >
+                <span>13</span> ФРМР ↔ ГИС <b>новое</b>
+              </button>
+              <button
                 className={`developmentSection ${tab === "methods" ? "active" : ""}`}
                 onClick={() => {
                   setTab("methods");
@@ -6105,6 +6114,7 @@ export default function Home() {
         </aside>
 
         <section className="content">
+          {tab === "frmr" && <FrmrReconciliation />}
           {tab === "summary" && (
             <>
               <div className="pageHead">
