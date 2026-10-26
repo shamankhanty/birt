@@ -1,43 +1,39 @@
 import test from "node:test";
 import assert from "node:assert/strict";
 import fs from "node:fs";
-import { maskSnils, parseLocalPrivateFrmr } from "../lib/frmr-private-local.js";
 
 const component = fs.readFileSync("app/frmr-reconciliation.tsx", "utf8");
-const reader = fs.readFileSync("lib/frmr-private-local.js", "utf8");
 const style = fs.readFileSync("app/frmr-reconciliation.module.css", "utf8");
+const source = JSON.parse(fs.readFileSync("app/frmr-reconciliation-data.json", "utf8"));
 
-test("private identity file is never bundled in GitHub Pages and no transport is used", () => {
-  assert.doesNotMatch(reader, /\bfetch\s*\(|XMLHttpRequest|navigator\.sendBeacon|localStorage|sessionStorage/);
-  assert.doesNotMatch(component, /uploadPrivateData|\/api\/.*(?:private|frmr)/);
-  assert.match(reader, /file\.arrayBuffer\(\)/u);
-  assert.match(component, /Excel не передаётся в GitHub/u);
-  assert.match(component, /после перезагрузки страницы сведения исчезнут/u);
+test("medical organizations can inspect errors inline with no Excel or downloadable data", () => {
+  assert.match(component, /frmr-organization-diagnostic/u);
+  assert.match(component, /Маршрут для МО|маршрут для МО/u);
+  assert.match(component, /Поиск по проблемным должностям/u);
+  assert.match(component, /Скопировать маршрут проверки/u);
+  assert.doesNotMatch(component, /type="file"|parseLocalPrivateFrmr|openPrivateWorkbook|download=|FileReader|file\.arrayBuffer/u);
+  assert.doesNotMatch(component, /import .*frmr-private-local/u);
+  assert.doesNotMatch(component, /СНИЛС.*r\.snils/u);
 });
 
-test("MO private worksheet is strictly scoped to OID and source cut", () => {
-  assert.match(reader, /sourceOid !== fullOid/u);
-  assert.match(reader, /cutDate !== "22\.10\.2026"/u);
-  assert.match(reader, /records\.length !== expectedCount/u);
-  assert.match(reader, /СНИЛС/u);
-  assert.match(reader, /Должность ФРМР/u);
-  assert.match(reader, /Тип расхождения/u);
-  assert.match(component, /parseLocalPrivateFrmr\(file, selected\.id, selected\.current\)/u);
-  assert.match(component, /resetPrivate\(\);setView\("organization"\)/u);
-  assert.match(component, /resetPrivate\(\);\}\}/u);
+test("MO detail makes clear that reasons are MO-wide and employee and department mappings unavailable", () => {
+  assert.match(component, /Категории ошибок по отдельной должности/u);
+  assert.match(component, /не опубликованы/u);
+  assert.match(component, /OID СП/u);
+  assert.match(component, /без первичных идентификаторов нельзя привязать/u);
+  assert.match(component, /ФРМР → трудоустройство/u);
+  assert.match(component, /ГИС → сотрудники/u);
+  assert.match(component, /resetInspection\(\)/u);
+  assert.match(style, /diagnosticLayout/u);
+  assert.match(style, /diagnosticRoleActive/u);
 });
 
-test("employee is discoverable in a local file without exposing the identifier by default", async () => {
-  assert.equal(maskSnils("123-456-789 01"), "••• ••• 789 01");
-  assert.equal(maskSnils(""), "скрыт");
-  await assert.rejects(
-    () => parseLocalPrivateFrmr({ name: "wrong.csv", size: 1 }, "1094", 87),
-    /XLSX/,
-  );
-  assert.match(component, /\[showPrivateIdentifiers, setShowPrivateIdentifiers\] = useState\(false\)/u);
-  assert.match(component, /ФИО в ФРМР нет/u);
-  assert.match(component, /Расписание ГИС \(не подтверждено\)/u);
-  assert.match(component, /r\.snils\.includes\(digits\)/u);
-  assert.match(component, /Закрыть и очистить данные/u);
-  assert.match(style, /privateTableWrap/u);
+test("existing source retains exact source totals without synthesizing unseen names", () => {
+  assert.equal(source.sourceCut,"22.10.2026");
+  const totals = source.rows.reduce((a,row)=> {
+    a.current += row[4]; a.stage1 += row[5]; a.stage2 += row[6]; return a;
+  }, {current:0,stage1:0,stage2:0});
+  assert.deepEqual(totals,{current:1445,stage1:755,stage2:690});
+  assert.equal(source.rows.length,137);
+  assert.doesNotMatch(component, /Ива\*\*\*|maskedNamesRaw|frmr-masked-names/u);
 });
