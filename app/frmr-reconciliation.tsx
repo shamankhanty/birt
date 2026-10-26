@@ -24,6 +24,7 @@ const orgs: Org[] = (raw.rows as unknown as PositionRecord[]).map(
   ([id, name, feb, previous, current, stage1, stage2, positions, specialties]) =>
     ({ id, name, feb, previous, current, stage1, stage2, positions, specialties }),
 );
+const topSpecialties = raw.topSpecialties as unknown as SpecialityGroup[];
 const number = (n: number | null | undefined) =>
   typeof n === "number" ? new Intl.NumberFormat("ru-RU").format(n) : "—";
 const signed = (n: number | null) =>
@@ -175,7 +176,7 @@ export default function FrmrReconciliation() {
             <div className={styles.panel}>
               <h2>Должности с наибольшим числом расхождений</h2>
               <p className={styles.muted}>Показатели относятся к наименованиям должностей ФРМР, не к квалификационным сертификатам.</p>
-              {raw.topSpecialties.slice(0,8).map(([name,count]) => <div className={styles.spec} key={name}><span>{name}</span><strong>{number(count)}</strong></div>)}
+              {topSpecialties.slice(0,8).map(([name,count]) => <div className={styles.spec} key={name}><span>{name}</span><strong>{number(count)}</strong></div>)}
             </div>
             <div className={styles.panel}>
               <h2>Что должен видеть министр</h2>
