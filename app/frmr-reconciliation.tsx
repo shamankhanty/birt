@@ -1,17 +1,9 @@
 "use client";
 
-import { useMemo, useState, type ChangeEvent } from "react";
-import { parseLocalPrivateFrmr, maskSnils } from "../lib/frmr-private-local.js";
+import { useMemo, useState } from "react";
 import raw from "./frmr-reconciliation-data.json";
 import styles from "./frmr-reconciliation.module.css";
 
-type PrivateRecord = {
-  snils: string; frmrName: string; scheduleName: string; position: string;
-  department: string; departmentOid: string; employment: string; issue: string;
-  gisMatch: string; gisPositions: string; gisDepartments: string;
-  schedule: string; action: string; status: string; row: string;
-};
-type PrivateRegister = { organizationOid: string; cutDate: string; records: PrivateRecord[] };
 type SpecialityGroup = [string, number];
 type PositionRecord = [
   string, string, number | null, number | null,
@@ -48,12 +40,10 @@ export default function FrmrReconciliation() {
   const [search, setSearch] = useState("");
   const [selectedId, setSelectedId] = useState("1094");
   const [copied, setCopied] = useState(false);
-  const [privateRegister, setPrivateRegister] = useState<PrivateRegister | null>(null);
-  const [privateError, setPrivateError] = useState("");
-  const [privateLoading, setPrivateLoading] = useState(false);
-  const [privateSearch, setPrivateSearch] = useState("");
-  const [privateType, setPrivateType] = useState("all");
-  const [showPrivateIdentifiers, setShowPrivateIdentifiers] = useState(false);
+  const [roleQuery, setRoleQuery] = useState("");
+  const [activeRole, setActiveRole] = useState<string | null>(null);
+  const [inspectionType, setInspectionType] = useState<"all" | "mo" | "department">("all");
+  const [inspectionCopied, setInspectionCopied] = useState(false);
 
   const selected = orgs.find((row) => row.id === selectedId) ?? orgs[0];
   const previousTotal = orgs.reduce((sum, row) => sum + (row.previous ?? 0), 0);
@@ -84,42 +74,27 @@ export default function FrmrReconciliation() {
       );
   }, [filter, search, sort]);
 
-  const localRows = useMemo(() => {
-    if (!privateRegister) return [];
-    const term = privateSearch.trim().toLocaleLowerCase("ru");
-    const digits = term.replace(/\D/g, "");
-    return privateRegister.records.filter((r) =>
-      (privateType === "all" || r.issue === privateType) &&
-      (!term ||
-        [r.position, r.department, r.gisMatch, r.gisPositions, r.gisDepartments, r.frmrName, r.scheduleName, r.row]
-          .some((value) => value.toLocaleLowerCase("ru").includes(term)) ||
-        Boolean(digits && r.snils.includes(digits)))
-    );
-  }, [privateRegister, privateSearch, privateType]);
-
-  const resetPrivate = () => {
-    setPrivateRegister(null);
-    setPrivateError("");
-    setPrivateSearch("");
-    setPrivateType("all");
-    setShowPrivateIdentifiers(false);
+  const diagnosticRoles = selected.specialties
+    .filter(([role]) => role.toLocaleLowerCase("ru").includes(roleQuery.trim().toLocaleLowerCase("ru")))
+    .sort((a, b) => b[1] - a[1]);
+  const resetInspection = () => {
+    setRoleQuery("");
+    setActiveRole(null);
+    setInspectionType("all");
+    setInspectionCopied(false);
   };
-
-  const openPrivateWorkbook = async (event: ChangeEvent<HTMLInputElement>) => {
-    const file = event.target.files?.[0];
-    event.target.value = "";
-    if (!file) return;
-    resetPrivate();
-    setPrivateLoading(true);
-    try {
-      const result = await parseLocalPrivateFrmr(file, selected.id, selected.current);
-      setPrivateRegister(result);
-    } catch (error) {
-      setPrivateError(error instanceof Error ? error.message : "Ошибка чтения персональной ведомости.");
-    } finally {
-      setPrivateLoading(false);
-    }
-  };
+  const inspectionText = [
+    "Сверка должностей ФРМР ↔ ГИС · 22.10.2026",
+    "Медицинская организация: " + selected.name,
+    "OID МО: 1.2.643.5.1.13.13.12.2.16." + selected.id,
+    "Проверяемая должность: " + (activeRole || "все должности МО"),
+    "Вид проверки: " + (inspectionType === "mo" ? "отсутствует должность в ГИС на уровне МО" : inspectionType === "department" ? "не совпадает структурное подразделение" : "оба типа"),
+    "1. В ФРМР проверить действующую запись о трудоустройстве, должность, тип занятия должности, OID МО и OID подразделения.",
+    "2. В ГИС по сотруднику и МО проверить ту же должность и привязку к структурному подразделению.",
+    "3. При наличии расхождения уточнить первопричину, ответственного и исправить запись в системе-источнике.",
+    "4. Проверить влияние на расписание и ЕПГУ отдельной сверкой, не предполагая его автоматически.",
+    "Здесь отображены агрегаты должностных записей без ФИО и СНИЛС. Конкретные СП и врачи подлежат уточнению в защищённой кадровой системе."
+  ].join("\n");
 
   const taskText = [
     "Контроль расхождений ФРМР ↔ ГИС на 22.10.2026",
@@ -213,7 +188,7 @@ export default function FrmrReconciliation() {
                 <tbody>{filtered.map((row) => {
                   const delta = change(row);
                   return <tr key={row.id}>
-                    <td><button type="button" className={styles.clickName} onClick={() => {setSelectedId(row.id);setCopied(false);resetPrivate();setView("organization");}}>{row.name}</button></td>
+                    <td><button type="button" className={styles.clickName} onClick={() => {setSelectedId(row.id);setCopied(false);resetInspection();setView("organization");}}>{row.name}</button></td>
                     <td>{number(row.previous)}</td><td><b>{number(row.current)}</b></td>
                     <td className={[styles.delta,delta === null || delta === 0 ? styles.stable : delta > 0 ? styles.bad : styles.good].join(" ")}>{signed(delta)}</td>
                     <td>{number(row.stage1)}</td><td>{number(row.stage2)}</td>
@@ -243,7 +218,7 @@ export default function FrmrReconciliation() {
           <section className={styles.panel}>
             <div className={styles.moHeader}>
               <div><h2>Карточка медицинской организации</h2><p className={styles.muted}>Выберите свою МО. Данные обезличены; подробный реестр сотрудников должен находиться в защищённом контуре ГИС.</p></div>
-              <select className={[styles.select,styles.moSelect].join(" ")} value={selected.id} onChange={(e)=>{setSelectedId(e.target.value);setCopied(false);resetPrivate();}} aria-label="Выбор медицинской организации">
+              <select className={[styles.select,styles.moSelect].join(" ")} value={selected.id} onChange={(e)=>{setSelectedId(e.target.value);setCopied(false);resetInspection();}} aria-label="Выбор медицинской организации">
                 {sortedOrgs.map((row)=><option key={row.id} value={row.id}>{row.name}</option>)}
               </select>
               <span className={styles.muted}>OID: 1.2.643.5.1.13.13.12.2.16.{selected.id}</span>
@@ -255,67 +230,70 @@ export default function FrmrReconciliation() {
               <article><small>Не совпадает подразделение</small><b>{number(selected.stage2)}</b></article>
             </div>
           </section>
-          <section className={styles.panel} data-testid="frmr-private-local">
+
+          <section className={styles.panel} data-testid="frmr-organization-diagnostic">
             <div className={styles.panelHead}>
               <div>
-                <h2>Найти конкретного врача и его должность</h2>
-                <p className={styles.muted}>Персональная ведомость открывается только на вашем устройстве. Excel не передаётся в GitHub, на сервер или другим МО; после перезагрузки страницы сведения исчезнут.</p>
+                <h2>Где искать расхождения — маршрут для МО</h2>
+                <p className={styles.muted}>Выберите должность: дашборд покажет источник проверки, причину и последовательность действий. Никаких файлов, скачиваний и персональных данных.</p>
               </div>
-              <span className={styles.pill}>Локально · только для уполномоченных</span>
+              <span className={styles.pill}>Данные сверки · 22.10.2026</span>
             </div>
-            <div className={styles.privateIntro}>
-              <label className={styles.button}>
-                {privateLoading ? "Чтение XLSX…" : "Открыть персональную ведомость МО (XLSX)"}
-                <input type="file" accept=".xlsx,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
-                  className={styles.visuallyHidden} onChange={openPrivateWorkbook} disabled={privateLoading}
-                  aria-label="Открыть локальную ведомость сотрудников"/>
-              </label>
-              {privateRegister && <button type="button" className={[styles.button,styles.ghost].join(" ")} onClick={resetPrivate}>Закрыть и очистить данные</button>}
-              <span className={styles.muted}>Файл должен быть подготовлен для выбранной МО на 22.10.2026; проверяется OID МО и количество записей.</span>
-            </div>
-            {privateError && <p className={styles.privateError} role="alert">{privateError}</p>}
-            {!privateRegister ? (
-              <div className={styles.privateEmpty}>
-                <b>Почему здесь нет ФИО?</b>
-                <p>Публичная сводка не содержит персональных идентификаторов. Для поиска конкретной записи откройте выданную вашей МО конфиденциальную ведомость. ФИО в первичной выгрузке ФРМР отсутствует; сотрудника можно определить по СНИЛС в кадровой системе, а имя из расписания ГИС является неподтверждённым.</p>
-                <small>Не загружайте полный исходный файл по всей республике. Выберите только ведомость своей МО, полученную через защищённый канал.</small>
-              </div>
-            ) : (
-              <>
+            <div className={styles.diagnosticLayout}>
+              <div>
                 <div className={styles.privateTools}>
-                  <input className={styles.input} type="search" value={privateSearch} onChange={(e)=>setPrivateSearch(e.target.value)}
-                    placeholder="Поиск по СНИЛС, должности, подразделению…" aria-label="Поиск сотрудников в локальной ведомости"/>
-                  <select className={styles.select} value={privateType} onChange={(e)=>setPrivateType(e.target.value)} aria-label="Тип расхождения локальной ведомости">
-                    <option value="all">Все расхождения</option>
-                    <option value="Должность не найдена на уровне МО">Нет должности в ГИС</option>
-                    <option value="Не совпадает подразделение">Несовпадение подразделения</option>
-                  </select>
-                  <label className={styles.privateToggle}><input type="checkbox" checked={showPrivateIdentifiers} onChange={(e)=>setShowPrivateIdentifiers(e.target.checked)}/> Показать полный СНИЛС</label>
+                  <input className={styles.input} type="search" value={roleQuery}
+                    onChange={(e) => setRoleQuery(e.target.value)}
+                    placeholder="Найти должность…" aria-label="Поиск по проблемным должностям"/>
                 </div>
-                <p className={styles.muted}>В выбранной МО: {number(privateRegister.records.length)} записей · найдено {number(localRows.length)} · срез {privateRegister.cutDate}. ФИО из расписания не считается подтверждённым кадровым ФИО.</p>
-                <div className={styles.privateTableWrap}>
-                  <table className={styles.table}>
-                    <thead><tr><th>№ в исходнике</th><th>СНИЛС / сотрудник</th><th>Должность ФРМР</th><th>Подразделение ФРМР</th><th>Расхождение и состояние ГИС</th><th>Что исправить</th></tr></thead>
-                    <tbody>
-                      {localRows.slice(0, 200).map((r, i) => <tr key={r.snils + "-" + r.row + "-" + i}>
-                        <td>{r.row || "—"}</td>
-                        <td className={styles.privatePerson}><b>{showPrivateIdentifiers ? r.snils : maskSnils(r.snils)}</b>
-                          <small>{r.frmrName ? "ФРМР: " + r.frmrName : "ФИО в ФРМР нет"}</small>
-                          {r.scheduleName && <small>Расписание ГИС (не подтверждено): {r.scheduleName}</small>}
-                        </td>
-                        <td>{r.position}<small className={styles.privateCellHint}>{r.employment}</small></td>
-                        <td>{r.department}<small className={styles.privateCellHint}>OID СП: {r.departmentOid || "—"}</small></td>
-                        <td><b>{r.issue}</b><small className={styles.privateCellHint}>{r.gisMatch}</small><small className={styles.privateCellHint}>ГИС: {r.gisPositions}</small><small className={styles.privateCellHint}>{r.gisDepartments}</small></td>
-                        <td>{r.action}<small className={styles.privateCellHint}>Статус из файла: {r.status}</small></td>
-                      </tr>)}
-                    </tbody>
-                  </table>
-                  {localRows.length === 0 && <p className={styles.muted}>Сотрудники по указанному запросу не найдены.</p>}
+                <div className={styles.diagnosticRoles}>
+                  {diagnosticRoles.map(([role, count]) => (
+                    <button key={role} className={[styles.diagnosticRole, activeRole === role ? styles.diagnosticRoleActive : ""].join(" ")}
+                      onClick={() => {setActiveRole(activeRole === role ? null : role);setInspectionCopied(false);}}
+                      type="button" aria-pressed={activeRole === role}>
+                      <span>{role.replace(/^- /, "")}</span>
+                      <b>{number(count)} <small>зап.</small></b>
+                    </button>
+                  ))}
+                  {!diagnosticRoles.length && <p className={styles.muted}>Нет опубликованных групп должностей по указанному запросу. Для групп менее трёх записей детализация закрыта.</p>}
                 </div>
-                {localRows.length > 200 && <p className={styles.muted}>Для удобства показаны первые 200 записей. Уточните поиск, чтобы найти конкретного сотрудника.</p>}
-                <p className={styles.privateCaution}>Конфиденциально. Этот просмотр не предоставляет сетевую авторизацию или проверку полномочий: используйте его только на защищённом устройстве уполномоченного сотрудника МО. Не делайте публичные скриншоты с раскрытыми СНИЛС.</p>
-              </>
-            )}
+                {selected.current > selected.specialties.reduce((sum,[,n])=>sum+n,0) && (
+                  <p className={styles.muted}>Часть должностных записей относится к малочисленным группам и не раскрывается. Общее число расхождений МО указано выше.</p>
+                )}
+              </div>
+              <div className={styles.diagnosticGuide}>
+                <h3>{activeRole || "Выберите должность слева"}</h3>
+                <p className={styles.muted}>По выбранной должности показано место поиска в двух системах. Категории ошибок по отдельной должности в текущей сверке не опубликованы; ниже приведены значения по МО в целом.</p>
+                <div className={styles.diagnosticIssueButtons} role="group" aria-label="Выбрать тип проблемы">
+                  <button type="button" className={inspectionType==="all" ? styles.issueSelected : ""} onClick={()=>setInspectionType("all")}>Обе причины</button>
+                  <button type="button" className={inspectionType==="mo" ? styles.issueSelected : ""} onClick={()=>setInspectionType("mo")}>Нет в ГИС · {number(selected.stage1)}</button>
+                  <button type="button" className={inspectionType==="department" ? styles.issueSelected : ""} onClick={()=>setInspectionType("department")}>Не совпадает СП · {number(selected.stage2)}</button>
+                </div>
+                {(inspectionType==="all" || inspectionType==="mo") && (
+                  <div className={styles.action}><b className={styles.actionNum}>1</b><div>
+                    <b>Нет должности на уровне МО в ГИС</b>
+                    <span>ФРМР → трудоустройство → OID МО → должность. Затем ГИС → сотрудники → должность в МО. Проверить существование, актуальность и соответствие кадровой записи.</span>
+                  </div></div>
+                )}
+                {(inspectionType==="all" || inspectionType==="department") && (
+                  <div className={styles.action}><b className={styles.actionNum}>2</b><div>
+                    <b>Должность есть, но не совпадает подразделение</b>
+                    <span>В ФРМР определить OID и название структурного подразделения у выбранной должности. В ГИС проверить привязку того же сотрудника к СП и при необходимости исправить её.</span>
+                  </div></div>
+                )}
+                <div className={styles.diagnosticRoute}>
+                  <b>Адрес проверки</b>
+                  <div><small>Медицинская организация</small><strong>{selected.name}</strong></div>
+                  <div><small>OID МО</small><code>1.2.643.5.1.13.13.12.2.16.{selected.id}</code></div>
+                  <div><small>Должность ФРМР</small><strong>{activeRole || "Выберите в списке"}</strong></div>
+                  <div><small>Структурное подразделение</small><span>Уточнить в ФРМР и сопоставить в ГИС по OID СП; адресная детализация СП в публичном срезе не подтверждена.</span></div>
+                </div>
+                <button className={styles.button} type="button" onClick={async()=>{try {await navigator.clipboard.writeText(inspectionText);setInspectionCopied(true);} catch {setInspectionCopied(false);}}}>
+                  {inspectionCopied ? "Маршрут проверки скопирован" : "Скопировать маршрут проверки"}
+                </button>
+              </div>
+            </div>
+            <p className={styles.privateCaution}>Сведения о должностях приведены по опубликованным агрегатам. Должностная запись — не уникальный врач; без первичных идентификаторов нельзя привязать её к конкретному сотруднику. Влияние на расписание и запись пациентов не подтверждено.</p>
           </section>
           <div className={styles.grid}>
             <section className={styles.panel}>
