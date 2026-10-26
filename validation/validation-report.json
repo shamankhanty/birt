@@ -1,21 +1,21 @@
 {
   "schemaVersion": 1,
   "baselineVersion": "5.4.5",
-  "dataDate": "22.10.2026",
+  "dataDate": "25.10.2026",
   "reportingPeriod": {
     "latestFullMonth": "сентябрь 2026",
     "previousFullMonth": "август 2026",
     "hasPartialNewerMonth": true,
-    "latestObservedDate": "22.10.2026"
+    "latestObservedDate": "25.10.2026"
   },
   "overallStatus": "WARNING",
   "summary": {
     "checks": 15,
-    "PASS": 14,
-    "WARNING": 1,
+    "PASS": 13,
+    "WARNING": 2,
     "FAIL": 0,
     "blocking": 0,
-    "aiReviewItems": 0
+    "aiReviewItems": 4
   },
   "acknowledgedBaseline": {
     "unresolvedOrganizations": 106,
@@ -121,9 +121,9 @@
       "status": "PASS",
       "blocking": false,
       "requiresAiReview": false,
-      "message": "1890 trend rows reconcile to fact minus previous",
+      "message": "1891 trend rows reconcile to fact minus previous",
       "details": {
-        "inspectedRows": 1890
+        "inspectedRows": 1891
       },
       "issues": []
     },
@@ -152,7 +152,7 @@
         "activeRatingIndicators": 16,
         "latestFullMonth": "сентябрь 2026",
         "previousFullMonth": "август 2026",
-        "latestObservedDate": "22.10.2026",
+        "latestObservedDate": "25.10.2026",
         "hasPartialNewerMonth": true
       },
       "issues": [
@@ -224,16 +224,126 @@
       "id": "data.percentage_anomalies",
       "category": "anomaly",
       "title": "Новые аномальные процентные значения",
-      "status": "PASS",
+      "status": "WARNING",
       "blocking": false,
-      "requiresAiReview": false,
-      "message": "No new percentage anomalies beyond 35 acknowledged baseline cases",
+      "requiresAiReview": true,
+      "message": "4 issue(s) detected",
       "details": {
-        "currentAnomalyRows": 35,
+        "currentAnomalyRows": 37,
         "acknowledgedBaselineCases": 35
       },
-      "issues": []
+      "issues": [
+        {
+          "kind": "percentage_above_100",
+          "scope": "mo-data",
+          "metric": "semd228",
+          "organizationOid": "1.2.643.5.1.13.13.12.2.16.1152",
+          "organizationName": "АПАСТОВСКАЯ ЦРБ",
+          "field": "fact",
+          "value": 100.4189797842254,
+          "fingerprint": "percentage_above_100|mo-data|semd228|1.2.643.5.1.13.13.12.2.16.1152|АПАСТОВСКАЯ ЦРБ|fact",
+          "acknowledged": false,
+          "status": "WARNING",
+          "requiresAiReview": true,
+          "reviewReason": "anomaly"
+        },
+        {
+          "kind": "percentage_above_100",
+          "scope": "mo-data",
+          "metric": "semd228",
+          "organizationOid": "1.2.643.5.1.13.13.12.2.16.1122",
+          "organizationName": "ДГП № 4 г.Казань",
+          "field": "previous",
+          "value": 101.09109180963318,
+          "fingerprint": "percentage_above_100|mo-data|semd228|1.2.643.5.1.13.13.12.2.16.1122|ДГП № 4 г.Казань|previous",
+          "acknowledged": false,
+          "status": "WARNING",
+          "requiresAiReview": true,
+          "reviewReason": "anomaly"
+        },
+        {
+          "kind": "percentage_above_100",
+          "scope": "mo-data",
+          "metric": "semd228",
+          "organizationOid": "1.2.643.5.1.13.13.12.2.16.1105",
+          "organizationName": "ДРОЖЖАНОВСКАЯ ЦРБ",
+          "field": "fact",
+          "value": 100.91561261091184,
+          "fingerprint": "percentage_above_100|mo-data|semd228|1.2.643.5.1.13.13.12.2.16.1105|ДРОЖЖАНОВСКАЯ ЦРБ|fact",
+          "acknowledged": false,
+          "status": "WARNING",
+          "requiresAiReview": true,
+          "reviewReason": "anomaly"
+        },
+        {
+          "kind": "percentage_above_100",
+          "scope": "mo-data",
+          "metric": "hospital",
+          "organizationOid": "1.2.643.5.1.13.13.12.2.16.1092",
+          "organizationName": "АКТАНЫШСКАЯ ЦРБ",
+          "field": "fact",
+          "value": 100.47193243914556,
+          "fingerprint": "percentage_above_100|mo-data|hospital|1.2.643.5.1.13.13.12.2.16.1092|АКТАНЫШСКАЯ ЦРБ|fact",
+          "acknowledged": false,
+          "status": "WARNING",
+          "requiresAiReview": true,
+          "reviewReason": "anomaly"
+        }
+      ]
     }
   ],
-  "aiReviewItems": []
+  "aiReviewItems": [
+    {
+      "checkId": "data.percentage_anomalies",
+      "category": "anomaly",
+      "status": "WARNING",
+      "reviewReason": "anomaly",
+      "fingerprint": "percentage_above_100|mo-data|semd228|1.2.643.5.1.13.13.12.2.16.1152|АПАСТОВСКАЯ ЦРБ|fact",
+      "metric": "semd228",
+      "organizationOid": "1.2.643.5.1.13.13.12.2.16.1152",
+      "organizationName": "АПАСТОВСКАЯ ЦРБ",
+      "field": "fact",
+      "expected": null,
+      "actual": 100.4189797842254
+    },
+    {
+      "checkId": "data.percentage_anomalies",
+      "category": "anomaly",
+      "status": "WARNING",
+      "reviewReason": "anomaly",
+      "fingerprint": "percentage_above_100|mo-data|semd228|1.2.643.5.1.13.13.12.2.16.1122|ДГП № 4 г.Казань|previous",
+      "metric": "semd228",
+      "organizationOid": "1.2.643.5.1.13.13.12.2.16.1122",
+      "organizationName": "ДГП № 4 г.Казань",
+      "field": "previous",
+      "expected": null,
+      "actual": 101.09109180963318
+    },
+    {
+      "checkId": "data.percentage_anomalies",
+      "category": "anomaly",
+      "status": "WARNING",
+      "reviewReason": "anomaly",
+      "fingerprint": "percentage_above_100|mo-data|semd228|1.2.643.5.1.13.13.12.2.16.1105|ДРОЖЖАНОВСКАЯ ЦРБ|fact",
+      "metric": "semd228",
+      "organizationOid": "1.2.643.5.1.13.13.12.2.16.1105",
+      "organizationName": "ДРОЖЖАНОВСКАЯ ЦРБ",
+      "field": "fact",
+      "expected": null,
+      "actual": 100.91561261091184
+    },
+    {
+      "checkId": "data.percentage_anomalies",
+      "category": "anomaly",
+      "status": "WARNING",
+      "reviewReason": "anomaly",
+      "fingerprint": "percentage_above_100|mo-data|hospital|1.2.643.5.1.13.13.12.2.16.1092|АКТАНЫШСКАЯ ЦРБ|fact",
+      "metric": "hospital",
+      "organizationOid": "1.2.643.5.1.13.13.12.2.16.1092",
+      "organizationName": "АКТАНЫШСКАЯ ЦРБ",
+      "field": "fact",
+      "expected": null,
+      "actual": 100.47193243914556
+    }
+  ]
 }

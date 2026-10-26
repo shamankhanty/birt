@@ -36,11 +36,11 @@ test("period engine detects September 2026 as the latest full month and August a
 test("period engine ignores an incomplete newer month when choosing the full month", () => {
   const withOctoberOperational = resolveReportingPeriods({
     monthlyDatasets: monthlyRuntime,
-    datasets: [...Object.values(mergedData), { date: "23.10.2026", period: "01.10–23.10.2026" }],
+    datasets: [...Object.values(mergedData), { date: "25.10.2026", period: "01.10–23.10.2026" }],
     physicianMetrics: physicians,
   });
   assert.equal(withOctoberOperational.latestFullMonth.label, "сентябрь 2026");
-  assert.equal(withOctoberOperational.latestObservedDate, "23.10.2026");
+  assert.equal(withOctoberOperational.latestObservedDate, "25.10.2026");
   assert.equal(withOctoberOperational.latestObservedMonth.label, "октябрь 2026");
   assert.equal(withOctoberOperational.hasPartialNewerMonth, true);
 });

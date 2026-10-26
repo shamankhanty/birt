@@ -2,7 +2,7 @@ import fs from "node:fs";
 import test from "node:test";
 import assert from "node:assert/strict";
 
-const report = JSON.parse(fs.readFileSync("docs/physician500-reconciliation-20261021.json", "utf8"));
+const report = JSON.parse(fs.readFileSync("docs/physician500-reconciliation-20261024.json", "utf8"));
 const snapshot = JSON.parse(fs.readFileSync("app/physician-weekly-snapshot.json", "utf8"));
 
 test("primary workbook audit covers every source MO and all nine 500+ specialties", () => {
@@ -14,7 +14,7 @@ test("primary workbook audit covers every source MO and all nine 500+ specialtie
   assert.equal(report.coverage.specialties, 9);
   assert.equal(report.coverage.checks, 718);
   assert.equal(report.checks.length, 718);
-  assert.deepEqual(report.statusSummary, { PASS: 383, WARN: 335, FAIL: 0 });
+  assert.deepEqual(report.statusSummary, { PASS: 376, WARN: 342, FAIL: 0 });
   assert.equal(report.regionalReconciliation.length, 9);
   assert.ok(report.regionalReconciliation.every((item) => item.status === "PASS"));
 });
@@ -35,10 +35,10 @@ test("no-source organizations remain explicit exclusions rather than synthetic z
   assert.ok(report.outsideSpecialtyScope.every((item) => /не заменено нулём/u.test(item.reason)));
 });
 
-test("Sabinsky dental control confirms 2/5 and explains the rejected 4/6 hypothesis", () => {
+test("Sabinsky dental control keeps aggregate 3/5 separate from the 2/5 detail diagnostic", () => {
   const sabin = report.sabinDentalControl;
   assert.equal(sabin.status, "PASS");
-  assert.equal(sabin.sourceNumerator, 2);
+  assert.equal(sabin.sourceNumerator, 3);
   assert.equal(sabin.sourceDenominator, 5);
   assert.equal(sabin.confirmedNumeratorNoSum, 2);
   assert.equal(sabin.confirmedDenominatorByEligibleWorkerOid, 5);

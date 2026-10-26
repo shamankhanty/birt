@@ -1,0 +1,133 @@
+{
+  "checkedAt": "26.10.2026",
+  "sourceCut": "до 25.10.2026; отдельные источники имеют собственные даты",
+  "sourceFiles": {
+    "1.Отчет СЭМД_РЭМД 01.01.-25.10.(Выгрузка из BI 26.10.).xlsx": "c3de27205b0658edc74d2bd72ffe931e8a3c83bf2f7d228490196e29b0ac4df8",
+    "Доля_ТВСП,_обеспечивающих_передачу_СЭМД_Протокол_диагностических 01.01-25.10.xlsx": "a349d31fa30766cb5909f6c1f7ffc7f69f4b6b685caa977cf27d00c5fad7b482",
+    "Закрытые случаи ДОГВН ПМО и зарегистрированные СЭМД 122 и 228 - 01.01-25.10.xlsx": "e724228fa372112558294a4273bfca4192e117080685e4a58a5f98ac94b6fbf5",
+    "Количество_СЭМД_Результаты_профилактического_медицинского_осмотрадиспансеризаци.xlsx": "d71446960faf0c2396e7bb6597bc26dbe23c14cdaafe1b88b896074019fd1c11",
+    "Отправка сведений в федеральные сервисы 01.01.-25.10. (Выгрузка из АСУ ССМП 26.10.).xlsx": "f0b6535faaf29c3d046ff80f94fb2ef94ab312a39015387133d9825cf188af72",
+    "Отчет по госпитализациям_v2 -  01.01.2026-25.10.2026.xlsx": "b865ca1bc44adbbf3ef5f4dca1c8173e4d38434404e4fd1d420c97bbf150dcdc",
+    "Отчет_Доля_ТВСП_СЭМД_Протокол лабораторного исследования 01.01-25.10.xlsx": "16fb94724f40e4bd4995da1a2d67d2e91676d30e10c178fa7c57ca659ae42b4f",
+    "Отчет_Доля_ТВСП_СЭМД_Эпикриз по законченному случаю амбулаторный_Талон амбулаторного пациента и Протокол консультации 01.01-25.10.xlsx": "ad965b0d3b5c23ea642c69248f9d9b96b4933f129786f356f075993bb9c325b9",
+    "Отчет_Доля_ТВСП_СЭМД_Эпикриз_в_стационаре_выписной_или_Выписной 01.01-25.10.xlsx": "5430bd4e810ea0a3cf855d1c3ec6cf6a78ec968184c8708a7395c8233a6c4660",
+    "Отчет_СМП_ТВСП 01.01-25.10.xlsx": "0d06388795850f58703206a0e60e28d73b21485527b480012c8cd31a3f354fa1",
+    "Отчет_ТМК_РЭМД 01.01.-25.10.(Выгрузка из BI 26.10.).xlsx": "53d9726e33b0d484e3c62377f25d47ddd5765064f9640320e1e21c5f1730e520",
+    "Отчёт - Отказы по регистрации ЭМД в РЭМД 01.01-25.10.xlsx": "e0c65d44aab3a8fb234824134b7d11bdaf177e54b8c4143205116f8ee58a4bc5",
+    "Отчёт_по_врачам_сформировавших_СЭМД Октябрь.xlsx": "97e248e6185ddfb9e88cbbe4d741e36371ebbc83db4bb9da15d7e046e86c14cd",
+    "ПР_2_Кол-во заявл на прикр. от ЕГПУ за период. ИП ООГУЗ. Обраб. 2 раб.дн. 25.10.2026.xlsx": "7b96de343abeefe6eb0947cc174446c069bd226bb01da6bee45f093d3f49ecfb",
+    "Свидетельства_о_рождении_по_РТ_(РМИАЦ) 01.01.-25.10.(Выгрузка из ГИС 26.10.).xlsx": "10fdcccd28f3f3abf3f8f29f9d23b73c0f97884d809047933da9f851423e9bce",
+    "Случаи краткого ввода с 01.01.2026 по 25.10.2026 -.xlsx": "3950e5641f708ef4acbf51be21b915f8fde909b1c139f0cd835b17eab42ffb3e",
+    "ТМК_МАХ -01.01-25.10.xlsx": "09740031c2cd8bf819ab0df30cc201a5e9875d2dd66e3b21b61ddb893ccbb83f",
+    "ТМК_МАХ 01.10.-26.10.(Выгрузка из ГИС 26.10.).xlsx": "82f759aef589c7ff8bc45f33ee0494dcb46040e1a8cae3b5a751c9529769b58a"
+  },
+  "statistics": {
+    "expectedIndicators": 34,
+    "receivedIndicators": 30,
+    "preparedIndicators": 30,
+    "unchangedIndicators": 0,
+    "retainedInvalidIndicators": 0,
+    "missingSourceIndicators": 4
+  },
+  "prepared": [
+    "egpu",
+    "egpu2days",
+    "hospital",
+    "semd228",
+    "birth",
+    "tmkMaxCount",
+    "elnMaxCount",
+    "doctorsAll",
+    "doctorsLevel3",
+    "doctor500_obgyn",
+    "doctor500_gp",
+    "doctor500_cardiologist",
+    "doctor500_oncologist",
+    "doctor500_ophthalmologist",
+    "doctor500_pediatrician",
+    "doctor500_dentist",
+    "doctor500_therapist",
+    "doctor500_surgeon",
+    "remdErrors",
+    "tvspAmbulatory",
+    "tvspStationary",
+    "tvspLaboratory",
+    "tvspDiagnostic",
+    "smpFederal",
+    "tmkRemd",
+    "elmk",
+    "shortInput",
+    "shortInputAmb",
+    "shortInputHosp",
+    "smp"
+  ],
+  "unchanged": [],
+  "copiedFromFullStage": [
+    "mo-data.json",
+    "mo-detail-oids.json",
+    "mo-details.json",
+    "operational-mo.json",
+    "organization-status.json",
+    "physician-metrics.json",
+    "physician-weekly-snapshot.json",
+    "physician500-audit.json",
+    "preventive-semd-audit.json",
+    "unit-data.json"
+  ],
+  "separatelyPrepared": [
+    "remdErrorsCumulative",
+    "semdSummary",
+    "maxPeriodViews",
+    "federalRemdFacts"
+  ],
+  "retained": [
+    {
+      "metric": "remdErrorsWeekly",
+      "reason": "Недельный источник в архиве отсутствует."
+    },
+    {
+      "metric": "ambulatoryCase",
+      "reason": "Новый источник отсутствует."
+    },
+    {
+      "metric": "death",
+      "reason": "Новый источник отсутствует."
+    },
+    {
+      "metric": "electronicWaybill",
+      "reason": "Новый источник отсутствует."
+    },
+    {
+      "metric": "fapSemdCount",
+      "reason": "Новый источник отсутствует."
+    }
+  ],
+  "qualityWarnings": [
+    {
+      "metric": "semd228",
+      "oid": "1.2.643.5.1.13.13.12.2.16.1122",
+      "value": 103.05645707764187
+    },
+    {
+      "metric": "semd228",
+      "oid": "1.2.643.5.1.13.13.12.2.16.1152",
+      "value": 100.4189797842254
+    },
+    {
+      "metric": "semd228",
+      "oid": "1.2.643.5.1.13.13.12.2.16.1105",
+      "value": 100.91561261091184
+    },
+    {
+      "metric": "hospital",
+      "oid": "1.2.643.5.1.13.13.12.2.16.1092",
+      "value": 100.47193243914556
+    }
+  ],
+  "semdSummary": {
+    "period": "01.01.2026–25.10.2026",
+    "formed": "26.10.2026 07:22",
+    "total": 82198158,
+    "registeredTypes": 97
+  }
+}

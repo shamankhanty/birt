@@ -4,7 +4,7 @@
   "acknowledgedFingerprints": [
     "percentage_above_100|mo-data|hospital|1.2.643.5.1.13.13.12.2.16.1065|КДМЦ г.Наб.Челны|fact",
     "percentage_above_100|mo-data|hospital|1.2.643.5.1.13.13.12.2.16.1065|КДМЦ г.Наб.Челны|previous",
-    "percentage_above_100|mo-data|hospital|1.2.643.5.1.13.13.12.2.16.1126|САБИНСКАЯ ЦРБ|previous",
+    "percentage_above_100|mo-data|hospital|1.2.643.5.1.13.13.12.2.16.1092|АКТАНЫШСКАЯ ЦРБ|fact",
     "percentage_above_100|mo-data|hospital|1.2.643.5.1.13.13.12.2.16.1171|НДРБ С ПЦ г.Нижнекамск|fact",
     "percentage_above_100|mo-data|hospital|1.2.643.5.1.13.13.12.2.16.1171|НДРБ С ПЦ г.Нижнекамск|previous",
     "percentage_above_100|mo-data|hospital|1.2.643.5.1.13.13.12.2.16.1231|ФГАОУВО КФУ|fact",
@@ -17,12 +17,14 @@
     "percentage_above_100|mo-data|semd228|1.2.643.5.1.13.13.12.2.16.1072|ЗАИНСКАЯ ЦРБ|previous",
     "percentage_above_100|mo-data|semd228|1.2.643.5.1.13.13.12.2.16.1073|ЛЕНИНОГОРСКАЯ ЦРБ|fact",
     "percentage_above_100|mo-data|semd228|1.2.643.5.1.13.13.12.2.16.1073|ЛЕНИНОГОРСКАЯ ЦРБ|previous",
+    "percentage_above_100|mo-data|semd228|1.2.643.5.1.13.13.12.2.16.1105|ДРОЖЖАНОВСКАЯ ЦРБ|fact",
     "percentage_above_100|mo-data|semd228|1.2.643.5.1.13.13.12.2.16.1122|ДГП № 4 г.Казань|fact",
+    "percentage_above_100|mo-data|semd228|1.2.643.5.1.13.13.12.2.16.1122|ДГП № 4 г.Казань|previous",
     "percentage_above_100|mo-data|semd228|1.2.643.5.1.13.13.12.2.16.1138|НУРЛАТСКАЯ ЦРБ|fact",
     "percentage_above_100|mo-data|semd228|1.2.643.5.1.13.13.12.2.16.1138|НУРЛАТСКАЯ ЦРБ|previous",
     "percentage_above_100|mo-data|semd228|1.2.643.5.1.13.13.12.2.16.1144|КУКМОРСКАЯ ЦРБ|fact",
     "percentage_above_100|mo-data|semd228|1.2.643.5.1.13.13.12.2.16.1144|КУКМОРСКАЯ ЦРБ|previous",
-    "percentage_above_100|mo-data|semd228|1.2.643.5.1.13.13.12.2.16.1182|ДГП № 2 г.Казань|previous",
+    "percentage_above_100|mo-data|semd228|1.2.643.5.1.13.13.12.2.16.1152|АПАСТОВСКАЯ ЦРБ|fact",
     "percentage_above_100|monthly-mo|hospital|1.2.643.5.1.13.13.12.2.16.1042|БУГУЛЬМИНСКАЯ ЦРБ|july",
     "percentage_above_100|monthly-mo|hospital|1.2.643.5.1.13.13.12.2.16.1061|ЦЕНТР РЕАБИЛИТАЦИИ СЛУХА г.Наб.Челны|july",
     "percentage_above_100|monthly-mo|hospital|1.2.643.5.1.13.13.12.2.16.1061|ЦЕНТР РЕАБИЛИТАЦИИ СЛУХА г.Наб.Челны|june",
@@ -5120,7 +5122,7 @@
   },
   "acknowledgedCounts": {
     "unresolvedOrganizations": 106,
-    "percentageAnomalies": 35,
+    "percentageAnomalies": 37,
     "missingCurrentValues": 0
   }
 }
