@@ -4678,19 +4678,25 @@ export default function Home() {
     dynamicsMode === "operational" &&
     matrixMetric.startsWith("doctor500_") &&
     Boolean(physicianWeeklySnapshot.summary[matrixMetric]);
-  const physicianOperationalSummary = isOperationalPhysician500
+  // The closed monthly physician data are unchanged. Operational mode uses
+  // the individual October snapshot for doctorsAll, doctorsLevel3 and 500+.
+  const isOperationalPhysicianSnapshot =
+    dynamicsMode === "operational" &&
+    isPhysicianMetric(matrixMetric) &&
+    Boolean(physicianWeeklySnapshot.summary[matrixMetric]);
+  const physicianOperationalSummary = isOperationalPhysicianSnapshot
     ? physicianWeeklySnapshot.summary[matrixMetric]
     : null;
-  const physicianOperationalPreviousSummary = isOperationalPhysician500
+  const physicianOperationalPreviousSummary = isOperationalPhysicianSnapshot
     ? (physicianWeeklySnapshot.previousSummary?.[matrixMetric] ?? null)
     : null;
-  const previousPhysicianOperationalRows = isOperationalPhysician500
+  const previousPhysicianOperationalRows = isOperationalPhysicianSnapshot
     ? (physicianWeeklySnapshot.previousDatasets?.[matrixMetric] ?? [])
     : [];
   const previousPhysicianOperationalByOid = new Map(
     previousPhysicianOperationalRows.map((row) => [row.oid, row]),
   );
-  const physicianOperationalRows: MoRow[] = isOperationalPhysician500
+  const physicianOperationalRows: MoRow[] = isOperationalPhysicianSnapshot
     ? (physicianWeeklySnapshot.datasets[matrixMetric] ?? []).map((row) => {
         const previous = previousPhysicianOperationalByOid.get(row.oid);
         return {
@@ -4700,7 +4706,7 @@ export default function Home() {
         };
       })
     : [];
-  const displayDatasetDate = isOperationalPhysician500
+  const displayDatasetDate = isOperationalPhysicianSnapshot
     ? (physicianWeeklySnapshot.periods?.[matrixMetric]?.date ?? physicianWeeklySnapshot.date)
     : selectedDataset.date;
   const maxAugustMonthlyDataset: MonthlyMoDataset | null = isMaxMetric
@@ -4727,7 +4733,7 @@ export default function Home() {
   const lowerIsBetter =
     matrixMetric === "shortInput" || selectedDataset.direction === "lower";
   const datasetOperationalPeriods =
-    isOperationalPhysician500
+    isOperationalPhysicianSnapshot
       ? {
           previous: (physicianWeeklySnapshot.previousPeriods?.[matrixMetric]?.date ?? physicianWeeklySnapshot.previousDate)
             ? `на ${physicianWeeklySnapshot.previousPeriods?.[matrixMetric]?.date ?? physicianWeeklySnapshot.previousDate}`
@@ -4753,7 +4759,7 @@ export default function Home() {
     };
   const previousSnapshot = snapshotDate(periods.previous);
   const currentSnapshot = snapshotDate(periods.current);
-  const indicatorRows = (isOperationalPhysician500
+  const indicatorRows = (isOperationalPhysicianSnapshot
     ? physicianOperationalRows
     : selectedDataset.rows
   ).filter(
@@ -4975,7 +4981,7 @@ export default function Home() {
   const countRowsWithoutPrevious = isCountMetric
     ? indicatorRows.length - comparableCountRows.length
     : 0;
-  const operationalRegionalCurrent = isOperationalPhysician500
+  const operationalRegionalCurrent = isOperationalPhysicianSnapshot
     ? (physicianOperationalSummary?.fact ?? 0)
     : isCountMetric
       ? regionalFact
@@ -4992,7 +4998,7 @@ export default function Home() {
           baselineIndicatorForMetric.trend !== undefined
         ? operationalRegionalCurrent - baselineIndicatorForMetric.trend
         : null;
-  const regionalPrevious = isOperationalPhysician500
+  const regionalPrevious = isOperationalPhysicianSnapshot
     ? (physicianOperationalPreviousSummary?.fact ?? null)
     : selectedDataset.comparisonReset
       ? null
@@ -5010,7 +5016,7 @@ export default function Home() {
       selectedDataset.period?.startsWith("01.01") ||
         selectedDataset.period?.toLocaleLowerCase("ru-RU").includes("январ"),
     );
-  const currentRegionalComponents = isOperationalPhysician500 && physicianOperationalSummary
+  const currentRegionalComponents = isOperationalPhysicianSnapshot && physicianOperationalSummary
     ? {
         numerator: physicianOperationalSummary.numerator,
         denominator: physicianOperationalSummary.denominator,
@@ -5023,7 +5029,7 @@ export default function Home() {
       : null;
   const staticPreviousComponents = operationalRegionalPreviousComponents[matrixMetric];
   const previousRegionalComponents =
-    isOperationalPhysician500 && physicianOperationalPreviousSummary
+    isOperationalPhysicianSnapshot && physicianOperationalPreviousSummary
       ? {
           numerator: physicianOperationalPreviousSummary.numerator,
           denominator: physicianOperationalPreviousSummary.denominator,
@@ -9177,7 +9183,9 @@ export default function Home() {
                 </p>
               ) : selectedDataset.note && matrixMetric !== "semd228" && (
                 <p className="sourceDataNote">
-                  <b>Источник и ограничение:</b> {selectedDataset.note}
+                  <b>Источник и ограничение:</b> {isOperationalPhysicianSnapshot
+                    ? `Оперативный срез ${physicianWeeklySnapshot.periods?.[matrixMetric]?.period ?? physicianWeeklySnapshot.period}; источник — ${physicianWeeklySnapshot.periods?.[matrixMetric]?.source ?? physicianWeeklySnapshot.source}. Месячный результат и рейтинг остаются за ${selectedDataset.period}.`
+                    : selectedDataset.note}
                 </p>
               )}
               {isMaxMetric && (
@@ -9375,7 +9383,7 @@ export default function Home() {
                       </strong>
                       <span>
                         {previousSnapshot}
-                        {isCumulativeShareMetric || isOperationalPhysician500
+                        {isCumulativeShareMetric || isOperationalPhysicianSnapshot
                           ? previousRegionalComponents
                             ? ` · ${format(previousRegionalComponents.numerator, 0)} / ${format(previousRegionalComponents.denominator, 0)}`
                             : " · компоненты предыдущего среза не сохранены"
@@ -9419,7 +9427,7 @@ export default function Home() {
                           ? "нет сопоставимого предыдущего значения"
                           : isCountMetric && regionalRelativeChange !== null
                             ? `${regionalRelativeChange > 0 ? "+" : regionalRelativeChange < 0 ? "−" : ""}${format(Math.abs(regionalRelativeChange), 1)}% к предыдущей выгрузке`
-                            : (isCumulativeShareMetric || isOperationalPhysician500) &&
+                            : (isCumulativeShareMetric || isOperationalPhysicianSnapshot) &&
                                 numeratorChange !== null &&
                                 denominatorChange !== null
                               ? `числитель ${numeratorChange > 0 ? "+" : numeratorChange < 0 ? "−" : ""}${format(Math.abs(numeratorChange), 0)} · знаменатель ${denominatorChange > 0 ? "+" : denominatorChange < 0 ? "−" : ""}${format(Math.abs(denominatorChange), 0)}`
@@ -9444,6 +9452,8 @@ export default function Home() {
                               ? `${comparableCountRows.length} из ${indicatorRows.length} МО сопоставлены; ${countRowsWithoutPrevious} без предыдущего значения`
                               : isOperationalPhysician500 && !physicianOperationalPreviousSummary
                                 ? "предыдущего оперативного среза 500+ в архиве нет; текущий срез сохранён как baseline для следующей выгрузки"
+                              : isOperationalPhysicianSnapshot && !physicianOperationalPreviousSummary
+                                ? "предыдущего сопоставимого оперативного среза нет; сравнение не выполняется"
                               : isCumulativeShareMetric && !previousRegionalComponents
                                 ? "доля сопоставима, но компоненты предыдущего среза не сохранены; после следующей выгрузки будут показаны изменения числителя и знаменателя"
                                 : "текущая выгрузка сравнивается с непосредственно предыдущей"}
