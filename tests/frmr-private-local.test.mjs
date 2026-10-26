@@ -34,7 +34,7 @@ test("employee is discoverable in a local file without exposing the identifier b
     () => parseLocalPrivateFrmr({ name: "wrong.csv", size: 1 }, "1094", 87),
     /XLSX/,
   );
-  assert.match(component, /showPrivateIdentifiers\] = useState\(false\)/u);
+  assert.match(component, /\[showPrivateIdentifiers, setShowPrivateIdentifiers\] = useState\(false\)/u);
   assert.match(component, /ФИО в ФРМР нет/u);
   assert.match(component, /Расписание ГИС \(не подтверждено\)/u);
   assert.match(component, /r\.snils\.includes\(digits\)/u);
