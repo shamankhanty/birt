@@ -5538,7 +5538,7 @@ export default function Home() {
         </>
       );
     }
-    if (id.startsWith("doctor500_") && physicianMetrics.datasets[id]) {
+    if (isPhysicianMetric(id) && physicianMetrics.datasets[id]) {
       const monthly = physicianMetrics.datasets[id].summary;
       const operational = physicianWeeklySnapshot.summary[id];
       const operationalFact = operational?.denominator
@@ -5570,7 +5570,12 @@ export default function Home() {
     if (dataset.mode === "count" || dataset.plan === null) return "neutral";
     const indicator = calculatedIndicatorById[id];
     const details = Object.values(moDetails[id] ?? {});
-    const fact = indicator?.fact ?? (details.length ? aggregateComponents(details).fact : 0);
+    const currentPhysicianFact = dynamicsMode === "operational" && isPhysicianMetric(id)
+      ? physicianWeeklySnapshot.summary[id]?.fact
+      : null;
+    const fact = typeof currentPhysicianFact === "number"
+      ? currentPhysicianFact
+      : indicator?.fact ?? (details.length ? aggregateComponents(details).fact : 0);
     const ok =
       dataset.direction === "lower"
         ? fact <= dataset.plan
@@ -5974,7 +5979,7 @@ export default function Home() {
                       title={metricDisplayName(id)}
                     >
                       <span>{metricDisplayName(id)}</span>
-                      <b className={id.startsWith("doctor500_") || id === "tmkMaxCount" || id === "elnMaxCount" ? "periodValue" : ""}>{sidebarMetricValue(id)}</b>
+                      <b className={isPhysicianMetric(id) || id === "tmkMaxCount" || id === "elnMaxCount" ? "periodValue" : ""}>{sidebarMetricValue(id)}</b>
                     </button>
                   ))}
                 </div>
@@ -9129,7 +9134,7 @@ export default function Home() {
                     : selectedDataset.name}
                 </h1>
                 <div
-                  className={`titlePlan ${isMaxMetric ? "neutral" : selectedDataset.plan === null ? "neutral" : statusFor(regionalFact, selectedDataset.plan, lowerIsBetter)}`}
+                  className={`titlePlan ${isMaxMetric ? "neutral" : selectedDataset.plan === null ? "neutral" : statusFor(isOperationalPhysicianSnapshot ? operationalRegionalCurrent : regionalFact, selectedDataset.plan, lowerIsBetter)}`}
                 >
                   <small>
                     {isMaxMetric
