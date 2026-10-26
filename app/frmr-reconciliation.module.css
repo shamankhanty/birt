@@ -96,3 +96,26 @@
 .privatePerson small,.privateCellHint{display:block;color:#5e7b6e;font-size:11px;margin-top:4px;line-height:1.4}
 .privateCaution{margin:13px 0 0;padding:13px 15px;background:#fff8e7;border:1px solid #eed8ae;border-radius:10px;color:#76552b;font-size:12px;line-height:1.6}
 @media(max-width:650px){.privateIntro>label,.privateIntro>.button{width:100%}.privateTools>.input,.privateTools>.select{width:100%}.privateToggle{white-space:normal}}
+
+
+/* Inline FRMR diagnostic workflow: no workbook upload or personal identifiers */
+.diagnosticLayout{display:grid;grid-template-columns:minmax(250px,.82fr) minmax(320px,1.18fr);gap:16px;align-items:start}
+.diagnosticRoles{max-height:445px;overflow:auto;display:flex;flex-direction:column;gap:7px}
+.diagnosticRole{display:flex;justify-content:space-between;gap:15px;align-items:center;text-align:left;padding:12px 13px;background:#f7faf8;border:1px solid #dce9e1;border-radius:10px;cursor:pointer;color:#25493c;font-size:12px;line-height:1.45}
+.diagnosticRole:hover{background:#e9f6ee;border-color:#9ac4b1}
+.diagnosticRoleActive{background:#e1f2e9;border-color:#128264;box-shadow:inset 3px 0 0 #128264}
+.diagnosticRole b{font-size:16px;color:#166b50;white-space:nowrap}
+.diagnosticRole small{font-size:10px;font-weight:500}
+.diagnosticGuide{min-width:0;background:#f9fcfa;border:1px solid #dce8e1;border-radius:13px;padding:17px;display:flex;flex-direction:column;gap:12px}
+.diagnosticGuide h3{font-size:17px;line-height:1.35;margin:0;color:#194e3c}
+.diagnosticIssueButtons{display:flex;flex-wrap:wrap;gap:6px}
+.diagnosticIssueButtons button{background:white;color:#356a57;border:1px solid #bfd9cc;border-radius:8px;padding:8px 9px;font-size:11px;cursor:pointer;font-weight:650}
+.diagnosticIssueButtons .issueSelected{background:#177657;color:white;border-color:#177657}
+.diagnosticRoute{border:1px solid #dce8e1;border-radius:11px;background:white;padding:14px;display:grid;gap:10px;font-size:12px}
+.diagnosticRoute>b{font-size:13px;color:#164f3b}
+.diagnosticRoute>div{display:grid;gap:3px}
+.diagnosticRoute small{color:#658276;font-size:11px}
+.diagnosticRoute strong{font-weight:670;overflow-wrap:anywhere}
+.diagnosticRoute code{font-size:11px;color:#3a6b58;overflow-wrap:anywhere}
+.diagnosticRoute span{color:#4f665d;line-height:1.5}
+@media(max-width:900px){.diagnosticLayout{grid-template-columns:1fr}.diagnosticRoles{max-height:280px}}
