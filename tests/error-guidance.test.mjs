@@ -19,7 +19,7 @@ test("every current annual and weekly category has actionable guidance", () => {
     assert.ok(item.description && item.owner && item.retry && item.steps.length>=2);
     assert.ok(item.steps.every(step=>typeof step==="string" && step.length>10));
   }
-  assert.equal(byCode.size,37);
+  assert.equal(byCode.size,38);
   assert.equal(guide.sourceUrl,"https://wiki.is-mis.ru/pages/viewpage.action?pageId=107708704");
 });
 test("ambiguous errors require details and duplicate registration is not blindly retried", () => {

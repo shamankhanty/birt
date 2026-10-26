@@ -12,8 +12,8 @@ test("confirmed v5.2.4 facts remain traceable after v5.2.5 manual additions", ()
   assert.match(firstDay.sourceNote, /числитель и знаменатель сверены/u);
 
   const prescription = agreement.get("39.1");
-  assert.equal(prescription.regionalFact, "1 344 250 СЭМД");
-  assert.equal(prescription.regionalPeriod, "01.01–22.10.2026");
+  assert.equal(prescription.regionalFact, "1 364 313 СЭМД");
+  assert.equal(prescription.regionalPeriod, "01.01–25.10.2026");
   assert.equal(prescription.status, "Справочно");
 });
 

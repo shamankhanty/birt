@@ -14,7 +14,7 @@ function auditFixture(pythonCase) {
     "    return row",
     pythonCase,
   ].join("\n");
-  const r = spawnSync("python3", ["-c", code], { encoding: "utf8" });
+  const r = spawnSync(process.env.PYTHON || (process.platform === "win32" ? "python" : "python3"), ["-c", code], { encoding: "utf8" });
   assert.equal(r.status, 0, r.stderr || r.stdout);
   return JSON.parse(r.stdout);
 }
