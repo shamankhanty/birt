@@ -63,9 +63,9 @@ test("doctorsAll operational snapshot is shown instead of September monthly resu
   assert.equal(physicianWeekly.previousSummary.doctorsAll.denominator, 13671);
   assert.equal(physicianWeekly.periods.doctorsAll.date, "24.10.2026");
   assert.equal(physicianWeekly.previousPeriods.doctorsAll.date, "21.10.2026");
-  assert.match(page, /const isOperationalPhysicianSnapshot =[\\s\\S]*?isPhysicianMetric\\(matrixMetric\\)/u);
+  assert.match(page, /const isOperationalPhysicianSnapshot =[\s\S]*?isPhysicianMetric\(matrixMetric\)/u);
   assert.match(page, /const physicianOperationalSummary = isOperationalPhysicianSnapshot/u);
-  assert.match(page, /const indicatorRows = \\(isOperationalPhysicianSnapshot/u);
+  assert.match(page, /const indicatorRows = \(isOperationalPhysicianSnapshot/u);
   assert.match(page, /const operationalRegionalCurrent = isOperationalPhysicianSnapshot/u);
   assert.match(page, /const regionalPrevious = isOperationalPhysicianSnapshot/u);
   assert.match(page, /Месячный результат и рейтинг остаются за/u);
