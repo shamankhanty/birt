@@ -87,9 +87,9 @@ test("doctorsLevel3 operational snapshot retains both comparable October cuts", 
 });
 
 test("physician sidebar distinguishes closed month from operational source cut", () => {
-  assert.match(page, /if \\(isPhysicianMetric\\(id\\) && physicianMetrics.datasets\\[id\\]\\)/u);
+  assert.match(page, /if \(isPhysicianMetric\(id\) && physicianMetrics.datasets\[id\]\)/u);
   assert.match(page, /Месяцы/u);
-  assert.match(page, /Оперативно \\{operationalDate.slice\\(0, 5\\)\\}/u);
+  assert.match(page, /Оперативно \{operationalDate.slice\(0, 5\)\}/u);
   assert.match(page, /currentPhysicianFact/u);
-  assert.match(page, /statusFor\\(isOperationalPhysicianSnapshot \\? operationalRegionalCurrent : regionalFact/u);
+  assert.match(page, /statusFor\(isOperationalPhysicianSnapshot \? operationalRegionalCurrent : regionalFact/u);
 });
