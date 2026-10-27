@@ -3,9 +3,12 @@
 import { useMemo, useState } from "react";
 import raw from "./frmr-reconciliation-data.json";
 import departmentRaw from "./frmr-department-details.json";
+import last4Raw from "./frmr-last4-records.json";
 import styles from "./frmr-reconciliation.module.css";
 
-type DepartmentGroup = { mo: string; role: string; name: string; oid: string; noPosition: number; wrongDepartment: number; count: number };
+type DepartmentGroup = { mo: string; role: string; name: string; oid: string; moIndex: number; roleIndex: number; spIndex: number; noPosition: number; wrongDepartment: number; count: number };
+type StaffRecord = [number, number, number, string | null, number, number];
+const staffRecords = last4Raw.rows as unknown as StaffRecord[];
 const officialPrefix = "1.2.643.5.1.13.13.12.2.16.";
 const departmentRows: DepartmentGroup[] = (
   departmentRaw.rows as number[][]
@@ -15,6 +18,9 @@ const departmentRows: DepartmentGroup[] = (
   if (spMoIndex !== moIndex) throw new Error("Несоответствие OID МО при загрузке детализации ФРМР");
   return {
     mo,
+    moIndex,
+    roleIndex,
+    spIndex,
     role: departmentRaw.roles[roleIndex].replace(/^Врач\s*-\s*/iu, "").replace(/^Врач\s+/iu, "").toLocaleLowerCase("ru"),
     name: spName,
     oid: officialPrefix + mo + ".0." + spSuffix,
@@ -64,6 +70,7 @@ export default function FrmrReconciliation() {
   const [activeDepartment, setActiveDepartment] = useState<string | null>(null);
   const [inspectionType, setInspectionType] = useState<"all" | "mo" | "department">("all");
   const [inspectionCopied, setInspectionCopied] = useState(false);
+  const [last4Query, setLast4Query] = useState("");
 
   const selected = orgs.find((row) => row.id === selectedId) ?? orgs[0];
   const previousTotal = orgs.reduce((sum, row) => sum + (row.previous ?? 0), 0);
@@ -104,12 +111,25 @@ export default function FrmrReconciliation() {
   const roleDepartments = allSelectedGroups.filter((row) => row.role === activeRole)
     .sort((a,b) => b.count-a.count || a.name.localeCompare(b.name,"ru"));
   const selectedDepartment = roleDepartments.find((row)=>row.oid===activeDepartment) ?? null;
+  const detailRecords = selectedDepartment
+    ? staffRecords.filter(([mo,role,sp,,issue]) =>
+        mo === selectedDepartment.moIndex &&
+        role === selectedDepartment.roleIndex &&
+        sp === selectedDepartment.spIndex &&
+        (inspectionType === "all" || (inspectionType === "mo" ? issue === 0 : issue === 1))
+      )
+    : [];
+  const visibleRecords = detailRecords.filter((rec) =>
+    !last4Query.trim() ||
+    (rec[3] !== null && rec[3].includes(last4Query.replace(/\D/g,"")))
+  );
   const resetInspection = () => {
     setRoleQuery("");
     setActiveRole(null);
     setActiveDepartment(null);
     setInspectionType("all");
     setInspectionCopied(false);
+    setLast4Query("");
   };
   const inspectionText = [
     "Сверка должностей ФРМР ↔ ГИС · 22.10.2026",
@@ -266,7 +286,7 @@ export default function FrmrReconciliation() {
             <div className={styles.panelHead}>
               <div>
                 <h2>Где искать расхождения — маршрут для МО</h2>
-                <p className={styles.muted}>Выберите должность и конкретное структурное подразделение. Отображаются реальные OID СП и категории ошибок по первичной сверке для всех МО. Без файлов, скачиваний и персональных данных в публичном разделе.</p>
+                <p className={styles.muted}>Выберите должность и структурное подразделение. Ниже появятся конкретные записи, последние четыре цифры СНИЛС, OID СП и путь исправления по первичной сверке.</p>
               </div>
               <span className={styles.pill}>Срез · 22.10.2026</span>
             </div>
@@ -281,7 +301,7 @@ export default function FrmrReconciliation() {
                 <div className={styles.diagnosticRoles}>
                   {diagnosticRoles.map(([role, count]) => (
                     <button key={role} className={[styles.diagnosticRole, activeRole === role ? styles.diagnosticRoleActive : ""].join(" ")}
-                      onClick={() => { setActiveRole(role); setActiveDepartment(null); setInspectionType("all"); setInspectionCopied(false); }}
+                      onClick={() => { setActiveRole(role); setActiveDepartment(null); setInspectionType("all"); setLast4Query(""); setInspectionCopied(false); }}
                       type="button" aria-pressed={activeRole === role}>
                       <span>{role}</span><b>{number(count)} <small>зап.</small></b>
                     </button>
@@ -298,7 +318,7 @@ export default function FrmrReconciliation() {
                     <div className={styles.frmrDepartmentList}>
                       {roleDepartments.map((dep) => <button type="button" key={dep.oid}
                         className={[styles.frmrDepartment, selectedDepartment?.oid===dep.oid ? styles.frmrDepartmentActive : ""].join(" ")}
-                        onClick={() => {setActiveDepartment(dep.oid);setInspectionType("all");setInspectionCopied(false);}}>
+                        onClick={() => {setActiveDepartment(dep.oid);setInspectionType("all");setLast4Query("");setInspectionCopied(false);}}>
                         <span><b>{dep.name}</b><small>OID СП: {dep.oid}</small><small>Нет должности: {number(dep.noPosition)} · не совпадает СП: {number(dep.wrongDepartment)}</small></span>
                         <strong>{number(dep.count)}</strong>
                       </button>)}
@@ -337,13 +357,40 @@ export default function FrmrReconciliation() {
                   {((inspectionType==="mo"&&selectedDepartment.noPosition===0)||(inspectionType==="department"&&selectedDepartment.wrongDepartment===0)) && (
                     <p className={styles.muted}>Для этого подразделения записей выбранного типа не выявлено.</p>
                   )}
+                  <section className={styles.frmrEmployeeRecords} data-testid="frmr-snils-last4-records">
+                    <div className={styles.frmrEmployeeHeader}>
+                      <div>
+                        <h4>4. Конкретные записи — СНИЛС (4 цифры)</h4>
+                        <p className={styles.muted}>Первые 7 цифр скрыты и отсутствуют в данных сайта. Номер строки помогает найти запись в исходной ведомости. Срез 22.10.2026.</p>
+                      </div>
+                      <strong>{number(detailRecords.length)} записей</strong>
+                    </div>
+                    <input className={styles.input} type="search"
+                      value={last4Query} onChange={(e)=>setLast4Query(e.target.value)}
+                      placeholder="Найти по последним 4 цифрам…" aria-label="Поиск по последним четырем цифрам СНИЛС"
+                      inputMode="numeric" maxLength={4}/>
+                    <div className={styles.frmrRecordTableWrap}>
+                      <table className={styles.table}>
+                        <thead><tr><th>Строка в выгрузке</th><th>СНИЛС</th><th>Причина расхождения</th><th>Что проверить</th></tr></thead>
+                        <tbody>{visibleRecords.map((rec,i)=><tr key={rec[5]+"-"+i}>
+                          <td>№ {rec[5]}</td>
+                          <td className={styles.frmrLastFour}>{rec[3]===null ? "Нет СНИЛС" : "•••-•••-•"+rec[3]}</td>
+                          <td>{last4Raw.issues[rec[4]]}</td>
+                          <td>{rec[4]===0
+                            ? "Сверить сотрудника и должность на уровне МО в ФРМР и ГИС; установить, какая запись неактуальна."
+                            : "Сверить OID СП и филиала в ФРМР и ГИС; при спорном сопоставлении обратиться в РМИАЦ."}</td>
+                        </tr>)}</tbody>
+                      </table>
+                      {visibleRecords.length===0 && <p className={styles.muted}>Записей с такими последними цифрами в выбранном подразделении нет.</p>}
+                    </div>
+                  </section>
                   <button className={styles.button} type="button" onClick={async()=>{try {await navigator.clipboard.writeText(inspectionText);setInspectionCopied(true);} catch {setInspectionCopied(false);}}}>
                     {inspectionCopied ? "Маршрут проверки скопирован" : "Скопировать маршрут проверки"}
                   </button>
                 </>
               ) : <p className={styles.muted}>Выберите должность и подразделение выше. Будут показаны только подтверждённые для этого СП категории ошибок.</p>}
             </div>
-            <p className={styles.privateCaution}>В открытом дашборде персональные СНИЛС и построчные сведения не опубликованы. Для определения сотрудника используйте индивидуальную конфиденциальную ведомость своей МО (первые две цифры СНИЛС скрыты). Это не делает номер анонимным. Категории ошибок рассчитаны на уровне должности и СП; без первичных идентификаторов нельзя привязать их к конкретному сотруднику. Проверить влияние на запись ЕПГУ отдельно.</p>
+            <p className={styles.privateCaution}>Показаны только последние четыре цифры СНИЛС, первые семь удалены из публичной выгрузки. Это сокращает раскрытие данных, но не гарантирует полной анонимности в малочисленных подразделениях. ФИО и ставки не опубликованы. Подтверждение причины ошибки и влияния на запись ЕПГУ проводится отдельно.</p>
           </section>
           <div className={styles.grid}>
             <section className={styles.panel}>
