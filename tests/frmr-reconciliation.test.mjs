@@ -41,11 +41,13 @@ test("public manager and MO dashboards do not carry per-person identifiers", () 
   assert.match(component,/К общей сводке/u);
   assert.doesNotMatch(component,/Скопировать поручение для МО/u);
 });
-test("new in-development section is available on desktop and mobile but monthly rating is unchanged", () => {
+test("FRMR/GIS is promoted to primary desktop and mobile navigation without changing rating calculations", () => {
   assert.match(page,/import FrmrReconciliation from "\.\/frmr-reconciliation"/u);
   assert.match(page,/\| "frmr"/u);
   assert.match(page,/\["frmr", "ФРМР ↔ ГИС/u);
   assert.match(page,/tab === "frmr" && <FrmrReconciliation/u);
-  assert.match(page,/developmentSection \$\{tab === "frmr"/u);
+  assert.match(page,/\["frmr", "ФРМР ↔ ГИС", "06"\]/u);
+  assert.match(page,/<span>06<\/span> ФРМР ↔ ГИС/u);
+  assert.doesNotMatch(page,/developmentSection \$\{tab === "frmr"/u);
   assert.doesNotMatch(component,/physicianMetrics\.datasets/u);
 });
