@@ -10,23 +10,29 @@ test("medical organizations can inspect errors inline with no Excel or downloada
   assert.match(component, /frmr-organization-diagnostic/u);
   assert.match(component, /Маршрут для МО|маршрут для МО/u);
   assert.match(component, /Поиск по проблемным должностям/u);
-  assert.match(component, /Скопировать маршрут проверки/u);
+  assert.doesNotMatch(component, /Скопировать маршрут проверки/u);
   assert.doesNotMatch(component, /type="file"|parseLocalPrivateFrmr|openPrivateWorkbook|download=|FileReader|file\.arrayBuffer/u);
   assert.doesNotMatch(component, /import .*frmr-private-local/u);
   assert.doesNotMatch(component, /СНИЛС.*r\.snils/u);
 });
 
-test("MO details show verified department counts but do not expose employee identifiers", () => {
-  assert.match(component, /Категории ошибок рассчитаны на уровне должности и СП/u);
-  assert.match(component, /не опубликованы/u);
+test("MO details retain department navigation and limited SNILS while omitting flagged text", () => {
+  assert.match(component, /frmr-snils-last4-records/u);
+  assert.doesNotMatch(component, /Приоритетность корректировки не равна числу расхождений/u);
   assert.match(component, /OID СП/u);
-  assert.match(component, /без первичных идентификаторов нельзя привязать/u);
+  assert.doesNotMatch(component, /подробный реестр сотрудников должен находиться в защищённом контуре ГИС/u);
   assert.match(component, /selectedDepartment\.oid/u);
   assert.match(component, /ФРМР → трудоустройство/u);
   assert.match(component, /ГИС → сотрудники/u);
   assert.match(component, /resetInspection\(\)/u);
   assert.match(style, /diagnosticLayout/u);
   assert.match(style, /diagnosticRoleActive/u);
+  assert.match(style, /moSearchResults/u);
+  assert.match(component, /aria-autocomplete="list"/u);
+  assert.match(component, /moMatches/u);
+  assert.match(component, /row\.id\.includes\(q\)/u);
+  assert.doesNotMatch(component, /Скопировать поручение для МО|Маршрут проверки скопирован/u);
+  assert.doesNotMatch(component, /Показаны только последние четыре цифры СНИЛС, первые семь удалены/u);
 });
 
 test("existing source retains exact source totals without synthesizing unseen names", () => {
