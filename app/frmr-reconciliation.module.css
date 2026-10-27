@@ -119,3 +119,18 @@
 .diagnosticRoute code{font-size:11px;color:#3a6b58;overflow-wrap:anywhere}
 .diagnosticRoute span{color:#4f665d;line-height:1.5}
 @media(max-width:900px){.diagnosticLayout{grid-template-columns:1fr}.diagnosticRoles{max-height:280px}}
+
+
+/* FРМР × ГИС: exact OID of the structural subdivision (not the MO OID). */
+.frmrDepartmentList{max-height:380px;overflow:auto;display:flex;flex-direction:column;gap:7px;margin:12px 0 0}
+.frmrDepartment{display:flex;justify-content:space-between;align-items:center;text-align:left;gap:12px;padding:11px 13px;border:1px solid #d7e8dc;border-radius:11px;background:#f7fbf8;color:#244b39;cursor:pointer;font-size:12px;width:100%}
+.frmrDepartment:hover{background:#eff7f0}
+.frmrDepartmentActive{border-color:#168263;background:#e1f3e9;box-shadow:inset 4px 0 #168263}
+.frmrDepartment span{flex:1;min-width:0}
+.frmrDepartment b{display:block;font-weight:700}
+.frmrDepartment small{display:block;color:#658275;font-size:11px;overflow-wrap:anywhere;margin-top:4px;line-height:1.5}
+.frmrDepartment strong{font-size:16px;color:#126c4e;white-space:nowrap}
+.frmrDepartmentDetails{background:#f9fcfa;border:1px solid #ddebe3;border-radius:15px;padding:20px;margin-top:15px}
+.frmrDepartmentDetails h3{margin:0 0 11px;font-size:16px}
+.frmrDepartmentDetails>.button{margin-top:16px}
+@media(max-width:650px){.frmrDepartmentDetails{padding:14px}.frmrDepartment{padding:9px}}
