@@ -5914,19 +5914,20 @@ export default function Home() {
             {[
               ["unified", "Расширенная сводка", "01"],
               ["matrix", "Показатели", "02"],
-              ["ranking", "Рейтинг медицинских организаций", "03"],
-              ["hearings", "МО для заслушивания", "04"],
-              ["waybill", "Электронный путевой лист", "06"],
+              ["hearings", "МО для заслушивания", "03"],
+              ["ranking", "Месячный рейтинг МО", "04"],
+              ["methods", "Методика расчёта", "05"],
+              ["frmr", "ФРМР ↔ ГИС", "06"],
               ["remdErrors", "Ошибки РЭМД", "07"],
-              ["divider", "В разработке", ""],
-              ["frmr", "ФРМР ↔ ГИС · кадровые должности", "13"],
-              ["methods", "Методики расчёта", "09"],
-              ["history", "История обновлений", "10"],
-              ["semd", "Все виды СЭМД", "11"],
-              ["errors", "Ошибки методик", "12"],
-              ["max", "МАХ", "05"],
+              ["extraDivider", "Другие разделы", ""],
+              ["waybill", "Электронный путевой лист", "08"],
+              ["devDivider", "В разработке", ""],
+              ["history", "История обновлений", "09"],
+              ["semd", "Все виды СЭМД", "10"],
+              ["errors", "Ошибки методик", "11"],
+              ["max", "МАХ", "12"],
             ].map(([id, label, number]) =>
-              id === "divider" ? (
+              id === "extraDivider" || id === "devDivider" ? (
                 <div className="mobileSectionDivider" key={id}>
                   {label}
                 </div>
@@ -5993,114 +5994,82 @@ export default function Home() {
               <p className="sideLabel">РАЗДЕЛЫ</p>
               <button
                 className={tab === "unified" ? "active" : ""}
-                onClick={() => {
-                  setTab("unified");
-                  setShowMatrixSections(false);
-                }}
+                onClick={() => { setTab("unified"); setShowMatrixSections(false); }}
               >
                 <span>01</span> Расширенная сводка
               </button>
               <button
                 className={tab === "matrix" ? "active" : ""}
-                onClick={() => {
-                  setTab("matrix");
-                  setShowMatrixSections(false);
-                }}
+                onClick={() => { setTab("matrix"); setShowMatrixSections(false); }}
               >
                 <span>02</span> Показатели
               </button>
               <button
-                className={tab === "ranking" ? "active" : ""}
-                onClick={() => {
-                  setTab("ranking");
-                  setShowMatrixSections(false);
-                }}
-              >
-                <span>03</span> Рейтинг медицинских организаций
-              </button>
-              <button
                 className={tab === "hearings" ? "active" : ""}
-                onClick={() => {
-                  setTab("hearings");
-                  setShowMatrixSections(false);
-                }}
+                onClick={() => { setTab("hearings"); setShowMatrixSections(false); }}
               >
-                <span>04</span> МО для заслушивания{" "}
-                <b>
-                  {
-                    hearingRows.filter((row) => row.level === "mandatory")
-                      .length
-                  }
-                </b>
+                <span>03</span> МО для заслушивания{" "}
+                <b>{hearingRows.filter((row) => row.level === "mandatory").length}</b>
               </button>
               <button
-                className={tab === "waybill" ? "active" : ""}
-                onClick={() => {
-                  setTab("waybill");
-                  setShowMatrixSections(false);
-                }}
+                className={tab === "ranking" ? "active" : ""}
+                onClick={() => { setTab("ranking"); setShowMatrixSections(false); }}
               >
-                <span>06</span> Электронный путевой лист
+                <span>04</span> Месячный рейтинг МО
+              </button>
+              <button
+                className={tab === "methods" ? "active" : ""}
+                onClick={() => { setTab("methods"); setShowMatrixSections(false); }}
+              >
+                <span>05</span> Методика расчёта
+              </button>
+              <button
+                className={tab === "frmr" ? "active" : ""}
+                onClick={() => { setTab("frmr"); setShowMatrixSections(false); }}
+              >
+                <span>06</span> ФРМР ↔ ГИС
               </button>
               <button
                 className={tab === "remdErrors" ? "active" : ""}
-                onClick={() => {
-                  setTab("remdErrors");
-                  setShowMatrixSections(false);
-                }}
+                onClick={() => { setTab("remdErrors"); setShowMatrixSections(false); }}
               >
                 <span>07</span> Ошибки РЭМД
+              </button>
+              <div className="sideDevelopment">
+                <span>Другие разделы</span>
+              </div>
+              <button
+                className={tab === "waybill" ? "active" : ""}
+                onClick={() => { setTab("waybill"); setShowMatrixSections(false); }}
+              >
+                <span>08</span> Электронный путевой лист
               </button>
               <div className="sideDevelopment">
                 <span>В разработке</span>
               </div>
               <button
-                className={`developmentSection ${tab === "frmr" ? "active" : ""}`}
-                onClick={() => {setTab("frmr"); setShowMatrixSections(false);}}
+                className={tab === "history" ? "developmentSection active" : "developmentSection"}
+                onClick={() => { setTab("history"); setShowMatrixSections(false); }}
               >
-                <span>13</span> ФРМР ↔ ГИС <b>новое</b>
+                <span>09</span> История обновлений
               </button>
               <button
-                className={`developmentSection ${tab === "methods" ? "active" : ""}`}
-                onClick={() => {
-                  setTab("methods");
-                  setShowMatrixSections(false);
-                }}
+                className={tab === "semd" ? "developmentSection active" : "developmentSection"}
+                onClick={() => { setTab("semd"); setShowMatrixSections(false); }}
               >
-                <span>09</span> Методики расчёта
+                <span>10</span> Все виды СЭМД
               </button>
               <button
-                className={`developmentSection ${tab === "history" ? "active" : ""}`}
-                onClick={() => {
-                  setTab("history");
-                  setShowMatrixSections(false);
-                }}
+                className={tab === "errors" ? "developmentSection active" : "developmentSection"}
+                onClick={() => { setTab("errors"); setShowMatrixSections(false); }}
               >
-                <span>10</span> История обновлений
+                <span>11</span> Ошибки методик <b>{calcErrors.length}</b>
               </button>
               <button
-                className={`developmentSection ${tab === "semd" ? "active" : ""}`}
-                onClick={() => {
-                  setTab("semd");
-                  setShowMatrixSections(false);
-                }}
-              >
-                <span>11</span> Все виды СЭМД
-              </button>
-              <button
-                className={`developmentSection ${tab === "errors" ? "active" : ""}`}
-                onClick={() => {
-                  setTab("errors");
-                  setShowMatrixSections(false);
-                }}
-              >
-                <span>12</span> Ошибки методик <b>{calcErrors.length}</b>
-              </button>
-              <button
-                className={`developmentSection ${tab === "max" ? "active" : ""}`}
+                className={tab === "max" ? "developmentSection active" : "developmentSection"}
                 onClick={() => { setTab("max"); setShowMatrixSections(false); }}
               >
-                <span>05</span> МАХ
+                <span>12</span> МАХ
               </button>
               <div className="sideFoot">
                 <p>Версия {DASHBOARD_VERSION}</p>
@@ -6975,7 +6944,7 @@ export default function Home() {
               <div className="pageHead ratingHead">
                 <div>
                   <p className="eyebrow">ПОСЛЕДНИЙ ПОЛНЫЙ МЕСЯЦ</p>
-                  <h1>Рейтинг медицинских организаций — {latestFullMonth.label}</h1>
+                  <h1>Месячный рейтинг МО — {latestFullMonth.label}</h1>
                   {/* Baseline v4.6.0: Рейтинг медицинских организаций — август 2026 */}
                   <p>
                     МО сравниваются только внутри своего типа · {reportingPeriods.hasPartialNewerMonth
@@ -10762,7 +10731,7 @@ export default function Home() {
               <div className="pageHead methodsHead">
                 <div>
                   <p className="eyebrow">ЕДИНЫЙ СПРАВОЧНИК</p>
-                  <h1>Методики расчёта показателей</h1>
+                  <h1>Методика расчёта показателей</h1>
                   <p>
                     Формулы федеральных показателей приведены по методическим
                     рекомендациям от 10.07.2026; региональные абсолютные

@@ -31,8 +31,8 @@ test("MAX has one active service and compact monthly cards", () => {
   assert.match(page, /maxMonthCards/u);
   assert.match(css, /v5\.2\.2 compact MAX and service selector/u);
   assert.match(page, /const DASHBOARD_VERSION = RELEASE_VERSION/u);
-  assert.ok(page.indexOf('["max", "МАХ", "05"]') > page.indexOf('["divider", "В разработке", ""]'));
-  assert.ok(page.includes('developmentSection ${tab === "max"'));
+  assert.ok(page.indexOf('["max", "МАХ", "12"]') > page.indexOf('["devDivider", "В разработке", ""]'));
+  assert.match(page, /tab === "max" \? "developmentSection active" : "developmentSection"/u);
   assert.doesNotMatch(page, /className=\{tab === "max" \? "active" : ""\}/u);
   assert.match(css, /v5\.2\.3 hearing TOP-10 readability/u);
 });
