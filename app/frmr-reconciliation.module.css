@@ -148,3 +148,15 @@
 .frmrRecordTableWrap .table td:first-child{min-width:98px}
 .frmrLastFour{font:750 13px ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;white-space:nowrap!important;color:#205d46}
 @media(max-width:650px){.frmrEmployeeHeader>strong{font-size:11px}.frmrRecordTableWrap .table{min-width:610px}}
+
+
+/* MO chooser: searchable by organization name and OID, responsive and keyboard-friendly. */
+.moSearchBox{position:relative;width:min(100%,570px);z-index:3}
+.moSearchInput{width:100%;display:block}
+.moSearchResults{position:absolute;left:0;right:0;top:calc(100% + 5px);z-index:20;max-height:300px;overflow-y:auto;border:1px solid #b9d8ca;background:#fff;box-shadow:0 12px 34px #123f3229;border-radius:12px;padding:6px}
+.moSearchOption{width:100%;display:flex;flex-direction:column;gap:4px;align-items:flex-start;text-align:left;border:0;border-radius:7px;background:transparent;padding:9px 11px;color:#174b3a;cursor:pointer;font-size:12px;line-height:1.4}
+.moSearchOption span{font-weight:700}
+.moSearchOption small{font-size:10px;color:#687e74;word-break:break-all}
+.moSearchOption:hover,.moSearchOptionActive{background:#e8f5ee}
+.moSearchEmpty{font-size:12px;color:#657b71;padding:10px 12px;margin:0}
+@media(max-width:650px){.moSearchBox{width:100%}.moSearchResults{max-height:240px}}

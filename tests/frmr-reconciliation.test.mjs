@@ -35,7 +35,9 @@ test("public manager and MO dashboards do not carry per-person identifiers", () 
   assert.match(component,/Обзор для министра/u);
   assert.match(component,/Карточка МО и действия/u);
   assert.match(component,/не подтверждено/u);
-  assert.match(component,/Скопировать поручение для МО/u);
+  assert.match(component,/Поиск медицинской организации/u);
+  assert.match(component,/К общей сводке/u);
+  assert.doesNotMatch(component,/Скопировать поручение для МО/u);
 });
 test("new in-development section is available on desktop and mobile but monthly rating is unchanged", () => {
   assert.match(page,/import FrmrReconciliation from "\.\/frmr-reconciliation"/u);
