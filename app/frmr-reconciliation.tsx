@@ -173,7 +173,7 @@ export default function FrmrReconciliation() {
       </section>
 
       <div className={styles.tabs} role="group" aria-label="Представление раздела">
-        <button className={[styles.tab, view === "minister" ? styles.tabActive : ""].join(" ")} onClick={() => setView("minister")} aria-pressed={view === "minister"}>Обзор для министра</button>
+        <button className={[styles.tab, view === "minister" ? styles.tabActive : ""].join(" ")} onClick={() => setView("minister")} aria-pressed={view === "minister"}>Обзор</button>
         <button className={[styles.tab, view === "organization" ? styles.tabActive : ""].join(" ")} onClick={() => setView("organization")} aria-pressed={view === "organization"}>Карточка МО и действия</button>
       </div>
 
@@ -226,19 +226,10 @@ export default function FrmrReconciliation() {
               {filtered.length === 0 && <p className={styles.muted}>По выбранным фильтрам МО не найдены.</p>}
             </div>
           </section>
-          <section className={styles.grid}>
-            <div className={styles.panel}>
-              <h2>Должности с наибольшим числом расхождений</h2>
-              <p className={styles.muted}>Показатели относятся к наименованиям должностей ФРМР, не к квалификационным сертификатам.</p>
-              {topSpecialties.slice(0,8).map(([name,count]) => <div className={styles.spec} key={name}><span>{name}</span><strong>{number(count)}</strong></div>)}
-            </div>
-            <div className={styles.panel}>
-              <h2>Что должен видеть министр</h2>
-              <div className={styles.action}><b className={styles.actionNum}>1</b><div><b>Изменение с прошлого среза</b><span>В каких МО проблема сокращается, сохраняется или усиливается.</span></div></div>
-              <div className={styles.action}><b className={styles.actionNum}>2</b><div><b>Системные причины</b><span>Разделение отсутствующих должностей и несоответствий подразделений.</span></div></div>
-              <div className={styles.action}><b className={styles.actionNum}>3</b><div><b>Влияние на пациента</b><span>Пока не рассчитано. Следующий этап — связать кадровые записи с расписаниями, опубликованными слотами и ошибками записи.</span></div></div>
-              <div className={styles.warning}>Не следует сравнивать разные типы МО только по абсолютному числу расхождений: численность кадров и функции организаций различаются.</div>
-            </div>
+          <section className={styles.panel}>
+            <h2>Должности с наибольшим числом расхождений</h2>
+            <p className={styles.muted}>Показатели относятся к наименованиям должностей ФРМР, не к квалификационным сертификатам.</p>
+            {topSpecialties.slice(0,8).map(([name,count]) => <div className={styles.spec} key={name}><span>{name}</span><strong>{number(count)}</strong></div>)}
           </section>
         </>
       ) : (
