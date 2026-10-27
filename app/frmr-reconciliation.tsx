@@ -64,15 +64,21 @@ export default function FrmrReconciliation() {
   const [sort, setSort] = useState<"count" | "worsening" | "improving" | "name">("count");
   const [search, setSearch] = useState("");
   const [selectedId, setSelectedId] = useState("1094");
-  const [copied, setCopied] = useState(false);
+  const [moQuery, setMoQuery] = useState(() => sortedOrgs.find((row) => row.id === "1094")?.name ?? "");
+  const [moSearchOpen, setMoSearchOpen] = useState(false);
+  const [moHighlight, setMoHighlight] = useState(0);
   const [roleQuery, setRoleQuery] = useState("");
   const [activeRole, setActiveRole] = useState<string | null>(null);
   const [activeDepartment, setActiveDepartment] = useState<string | null>(null);
   const [inspectionType, setInspectionType] = useState<"all" | "mo" | "department">("all");
-  const [inspectionCopied, setInspectionCopied] = useState(false);
   const [last4Query, setLast4Query] = useState("");
 
   const selected = orgs.find((row) => row.id === selectedId) ?? orgs[0];
+  const moMatches = sortedOrgs.filter((row) => {
+    const q = moQuery.trim().toLocaleLowerCase("ru");
+    return !q || row.name.toLocaleLowerCase("ru").includes(q) ||
+      row.id.includes(q) || (officialPrefix + row.id).includes(q);
+  }).slice(0, 30);
   const previousTotal = orgs.reduce((sum, row) => sum + (row.previous ?? 0), 0);
   const currentTotal = orgs.reduce((sum, row) => sum + row.current, 0);
   const febTotal = orgs.reduce((sum, row) => sum + (row.feb ?? 0), 0);
@@ -128,45 +134,16 @@ export default function FrmrReconciliation() {
     setActiveRole(null);
     setActiveDepartment(null);
     setInspectionType("all");
-    setInspectionCopied(false);
     setLast4Query("");
   };
-  const inspectionText = [
-    "Сверка должностей ФРМР ↔ ГИС · 22.10.2026",
-    "Медицинская организация: " + selected.name,
-    "OID МО: " + officialPrefix + selected.id,
-    "Проверяемая должность: " + (activeRole || "не выбрана"),
-    "Структурное подразделение ФРМР: " + (selectedDepartment?.name || "не выбрано"),
-    "OID СП: " + (selectedDepartment?.oid || "не выбран"),
-    "Нет должности на уровне МО в ГИС: " + (selectedDepartment?.noPosition ?? "нет выбора") + " записей.",
-    "Несовпадение структурного подразделения: " + (selectedDepartment?.wrongDepartment ?? "нет выбора") + " записей.",
-    "1. Проверить кадровое основание и актуальность трудоустройства в ФРМР.",
-    "2. Проверить наличие того же сотрудника и должности в ГИС, сравнить OID МО и СП.",
-    "3. При расхождении OID филиала и рабочего СП проверить методику сопоставления с РМИАЦ.",
-    "4. Подтвердить исправление по следующей сопоставимой выгрузке.",
-    "Конкретные СНИЛС находятся только в индивидуальной конфиденциальной ведомости МО.",
-  ].join("\\n");
-
-  const taskText = [
-    "Контроль расхождений ФРМР ↔ ГИС на 22.10.2026",
-    "Медицинская организация: " + selected.name,
-    "OID МО: 1.2.643.5.1.13.13.12.2.16." + selected.id,
-    "Расхождения: " + selected.current + " должностных записей (16.10: " + (selected.previous ?? "нет данных") + "; изменение " + signed(change(selected)) + ").",
-    "Нет соответствующей должности в ГИС на уровне МО: " + selected.stage1 + ".",
-    "Должность не соответствует структурному подразделению: " + selected.stage2 + ".",
-    "Поручение: провести по каждой записи проверку ФРМР и ГИС; подтвердить трудоустройство, актуальную должность и структурное подразделение; устранить причины; перепроверить результат следующей выгрузкой.",
-    "Отдельно проверить, влияет ли ошибка на расписание и публикацию слотов ЕПГУ. По одной этой сверке влияние на запись не подтверждено.",
-    "Указать ответственного исполнителя, срок и подтверждение исправления.",
-    "В публичной версии персональные данные и построчные идентификаторы сотрудников не размещены.",
-  ].join("\n");
-
-  const copyTask = async () => {
-    try {
-      await navigator.clipboard.writeText(taskText);
-      setCopied(true);
-    } catch {
-      setCopied(false);
-    }
+  const selectOrganization = (id: string) => {
+    const row = sortedOrgs.find((item) => item.id === id);
+    if (!row) return;
+    setSelectedId(id);
+    setMoQuery(row.name);
+    setMoSearchOpen(false);
+    setMoHighlight(0);
+    resetInspection();
   };
 
   const trendBars = (values: [string, number][]) => (
@@ -239,7 +216,7 @@ export default function FrmrReconciliation() {
                 <tbody>{filtered.map((row) => {
                   const delta = change(row);
                   return <tr key={row.id}>
-                    <td><button type="button" className={styles.clickName} onClick={() => {setSelectedId(row.id);setCopied(false);resetInspection();setView("organization");}}>{row.name}</button></td>
+                    <td><button type="button" className={styles.clickName} onClick={() => {selectOrganization(row.id);setView("organization");}}>{row.name}</button></td>
                     <td>{number(row.previous)}</td><td><b>{number(row.current)}</b></td>
                     <td className={[styles.delta,delta === null || delta === 0 ? styles.stable : delta > 0 ? styles.bad : styles.good].join(" ")}>{signed(delta)}</td>
                     <td>{number(row.stage1)}</td><td>{number(row.stage2)}</td>
@@ -268,10 +245,45 @@ export default function FrmrReconciliation() {
         <>
           <section className={styles.panel}>
             <div className={styles.moHeader}>
-              <div><h2>Карточка медицинской организации</h2><p className={styles.muted}>Выберите свою МО. Данные обезличены; подробный реестр сотрудников должен находиться в защищённом контуре ГИС.</p></div>
-              <select className={[styles.select,styles.moSelect].join(" ")} value={selected.id} onChange={(e)=>{setSelectedId(e.target.value);setCopied(false);resetInspection();}} aria-label="Выбор медицинской организации">
-                {sortedOrgs.map((row)=><option key={row.id} value={row.id}>{row.name}</option>)}
-              </select>
+              <h2>Карточка медицинской организации</h2>
+              <div className={styles.moSearchBox}
+                onBlur={(e) => { if (!e.currentTarget.contains(e.relatedTarget)) setMoSearchOpen(false); }}>
+                <input className={[styles.input, styles.moSearchInput].join(" ")} type="search"
+                  value={moQuery} role="combobox" aria-label="Поиск медицинской организации"
+                  aria-autocomplete="list" aria-expanded={moSearchOpen}
+                  aria-controls="frmr-mo-search-results"
+                  aria-activedescendant={moSearchOpen && moMatches.length ? "frmr-mo-option-" + moHighlight : undefined}
+                  placeholder="Найти МО по названию или OID…"
+                  onFocus={(e) => { setMoSearchOpen(true); setMoHighlight(0); e.currentTarget.select(); }}
+                  onChange={(e) => { setMoQuery(e.target.value); setMoSearchOpen(true); setMoHighlight(0); }}
+                  onKeyDown={(e) => {
+                    if (e.key === "Escape") { setMoSearchOpen(false); return; }
+                    if (e.key === "ArrowDown" || e.key === "ArrowUp") {
+                      e.preventDefault();
+                      setMoSearchOpen(true);
+                      setMoHighlight((index) => moMatches.length
+                        ? (index + (e.key === "ArrowDown" ? 1 : -1) + moMatches.length) % moMatches.length : 0);
+                    }
+                    if (e.key === "Enter" && moSearchOpen && moMatches[moHighlight]) {
+                      e.preventDefault();
+                      selectOrganization(moMatches[moHighlight].id);
+                    }
+                  }}/>
+                {moSearchOpen && (
+                  <div className={styles.moSearchResults} id="frmr-mo-search-results" role="listbox"
+                    aria-label="Найденные медицинские организации">
+                    {moMatches.length ? moMatches.map((row, index) =>
+                      <button type="button" role="option" id={"frmr-mo-option-" + index}
+                        key={row.id} aria-selected={row.id === selected.id}
+                        className={[styles.moSearchOption, index === moHighlight ? styles.moSearchOptionActive : ""].join(" ")}
+                        onMouseDown={(e) => e.preventDefault()}
+                        onClick={() => selectOrganization(row.id)}>
+                        <span>{row.name}</span><small>OID: {officialPrefix}{row.id}</small>
+                      </button>
+                    ) : <p className={styles.moSearchEmpty}>МО не найдена</p>}
+                  </div>
+                )}
+              </div>
               <span className={styles.muted}>OID: 1.2.643.5.1.13.13.12.2.16.{selected.id}</span>
             </div>
             <div className={styles.miniStats}>
@@ -301,7 +313,7 @@ export default function FrmrReconciliation() {
                 <div className={styles.diagnosticRoles}>
                   {diagnosticRoles.map(([role, count]) => (
                     <button key={role} className={[styles.diagnosticRole, activeRole === role ? styles.diagnosticRoleActive : ""].join(" ")}
-                      onClick={() => { setActiveRole(role); setActiveDepartment(null); setInspectionType("all"); setLast4Query(""); setInspectionCopied(false); }}
+                      onClick={() => { setActiveRole(role); setActiveDepartment(null); setInspectionType("all"); setLast4Query("");  }}
                       type="button" aria-pressed={activeRole === role}>
                       <span>{role}</span><b>{number(count)} <small>зап.</small></b>
                     </button>
@@ -318,7 +330,7 @@ export default function FrmrReconciliation() {
                     <div className={styles.frmrDepartmentList}>
                       {roleDepartments.map((dep) => <button type="button" key={dep.oid}
                         className={[styles.frmrDepartment, selectedDepartment?.oid===dep.oid ? styles.frmrDepartmentActive : ""].join(" ")}
-                        onClick={() => {setActiveDepartment(dep.oid);setInspectionType("all");setLast4Query("");setInspectionCopied(false);}}>
+                        onClick={() => {setActiveDepartment(dep.oid);setInspectionType("all");setLast4Query("");}}>
                         <span><b>{dep.name}</b><small>OID СП: {dep.oid}</small><small>Нет должности: {number(dep.noPosition)} · не совпадает СП: {number(dep.wrongDepartment)}</small></span>
                         <strong>{number(dep.count)}</strong>
                       </button>)}
@@ -384,13 +396,9 @@ export default function FrmrReconciliation() {
                       {visibleRecords.length===0 && <p className={styles.muted}>Записей с такими последними цифрами в выбранном подразделении нет.</p>}
                     </div>
                   </section>
-                  <button className={styles.button} type="button" onClick={async()=>{try {await navigator.clipboard.writeText(inspectionText);setInspectionCopied(true);} catch {setInspectionCopied(false);}}}>
-                    {inspectionCopied ? "Маршрут проверки скопирован" : "Скопировать маршрут проверки"}
-                  </button>
                 </>
               ) : <p className={styles.muted}>Выберите должность и подразделение выше. Будут показаны только подтверждённые для этого СП категории ошибок.</p>}
             </div>
-            <p className={styles.privateCaution}>Показаны только последние четыре цифры СНИЛС, первые семь удалены из публичной выгрузки. Это сокращает раскрытие данных, но не гарантирует полной анонимности в малочисленных подразделениях. ФИО и ставки не опубликованы. Подтверждение причины ошибки и влияния на запись ЕПГУ проводится отдельно. Категории ошибок рассчитаны на уровне должности и СП; без первичных идентификаторов нельзя привязать такие записи к конкретному сотруднику однозначно.</p>
           </section>
           <div className={styles.grid}>
             <section className={styles.panel}>
@@ -408,9 +416,7 @@ export default function FrmrReconciliation() {
               <div className={styles.action}><b className={styles.actionNum}>2</b><div><b>Уточнить подразделения ({number(selected.stage2)})</b><span>Сопоставить подразделение из ФРМО, филиал, должность и фактическое место работы.</span></div></div>
               <div className={styles.action}><b className={styles.actionNum}>3</b><div><b>Проверить запись пациентов</b><span>Выяснить, относится ли должность к амбулаторному приёму, есть ли расписание и опубликованы ли слоты на ЕПГУ.</span></div></div>
               <div className={styles.action}><b className={styles.actionNum}>4</b><div><b>Подтвердить исправление</b><span>Указать ответственного, срок, первопричину и результат повторной сверки.</span></div></div>
-              <div className={styles.warning}>Приоритетность корректировки не равна числу расхождений. Приоритет для пациента устанавливается только после проверки влияния на расписание и возможность записи.</div>
               <div className={styles.linkrow}>
-                <button className={styles.button} type="button" onClick={copyTask}>{copied ? "Поручение скопировано" : "Скопировать поручение для МО"}</button>
                 <button className={[styles.button,styles.ghost].join(" ")} type="button" onClick={()=>setView("minister")}>К общей сводке</button>
               </div>
             </section>
