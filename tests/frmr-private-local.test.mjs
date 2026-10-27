@@ -16,11 +16,12 @@ test("medical organizations can inspect errors inline with no Excel or downloada
   assert.doesNotMatch(component, /СНИЛС.*r\.snils/u);
 });
 
-test("MO detail makes clear that reasons are MO-wide and employee and department mappings unavailable", () => {
-  assert.match(component, /Категории ошибок по отдельной должности/u);
+test("MO details show verified department counts but do not expose employee identifiers", () => {
+  assert.match(component, /Категории ошибок рассчитаны на уровне должности и СП/u);
   assert.match(component, /не опубликованы/u);
   assert.match(component, /OID СП/u);
   assert.match(component, /без первичных идентификаторов нельзя привязать/u);
+  assert.match(component, /selectedDepartment\.oid/u);
   assert.match(component, /ФРМР → трудоустройство/u);
   assert.match(component, /ГИС → сотрудники/u);
   assert.match(component, /resetInspection\(\)/u);
