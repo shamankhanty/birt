@@ -134,3 +134,17 @@
 .frmrDepartmentDetails h3{margin:0 0 11px;font-size:16px}
 .frmrDepartmentDetails>.button{margin-top:16px}
 @media(max-width:650px){.frmrDepartmentDetails{padding:14px}.frmrDepartment{padding:9px}}
+
+
+/* Minimal staff-reference dataset: only four rightmost SNILS digits are rendered. */
+.frmrEmployeeRecords{margin-top:17px;border-top:1px solid #d9e9df;padding-top:17px}
+.frmrEmployeeHeader{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;margin-bottom:12px;flex-wrap:wrap}
+.frmrEmployeeHeader h4{font-size:15px;line-height:1.4;color:#184f3d;margin:0 0 6px}
+.frmrEmployeeHeader>strong{border-radius:20px;background:#e7f5ed;color:#176c50;padding:6px 10px;font-size:12px;white-space:nowrap}
+.frmrEmployeeRecords>.input{width:100%;max-width:350px}
+.frmrRecordTableWrap{margin:12px 0 4px;border:1px solid #dce9df;border-radius:11px;max-height:465px;overflow:auto}
+.frmrRecordTableWrap .table{min-width:680px;font-size:12px}
+.frmrRecordTableWrap .table th,.frmrRecordTableWrap .table td{text-align:left;white-space:normal;line-height:1.45}
+.frmrRecordTableWrap .table td:first-child{min-width:98px}
+.frmrLastFour{font:750 13px ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;white-space:nowrap!important;color:#205d46}
+@media(max-width:650px){.frmrEmployeeHeader>strong{font-size:11px}.frmrRecordTableWrap .table{min-width:610px}}
