@@ -2,8 +2,27 @@
 
 import { useMemo, useState } from "react";
 import raw from "./frmr-reconciliation-data.json";
+import departmentRaw from "./frmr-department-details.json";
 import styles from "./frmr-reconciliation.module.css";
 
+type DepartmentGroup = { mo: string; role: string; name: string; oid: string; noPosition: number; wrongDepartment: number; count: number };
+const officialPrefix = "1.2.643.5.1.13.13.12.2.16.";
+const departmentRows: DepartmentGroup[] = (
+  departmentRaw.rows as number[][]
+).map(([moIndex, roleIndex, spIndex, noPosition, wrongDepartment]) => {
+  const mo = departmentRaw.mos[moIndex];
+  const [spMoIndex, spSuffix, spName] = departmentRaw.sp[spIndex] as [number, string, string];
+  if (spMoIndex !== moIndex) throw new Error("Несоответствие OID МО при загрузке детализации ФРМР");
+  return {
+    mo,
+    role: departmentRaw.roles[roleIndex].replace(/^Врач\s*-\s*/iu, "").replace(/^Врач\s+/iu, "").toLocaleLowerCase("ru"),
+    name: spName,
+    oid: officialPrefix + mo + ".0." + spSuffix,
+    noPosition,
+    wrongDepartment,
+    count: noPosition + wrongDepartment,
+  };
+});
 type SpecialityGroup = [string, number];
 type PositionRecord = [
   string, string, number | null, number | null,
@@ -42,6 +61,7 @@ export default function FrmrReconciliation() {
   const [copied, setCopied] = useState(false);
   const [roleQuery, setRoleQuery] = useState("");
   const [activeRole, setActiveRole] = useState<string | null>(null);
+  const [activeDepartment, setActiveDepartment] = useState<string | null>(null);
   const [inspectionType, setInspectionType] = useState<"all" | "mo" | "department">("all");
   const [inspectionCopied, setInspectionCopied] = useState(false);
 
@@ -74,27 +94,38 @@ export default function FrmrReconciliation() {
       );
   }, [filter, search, sort]);
 
-  const diagnosticRoles = selected.specialties
+  const allSelectedGroups = departmentRows.filter((row) => row.mo === selected.id);
+  const diagnosticRoles: SpecialityGroup[] = [...allSelectedGroups.reduce((map, row) => {
+    map.set(row.role, (map.get(row.role) ?? 0) + row.count);
+    return map;
+  }, new Map<string,number>()).entries()]
     .filter(([role]) => role.toLocaleLowerCase("ru").includes(roleQuery.trim().toLocaleLowerCase("ru")))
-    .sort((a, b) => b[1] - a[1]);
+    .sort((a,b)=>b[1]-a[1] || a[0].localeCompare(b[0],"ru"));
+  const roleDepartments = allSelectedGroups.filter((row) => row.role === activeRole)
+    .sort((a,b) => b.count-a.count || a.name.localeCompare(b.name,"ru"));
+  const selectedDepartment = roleDepartments.find((row)=>row.oid===activeDepartment) ?? null;
   const resetInspection = () => {
     setRoleQuery("");
     setActiveRole(null);
+    setActiveDepartment(null);
     setInspectionType("all");
     setInspectionCopied(false);
   };
   const inspectionText = [
     "Сверка должностей ФРМР ↔ ГИС · 22.10.2026",
     "Медицинская организация: " + selected.name,
-    "OID МО: 1.2.643.5.1.13.13.12.2.16." + selected.id,
-    "Проверяемая должность: " + (activeRole || "все должности МО"),
-    "Вид проверки: " + (inspectionType === "mo" ? "отсутствует должность в ГИС на уровне МО" : inspectionType === "department" ? "не совпадает структурное подразделение" : "оба типа"),
-    "1. В ФРМР проверить действующую запись о трудоустройстве, должность, тип занятия должности, OID МО и OID подразделения.",
-    "2. В ГИС по сотруднику и МО проверить ту же должность и привязку к структурному подразделению.",
-    "3. При наличии расхождения уточнить первопричину, ответственного и исправить запись в системе-источнике.",
-    "4. Проверить влияние на расписание и ЕПГУ отдельной сверкой, не предполагая его автоматически.",
-    "Здесь отображены агрегаты должностных записей без ФИО и СНИЛС. Конкретные СП и врачи подлежат уточнению в защищённой кадровой системе."
-  ].join("\n");
+    "OID МО: " + officialPrefix + selected.id,
+    "Проверяемая должность: " + (activeRole || "не выбрана"),
+    "Структурное подразделение ФРМР: " + (selectedDepartment?.name || "не выбрано"),
+    "OID СП: " + (selectedDepartment?.oid || "не выбран"),
+    "Нет должности на уровне МО в ГИС: " + (selectedDepartment?.noPosition ?? "нет выбора") + " записей.",
+    "Несовпадение структурного подразделения: " + (selectedDepartment?.wrongDepartment ?? "нет выбора") + " записей.",
+    "1. Проверить кадровое основание и актуальность трудоустройства в ФРМР.",
+    "2. Проверить наличие того же сотрудника и должности в ГИС, сравнить OID МО и СП.",
+    "3. При расхождении OID филиала и рабочего СП проверить методику сопоставления с РМИАЦ.",
+    "4. Подтвердить исправление по следующей сопоставимой выгрузке.",
+    "Конкретные СНИЛС находятся только в индивидуальной конфиденциальной ведомости МО.",
+  ].join("\\n");
 
   const taskText = [
     "Контроль расхождений ФРМР ↔ ГИС на 22.10.2026",
@@ -235,12 +266,13 @@ export default function FrmrReconciliation() {
             <div className={styles.panelHead}>
               <div>
                 <h2>Где искать расхождения — маршрут для МО</h2>
-                <p className={styles.muted}>Выберите должность: дашборд покажет источник проверки, причину и последовательность действий. Никаких файлов, скачиваний и персональных данных.</p>
+                <p className={styles.muted}>Выберите должность и конкретное структурное подразделение. Отображаются реальные OID СП и категории ошибок по первичной сверке для всех МО. Без файлов, скачиваний и персональных данных в публичном разделе.</p>
               </div>
-              <span className={styles.pill}>Данные сверки · 22.10.2026</span>
+              <span className={styles.pill}>Срез · 22.10.2026</span>
             </div>
             <div className={styles.diagnosticLayout}>
               <div>
+                <h3>1. Должность ФРМР</h3>
                 <div className={styles.privateTools}>
                   <input className={styles.input} type="search" value={roleQuery}
                     onChange={(e) => setRoleQuery(e.target.value)}
@@ -249,51 +281,69 @@ export default function FrmrReconciliation() {
                 <div className={styles.diagnosticRoles}>
                   {diagnosticRoles.map(([role, count]) => (
                     <button key={role} className={[styles.diagnosticRole, activeRole === role ? styles.diagnosticRoleActive : ""].join(" ")}
-                      onClick={() => {setActiveRole(activeRole === role ? null : role);setInspectionCopied(false);}}
+                      onClick={() => { setActiveRole(role); setActiveDepartment(null); setInspectionType("all"); setInspectionCopied(false); }}
                       type="button" aria-pressed={activeRole === role}>
-                      <span>{role.replace(/^- /, "")}</span>
-                      <b>{number(count)} <small>зап.</small></b>
+                      <span>{role}</span><b>{number(count)} <small>зап.</small></b>
                     </button>
                   ))}
-                  {!diagnosticRoles.length && <p className={styles.muted}>Нет опубликованных групп должностей по указанному запросу. Для групп менее трёх записей детализация закрыта.</p>}
+                  {!diagnosticRoles.length && <p className={styles.muted}>По запросу должности не найдены. Все должностные группы, включая единичные, доступны в перечне.</p>}
                 </div>
-                {selected.current > selected.specialties.reduce((sum,[,n])=>sum+n,0) && (
-                  <p className={styles.muted}>Часть должностных записей относится к малочисленным группам и не раскрывается. Общее число расхождений МО указано выше.</p>
-                )}
+                <p className={styles.muted}>Всего расхождений по всем должностям МО: <b>{number(allSelectedGroups.reduce((sum,r)=>sum+r.count,0))}</b>. Одна запись — не обязательно отдельный врач.</p>
               </div>
               <div className={styles.diagnosticGuide}>
-                <h3>{activeRole || "Выберите должность слева"}</h3>
-                <p className={styles.muted}>По выбранной должности показано место поиска в двух системах. Категории ошибок по отдельной должности в текущей сверке не опубликованы; ниже приведены значения по МО в целом.</p>
-                <div className={styles.diagnosticIssueButtons} role="group" aria-label="Выбрать тип проблемы">
-                  <button type="button" className={inspectionType==="all" ? styles.issueSelected : ""} onClick={()=>setInspectionType("all")}>Обе причины</button>
-                  <button type="button" className={inspectionType==="mo" ? styles.issueSelected : ""} onClick={()=>setInspectionType("mo")}>Нет в ГИС · {number(selected.stage1)}</button>
-                  <button type="button" className={inspectionType==="department" ? styles.issueSelected : ""} onClick={()=>setInspectionType("department")}>Не совпадает СП · {number(selected.stage2)}</button>
-                </div>
-                {(inspectionType==="all" || inspectionType==="mo") && (
-                  <div className={styles.action}><b className={styles.actionNum}>1</b><div>
-                    <b>Нет должности на уровне МО в ГИС</b>
-                    <span>ФРМР → трудоустройство → OID МО → должность. Затем ГИС → сотрудники → должность в МО. Проверить существование, актуальность и соответствие кадровой записи.</span>
-                  </div></div>
-                )}
-                {(inspectionType==="all" || inspectionType==="department") && (
-                  <div className={styles.action}><b className={styles.actionNum}>2</b><div>
-                    <b>Должность есть, но не совпадает подразделение</b>
-                    <span>В ФРМР определить OID и название структурного подразделения у выбранной должности. В ГИС проверить привязку того же сотрудника к СП и при необходимости исправить её.</span>
-                  </div></div>
-                )}
-                <div className={styles.diagnosticRoute}>
-                  <b>Адрес проверки</b>
-                  <div><small>Медицинская организация</small><strong>{selected.name}</strong></div>
-                  <div><small>OID МО</small><code>1.2.643.5.1.13.13.12.2.16.{selected.id}</code></div>
-                  <div><small>Должность ФРМР</small><strong>{activeRole || "Выберите в списке"}</strong></div>
-                  <div><small>Структурное подразделение</small><span>Уточнить в ФРМР и сопоставить в ГИС по OID СП; адресная детализация СП в публичном срезе не подтверждена.</span></div>
-                </div>
-                <button className={styles.button} type="button" onClick={async()=>{try {await navigator.clipboard.writeText(inspectionText);setInspectionCopied(true);} catch {setInspectionCopied(false);}}}>
-                  {inspectionCopied ? "Маршрут проверки скопирован" : "Скопировать маршрут проверки"}
-                </button>
+                <h3>2. Структурное подразделение</h3>
+                {activeRole ? (
+                  <>
+                    <p className={styles.muted}>Должность «{activeRole}»: {number(roleDepartments.reduce((sum,row)=>sum+row.count,0))} записей, {roleDepartments.length} СП. Выберите отделение, чтобы увидеть конкретные причины.</p>
+                    <div className={styles.frmrDepartmentList}>
+                      {roleDepartments.map((dep) => <button type="button" key={dep.oid}
+                        className={[styles.frmrDepartment, selectedDepartment?.oid===dep.oid ? styles.frmrDepartmentActive : ""].join(" ")}
+                        onClick={() => {setActiveDepartment(dep.oid);setInspectionType("all");setInspectionCopied(false);}}>
+                        <span><b>{dep.name}</b><small>OID СП: {dep.oid}</small><small>Нет должности: {number(dep.noPosition)} · не совпадает СП: {number(dep.wrongDepartment)}</small></span>
+                        <strong>{number(dep.count)}</strong>
+                      </button>)}
+                    </div>
+                  </>
+                ) : <p className={styles.muted}>Выберите врачебную должность слева. Здесь появятся все её подразделения, включая единичные расхождения.</p>}
               </div>
             </div>
-            <p className={styles.privateCaution}>Сведения о должностях приведены по опубликованным агрегатам. Должностная запись — не уникальный врач; без первичных идентификаторов нельзя привязать её к конкретному сотруднику. Влияние на расписание и запись пациентов не подтверждено.</p>
+            <div className={styles.frmrDepartmentDetails}>
+              <h3>3. Причина и как исправить</h3>
+              {selectedDepartment ? (
+                <>
+                  <div className={styles.diagnosticRoute}>
+                    <b>Точный адрес проверки</b>
+                    <div><small>МО</small><strong>{selected.name}</strong></div>
+                    <div><small>OID МО</small><code>{officialPrefix}{selected.id}</code></div>
+                    <div><small>Должность ФРМР</small><strong>{activeRole}</strong></div>
+                    <div><small>Структурное подразделение ФРМР</small><strong>{selectedDepartment.name}</strong></div>
+                    <div><small>OID СП</small><code>{selectedDepartment.oid}</code></div>
+                  </div>
+                  <div className={styles.diagnosticIssueButtons} role="group" aria-label="Выбрать тип проблемы подразделения">
+                    <button type="button" className={inspectionType==="all" ? styles.issueSelected : ""} onClick={()=>setInspectionType("all")}>Обе причины · {number(selectedDepartment.count)}</button>
+                    <button type="button" className={inspectionType==="mo" ? styles.issueSelected : ""} onClick={()=>setInspectionType("mo")}>Нет должности · {number(selectedDepartment.noPosition)}</button>
+                    <button type="button" className={inspectionType==="department" ? styles.issueSelected : ""} onClick={()=>setInspectionType("department")}>Не совпадает СП · {number(selectedDepartment.wrongDepartment)}</button>
+                  </div>
+                  {(inspectionType==="all" || inspectionType==="mo") && selectedDepartment.noPosition>0 && (
+                    <div className={styles.action}><b className={styles.actionNum}>1</b><div><b>Нет должности на уровне МО в ГИС — {number(selectedDepartment.noPosition)} зап.</b>
+                      <span>ФРМР → трудоустройство → OID МО → должность. В ГИС → сотрудники → должность в МО проверить наличие того же работника. Если ФРМР актуален, исправить ГИС; если кадровая запись устарела — исправить ФРМР. Дубликаты не создавать.</span>
+                    </div></div>
+                  )}
+                  {(inspectionType==="all" || inspectionType==="department") && selectedDepartment.wrongDepartment>0 && (
+                    <div className={styles.action}><b className={styles.actionNum}>2</b><div><b>Должность есть, но не совпадает СП — {number(selectedDepartment.wrongDepartment)} зап.</b>
+                      <span>Сверить OID подразделения сотрудника в ФРМР с привязкой в ГИС. Если OID ФРМР соответствует филиалу, а не рабочему СП, направить на проверку правил сопоставления РМИАЦ прежде, чем требовать от МО исправлений.</span>
+                    </div></div>
+                  )}
+                  {((inspectionType==="mo"&&selectedDepartment.noPosition===0)||(inspectionType==="department"&&selectedDepartment.wrongDepartment===0)) && (
+                    <p className={styles.muted}>Для этого подразделения записей выбранного типа не выявлено.</p>
+                  )}
+                  <button className={styles.button} type="button" onClick={async()=>{try {await navigator.clipboard.writeText(inspectionText);setInspectionCopied(true);} catch {setInspectionCopied(false);}}}>
+                    {inspectionCopied ? "Маршрут проверки скопирован" : "Скопировать маршрут проверки"}
+                  </button>
+                </>
+              ) : <p className={styles.muted}>Выберите должность и подразделение выше. Будут показаны только подтверждённые для этого СП категории ошибок.</p>}
+            </div>
+            <p className={styles.privateCaution}>В открытом дашборде персональные СНИЛС и построчные сведения не опубликованы. Для определения сотрудника используйте индивидуальную конфиденциальную ведомость своей МО (первые две цифры СНИЛС скрыты). Это не делает номер анонимным. Категории ошибок рассчитаны на уровне должности и СП; без первичных идентификаторов нельзя привязать их к конкретному сотруднику. Проверить влияние на запись ЕПГУ отдельно.</p>
           </section>
           <div className={styles.grid}>
             <section className={styles.panel}>
