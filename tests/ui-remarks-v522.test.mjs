@@ -23,18 +23,15 @@ test("duplicate MAX regional block is removed", () => {
   assert.doesNotMatch(page, /РЕГИОНАЛЬНЫЙ КОНТРОЛЬ · МАХ/u);
 });
 
-test("MAX has one active service and compact monthly cards", () => {
-  assert.match(page, /maxServiceSwitch/u);
-  assert.match(page, /setMaxService\("visit"\)/u);
-  assert.match(page, /setMaxService\("tmk"\)/u);
-  assert.match(page, /setMaxService\("eln"\)/u);
-  assert.match(page, /maxMonthCards/u);
-  assert.match(css, /v5\.2\.2 compact MAX and service selector/u);
-  assert.match(page, /const DASHBOARD_VERSION = RELEASE_VERSION/u);
-  assert.ok(page.indexOf('["max", "МАХ", "12"]') > page.indexOf('["devDivider", "В разработке", ""]'));
-  assert.match(page, /tab === "max" \? "developmentSection active" : "developmentSection"/u);
-  assert.doesNotMatch(page, /className=\{tab === "max" \? "active" : ""\}/u);
-  assert.match(css, /v5\.2\.3 hearing TOP-10 readability/u);
+test("Standalone MAX is removed, while indicators in section 02 remain active", () => {
+  assert.doesNotMatch(page, /maxServiceSwitch|<section className="maxSection">|tab === "max"/u);
+  assert.doesNotMatch(page, /\["max", "МАХ", "12"\]/u);
+  assert.match(page,/data-testid="max-indicator-period-switch"/u);
+  assert.match(page,/data-testid="max-indicator-summary"/u);
+  assert.match(page,/data-testid="max-indicator-organization-table"/u);
+  assert.match(page,/maxIndicatorSlice/u);
+  assert.match(page,/const DASHBOARD_VERSION = RELEASE_VERSION/u);
+  assert.match(css,/v5\.2\.3 hearing TOP-10 readability/u);
 });
 
 test("hearing card uses the fixed management grouping", () => {
