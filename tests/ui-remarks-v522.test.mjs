@@ -10,10 +10,13 @@ test("relocated summary provides the all-except-contract status filter and the c
   const end = page.indexOf('{tab === "ranking" && (', start);
   const summary = page.slice(start, end);
   assert.ok(start >= 0 && end > start);
-  assert.match(summary, /aria-label="Статус показателя"/u);
-  assert.match(summary, /onChange=\{\(event\) => setFederalStatus\(event\.target\.value\)\}/u);
-  assert.match(summary, /<option value="except-contract">[\s\S]*?Все, кроме «В контракте»/u);
-  assert.match(summary, /<option>В контракте<\/option>/u);
+  assert.match(summary, /className="federalStatusButtons"/u);
+  assert.match(summary, /role="group" aria-label="Статус показателя"/u);
+  assert.match(summary, /onClick=\{\(\) => setFederalStatus\(key\)\}/u);
+  assert.match(summary, /aria-pressed=\{federalStatus === key\}/u);
+  assert.match(summary, /\["except-contract", "Все, кроме «В контракте»"\]/u);
+  assert.match(summary, /\["В контракте", "В контракте"\]/u);
+  assert.doesNotMatch(summary, /<select\s+aria-label="Статус показателя"/u);
   assert.match(summary, /\["other", "В контракте"/u);
   assert.doesNotMatch(page, /<span>08<\/span> Показатели на контроле РФ/u);
 });
