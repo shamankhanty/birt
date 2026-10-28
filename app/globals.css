@@ -643,3 +643,15 @@ body{font-size:14px}
 .unifiedFederalTop .operationalCard>strong{margin-top:5px}
 .federalPlanQualitative{margin:5px 0 2px;padding:7px 9px;border-radius:9px;background:color-mix(in srgb,var(--federal-band),white 90%);color:var(--federal-band);font-weight:800;font-size:11px;line-height:1.3}
 @media(max-width:760px){.unifiedFederalTop .operationalCard>div{min-height:0}}
+
+
+/* Section 01: status filters replace the native dropdown, preserving source status values. */
+.federalToolbar:has(.federalStatusButtons){flex-wrap:wrap}
+.federalToolbar .federalStatusButtons{display:flex;align-items:center;gap:6px;flex-wrap:wrap;flex:2 1 630px;min-width:0}
+.federalStatusButtons button{font:inherit;font-size:11px;font-weight:750;line-height:1.25;white-space:nowrap;cursor:pointer;border:1px solid #c8dcd3;border-radius:9px;padding:10px 12px;color:#285a4c;background:#fff;transition:background .15s,border-color .15s}
+.federalStatusButtons button:hover{border-color:#13815d;background:#eff8f3}
+.federalStatusButtons button.active{border-color:#0f7155;background:#0f7155;color:#fff;box-shadow:0 3px 8px rgba(15,109,82,.16)}
+.federalStatusButtons button.active:hover{background:#0c6049}
+.federalStatusButtons button:focus-visible{outline:3px solid #76b99e;outline-offset:2px}
+@media(max-width:900px){.federalToolbar .federalStatusButtons{flex:1 1 100%}}
+@media(max-width:700px){.federalToolbar .federalStatusButtons{width:100%;max-width:100%;flex-wrap:nowrap;overflow-x:auto;overscroll-behavior-x:contain;padding:3px 0 8px;scrollbar-width:thin}.federalStatusButtons button{flex:0 0 auto;min-height:41px}.federalToolbar>span{align-self:flex-start}}
