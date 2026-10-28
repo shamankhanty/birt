@@ -18,3 +18,12 @@ test('hospital count reconciles with case denominator from the same October sour
   assert.equal(ratio.numerator, 709565);
   assert.equal(count.plan, null);
 });
+
+
+test('source total and management perimeter differ only by the approved KGMA exclusion', () => {
+  const runtime = read('baseline/calculation-runtime-snapshot.json').allIndicators.hospitalCount;
+  assert.equal(runtime.fact, 781683);
+  assert.equal(count.total - runtime.fact, 376);
+  const excluded = count.rows.filter(row => /КГМА.*РМАНПО/u.test(row.name));
+  assert.equal(excluded.reduce((sum, row) => sum + row.fact, 0), 376);
+});

@@ -1082,6 +1082,8 @@
     "organizations": 129,
     "repeatability": "PASS",
     "sourceRowsAndMoValues": "PASS",
-    "published": false
+    "published": false,
+    "managementPerimeterTotal": 781683,
+    "excludedKgmaCases": 376
   }
 }

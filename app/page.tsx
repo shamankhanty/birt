@@ -8982,6 +8982,13 @@ export default function Home() {
                     : selectedDataset.note}
                 </p>
               )}
+              {matrixMetric === "hospitalCount" && (
+                <p className="sourceDataNote">
+                  <b>Контроль полноты:</b> весь исходный файл — {format(operationalMoRaw.hospitalCount.total, 0)} случаев.
+                  В действующем периметре показателя — {format(regionalFact, 0)};
+                  разница {format(operationalMoRaw.hospitalCount.total - regionalFact, 0)} относится к организациям, исключённым из показателей по действующим правилам. Их исходные строки сохранены.
+                </p>
+              )}
               {isMaxMetric && (
                 <section className="planControlHero" data-testid="max-indicator-summary">
                   <header>
