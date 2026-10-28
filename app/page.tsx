@@ -6322,20 +6322,20 @@ export default function Home() {
                   onChange={(event) => setFederalQuery(event.target.value)}
                   placeholder="Найти показатель или номер"
                 />
-                <select
-                  aria-label="Статус показателя"
-                  value={federalStatus}
-                  onChange={(event) => setFederalStatus(event.target.value)}
-                >
-                  <option value="all">Все статусы исходного перечня</option>
-                  <option value="except-contract">
-                    Все, кроме «В контракте»
-                  </option>
-                  <option>Достигнут</option>
-                  <option>Отклонение</option>
-                  <option>В контракте</option>
-                  <option>Справочно</option>
-                </select>
+                <div className="federalStatusButtons" role="group" aria-label="Статус показателя">
+                  {([
+                    ["all", "Все статусы"],
+                    ["except-contract", "Все, кроме «В контракте»"],
+                    ["Достигнут", "Достигнут"],
+                    ["Отклонение", "Отклонение"],
+                    ["В контракте", "В контракте"],
+                    ["Справочно", "Справочно"],
+                  ] as const).map(([key, label]) => (
+                    <button key={key} type="button" aria-pressed={federalStatus === key}
+                      className={federalStatus === key ? "active" : ""}
+                      onClick={() => setFederalStatus(key)}>{label}</button>
+                  ))}
+                </div>
                 <span>{federalPlanVisible.length} из {federalPlanAll.length} самостоятельных показателей</span>
               </div>
               <div className="federalNote">
