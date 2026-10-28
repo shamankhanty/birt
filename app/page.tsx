@@ -4346,10 +4346,11 @@ export default function Home() {
       (row) => row.status === "Достигнут",
     ).length,
   };
-  const openExtendedMetric = (item: ExtendedCardItem) => {
-    if (!item.row.regionalId) return;
-    setExtendedReturn({ point: item.row.id, scrollY: window.scrollY });
-    setMatrixMetric(item.row.regionalId);
+  const openExtendedMetric = (row: FederalControlRow) => {
+    if (!row.regionalId || !metricIds.includes(row.regionalId)) return;
+    setExtendedReturn({ point: row.id, scrollY: window.scrollY });
+    setMatrixMetric(row.regionalId);
+    setMetricQuery("");
     setDynamicsMode("operational");
     setTab("matrix");
     setShowMatrixSections(false);
@@ -6372,7 +6373,21 @@ export default function Home() {
                         other: "В контракте", reference: "Справочно",
                       } as const)[assessment.zone]}</b>
                     </div>
-                    <h3>{row.name}</h3>
+                    <h3>
+                      {row.regionalId && metricIds.includes(row.regionalId) ? (
+                        <button
+                          type="button"
+                          className="federalPlanCardLink"
+                          onClick={() => openExtendedMetric(row)}
+                          aria-label={`Открыть показатель: ${row.name}`}
+                        >
+                          {row.name}
+                        </button>
+                      ) : row.name}
+                    </h3>
+                    {(!row.regionalId || !metricIds.includes(row.regionalId)) && (
+                      <p className="federalPlanNoDetail">Детализация в разделе «02 Показатели» пока отсутствует</p>
+                    )}
                     <div className="federalPlanFacts">
                       <div>
                         <small>Факт РТ · {assessment.period}</small>
