@@ -33,7 +33,9 @@ test("desktop primary menu mirrors mobile and brings methodology/FRMR out of dev
   assert.match(sidebar,/История обновлений/);
   assert.match(sidebar,/Все виды СЭМД/);
   assert.match(sidebar,/Ошибки методик/);
-  assert.match(sidebar,/МАХ/);
+  assert.doesNotMatch(sidebar,/<span>12<\/span>\s*МАХ/u);
+  assert.doesNotMatch(mobile,/\["max", "МАХ", "12"\]/u);
+  assert.doesNotMatch(source,/tab === "max"/u);
 });
 test("month rating and methodology headings follow navigation; content remains available", () => {
   assert.match(source,/<h1>Месячный рейтинг МО — \{latestFullMonth.label\}<\/h1>/);
