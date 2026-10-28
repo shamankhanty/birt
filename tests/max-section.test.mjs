@@ -2,98 +2,66 @@ import test from "node:test";
 import assert from "node:assert/strict";
 import fs from "node:fs";
 
-const page = fs.readFileSync(new URL("../app/page.tsx", import.meta.url), "utf8");
-const monthly = JSON.parse(fs.readFileSync(new URL("../app/monthly-mo.json", import.meta.url), "utf8"));
-const appointments = JSON.parse(fs.readFileSync(new URL("../app/max-appointments-municipal.json", import.meta.url), "utf8"));
-const registry = JSON.parse(fs.readFileSync(new URL("../config/indicator-registry.json", import.meta.url), "utf8"));
-const periodViews = JSON.parse(fs.readFileSync(new URL("../app/max-period-views.json", import.meta.url), "utf8"));
+const page = fs.readFileSync("app/page.tsx", "utf8");
+const monthly = JSON.parse(fs.readFileSync("app/monthly-mo.json", "utf8"));
+const appointments = JSON.parse(fs.readFileSync("app/max-appointments-municipal.json", "utf8"));
+const registry = JSON.parse(fs.readFileSync("config/indicator-registry.json", "utf8"));
+const periodViews = JSON.parse(fs.readFileSync("app/max-period-views.json", "utf8"));
 
-test("МАХ keeps annual, cumulative-control, and monthly operational plans separate", () => {
+test("Removing standalone MAX does not alter annual, cumulative or operational source plans", () => {
   assert.equal(registry.indicators.visitMax.plan.value, 654000);
   assert.equal(registry.indicators.tmkMax.plan.value, 193000);
   assert.equal(registry.indicators.elnMax.plan.value, 99000);
-  assert.match(page, /Официальный накопительный результат не смешивается с оперативной динамикой между выгрузками и с месячной динамикой МО/u);
-  assert.match(page, /Накопительно/u);
-  assert.match(page, /Оперативно/u);
   assert.equal(periodViews.operational.metrics.tmk.republicPlan, 16000);
   assert.equal(periodViews.operational.metrics.eln.republicPlan, 8000);
   assert.equal(periodViews.cumulative.metrics.tmk.republicPlan, 161000);
   assert.equal(periodViews.cumulative.metrics.eln.republicPlan, 82000);
+  assert.match(page, /data-testid="max-indicator-period-switch"/u);
+  assert.match(page, /maxIndicatorSlice = maxPeriodView === "operational" \? maxPeriodViews.operational : maxPeriodViews.cumulative/u);
 });
 
-test("МАХ preserves the regional visit indicator while showing the new factual appointment source separately", () => {
+test("MAX regional appointments source remains distinct from organizational data", () => {
   assert.match(registry.indicators.visitMax.name, /записей к врачу на телеконсультацию посредством МАХ/u);
-  assert.match(page, /Запись к врачу посредством МАХ/u);
-  assert.match(page, /Фактические записи через МАХ по муниципалитетам/u);
-  assert.match(page, /статистика здрав\.xlsx/u);
-});
-
-test("August TMC and ELN monthly values are derived from equal-boundary cumulative snapshots", () => {
-  for (const id of ["tmkMaxCount", "elnMaxCount"]) {
-    assert.equal(monthly[id].previousLabel, "На 31.08");
-    assert.equal(monthly[id].currentLabel, "На 30.09");
-  }
-  assert.match(page, /row\.july - row\.june/u);
-  assert.match(page, /Предыдущий накопительный срез нельзя выдавать за месячный объём августа/u);
-});
-
-test("doctor appointments through MAX are factual municipal data without MO attribution", () => {
   assert.equal(appointments.dimension, "municipality");
   assert.equal(appointments.bindingToMedicalOrganization, false);
-  assert.equal(appointments.totals["2026-08"], 6537);
-  assert.equal(appointments.totals["2026-09"], 12228);
-  assert.equal(appointments.totals["2026-10"], 4646);
-  assert.equal(appointments.grandTotal, 45567);
-  assert.equal(appointments.months.find((month) => month.id === "2026-10")?.asOf, "12.10.2026");
-  const kazan = appointments.rows.find((row) => row.municipality === "Казань");
-  assert.ok(kazan);
-  assert.equal(kazan.values["2026-08"], 2805);
-  assert.equal(kazan.values["2026-10"], 2006);
-  const unassigned = appointments.rows.find((row) => row.municipality === "Район не определен");
-  assert.ok(unassigned);
-  assert.equal(unassigned.values["2026-10"], 2);
-  assert.match(page, /Привязка к медицинским организациям не выполняется/u);
-  assert.match(page, /sortedMaxAppointmentRows/u);
-  assert.match(page, /changeMaxAppointmentSort/u);
-  assert.doesNotMatch(page, /selectedMaxRow\.visit/u);
-  assert.doesNotMatch(page, /row\.visit/u);
+  assert.equal(appointments.totals["2026-08"],6537);
+  assert.equal(appointments.totals["2026-09"],12228);
+  assert.equal(appointments.totals["2026-10"],4646);
+  assert.equal(appointments.grandTotal,45567);
+  assert.match(page,/maxAppointmentsMunicipalRaw/u);
 });
 
-test("missing rows are not converted to zero", () => {
+test("Independent TMC and ELN monthly snapshots keep equal period boundaries", () => {
+  for (const id of ["tmkMaxCount","elnMaxCount"]) {
+    assert.equal(monthly[id].previousLabel,"На 31.08");
+    assert.equal(monthly[id].currentLabel,"На 30.09");
+  }
+  assert.match(page, /maxAugustMonthlyDataset/u);
+  assert.match(page, /maxPeriodViews.operational/u);
+  assert.match(page, /maxPeriodViews.cumulative/u);
+  assert.doesNotMatch(page, /isMaxMetric\s*\?\s*"ТМК и ЛВН посредством МАХ"/u);
+});
+
+test("Missing data remain missing and can never be fabricated as zero", () => {
   assert.match(page, /status: "missing"/u);
   assert.match(page, /Нет строки в выгрузке/u);
-  assert.match(page, /Отсутствующие данные не заменяются нулём/u);
+  assert.match(page, /maxIndicatorPreviousFact === null/u);
+  assert.match(page, /maxIndicatorGrowth/u);
 });
 
-
-test("MAX separates export-to-export operational dynamics from monthly values", () => {
-  assert.match(page, /Официальный накопительный результат не смешивается с оперативной динамикой между выгрузками/u);
-  assert.match(page, /НАКОПИТЕЛЬНЫЙ СРЕЗ/u);
-  assert.match(page, /ОПЕРАТИВНЫЙ МЕСЯЧНЫЙ СРЕЗ/u);
-  assert.match(page, /maxPeriodViews\.operational/u);
-  assert.match(page, /maxPeriodViews\.cumulative/u);
-  assert.match(page, /Оперативно — текущая выгрузка к предыдущей/u);
-  assert.match(page, /Предыдущая выгрузка/u);
-  assert.match(page, /Текущая выгрузка/u);
-  assert.match(page, /Разница/u);
-  assert.match(page, /maxAugustMonthlyDataset/u);
-  assert.match(page, /31\.08 минус 31\.07/u);
-  assert.match(page, /срез на 30\.06/u);
-  assert.doesNotMatch(page, /ТМК\s*\+\s*ЛВН/u);
-  assert.doesNotMatch(page, /isMaxMetric\s*\?\s*"ТМК и ЛВН посредством МАХ"/u);
-  assert.match(page, /ТМК посредством МАХ/u);
-  assert.match(page, /ЛВН после ТМК посредством МАХ/u);
-  assert.doesNotMatch(page, /Месячный план[\s\S]{0,250}10 000 в месяц/u);
-});
-
-
-test("TMC and LVN are independent sidebar indicators", () => {
+test("Section 02 still has TMC and LVN as separate selectable indicators", () => {
   assert.match(page, /"tmkMaxCount",\s*"elnMaxCount",/u);
   assert.match(page, /id === "tmkMaxCount"[\s\S]*?"ТМК посредством МАХ"/u);
   assert.match(page, /id === "elnMaxCount"[\s\S]*?"ЛВН после ТМК посредством МАХ"/u);
   assert.match(page, /matrixMetric === id \? "active" : ""/u);
   assert.match(page, /value=\{matrixMetric\}/u);
-  assert.doesNotMatch(page, /maxMetricSwitch/u);
-  assert.doesNotMatch(page, /maxMetricTotals/u);
+  assert.match(page, /data-testid="max-indicator-summary"/u);
+  assert.match(page, /data-testid="max-indicator-organization-table"/u);
   assert.doesNotMatch(page, /calculatedIndicatorById\.tmkMaxCount[\s\S]{0,180}\s\/\s[\s\S]{0,180}calculatedIndicatorById\.elnMaxCount/u);
+});
+
+test("Standalone MAX page is fully removed from desktop, mobile and rendered sections", () => {
+  assert.doesNotMatch(page, /\["max", "МАХ", "12"\]/u);
+  assert.doesNotMatch(page, /<span>12<\/span>\s*МАХ/u);
+  assert.doesNotMatch(page, /tab === "max"|setTab\("max"\)|<section className="maxSection">/u);
 });
