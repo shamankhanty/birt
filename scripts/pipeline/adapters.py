@@ -682,7 +682,9 @@ def adapt_errors(app: Path, source: Path, end: date, start: date | None = None) 
         "unassignedCategories": [{"name": k, "count": v} for k, v in unassigned.most_common()],
     }
 
-    payload = load(app, "error-categories.json")
+    cumulative = start is not None and start.month == 1 and start.day == 1
+    target = "error-cumulative.json" if cumulative else "error-categories.json"
+    payload = load(app, target)
     payload.update({
         "total": total, "period": period, "share": None,
         "shareDate": date_ru(end),
@@ -691,16 +693,19 @@ def adapt_errors(app: Path, source: Path, end: date, start: date | None = None) 
         "items": [{"name": k, "count": v} for k, v in counts.most_common()],
         "organizationBreakdown": breakdown,
     })
-    save(app, "error-categories.json", payload)
+    if cumulative:
+        payload["periodKind"] = "cumulative"
+    save(app, target, payload)
     # Keep the standalone drill-down payload in sync with the category payload.
     # The UI imports both files and must never present an August organisation
     # breakdown next to a newer operational total.
-    save(app, "error-organizations.json", breakdown)
+    if not cumulative:
+        save(app, "error-organizations.json", breakdown)
     warnings = []
     if unassigned_errors:
         warnings.append(f"МО не определена для {unassigned_errors} ошибок ({100-coverage:.2f}%)")
     return AdapterResult(
-        "errors", ["remd_errors"], "PASS", ["error-categories.json", "error-organizations.json"], [source.name],
+        "errors", ["remd_errors"], "PASS", [target] if cumulative else [target, "error-organizations.json"], [source.name],
         {"errors": total, "categories": len(payload["items"]),
          "organizations": len(organizations), "attributedErrors": attributed_errors,
          "unassignedErrors": unassigned_errors, "coveragePercent": coverage},

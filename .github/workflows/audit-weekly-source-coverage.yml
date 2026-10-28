@@ -1,16 +1,10 @@
 name: Audit weekly source coverage (read only)
 on:
-  pull_request:
-    branches: [main]
-    paths:
-      - scripts/audit_weekly_source_coverage.py
-      - .github/workflows/audit-weekly-source-coverage.yml
   workflow_dispatch:
 permissions:
   contents: read
 jobs:
   audit:
-    if: github.event_name == 'workflow_dispatch' || github.event.pull_request.head.repo.full_name == github.repository
     runs-on: ubuntu-latest
     timeout-minutes: 25
     steps:

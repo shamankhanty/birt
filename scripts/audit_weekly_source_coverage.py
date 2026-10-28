@@ -52,9 +52,64 @@ def stable(value):
         return [stable(x) for x in value]
     if isinstance(value, dict):
         fields = {'oid', 'fact', 'value', 'count', 'volume', 'numerator', 'denominator',
-                  'registered', 'total', 'date', 'period', 'rows', 'summary', 'plan'}
+                  'registered', 'total', 'date', 'period', 'rows', 'summary', 'plan',
+                  'moOid', 'unitOid', 'buildingIds', 'plannedSubunits', 'registeredSubunits', 'partial',
+                  'items', 'organizations', 'sourcePeriod', 'totalErrors', 'categories'}
         return {k: stable(v) for k, v in value.items() if k in fields}
     return value
+
+
+def check_supplemental_views(found):
+    """Recompute the views prepared outside transactional staging from primary Excel."""
+    from collections import defaultdict
+    from openpyxl import load_workbook
+    sys.path.insert(0, str(ROOT / 'scripts/pipeline'))
+    from adapters import parse_max, source_rows
+    checks = []
+    views = json.loads((ROOT/'app/max-period-views.json').read_text(encoding='utf-8'))
+    for kind, prefix in [('cumulative', 'ТМК_МАХ -01.01'), ('operational', 'ТМК_МАХ 01.10')]:
+        source = next((path for name, path in found.items() if name.startswith(prefix)), None)
+        if source is None:
+            checks.append({'view': kind, 'status': 'MISSING_SOURCE'})
+            continue
+        for service, metric, col in [('tmk', 'tmkMaxCount', 3), ('eln', 'elnMaxCount', 4)]:
+            raw = parse_max(source, col)
+            resolved = {r.get('oid'): r for r in source_rows(raw, metric) if r.get('oid')}
+            current = views[kind]['metrics'][service]
+            mismatches = [row['oid'] for row in current['rows'] if row.get('fact') != (resolved.get(row['oid']) or {}).get('fact')]
+            total = sum(row['count'] for row in raw)
+            checks.append({'view': f'maxPeriodViews.{kind}.{service}', 'source': source.name,
+                'status': 'PASS' if total == current['sourceTotal'] and not mismatches else 'FAIL',
+                'sourceTotal': total, 'displayedSourceTotal': current['sourceTotal'],
+                'checkedPlannedOrganizations': len(current['rows']), 'mismatchedOrganizations': len(mismatches)})
+    source = next((path for name, path in found.items() if name.startswith('1.Отчет СЭМД_РЭМД')), None)
+    if source:
+        book = load_workbook(source, read_only=True, data_only=True)
+        rows = list(book['Отчет РЭМД'].values); book.close()
+        names, formats, values = rows[4], rows[5], rows[7]
+        grouped = defaultdict(int); last = ''
+        for index in range(3, len(values)):
+            if names[index]: last = str(names[index]).strip()
+            if not last: continue
+            value = values[index]
+            if value is None and names[index] is None and formats[index] is None: continue
+            if not isinstance(value, (int, float)) or value < 0: raise ValueError('Invalid SEMD summary component')
+            grouped[last] += int(value)
+        current = json.loads((ROOT/'app/semd-summary.json').read_text(encoding='utf-8'))
+        present = {row['name']: row['count'] for row in current['items']}
+        checks.append({'view': 'semdSummary', 'source': source.name,
+            'status': 'PASS' if dict(grouped) == present and sum(grouped.values()) == current['total'] == int(values[2]) and sum(x > 0 for x in grouped.values()) == current['registeredTypes'] == int(values[1]) else 'FAIL',
+            'sourceTotal': int(values[2]), 'registeredTypes': int(values[1]), 'checkedDocumentTypes': len(grouped)})
+        control = json.loads((ROOT/'app/federal-control.json').read_text(encoding='utf-8'))
+        for point, needle in [('37','Экстренное извещение об инфекционном заболевании'),('38','Выписка из протокола решения врачебной комиссии'),('39','Льготный рецепт')]:
+            matches = [value for name, value in grouped.items() if (name.casefold() == needle.casefold() if point == '38' else name.casefold().startswith(needle.casefold()))]
+            row = next(row for row in control['agreement'] if row['id'] == point)
+            import re
+            actual = int(re.sub(r'\D', '', row.get('regionalFact', '')) or '-1')
+            checks.append({'view': f'federal.agreement.{point}', 'source': source.name,
+                'status': 'PASS' if len(matches) == 1 and actual == matches[0] else 'FAIL',
+                'sourceCount': matches[0] if len(matches) == 1 else None, 'displayedCount': actual})
+    return checks
 
 
 def run(args):
@@ -122,10 +177,14 @@ def run(args):
             with zipfile.ZipFile(tmp) as archive:
                 for member in archive.infolist():
                     name = Path(member.filename).name
-                    if name not in expected or name in found or member.file_size > 256 * 1024 * 1024:
+                    if not name.lower().endswith('.xlsx') or member.file_size > 256 * 1024 * 1024:
                         continue
                     data = archive.read(member)
-                    if hashlib.sha256(data).hexdigest() != expected[name]:
+                    # Legacy Windows ZIPs may omit the UTF-8 filename flag (CP866).
+                    # The accepted content hash is authoritative, even for a garbled filename.
+                    actual_hash = hashlib.sha256(data).hexdigest()
+                    name = next((key for key, value in expected.items() if value == actual_hash), None)
+                    if name is None or name in found:
                         continue
                     safe = sources / (name if len(name.encode()) <= 255 else hashlib.sha256(name.encode()).hexdigest()[:16] + '.xlsx')
                     safe.write_bytes(data)
@@ -156,6 +215,7 @@ def run(args):
             book.close()
         report['sources'].append(entry)
     report['matchedFiles'] = len(found)
+    report['supplementalChecks'] = check_supplemental_views(found) if len(found) == 18 else []
     write(output / 'source-coverage.json', report)
     if args.replay and len(found) == len(expected):
         sys.path.insert(0, str(ROOT / 'scripts/pipeline'))
@@ -167,7 +227,8 @@ def run(args):
                 'differences': []}
             candidate = Path(replay['stagingApp'])
             for filename in ('mo-data.json', 'operational-mo.json', 'organization-status.json', 'physician-metrics.json',
-                             'physician-weekly-snapshot.json', 'unit-data.json', 'preventive-semd-audit.json'):
+                             'physician-weekly-snapshot.json', 'unit-data.json', 'preventive-semd-audit.json',
+                             'error-categories.json', 'error-organizations.json', 'error-cumulative.json'):
                 before = json.loads((ROOT / 'app' / filename).read_text(encoding='utf-8'))
                 after = json.loads((candidate / filename).read_text(encoding='utf-8'))
                 if filename == 'physician-metrics.json':
@@ -180,6 +241,10 @@ def run(args):
                             'status': 'CURRENT_VALUES_DIFFER', 'requiresReview': True})
         except Exception as error:
             report['replay'] = {'status': 'FAIL', 'error': type(error).__name__, 'message': str(error)[:1200]}
+    report['acceptedSourceReplay'] = {
+        'allFilesIdenticalToAcceptedPackage': len(found) == len(expected),
+        'allCurrentValuesMatch': not report['replay'].get('differences') and all(x['status'] == 'PASS' for x in report['supplementalChecks']) if report['replay']['status'] not in ('NOT_RUN', 'FAIL') else None,
+    }
     report['status'] = 'PARTIAL' if len(found) != len(expected) or report['replay']['status'] != 'PASS' or report['replay'].get('differences') else 'REPLAY_MATCH'
     write(output / 'source-coverage.json', report)
     lines = ['# Сверка исходников еженедельного пакета', '', f"Исходники с совпавшим SHA-256: {len(found)} из {len(expected)}.",

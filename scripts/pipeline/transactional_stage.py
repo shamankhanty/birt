@@ -310,6 +310,9 @@ def stage(input_dir, output_dir, replay_manifest=None):
             shutil.copytree(current,base); shutil.copytree(base,raw)
             try:
                 if item['status']=='FAIL': raise ValueError(item.get('reason') or 'Источник поврежден или дублирует период')
+                if family == 'remd_errors' and (item.get('startDate') or '').endswith('-01-01'):
+                    accepted_errors = read(production/'error-cumulative.json')
+                    entry['previousPeriod'] = {'date': accepted_errors.get('shareDate'), 'period': accepted_errors.get('period')}
                 prior=entry['previousPeriod'].get('date')
                 if prior:
                     from datetime import datetime

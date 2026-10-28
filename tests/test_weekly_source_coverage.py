@@ -21,7 +21,7 @@ class CoverageTests(unittest.TestCase):
             book.save(workbook)
             evidence=root/'evidence.json'; evidence.write_text(json.dumps({'sourceFiles': {'sample.xlsx': 'invalid' if mismatch else hashlib.sha256(workbook.read_bytes()).hexdigest()}}))
             if zipped:
-                with zipfile.ZipFile(local/'package.zip','w') as archive: archive.write(workbook,'nested/sample.xlsx')
+                with zipfile.ZipFile(local/'package.zip','w') as archive: archive.write(workbook,'nested/garbled-legacy-name.xlsx')
             else: (local/'sample.xlsx').write_bytes(workbook.read_bytes())
             args=argparse.Namespace(evidence=str(evidence),output=root/'report',local=local,remote=[],replay=False)
             audit.run(args)
@@ -36,7 +36,7 @@ class CoverageTests(unittest.TestCase):
         report=self.run_case(mismatch=True)
         self.assertEqual(report['matchedFiles'],0)
         self.assertEqual(report['sources'][0]['status'],'MISSING')
-    def test_zip_member_resolves_by_exact_name_and_hash(self):
+    def test_zip_member_resolves_by_hash_even_if_legacy_filename_is_garbled(self):
         self.assertEqual(self.run_case(zipped=True)['matchedFiles'],1)
 
 if __name__ == '__main__': unittest.main()
