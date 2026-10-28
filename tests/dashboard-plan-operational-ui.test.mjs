@@ -13,14 +13,13 @@ const countTotal = (id) => operational[id].rows.reduce((sum, row) => sum + row.f
 
 test("MAX UI uses the approved target registry and keeps TMK and ELN independent", () => {
   assert.match(page, /max-targets-2026\.json/u);
-  assert.match(page, /data-testid="max-plan-summary"/u);
-  assert.match(page, /data-testid="max-plan-organization-table"/u);
-  assert.match(page, /Месячный план/u);
-  assert.match(page, /Выполнение, %/u);
-  assert.match(page, /Динамика/u);
-  assert.match(page, /Нужно до конца месяца/u);
-  assert.match(page, /Рейтинг по прогнозному выполнению месячного плана/u);
-  assert.match(page, /forecastAchievement/u);
+  assert.doesNotMatch(page, /data-testid="max-plan-summary"|data-testid="max-plan-organization-table"/u);
+  assert.match(page, /data-testid="max-indicator-period-switch"/u);
+  assert.match(page, /data-testid="max-indicator-summary"/u);
+  assert.match(page, /data-testid="max-indicator-organization-table"/u);
+  assert.match(page, /maxDashboardServiceKey/u);
+  assert.match(page, /maxDashboardRows/u);
+  assert.match(page, /maxIndicatorForecast/u);
 
   assert.equal(countTotal("tmkMaxCount"), 69_611);
   // One source row is explicitly "Неизвестная МО" and is not part of the
@@ -34,9 +33,9 @@ test("MAX UI uses the approved target registry and keeps TMK and ELN independent
   assert.equal(Number((45_937 / 74_000 * 100).toFixed(2)), 62.08);
   assert.equal(145_000 - 60_015, 84_985);
   assert.equal(74_000 - 45_937, 28_063);
-  assert.match(page, /maxDashboardRows/u);
-  assert.match(page, /Number\.POSITIVE_INFINITY/u);
-  assert.match(page, /От наибольшего риска к выполнению/u);
+
+
+
   assert.doesNotMatch(page, /tmk.*\+.*eln|eln.*\+.*tmk/u);
 });
 
