@@ -1,0 +1,42 @@
+name: Audit weekly source coverage (read only)
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - scripts/audit_weekly_source_coverage.py
+      - .github/workflows/audit-weekly-source-coverage.yml
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  audit:
+    if: github.event_name == 'workflow_dispatch' || github.event.pull_request.head.repo.full_name == github.repository
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+      - run: python -m pip install --disable-pip-version-check openpyxl
+      - name: Recover exact accepted sources and replay without publishing
+        env:
+          YANDEX_DISK_TOKEN: ${{ secrets.YANDEX_DISK_TOKEN }}
+          BIRT_DISK_BASE: 'disk:/!МЗ РТ/!Синк 05 08 26/BIRT/BIRT'
+        run: >-
+          python scripts/audit_weekly_source_coverage.py
+          --output "$RUNNER_TEMP/source-audit"
+          --remote "$BIRT_DISK_BASE/INBOX"
+          --remote "$BIRT_DISK_BASE/ARCHIVE"
+          --replay
+      - name: Upload aggregate audit (no original workbooks)
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: weekly-source-coverage
+          path: ${{ runner.temp }}/source-audit/
+          retention-days: 30
+          if-no-files-found: error

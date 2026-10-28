@@ -1,6 +1,7 @@
 "use client";
 
 import { useMemo, useState } from "react";
+import { buildFederalDetailCatalog, federalMetricTarget } from "../lib/federal-navigation.js";
 import moDataRaw from "./mo-data.json";
 import moDetailsRaw from "./mo-details.json";
 import moDetailOidsRaw from "./mo-detail-oids.json";
@@ -3549,6 +3550,7 @@ export default function Home() {
     useState<ExtendedStatus>("all");
   const [extendedFactRange, setExtendedFactRange] =
     useState<ExtendedFactRange>("all");
+  const [federalDetailKey, setFederalDetailKey] = useState<string | null>(null);
   const [extendedReturn, setExtendedReturn] = useState<{
     point: string;
     scrollY: number;
@@ -4346,12 +4348,22 @@ export default function Home() {
       (row) => row.status === "Достигнут",
     ).length,
   };
-  const openExtendedMetric = (row: FederalControlRow) => {
-    if (!row.regionalId || !metricIds.includes(row.regionalId)) return;
-    setExtendedReturn({ point: row.id, scrollY: window.scrollY });
-    setMatrixMetric(row.regionalId);
-    setMetricQuery("");
+  const federalDetailCatalog = buildFederalDetailCatalog(federalControl, metricIds);
+  const selectedFederalDetail = federalDetailCatalog.find((item) => item.key === federalDetailKey);
+  const selectedFederalAssessment = selectedFederalDetail ? assessFederalPlan(selectedFederalDetail.row) : null;
+  const chooseDetailMetric = (key: string) => {
+    if (key.startsWith("federal:")) {
+      setFederalDetailKey(key);
+    } else {
+      setFederalDetailKey(null);
+      setMatrixMetric(key);
+    }
     setDynamicsMode("operational");
+  };
+  const openExtendedMetric = (row: FederalControlRow, source = federalSet) => {
+    setExtendedReturn({ point: row.id, scrollY: window.scrollY });
+    chooseDetailMetric(federalMetricTarget(row, source, metricIds));
+    setMetricQuery("");
     setTab("matrix");
     setShowMatrixSections(false);
     window.scrollTo({ top: 0, behavior: "auto" });
@@ -5964,7 +5976,7 @@ export default function Home() {
               <div className="sideMetrics">
                 <div className="sideMetricsHead">
                   <span>ПОКАЗАТЕЛИ</span>
-                  <b>{metricIds.length}</b>
+                  <b>{metricIds.length + federalDetailCatalog.length}</b>
                 </div>
                 <input
                   className="sideMetricSearch"
@@ -5977,12 +5989,23 @@ export default function Home() {
                   {filteredMetricIds.map((id) => (
                     <button
                       key={id}
-                      className={`sideMetricButton ${sidebarMetricTone(id)} ${matrixMetric === id ? "active" : ""}`}
-                      onClick={() => { setMatrixMetric(id); setDynamicsMode("operational"); }}
+                      className={`sideMetricButton ${sidebarMetricTone(id)} ${!selectedFederalDetail && matrixMetric === id ? "active" : ""}`}
+                      onClick={() => chooseDetailMetric(id)}
                       title={metricDisplayName(id)}
                     >
                       <span>{metricDisplayName(id)}</span>
                       <b className={isPhysicianMetric(id) || id === "tmkMaxCount" || id === "elnMaxCount" ? "periodValue" : ""}>{sidebarMetricValue(id)}</b>
+                    </button>
+                  ))}
+                  {federalDetailCatalog.filter(({ row }) => row.name.toLowerCase().includes(metricQuery.trim().toLowerCase())).map((item) => (
+                    <button
+                      key={item.key}
+                      className={`sideMetricButton ${federalDetailKey === item.key ? "active" : ""}`}
+                      onClick={() => chooseDetailMetric(item.key)}
+                      title={item.row.name}
+                    >
+                      <span>{item.row.name}</span>
+                      <b>{item.row.regionalFact ?? "Нет данных"}</b>
                     </button>
                   ))}
                 </div>
@@ -6374,20 +6397,15 @@ export default function Home() {
                       } as const)[assessment.zone]}</b>
                     </div>
                     <h3>
-                      {row.regionalId && metricIds.includes(row.regionalId) ? (
-                        <button
-                          type="button"
-                          className="federalPlanCardLink"
-                          onClick={() => openExtendedMetric(row)}
-                          aria-label={`Открыть показатель: ${row.name}`}
-                        >
-                          {row.name}
-                        </button>
-                      ) : row.name}
+                      <button
+                        type="button"
+                        className="federalPlanCardLink"
+                        onClick={() => openExtendedMetric(row)}
+                        aria-label={`Открыть показатель: ${row.name}`}
+                      >
+                        {row.name}
+                      </button>
                     </h3>
-                    {(!row.regionalId || !metricIds.includes(row.regionalId)) && (
-                      <p className="federalPlanNoDetail">Детализация в разделе «02 Показатели» пока отсутствует</p>
-                    )}
                     <div className="federalPlanFacts">
                       <div>
                         <small>Факт РТ · {assessment.period}</small>
@@ -8873,6 +8891,45 @@ export default function Home() {
                   ← Расширенная сводка · пункт {extendedReturn.point}
                 </button>
               )}
+              <div className="mobileMetricSelect">
+                <label htmlFor="mobile-metric">Показатель</label>
+                <select id="mobile-metric" value={selectedFederalDetail?.key ?? matrixMetric}
+                  onChange={(e) => chooseDetailMetric(e.target.value)}>
+                  {metricIds.map((id) => <option key={id} value={id}>{metricDisplayName(id)}</option>)}
+                  {federalDetailCatalog.map((item) => <option key={item.key} value={item.key}>{item.row.name}</option>)}
+                </select>
+              </div>
+              {selectedFederalDetail && selectedFederalAssessment ? (
+                <section className="federalIndicatorDetail" data-testid="federal-indicator-detail">
+                  <div className="pageHead compactHead indicatorTitle">
+                    <div>
+                      <p className="eyebrow">02 · ПОКАЗАТЕЛИ · {selectedFederalDetail.source === "agreement" ? "СОГЛАШЕНИЕ" : "КОЛЛЕГИЯ"} · № {selectedFederalDetail.row.id}</p>
+                      <h1>{selectedFederalDetail.row.name}</h1>
+                    </div>
+                  </div>
+                  <div className="federalDetailFacts">
+                    <article><small>Факт РТ</small><strong>{selectedFederalDetail.row.regionalFact ?? "Нет данных"}</strong><span>{selectedFederalAssessment.period}</span></article>
+                    <article><small>План</small><strong>{selectedFederalAssessment.plan}</strong><span>{selectedFederalAssessment.deviation}</span></article>
+                    <article><small>Числитель и знаменатель</small><strong>{selectedFederalAssessment.volume ?? "Не представлены"}</strong><span>Компоненты не восстанавливаются из процента</span></article>
+                  </div>
+                  <p className="sourceDataNote"><b>Источник регионального факта:</b> {selectedFederalDetail.row.sourceNote ?? "Региональный факт сохранён в перечне федерального контроля. Отдельная первичная выгрузка для этого показателя не подключена."}</p>
+                  <div className="federalDetailAvailability">
+                    <h2>{selectedFederalDetail.row.regionalFact ? "Региональный итог без детализации по МО" : "Региональные данные не представлены"}</h2>
+                    <p>{selectedFederalDetail.row.regionalFact
+                      ? "Показано имеющееся значение по Республике Татарстан. Исходные строки медицинских организаций и подразделений к этому показателю не подключены."
+                      : "В перечне есть плановый показатель, но подтверждённый факт РТ и строки медицинских организаций отсутствуют. Отсутствие данных не означает нулевое выполнение."}</p>
+                    <p><b>Динамика:</b> сопоставимый предыдущий срез не представлен.</p>
+                    <p><b>Рейтинг МО и приоритет заслушивания:</b> по этому региональному итогу не рассчитываются.</p>
+                  </div>
+                  <details className="federalDetailSource">
+                    <summary>Основание и федеральная оценка</summary>
+                    <p>{federalControl.source}</p>
+                    <p><b>Федеральная оценка:</b> {selectedFederalDetail.row.federal} · {federalControl.federalPeriod}</p>
+                    <p>Федеральная оценка не подставляется вместо факта РТ и не используется как предыдущий срез.</p>
+                  </details>
+                </section>
+              ) : (
+                <>
               <div className="pageHead compactHead indicatorTitle">
                 <h1>
                   {isMaxMetric
@@ -8914,20 +8971,6 @@ export default function Home() {
                   <span>{maxPeriodView === "operational" ? `${maxIndicatorSlice.period} · текущий месяц` : `${maxIndicatorSlice.period} · с начала года`}</span>
                 </div>
               )}
-              <div className="mobileMetricSelect">
-                <label htmlFor="mobile-metric">Показатель</label>
-                <select
-                  id="mobile-metric"
-                  value={matrixMetric}
-                  onChange={(e) => { setMatrixMetric(e.target.value); setDynamicsMode("operational"); }}
-                >
-                  {metricIds.map((id) => (
-                    <option key={id} value={id}>
-                      {metricDisplayName(id)}
-                    </option>
-                  ))}
-                </select>
-              </div>
               {isMaxMetric ? (
                 <p className="sourceDataNote">
                   <b>Источник и ограничение:</b> {maxIndicatorSlice.source}. В выполнение включены 85 МО утверждённого планового периметра; контрольный итог всего исходного файла — {format(maxIndicatorMetricData.sourceTotal, 0)}. Отсутствие строки не заменяется нулём.
@@ -10057,6 +10100,8 @@ export default function Home() {
                   Поэтому числитель и знаменатель различаются; сравнивать их
                   напрямую нельзя.
                 </p>
+              )}
+                </>
               )}
             </>
           )}
