@@ -2219,859 +2219,1177 @@
     "name": "Количество госпитализаций",
     "plan": null,
     "unit": "",
-    "date": "29.08.2026",
-    "period": "01.01–29.08.2026",
+    "date": "25.10.2026",
+    "period": "01.01–25.10.2026",
     "mode": "count",
     "rows": [
       {
         "name": "ГАУЗ \"Агрызская ЦРБ\"",
         "oid": "1.2.643.5.1.13.13.12.2.16.1088",
-        "fact": 4210,
-        "count": 4210,
-        "previous": null,
-        "trend": null
+        "fact": 5205,
+        "count": 5205,
+        "previous": 4210,
+        "trend": 995,
+        "sourceRows": 1
       },
       {
         "name": "ГАУЗ \"АДРБ С ПЦ\"",
         "oid": "1.2.643.5.1.13.13.12.2.16.1146",
-        "fact": 3469,
-        "count": 3469,
-        "previous": null,
-        "trend": null
+        "fact": 4300,
+        "count": 4300,
+        "previous": 3469,
+        "trend": 831,
+        "sourceRows": 1
       },
       {
         "name": "ГАУЗ \"Азнакаевская ЦРБ\"",
         "oid": "1.2.643.5.1.13.13.12.2.16.1084",
-        "fact": 7881,
-        "count": 7881,
-        "previous": null,
-        "trend": null
+        "fact": 9776,
+        "count": 9776,
+        "previous": 7881,
+        "trend": 1895,
+        "sourceRows": 1
       },
       {
         "name": "ГАУЗ \"Аксубаевская ЦРБ\"",
         "oid": "1.2.643.5.1.13.13.12.2.16.1156",
-        "fact": 3292,
-        "count": 3292,
-        "previous": null,
-        "trend": null
+        "fact": 4341,
+        "count": 4341,
+        "previous": 3292,
+        "trend": 1049,
+        "sourceRows": 1
       },
       {
         "name": "ГАУЗ \"Актанышская ЦРБ\"",
         "oid": "1.2.643.5.1.13.13.12.2.16.1092",
-        "fact": 3185,
-        "count": 3185,
-        "previous": null,
-        "trend": null
+        "fact": 4026,
+        "count": 4026,
+        "previous": 3185,
+        "trend": 841,
+        "sourceRows": 1
       },
       {
         "name": "ГАУЗ \"Алексеевская ЦРБ\"",
         "oid": "1.2.643.5.1.13.13.12.2.16.1087",
-        "fact": 2999,
-        "count": 2999,
-        "previous": null,
-        "trend": null
+        "fact": 3849,
+        "count": 3849,
+        "previous": 2999,
+        "trend": 850,
+        "sourceRows": 1
       },
       {
         "name": "ГАУЗ \"Альметьевская поликлиника №3\"",
         "oid": "1.2.643.5.1.13.13.12.2.16.1107",
-        "fact": 1253,
-        "count": 1253,
-        "previous": null,
-        "trend": null
+        "fact": 1476,
+        "count": 1476,
+        "previous": 1253,
+        "trend": 223,
+        "sourceRows": 1
       },
       {
         "name": "ГАУЗ \"Альметьевская РМБ\"",
         "oid": "1.2.643.5.1.13.13.12.2.16.44921",
-        "fact": 11888,
-        "count": 11888,
-        "previous": null,
-        "trend": null
+        "fact": 15900,
+        "count": 15900,
+        "previous": 11888,
+        "trend": 4012,
+        "sourceRows": 1
       },
       {
         "name": "ГАУЗ \"Альметьевская ЦРБ\"",
         "oid": "1.2.643.5.1.13.13.12.2.16.1108",
-        "fact": 11025,
-        "count": 11025,
-        "previous": null,
-        "trend": null
+        "fact": 14691,
+        "count": 14691,
+        "previous": 11025,
+        "trend": 3666,
+        "sourceRows": 1
       },
       {
         "name": "ГАУЗ \"Апастовская ЦРБ\"",
         "oid": "1.2.643.5.1.13.13.12.2.16.1152",
-        "fact": 2312,
-        "count": 2312,
-        "previous": null,
-        "trend": null
+        "fact": 2832,
+        "count": 2832,
+        "previous": 2312,
+        "trend": 520,
+        "sourceRows": 1
       },
       {
         "name": "ГАУЗ \"Арская ЦРБ\"",
         "oid": "1.2.643.5.1.13.13.12.2.16.1164",
-        "fact": 5935,
-        "count": 5935,
-        "previous": null,
-        "trend": null
+        "fact": 7580,
+        "count": 7580,
+        "previous": 5935,
+        "trend": 1645,
+        "sourceRows": 1
       },
       {
         "name": "ГАУЗ \"Атнинская ЦРБ\"",
         "oid": "1.2.643.5.1.13.13.12.2.16.1078",
-        "fact": 2632,
-        "count": 2632,
-        "previous": null,
-        "trend": null
+        "fact": 3206,
+        "count": 3206,
+        "previous": 2632,
+        "trend": 574,
+        "sourceRows": 1
       },
       {
         "name": "ГАУЗ \"Бавлинская ЦРБ\"",
         "oid": "1.2.643.5.1.13.13.12.2.16.1129",
-        "fact": 4585,
-        "count": 4585,
-        "previous": null,
-        "trend": null
+        "fact": 5717,
+        "count": 5717,
+        "previous": 4585,
+        "trend": 1132,
+        "sourceRows": 1
       },
       {
         "name": "ГАУЗ \"Базарно-Матакская ЦРБ\"",
         "oid": "1.2.643.5.1.13.13.12.2.16.1161",
-        "fact": 3236,
-        "count": 3236,
-        "previous": null,
-        "trend": null
+        "fact": 3996,
+        "count": 3996,
+        "previous": 3236,
+        "trend": 760,
+        "sourceRows": 1
       },
       {
         "name": "ГАУЗ \"Балтасинская ЦРБ\"",
         "oid": "1.2.643.5.1.13.13.12.2.16.1081",
-        "fact": 2785,
-        "count": 2785,
-        "previous": null,
-        "trend": null
+        "fact": 3872,
+        "count": 3872,
+        "previous": 2785,
+        "trend": 1087,
+        "sourceRows": 1
       },
       {
         "name": "ГАУЗ \"Бугульминская ЦРБ\"",
         "oid": "1.2.643.5.1.13.13.12.2.16.1042",
-        "fact": 15242,
-        "count": 15242,
-        "previous": null,
-        "trend": null
+        "fact": 19014,
+        "count": 19014,
+        "previous": 15242,
+        "trend": 3772,
+        "sourceRows": 1
       },
       {
         "name": "ГАУЗ \"Буинская ЦРБ\"",
         "oid": "1.2.643.5.1.13.13.12.2.16.1120",
-        "fact": 5876,
-        "count": 5876,
-        "previous": null,
-        "trend": null
+        "fact": 6852,
+        "count": 6852,
+        "previous": 5876,
+        "trend": 976,
+        "sourceRows": 1
       },
       {
         "name": "ГАУЗ \"Верхнеуслонская ЦРБ\"",
         "oid": "1.2.643.5.1.13.13.12.2.16.1052",
-        "fact": 2575,
-        "count": 2575,
-        "previous": null,
-        "trend": null
+        "fact": 3184,
+        "count": 3184,
+        "previous": 2575,
+        "trend": 609,
+        "sourceRows": 1
       },
       {
         "name": "ГАУЗ \"Высокогорская ЦРБ\"",
         "oid": "1.2.643.5.1.13.13.12.2.16.1050",
-        "fact": 2894,
-        "count": 2894,
-        "previous": null,
-        "trend": null
+        "fact": 4039,
+        "count": 4039,
+        "previous": 2894,
+        "trend": 1145,
+        "sourceRows": 1
       },
       {
         "name": "ГАУЗ \"ГДП №7\"",
         "oid": "1.2.643.5.1.13.13.12.2.16.1113",
-        "fact": 823,
-        "count": 823,
-        "previous": null,
-        "trend": null
+        "fact": 1131,
+        "count": 1131,
+        "previous": 823,
+        "trend": 308,
+        "sourceRows": 1
       },
       {
-        "name": "ГАУЗ \"ГКБ № 12\"",
+        "name": "ГАУЗ \"ГКБ №12\"",
         "oid": "1.2.643.5.1.13.13.12.2.16.28030",
-        "fact": 7660,
-        "count": 7660,
-        "previous": null,
-        "trend": null
+        "fact": 9504,
+        "count": 9504,
+        "previous": 7660,
+        "trend": 1844,
+        "sourceRows": 1
       },
       {
         "name": "ГАУЗ \"ГКБ №16\" г. Казани",
         "oid": "1.2.643.5.1.13.13.12.2.16.1136",
-        "fact": 10003,
-        "count": 10003,
-        "previous": null,
-        "trend": null
+        "fact": 13061,
+        "count": 13061,
+        "previous": 10003,
+        "trend": 3058,
+        "sourceRows": 1
       },
       {
-        "name": "ГАУЗ \"ГКБ №7 им. М.Н.Садыкова\"",
+        "name": "ГАУЗ \"ГКБ №7 им. М.Н. Садыкова\"",
         "oid": "1.2.643.5.1.13.13.12.2.16.1163",
-        "fact": 42786,
-        "count": 42786,
-        "previous": null,
-        "trend": null
+        "fact": 55686,
+        "count": 55686,
+        "previous": 42786,
+        "trend": 12900,
+        "sourceRows": 1
       },
       {
-        "name": "ГАУЗ \"Городская больница №11\" г.Казани",
+        "name": "ГАУЗ \"Городская больница №11\" г. Казани",
         "oid": "1.2.643.5.1.13.13.12.2.16.1070",
-        "fact": 5172,
-        "count": 5172,
-        "previous": null,
-        "trend": null
+        "fact": 6329,
+        "count": 6329,
+        "previous": 5172,
+        "trend": 1157,
+        "sourceRows": 1
       },
       {
-        "name": "ГАУЗ \"Городская больница №2\" г.Наб.Челны",
+        "name": "ГАУЗ \"Городская больница №2\" г. Набережные Челны",
         "oid": "1.2.643.5.1.13.13.12.2.16.1116",
-        "fact": 8417,
-        "count": 8417,
-        "previous": null,
-        "trend": null
+        "fact": 10410,
+        "count": 10410,
+        "previous": 8417,
+        "trend": 1993,
+        "sourceRows": 1
       },
       {
-        "name": "ГАУЗ \"Городская больница №5\" г.Набережные Челны",
+        "name": "ГАУЗ \"Городская больница №5\" г. Набережные Челны",
         "oid": "1.2.643.5.1.13.13.12.2.16.1112",
-        "fact": 20133,
-        "count": 20133,
-        "previous": null,
-        "trend": null
+        "fact": 24762,
+        "count": 24762,
+        "previous": 20133,
+        "trend": 4629,
+        "sourceRows": 1
       },
       {
-        "name": "ГАУЗ \"Городская детская больница №1\" г.Казани",
+        "name": "ГАУЗ \"Городская детская больница №1\" г. Казани",
         "oid": "1.2.643.5.1.13.13.12.2.16.1148",
-        "fact": 3600,
-        "count": 3600,
-        "previous": null,
-        "trend": null
+        "fact": 4634,
+        "count": 4634,
+        "previous": 3600,
+        "trend": 1034,
+        "sourceRows": 1
       },
       {
-        "name": "ГАУЗ \"Городская детская поликлиника №6\" г.Казани",
+        "name": "ГАУЗ \"Городская детская поликлиника №6\" г. Казани",
         "oid": "1.2.643.5.1.13.13.12.2.16.1090",
-        "fact": 158,
-        "count": 158,
-        "previous": null,
-        "trend": null
+        "fact": 279,
+        "count": 279,
+        "previous": 158,
+        "trend": 121,
+        "sourceRows": 1
       },
       {
         "name": "ГАУЗ \"Городская поликлиника №10\" г. Казани",
         "oid": "1.2.643.5.1.13.13.12.2.16.1074",
-        "fact": 1227,
-        "count": 1227,
-        "previous": null,
-        "trend": null
+        "fact": 1410,
+        "count": 1410,
+        "previous": 1227,
+        "trend": 183,
+        "sourceRows": 1
       },
       {
         "name": "ГАУЗ \"Городская поликлиника №18\" г. Казани",
         "oid": "1.2.643.5.1.13.13.12.2.16.1080",
-        "fact": 980,
-        "count": 980,
-        "previous": null,
-        "trend": null
+        "fact": 1212,
+        "count": 1212,
+        "previous": 980,
+        "trend": 232,
+        "sourceRows": 1
       },
       {
-        "name": "ГАУЗ \"Городская поликлиника №20\" г.Казани",
+        "name": "ГАУЗ \"Городская поликлиника №20\" г. Казани",
         "oid": "1.2.643.5.1.13.13.12.2.16.1178",
-        "fact": 1696,
-        "count": 1696,
-        "previous": null,
-        "trend": null
+        "fact": 2057,
+        "count": 2057,
+        "previous": 1696,
+        "trend": 361,
+        "sourceRows": 1
       },
       {
         "name": "ГАУЗ \"Городская поликлиника №21\" г. Казани",
         "oid": "1.2.643.5.1.13.13.12.2.16.1179",
-        "fact": 1593,
-        "count": 1593,
-        "previous": null,
-        "trend": null
+        "fact": 2117,
+        "count": 2117,
+        "previous": 1593,
+        "trend": 524,
+        "sourceRows": 1
       },
       {
-        "name": "ГАУЗ \"Городская поликлиника №3\" г.Наб.Челны",
+        "name": "ГАУЗ \"Городская поликлиника №3\" г. Набережные Челны",
         "oid": "1.2.643.5.1.13.13.12.2.16.1208",
-        "fact": 1462,
-        "count": 1462,
-        "previous": null,
-        "trend": null
+        "fact": 1977,
+        "count": 1977,
+        "previous": 1462,
+        "trend": 515,
+        "sourceRows": 1
       },
       {
         "name": "ГАУЗ \"Городская поликлиника №4 им. Л.Н. Ганиевой\"",
         "oid": "1.2.643.5.1.13.13.12.2.16.1147",
-        "fact": 1033,
-        "count": 1033,
-        "previous": null,
-        "trend": null
+        "fact": 1394,
+        "count": 1394,
+        "previous": 1033,
+        "trend": 361,
+        "sourceRows": 1
       },
       {
-        "name": "ГАУЗ \"Городская поликлиника №6\" г.Наб.Челны",
+        "name": "ГАУЗ \"Городская поликлиника №6\" г. Набережные Челны",
         "oid": "1.2.643.5.1.13.13.12.2.16.1051",
-        "fact": 1332,
-        "count": 1332,
-        "previous": null,
-        "trend": null
+        "fact": 1724,
+        "count": 1724,
+        "previous": 1332,
+        "trend": 392,
+        "sourceRows": 1
       },
       {
-        "name": "ГАУЗ \"Городская поликлиника №7\" г.Казани",
+        "name": "ГАУЗ \"Городская поликлиника №7\" г. Казани",
         "oid": "1.2.643.5.1.13.13.12.2.16.1153",
-        "fact": 1163,
-        "count": 1163,
-        "previous": null,
-        "trend": null
+        "fact": 1451,
+        "count": 1451,
+        "previous": 1163,
+        "trend": 288,
+        "sourceRows": 1
       },
       {
-        "name": "ГАУЗ \"Городская поликлиника №7\" г.Наб.Челны",
+        "name": "ГАУЗ \"Городская поликлиника №7\" г. Набережные Челны",
         "oid": "1.2.643.5.1.13.13.12.2.16.1115",
-        "fact": 583,
-        "count": 583,
-        "previous": null,
-        "trend": null
+        "fact": 853,
+        "count": 853,
+        "previous": 583,
+        "trend": 270,
+        "sourceRows": 1
       },
       {
-        "name": "ГАУЗ \"Городская поликлиника №8\" г.Казань",
+        "name": "ГАУЗ \"Городская поликлиника №8\" г. Казани",
         "oid": "1.2.643.5.1.13.13.12.2.16.1082",
-        "fact": 1893,
-        "count": 1893,
-        "previous": null,
-        "trend": null
+        "fact": 2371,
+        "count": 2371,
+        "previous": 1893,
+        "trend": 478,
+        "sourceRows": 1
       },
       {
-        "name": "ГАУЗ \"Госпиталь для Ветеранов Войн\" г. Н. Челны",
-        "oid": "1.2.643.5.1.13.13.12.2.16.1085",
-        "fact": 4155,
-        "count": 4155,
-        "previous": null,
-        "trend": null
-      },
-      {
-        "name": "ГАУЗ \"Госпиталь для ветеранов войн\" г.Казани",
+        "name": "ГАУЗ \"Госпиталь для Ветеранов Войн\" г. Казани",
         "oid": "1.2.643.5.1.13.13.12.2.16.1135",
-        "fact": 6965,
-        "count": 6965,
-        "previous": null,
-        "trend": null
+        "fact": 8602,
+        "count": 8602,
+        "previous": 6965,
+        "trend": 1637,
+        "sourceRows": 1
       },
       {
-        "name": "ГАУЗ \"Детская городская больница №8\" г.Казани",
+        "name": "ГАУЗ \"Госпиталь для ветеранов войн\" г. Н. Челны",
+        "oid": "1.2.643.5.1.13.13.12.2.16.1085",
+        "fact": 5785,
+        "count": 5785,
+        "previous": 4155,
+        "trend": 1630,
+        "sourceRows": 1
+      },
+      {
+        "name": "ГАУЗ \"Детская городская больница №8\" г. Казани",
         "oid": "1.2.643.5.1.13.13.12.2.16.1202",
-        "fact": 2331,
-        "count": 2331,
-        "previous": null,
-        "trend": null
+        "fact": 4025,
+        "count": 4025,
+        "previous": 2331,
+        "trend": 1694,
+        "sourceRows": 1
       },
       {
-        "name": "ГАУЗ \"Детская городская клиническая больница №7\" г.Казани",
+        "name": "ГАУЗ \"Детская городская клиническая больница №7\" г. Казани",
         "oid": "1.2.643.5.1.13.13.12.2.16.1123",
-        "fact": 3781,
-        "count": 3781,
-        "previous": null,
-        "trend": null
+        "fact": 4713,
+        "count": 4713,
+        "previous": 3781,
+        "trend": 932,
+        "sourceRows": 1
       },
       {
         "name": "ГАУЗ \"Детская городская поликлиника №2\" г. Казани",
         "oid": "1.2.643.5.1.13.13.12.2.16.1182",
-        "fact": 218,
-        "count": 218,
-        "previous": null,
-        "trend": null
+        "fact": 277,
+        "count": 277,
+        "previous": 218,
+        "trend": 59,
+        "sourceRows": 1
       },
       {
-        "name": "ГАУЗ \"Детская городская поликлиника №2\" г.Наб.Челны",
+        "name": "ГАУЗ \"Детская городская поликлиника №2\" г. Набережные Челны",
         "oid": "1.2.643.5.1.13.13.12.2.16.1045",
-        "fact": 615,
-        "count": 615,
-        "previous": null,
-        "trend": null
+        "fact": 857,
+        "count": 857,
+        "previous": 615,
+        "trend": 242,
+        "sourceRows": 1
       },
       {
         "name": "ГАУЗ \"Детская городская поликлиника №3\"",
         "oid": "1.2.643.5.1.13.13.12.2.16.1067",
-        "fact": 882,
-        "count": 882,
-        "previous": null,
-        "trend": null
+        "fact": 1190,
+        "count": 1190,
+        "previous": 882,
+        "trend": 308,
+        "sourceRows": 1
       },
       {
         "name": "ГАУЗ \"Детская городская поликлиника №4 им. Ф.Г. Ахмеровой\"",
         "oid": "1.2.643.5.1.13.13.12.2.16.1127",
-        "fact": 377,
-        "count": 377,
-        "previous": null,
-        "trend": null
+        "fact": 458,
+        "count": 458,
+        "previous": 377,
+        "trend": 81,
+        "sourceRows": 1
       },
       {
         "name": "ГАУЗ \"Детская городская поликлиника №4\" г. Казани",
         "oid": "1.2.643.5.1.13.13.12.2.16.1122",
-        "fact": 352,
-        "count": 352,
-        "previous": null,
-        "trend": null
+        "fact": 496,
+        "count": 496,
+        "previous": 352,
+        "trend": 144,
+        "sourceRows": 1
       },
       {
-        "name": "ГАУЗ \"Детская городская поликлиника №5\" г.Наб.Челны",
+        "name": "ГАУЗ \"Детская городская поликлиника №5\" г. Набережные Челны",
         "oid": "1.2.643.5.1.13.13.12.2.16.1089",
-        "fact": 279,
-        "count": 279,
-        "previous": null,
-        "trend": null
+        "fact": 333,
+        "count": 333,
+        "previous": 279,
+        "trend": 54,
+        "sourceRows": 1
       },
       {
-        "name": "ГАУЗ \"Детская городская поликлиника №6\" г.Наб.Челны",
+        "name": "ГАУЗ \"Детская городская поликлиника №6\" г. Набережные Челны",
         "oid": "1.2.643.5.1.13.13.12.2.16.1066",
-        "fact": 366,
-        "count": 366,
-        "previous": null,
-        "trend": null
+        "fact": 448,
+        "count": 448,
+        "previous": 366,
+        "trend": 82,
+        "sourceRows": 1
       },
       {
-        "name": "ГАУЗ \"Детская городская поликлиника №9\" г.Казани",
+        "name": "ГАУЗ \"Детская городская поликлиника №9\" г. Казани",
         "oid": "1.2.643.5.1.13.13.12.2.16.1193",
-        "fact": 251,
-        "count": 251,
-        "previous": null,
-        "trend": null
+        "fact": 313,
+        "count": 313,
+        "previous": 251,
+        "trend": 62,
+        "sourceRows": 1
       },
       {
         "name": "ГАУЗ \"ДРКБ МЗ РТ\"",
         "oid": "1.2.643.5.1.13.13.12.2.16.1155",
-        "fact": 27747,
-        "count": 27747,
-        "previous": null,
-        "trend": null
+        "fact": 35800,
+        "count": 35800,
+        "previous": 27747,
+        "trend": 8053,
+        "sourceRows": 1
       },
       {
         "name": "ГАУЗ \"Дрожжановская ЦРБ\"",
         "oid": "1.2.643.5.1.13.13.12.2.16.1105",
-        "fact": 71,
-        "count": 71,
-        "previous": null,
-        "trend": null
+        "fact": 3178,
+        "count": 3178,
+        "previous": 71,
+        "trend": 3107,
+        "sourceRows": 1
       },
       {
         "name": "ГАУЗ \"ДЦМР\"",
         "oid": "1.2.643.5.1.13.13.12.2.16.1099",
-        "fact": 986,
-        "count": 986,
-        "previous": null,
-        "trend": null
+        "fact": 1374,
+        "count": 1374,
+        "previous": 986,
+        "trend": 388,
+        "sourceRows": 1
       },
       {
         "name": "ГАУЗ \"Елабужская ЦРБ\"",
         "oid": "1.2.643.5.1.13.13.12.2.16.1093",
-        "fact": 13081,
-        "count": 13081,
-        "previous": null,
-        "trend": null
+        "fact": 15937,
+        "count": 15937,
+        "previous": 13081,
+        "trend": 2856,
+        "sourceRows": 1
       },
       {
         "name": "ГАУЗ \"Заинская ЦРБ\"",
         "oid": "1.2.643.5.1.13.13.12.2.16.1072",
-        "fact": 7372,
-        "count": 7372,
-        "previous": null,
-        "trend": null
+        "fact": 9339,
+        "count": 9339,
+        "previous": 7372,
+        "trend": 1967,
+        "sourceRows": 1
       },
       {
         "name": "ГАУЗ \"Зеленодольская ЦРБ\"",
         "oid": "1.2.643.5.1.13.13.12.2.16.1139",
-        "fact": 21887,
-        "count": 21887,
-        "previous": null,
-        "trend": null
+        "fact": 27367,
+        "count": 27367,
+        "previous": 21887,
+        "trend": 5480,
+        "sourceRows": 1
       },
       {
         "name": "ГАУЗ \"Казанский эндокринологический диспансер\" ",
         "oid": "1.2.643.5.1.13.13.12.2.16.1154",
-        "fact": 610,
-        "count": 610,
-        "previous": null,
-        "trend": null
+        "fact": 744,
+        "count": 744,
+        "previous": 610,
+        "trend": 134,
+        "sourceRows": 1
       },
       {
         "name": "ГАУЗ \"Кайбицкая ЦРБ\"",
         "oid": "1.2.643.5.1.13.13.12.2.16.1131",
-        "fact": 2607,
-        "count": 2607,
-        "previous": null,
-        "trend": null
+        "fact": 3305,
+        "count": 3305,
+        "previous": 2607,
+        "trend": 698,
+        "sourceRows": 1
       },
       {
         "name": "ГАУЗ \"Камско-Полянская РБ\"",
         "oid": "1.2.643.5.1.13.13.12.2.16.1165",
-        "fact": 3170,
-        "count": 3170,
-        "previous": null,
-        "trend": null
+        "fact": 4453,
+        "count": 4453,
+        "previous": 3170,
+        "trend": 1283,
+        "sourceRows": 1
       },
       {
         "name": "ГАУЗ \"Камско-Устьинская ЦРБ\"",
         "oid": "1.2.643.5.1.13.13.12.2.16.1044",
-        "fact": 2815,
-        "count": 2815,
-        "previous": null,
-        "trend": null
+        "fact": 3522,
+        "count": 3522,
+        "previous": 2815,
+        "trend": 707,
+        "sourceRows": 1
       },
       {
         "name": "ГАУЗ \"КДМЦ\"",
         "oid": "1.2.643.5.1.13.13.12.2.16.1065",
-        "fact": 16988,
-        "count": 16988,
-        "previous": null,
-        "trend": null
+        "fact": 21373,
+        "count": 21373,
+        "previous": 16988,
+        "trend": 4385,
+        "sourceRows": 1
       },
       {
-        "name": "ГАУЗ \"Клиника медицинского университета\" г.Казани",
+        "name": "ГАУЗ \"Клиника медицинского университета\" г. Казани",
         "oid": "1.2.643.5.1.13.13.12.2.16.1125",
-        "fact": 10002,
-        "count": 10002,
-        "previous": null,
-        "trend": null
+        "fact": 12572,
+        "count": 12572,
+        "previous": 10002,
+        "trend": 2570,
+        "sourceRows": 1
       },
       {
-        "name": "ГАУЗ \"Клиническая больница №2\" г.Казани",
+        "name": "ГАУЗ \"Клиническая больница №2\" г. Казани",
         "oid": "1.2.643.5.1.13.13.12.2.16.1185",
-        "fact": 4409,
-        "count": 4409,
-        "previous": null,
-        "trend": null
+        "fact": 5614,
+        "count": 5614,
+        "previous": 4409,
+        "trend": 1205,
+        "sourceRows": 1
       },
       {
         "name": "ГАУЗ \"Кукморская ЦРБ\"",
         "oid": "1.2.643.5.1.13.13.12.2.16.1144",
-        "fact": 5584,
-        "count": 5584,
-        "previous": null,
-        "trend": null
+        "fact": 7240,
+        "count": 7240,
+        "previous": 5584,
+        "trend": 1656,
+        "sourceRows": 1
       },
       {
         "name": "ГАУЗ \"Лаишевская ЦРБ\"",
         "oid": "1.2.643.5.1.13.13.12.2.16.1149",
-        "fact": 3642,
-        "count": 3642,
-        "previous": null,
-        "trend": null
+        "fact": 4573,
+        "count": 4573,
+        "previous": 3642,
+        "trend": 931,
+        "sourceRows": 1
       },
       {
         "name": "ГАУЗ \"Лениногорская ЦРБ\"",
         "oid": "1.2.643.5.1.13.13.12.2.16.1073",
-        "fact": 10730,
-        "count": 10730,
-        "previous": null,
-        "trend": null
+        "fact": 13209,
+        "count": 13209,
+        "previous": 10730,
+        "trend": 2479,
+        "sourceRows": 1
       },
       {
         "name": "ГАУЗ \"Мамадышская ЦРБ\"",
         "oid": "1.2.643.5.1.13.13.12.2.16.1104",
-        "fact": 6436,
-        "count": 6436,
-        "previous": null,
-        "trend": null
+        "fact": 7790,
+        "count": 7790,
+        "previous": 6436,
+        "trend": 1354,
+        "sourceRows": 1
       },
       {
         "name": "ГАУЗ \"МЕНДЕЛЕЕВСКАЯ ЦРБ\"",
         "oid": "1.2.643.5.1.13.13.12.2.16.1058",
-        "fact": 3544,
-        "count": 3544,
-        "previous": null,
-        "trend": null
+        "fact": 4493,
+        "count": 4493,
+        "previous": 3544,
+        "trend": 949,
+        "sourceRows": 1
       },
       {
         "name": "ГАУЗ \"Мензелинская ЦРБ\"",
         "oid": "1.2.643.5.1.13.13.12.2.16.1101",
-        "fact": 2753,
-        "count": 2753,
-        "previous": null,
-        "trend": null
+        "fact": 3375,
+        "count": 3375,
+        "previous": 2753,
+        "trend": 622,
+        "sourceRows": 1
       },
       {
         "name": "ГАУЗ \"Муслюмовская ЦРБ\"",
         "oid": "1.2.643.5.1.13.13.12.2.16.1055",
-        "fact": 2892,
-        "count": 2892,
-        "previous": null,
-        "trend": null
+        "fact": 3585,
+        "count": 3585,
+        "previous": 2892,
+        "trend": 693,
+        "sourceRows": 1
       },
       {
         "name": "ГАУЗ \"НАБЕРЕЖНО-ЧЕЛНИНСКАЯ ИБ\"",
         "oid": "1.2.643.5.1.13.13.12.2.16.1064",
-        "fact": 7913,
-        "count": 7913,
-        "previous": null,
-        "trend": null
+        "fact": 10662,
+        "count": 10662,
+        "previous": 7913,
+        "trend": 2749,
+        "sourceRows": 1
       },
       {
         "name": "ГАУЗ \"НДРБ с ПЦ\"",
         "oid": "1.2.643.5.1.13.13.12.2.16.1171",
-        "fact": 7978,
-        "count": 7978,
-        "previous": null,
-        "trend": null
+        "fact": 10590,
+        "count": 10590,
+        "previous": 7978,
+        "trend": 2612,
+        "sourceRows": 1
       },
       {
         "name": "ГАУЗ \"Новошешминская ЦРБ\"",
         "oid": "1.2.643.5.1.13.13.12.2.16.1059",
-        "fact": 2400,
-        "count": 2400,
-        "previous": null,
-        "trend": null
+        "fact": 3040,
+        "count": 3040,
+        "previous": 2400,
+        "trend": 640,
+        "sourceRows": 1
       },
       {
         "name": "ГАУЗ \"Нурлатская ЦРБ\"",
         "oid": "1.2.643.5.1.13.13.12.2.16.1138",
-        "fact": 5617,
-        "count": 5617,
-        "previous": null,
-        "trend": null
+        "fact": 6903,
+        "count": 6903,
+        "previous": 5617,
+        "trend": 1286,
+        "sourceRows": 1
       },
       {
         "name": "ГАУЗ \"НЦРМБ\"",
         "oid": "1.2.643.5.1.13.13.12.2.16.1192",
-        "fact": 19909,
-        "count": 19909,
-        "previous": null,
-        "trend": null
+        "fact": 25086,
+        "count": 25086,
+        "previous": 19909,
+        "trend": 5177,
+        "sourceRows": 1
       },
       {
         "name": "ГАУЗ \"Пестречинская ЦРБ\"",
         "oid": "1.2.643.5.1.13.13.12.2.16.1109",
-        "fact": 3209,
-        "count": 3209,
-        "previous": null,
-        "trend": null
+        "fact": 4039,
+        "count": 4039,
+        "previous": 3209,
+        "trend": 830,
+        "sourceRows": 1
       },
       {
         "name": "ГАУЗ \"Республиканский клинический наркологический диспансер МЗ РТ\"",
         "oid": "1.2.643.5.1.13.13.12.2.16.1168",
-        "fact": 3071,
-        "count": 3071,
-        "previous": null,
-        "trend": null
+        "fact": 4364,
+        "count": 4364,
+        "previous": 3071,
+        "trend": 1293,
+        "sourceRows": 1
       },
       {
         "name": "ГАУЗ \"РКБ МЗ РТ\"",
         "oid": "1.2.643.5.1.13.13.12.2.16.1094",
-        "fact": 2669,
-        "count": 2669,
-        "previous": null,
-        "trend": null
+        "fact": 3499,
+        "count": 3499,
+        "previous": 2669,
+        "trend": 830,
+        "sourceRows": 1
       },
       {
         "name": "ГАУЗ \"РКИБ им. проф. А.Ф. Агафонова\"",
         "oid": "1.2.643.5.1.13.13.12.2.16.1041",
-        "fact": 12383,
-        "count": 12383,
-        "previous": null,
-        "trend": null
+        "fact": 20281,
+        "count": 20281,
+        "previous": 12383,
+        "trend": 7898,
+        "sourceRows": 1
       },
       {
         "name": "ГАУЗ \"РКОБ МЗ РТ им. проф. Е.В. Адамюка\"",
         "oid": "1.2.643.5.1.13.13.12.2.16.1046",
-        "fact": 9389,
-        "count": 9389,
-        "previous": null,
-        "trend": null
+        "fact": 12189,
+        "count": 12189,
+        "previous": 9389,
+        "trend": 2800,
+        "sourceRows": 1
       },
       {
         "name": "ГАУЗ \"РКОД МЗ РТ им. проф. М.З. Сигала\"",
         "oid": "1.2.643.5.1.13.13.12.2.16.1063",
-        "fact": 56137,
-        "count": 56137,
-        "previous": null,
-        "trend": null
+        "fact": 72544,
+        "count": 72544,
+        "previous": 56137,
+        "trend": 16407,
+        "sourceRows": 1
       },
       {
         "name": "ГАУЗ \"РКПД\"",
         "oid": "1.2.643.5.1.13.13.12.2.16.1049",
-        "fact": 713,
-        "count": 713,
-        "previous": null,
-        "trend": null
+        "fact": 888,
+        "count": 888,
+        "previous": 713,
+        "trend": 175,
+        "sourceRows": 1
       },
       {
         "name": "ГАУЗ \"РКПД\" Детский туберкулезный санаторий",
         "oid": "1.2.643.5.1.13.13.12.2.16.9261",
-        "fact": 217,
-        "count": 217,
-        "previous": null,
-        "trend": null
+        "fact": 297,
+        "count": 297,
+        "previous": 217,
+        "trend": 80,
+        "sourceRows": 1
       },
       {
         "name": "ГАУЗ \"Рыбно-Слободская ЦРБ\"",
         "oid": "1.2.643.5.1.13.13.12.2.16.1133",
-        "fact": 3217,
-        "count": 3217,
-        "previous": null,
-        "trend": null
+        "fact": 4067,
+        "count": 4067,
+        "previous": 3217,
+        "trend": 850,
+        "sourceRows": 1
       },
       {
         "name": "ГАУЗ \"САБИНСКАЯ ЦРБ\"",
         "oid": "1.2.643.5.1.13.13.12.2.16.1126",
-        "fact": 4865,
-        "count": 4865,
-        "previous": null,
-        "trend": null
+        "fact": 5569,
+        "count": 5569,
+        "previous": 4865,
+        "trend": 704,
+        "sourceRows": 1
       },
       {
         "name": "ГАУЗ \"Сармановская ЦРБ\"",
         "oid": "1.2.643.5.1.13.13.12.2.16.1169",
-        "fact": 4560,
-        "count": 4560,
-        "previous": null,
-        "trend": null
+        "fact": 5548,
+        "count": 5548,
+        "previous": 4560,
+        "trend": 988,
+        "sourceRows": 1
       },
       {
         "name": "ГАУЗ \"Тетюшская ЦРБ\"",
         "oid": "1.2.643.5.1.13.13.12.2.16.1130",
-        "fact": 3368,
-        "count": 3368,
-        "previous": null,
-        "trend": null
+        "fact": 4235,
+        "count": 4235,
+        "previous": 3368,
+        "trend": 867,
+        "sourceRows": 1
       },
       {
         "name": "ГАУЗ \"Тукаевская ЦРБ\"",
         "oid": "1.2.643.5.1.13.13.12.2.16.1140",
-        "fact": 2702,
-        "count": 2702,
-        "previous": null,
-        "trend": null
+        "fact": 3419,
+        "count": 3419,
+        "previous": 2702,
+        "trend": 717,
+        "sourceRows": 1
       },
       {
         "name": "ГАУЗ \"Тюлячинская ЦРБ\"",
         "oid": "1.2.643.5.1.13.13.12.2.16.1039",
-        "fact": 1921,
-        "count": 1921,
-        "previous": null,
-        "trend": null
+        "fact": 2374,
+        "count": 2374,
+        "previous": 1921,
+        "trend": 453,
+        "sourceRows": 1
       },
       {
         "name": "ГАУЗ \"УРУССИНСКАЯ ЦРБ\"",
         "oid": "1.2.643.5.1.13.13.12.2.16.1097",
-        "fact": 2815,
-        "count": 2815,
-        "previous": null,
-        "trend": null
+        "fact": 3442,
+        "count": 3442,
+        "previous": 2815,
+        "trend": 627,
+        "sourceRows": 1
       },
       {
-        "name": "ГАУЗ \"ЦГКБ №18 им. проф. К.Ш.Зыятдинова\"",
+        "name": "ГАУЗ \"ЦГКБ №18 им. проф. К.Ш. Зыятдинова\"",
         "oid": "1.2.643.5.1.13.13.12.2.16.1151",
-        "fact": 9038,
-        "count": 9038,
-        "previous": null,
-        "trend": null
+        "fact": 12656,
+        "count": 12656,
+        "previous": 9038,
+        "trend": 3618,
+        "sourceRows": 1
       },
       {
         "name": "ГАУЗ \"Черемшанская ЦРБ\"",
         "oid": "1.2.643.5.1.13.13.12.2.16.1162",
-        "fact": 2165,
-        "count": 2165,
-        "previous": null,
-        "trend": null
+        "fact": 2710,
+        "count": 2710,
+        "previous": 2165,
+        "trend": 545,
+        "sourceRows": 1
       },
       {
         "name": "ГАУЗ \"Чистопольская ЦРБ\"",
         "oid": "1.2.643.5.1.13.13.12.2.16.1038",
-        "fact": 12347,
-        "count": 12347,
-        "previous": null,
-        "trend": null
+        "fact": 15475,
+        "count": 15475,
+        "previous": 12347,
+        "trend": 3128,
+        "sourceRows": 1
       },
       {
         "name": "ГАУЗ РТ \"БСМП им. Р.С. Акчурина\"",
         "oid": "1.2.643.5.1.13.13.12.2.16.1040",
-        "fact": 14791,
-        "count": 14791,
-        "previous": null,
-        "trend": null
+        "fact": 18951,
+        "count": 18951,
+        "previous": 14791,
+        "trend": 4160,
+        "sourceRows": 1
       },
       {
         "name": "ГБУЗ «Центр Реабилитации Слуха»",
         "oid": "1.2.643.5.1.13.13.12.2.16.1061",
-        "fact": 85,
-        "count": 85,
+        "fact": 237,
+        "count": 237,
+        "previous": 85,
+        "trend": 152,
+        "sourceRows": 1
+      },
+      {
+        "name": "КГМА - Филиал ФГАОУ ДПО РМАНПО МЗ РФ",
+        "oid": "1.2.643.5.1.13.13.12.4.16.1135",
+        "fact": 376,
+        "count": 376,
         "previous": null,
-        "trend": null
+        "trend": null,
+        "sourceRows": 1
+      },
+      {
+        "name": "МАНО «Казанский хоспис «Наташа»",
+        "oid": "1.2.643.5.1.13.13.12.2.16.112487",
+        "fact": 43,
+        "count": 43,
+        "previous": null,
+        "trend": null,
+        "sourceRows": 1
+      },
+      {
+        "name": "НМЧУ \"ДЕТСКИЙ ХОСПИС\"",
+        "oid": "1.2.643.5.1.13.13.12.2.16.30686",
+        "fact": 100,
+        "count": 100,
+        "previous": null,
+        "trend": null,
+        "sourceRows": 1
+      },
+      {
+        "name": "ООО \"ДИОН МЕДИКАЛ ГРУПП МЦ \"Millenium Clinic\"",
+        "oid": "1.2.643.5.1.13.13.12.2.16.62692",
+        "fact": 100,
+        "count": 100,
+        "previous": null,
+        "trend": null,
+        "sourceRows": 1
+      },
+      {
+        "name": "ООО \"КДЦ Авиастроительного района\"",
+        "oid": "1.2.643.5.1.13.13.12.2.16.1188",
+        "fact": 689,
+        "count": 689,
+        "previous": null,
+        "trend": null,
+        "sourceRows": 1
+      },
+      {
+        "name": "ООО \"КДЦ на Четаева\"",
+        "oid": "1.2.643.5.1.13.13.12.2.16.1228",
+        "fact": 192,
+        "count": 192,
+        "previous": null,
+        "trend": null,
+        "sourceRows": 1
+      },
+      {
+        "name": "ООО \"КЛИНИКА ВОССТАНОВИТЕЛЬНОЙ МЕДИЦИНЫ\"",
+        "oid": "1.2.643.5.1.13.13.12.2.16.21634",
+        "fact": 77,
+        "count": 77,
+        "previous": null,
+        "trend": null,
+        "sourceRows": 1
+      },
+      {
+        "name": "ООО \"Красноключинский центр семейной медицины\"",
+        "oid": "1.2.643.5.1.13.13.12.2.16.1083",
+        "fact": 25,
+        "count": 25,
+        "previous": null,
+        "trend": null,
+        "sourceRows": 1
       },
       {
         "name": "ООО \"КСМ\"",
         "oid": "1.2.643.5.1.13.13.12.2.16.15164",
-        "fact": 4,
-        "count": 4,
+        "fact": 35,
+        "count": 35,
+        "previous": 4,
+        "trend": 31,
+        "sourceRows": 1
+      },
+      {
+        "name": "ООО \"МЕДЕЛ\"",
+        "oid": "1.2.643.5.1.13.13.12.2.16.22878",
+        "fact": 44,
+        "count": 44,
         "previous": null,
-        "trend": null
+        "trend": null,
+        "sourceRows": 1
+      },
+      {
+        "name": "ООО \"ММЦ Профмедицина-НК\"",
+        "oid": "1.2.643.5.1.13.13.12.2.16.1224",
+        "fact": 534,
+        "count": 534,
+        "previous": null,
+        "trend": null,
+        "sourceRows": 1
+      },
+      {
+        "name": "ООО \"МЦГХ Хузангаево\"",
+        "oid": "1.2.643.5.1.13.13.12.2.16.20953",
+        "fact": 217,
+        "count": 217,
+        "previous": null,
+        "trend": null,
+        "sourceRows": 1
+      },
+      {
+        "name": "ООО \"Прозрение\"",
+        "oid": "1.2.643.5.1.13.13.12.2.16.14339",
+        "fact": 1002,
+        "count": 1002,
+        "previous": null,
+        "trend": null,
+        "sourceRows": 1
+      },
+      {
+        "name": "ООО \"Ситидок-Эксперт Казань\"",
+        "oid": "1.2.643.5.1.13.13.12.2.16.12459",
+        "fact": 592,
+        "count": 592,
+        "previous": null,
+        "trend": null,
+        "sourceRows": 1
+      },
+      {
+        "name": "ООО \"СИТИКОМ\"",
+        "oid": "1.2.643.5.1.13.13.12.2.16.21874",
+        "fact": 72,
+        "count": 72,
+        "previous": null,
+        "trend": null,
+        "sourceRows": 1
+      },
+      {
+        "name": "ООО \"Центр микрохирургии глаза \"Прозрение\" Отделение в г. Елабуге",
+        "oid": "1.2.643.5.1.13.13.12.2.16.15115",
+        "fact": 660,
+        "count": 660,
+        "previous": null,
+        "trend": null,
+        "sourceRows": 2
+      },
+      {
+        "name": "ООО \"Центр репродуктивной медицины \"Аист\"",
+        "oid": "1.2.643.5.1.13.13.12.2.16.21823",
+        "fact": 208,
+        "count": 208,
+        "previous": null,
+        "trend": null,
+        "sourceRows": 1
+      },
+      {
+        "name": "ООО «Клиника лазерной хирургии»",
+        "oid": "1.2.643.5.1.13.13.12.2.2.20318",
+        "fact": 86,
+        "count": 86,
+        "previous": null,
+        "trend": null,
+        "sourceRows": 1
+      },
+      {
+        "name": "ООО «Отель-Клиника» ",
+        "oid": "1.2.643.5.1.13.13.12.2.16.22116",
+        "fact": 405,
+        "count": 405,
+        "previous": null,
+        "trend": null,
+        "sourceRows": 1
+      },
+      {
+        "name": "ООО «ЮНИМЕД»",
+        "oid": "1.2.643.5.1.13.13.12.2.16.21977",
+        "fact": 69,
+        "count": 69,
+        "previous": null,
+        "trend": null,
+        "sourceRows": 1
+      },
+      {
+        "name": "ООО МО СПАСЕНИЕ",
+        "oid": "1.2.643.5.1.13.13.12.2.16.1190",
+        "fact": 648,
+        "count": 648,
+        "previous": null,
+        "trend": null,
+        "sourceRows": 1
+      },
+      {
+        "name": "ПАО «Татнефть» им. В.Д. Шашина",
+        "oid": "1.2.643.5.1.13.13.12.2.16.21788",
+        "fact": 203,
+        "count": 203,
+        "previous": null,
+        "trend": null,
+        "sourceRows": 1
       },
       {
         "name": "РКПБ им. акад. В.М. Бехтерева МЗ РТ",
         "oid": "1.2.643.5.1.13.13.12.2.16.1056",
-        "fact": 9251,
-        "count": 9251,
-        "previous": null,
-        "trend": null
+        "fact": 12538,
+        "count": 12538,
+        "previous": 9251,
+        "trend": 3287,
+        "sourceRows": 1
       },
       {
         "name": "ФГАОУВО Казанский (Приволжский) федеральный университет",
         "oid": "1.2.643.5.1.13.13.12.2.16.1231",
-        "fact": 13313,
-        "count": 13313,
-        "previous": null,
-        "trend": null
+        "fact": 18256,
+        "count": 18256,
+        "previous": 13313,
+        "trend": 4943,
+        "sourceRows": 1
       },
       {
         "name": "Филиал ГАУЗ \"РКНД МЗ РТ\" - АНД",
         "oid": "1.2.643.5.1.13.13.12.2.16.9665",
-        "fact": 920,
-        "count": 920,
-        "previous": null,
-        "trend": null
+        "fact": 1258,
+        "count": 1258,
+        "previous": 920,
+        "trend": 338,
+        "sourceRows": 1
       },
       {
         "name": "Филиал ГАУЗ \"РКНД МЗ РТ\" - ННД",
         "oid": "1.2.643.5.1.13.13.12.2.16.9622",
-        "fact": 744,
-        "count": 744,
-        "previous": null,
-        "trend": null
+        "fact": 1021,
+        "count": 1021,
+        "previous": 744,
+        "trend": 277,
+        "sourceRows": 1
       },
       {
         "name": "Филиал ГАУЗ \"РКНД МЗ РТ\" - НЧНД",
         "oid": "1.2.643.5.1.13.13.12.2.16.9641",
-        "fact": 1107,
-        "count": 1107,
-        "previous": null,
-        "trend": null
+        "fact": 1530,
+        "count": 1530,
+        "previous": 1107,
+        "trend": 423,
+        "sourceRows": 1
       },
       {
         "name": "Филиал ГАУЗ \"РКПД\" - \"Альметьевский ПТД\"",
         "oid": "1.2.643.5.1.13.13.12.2.16.9255",
-        "fact": 614,
-        "count": 614,
-        "previous": null,
-        "trend": null
+        "fact": 839,
+        "count": 839,
+        "previous": 614,
+        "trend": 225,
+        "sourceRows": 1
       },
       {
         "name": "Филиал ГАУЗ \"РКПД\" - \"Бугульминский ПТД\"",
         "oid": "1.2.643.5.1.13.13.12.2.16.9256",
-        "fact": 54,
-        "count": 54,
+        "fact": 68,
+        "count": 68,
+        "previous": 54,
+        "trend": 14,
+        "sourceRows": 1
+      },
+      {
+        "name": "Филиал ГАУЗ \"РКПД\" - \"Зеленодольский ПТД\"",
+        "oid": "1.2.643.5.1.13.13.12.2.16.9258",
+        "fact": 121,
+        "count": 121,
         "previous": null,
-        "trend": null
+        "trend": null,
+        "sourceRows": 1
       },
       {
         "name": "Филиал ГАУЗ \"РКПД\" - \"Лениногорский ПТД\"",
         "oid": "1.2.643.5.1.13.13.12.2.16.9259",
-        "fact": 85,
-        "count": 85,
-        "previous": null,
-        "trend": null
+        "fact": 96,
+        "count": 96,
+        "previous": 85,
+        "trend": 11,
+        "sourceRows": 1
       },
       {
         "name": "Филиал ГАУЗ \"РКПД\" - \"Набережночелнинский ПТД\"",
         "oid": "1.2.643.5.1.13.13.12.2.16.9667",
-        "fact": 195,
-        "count": 195,
-        "previous": null,
-        "trend": null
+        "fact": 220,
+        "count": 220,
+        "previous": 195,
+        "trend": 25,
+        "sourceRows": 1
       },
       {
         "name": "Филиал ГАУЗ \"РКПД\" - \"Нижнекамский ПТД\"",
         "oid": "1.2.643.5.1.13.13.12.2.16.9257",
-        "fact": 121,
-        "count": 121,
+        "fact": 118,
+        "count": 118,
+        "previous": 121,
+        "trend": -3,
+        "sourceRows": 1
+      },
+      {
+        "name": "ЧУЗ \"КБ \"РЖД-Медицина\" г. Казани\"",
+        "oid": "1.2.643.5.1.13.13.12.2.16.1197",
+        "fact": 3994,
+        "count": 3994,
         "previous": null,
-        "trend": null
+        "trend": null,
+        "sourceRows": 1
       }
-    ]
+    ],
+    "previousDate": "29.08.2026",
+    "previousPeriod": "01.01–29.08.2026",
+    "source": "Отчет по госпитализациям_v2 -  01.01.2026-25.10.2026.xlsx",
+    "total": 782059,
+    "note": "Количество завершённых случаев стационарной помощи: столбец D отчёта по госпитализациям. Столбцы E и F содержат СЭМД и в количество случаев не суммируются."
   },
   "fapSemdCount": {
     "name": "Количество зарегистрированных СЭМД по ФАП и ФП",

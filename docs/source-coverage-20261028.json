@@ -967,13 +967,17 @@
   "findings": [
     {
       "id": "hospital-count-stale",
-      "status": "OPEN",
+      "status": "FIX_PREPARED",
       "metric": "hospitalCount",
       "displayedCut": "29.08.2026",
       "availableSourceCut": "25.10.2026",
       "currentDisplayedTotal": 596773,
       "availableSourceTotal": 782059,
-      "reason": "Separate count dataset is not in the weekly adapter metric list; hospital ratio has already been updated."
+      "reason": "Column D loaded into hospitalCount; registered SEMD columns E/F remain separate. Weekly adapter now includes this indicator.",
+      "preparedTotal": 782059,
+      "preparedCut": "25.10.2026",
+      "sourceRows": 130,
+      "uniqueOids": 129
     },
     {
       "id": "remd-period-routing",
@@ -1069,5 +1073,15 @@
       "sourceCount": 1364313,
       "displayedCount": 1364313
     }
-  ]
+  ],
+  "hospitalCountCorrection": {
+    "sourceColumn": "D",
+    "period": "01.01–25.10.2026",
+    "total": 782059,
+    "sourceRows": 130,
+    "organizations": 129,
+    "repeatability": "PASS",
+    "sourceRowsAndMoValues": "PASS",
+    "published": false
+  }
 }

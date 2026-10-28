@@ -3,60 +3,7 @@
   "baselineVersion": "5.4.5",
   "dataDate": "25.10.2026",
   "sourceOverallStatus": "WARNING",
-  "reviewCount": 4,
+  "reviewCount": 0,
   "rule": "AI receives only FAIL items, new anomalies and methodological conflicts; PASS and ordinary WARNING items are excluded.",
-  "items": [
-    {
-      "checkId": "data.percentage_anomalies",
-      "category": "anomaly",
-      "status": "WARNING",
-      "reviewReason": "anomaly",
-      "fingerprint": "percentage_above_100|mo-data|semd228|1.2.643.5.1.13.13.12.2.16.1152|АПАСТОВСКАЯ ЦРБ|fact",
-      "metric": "semd228",
-      "organizationOid": "1.2.643.5.1.13.13.12.2.16.1152",
-      "organizationName": "АПАСТОВСКАЯ ЦРБ",
-      "field": "fact",
-      "expected": null,
-      "actual": 100.4189797842254
-    },
-    {
-      "checkId": "data.percentage_anomalies",
-      "category": "anomaly",
-      "status": "WARNING",
-      "reviewReason": "anomaly",
-      "fingerprint": "percentage_above_100|mo-data|semd228|1.2.643.5.1.13.13.12.2.16.1122|ДГП № 4 г.Казань|previous",
-      "metric": "semd228",
-      "organizationOid": "1.2.643.5.1.13.13.12.2.16.1122",
-      "organizationName": "ДГП № 4 г.Казань",
-      "field": "previous",
-      "expected": null,
-      "actual": 101.09109180963318
-    },
-    {
-      "checkId": "data.percentage_anomalies",
-      "category": "anomaly",
-      "status": "WARNING",
-      "reviewReason": "anomaly",
-      "fingerprint": "percentage_above_100|mo-data|semd228|1.2.643.5.1.13.13.12.2.16.1105|ДРОЖЖАНОВСКАЯ ЦРБ|fact",
-      "metric": "semd228",
-      "organizationOid": "1.2.643.5.1.13.13.12.2.16.1105",
-      "organizationName": "ДРОЖЖАНОВСКАЯ ЦРБ",
-      "field": "fact",
-      "expected": null,
-      "actual": 100.91561261091184
-    },
-    {
-      "checkId": "data.percentage_anomalies",
-      "category": "anomaly",
-      "status": "WARNING",
-      "reviewReason": "anomaly",
-      "fingerprint": "percentage_above_100|mo-data|hospital|1.2.643.5.1.13.13.12.2.16.1092|АКТАНЫШСКАЯ ЦРБ|fact",
-      "metric": "hospital",
-      "organizationOid": "1.2.643.5.1.13.13.12.2.16.1092",
-      "organizationName": "АКТАНЫШСКАЯ ЦРБ",
-      "field": "fact",
-      "expected": null,
-      "actual": 100.47193243914556
-    }
-  ]
+  "items": []
 }

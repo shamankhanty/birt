@@ -9,14 +9,14 @@ import shutil
 import subprocess
 
 from adapters import (SPECIALTIES, adapt_egpu, adapt_max, adapt_short_input,
-                      adapt_physicians, adapt_preventive, adapt_hospital, run_family, parse_iso)
+                      adapt_physicians, adapt_preventive, adapt_hospital, adapt_hospital_count, run_family, parse_iso)
 from adapters import parse_max, source_rows
 from source_catalog import scan
 from replay_gate import run as compare_trees
 
 ROOT = Path(__file__).resolve().parents[2]
 METRICS = {
-    'egpu_attachment': ['egpu', 'egpu2days'], 'hospital_cases': ['hospital'],
+    'egpu_attachment': ['egpu', 'egpu2days'], 'hospital_cases': ['hospital', 'hospitalCount'],
     'ambulatory_cases': ['ambulatoryCase'], 'preventive_remd': ['semd228'],
     'birth_certificates': ['birth'], 'death_certificates': ['death'],
     'max_tmk_eln': ['tmkMaxCount', 'elnMaxCount'],
@@ -152,7 +152,8 @@ def invoke(app, family, metric, item, partner):
             raise ValueError('Нет парного источника за тот же отчетный период')
         approved_missing_oids = [r['oid'] for r in read(app/'preventive-semd-audit.json').get('excluded', [])]
         return adapt_preventive(app,source,Path(partner['path']),end,ROOT/'app/mo-registry.json',approved_missing_oids)
-    if family=='hospital_cases': return adapt_hospital(app,source,end)
+    if family=='hospital_cases':
+        return adapt_hospital_count(app, source, end) if metric == 'hospitalCount' else adapt_hospital(app, source, end)
     if family=='electronic_waybill' and item.get('previous'):
         previous=item['previous']
         if previous['status']=='FAIL': raise ValueError('ЭЛП: предыдущий недельный источник поврежден')

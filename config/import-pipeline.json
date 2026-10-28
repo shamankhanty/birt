@@ -27,6 +27,7 @@
       ],
       "datasets": [
         "mo-data.json",
+        "operational-mo.json",
         "mo-details.json",
         "mo-detail-oids.json",
         "monthly-mo.json"

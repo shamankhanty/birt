@@ -344,6 +344,8 @@ def parse_hospital_cases(path: Path) -> list[dict]:
     for r in ws.iter_rows(min_row=6, values_only=True):
         if len(r) < 6 or not r[1] or not r[2] or is_total(r[1]):
             continue
+        if r[3] is None:
+            raise ValueError('Госпитализации: отсутствует количество случаев в столбце D')
         volume, inpatient, maternity = n(r[3]), n(r[4]), n(r[5])
         out.append({"name": str(r[1]), "oid": str(r[2]), "volume": volume,
                     "inpatient": inpatient, "maternity": maternity,
@@ -486,6 +488,57 @@ def parse_ambulatory_cases(path: Path) -> list[dict]:
     if not out:
         raise ValueError("Амбулаторный эпикриз: не найдено строк данных")
     return out
+
+
+def adapt_hospital_count(app: Path, source: Path, end: date) -> AdapterResult:
+    """Absolute case count from D, independently of discharge SEMD in E/F."""
+    items = parse_hospital_cases(source)
+    grouped = {}
+    seen = set()
+    for item in items:
+        identity = (item['oid'], item['name'], item['volume'], item['inpatient'], item['maternity'])
+        if identity in seen:
+            raise ValueError('Госпитализации: повтор идентичной строки источника')
+        seen.add(identity)
+        if item['oid'] not in grouped:
+            grouped[item['oid']] = {**item, 'sourceRows': 1}
+        else:
+            grouped[item['oid']]['volume'] += item['volume']
+            grouped[item['oid']]['sourceRows'] += 1
+    operational = load(app, 'operational-mo.json')
+    base = operational.get('hospitalCount', {})
+    previous = previous_rows_from_dataset(base)
+    same_cut = base.get('date') == date_ru(end)
+    rows = []
+    for item in grouped.values():
+        count = item['volume']
+        old = previous.get(item['oid'])
+        pv, trend = previous_fields(old, same_cut, count)
+        rows.append({'name': item['name'], 'oid': item['oid'], 'fact': count,
+                     'count': count, 'previous': pv, 'trend': trend, 'sourceRows': item['sourceRows']})
+    rows = retain_no_source_rows(previous, rows)
+    if same_cut:
+        for row in rows:
+            old = previous.get(row.get("oid"))
+            if row.get("fact") is None and old:
+                row["previous"] = old.get("previous")
+    total = sum(item['volume'] for item in items)
+    operational['hospitalCount'] = {
+        **base, 'name': base.get('name', 'Количество госпитализаций'), 'plan': None,
+        'unit': '', 'mode': 'count', 'date': date_ru(end), 'period': period_cumulative(end),
+        **previous_cut_metadata(base, end), 'source': source.name, 'total': total,
+        'note': 'Количество завершённых случаев стационарной помощи: столбец D отчёта по госпитализациям. Столбцы E и F содержат СЭМД и в количество случаев не суммируются.',
+        'rows': rows,
+    }
+    save(app, 'operational-mo.json', operational)
+    changed = ['operational-mo.json']
+    if is_full_month(end):
+        monthly = load(app, 'monthly-mo.json')
+        monthly['hospitalCount'] = monthly_payload(previous, rows, end, unit='')
+        save(app, 'monthly-mo.json', monthly)
+        changed.append('monthly-mo.json')
+    return AdapterResult('hospital_count', ['hospital_cases'], 'PASS', changed, [source.name],
+                         {'sourceRows': len(items), 'organizations': len(grouped), 'total': total}, [], [])
 
 
 def adapt_ambulatory_cases(app: Path, source: Path, end: date) -> AdapterResult:
