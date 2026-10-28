@@ -3482,7 +3482,6 @@ export default function Home() {
   const [tab, setTab] = useState<
     | "summary"
     | "unified"
-    | "max"
     | "federal"
     | "matrix"
     | "ranking"
@@ -5925,7 +5924,6 @@ export default function Home() {
               ["history", "История обновлений", "09"],
               ["semd", "Все виды СЭМД", "10"],
               ["errors", "Ошибки методик", "11"],
-              ["max", "МАХ", "12"],
             ].map(([id, label, number]) =>
               id === "extraDivider" || id === "devDivider" ? (
                 <div className="mobileSectionDivider" key={id}>
@@ -6064,12 +6062,6 @@ export default function Home() {
                 onClick={() => { setTab("errors"); setShowMatrixSections(false); }}
               >
                 <span>11</span> Ошибки методик <b>{calcErrors.length}</b>
-              </button>
-              <button
-                className={tab === "max" ? "developmentSection active" : "developmentSection"}
-                onClick={() => { setTab("max"); setShowMatrixSections(false); }}
-              >
-                <span>12</span> МАХ
               </button>
               <div className="sideFoot">
                 <p>Версия {DASHBOARD_VERSION}</p>
@@ -6247,246 +6239,6 @@ export default function Home() {
                 })}
               </div>
             </>
-          )}
-
-          {tab === "max" && (
-            <section className="maxSection">
-              <div className="pageHead maxHead">
-                <div>
-                  <p className="eyebrow">МАХ</p>
-                  <h1>Официальный результат РТ и оперативный мониторинг МО</h1>
-                  <p>Официальный накопительный результат не смешивается с оперативной динамикой между выгрузками и с месячной динамикой МО.</p>
-                </div>
-              </div>
-
-              <section className="maxOfficialBlock" aria-label="Официальные данные Республики Татарстан по МАХ">
-                <header>
-                  <div>
-                    <p className="eyebrow">ОФИЦИАЛЬНО ПО РЕСПУБЛИКЕ ТАТАРСТАН</p>
-                    <h2>Накопительный результат за 2026 год</h2>
-                  </div>
-                  <span>Источник: ГИС ЭЗ РТ / МАХ</span>
-                </header>
-              <div className="maxRegionalCards maxOfficialCards">
-                {liveIndicators
-                  .filter((item) => ["visitMax", "tmkMax", "elnMax"].includes(item.id))
-                  .sort((a, b) => ["visitMax", "tmkMax", "elnMax"].indexOf(a.id) - ["visitMax", "tmkMax", "elnMax"].indexOf(b.id))
-                  .map((item) => {
-                    const completion = item.plan ? (item.fact / item.plan) * 100 : null;
-                    const title = item.id === "visitMax" ? "Запись к врачу посредством МАХ" : item.name.replace(/^Количество\s+/u, "");
-                    return (
-                      <article
-                        key={item.id}
-                        className={`maxServiceCard ${
-                          maxService ===
-                          (item.id === "visitMax" ? "visit" : item.id === "tmkMax" ? "tmk" : "eln")
-                            ? "active"
-                            : ""
-                        }`}
-                        onClick={() =>
-                          setMaxService(
-                            item.id === "visitMax" ? "visit" : item.id === "tmkMax" ? "tmk" : "eln",
-                          )
-                        }
-                      >
-                        <small>Официальный факт РТ · накопительно за 2026 год</small>
-                        <h2>{title}</h2>
-                        <strong>{format(item.fact, 0)}</strong>
-                        <p>Годовой план <b>{format(item.plan ?? 0, 0)}</b></p>
-                        <div className="maxProgress"><i style={{ width: `${Math.min(completion ?? 0, 100)}%` }} /></div>
-                        <footer><b>{completion == null ? "—" : `${format(completion, 2)}%`}</b><span>исполнения плана</span></footer>
-                      </article>
-                    );
-                  })}
-              </div>
-              </section>
-
-              <section className="maxOperationalBlock" aria-label="Оперативный мониторинг медицинских организаций">
-                <header>
-                  <div>
-                    <p className="eyebrow">ОПЕРАТИВНО ПО МО</p>
-                    <h2>Выполнение утверждённых планов ТМК и ЛВН</h2>
-                  </div>
-                  <span>Индивидуальные планы МО · приказ № 2291 от 28.09.2026</span>
-                </header>
-              <div className="maxServiceSwitch" role="group" aria-label="Сервис МАХ">
-                <button className={maxService === "visit" ? "active" : ""} onClick={() => setMaxService("visit")}>Запись к врачу</button>
-                <button className={maxService === "tmk" ? "active" : ""} onClick={() => setMaxService("tmk")}>ТМК</button>
-                <button className={maxService === "eln" ? "active" : ""} onClick={() => setMaxService("eln")}>ЛВН</button>
-              </div>
-
-              {maxService === "visit" && (
-                <>
-              <div className="maxMonthlyHead">
-                <div>
-                  <p className="eyebrow">ЗАПИСЬ НА ПРИЁМ К ВРАЧУ</p>
-                  <h2>Фактические записи через МАХ по муниципалитетам</h2>
-                  <p>Показываются данные источника как есть: муниципалитет × месяц. Октябрь — на 12.10.2026. Привязка к медицинским организациям не выполняется.</p>
-                </div>
-              </div>
-
-              <div className="maxRegionalCards maxMonthCards">
-                {maxAppointmentsMunicipal.months.map((month) => (
-                  <article key={month.id}>
-                    <small>{month.complete ? "Полный месяц" : month.asOf ? `На ${month.asOf}` : "Текущий неполный месяц"}</small>
-                    <h2>{month.label}</h2>
-                    <strong>{format(maxAppointmentsMunicipal.totals[month.id] ?? 0, 0)}</strong>
-                    <p>фактических записей</p>
-                  </article>
-                ))}
-              </div>
-
-              <div className="maxTableWrap">
-                <table className="maxTable">
-                  <thead>
-                    <tr>
-                      <th><button type="button" className={maxAppointmentSortKey === "municipality" ? "sorted" : ""} onClick={() => changeMaxAppointmentSort("municipality")}>Муниципалитет<i>{maxAppointmentSortKey === "municipality" ? (maxAppointmentSortDirection === "asc" ? "↑" : "↓") : "↕"}</i></button></th>
-                      {maxAppointmentsMunicipal.months.map((month) => (
-                        <th key={month.id}><button type="button" className={maxAppointmentSortKey === month.id ? "sorted" : ""} onClick={() => changeMaxAppointmentSort(month.id)}>{month.label.replace(" 2026", "")}<i>{maxAppointmentSortKey === month.id ? (maxAppointmentSortDirection === "asc" ? "↑" : "↓") : "↕"}</i></button></th>
-                      ))}
-                      <th><button type="button" className={maxAppointmentSortKey === "total" ? "sorted" : ""} onClick={() => changeMaxAppointmentSort("total")}>Итого<i>{maxAppointmentSortKey === "total" ? (maxAppointmentSortDirection === "asc" ? "↑" : "↓") : "↕"}</i></button></th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {sortedMaxAppointmentRows.map((row) => (
-                      <tr key={row.municipality}>
-                        <td><strong>{row.municipality}</strong></td>
-                        {maxAppointmentsMunicipal.months.map((month) => (
-                          <td key={month.id}>
-                            {row.values[month.id] == null ? "—" : format(row.values[month.id] ?? 0, 0)}
-                          </td>
-                        ))}
-                        <td><strong>{format(row.total, 0)}</strong></td>
-                      </tr>
-                    ))}
-                  </tbody>
-                  <tfoot>
-                    <tr>
-                      <td>Итого по РТ</td>
-                      {maxAppointmentsMunicipal.months.map((month) => (
-                        <td key={month.id}><strong>{format(maxAppointmentsMunicipal.totals[month.id] ?? 0, 0)}</strong></td>
-                      ))}
-                      <td><strong>{format(maxAppointmentsMunicipal.grandTotal, 0)}</strong></td>
-                    </tr>
-                  </tfoot>
-                </table>
-              </div>
-
-              <div className="maxDataGap">
-                <strong>Без привязки к МО</strong>
-                <span>Источник не содержит идентификатор медицинской организации. Поэтому значения не распределяются между поликлиниками и больницами и не участвуют в рейтинге МО.</span>
-              </div>
-              <p className="methodNote"><b>Источник:</b> «статистика здрав.xlsx». Сентябрь — полный месяц, октябрь — на 12.10.2026.</p>
-
-                </>
-              )}
-
-              {maxService !== "visit" && (
-                <>
-              <div className="maxPeriodSwitch" role="group" aria-label="Период контроля МАХ">
-                <button className={maxPeriodView === "cumulative" ? "active" : ""} onClick={() => setMaxPeriodView("cumulative")}>Накопительно</button>
-                <button className={maxPeriodView === "operational" ? "active" : ""} onClick={() => setMaxPeriodView("operational")}>Оперативно</button>
-              </div>
-              {maxDashboardMonthKey && maxDashboardPlan !== null && (
-                <>
-                  <section className="planControlHero" data-testid="max-plan-summary">
-                    <header>
-                      <div>
-                        <p className="eyebrow">{maxPeriodView === "operational" ? "ОПЕРАТИВНЫЙ МЕСЯЧНЫЙ СРЕЗ" : "НАКОПИТЕЛЬНЫЙ СРЕЗ"}</p>
-                        <h2>{maxPeriodViews.monthLabel} · {maxDashboardServiceKey === "tmk" ? "ТМК" : "ЛВН после ТМК"}</h2>
-                      </div>
-                      <span className={`statusChip ${(maxDashboardAchievement ?? 0) >= 100 ? "good" : maxPeriodView === "operational" && (maxDashboardForecast ?? 0) >= maxDashboardPlan ? "warn" : "bad"}`}>
-                        {(maxDashboardAchievement ?? 0) >= 100 ? "План достигнут ✓" : maxPeriodView === "operational" && (maxDashboardForecast ?? 0) >= maxDashboardPlan ? "Темп достаточен" : "Отставание"}
-                      </span>
-                    </header>
-                    <div className="planControlCards">
-                      <article><small>{maxPeriodView === "operational" ? `Факт за месяц на ${maxDashboardSlice.date}` : `Факт накопительно на ${maxDashboardSlice.date}`}</small><strong>{format(maxDashboardFact, 0)}</strong></article>
-                      <article><small>{maxPeriodView === "operational" ? "План на месяц" : "Накопительный план"}</small><strong>{format(maxDashboardPlan, 0)}</strong></article>
-                      <article><small>Выполнение плана</small><strong>{format(maxDashboardAchievement ?? 0, 2)}%</strong></article>
-                      <article><small>Осталось до плана</small><strong>{format(maxDashboardRemaining ?? 0, 0)}</strong></article>
-                      {maxPeriodView === "operational" ? <article className="forecastCard"><small>Прогноз к концу месяца</small><strong>{maxDashboardForecast === null ? "—" : format(maxDashboardForecast, 0)}</strong><span>{maxDashboardForecast === null ? "нет сопоставимой динамики" : `${format((maxDashboardForecast/maxDashboardPlan)*100,1)}% плана`}</span></article> : <article><small>Периметр расчёта</small><strong>85 МО</strong><span>утверждённый план</span></article>}
-                    </div>
-                    <div className="planTempoLine"><span>Изменение {maxDashboardSlice.previousDate} → {maxDashboardSlice.date}</span><b>{maxDashboardGrowth === null ? "—" : `${maxDashboardGrowth>0?"+":""}${format(maxDashboardGrowth,0)}`}</b><span>{maxPeriodView === "operational" ? "Текущий темп" : "Средний прирост"}</span><b>{maxDashboardRecentPace === null ? "—" : `${format(maxDashboardRecentPace,1)} в день`}</b>{maxPeriodView === "operational" && <><span>Нужно до конца месяца</span><b>{maxDashboardRequiredPace === null ? "—" : `${format(maxDashboardRequiredPace,1)} в день`}</b></>}</div>
-                    <p>В выполнение включены только 85 МО из утверждённого плана. Контрольный итог исходного файла — {format(maxDashboardMetricData.sourceTotal,0)}; частные и внеплановые строки не подменяют плановый периметр.</p>
-                  </section>
-                  <section className="maxPlanOrganizations" data-testid="max-plan-organization-table">
-                    <div className="allMosHead"><div><p className="eyebrow">КОНТРОЛЬ ПЛАНА ПО МО</p><h2>От наибольшего риска к выполнению</h2><p>{maxPeriodView === "operational" ? "Рейтинг по прогнозному выполнению месячного плана." : "Рейтинг по выполнению накопительного плана."}</p></div><span>{maxDashboardRows.length} МО</span></div>
-                    <div className="tableWrap"><table className="matrix maxPlanTable"><thead><tr><th>МО</th><th>{maxPeriodView === "operational" ? "План месяца" : "План накопительно"}</th><th>Факт</th><th>Выполнение, %</th><th>Осталось</th><th>Динамика</th>{maxPeriodView === "operational" && <th>Прогноз</th>}<th>Статус</th></tr></thead><tbody>
-                      {maxDashboardRows.map(({ row, plan, fact, growth, achievement, remaining, forecast, forecastAchievement, status }) => <tr key={`${row.oid ?? row.name}-${maxDashboardServiceKey}`}><td><strong>{displayMoName(row.name,row.oid)}</strong><small>{row.oid}</small></td><td>{plan===null?"—":format(plan,0)}</td><td>{fact===null?"Нет данных":format(fact,0)}</td><td>{achievement===null?"—":`${format(achievement,2)}%`}</td><td>{remaining===null?"—":format(remaining,0)}</td><td>{growth===null?"—":`${growth>0?"+":""}${format(growth,0)} за ${maxDashboardIntervalDays??"—"} дн.`}</td>{maxPeriodView === "operational" && <td>{forecast===null?"—":<><b>{format(forecast,0)}</b><small>{format(forecastAchievement??0,1)}% плана</small></>}</td>}<td><span className={`statusChip ${status==="План достигнут ✓"||status==="Темп достаточен"?"good":status==="Нет данных"?"na":"bad"}`}>{status}</span></td></tr>)}
-                    </tbody></table></div>
-                  </section>
-                </>
-              )}
-              <div className="maxMonthlyHead">
-                <div>
-                  <p className="eyebrow">{maxService === "tmk" ? "ТМК" : "ЛВН"}</p>
-                  <h2>{maxService === "tmk" ? "ТМК: работа МО за полный месяц" : "ЛВН после ТМК: работа МО за полный месяц"}</h2>
-                  <p>Сентябрь рассчитан как разность накопительных срезов на 30.09 и 31.08. Накопительные значения в месячную таблицу не подставляются.</p>
-                </div>
-                <div className="maxMonthSwitch" aria-label="Выбранный полный месяц">
-                  <button className={maxMonth === "2026-08" ? "active" : ""} onClick={() => setMaxMonth("2026-08")}>Август</button>
-                  <button className={maxMonth === "2026-09" ? "active" : ""} onClick={() => setMaxMonth("2026-09")}>Сентябрь</button>
-                </div>
-              </div>
-
-              <div className="maxFilters">
-                {([
-                  ["volume", "Лидеры по объёму"],
-                  ["growth", "Наибольший рост"],
-                  ["decline", "Наибольшее падение"],
-                  ["zero", "Нет активности"],
-                  ["missing", "Нет строки в выгрузке"],
-                ] as const).map(([id, label]) => (
-                  <button key={id} className={maxFilter === id ? "active" : ""} onClick={() => setMaxFilter(id)}>{label}</button>
-                ))}
-              </div>
-
-              {maxMonth === "2026-08" ? (
-                <div className="maxDataGap">
-                  <strong>Август 2026 недоступен в текущей паре срезов</strong>
-                  <span>В текущем наборе сохранены границы 31.08 и 30.09 для расчёта сентября. Предыдущий накопительный срез нельзя выдавать за месячный объём августа.</span>
-                </div>
-              ) : (maxFilter === "growth" || maxFilter === "decline") ? (
-                <div className="maxDataGap">
-                  <strong>Для динамики нужен полный август</strong>
-                  <span>Рост и падение будут рассчитаны при наличии отдельного сопоставимого месячного объёма августа. Отсутствующие данные не заменяются нулём.</span>
-                </div>
-              ) : (
-                <div className="maxTableWrap">
-                  <table className="maxTable">
-                      <thead><tr><th>МО</th><th>{maxService === "tmk" ? "ТМК" : "ЛВН"}</th><th>к августу</th></tr></thead>
-                    <tbody>
-                      {visibleMaxRows.map((row) => (
-                        <tr key={row.name} onClick={() => setMaxSelectedMo(row.name)}>
-                          <td><strong>{row.name}</strong></td>
-                          <td>{renderMaxValue(maxService === "tmk" ? row.tmk : row.eln)}</td><td>—</td>
-                        </tr>
-                      ))}
-                    </tbody>
-                    <tfoot><tr><td>Итого по сопоставимым строкам</td><td>{format(maxService === "tmk" ? augustMaxTotals.tmk : augustMaxTotals.eln, 0)}</td><td>—</td></tr></tfoot>
-                  </table>
-                </div>
-              )}
-
-              {selectedMaxRow && (
-                <div className="maxMoCard">
-                  <header><div><small>КАРТОЧКА МО · АВГУСТ 2026</small><h2>{selectedMaxRow.name}</h2></div><button onClick={() => setMaxSelectedMo(null)}>Закрыть</button></header>
-                  <div className="maxMoMetrics">
-                    <article>
-                      <small>{maxService === "tmk" ? "ТМК" : "ЛВН после ТМК"}</small>
-                      {renderMaxValue(maxService === "tmk" ? selectedMaxRow.tmk : selectedMaxRow.eln)}
-                    </article>
-                  </div>
-                  <p><b>Управленческий вывод:</b> доступен один полный месяц; вывод о росте или снижении будет сформирован после появления сопоставимого июля.</p>
-                  <div className="maxHistory"><span>Июль 2026 · нет сопоставимого среза на 30.06</span><span>Август 2026 · {maxService === "tmk" ? "ТМК" : "ЛВН"} {(maxService === "tmk" ? selectedMaxRow.tmk.value : selectedMaxRow.eln.value) == null ? "нет данных" : format((maxService === "tmk" ? selectedMaxRow.tmk.value : selectedMaxRow.eln.value) ?? 0, 0)}</span></div>
-                </div>
-              )}
-
-              <details className="maxMethod"><summary>Источник и методика</summary><p><b>Накопительно:</b> факт 01.01–18.10 сопоставляется с индивидуальной контрольной точкой октября из приказа № 2291.</p><p><b>Оперативно:</b> факт 01.10–21.10 сопоставляется с месячным планом — разницей октябрьской и сентябрьской накопительных контрольных точек. Динамика — к выгрузке 01.10–19.10.</p><p><b>Важно:</b> отсутствие строки остаётся «Нет данных»; частные и внеплановые строки не включаются в выполнение плана 85 МО.</p></details>
-                </>
-              )}
-              </section>
-            </section>
           )}
 
           {tab === "unified" && (

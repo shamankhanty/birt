@@ -44,10 +44,13 @@ test("AI imaging shares use source numerators/denominators and one-decimal round
   }
 });
 
-test("MAX separates official RT results from operational MO monitoring", () => {
-  assert.match(page, /ОФИЦИАЛЬНО ПО РЕСПУБЛИКЕ ТАТАРСТАН/u);
-  assert.match(page, /ОПЕРАТИВНО ПО МО/u);
-  assert.match(page, /Официальный накопительный результат не смешивается с оперативной динамикой между выгрузками и с месячной динамикой МО/u);
+test("MAX cumulative/operational sources remain separate in section 02 after removing stand-alone view", () => {
+  assert.match(page, /maxIndicatorSlice = maxPeriodView === "operational"/u);
+  assert.match(page, /maxPeriodViews.operational/u);
+  assert.match(page, /maxPeriodViews.cumulative/u);
+  assert.match(page, /data-testid="max-indicator-period-switch"/u);
+  assert.match(page, /data-testid="max-indicator-organization-table"/u);
+  assert.doesNotMatch(page, /tab === "max"|<section className="maxSection">/u);
   assert.match(styles, /\.maxOfficialBlock/u);
   assert.match(styles, /\.maxOperationalBlock/u);
 });
