@@ -9,10 +9,10 @@ const updater=await readFile(new URL("../scripts/refresh_preventive_semd.py",imp
 test("federal 2026 calculation uses per-organization MAX from REMD and FOMS",async()=>{
   assert.equal(audit.summary.status,"ready");
   assert.equal(audit.summary.organizations,95);
-  assert.equal(audit.summary.numerator,2117657);
-  assert.equal(audit.summary.denominator,2359041);
-  assert.equal(audit.summary.period122,'01.01–25.10.2026');
-  assert.equal(audit.summary.period228,'01.01–25.10.2026');
+  assert.equal(audit.summary.numerator,2163037);
+  assert.equal(audit.summary.denominator,2393314);
+  assert.equal(audit.summary.period122,'01.01–28.10.2026');
+  assert.equal(audit.summary.period228,'01.01–28.10.2026');
   assert.deepEqual(audit.excluded,[{
     oid:'1.2.643.5.1.13.13.12.2.18.1384',
     name:'ЧУЗ "Больница "РЖД-Медицина" города Ижевск"',

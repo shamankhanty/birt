@@ -21,7 +21,7 @@ METRICS = {
     'birth_certificates': ['birth'], 'death_certificates': ['death'],
     'max_tmk_eln': ['tmkMaxCount', 'elnMaxCount'],
     'physicians': ['doctorsAll', 'doctorsLevel3', *SPECIALTIES.values()],
-    'remd_errors': ['remdErrors'], 'electronic_waybill': ['electronicWaybill'],
+    'remd_errors': ['remdErrors', 'remdErrorsCumulative'], 'electronic_waybill': ['electronicWaybill'],
     'tvsp_ambulatory': ['tvspAmbulatory'], 'tvsp_stationary': ['tvspStationary'],
     'tvsp_laboratory': ['tvspLaboratory'], 'tvsp_diagnostic': ['tvspDiagnostic'],
     'smp_tvsp': ['smpFederal'], 'tmk_remd': ['tmkRemd'], 'elmk': ['elmk'],
@@ -69,8 +69,8 @@ def gate_errors(report):
 
 
 def period_metadata(app, metric):
-    if metric=='remdErrors':
-        data=read(app/'error-categories.json'); return {'date':data.get('shareDate'),'period':data.get('period')}
+    if metric in ('remdErrors', 'remdErrorsCumulative'):
+        data=read(app/('error-cumulative.json' if metric == 'remdErrorsCumulative' else 'error-categories.json')); return {'date':data.get('shareDate'),'period':data.get('period')}
     if metric=='electronicWaybill':
         data=read(app/'electronic-waybill-weekly.json'); return {'period':data.get('current',{}).get('period') or data.get('currentPeriod') or data.get('period')}
     for filename in MAPS[:3]:
@@ -83,7 +83,7 @@ def period_metadata(app, metric):
 
 
 def metric_label(app,metric):
-    labels={'remdErrors':'Ошибки регистрации СЭМД','electronicWaybill':'Электронный путевой лист'}
+    labels={'remdErrorsCumulative':'Ошибки регистрации СЭМД накопительно', 'remdErrors':'Ошибки регистрации СЭМД','electronicWaybill':'Электронный путевой лист'}
     if metric in labels: return labels[metric]
     for filename in MAPS[:3]+['physician-metrics.json']:
         if not (app/filename).exists(): continue
@@ -277,8 +277,10 @@ def stage(input_dir, output_dir, replay_manifest=None):
     for item in intake['files']:
         if item['family']: by.setdefault(item['family'],[]).append(item)
     results=[]
-    def latest(family):
+    def latest(family, metric=None):
         items=by.get(family,[])
+        if family == 'remd_errors' and metric:
+            items = [i for i in items if bool((i.get('startDate') or '').endswith('-01-01')) == (metric == 'remdErrorsCumulative')]
         if family=='max_tmk_eln': items=[i for i in items if (i.get('startDate') or '').endswith('-01-01')]
         selected=max(items,key=lambda i:i.get('endDate') or '') if items else None
         if selected and family=='electronic_waybill':
@@ -300,6 +302,9 @@ def stage(input_dir, output_dir, replay_manifest=None):
             received=received+by.get('preventive_foms',[])
             if item and item['path'] not in {r['path'] for r in received}: received=received+[item]
         for metric in metrics:
+            if family == 'remd_errors':
+                item = latest(family, metric)
+                received = [i for i in by.get(family, []) if bool((i.get('startDate') or '').endswith('-01-01')) == (metric == 'remdErrorsCumulative')]
             entry={'metric':metric,'label':metric_label(production,metric),'family':family,'state':'RETAINED','previousPeriod':period_metadata(production,metric),'sources':[source['name'] for source in received],'errors':[]}
             if not item:
                 entry['errors']=['Нет подходящего основного источника (накопительного/парного)' if received else 'Нет входного источника показателя']; results.append(entry); continue

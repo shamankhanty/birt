@@ -20,9 +20,12 @@ test("primary workbook audit covers every source MO and all nine 500+ specialtie
 });
 
 test("every source aggregate is identical to the current dashboard snapshot", () => {
-  assert.equal(snapshot.date, report.dashboardDate);
-  assert.equal(snapshot.period, report.period);
+  assert.equal(snapshot.previousPeriods.doctor500_dentist.date, report.dashboardDate);
+  assert.equal(snapshot.previousPeriods.doctor500_dentist.period, report.period);
   for (const row of report.checks) {
+    const previous = snapshot.previousDatasets[row.metric].find(item => item.oid === row.moOid);
+    assert.equal(previous?.count, row.sourceNumerator);
+    assert.equal(previous?.volume, row.sourceDenominator);
     assert.equal(row.sourceNumerator, row.dashboardNumerator, `${row.metric}/${row.moOid} numerator`);
     assert.equal(row.sourceDenominator, row.dashboardDenominator, `${row.metric}/${row.moOid} denominator`);
     assert.notEqual(row.status, "FAIL", `${row.metric}/${row.moOid} failed`);

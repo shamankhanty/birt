@@ -182,7 +182,7 @@ def scan(folder:Path):
     dup=[]; seen={}
     for i in items:
         if not i.family:continue
-        key=(i.family,i.endDate)
+        key=(i.family,i.startDate,i.endDate) if i.family=='remd_errors' else (i.family,i.endDate)
         if key in seen:
             first=seen[key]
             if i.family=='max_tmk_eln':

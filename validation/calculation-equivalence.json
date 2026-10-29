@@ -6,34 +6,280 @@
   "registryCoverage": "38/38",
   "mismatches": [
     {
+      "id": "ambulatoryCase",
+      "field": "fact",
+      "expected": 91.32547801963928,
+      "actual": 92.10774314461551
+    },
+    {
+      "id": "ambulatoryCase",
+      "field": "date",
+      "expected": "20.10.2026",
+      "actual": "27.10.2026"
+    },
+    {
+      "id": "ambulatoryCase",
+      "field": "quantity",
+      "expected": 13870920,
+      "actual": 13163346
+    },
+    {
+      "id": "birth",
+      "field": "fact",
+      "expected": 99.85177865612648,
+      "actual": 99.87206020696144
+    },
+    {
+      "id": "birth",
+      "field": "date",
+      "expected": "25.10.2026",
+      "actual": "28.10.2026"
+    },
+    {
+      "id": "birth",
+      "field": "quantity",
+      "expected": 26273,
+      "actual": 26541
+    },
+    {
+      "id": "death",
+      "field": "fact",
+      "expected": 99.21945361753227,
+      "actual": 98.73707706766918
+    },
+    {
+      "id": "death",
+      "field": "date",
+      "expected": "21.10.2026",
+      "actual": "28.10.2026"
+    },
+    {
+      "id": "death",
+      "field": "quantity",
+      "expected": 33050,
+      "actual": 33618
+    },
+    {
+      "id": "egpu",
+      "field": "fact",
+      "expected": 98.91523358792934,
+      "actual": 98.91896843937519
+    },
+    {
+      "id": "egpu",
+      "field": "date",
+      "expected": "25.10.2026",
+      "actual": "28.10.2026"
+    },
+    {
+      "id": "egpu",
+      "field": "quantity",
+      "expected": 42219,
+      "actual": 43190
+    },
+    {
+      "id": "egpu2days",
+      "field": "fact",
+      "expected": 84.49463474064008,
+      "actual": 84.56781640786039
+    },
+    {
+      "id": "egpu2days",
+      "field": "date",
+      "expected": "25.10.2026",
+      "actual": "28.10.2026"
+    },
+    {
+      "id": "egpu2days",
+      "field": "quantity",
+      "expected": 36064,
+      "actual": 36924
+    },
+    {
+      "id": "elmk",
+      "field": "date",
+      "expected": "25.10.2026",
+      "actual": "28.10.2026"
+    },
+    {
+      "id": "elnMaxCount",
+      "field": "fact",
+      "expected": 52716,
+      "actual": 54134
+    },
+    {
+      "id": "elnMaxCount",
+      "field": "date",
+      "expected": "25.10.2026",
+      "actual": "28.10.2026"
+    },
+    {
+      "id": "elnMaxCount",
+      "field": "previous",
+      "expected": 51879,
+      "actual": 52716
+    },
+    {
+      "id": "elnMaxCount",
+      "field": "trend",
+      "expected": 837,
+      "actual": 1418
+    },
+    {
+      "id": "elnMaxCount",
+      "field": "quantity",
+      "expected": 52716,
+      "actual": 54134
+    },
+    {
+      "id": "fapSemdCount",
+      "field": "fact",
+      "expected": 7079135,
+      "actual": 3687991
+    },
+    {
+      "id": "fapSemdCount",
+      "field": "date",
+      "expected": "20.10.2026",
+      "actual": "27.10.2026"
+    },
+    {
+      "id": "fapSemdCount",
+      "field": "previous",
+      "expected": 3439709,
+      "actual": 7079135
+    },
+    {
+      "id": "fapSemdCount",
+      "field": "trend",
+      "expected": 3639426,
+      "actual": -3391144
+    },
+    {
+      "id": "fapSemdCount",
+      "field": "quantity",
+      "expected": 7079135,
+      "actual": 3687991
+    },
+    {
+      "id": "hospital",
+      "field": "fact",
+      "expected": 90.73036689047757,
+      "actual": 91.25529645603989
+    },
+    {
+      "id": "hospital",
+      "field": "date",
+      "expected": "25.10.2026",
+      "actual": "27.10.2026"
+    },
+    {
+      "id": "hospital",
+      "field": "quantity",
+      "expected": 709565,
+      "actual": 721270
+    },
+    {
       "id": "hospitalCount",
       "field": "fact",
-      "expected": 596773,
-      "actual": 781683
+      "expected": 781683,
+      "actual": 790006
     },
     {
       "id": "hospitalCount",
       "field": "date",
-      "expected": "29.08.2026",
-      "actual": "25.10.2026"
+      "expected": "25.10.2026",
+      "actual": "27.10.2026"
     },
     {
       "id": "hospitalCount",
       "field": "previous",
-      "expected": 0,
-      "actual": 596773
+      "expected": 596773,
+      "actual": 781683
     },
     {
       "id": "hospitalCount",
       "field": "trend",
-      "expected": 596773,
-      "actual": 184910
+      "expected": 184910,
+      "actual": 8323
     },
     {
       "id": "hospitalCount",
       "field": "quantity",
-      "expected": 596773,
-      "actual": 781683
+      "expected": 781683,
+      "actual": 790006
+    },
+    {
+      "id": "semd228",
+      "field": "fact",
+      "expected": 89.76770645359703,
+      "actual": 90.37832060481826
+    },
+    {
+      "id": "semd228",
+      "field": "date",
+      "expected": "25.10.2026",
+      "actual": "28.10.2026"
+    },
+    {
+      "id": "semd228",
+      "field": "quantity",
+      "expected": 2117657,
+      "actual": 2163037
+    },
+    {
+      "id": "smp",
+      "field": "fact",
+      "expected": 94.08984618582416,
+      "actual": 94.42233739317366
+    },
+    {
+      "id": "smp",
+      "field": "date",
+      "expected": "25.10.2026",
+      "actual": "28.10.2026"
+    },
+    {
+      "id": "smp",
+      "field": "quantity",
+      "expected": 724266,
+      "actual": 734399
+    },
+    {
+      "id": "tmkMaxCount",
+      "field": "fact",
+      "expected": 69610,
+      "actual": 71744
+    },
+    {
+      "id": "tmkMaxCount",
+      "field": "date",
+      "expected": "25.10.2026",
+      "actual": "28.10.2026"
+    },
+    {
+      "id": "tmkMaxCount",
+      "field": "previous",
+      "expected": 68048,
+      "actual": 69610
+    },
+    {
+      "id": "tmkMaxCount",
+      "field": "trend",
+      "expected": 1562,
+      "actual": 2134
+    },
+    {
+      "id": "tmkMaxCount",
+      "field": "quantity",
+      "expected": 69610,
+      "actual": 71744
+    },
+    {
+      "id": "tmkRemd",
+      "field": "date",
+      "expected": "25.10.2026",
+      "actual": "28.10.2026"
     }
   ],
   "preservedBaselineConflicts": [],

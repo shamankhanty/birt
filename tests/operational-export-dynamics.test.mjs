@@ -57,12 +57,12 @@ test("doctorsAll operational snapshot is shown instead of September monthly resu
   assert.equal(physicianMonthly.datasets.doctorsAll.summary.numerator, 10674);
   assert.equal(physicianMonthly.datasets.doctorsAll.summary.denominator, 13542);
   assert.equal(physicianMonthly.datasets.doctorsAll.period, "сентябрь 2026");
-  assert.equal(physicianWeekly.summary.doctorsAll.numerator, 10875);
-  assert.equal(physicianWeekly.summary.doctorsAll.denominator, 13691);
-  assert.equal(physicianWeekly.previousSummary.doctorsAll.numerator, 10635);
-  assert.equal(physicianWeekly.previousSummary.doctorsAll.denominator, 13671);
-  assert.equal(physicianWeekly.periods.doctorsAll.date, "24.10.2026");
-  assert.equal(physicianWeekly.previousPeriods.doctorsAll.date, "21.10.2026");
+  assert.equal(physicianWeekly.summary.doctorsAll.numerator, 11031);
+  assert.equal(physicianWeekly.summary.doctorsAll.denominator, 13701);
+  assert.equal(physicianWeekly.previousSummary.doctorsAll.numerator, 10875);
+  assert.equal(physicianWeekly.previousSummary.doctorsAll.denominator, 13691);
+  assert.equal(physicianWeekly.periods.doctorsAll.date, "28.10.2026");
+  assert.equal(physicianWeekly.previousPeriods.doctorsAll.date, "24.10.2026");
   assert.match(page, /const isOperationalPhysicianSnapshot =[\s\S]*?isPhysicianMetric\(matrixMetric\)/u);
   assert.match(page, /const physicianOperationalSummary = isOperationalPhysicianSnapshot/u);
   assert.match(page, /const indicatorRows = \(isOperationalPhysicianSnapshot/u);
@@ -74,14 +74,14 @@ test("doctorsAll operational snapshot is shown instead of September monthly resu
 test("doctorsLevel3 operational snapshot retains both comparable October cuts", () => {
   assert.deepEqual(
     [physicianWeekly.summary.doctorsLevel3.numerator, physicianWeekly.summary.doctorsLevel3.denominator],
-    [3970, 4888],
+    [4040, 4891],
   );
   assert.deepEqual(
     [physicianWeekly.previousSummary.doctorsLevel3.numerator, physicianWeekly.previousSummary.doctorsLevel3.denominator],
-    [3847, 4882],
+    [3970, 4888],
   );
-  assert.equal(physicianWeekly.periods.doctorsLevel3.date, "24.10.2026");
-  assert.equal(physicianWeekly.previousPeriods.doctorsLevel3.date, "21.10.2026");
+  assert.equal(physicianWeekly.periods.doctorsLevel3.date, "28.10.2026");
+  assert.equal(physicianWeekly.previousPeriods.doctorsLevel3.date, "24.10.2026");
   assert.ok(physicianWeekly.datasets.doctorsLevel3.length > 0);
   assert.ok(physicianWeekly.previousDatasets.doctorsLevel3.length > 0);
 });

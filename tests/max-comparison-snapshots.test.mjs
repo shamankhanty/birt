@@ -5,12 +5,12 @@ import fs from "node:fs";
 const periodViews = JSON.parse(fs.readFileSync(new URL("../app/max-period-views.json", import.meta.url), "utf8"));
 
 test("MAX comparison snapshots use like-for-like periods and preserve missing rows", () => {
-  assert.deepEqual([periodViews.operational.previousDate, periodViews.operational.date], ["22.10.2026", "26.10.2026"]);
-  assert.deepEqual([periodViews.cumulative.previousDate, periodViews.cumulative.date], ["22.10.2026", "25.10.2026"]);
-  assert.deepEqual([periodViews.operational.metrics.tmk.previousPlannedMoFact, periodViews.operational.metrics.tmk.plannedMoFact], [10229, 11755]);
-  assert.deepEqual([periodViews.operational.metrics.eln.previousPlannedMoFact, periodViews.operational.metrics.eln.plannedMoFact], [8572, 9683]);
-  assert.deepEqual([periodViews.cumulative.metrics.tmk.previousPlannedMoFact, periodViews.cumulative.metrics.tmk.plannedMoFact], [66483, 68026]);
-  assert.deepEqual([periodViews.cumulative.metrics.eln.previousPlannedMoFact, periodViews.cumulative.metrics.eln.plannedMoFact], [51388, 52219]);
+  assert.deepEqual([periodViews.operational.previousDate, periodViews.operational.date], ["26.10.2026", "29.10.2026"]);
+  assert.deepEqual([periodViews.cumulative.previousDate, periodViews.cumulative.date], ["25.10.2026", "28.10.2026"]);
+  assert.deepEqual([periodViews.operational.metrics.tmk.previousPlannedMoFact, periodViews.operational.metrics.tmk.plannedMoFact], [11755, 13789]);
+  assert.deepEqual([periodViews.operational.metrics.eln.previousPlannedMoFact, periodViews.operational.metrics.eln.plannedMoFact], [9683, 11077]);
+  assert.deepEqual([periodViews.cumulative.metrics.tmk.previousPlannedMoFact, periodViews.cumulative.metrics.tmk.plannedMoFact], [68026, 70140]);
+  assert.deepEqual([periodViews.cumulative.metrics.eln.previousPlannedMoFact, periodViews.cumulative.metrics.eln.plannedMoFact], [52219, 53621]);
 
   for (const slice of [periodViews.operational, periodViews.cumulative]) {
     for (const metric of [slice.metrics.tmk, slice.metrics.eln]) {
@@ -27,8 +27,8 @@ test("Agriz keeps independent previous, current, and plan values", () => {
   const cE = periodViews.cumulative.metrics.eln.rows.find((row) => row.oid === oid);
   const oT = periodViews.operational.metrics.tmk.rows.find((row) => row.oid === oid);
   const oE = periodViews.operational.metrics.eln.rows.find((row) => row.oid === oid);
-  assert.deepEqual([cT.previous, cT.fact, cT.plan], [511, 518, 1024]);
-  assert.deepEqual([cE.previous, cE.fact, cE.plan], [302, 306, 521]);
-  assert.deepEqual([oT.previous, oT.fact, oT.plan], [22, 29, 102]);
-  assert.deepEqual([oE.previous, oE.fact, oE.plan], [18, 23, 50]);
+  assert.deepEqual([cT.previous, cT.fact, cT.plan], [518, 523, 1024]);
+  assert.deepEqual([cE.previous, cE.fact, cE.plan], [306, 310, 521]);
+  assert.deepEqual([oT.previous, oT.fact, oT.plan], [29, 33, 102]);
+  assert.deepEqual([oE.previous, oE.fact, oE.plan], [23, 27, 50]);
 });
