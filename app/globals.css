@@ -662,3 +662,24 @@ body{font-size:14px}
 .federalDetailFacts strong{display:block;color:#144b3b;font-size:25px;margin:10px 0;overflow-wrap:anywhere}
 .federalDetailAvailability{margin:16px 0;line-height:1.6}.federalDetailAvailability h2{font-size:20px;margin:0 0 12px}.federalDetailSource{line-height:1.6}.federalDetailSource summary{cursor:pointer;font-weight:700}
 @media(max-width:850px){.federalDetailFacts{grid-template-columns:1fr}.federalDetailFacts strong{font-size:22px}}
+
+/* Plan crossings: preserve the existing summary and three-column layout. */
+.moStats article.planTransitionStat{overflow:visible;z-index:2}
+.moStats article.planTransitionStat.isOpen{z-index:30}
+.planTransitionTriggers{display:inline-flex;gap:7px;margin-left:8px;vertical-align:middle}
+.planTransitionTriggers button{border:0;background:transparent;padding:5px 2px;cursor:pointer;font-family:inherit;font-weight:700;font-size:15px;line-height:1.1}
+.planTransitionTriggers button:hover{text-decoration:underline}
+.planTransitionTriggers button:focus-visible,.planTransitionPopover button:focus-visible{outline:2px solid #168467;outline-offset:2px}
+.planTransitionPopover{position:absolute;top:calc(100% + 6px);left:0;width:370px;max-width:calc(100vw - 40px);padding:14px;background:#fff;border:1px solid #b6d6ca;border-radius:12px;box-shadow:0 8px 25px #173e3326;text-align:left;color:var(--ink)}
+.planTransitionPopover header{display:flex;justify-content:space-between;align-items:center;gap:10px}
+.planTransitionPopover header b{font-size:15px}
+.planTransitionPopover header button{border:0;background:none;color:#71827c;font-size:23px;cursor:pointer;padding:0 4px}
+.planTransitionPopover>p{font-size:11px;color:var(--muted);margin:4px 0 10px}
+.planTransitionList{max-height:280px;overflow:auto}
+.planTransitionList>div{display:flex;justify-content:space-between;align-items:center;gap:14px;padding:10px 0;border-top:1px solid #edf2ef;font-size:12px}
+.planTransitionList>div>span:last-child{white-space:nowrap;font-size:11px}
+.planTransitionList>p{font-size:12px;color:var(--muted)}
+.planTransitionBadge{display:inline-block;vertical-align:middle;margin-left:6px;padding:2px 5px;border-radius:5px;font-size:9px!important;line-height:1.2;font-weight:600;white-space:nowrap}
+.planTransitionBadge.reached{background:#e8f5ed;color:#16805d}
+.planTransitionBadge.lost{background:#fdeaea;color:#bd3e48}
+@media(max-width:600px){.planTransitionTriggers{margin-left:3px;gap:3px}.planTransitionTriggers button{font-size:12px}.planTransitionPopover{position:fixed;top:25%;left:16px;right:16px;width:auto;max-width:none}.planTransitionBadge{margin-left:3px;padding:2px 3px;font-size:8px!important}}

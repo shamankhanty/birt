@@ -1,6 +1,8 @@
 "use client";
 
 import { useMemo, useState } from "react";
+import PlanTransitionStat from "./plan-transition-stat";
+import { planTransition } from "../lib/plan-transitions.js";
 import { buildFederalDetailCatalog, federalMetricTarget } from "../lib/federal-navigation.js";
 import moDataRaw from "./mo-data.json";
 import moDetailsRaw from "./mo-details.json";
@@ -4894,7 +4896,7 @@ export default function Home() {
     ? evaluableIndicatorRows.filter((r) => r.fact > 0).length
     : selectedDataset.plan === null
       ? 0
-      : evaluableIndicatorRows.filter((r) => r.fact >= selectedDataset.plan!)
+      : evaluableIndicatorRows.filter((r) => lowerIsBetter ? r.fact <= selectedDataset.plan! : r.fact >= selectedDataset.plan!)
           .length;
   const comparablePlanStatusRows = evaluableIndicatorRows.filter(
     (row) => row.previous !== null && row.previous !== undefined,
@@ -4906,14 +4908,14 @@ export default function Home() {
     ? comparablePlanStatusRows.filter((row) =>
         isPresenceMetric
           ? row.fact > 0
-          : row.fact >= selectedDataset.plan!,
+          : lowerIsBetter ? row.fact <= selectedDataset.plan! : row.fact >= selectedDataset.plan!,
       ).length
     : 0;
   const previousAchievedComparable = hasPlanStatusComparison
     ? comparablePlanStatusRows.filter((row) =>
         isPresenceMetric
           ? Number(row.previous) > 0
-          : Number(row.previous) >= selectedDataset.plan!,
+          : lowerIsBetter ? Number(row.previous) <= selectedDataset.plan! : Number(row.previous) >= selectedDataset.plan!,
       ).length
     : 0;
   const achievedMosChange = hasPlanStatusComparison
@@ -4923,6 +4925,17 @@ export default function Home() {
     ? (comparablePlanStatusRows.length - currentAchievedComparable) -
       (comparablePlanStatusRows.length - previousAchievedComparable)
     : null;
+  const transitionFor = (row: MoRow) => planTransition(row, selectedDataset.plan, {
+    lowerIsBetter,
+    disabled: isCountMetric || isPresenceMetric || !!selectedDataset.comparisonReset || isUnavailableSourceRow(row),
+  });
+  const transitionRows = (kind: "reached" | "lost") => evaluableIndicatorRows
+    .filter(row => transitionFor(row) === kind)
+    .map(row => ({ key: row.oid ?? row.name, name: displayReportMoName(matrixMetric, row),
+      previous: `${format(Number(row.previous), 2)}%`, current: `${format(row.fact, 2)}%` }))
+    .sort((a, b) => a.name.localeCompare(b.name, "ru"));
+  const reachedPlanRows = transitionRows("reached");
+  const lostPlanRows = transitionRows("lost");
   const improvedMos = indicatorRows.filter(
     (r) => r.trend !== null && (lowerIsBetter ? r.trend < 0 : r.trend > 0),
   ).length;
@@ -9485,17 +9498,11 @@ export default function Home() {
                           </>
                         ) : (
                           <>
-                            <article>
-                              <small>Выполнили план</small>
-                              <strong className="green">
-                                {achievedMos}
-                                {achievedMosChange !== null && (
-                                  <em className={achievedMosChange >= 0 ? "moStatChange green" : "moStatChange red"}>
-                                    ({achievedMosChange > 0 ? "+" : ""}{achievedMosChange})
-                                  </em>
-                                )}
-                              </strong>
-                            </article>
+                            <PlanTransitionStat key={`${matrixMetric}:${previousSnapshot}:${currentSnapshot}`}
+                              total={achievedMos} reached={reachedPlanRows} lost={lostPlanRows}
+                              previousDate={previousSnapshot} currentDate={currentSnapshot}
+                              comparable={hasPlanStatusComparison && !selectedDataset.comparisonReset}
+                            />
                             <article>
                               <small>Не выполнили план</small>
                               <strong className="red">
@@ -9556,6 +9563,7 @@ export default function Home() {
                               ? "выполнившие план — по объёму; остальные — по проценту"
                               : "10 медицинских организаций"
                           }
+                          transitionFor={transitionFor}
                           rows={comparableLeaders}
                           plan={selectedDataset.plan ?? 0}
                           tone="good"
@@ -9578,6 +9586,7 @@ export default function Home() {
                               ? "по количеству, недостающему до плана"
                               : "10 медицинских организаций"
                           }
+                          transitionFor={transitionFor}
                           rows={comparableLaggards}
                           plan={selectedDataset.plan ?? 0}
                           tone="bad"
@@ -9940,6 +9949,9 @@ export default function Home() {
                                   <td>
                                     <strong>
                                       {displayReportMoName(matrixMetric, o)}
+                                      {transitionFor(o) && <span className={`planTransitionBadge ${transitionFor(o)}`}>
+                                        {transitionFor(o) === "reached" ? "Достигли" : "Утратили"}
+                                      </span>}
                                     </strong>
                                     <small>
                                       {o.sourceWarning ??
@@ -11823,8 +11835,10 @@ function RankingBlock({
   lowerIsBetter = false,
   gapMode = false,
   showRankChange = false,
+  transitionFor,
   emptyText = "Нет данных для сравнения периодов",
 }: {
+  transitionFor?: (row: MoRow) => "reached" | "lost" | null;
   metric?: string;
   title: string;
   subtitle: string;
@@ -11871,6 +11885,9 @@ function RankingBlock({
                 <span className="miniRank">{i + 1}</span>
                 <p title={displayName}>
                   {displayName}
+                  {transitionFor?.(r) && <span className={`planTransitionBadge ${transitionFor(r)}`}>
+                    {transitionFor(r) === "reached" ? "Достигли" : "Утратили"}
+                  </span>}
                   {gapMode && (
                     <small>
                       {format(r.count ?? 0, 0)} из {format(r.volume ?? 0, 0)}
