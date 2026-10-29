@@ -1037,7 +1037,7 @@ def adapt_tvsp_subunits(app: Path, source: Path, end: date, metric: str, family:
         planned=sorted(set(oid_list(r[4]))); passed=sorted(set(oid_list(r[5]))); registered=sorted(set(planned)&set(passed))
         if not planned: continue
         bid=str(r[3] or ""); oid=str(r[2] or "")
-        rows.append({"mo":str(r[1]),"moOid":oid,"unit":f"Здание {bid}","unitOid":", ".join(planned),"buildingIds":bid,"registered":bool(registered),"partial":0<len(registered)<len(planned),"count":old_counts.get((oid,bid),0),"plannedSubunits":len(planned),"registeredSubunits":len(registered)})
+        rows.append({"mo":str(r[1]),"moOid":oid,"unit":f"Здание {bid}","unitOid":", ".join(planned),"buildingIds":bid,"registered":bool(registered),"partial":0<len(registered)<len(planned),"count":old_counts.get((oid,bid),0),"plannedSubunits":len(planned),"registeredSubunits":len(registered),"missingUnitOids":sorted(set(planned)-set(registered))})
     if not rows: raise ValueError(f"{family}: не найдено строк детализации")
     plan=len(rows); fact=sum(bool(r["registered"]) for r in rows)
     if "Сводный" in wb.sheetnames:

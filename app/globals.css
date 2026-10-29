@@ -683,3 +683,7 @@ body{font-size:14px}
 .planTransitionBadge.reached{background:#e8f5ed;color:#16805d}
 .planTransitionBadge.lost{background:#fdeaea;color:#bd3e48}
 @media(max-width:600px){.planTransitionTriggers{margin-left:3px;gap:3px}.planTransitionTriggers button{font-size:12px}.planTransitionPopover{position:fixed;top:25%;left:16px;right:16px;width:auto;max-width:none}.planTransitionBadge{margin-left:3px;padding:2px 3px;font-size:8px!important}}
+
+.unitMoIssues .missingUnitOid{display:block;overflow-wrap:anywhere;line-height:1.5;user-select:text}
+@media(max-width:650px){.unitMoIssues td>div{padding:10px 12px}.unitMoIssues article{grid-template-columns:minmax(0,1fr) auto}.unitMoIssues article>small{grid-column:1/-1;grid-row:2}.unitMoIssues article>strong{grid-column:2;grid-row:1}}
+@media(max-width:650px){.unitMoIssues td>div{max-width:calc(100vw - 32px);box-sizing:border-box}}

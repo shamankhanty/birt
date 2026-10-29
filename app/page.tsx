@@ -692,6 +692,7 @@ type UnitRow = {
   moOid: string;
   unit: string;
   unitOid: string;
+  missingUnitOids?: string[];
   buildingIds: string;
   registered: boolean;
   partial?: boolean;
@@ -11034,14 +11035,14 @@ function UnitMoOverview({ dataset }: { dataset: UnitDataset }) {
                             <article key={`${r.buildingIds}-${r.unitOid}-${i}`}>
                               <span>{r.unit}</span>
                               <small>
-                                {r.unitOid ||
-                                  r.buildingIds ||
-                                  "идентификатор не указан"}
+                                {r.missingUnitOids?.length
+                                  ? r.missingUnitOids.map(oid => <span className="missingUnitOid" key={oid}>{oid}</span>)
+                                  : `OID непередающих СП в исходнике не указаны. ID здания: ${r.buildingIds || "не указан"}` }
                               </small>
                               <strong>
-                                {r.registeredSubunits !== undefined
-                                  ? `${r.registeredSubunits} из ${r.plannedSubunits}`
-                                  : "не передаёт"}
+                                {r.plannedSubunits !== undefined && r.registeredSubunits !== undefined
+                                  ? `Не передают: ${r.plannedSubunits - r.registeredSubunits}`
+                                  : "Не передаёт объект"}
                               </strong>
                             </article>
                           ))}
@@ -11189,7 +11190,7 @@ function UnitDetail({
                     ID здания: {row.buildingIds || "—"}
                   </span>
                   <small className="oidList">
-                    OID СП: {row.unitOid || "—"}
+                    Все обязательные OID СП: {row.unitOid === row.buildingIds ? "не указаны в исходнике" : row.unitOid || "—"}
                   </small>
                 </td>
                 <td>
