@@ -40,7 +40,7 @@ test("period engine ignores an incomplete newer month when choosing the full mon
     physicianMetrics: physicians,
   });
   assert.equal(withOctoberOperational.latestFullMonth.label, "сентябрь 2026");
-  assert.equal(withOctoberOperational.latestObservedDate, "25.10.2026");
+  assert.equal(withOctoberOperational.latestObservedDate, "29.10.2026");
   assert.equal(withOctoberOperational.latestObservedMonth.label, "октябрь 2026");
   assert.equal(withOctoberOperational.hasPartialNewerMonth, true);
 });

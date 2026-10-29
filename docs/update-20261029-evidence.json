@@ -1,0 +1,1107 @@
+{
+  "sourceFiles": {
+    "Отчет_по_законченному_случаю_амбулаторный__01.01.-27.10.(Выгрузка стп ГИС 28.10.).xlsx": "a1dddff0992c5fde51627845107766f12d0624c1a952e438085004a9fe6a8fe6",
+    "I_Свид-ва о смерти по РТ (РМИАЦ) 01.01.-28.10.(Выгрузка из ГИС 29.10.).xlsx": "6b0cee5b661753b3460ba3eaa92d7e28de2bbfab2d36c503fbf750518d12208c",
+    "Отчёт - Отказы по регистрации ЭМД в РЭМД_01.01.-28.10.(Выгрузка из BI 29.10.).xlsx": "5fd0062932dfdb7a2ea31b67e2d40d753edac40889cedbdf9a642570596c66aa",
+    "Отчет_Доля_ТВСП_СЭМД_Эпикриз по законч случаю амбулат_Талон амбулат пациента и Протокол консульт_Январь-Октябрь(Выгрузка из BI 29.10.).xlsx": "fd360846e0530c2e7486ac008520243d792ef76cdd01db99a5078afb9f52256e",
+    "Свидетельства_о_рождении_по_РТ_(РМИАЦ) 01.01.-28.10.(Выгрузка из ГИС 29.10.).xlsx": "e4c10aa31aa2ef44059cbcc1d5dee07ae9f87a94bb31a2a24321fb39cfb74333",
+    "Закрытые случаи ДОГВН ПМО и зарегистрированные СЭМД 122 и 228 _01.01.-28.10.(Выгрузка из ГИС 29.10.).xlsx": "3bad1c2d45bcb89118404af122212f71e3812ad0edc6d8e7a081114d56c5f54d",
+    "ТМК_МАХ 01.10.-29.10.(Выгрузка из ГИС 29.10.).xlsx": "ba35aa6acb8e8e1f6486dcf1549b95b66ab179de4a4db970a61a1d610eb08504",
+    "Количество_СЭМД_Результаты_профилактического_медицинского_осмотрадиспансеризации 01.01.-28.10.(Выгрузка из ГИС 29.10.).xlsx": "b19052863196903d1b40c945ca8726f1fe5d8ffa5f99a449a56705bf32055ed6",
+    "Отчёт_по_врачам_сформировавших_СЭМД_Октябрь(Выгрузка из BI 29.10.).xlsx": "e7cef1c674ac48ac98b09c1907fd3dc7e75575a6ea684cb7ba0a47444612c957",
+    "ТМК_МАХ 01.01.-28.10.(Выгрузка из ГИС 29.10.).xlsx": "78932708aa235eea5cc91ac915312b9acf44503770c566d6139bc2d73accc673",
+    "Отчет_ТМК_РЭМД_01.01.-28.10.(Выгрузка из BI 29.10.).xlsx": "3cb6ffc6da506e19b3ef5f1a8cf402bb9c6e3ed7d8a0c643e9b65c04c47d80ed",
+    "1.Отчет СЭМД_РЭМД - 01.01.-28.10.(Выгрузка из BI 29.10.).xlsx": "9ad7fbaac1d6a4320c350d9b8996bad5d03bc574731fc1922cec3d1a51d14b9f",
+    "Отчёт - Отказы по регистрации ЭМД в РЭМД_22.10-.28.10.(Выгрузка из BI 29.10.).xlsx": "1715fae381e905a7d39f8b9a8ac4bd7cca998ca2c0f623dc9707b8e1c9085201",
+    "Отчет_Доля_ТВСП_СЭМД_Эпикриз_в_стац_вып_или_Выпис_Январь-Октябрь.(Выгрузка из BI 29.10.).xlsx": "0324f8cd2be65a90c457ef1eb12fd6d93119bd81166f0c50490018c975731b64",
+    "ПР_2_Кол-во заявл на прикр. от ЕГПУ за период. ИП ООГУЗ. Обраб. 2 раб.дн. 01.01.-28.10.(Выгрузка из ГИС 29.10.).xlsx": "9410e7ae3c49221b1939502f9826ecb5561a47aef27aae21a89304bb11f8c644",
+    "Доля_ТВСП,_обеспечивающих_передачу_СЭМД_«Протокол_диагностических_01.01.-28.10.(Выгрузка из BI 29.10.).xlsx": "469764a4e828532a4ba4f2fd0effd2c342f3cafba92dc0190645a03875c9ad28",
+    "Отчет_по_ФАП_и_ФП_(кол-во_зарегистрированных_СЭМД)_01.01.-27.10.(Выгрузка стп ГИС 28.10.).xlsx": "064e86dab2db8cbf586d482a0cb2e8768a7e0db6f8ed791fc688975e3d70e7ec",
+    "Отправка сведений в федеральные сервисы 01.01.-28.10.(Выгрузка из АСУ ССМП 29.10.).xlsx": "a8341ec5900a84449e39d541ec45c966d27118b84e22f22b5be7e18318059ffa",
+    "Отчет_по_госпитализациям_v2_01.01.-27.10.(Выгрузка стп ГИС 28.10.).xlsx": "15d5fa54918a0bf550310bcab93a7eb6a51d18f7d04ae22cf7efa9f8c2ca70cd",
+    "Отчет_СМП_ТВСП_01.01.-28.10.(Выгрузка из BI 29.10.).xlsx": "408335be12517277ab45887ce0fed1d36c31fb6c434664ee15b4f7c55a9ad7a1",
+    "Отчет_Доля_ТВСП_СЭМД_Протокол лабораторного исследования_Январь-Октябрь(Выгрузка из BI 29.10.).xlsx": "9e94607c7643aaf41b36aef5ea63ce8129ee46f00e81dc8a536125c327d90a38"
+  },
+  "statistics": {
+    "expectedIndicators": 36,
+    "receivedIndicators": 32,
+    "preparedIndicators": 32,
+    "unchangedIndicators": 0,
+    "retainedInvalidIndicators": 0,
+    "missingSourceIndicators": 4
+  },
+  "retained": [
+    {
+      "metric": "electronicWaybill",
+      "errors": [
+        "Нет входного источника показателя"
+      ]
+    },
+    {
+      "metric": "shortInput",
+      "errors": [
+        "Нет входного источника показателя"
+      ]
+    },
+    {
+      "metric": "shortInputAmb",
+      "errors": [
+        "Нет входного источника показателя"
+      ]
+    },
+    {
+      "metric": "shortInputHosp",
+      "errors": [
+        "Нет входного источника показателя"
+      ]
+    }
+  ],
+  "supplementalFiles": [
+    "semd-summary.json",
+    "max-period-views.json",
+    "federal-control.json"
+  ],
+  "semdSummary": {
+    "period": "01.01.2026–28.10.2026",
+    "total": 83476149,
+    "registeredTypes": 97
+  },
+  "maxViews": {
+    "cumulative": {
+      "date": "28.10.2026",
+      "previousDate": "25.10.2026",
+      "metrics": {
+        "tmk": {
+          "sourceTotal": 71745,
+          "plannedMoFact": 70140
+        },
+        "eln": {
+          "sourceTotal": 54134,
+          "plannedMoFact": 53621
+        }
+      }
+    },
+    "operational": {
+      "date": "29.10.2026",
+      "previousDate": "26.10.2026",
+      "metrics": {
+        "tmk": {
+          "sourceTotal": 13932,
+          "plannedMoFact": 13789
+        },
+        "eln": {
+          "sourceTotal": 11184,
+          "plannedMoFact": 11077
+        }
+      }
+    }
+  },
+  "monthlyRatingChanged": false,
+  "published": false,
+  "indicators": [
+    {
+      "metric": "egpu",
+      "state": "PREPARED",
+      "period": {
+        "date": "28.10.2026",
+        "period": "01.01–28.10.2026"
+      },
+      "facts": {
+        "egpu": {
+          "rows": 84,
+          "numerator": 43190,
+          "denominator": 43662
+        }
+      },
+      "errors": [],
+      "repeatability": "PASS"
+    },
+    {
+      "metric": "egpu2days",
+      "state": "PREPARED",
+      "period": {
+        "date": "28.10.2026",
+        "period": "01.01–28.10.2026"
+      },
+      "facts": {
+        "egpu2days": {
+          "rows": 84,
+          "numerator": 36924,
+          "denominator": 43662
+        }
+      },
+      "errors": [],
+      "repeatability": "PASS"
+    },
+    {
+      "metric": "hospital",
+      "state": "PREPARED",
+      "period": {
+        "date": "27.10.2026",
+        "period": "01.01–27.10.2026"
+      },
+      "facts": {
+        "rows": 130,
+        "matched": 130,
+        "numerator": 721270,
+        "denominator": 790387,
+        "fact": 91.25529645603989
+      },
+      "errors": [],
+      "repeatability": "PASS"
+    },
+    {
+      "metric": "hospitalCount",
+      "state": "PREPARED",
+      "period": {
+        "date": "27.10.2026",
+        "period": "01.01–27.10.2026"
+      },
+      "facts": {
+        "sourceRows": 130,
+        "organizations": 129,
+        "total": 790387
+      },
+      "errors": [],
+      "repeatability": "PASS"
+    },
+    {
+      "metric": "ambulatoryCase",
+      "state": "PREPARED",
+      "period": {
+        "date": "27.10.2026",
+        "period": "01.01–27.10.2026"
+      },
+      "facts": {
+        "rows": 146,
+        "numerator": 13163346,
+        "denominator": 14291248
+      },
+      "errors": [],
+      "repeatability": "PASS"
+    },
+    {
+      "metric": "semd228",
+      "state": "PREPARED",
+      "period": {
+        "date": "28.10.2026",
+        "period": "01.01–28.10.2026"
+      },
+      "facts": {
+        "organizations": 95,
+        "numerator": 2163037,
+        "denominator": 2393314,
+        "share": 90.37832060481826,
+        "excluded": 1
+      },
+      "errors": [],
+      "repeatability": "PASS"
+    },
+    {
+      "metric": "birth",
+      "state": "PREPARED",
+      "period": {
+        "date": "28.10.2026",
+        "period": "01.01–28.10.2026"
+      },
+      "facts": {
+        "rows": 41,
+        "numerator": 26541,
+        "denominator": 26575,
+        "fact": 99.87206020696144
+      },
+      "errors": [],
+      "repeatability": "PASS"
+    },
+    {
+      "metric": "death",
+      "state": "PREPARED",
+      "period": {
+        "date": "28.10.2026",
+        "period": "01.01–28.10.2026"
+      },
+      "facts": {
+        "rows": 89,
+        "numerator": 33618,
+        "denominator": 34048,
+        "fact": 98.73707706766918
+      },
+      "errors": [],
+      "repeatability": "PASS"
+    },
+    {
+      "metric": "tmkMaxCount",
+      "state": "PREPARED",
+      "period": {
+        "date": "28.10.2026",
+        "period": "01.01–28.10.2026"
+      },
+      "facts": {
+        "tmkMaxCount": {
+          "rows": 97,
+          "total": 71745
+        }
+      },
+      "errors": [],
+      "repeatability": "PASS"
+    },
+    {
+      "metric": "elnMaxCount",
+      "state": "PREPARED",
+      "period": {
+        "date": "28.10.2026",
+        "period": "01.01–28.10.2026"
+      },
+      "facts": {
+        "elnMaxCount": {
+          "rows": 97,
+          "total": 54134
+        }
+      },
+      "errors": [],
+      "repeatability": "PASS"
+    },
+    {
+      "metric": "doctorsAll",
+      "state": "PREPARED",
+      "period": {
+        "date": "28.10.2026",
+        "period": "01.10.2026–28.10.2026",
+        "source": "Отчёт_по_врачам_сформировавших_СЭМД_Октябрь(Выгрузка из BI 29.10.).xlsx"
+      },
+      "facts": {
+        "doctorsAll": {
+          "numerator": 11031,
+          "denominator": 13701,
+          "fact": 80.51237135975477
+        }
+      },
+      "errors": [],
+      "repeatability": "PASS"
+    },
+    {
+      "metric": "doctorsLevel3",
+      "state": "PREPARED",
+      "period": {
+        "date": "28.10.2026",
+        "period": "01.10.2026–28.10.2026",
+        "source": "Отчёт_по_врачам_сформировавших_СЭМД_Октябрь(Выгрузка из BI 29.10.).xlsx"
+      },
+      "facts": {
+        "doctorsLevel3": {
+          "numerator": 4040,
+          "denominator": 4891,
+          "fact": 82.60069515436516
+        }
+      },
+      "errors": [],
+      "repeatability": "PASS"
+    },
+    {
+      "metric": "doctor500_obgyn",
+      "state": "PREPARED",
+      "period": {
+        "date": "28.10.2026",
+        "period": "01.10.2026–28.10.2026",
+        "source": "Отчёт_по_врачам_сформировавших_СЭМД_Октябрь(Выгрузка из BI 29.10.).xlsx"
+      },
+      "facts": {
+        "doctor500_obgyn": {
+          "numerator": 305,
+          "denominator": 425,
+          "fact": 71.76470588235294
+        }
+      },
+      "errors": [],
+      "repeatability": "PASS"
+    },
+    {
+      "metric": "doctor500_gp",
+      "state": "PREPARED",
+      "period": {
+        "date": "28.10.2026",
+        "period": "01.10.2026–28.10.2026",
+        "source": "Отчёт_по_врачам_сформировавших_СЭМД_Октябрь(Выгрузка из BI 29.10.).xlsx"
+      },
+      "facts": {
+        "doctor500_gp": {
+          "numerator": 262,
+          "denominator": 301,
+          "fact": 87.04318936877077
+        }
+      },
+      "errors": [],
+      "repeatability": "PASS"
+    },
+    {
+      "metric": "doctor500_cardiologist",
+      "state": "PREPARED",
+      "period": {
+        "date": "28.10.2026",
+        "period": "01.10.2026–28.10.2026",
+        "source": "Отчёт_по_врачам_сформировавших_СЭМД_Октябрь(Выгрузка из BI 29.10.).xlsx"
+      },
+      "facts": {
+        "doctor500_cardiologist": {
+          "numerator": 133,
+          "denominator": 212,
+          "fact": 62.735849056603776
+        }
+      },
+      "errors": [],
+      "repeatability": "PASS"
+    },
+    {
+      "metric": "doctor500_oncologist",
+      "state": "PREPARED",
+      "period": {
+        "date": "28.10.2026",
+        "period": "01.10.2026–28.10.2026",
+        "source": "Отчёт_по_врачам_сформировавших_СЭМД_Октябрь(Выгрузка из BI 29.10.).xlsx"
+      },
+      "facts": {
+        "doctor500_oncologist": {
+          "numerator": 164,
+          "denominator": 237,
+          "fact": 69.19831223628692
+        }
+      },
+      "errors": [],
+      "repeatability": "PASS"
+    },
+    {
+      "metric": "doctor500_ophthalmologist",
+      "state": "PREPARED",
+      "period": {
+        "date": "28.10.2026",
+        "period": "01.10.2026–28.10.2026",
+        "source": "Отчёт_по_врачам_сформировавших_СЭМД_Октябрь(Выгрузка из BI 29.10.).xlsx"
+      },
+      "facts": {
+        "doctor500_ophthalmologist": {
+          "numerator": 158,
+          "denominator": 236,
+          "fact": 66.94915254237289
+        }
+      },
+      "errors": [],
+      "repeatability": "PASS"
+    },
+    {
+      "metric": "doctor500_pediatrician",
+      "state": "PREPARED",
+      "period": {
+        "date": "28.10.2026",
+        "period": "01.10.2026–28.10.2026",
+        "source": "Отчёт_по_врачам_сформировавших_СЭМД_Октябрь(Выгрузка из BI 29.10.).xlsx"
+      },
+      "facts": {
+        "doctor500_pediatrician": {
+          "numerator": 972,
+          "denominator": 1365,
+          "fact": 71.20879120879121
+        }
+      },
+      "errors": [],
+      "repeatability": "PASS"
+    },
+    {
+      "metric": "doctor500_dentist",
+      "state": "PREPARED",
+      "period": {
+        "date": "28.10.2026",
+        "period": "01.10.2026–28.10.2026",
+        "source": "Отчёт_по_врачам_сформировавших_СЭМД_Октябрь(Выгрузка из BI 29.10.).xlsx"
+      },
+      "facts": {
+        "doctor500_dentist": {
+          "numerator": 371,
+          "denominator": 591,
+          "fact": 62.77495769881557
+        }
+      },
+      "errors": [],
+      "repeatability": "PASS"
+    },
+    {
+      "metric": "doctor500_therapist",
+      "state": "PREPARED",
+      "period": {
+        "date": "28.10.2026",
+        "period": "01.10.2026–28.10.2026",
+        "source": "Отчёт_по_врачам_сформировавших_СЭМД_Октябрь(Выгрузка из BI 29.10.).xlsx"
+      },
+      "facts": {
+        "doctor500_therapist": {
+          "numerator": 1001,
+          "denominator": 1432,
+          "fact": 69.90223463687151
+        }
+      },
+      "errors": [],
+      "repeatability": "PASS"
+    },
+    {
+      "metric": "doctor500_surgeon",
+      "state": "PREPARED",
+      "period": {
+        "date": "28.10.2026",
+        "period": "01.10.2026–28.10.2026",
+        "source": "Отчёт_по_врачам_сформировавших_СЭМД_Октябрь(Выгрузка из BI 29.10.).xlsx"
+      },
+      "facts": {
+        "doctor500_surgeon": {
+          "numerator": 188,
+          "denominator": 280,
+          "fact": 67.14285714285714
+        }
+      },
+      "errors": [],
+      "repeatability": "PASS"
+    },
+    {
+      "metric": "remdErrors",
+      "state": "PREPARED",
+      "period": {
+        "date": "28.10.2026",
+        "period": "22.10.2026–28.10.2026"
+      },
+      "facts": {
+        "errors": 86839,
+        "categories": 23,
+        "organizations": 158,
+        "attributedErrors": 86839,
+        "unassignedErrors": 0,
+        "coveragePercent": 100.0
+      },
+      "errors": [],
+      "repeatability": "PASS"
+    },
+    {
+      "metric": "remdErrorsCumulative",
+      "state": "PREPARED",
+      "period": {
+        "date": "28.10.2026",
+        "period": "01.01.2026–28.10.2026"
+      },
+      "facts": {
+        "errors": 14216686,
+        "categories": 38,
+        "organizations": 330,
+        "attributedErrors": 14216686,
+        "unassignedErrors": 0,
+        "coveragePercent": 100.0
+      },
+      "errors": [],
+      "repeatability": "PASS"
+    },
+    {
+      "metric": "electronicWaybill",
+      "state": "RETAINED",
+      "period": null,
+      "facts": null,
+      "errors": [
+        "Нет входного источника показателя"
+      ],
+      "repeatability": null
+    },
+    {
+      "metric": "tvspAmbulatory",
+      "state": "PREPARED",
+      "period": {
+        "date": "29.10.2026",
+        "period": "январь–октябрь 2026"
+      },
+      "facts": {
+        "objects": 458,
+        "plan": 458,
+        "fact": 457,
+        "subunits": 883,
+        "registeredSubunits": 804
+      },
+      "errors": [],
+      "repeatability": "PASS"
+    },
+    {
+      "metric": "tvspStationary",
+      "state": "PREPARED",
+      "period": {
+        "date": "29.10.2026",
+        "period": "январь–октябрь 2026"
+      },
+      "facts": {
+        "objects": 274,
+        "plan": 274,
+        "fact": 271,
+        "subunits": 813,
+        "registeredSubunits": 701
+      },
+      "errors": [],
+      "repeatability": "PASS"
+    },
+    {
+      "metric": "tvspLaboratory",
+      "state": "PREPARED",
+      "period": {
+        "date": "29.10.2026",
+        "period": "январь–октябрь 2026"
+      },
+      "facts": {
+        "objects": 125,
+        "plan": 125,
+        "fact": 125,
+        "subunits": 141,
+        "registeredSubunits": 141
+      },
+      "errors": [],
+      "repeatability": "PASS"
+    },
+    {
+      "metric": "tvspDiagnostic",
+      "state": "PREPARED",
+      "period": {
+        "date": "28.10.2026",
+        "period": "01.01–28.10.2026"
+      },
+      "facts": {
+        "objects": 309,
+        "fact": 305
+      },
+      "errors": [],
+      "repeatability": "PASS"
+    },
+    {
+      "metric": "smpFederal",
+      "state": "PREPARED",
+      "period": {
+        "date": "28.10.2026",
+        "period": "01.01–28.10.2026"
+      },
+      "facts": {
+        "objects": 68,
+        "fact": 67
+      },
+      "errors": [],
+      "repeatability": "PASS"
+    },
+    {
+      "metric": "tmkRemd",
+      "state": "PREPARED",
+      "period": {
+        "date": "28.10.2026",
+        "period": "01.01–28.10.2026"
+      },
+      "facts": {
+        "planOrganizations": 40,
+        "transmitting": 40
+      },
+      "errors": [],
+      "repeatability": "PASS"
+    },
+    {
+      "metric": "elmk",
+      "state": "PREPARED",
+      "period": {
+        "date": "28.10.2026",
+        "period": "01.01–28.10.2026"
+      },
+      "facts": {
+        "planOrganizations": 73,
+        "transmitting": 73
+      },
+      "errors": [],
+      "repeatability": "PASS"
+    },
+    {
+      "metric": "shortInput",
+      "state": "RETAINED",
+      "period": null,
+      "facts": null,
+      "errors": [
+        "Нет входного источника показателя"
+      ],
+      "repeatability": null
+    },
+    {
+      "metric": "shortInputAmb",
+      "state": "RETAINED",
+      "period": null,
+      "facts": null,
+      "errors": [
+        "Нет входного источника показателя"
+      ],
+      "repeatability": null
+    },
+    {
+      "metric": "shortInputHosp",
+      "state": "RETAINED",
+      "period": null,
+      "facts": null,
+      "errors": [
+        "Нет входного источника показателя"
+      ],
+      "repeatability": null
+    },
+    {
+      "metric": "fapSemdCount",
+      "state": "PREPARED",
+      "period": {
+        "date": "27.10.2026",
+        "period": "01.01–27.10.2026"
+      },
+      "facts": {
+        "organizations": 50,
+        "units": 1671,
+        "zeroUnits": 25,
+        "documents": 3687991
+      },
+      "errors": [],
+      "repeatability": "PASS"
+    },
+    {
+      "metric": "smp",
+      "state": "PREPARED",
+      "period": {
+        "date": "28.10.2026",
+        "period": "01.01–28.10.2026"
+      },
+      "facts": {
+        "organizations": 42,
+        "volume": 777781,
+        "registered": 734399
+      },
+      "errors": [],
+      "repeatability": "PASS"
+    }
+  ],
+  "qualityWarnings": [
+    {
+      "metric": "ambulatoryCase",
+      "kind": "cumulative_components_decreased",
+      "previousNumerator": 13870920,
+      "numerator": 13163346,
+      "previousDenominator": 15188445,
+      "denominator": 14291248,
+      "interpretation": "Аномалия источника/состава, не улучшение"
+    },
+    {
+      "metric": "remdErrorsCumulative",
+      "kind": "cumulative_total_decreased",
+      "previous": 15896753,
+      "current": 14216686,
+      "interpretation": "Аномалия источника/состава, не улучшение"
+    },
+    {
+      "metric": "tvspLaboratory",
+      "kind": "source_population_changed",
+      "previousPlan": 126,
+      "currentPlan": 125
+    }
+  ],
+  "preservedFiles": {
+    "app/monthly-mo.json": "25949c7f3ad4078f66495484e39e10920f81a06bf73cc1cd2c0068023524c0f7",
+    "app/physician-metrics.json": "067031ce2e09b4d294dea05eade28e0b21baae789408b9964edad5f21fb9a93a",
+    "app/electronic-waybill-weekly.json": "2cadce1e15a2cdee355e24f03976251ae542945661129d28064abfb8418f2a6b"
+  },
+  "sheetInventory": [
+    {
+      "source": "Отчет_по_законченному_случаю_амбулаторный__01.01.-27.10.(Выгрузка стп ГИС 28.10.).xlsx",
+      "sheets": [
+        {
+          "sheet": "1",
+          "nonEmptyRows": 146,
+          "firstNonEmptyRow": 2,
+          "lastNonEmptyRow": 147,
+          "columns": 5
+        }
+      ]
+    },
+    {
+      "source": "I_Свид-ва о смерти по РТ (РМИАЦ) 01.01.-28.10.(Выгрузка из ГИС 29.10.).xlsx",
+      "sheets": [
+        {
+          "sheet": "Sheet1",
+          "nonEmptyRows": 34050,
+          "firstNonEmptyRow": 2,
+          "lastNonEmptyRow": 34051,
+          "columns": 95
+        }
+      ]
+    },
+    {
+      "source": "Отчёт - Отказы по регистрации ЭМД в РЭМД_01.01.-28.10.(Выгрузка из BI 29.10.).xlsx",
+      "sheets": [
+        {
+          "sheet": "Лист1",
+          "nonEmptyRows": 16822,
+          "firstNonEmptyRow": 2,
+          "lastNonEmptyRow": 16823,
+          "columns": 10
+        }
+      ]
+    },
+    {
+      "source": "Отчет_Доля_ТВСП_СЭМД_Эпикриз по законч случаю амбулат_Талон амбулат пациента и Протокол консульт_Январь-Октябрь(Выгрузка из BI 29.10.).xlsx",
+      "sheets": [
+        {
+          "sheet": "Сводный",
+          "nonEmptyRows": 95,
+          "firstNonEmptyRow": 1,
+          "lastNonEmptyRow": 95,
+          "columns": 6
+        },
+        {
+          "sheet": "Детализация по СП",
+          "nonEmptyRows": 463,
+          "firstNonEmptyRow": 1,
+          "lastNonEmptyRow": 464,
+          "columns": 8
+        }
+      ]
+    },
+    {
+      "source": "Свидетельства_о_рождении_по_РТ_(РМИАЦ) 01.01.-28.10.(Выгрузка из ГИС 29.10.).xlsx",
+      "sheets": [
+        {
+          "sheet": "Лист1",
+          "nonEmptyRows": 26578,
+          "firstNonEmptyRow": 1,
+          "lastNonEmptyRow": 26579,
+          "columns": 4
+        }
+      ]
+    },
+    {
+      "source": "Закрытые случаи ДОГВН ПМО и зарегистрированные СЭМД 122 и 228 _01.01.-28.10.(Выгрузка из ГИС 29.10.).xlsx",
+      "sheets": [
+        {
+          "sheet": "1",
+          "nonEmptyRows": 99,
+          "firstNonEmptyRow": 2,
+          "lastNonEmptyRow": 100,
+          "columns": 22
+        }
+      ]
+    },
+    {
+      "source": "ТМК_МАХ 01.10.-29.10.(Выгрузка из ГИС 29.10.).xlsx",
+      "sheets": [
+        {
+          "sheet": "Лист1",
+          "nonEmptyRows": 100,
+          "firstNonEmptyRow": 1,
+          "lastNonEmptyRow": 101,
+          "columns": 6
+        },
+        {
+          "sheet": "Лист2",
+          "nonEmptyRows": 108,
+          "firstNonEmptyRow": 1,
+          "lastNonEmptyRow": 108,
+          "columns": 5
+        },
+        {
+          "sheet": "Лист3",
+          "nonEmptyRows": 89,
+          "firstNonEmptyRow": 1,
+          "lastNonEmptyRow": 89,
+          "columns": 5
+        },
+        {
+          "sheet": "Лист4",
+          "nonEmptyRows": 93,
+          "firstNonEmptyRow": 1,
+          "lastNonEmptyRow": 93,
+          "columns": 6
+        },
+        {
+          "sheet": "Лист5",
+          "nonEmptyRows": 107,
+          "firstNonEmptyRow": 1,
+          "lastNonEmptyRow": 107,
+          "columns": 6
+        }
+      ]
+    },
+    {
+      "source": "Количество_СЭМД_Результаты_профилактического_медицинского_осмотрадиспансеризации 01.01.-28.10.(Выгрузка из ГИС 29.10.).xlsx",
+      "sheets": [
+        {
+          "sheet": "Лист1",
+          "nonEmptyRows": 99,
+          "firstNonEmptyRow": 1,
+          "lastNonEmptyRow": 100,
+          "columns": 4
+        }
+      ]
+    },
+    {
+      "source": "Отчёт_по_врачам_сформировавших_СЭМД_Октябрь(Выгрузка из BI 29.10.).xlsx",
+      "sheets": [
+        {
+          "sheet": "Все врачи_По субъекту РФ",
+          "nonEmptyRows": 94,
+          "firstNonEmptyRow": 1,
+          "lastNonEmptyRow": 97,
+          "columns": 9
+        },
+        {
+          "sheet": "Все врачи_Детализация по МО",
+          "nonEmptyRows": 130,
+          "firstNonEmptyRow": 1,
+          "lastNonEmptyRow": 132,
+          "columns": 9
+        },
+        {
+          "sheet": "Все врачи_Детализация по врачам",
+          "nonEmptyRows": 22799,
+          "firstNonEmptyRow": 1,
+          "lastNonEmptyRow": 22801,
+          "columns": 13
+        },
+        {
+          "sheet": "Врачи по спец-тям_По субъекту",
+          "nonEmptyRows": 16,
+          "firstNonEmptyRow": 1,
+          "lastNonEmptyRow": 18,
+          "columns": 11
+        },
+        {
+          "sheet": "Врачи по спец-тям_По МО",
+          "nonEmptyRows": 726,
+          "firstNonEmptyRow": 1,
+          "lastNonEmptyRow": 727,
+          "columns": 14
+        }
+      ]
+    },
+    {
+      "source": "ТМК_МАХ 01.01.-28.10.(Выгрузка из ГИС 29.10.).xlsx",
+      "sheets": [
+        {
+          "sheet": "Лист1",
+          "nonEmptyRows": 100,
+          "firstNonEmptyRow": 1,
+          "lastNonEmptyRow": 101,
+          "columns": 6
+        },
+        {
+          "sheet": "Лист2",
+          "nonEmptyRows": 119,
+          "firstNonEmptyRow": 1,
+          "lastNonEmptyRow": 119,
+          "columns": 5
+        },
+        {
+          "sheet": "Лист3",
+          "nonEmptyRows": 93,
+          "firstNonEmptyRow": 1,
+          "lastNonEmptyRow": 93,
+          "columns": 5
+        },
+        {
+          "sheet": "Лист4",
+          "nonEmptyRows": 96,
+          "firstNonEmptyRow": 1,
+          "lastNonEmptyRow": 96,
+          "columns": 6
+        },
+        {
+          "sheet": "Лист5",
+          "nonEmptyRows": 114,
+          "firstNonEmptyRow": 1,
+          "lastNonEmptyRow": 114,
+          "columns": 6
+        }
+      ]
+    },
+    {
+      "source": "Отчет_ТМК_РЭМД_01.01.-28.10.(Выгрузка из BI 29.10.).xlsx",
+      "sheets": [
+        {
+          "sheet": "Сводный отчет",
+          "nonEmptyRows": 99,
+          "firstNonEmptyRow": 1,
+          "lastNonEmptyRow": 100,
+          "columns": 7
+        },
+        {
+          "sheet": "Детализированный отчет",
+          "nonEmptyRows": 1587,
+          "firstNonEmptyRow": 1,
+          "lastNonEmptyRow": 1587,
+          "columns": 6
+        }
+      ]
+    },
+    {
+      "source": "1.Отчет СЭМД_РЭМД - 01.01.-28.10.(Выгрузка из BI 29.10.).xlsx",
+      "sheets": [
+        {
+          "sheet": "Отчет РЭМД",
+          "nonEmptyRows": 7,
+          "firstNonEmptyRow": 1,
+          "lastNonEmptyRow": 8,
+          "columns": 170
+        },
+        {
+          "sheet": "Отчет РЭМД по МО",
+          "nonEmptyRows": 344,
+          "firstNonEmptyRow": 1,
+          "lastNonEmptyRow": 345,
+          "columns": 172
+        }
+      ]
+    },
+    {
+      "source": "Отчёт - Отказы по регистрации ЭМД в РЭМД_22.10-.28.10.(Выгрузка из BI 29.10.).xlsx",
+      "sheets": [
+        {
+          "sheet": "Лист1",
+          "nonEmptyRows": 1436,
+          "firstNonEmptyRow": 2,
+          "lastNonEmptyRow": 1437,
+          "columns": 10
+        }
+      ]
+    },
+    {
+      "source": "Отчет_Доля_ТВСП_СЭМД_Эпикриз_в_стац_вып_или_Выпис_Январь-Октябрь.(Выгрузка из BI 29.10.).xlsx",
+      "sheets": [
+        {
+          "sheet": "Сводный",
+          "nonEmptyRows": 95,
+          "firstNonEmptyRow": 1,
+          "lastNonEmptyRow": 95,
+          "columns": 6
+        },
+        {
+          "sheet": "Детализация по СП",
+          "nonEmptyRows": 279,
+          "firstNonEmptyRow": 1,
+          "lastNonEmptyRow": 280,
+          "columns": 8
+        }
+      ]
+    },
+    {
+      "source": "ПР_2_Кол-во заявл на прикр. от ЕГПУ за период. ИП ООГУЗ. Обраб. 2 раб.дн. 01.01.-28.10.(Выгрузка из ГИС 29.10.).xlsx",
+      "sheets": [
+        {
+          "sheet": "Отчет",
+          "nonEmptyRows": 87,
+          "firstNonEmptyRow": 1,
+          "lastNonEmptyRow": 87,
+          "columns": 11
+        }
+      ]
+    },
+    {
+      "source": "Доля_ТВСП,_обеспечивающих_передачу_СЭМД_«Протокол_диагностических_01.01.-28.10.(Выгрузка из BI 29.10.).xlsx",
+      "sheets": [
+        {
+          "sheet": "Сводный",
+          "nonEmptyRows": 99,
+          "firstNonEmptyRow": 1,
+          "lastNonEmptyRow": 99,
+          "columns": 7
+        },
+        {
+          "sheet": "Детализация по СП",
+          "nonEmptyRows": 1587,
+          "firstNonEmptyRow": 1,
+          "lastNonEmptyRow": 1588,
+          "columns": 7
+        },
+        {
+          "sheet": "Факт передачи",
+          "nonEmptyRows": 1942,
+          "firstNonEmptyRow": 1,
+          "lastNonEmptyRow": 1943,
+          "columns": 9
+        }
+      ]
+    },
+    {
+      "source": "Отчет_по_ФАП_и_ФП_(кол-во_зарегистрированных_СЭМД)_01.01.-27.10.(Выгрузка стп ГИС 28.10.).xlsx",
+      "sheets": [
+        {
+          "sheet": "Лист1",
+          "nonEmptyRows": 1674,
+          "firstNonEmptyRow": 1,
+          "lastNonEmptyRow": 1675,
+          "columns": 4
+        }
+      ]
+    },
+    {
+      "source": "Отправка сведений в федеральные сервисы 01.01.-28.10.(Выгрузка из АСУ ССМП 29.10.).xlsx",
+      "sheets": [
+        {
+          "sheet": "To_VIMIS",
+          "nonEmptyRows": 50,
+          "firstNonEmptyRow": 1,
+          "lastNonEmptyRow": 50,
+          "columns": 12
+        }
+      ]
+    },
+    {
+      "source": "Отчет_по_госпитализациям_v2_01.01.-27.10.(Выгрузка стп ГИС 28.10.).xlsx",
+      "sheets": [
+        {
+          "sheet": "v2",
+          "nonEmptyRows": 134,
+          "firstNonEmptyRow": 2,
+          "lastNonEmptyRow": 136,
+          "columns": 7
+        }
+      ]
+    },
+    {
+      "source": "Отчет_СМП_ТВСП_01.01.-28.10.(Выгрузка из BI 29.10.).xlsx",
+      "sheets": [
+        {
+          "sheet": "Сводный отчет",
+          "nonEmptyRows": 99,
+          "firstNonEmptyRow": 1,
+          "lastNonEmptyRow": 100,
+          "columns": 7
+        },
+        {
+          "sheet": "Детализированный отчет",
+          "nonEmptyRows": 1587,
+          "firstNonEmptyRow": 1,
+          "lastNonEmptyRow": 1588,
+          "columns": 7
+        },
+        {
+          "sheet": "Факт передачи",
+          "nonEmptyRows": 1586,
+          "firstNonEmptyRow": 1,
+          "lastNonEmptyRow": 1587,
+          "columns": 8
+        }
+      ]
+    },
+    {
+      "source": "Отчет_Доля_ТВСП_СЭМД_Протокол лабораторного исследования_Январь-Октябрь(Выгрузка из BI 29.10.).xlsx",
+      "sheets": [
+        {
+          "sheet": "Сводный",
+          "nonEmptyRows": 95,
+          "firstNonEmptyRow": 1,
+          "lastNonEmptyRow": 95,
+          "columns": 6
+        },
+        {
+          "sheet": "Детализация по СП",
+          "nonEmptyRows": 130,
+          "firstNonEmptyRow": 1,
+          "lastNonEmptyRow": 131,
+          "columns": 11
+        }
+      ]
+    }
+  ]
+}

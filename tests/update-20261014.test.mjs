@@ -23,13 +23,13 @@ with tempfile.TemporaryDirectory() as td:
 });
 test('REMD source total and registered types reconcile without mixing periods',()=>{
  const s=read('app/semd-summary.json');
- assert.equal(s.total,82198158);assert.equal(s.registeredTypes,97);
- assert.equal(s.period,'01.01.2026–25.10.2026');assert.equal(s.formed,'26.10.2026 07:22');
+ assert.equal(s.total,83476149);assert.equal(s.registeredTypes,97);
+ assert.equal(s.period,'01.01.2026–28.10.2026');assert.equal(s.formed,'29.10.2026 08:32');
  assert.equal(s.items.reduce((n,r)=>n+r.count,0),s.total);
  assert.equal(s.items.filter(r=>r.count>0).length,s.registeredTypes);
  const month=read('app/physician-metrics.json');const op=read('app/physician-weekly-snapshot.json');
- assert.equal(month.period,'сентябрь 2026');assert.equal(op.date,'24.10.2026');
- assert.equal(month.datasets.doctorsAll.summary.numerator,10674);assert.equal(op.summary.doctorsAll.numerator,10875);
+ assert.equal(month.period,'сентябрь 2026');assert.equal(op.date,'28.10.2026');
+ assert.equal(month.datasets.doctorsAll.summary.numerator,10674);assert.equal(op.summary.doctorsAll.numerator,11031);
 });
 test('approved statuses and current methodology audit are wired into the page',()=>{
  const page=fs.readFileSync('app/page.tsx','utf8');

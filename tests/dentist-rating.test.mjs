@@ -19,8 +19,8 @@ test("dentist is mandatory and uses the latest operational cut", () => {
   assert.equal(registry.indicators.doctor500_dentist.rating.policy, "include");
   assert.equal(registry.indicators.doctor500_dentist.rating.block, "readiness");
   assert.deepEqual(registry.indicators.doctor500_dentist.rowExclusionRules, ["small_denominator_lt3_reference_only"]);
-  assert.equal(weekly.date, "24.10.2026");
-  assert.match(weekly.period, /01\.10.*24\.10/u);
+  assert.equal(weekly.date, "28.10.2026");
+  assert.match(weekly.period, /01\.10.*28\.10/u);
   assert.ok(weekly.source);
   assert.ok(monthly.doctor500_dentist.rows.length > 0);
   assert.ok(monthly.doctor500_dentist.previousLabel);

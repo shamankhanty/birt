@@ -20,16 +20,16 @@ const monthlyTotals = (metric) =>
     { numerator: 0, denominator: 0, populated: 0 },
   );
 
-test("EPGU indicators keep separate cumulative numerators at 25.10.2026", () => {
-  assert.equal(mo.egpu.date, "25.10.2026");
-  assert.equal(mo.egpu2days.date, "25.10.2026");
+test("EPGU indicators keep separate cumulative numerators at 28.10.2026", () => {
+  assert.equal(mo.egpu.date, "28.10.2026");
+  assert.equal(mo.egpu2days.date, "28.10.2026");
   assert.deepEqual(
     [mo.egpu.numerator, mo.egpu.denominator],
-    [42219, 42682],
+    [43190, 43662],
   );
   assert.deepEqual(
     [mo.egpu2days.numerator, mo.egpu2days.denominator],
-    [36064, 42682],
+    [36924, 43662],
   );
   assert.notEqual(mo.egpu.numerator, mo.egpu2days.numerator);
 });
