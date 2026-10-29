@@ -214,6 +214,7 @@ const preventiveChildOids = new Set(
 const blockedIndicatorIds = new Set<string>();
 
 type Indicator = {
+  calculation?: { method: string; source: string; numerator?: number | null; denominator?: number | null };
   id: string;
   group: string;
   name: string;
@@ -903,6 +904,7 @@ const calculationRuntime = createIndicatorCalculationRuntime({
   staticIndicators: indicators,
   physicianMetrics,
   moData,
+  unitData,
   moDetails,
   moDetailOids,
   preventiveSemdAudit,
@@ -2289,9 +2291,9 @@ Object.entries(physicianMetrics.datasets).forEach(([id, dataset]) => {
 });
 
 function statusFor(fact: number, plan: number | null, reverse = false): Status {
-  if (plan === null) return "na";
+  if (plan === null || fact === null || !Number.isFinite(fact)) return "na";
+  if (reverse ? fact <= plan : fact >= plan) return "good";
   const ratio = reverse ? plan / fact : fact / plan;
-  if (ratio >= 1) return "good";
   if (ratio >= 0.9) return "warn";
   return "bad";
 }
@@ -2384,35 +2386,14 @@ function regionalControlStatus(
   row: FederalControlRow,
   alternate?: FederalControlRow,
 ): Exclude<ExtendedStatus, "all"> {
-  if (row.regionalManualStatus === "reference") return "contract";
-  if (row.regionalManualStatus === "achieved") return "achieved";
-  if (row.regionalManualStatus === "notAchieved") return "notAchieved";
-  if (row.regionalId && blockedIndicatorIds.has(row.regionalId))
-    return "noData";
-  const regional = row.regionalId
-    ? calculatedIndicatorById[row.regionalId]
-    : undefined;
-  if (regional) {
-    const status = statusFor(
-      regional.fact,
-      regional.plan,
-      Boolean(regional.reverse),
-    );
-    return status === "good" ? "achieved" : "notAchieved";
-  }
-  const factText = row.regionalFact ?? alternate?.regionalFact;
-  if (factText) {
-    const fact = federalMetric(factText),
-      plan = federalMetric(row.plan);
-    if (fact.value !== null && plan.value !== null && fact.unit === plan.unit) {
-      const achieved = federalLowerIsBetter(row)
-        ? fact.value <= plan.value
-        : fact.value >= plan.value;
-      return achieved ? "achieved" : "notAchieved";
-    }
-  }
-  if (row.status === "В контракте" || row.status === "Нет расчёта")
-    return "contract";
+  if (row.regionalId && blockedIndicatorIds.has(row.regionalId)) return "noData";
+  const effectiveRow = !row.regionalFact && alternate?.regionalFact
+    ? { ...row, regionalFact: alternate.regionalFact, regionalPeriod: alternate.regionalPeriod }
+    : row;
+  const assessment = assessFederalPlan(effectiveRow);
+  if (assessment.zone === "achieved") return "achieved";
+  if (["critical", "lag", "near"].includes(assessment.zone)) return "notAchieved";
+  if (assessment.zone === "reference" || row.status === "В контракте" || row.status === "Нет расчёта") return "contract";
   return "noData";
 }
 
@@ -2427,7 +2408,7 @@ function strictIndicatorKey(row: FederalControlRow) {
 
 function federalLowerIsBetter(row: FederalControlRow) {
   return (
-    /(?:менее|не\s+более|≤)/iu.test(row.plan) ||
+    /(?:менее|не\s+более|≤)/iu.test(row.plan.replace(/не\s+менее/giu, "")) ||
     /доля\s+(?:технических\s+)?ошиб/iu.test(row.name)
   );
 }
@@ -2484,11 +2465,12 @@ function assessFederalPlan(row: FederalControlRow): FederalPlanAssessment {
   const fallbackDenominator = volumePair
     ? Number(volumePair[2].replace(/\s/gu, ""))
     : null;
-  const numerator = typeof regional?.quantity === "number"
-    ? regional.quantity
-    : fallbackNumerator;
-  const denominator = quantityDenominator(regional?.quantityLabel)
-    ?? fallbackDenominator;
+  const numerator = typeof regional?.calculation?.numerator === "number"
+    ? regional.calculation.numerator
+    : typeof regional?.quantity === "number" ? regional.quantity : fallbackNumerator;
+  const denominator = typeof regional?.calculation?.denominator === "number"
+    ? regional.calculation.denominator
+    : quantityDenominator(regional?.quantityLabel) ?? fallbackDenominator;
   const volume = numerator !== null && denominator !== null
     ? format(numerator, 0) + " из " + format(denominator, 0)
     : typeof regional?.quantity === "number" && regional.quantityLabel
@@ -4141,8 +4123,10 @@ export default function Home() {
   const federalRows = useMemo(
     () =>
       federalControl[federalSet].filter((row) => {
-        const displayStatus =
-          row.status === "Нет расчёта" ? "В контракте" : row.status;
+        const zone = assessFederalPlan(row).zone;
+        const displayStatus = zone === "achieved" ? "Достигнут"
+          : zone === "other" ? "В контракте"
+            : zone === "reference" ? "Справочно" : "Отклонение";
         const statusMatches =
           federalStatus === "all" ||
           (federalStatus === "except-contract"
@@ -5582,6 +5566,7 @@ export default function Home() {
     if (dataset.mode === "count")
       return `${format(calculatedIndicatorById[id]?.fact ?? 0, 0)}`;
     const indicator = calculatedIndicatorById[id];
+    if (indicator?.calculation?.method === "unit_objects") return `${format(indicator.fact, 2)}${indicator.fact === null ? "" : "%"}`;
     const details = Object.values(moDetails[id] ?? {});
     const fact = indicator?.fact ?? (details.length ? aggregateComponents(details).fact : 0);
     return `${format(fact, 2)}%`;
