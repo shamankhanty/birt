@@ -1,0 +1,44 @@
+{
+  "sourceCount": 1,
+  "indicator": {
+    "metric": "hospitalCount",
+    "label": "Количество госпитализаций",
+    "family": "hospital_cases",
+    "state": "PREPARED",
+    "previousPeriod": {
+      "date": "29.08.2026",
+      "period": "01.01–29.08.2026"
+    },
+    "sources": [
+      "Отчет по госпитализациям_v2 -  01.01.2026-25.10.2026.xlsx"
+    ],
+    "errors": [],
+    "changedFiles": [
+      "operational-mo.json"
+    ],
+    "period": {
+      "date": "25.10.2026",
+      "period": "01.01–25.10.2026"
+    },
+    "warnings": [],
+    "facts": {
+      "sourceRows": 130,
+      "organizations": 129,
+      "total": 782059
+    },
+    "repeatability": "PASS"
+  },
+  "formalValidation": {
+    "status": "WARNING",
+    "summary": {
+      "checks": 15,
+      "PASS": 13,
+      "WARNING": 2,
+      "FAIL": 0,
+      "blocking": 0,
+      "aiReviewItems": 0
+    }
+  },
+  "canonicalRatioChanged": false,
+  "published": false
+}

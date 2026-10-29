@@ -54,7 +54,7 @@ test("Section 02 still has TMC and LVN as separate selectable indicators", () =>
   assert.match(page, /id === "tmkMaxCount"[\s\S]*?"ТМК посредством МАХ"/u);
   assert.match(page, /id === "elnMaxCount"[\s\S]*?"ЛВН после ТМК посредством МАХ"/u);
   assert.match(page, /matrixMetric === id \? "active" : ""/u);
-  assert.match(page, /value=\{matrixMetric\}/u);
+  assert.match(page, /value=\{selectedFederalDetail\?\.key \?\? matrixMetric\}/u);
   assert.match(page, /data-testid="max-indicator-summary"/u);
   assert.match(page, /data-testid="max-indicator-organization-table"/u);
   assert.doesNotMatch(page, /calculatedIndicatorById\.tmkMaxCount[\s\S]{0,180}\s\/\s[\s\S]{0,180}calculatedIndicatorById\.elnMaxCount/u);

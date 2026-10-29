@@ -36,7 +36,7 @@
     "config/indicator-registry.json": "08fc0adce893f879bddd28c5bbc51c58bfe031e8a1e426dd3b05f7c0c9754eb2",
     "app/mo-registry.json": "62202e489fced8a93c40867f04f5b3a021030cf4da1b0d0da6ce3a8cff088ea3",
     "app/hearing-snapshots.json": "54c2f55708aa3ef8165a058142f468d2b6f104d5ecab2d02c377d1447d44e965",
-    "config/import-pipeline.json": "ba8de31c4c56293fffe4de187886a04da6f4824591f437eeb8990cb41a50189d"
+    "config/import-pipeline.json": "8c67a6c444fdc8af06f7f59a2a1969cd92d60060b5b52df7741c8bb5d880a24f"
   },
   "stateFiles": {
     "STATE.md": "d84b776ef652edb56fbfeda66ceab59aad6d9097658588a48858ec1583f32ffb",

@@ -268,13 +268,13 @@
       "source": "mo-details"
     },
     "hospitalCount": {
-      "fact": 596773,
+      "fact": 781683,
       "plan": null,
-      "date": "29.08.2026",
-      "previous": 0,
-      "trend": 596773,
-      "quantity": 596773,
-      "numerator": 596773,
+      "date": "25.10.2026",
+      "previous": 596773,
+      "trend": 184910,
+      "quantity": 781683,
+      "numerator": 781683,
       "denominator": null,
       "method": "count_rows",
       "source": "mo-data"

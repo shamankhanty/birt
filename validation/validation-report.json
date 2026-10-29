@@ -15,11 +15,11 @@
     "WARNING": 2,
     "FAIL": 0,
     "blocking": 0,
-    "aiReviewItems": 4
+    "aiReviewItems": 0
   },
   "acknowledgedBaseline": {
     "unresolvedOrganizations": 106,
-    "percentageAnomalies": 35,
+    "percentageAnomalies": 37,
     "missingCurrentValues": 0
   },
   "checks": [
@@ -94,9 +94,9 @@
       "status": "PASS",
       "blocking": false,
       "requiresAiReview": false,
-      "message": "5094 rows contain no duplicate organization within a dataset",
+      "message": "5117 rows contain no duplicate organization within a dataset",
       "details": {
-        "inspectedRows": 5094
+        "inspectedRows": 5117
       },
       "issues": []
     },
@@ -121,9 +121,9 @@
       "status": "PASS",
       "blocking": false,
       "requiresAiReview": false,
-      "message": "1891 trend rows reconcile to fact minus previous",
+      "message": "1997 trend rows reconcile to fact minus previous",
       "details": {
-        "inspectedRows": 1891
+        "inspectedRows": 1997
       },
       "issues": []
     },
@@ -174,15 +174,302 @@
       "id": "data.new_unresolved_organizations",
       "category": "completeness",
       "title": "Новые несопоставленные названия МО",
-      "status": "PASS",
+      "status": "WARNING",
       "blocking": false,
       "requiresAiReview": false,
-      "message": "No new unresolved organizations beyond 106 acknowledged baseline rows",
+      "message": "22 issue(s) detected",
       "details": {
-        "currentUnresolvedRows": 106,
+        "currentUnresolvedRows": 128,
         "acknowledgedBaselineRows": 106
       },
-      "issues": []
+      "issues": [
+        {
+          "kind": "unresolved_organization",
+          "scope": "operational-mo",
+          "metric": "hospitalCount",
+          "organizationOid": null,
+          "organizationName": "КГМА - Филиал ФГАОУ ДПО РМАНПО МЗ РФ",
+          "field": "name",
+          "fingerprint": "unresolved_organization|operational-mo|hospitalCount||КГМА - Филиал ФГАОУ ДПО РМАНПО МЗ РФ|name",
+          "acknowledged": false,
+          "status": "WARNING",
+          "requiresAiReview": false,
+          "reviewReason": null
+        },
+        {
+          "kind": "unresolved_organization",
+          "scope": "operational-mo",
+          "metric": "hospitalCount",
+          "organizationOid": null,
+          "organizationName": "МАНО «Казанский хоспис «Наташа»",
+          "field": "name",
+          "fingerprint": "unresolved_organization|operational-mo|hospitalCount||МАНО «Казанский хоспис «Наташа»|name",
+          "acknowledged": false,
+          "status": "WARNING",
+          "requiresAiReview": false,
+          "reviewReason": null
+        },
+        {
+          "kind": "unresolved_organization",
+          "scope": "operational-mo",
+          "metric": "hospitalCount",
+          "organizationOid": null,
+          "organizationName": "НМЧУ \"ДЕТСКИЙ ХОСПИС\"",
+          "field": "name",
+          "fingerprint": "unresolved_organization|operational-mo|hospitalCount||НМЧУ \"ДЕТСКИЙ ХОСПИС\"|name",
+          "acknowledged": false,
+          "status": "WARNING",
+          "requiresAiReview": false,
+          "reviewReason": null
+        },
+        {
+          "kind": "unresolved_organization",
+          "scope": "operational-mo",
+          "metric": "hospitalCount",
+          "organizationOid": null,
+          "organizationName": "ООО \"ДИОН МЕДИКАЛ ГРУПП МЦ \"Millenium Clinic\"",
+          "field": "name",
+          "fingerprint": "unresolved_organization|operational-mo|hospitalCount||ООО \"ДИОН МЕДИКАЛ ГРУПП МЦ \"Millenium Clinic\"|name",
+          "acknowledged": false,
+          "status": "WARNING",
+          "requiresAiReview": false,
+          "reviewReason": null
+        },
+        {
+          "kind": "unresolved_organization",
+          "scope": "operational-mo",
+          "metric": "hospitalCount",
+          "organizationOid": null,
+          "organizationName": "ООО \"КДЦ Авиастроительного района\"",
+          "field": "name",
+          "fingerprint": "unresolved_organization|operational-mo|hospitalCount||ООО \"КДЦ Авиастроительного района\"|name",
+          "acknowledged": false,
+          "status": "WARNING",
+          "requiresAiReview": false,
+          "reviewReason": null
+        },
+        {
+          "kind": "unresolved_organization",
+          "scope": "operational-mo",
+          "metric": "hospitalCount",
+          "organizationOid": null,
+          "organizationName": "ООО \"КДЦ на Четаева\"",
+          "field": "name",
+          "fingerprint": "unresolved_organization|operational-mo|hospitalCount||ООО \"КДЦ на Четаева\"|name",
+          "acknowledged": false,
+          "status": "WARNING",
+          "requiresAiReview": false,
+          "reviewReason": null
+        },
+        {
+          "kind": "unresolved_organization",
+          "scope": "operational-mo",
+          "metric": "hospitalCount",
+          "organizationOid": null,
+          "organizationName": "ООО \"КЛИНИКА ВОССТАНОВИТЕЛЬНОЙ МЕДИЦИНЫ\"",
+          "field": "name",
+          "fingerprint": "unresolved_organization|operational-mo|hospitalCount||ООО \"КЛИНИКА ВОССТАНОВИТЕЛЬНОЙ МЕДИЦИНЫ\"|name",
+          "acknowledged": false,
+          "status": "WARNING",
+          "requiresAiReview": false,
+          "reviewReason": null
+        },
+        {
+          "kind": "unresolved_organization",
+          "scope": "operational-mo",
+          "metric": "hospitalCount",
+          "organizationOid": null,
+          "organizationName": "ООО \"Красноключинский центр семейной медицины\"",
+          "field": "name",
+          "fingerprint": "unresolved_organization|operational-mo|hospitalCount||ООО \"Красноключинский центр семейной медицины\"|name",
+          "acknowledged": false,
+          "status": "WARNING",
+          "requiresAiReview": false,
+          "reviewReason": null
+        },
+        {
+          "kind": "unresolved_organization",
+          "scope": "operational-mo",
+          "metric": "hospitalCount",
+          "organizationOid": null,
+          "organizationName": "ООО \"МЕДЕЛ\"",
+          "field": "name",
+          "fingerprint": "unresolved_organization|operational-mo|hospitalCount||ООО \"МЕДЕЛ\"|name",
+          "acknowledged": false,
+          "status": "WARNING",
+          "requiresAiReview": false,
+          "reviewReason": null
+        },
+        {
+          "kind": "unresolved_organization",
+          "scope": "operational-mo",
+          "metric": "hospitalCount",
+          "organizationOid": null,
+          "organizationName": "ООО \"ММЦ Профмедицина-НК\"",
+          "field": "name",
+          "fingerprint": "unresolved_organization|operational-mo|hospitalCount||ООО \"ММЦ Профмедицина-НК\"|name",
+          "acknowledged": false,
+          "status": "WARNING",
+          "requiresAiReview": false,
+          "reviewReason": null
+        },
+        {
+          "kind": "unresolved_organization",
+          "scope": "operational-mo",
+          "metric": "hospitalCount",
+          "organizationOid": null,
+          "organizationName": "ООО \"МЦГХ Хузангаево\"",
+          "field": "name",
+          "fingerprint": "unresolved_organization|operational-mo|hospitalCount||ООО \"МЦГХ Хузангаево\"|name",
+          "acknowledged": false,
+          "status": "WARNING",
+          "requiresAiReview": false,
+          "reviewReason": null
+        },
+        {
+          "kind": "unresolved_organization",
+          "scope": "operational-mo",
+          "metric": "hospitalCount",
+          "organizationOid": null,
+          "organizationName": "ООО \"Прозрение\"",
+          "field": "name",
+          "fingerprint": "unresolved_organization|operational-mo|hospitalCount||ООО \"Прозрение\"|name",
+          "acknowledged": false,
+          "status": "WARNING",
+          "requiresAiReview": false,
+          "reviewReason": null
+        },
+        {
+          "kind": "unresolved_organization",
+          "scope": "operational-mo",
+          "metric": "hospitalCount",
+          "organizationOid": null,
+          "organizationName": "ООО \"Ситидок-Эксперт Казань\"",
+          "field": "name",
+          "fingerprint": "unresolved_organization|operational-mo|hospitalCount||ООО \"Ситидок-Эксперт Казань\"|name",
+          "acknowledged": false,
+          "status": "WARNING",
+          "requiresAiReview": false,
+          "reviewReason": null
+        },
+        {
+          "kind": "unresolved_organization",
+          "scope": "operational-mo",
+          "metric": "hospitalCount",
+          "organizationOid": null,
+          "organizationName": "ООО \"СИТИКОМ\"",
+          "field": "name",
+          "fingerprint": "unresolved_organization|operational-mo|hospitalCount||ООО \"СИТИКОМ\"|name",
+          "acknowledged": false,
+          "status": "WARNING",
+          "requiresAiReview": false,
+          "reviewReason": null
+        },
+        {
+          "kind": "unresolved_organization",
+          "scope": "operational-mo",
+          "metric": "hospitalCount",
+          "organizationOid": null,
+          "organizationName": "ООО \"Центр микрохирургии глаза \"Прозрение\" Отделение в г. Елабуге",
+          "field": "name",
+          "fingerprint": "unresolved_organization|operational-mo|hospitalCount||ООО \"Центр микрохирургии глаза \"Прозрение\" Отделение в г. Елабуге|name",
+          "acknowledged": false,
+          "status": "WARNING",
+          "requiresAiReview": false,
+          "reviewReason": null
+        },
+        {
+          "kind": "unresolved_organization",
+          "scope": "operational-mo",
+          "metric": "hospitalCount",
+          "organizationOid": null,
+          "organizationName": "ООО \"Центр репродуктивной медицины \"Аист\"",
+          "field": "name",
+          "fingerprint": "unresolved_organization|operational-mo|hospitalCount||ООО \"Центр репродуктивной медицины \"Аист\"|name",
+          "acknowledged": false,
+          "status": "WARNING",
+          "requiresAiReview": false,
+          "reviewReason": null
+        },
+        {
+          "kind": "unresolved_organization",
+          "scope": "operational-mo",
+          "metric": "hospitalCount",
+          "organizationOid": null,
+          "organizationName": "ООО «Клиника лазерной хирургии»",
+          "field": "name",
+          "fingerprint": "unresolved_organization|operational-mo|hospitalCount||ООО «Клиника лазерной хирургии»|name",
+          "acknowledged": false,
+          "status": "WARNING",
+          "requiresAiReview": false,
+          "reviewReason": null
+        },
+        {
+          "kind": "unresolved_organization",
+          "scope": "operational-mo",
+          "metric": "hospitalCount",
+          "organizationOid": null,
+          "organizationName": "ООО «Отель-Клиника» ",
+          "field": "name",
+          "fingerprint": "unresolved_organization|operational-mo|hospitalCount||ООО «Отель-Клиника»|name",
+          "acknowledged": false,
+          "status": "WARNING",
+          "requiresAiReview": false,
+          "reviewReason": null
+        },
+        {
+          "kind": "unresolved_organization",
+          "scope": "operational-mo",
+          "metric": "hospitalCount",
+          "organizationOid": null,
+          "organizationName": "ООО «ЮНИМЕД»",
+          "field": "name",
+          "fingerprint": "unresolved_organization|operational-mo|hospitalCount||ООО «ЮНИМЕД»|name",
+          "acknowledged": false,
+          "status": "WARNING",
+          "requiresAiReview": false,
+          "reviewReason": null
+        },
+        {
+          "kind": "unresolved_organization",
+          "scope": "operational-mo",
+          "metric": "hospitalCount",
+          "organizationOid": null,
+          "organizationName": "ООО МО СПАСЕНИЕ",
+          "field": "name",
+          "fingerprint": "unresolved_organization|operational-mo|hospitalCount||ООО МО СПАСЕНИЕ|name",
+          "acknowledged": false,
+          "status": "WARNING",
+          "requiresAiReview": false,
+          "reviewReason": null
+        },
+        {
+          "kind": "unresolved_organization",
+          "scope": "operational-mo",
+          "metric": "hospitalCount",
+          "organizationOid": null,
+          "organizationName": "ПАО «Татнефть» им. В.Д. Шашина",
+          "field": "name",
+          "fingerprint": "unresolved_organization|operational-mo|hospitalCount||ПАО «Татнефть» им. В.Д. Шашина|name",
+          "acknowledged": false,
+          "status": "WARNING",
+          "requiresAiReview": false,
+          "reviewReason": null
+        },
+        {
+          "kind": "unresolved_organization",
+          "scope": "operational-mo",
+          "metric": "hospitalCount",
+          "organizationOid": null,
+          "organizationName": "ЧУЗ \"КБ \"РЖД-Медицина\" г. Казани\"",
+          "field": "name",
+          "fingerprint": "unresolved_organization|operational-mo|hospitalCount||ЧУЗ \"КБ \"РЖД-Медицина\" г. Казани\"|name",
+          "acknowledged": false,
+          "status": "WARNING",
+          "requiresAiReview": false,
+          "reviewReason": null
+        }
+      ]
     },
     {
       "id": "data.dropped_organizations",
@@ -224,126 +511,16 @@
       "id": "data.percentage_anomalies",
       "category": "anomaly",
       "title": "Новые аномальные процентные значения",
-      "status": "WARNING",
+      "status": "PASS",
       "blocking": false,
-      "requiresAiReview": true,
-      "message": "4 issue(s) detected",
+      "requiresAiReview": false,
+      "message": "No new percentage anomalies beyond 37 acknowledged baseline cases",
       "details": {
         "currentAnomalyRows": 37,
-        "acknowledgedBaselineCases": 35
+        "acknowledgedBaselineCases": 37
       },
-      "issues": [
-        {
-          "kind": "percentage_above_100",
-          "scope": "mo-data",
-          "metric": "semd228",
-          "organizationOid": "1.2.643.5.1.13.13.12.2.16.1152",
-          "organizationName": "АПАСТОВСКАЯ ЦРБ",
-          "field": "fact",
-          "value": 100.4189797842254,
-          "fingerprint": "percentage_above_100|mo-data|semd228|1.2.643.5.1.13.13.12.2.16.1152|АПАСТОВСКАЯ ЦРБ|fact",
-          "acknowledged": false,
-          "status": "WARNING",
-          "requiresAiReview": true,
-          "reviewReason": "anomaly"
-        },
-        {
-          "kind": "percentage_above_100",
-          "scope": "mo-data",
-          "metric": "semd228",
-          "organizationOid": "1.2.643.5.1.13.13.12.2.16.1122",
-          "organizationName": "ДГП № 4 г.Казань",
-          "field": "previous",
-          "value": 101.09109180963318,
-          "fingerprint": "percentage_above_100|mo-data|semd228|1.2.643.5.1.13.13.12.2.16.1122|ДГП № 4 г.Казань|previous",
-          "acknowledged": false,
-          "status": "WARNING",
-          "requiresAiReview": true,
-          "reviewReason": "anomaly"
-        },
-        {
-          "kind": "percentage_above_100",
-          "scope": "mo-data",
-          "metric": "semd228",
-          "organizationOid": "1.2.643.5.1.13.13.12.2.16.1105",
-          "organizationName": "ДРОЖЖАНОВСКАЯ ЦРБ",
-          "field": "fact",
-          "value": 100.91561261091184,
-          "fingerprint": "percentage_above_100|mo-data|semd228|1.2.643.5.1.13.13.12.2.16.1105|ДРОЖЖАНОВСКАЯ ЦРБ|fact",
-          "acknowledged": false,
-          "status": "WARNING",
-          "requiresAiReview": true,
-          "reviewReason": "anomaly"
-        },
-        {
-          "kind": "percentage_above_100",
-          "scope": "mo-data",
-          "metric": "hospital",
-          "organizationOid": "1.2.643.5.1.13.13.12.2.16.1092",
-          "organizationName": "АКТАНЫШСКАЯ ЦРБ",
-          "field": "fact",
-          "value": 100.47193243914556,
-          "fingerprint": "percentage_above_100|mo-data|hospital|1.2.643.5.1.13.13.12.2.16.1092|АКТАНЫШСКАЯ ЦРБ|fact",
-          "acknowledged": false,
-          "status": "WARNING",
-          "requiresAiReview": true,
-          "reviewReason": "anomaly"
-        }
-      ]
+      "issues": []
     }
   ],
-  "aiReviewItems": [
-    {
-      "checkId": "data.percentage_anomalies",
-      "category": "anomaly",
-      "status": "WARNING",
-      "reviewReason": "anomaly",
-      "fingerprint": "percentage_above_100|mo-data|semd228|1.2.643.5.1.13.13.12.2.16.1152|АПАСТОВСКАЯ ЦРБ|fact",
-      "metric": "semd228",
-      "organizationOid": "1.2.643.5.1.13.13.12.2.16.1152",
-      "organizationName": "АПАСТОВСКАЯ ЦРБ",
-      "field": "fact",
-      "expected": null,
-      "actual": 100.4189797842254
-    },
-    {
-      "checkId": "data.percentage_anomalies",
-      "category": "anomaly",
-      "status": "WARNING",
-      "reviewReason": "anomaly",
-      "fingerprint": "percentage_above_100|mo-data|semd228|1.2.643.5.1.13.13.12.2.16.1122|ДГП № 4 г.Казань|previous",
-      "metric": "semd228",
-      "organizationOid": "1.2.643.5.1.13.13.12.2.16.1122",
-      "organizationName": "ДГП № 4 г.Казань",
-      "field": "previous",
-      "expected": null,
-      "actual": 101.09109180963318
-    },
-    {
-      "checkId": "data.percentage_anomalies",
-      "category": "anomaly",
-      "status": "WARNING",
-      "reviewReason": "anomaly",
-      "fingerprint": "percentage_above_100|mo-data|semd228|1.2.643.5.1.13.13.12.2.16.1105|ДРОЖЖАНОВСКАЯ ЦРБ|fact",
-      "metric": "semd228",
-      "organizationOid": "1.2.643.5.1.13.13.12.2.16.1105",
-      "organizationName": "ДРОЖЖАНОВСКАЯ ЦРБ",
-      "field": "fact",
-      "expected": null,
-      "actual": 100.91561261091184
-    },
-    {
-      "checkId": "data.percentage_anomalies",
-      "category": "anomaly",
-      "status": "WARNING",
-      "reviewReason": "anomaly",
-      "fingerprint": "percentage_above_100|mo-data|hospital|1.2.643.5.1.13.13.12.2.16.1092|АКТАНЫШСКАЯ ЦРБ|fact",
-      "metric": "hospital",
-      "organizationOid": "1.2.643.5.1.13.13.12.2.16.1092",
-      "organizationName": "АКТАНЫШСКАЯ ЦРБ",
-      "field": "fact",
-      "expected": null,
-      "actual": 100.47193243914556
-    }
-  ]
+  "aiReviewItems": []
 }

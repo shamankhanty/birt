@@ -35,7 +35,7 @@ test('approved statuses and current methodology audit are wired into the page',(
  const page=fs.readFileSync('app/page.tsx','utf8');
  assert.match(page,/regionalStatus = row\.regionalManualStatus === "achieved"/u);
  assert.doesNotMatch(page,/setDynamicsMode\(id\.startsWith\("doctor"\) \? "month"/u);
- assert.match(page,/setMatrixMetric\(id\); setDynamicsMode\("operational"\)/u);
+ assert.match(page,/const chooseDetailMetric =[\s\S]*?setMatrixMetric\(key\)[\s\S]*?setDynamicsMode\("operational"\)/u);
  assert.match(page,/const calcErrors: typeof historicalCalcErrors = methodologyAudit\.items/u);
  const audit=read('app/methodology-audit.json');assert.equal(audit.checkedAt,'14.10.2026');
  assert.ok(audit.items.some(r=>r.source.includes('Профилактика')&&r.issue.includes('сопоставимая пара')&&r.status==='Исправлена'));

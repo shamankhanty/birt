@@ -1,0 +1,1089 @@
+{
+  "schemaVersion": 1,
+  "evidence": "docs/update-20261025-evidence.json",
+  "expectedFiles": 18,
+  "readOnly": true,
+  "sources": [
+    {
+      "name": "1.Отчет СЭМД_РЭМД 01.01.-25.10.(Выгрузка из BI 26.10.).xlsx",
+      "expectedSha256": "c3de27205b0658edc74d2bd72ffe931e8a3c83bf2f7d228490196e29b0ac4df8",
+      "status": "HASH_MATCH",
+      "sheets": [
+        {
+          "name": "Отчет РЭМД",
+          "nonEmptyRows": 7,
+          "firstNonEmptyRow": 1,
+          "lastNonEmptyRow": 8,
+          "columns": 170,
+          "parserCoverage": "NOT_ESTABLISHED"
+        },
+        {
+          "name": "Отчет РЭМД по МО",
+          "nonEmptyRows": 341,
+          "firstNonEmptyRow": 1,
+          "lastNonEmptyRow": 342,
+          "columns": 172,
+          "parserCoverage": "NOT_ESTABLISHED"
+        }
+      ]
+    },
+    {
+      "name": "Доля_ТВСП,_обеспечивающих_передачу_СЭМД_Протокол_диагностических 01.01-25.10.xlsx",
+      "expectedSha256": "a349d31fa30766cb5909f6c1f7ffc7f69f4b6b685caa977cf27d00c5fad7b482",
+      "status": "HASH_MATCH",
+      "sheets": [
+        {
+          "name": "Сводный",
+          "nonEmptyRows": 99,
+          "firstNonEmptyRow": 1,
+          "lastNonEmptyRow": 99,
+          "columns": 7,
+          "parserCoverage": "NOT_ESTABLISHED"
+        },
+        {
+          "name": "Детализация по СП",
+          "nonEmptyRows": 1587,
+          "firstNonEmptyRow": 1,
+          "lastNonEmptyRow": 1588,
+          "columns": 7,
+          "parserCoverage": "NOT_ESTABLISHED"
+        },
+        {
+          "name": "Факт передачи",
+          "nonEmptyRows": 1942,
+          "firstNonEmptyRow": 1,
+          "lastNonEmptyRow": 1943,
+          "columns": 9,
+          "parserCoverage": "NOT_ESTABLISHED"
+        }
+      ]
+    },
+    {
+      "name": "Закрытые случаи ДОГВН ПМО и зарегистрированные СЭМД 122 и 228 - 01.01-25.10.xlsx",
+      "expectedSha256": "e724228fa372112558294a4273bfca4192e117080685e4a58a5f98ac94b6fbf5",
+      "status": "HASH_MATCH",
+      "sheets": [
+        {
+          "name": "1",
+          "nonEmptyRows": 99,
+          "firstNonEmptyRow": 2,
+          "lastNonEmptyRow": 100,
+          "columns": 22,
+          "parserCoverage": "NOT_ESTABLISHED"
+        }
+      ]
+    },
+    {
+      "name": "Количество_СЭМД_Результаты_профилактического_медицинского_осмотрадиспансеризаци.xlsx",
+      "expectedSha256": "d71446960faf0c2396e7bb6597bc26dbe23c14cdaafe1b88b896074019fd1c11",
+      "status": "HASH_MATCH",
+      "sheets": [
+        {
+          "name": "Лист1",
+          "nonEmptyRows": 99,
+          "firstNonEmptyRow": 1,
+          "lastNonEmptyRow": 100,
+          "columns": 4,
+          "parserCoverage": "NOT_ESTABLISHED"
+        }
+      ]
+    },
+    {
+      "name": "Отправка сведений в федеральные сервисы 01.01.-25.10. (Выгрузка из АСУ ССМП 26.10.).xlsx",
+      "expectedSha256": "f0b6535faaf29c3d046ff80f94fb2ef94ab312a39015387133d9825cf188af72",
+      "status": "HASH_MATCH",
+      "sheets": [
+        {
+          "name": "To_VIMIS",
+          "nonEmptyRows": 50,
+          "firstNonEmptyRow": 1,
+          "lastNonEmptyRow": 50,
+          "columns": 12,
+          "parserCoverage": "NOT_ESTABLISHED"
+        }
+      ]
+    },
+    {
+      "name": "Отчет по госпитализациям_v2 -  01.01.2026-25.10.2026.xlsx",
+      "expectedSha256": "b865ca1bc44adbbf3ef5f4dca1c8173e4d38434404e4fd1d420c97bbf150dcdc",
+      "status": "HASH_MATCH",
+      "sheets": [
+        {
+          "name": "v2",
+          "nonEmptyRows": 134,
+          "firstNonEmptyRow": 2,
+          "lastNonEmptyRow": 136,
+          "columns": 7,
+          "parserCoverage": "NOT_ESTABLISHED"
+        }
+      ]
+    },
+    {
+      "name": "Отчет_Доля_ТВСП_СЭМД_Протокол лабораторного исследования 01.01-25.10.xlsx",
+      "expectedSha256": "16fb94724f40e4bd4995da1a2d67d2e91676d30e10c178fa7c57ca659ae42b4f",
+      "status": "HASH_MATCH",
+      "sheets": [
+        {
+          "name": "Сводный",
+          "nonEmptyRows": 95,
+          "firstNonEmptyRow": 1,
+          "lastNonEmptyRow": 95,
+          "columns": 6,
+          "parserCoverage": "NOT_ESTABLISHED"
+        },
+        {
+          "name": "Детализация по СП",
+          "nonEmptyRows": 131,
+          "firstNonEmptyRow": 1,
+          "lastNonEmptyRow": 132,
+          "columns": 11,
+          "parserCoverage": "NOT_ESTABLISHED"
+        }
+      ]
+    },
+    {
+      "name": "Отчет_Доля_ТВСП_СЭМД_Эпикриз по законченному случаю амбулаторный_Талон амбулаторного пациента и Протокол консультации 01.01-25.10.xlsx",
+      "expectedSha256": "ad965b0d3b5c23ea642c69248f9d9b96b4933f129786f356f075993bb9c325b9",
+      "status": "HASH_MATCH",
+      "sheets": [
+        {
+          "name": "Сводный",
+          "nonEmptyRows": 95,
+          "firstNonEmptyRow": 1,
+          "lastNonEmptyRow": 95,
+          "columns": 6,
+          "parserCoverage": "NOT_ESTABLISHED"
+        },
+        {
+          "name": "Детализация по СП",
+          "nonEmptyRows": 463,
+          "firstNonEmptyRow": 1,
+          "lastNonEmptyRow": 464,
+          "columns": 8,
+          "parserCoverage": "NOT_ESTABLISHED"
+        }
+      ]
+    },
+    {
+      "name": "Отчет_Доля_ТВСП_СЭМД_Эпикриз_в_стационаре_выписной_или_Выписной 01.01-25.10.xlsx",
+      "expectedSha256": "5430bd4e810ea0a3cf855d1c3ec6cf6a78ec968184c8708a7395c8233a6c4660",
+      "status": "HASH_MATCH",
+      "sheets": [
+        {
+          "name": "Сводный",
+          "nonEmptyRows": 95,
+          "firstNonEmptyRow": 1,
+          "lastNonEmptyRow": 95,
+          "columns": 6,
+          "parserCoverage": "NOT_ESTABLISHED"
+        },
+        {
+          "name": "Детализация по СП",
+          "nonEmptyRows": 279,
+          "firstNonEmptyRow": 1,
+          "lastNonEmptyRow": 280,
+          "columns": 8,
+          "parserCoverage": "NOT_ESTABLISHED"
+        }
+      ]
+    },
+    {
+      "name": "Отчет_СМП_ТВСП 01.01-25.10.xlsx",
+      "expectedSha256": "0d06388795850f58703206a0e60e28d73b21485527b480012c8cd31a3f354fa1",
+      "status": "HASH_MATCH",
+      "sheets": [
+        {
+          "name": "Сводный отчет",
+          "nonEmptyRows": 99,
+          "firstNonEmptyRow": 1,
+          "lastNonEmptyRow": 100,
+          "columns": 7,
+          "parserCoverage": "NOT_ESTABLISHED"
+        },
+        {
+          "name": "Детализированный отчет",
+          "nonEmptyRows": 1587,
+          "firstNonEmptyRow": 1,
+          "lastNonEmptyRow": 1588,
+          "columns": 7,
+          "parserCoverage": "NOT_ESTABLISHED"
+        },
+        {
+          "name": "Факт передачи",
+          "nonEmptyRows": 1586,
+          "firstNonEmptyRow": 1,
+          "lastNonEmptyRow": 1587,
+          "columns": 8,
+          "parserCoverage": "NOT_ESTABLISHED"
+        }
+      ]
+    },
+    {
+      "name": "Отчет_ТМК_РЭМД 01.01.-25.10.(Выгрузка из BI 26.10.).xlsx",
+      "expectedSha256": "53d9726e33b0d484e3c62377f25d47ddd5765064f9640320e1e21c5f1730e520",
+      "status": "HASH_MATCH",
+      "sheets": [
+        {
+          "name": "Сводный отчет",
+          "nonEmptyRows": 99,
+          "firstNonEmptyRow": 1,
+          "lastNonEmptyRow": 100,
+          "columns": 7,
+          "parserCoverage": "NOT_ESTABLISHED"
+        },
+        {
+          "name": "Детализированный отчет",
+          "nonEmptyRows": 1587,
+          "firstNonEmptyRow": 1,
+          "lastNonEmptyRow": 1587,
+          "columns": 6,
+          "parserCoverage": "NOT_ESTABLISHED"
+        }
+      ]
+    },
+    {
+      "name": "Отчёт - Отказы по регистрации ЭМД в РЭМД 01.01-25.10.xlsx",
+      "expectedSha256": "e0c65d44aab3a8fb234824134b7d11bdaf177e54b8c4143205116f8ee58a4bc5",
+      "status": "HASH_MATCH",
+      "sheets": [
+        {
+          "name": "Лист1",
+          "nonEmptyRows": 16822,
+          "firstNonEmptyRow": 2,
+          "lastNonEmptyRow": 16823,
+          "columns": 10,
+          "parserCoverage": "NOT_ESTABLISHED"
+        }
+      ]
+    },
+    {
+      "name": "Отчёт_по_врачам_сформировавших_СЭМД Октябрь.xlsx",
+      "expectedSha256": "97e248e6185ddfb9e88cbbe4d741e36371ebbc83db4bb9da15d7e046e86c14cd",
+      "status": "HASH_MATCH",
+      "sheets": [
+        {
+          "name": "Все врачи_По субъекту РФ",
+          "nonEmptyRows": 94,
+          "firstNonEmptyRow": 1,
+          "lastNonEmptyRow": 97,
+          "columns": 9,
+          "parserCoverage": "NOT_ESTABLISHED"
+        },
+        {
+          "name": "Все врачи_Детализация по МО",
+          "nonEmptyRows": 130,
+          "firstNonEmptyRow": 1,
+          "lastNonEmptyRow": 132,
+          "columns": 9,
+          "parserCoverage": "NOT_ESTABLISHED"
+        },
+        {
+          "name": "Все врачи_Детализация по врачам",
+          "nonEmptyRows": 22400,
+          "firstNonEmptyRow": 1,
+          "lastNonEmptyRow": 22402,
+          "columns": 13,
+          "parserCoverage": "NOT_ESTABLISHED"
+        },
+        {
+          "name": "Врачи по спец-тям_По субъекту",
+          "nonEmptyRows": 16,
+          "firstNonEmptyRow": 1,
+          "lastNonEmptyRow": 18,
+          "columns": 11,
+          "parserCoverage": "NOT_ESTABLISHED"
+        },
+        {
+          "name": "Врачи по спец-тям_По МО",
+          "nonEmptyRows": 725,
+          "firstNonEmptyRow": 1,
+          "lastNonEmptyRow": 726,
+          "columns": 14,
+          "parserCoverage": "NOT_ESTABLISHED"
+        }
+      ]
+    },
+    {
+      "name": "ПР_2_Кол-во заявл на прикр. от ЕГПУ за период. ИП ООГУЗ. Обраб. 2 раб.дн. 25.10.2026.xlsx",
+      "expectedSha256": "7b96de343abeefe6eb0947cc174446c069bd226bb01da6bee45f093d3f49ecfb",
+      "status": "HASH_MATCH",
+      "sheets": [
+        {
+          "name": "Отчет",
+          "nonEmptyRows": 87,
+          "firstNonEmptyRow": 1,
+          "lastNonEmptyRow": 87,
+          "columns": 11,
+          "parserCoverage": "NOT_ESTABLISHED"
+        }
+      ]
+    },
+    {
+      "name": "Свидетельства_о_рождении_по_РТ_(РМИАЦ) 01.01.-25.10.(Выгрузка из ГИС 26.10.).xlsx",
+      "expectedSha256": "10fdcccd28f3f3abf3f8f29f9d23b73c0f97884d809047933da9f851423e9bce",
+      "status": "HASH_MATCH",
+      "sheets": [
+        {
+          "name": "Лист1",
+          "nonEmptyRows": 26315,
+          "firstNonEmptyRow": 1,
+          "lastNonEmptyRow": 26316,
+          "columns": 4,
+          "parserCoverage": "NOT_ESTABLISHED"
+        }
+      ]
+    },
+    {
+      "name": "Случаи краткого ввода с 01.01.2026 по 25.10.2026 -.xlsx",
+      "expectedSha256": "3950e5641f708ef4acbf51be21b915f8fde909b1c139f0cd835b17eab42ffb3e",
+      "status": "HASH_MATCH",
+      "sheets": [
+        {
+          "name": "Краткий ввод",
+          "nonEmptyRows": 175,
+          "firstNonEmptyRow": 2,
+          "lastNonEmptyRow": 176,
+          "columns": 10,
+          "parserCoverage": "NOT_ESTABLISHED"
+        }
+      ]
+    },
+    {
+      "name": "ТМК_МАХ -01.01-25.10.xlsx",
+      "expectedSha256": "09740031c2cd8bf819ab0df30cc201a5e9875d2dd66e3b21b61ddb893ccbb83f",
+      "status": "HASH_MATCH",
+      "sheets": [
+        {
+          "name": "Лист1",
+          "nonEmptyRows": 99,
+          "firstNonEmptyRow": 1,
+          "lastNonEmptyRow": 99,
+          "columns": 6,
+          "parserCoverage": "NOT_ESTABLISHED"
+        },
+        {
+          "name": "Лист2",
+          "nonEmptyRows": 119,
+          "firstNonEmptyRow": 1,
+          "lastNonEmptyRow": 119,
+          "columns": 5,
+          "parserCoverage": "NOT_ESTABLISHED"
+        },
+        {
+          "name": "Лист3",
+          "nonEmptyRows": 93,
+          "firstNonEmptyRow": 1,
+          "lastNonEmptyRow": 93,
+          "columns": 5,
+          "parserCoverage": "NOT_ESTABLISHED"
+        },
+        {
+          "name": "Лист4",
+          "nonEmptyRows": 96,
+          "firstNonEmptyRow": 1,
+          "lastNonEmptyRow": 96,
+          "columns": 6,
+          "parserCoverage": "NOT_ESTABLISHED"
+        },
+        {
+          "name": "Лист5",
+          "nonEmptyRows": 114,
+          "firstNonEmptyRow": 1,
+          "lastNonEmptyRow": 114,
+          "columns": 6,
+          "parserCoverage": "NOT_ESTABLISHED"
+        }
+      ]
+    },
+    {
+      "name": "ТМК_МАХ 01.10.-26.10.(Выгрузка из ГИС 26.10.).xlsx",
+      "expectedSha256": "82f759aef589c7ff8bc45f33ee0494dcb46040e1a8cae3b5a751c9529769b58a",
+      "status": "HASH_MATCH",
+      "sheets": [
+        {
+          "name": "Лист1",
+          "nonEmptyRows": 100,
+          "firstNonEmptyRow": 1,
+          "lastNonEmptyRow": 101,
+          "columns": 6,
+          "parserCoverage": "NOT_ESTABLISHED"
+        },
+        {
+          "name": "Лист2",
+          "nonEmptyRows": 108,
+          "firstNonEmptyRow": 1,
+          "lastNonEmptyRow": 108,
+          "columns": 5,
+          "parserCoverage": "NOT_ESTABLISHED"
+        },
+        {
+          "name": "Лист3",
+          "nonEmptyRows": 89,
+          "firstNonEmptyRow": 1,
+          "lastNonEmptyRow": 89,
+          "columns": 5,
+          "parserCoverage": "NOT_ESTABLISHED"
+        },
+        {
+          "name": "Лист4",
+          "nonEmptyRows": 93,
+          "firstNonEmptyRow": 1,
+          "lastNonEmptyRow": 93,
+          "columns": 6,
+          "parserCoverage": "NOT_ESTABLISHED"
+        },
+        {
+          "name": "Лист5",
+          "nonEmptyRows": 107,
+          "firstNonEmptyRow": 1,
+          "lastNonEmptyRow": 107,
+          "columns": 6,
+          "parserCoverage": "NOT_ESTABLISHED"
+        }
+      ]
+    }
+  ],
+  "remoteErrors": [],
+  "replay": {
+    "status": "WARNING",
+    "statistics": {
+      "expectedIndicators": 34,
+      "receivedIndicators": 30,
+      "preparedIndicators": 10,
+      "unchangedIndicators": 20,
+      "retainedInvalidIndicators": 0,
+      "missingSourceIndicators": 4
+    },
+    "indicators": [
+      {
+        "metric": "egpu",
+        "state": "UNCHANGED",
+        "sources": [
+          "ПР_2_Кол-во заявл на прикр. от ЕГПУ за период. ИП ООГУЗ. Обраб. 2 раб.дн. 25.10.2026.xlsx"
+        ],
+        "errors": [],
+        "facts": {
+          "egpu": {
+            "rows": 84,
+            "numerator": 42219,
+            "denominator": 42682
+          }
+        },
+        "repeatability": "PASS"
+      },
+      {
+        "metric": "egpu2days",
+        "state": "UNCHANGED",
+        "sources": [
+          "ПР_2_Кол-во заявл на прикр. от ЕГПУ за период. ИП ООГУЗ. Обраб. 2 раб.дн. 25.10.2026.xlsx"
+        ],
+        "errors": [],
+        "facts": {
+          "egpu2days": {
+            "rows": 84,
+            "numerator": 36064,
+            "denominator": 42682
+          }
+        },
+        "repeatability": "PASS"
+      },
+      {
+        "metric": "hospital",
+        "state": "UNCHANGED",
+        "sources": [
+          "Отчет по госпитализациям_v2 -  01.01.2026-25.10.2026.xlsx"
+        ],
+        "errors": [],
+        "facts": {
+          "rows": 130,
+          "matched": 130,
+          "numerator": 709565,
+          "denominator": 782059,
+          "fact": 90.73036689047757
+        },
+        "repeatability": "PASS"
+      },
+      {
+        "metric": "ambulatoryCase",
+        "state": "RETAINED",
+        "sources": [],
+        "errors": [
+          "Нет входного источника показателя"
+        ],
+        "facts": null,
+        "repeatability": null
+      },
+      {
+        "metric": "semd228",
+        "state": "UNCHANGED",
+        "sources": [
+          "Закрытые случаи ДОГВН ПМО и зарегистрированные СЭМД 122 и 228 - 01.01-25.10.xlsx",
+          "Количество_СЭМД_Результаты_профилактического_медицинского_осмотрадиспансеризаци.xlsx",
+          "1.Отчет СЭМД_РЭМД 01.01.-25.10.(Выгрузка из BI 26.10.).xlsx"
+        ],
+        "errors": [],
+        "facts": {
+          "organizations": 95,
+          "numerator": 2117657,
+          "denominator": 2359041,
+          "share": 89.76770645359703,
+          "excluded": 1
+        },
+        "repeatability": "PASS"
+      },
+      {
+        "metric": "birth",
+        "state": "UNCHANGED",
+        "sources": [
+          "Свидетельства_о_рождении_по_РТ_(РМИАЦ) 01.01.-25.10.(Выгрузка из ГИС 26.10.).xlsx"
+        ],
+        "errors": [],
+        "facts": {
+          "rows": 41,
+          "numerator": 26273,
+          "denominator": 26312,
+          "fact": 99.85177865612648
+        },
+        "repeatability": "PASS"
+      },
+      {
+        "metric": "death",
+        "state": "RETAINED",
+        "sources": [],
+        "errors": [
+          "Нет входного источника показателя"
+        ],
+        "facts": null,
+        "repeatability": null
+      },
+      {
+        "metric": "tmkMaxCount",
+        "state": "UNCHANGED",
+        "sources": [
+          "ТМК_МАХ -01.01-25.10.xlsx",
+          "ТМК_МАХ 01.10.-26.10.(Выгрузка из ГИС 26.10.).xlsx"
+        ],
+        "errors": [],
+        "facts": {
+          "tmkMaxCount": {
+            "rows": 97,
+            "total": 69611
+          }
+        },
+        "repeatability": "PASS"
+      },
+      {
+        "metric": "elnMaxCount",
+        "state": "UNCHANGED",
+        "sources": [
+          "ТМК_МАХ -01.01-25.10.xlsx",
+          "ТМК_МАХ 01.10.-26.10.(Выгрузка из ГИС 26.10.).xlsx"
+        ],
+        "errors": [],
+        "facts": {
+          "elnMaxCount": {
+            "rows": 97,
+            "total": 52716
+          }
+        },
+        "repeatability": "PASS"
+      },
+      {
+        "metric": "doctorsAll",
+        "state": "PREPARED",
+        "sources": [
+          "Отчёт_по_врачам_сформировавших_СЭМД Октябрь.xlsx"
+        ],
+        "errors": [],
+        "facts": {
+          "doctorsAll": {
+            "numerator": 10875,
+            "denominator": 13691,
+            "fact": 79.43174348111899
+          }
+        },
+        "repeatability": "PASS"
+      },
+      {
+        "metric": "doctorsLevel3",
+        "state": "UNCHANGED",
+        "sources": [
+          "Отчёт_по_врачам_сформировавших_СЭМД Октябрь.xlsx"
+        ],
+        "errors": [],
+        "facts": {
+          "doctorsLevel3": {
+            "numerator": 3970,
+            "denominator": 4888,
+            "fact": 81.21931260229132
+          }
+        },
+        "repeatability": "PASS"
+      },
+      {
+        "metric": "doctor500_obgyn",
+        "state": "PREPARED",
+        "sources": [
+          "Отчёт_по_врачам_сформировавших_СЭМД Октябрь.xlsx"
+        ],
+        "errors": [],
+        "facts": {
+          "doctor500_obgyn": {
+            "numerator": 241,
+            "denominator": 423,
+            "fact": 56.973995271867615
+          }
+        },
+        "repeatability": "PASS"
+      },
+      {
+        "metric": "doctor500_gp",
+        "state": "PREPARED",
+        "sources": [
+          "Отчёт_по_врачам_сформировавших_СЭМД Октябрь.xlsx"
+        ],
+        "errors": [],
+        "facts": {
+          "doctor500_gp": {
+            "numerator": 246,
+            "denominator": 299,
+            "fact": 82.2742474916388
+          }
+        },
+        "repeatability": "PASS"
+      },
+      {
+        "metric": "doctor500_cardiologist",
+        "state": "PREPARED",
+        "sources": [
+          "Отчёт_по_врачам_сформировавших_СЭМД Октябрь.xlsx"
+        ],
+        "errors": [],
+        "facts": {
+          "doctor500_cardiologist": {
+            "numerator": 102,
+            "denominator": 211,
+            "fact": 48.34123222748815
+          }
+        },
+        "repeatability": "PASS"
+      },
+      {
+        "metric": "doctor500_oncologist",
+        "state": "PREPARED",
+        "sources": [
+          "Отчёт_по_врачам_сформировавших_СЭМД Октябрь.xlsx"
+        ],
+        "errors": [],
+        "facts": {
+          "doctor500_oncologist": {
+            "numerator": 130,
+            "denominator": 237,
+            "fact": 54.85232067510548
+          }
+        },
+        "repeatability": "PASS"
+      },
+      {
+        "metric": "doctor500_ophthalmologist",
+        "state": "PREPARED",
+        "sources": [
+          "Отчёт_по_врачам_сформировавших_СЭМД Октябрь.xlsx"
+        ],
+        "errors": [],
+        "facts": {
+          "doctor500_ophthalmologist": {
+            "numerator": 109,
+            "denominator": 236,
+            "fact": 46.186440677966104
+          }
+        },
+        "repeatability": "PASS"
+      },
+      {
+        "metric": "doctor500_pediatrician",
+        "state": "PREPARED",
+        "sources": [
+          "Отчёт_по_врачам_сформировавших_СЭМД Октябрь.xlsx"
+        ],
+        "errors": [],
+        "facts": {
+          "doctor500_pediatrician": {
+            "numerator": 806,
+            "denominator": 1364,
+            "fact": 59.09090909090909
+          }
+        },
+        "repeatability": "PASS"
+      },
+      {
+        "metric": "doctor500_dentist",
+        "state": "PREPARED",
+        "sources": [
+          "Отчёт_по_врачам_сформировавших_СЭМД Октябрь.xlsx"
+        ],
+        "errors": [],
+        "facts": {
+          "doctor500_dentist": {
+            "numerator": 225,
+            "denominator": 598,
+            "fact": 37.62541806020067
+          }
+        },
+        "repeatability": "PASS"
+      },
+      {
+        "metric": "doctor500_therapist",
+        "state": "PREPARED",
+        "sources": [
+          "Отчёт_по_врачам_сформировавших_СЭМД Октябрь.xlsx"
+        ],
+        "errors": [],
+        "facts": {
+          "doctor500_therapist": {
+            "numerator": 859,
+            "denominator": 1427,
+            "fact": 60.196215837421164
+          }
+        },
+        "repeatability": "PASS"
+      },
+      {
+        "metric": "doctor500_surgeon",
+        "state": "PREPARED",
+        "sources": [
+          "Отчёт_по_врачам_сформировавших_СЭМД Октябрь.xlsx"
+        ],
+        "errors": [],
+        "facts": {
+          "doctor500_surgeon": {
+            "numerator": 133,
+            "denominator": 281,
+            "fact": 47.330960854092524
+          }
+        },
+        "repeatability": "PASS"
+      },
+      {
+        "metric": "remdErrors",
+        "state": "UNCHANGED",
+        "sources": [
+          "Отчёт - Отказы по регистрации ЭМД в РЭМД 01.01-25.10.xlsx"
+        ],
+        "errors": [],
+        "facts": {
+          "errors": 15896753,
+          "categories": 38,
+          "organizations": 330,
+          "attributedErrors": 15896753,
+          "unassignedErrors": 0,
+          "coveragePercent": 100.0
+        },
+        "repeatability": "PASS"
+      },
+      {
+        "metric": "electronicWaybill",
+        "state": "RETAINED",
+        "sources": [],
+        "errors": [
+          "Нет входного источника показателя"
+        ],
+        "facts": null,
+        "repeatability": null
+      },
+      {
+        "metric": "tvspAmbulatory",
+        "state": "UNCHANGED",
+        "sources": [
+          "Отчет_Доля_ТВСП_СЭМД_Эпикриз по законченному случаю амбулаторный_Талон амбулаторного пациента и Протокол консультации 01.01-25.10.xlsx"
+        ],
+        "errors": [],
+        "facts": {
+          "objects": 458,
+          "plan": 458,
+          "fact": 458,
+          "subunits": 886,
+          "registeredSubunits": 808
+        },
+        "repeatability": "PASS"
+      },
+      {
+        "metric": "tvspStationary",
+        "state": "UNCHANGED",
+        "sources": [
+          "Отчет_Доля_ТВСП_СЭМД_Эпикриз_в_стационаре_выписной_или_Выписной 01.01-25.10.xlsx"
+        ],
+        "errors": [],
+        "facts": {
+          "objects": 274,
+          "plan": 274,
+          "fact": 271,
+          "subunits": 817,
+          "registeredSubunits": 693
+        },
+        "repeatability": "PASS"
+      },
+      {
+        "metric": "tvspLaboratory",
+        "state": "UNCHANGED",
+        "sources": [
+          "Отчет_Доля_ТВСП_СЭМД_Протокол лабораторного исследования 01.01-25.10.xlsx"
+        ],
+        "errors": [],
+        "facts": {
+          "objects": 126,
+          "plan": 126,
+          "fact": 126,
+          "subunits": 142,
+          "registeredSubunits": 141
+        },
+        "repeatability": "PASS"
+      },
+      {
+        "metric": "tvspDiagnostic",
+        "state": "UNCHANGED",
+        "sources": [
+          "Доля_ТВСП,_обеспечивающих_передачу_СЭМД_Протокол_диагностических 01.01-25.10.xlsx"
+        ],
+        "errors": [],
+        "facts": {
+          "objects": 306,
+          "fact": 302
+        },
+        "repeatability": "PASS"
+      },
+      {
+        "metric": "smpFederal",
+        "state": "UNCHANGED",
+        "sources": [
+          "Отчет_СМП_ТВСП 01.01-25.10.xlsx"
+        ],
+        "errors": [],
+        "facts": {
+          "objects": 68,
+          "fact": 68
+        },
+        "repeatability": "PASS"
+      },
+      {
+        "metric": "tmkRemd",
+        "state": "UNCHANGED",
+        "sources": [
+          "Отчет_ТМК_РЭМД 01.01.-25.10.(Выгрузка из BI 26.10.).xlsx"
+        ],
+        "errors": [],
+        "facts": {
+          "planOrganizations": 40,
+          "transmitting": 40
+        },
+        "repeatability": "PASS"
+      },
+      {
+        "metric": "elmk",
+        "state": "UNCHANGED",
+        "sources": [
+          "1.Отчет СЭМД_РЭМД 01.01.-25.10.(Выгрузка из BI 26.10.).xlsx"
+        ],
+        "errors": [],
+        "facts": {
+          "planOrganizations": 73,
+          "transmitting": 73
+        },
+        "repeatability": "PASS"
+      },
+      {
+        "metric": "shortInput",
+        "state": "UNCHANGED",
+        "sources": [
+          "Случаи краткого ввода с 01.01.2026 по 25.10.2026 -.xlsx"
+        ],
+        "errors": [],
+        "facts": {
+          "shortInput": 815970
+        },
+        "repeatability": "PASS"
+      },
+      {
+        "metric": "shortInputAmb",
+        "state": "UNCHANGED",
+        "sources": [
+          "Случаи краткого ввода с 01.01.2026 по 25.10.2026 -.xlsx"
+        ],
+        "errors": [],
+        "facts": {
+          "shortInputAmb": 807198
+        },
+        "repeatability": "PASS"
+      },
+      {
+        "metric": "shortInputHosp",
+        "state": "UNCHANGED",
+        "sources": [
+          "Случаи краткого ввода с 01.01.2026 по 25.10.2026 -.xlsx"
+        ],
+        "errors": [],
+        "facts": {
+          "shortInputHosp": 8772
+        },
+        "repeatability": "PASS"
+      },
+      {
+        "metric": "fapSemdCount",
+        "state": "RETAINED",
+        "sources": [],
+        "errors": [
+          "Нет входного источника показателя"
+        ],
+        "facts": null,
+        "repeatability": null
+      },
+      {
+        "metric": "smp",
+        "state": "UNCHANGED",
+        "sources": [
+          "Отправка сведений в федеральные сервисы 01.01.-25.10. (Выгрузка из АСУ ССМП 26.10.).xlsx"
+        ],
+        "errors": [],
+        "facts": {
+          "organizations": 42,
+          "volume": 769760,
+          "registered": 724266
+        },
+        "repeatability": "PASS"
+      }
+    ],
+    "differences": []
+  },
+  "fullWorkbookCoverage": "NOT_ESTABLISHED",
+  "limitation": "Inventory and deterministic replay do not prove that every worksheet and column is consumed by the adapters.",
+  "remoteCandidateFiles": 1,
+  "matchedFiles": 18,
+  "acceptedSourceReplay": {
+    "allFilesIdenticalToAcceptedPackage": true,
+    "allCurrentValuesMatch": true
+  },
+  "status": "PARTIAL",
+  "checkedAt": "28.10.2026",
+  "findings": [
+    {
+      "id": "hospital-count-stale",
+      "status": "FIX_PREPARED",
+      "metric": "hospitalCount",
+      "displayedCut": "29.08.2026",
+      "availableSourceCut": "25.10.2026",
+      "currentDisplayedTotal": 596773,
+      "availableSourceTotal": 782059,
+      "reason": "Column D loaded into hospitalCount; registered SEMD columns E/F remain separate. Weekly adapter now includes this indicator.",
+      "preparedTotal": 782059,
+      "preparedCut": "25.10.2026",
+      "sourceRows": 130,
+      "uniqueOids": 129
+    },
+    {
+      "id": "remd-period-routing",
+      "status": "FIX_PREPARED",
+      "reason": "Cumulative REMD errors previously targeted weekly datasets. Adapter now writes error-cumulative.json and preserves weekly categories/organizations."
+    },
+    {
+      "id": "max-extra-fields",
+      "status": "NOT_DISPLAYED_AS_SEPARATE_INDICATORS",
+      "reason": "Slot creation/occupation, appointments and all ELN columns in MAX workbooks are not identical to TMC and post-TMC ELN. They are not all represented as separate indicators in section 02."
+    },
+    {
+      "id": "missing-sources",
+      "status": "RETAINED_PREVIOUS_CUT",
+      "metrics": [
+        "ambulatoryCase",
+        "death",
+        "electronicWaybill",
+        "fapSemdCount"
+      ]
+    },
+    {
+      "id": "manual-federal-facts",
+      "status": "DETAIL_PAGES_PREPARED",
+      "cardsWithRegionalFact": 28,
+      "cardsWithoutRegionalFact": 15,
+      "reason": "No organization-level data or previous comparable cuts are inferred from regional percentages."
+    }
+  ],
+  "supplementalChecks": [
+    {
+      "view": "maxPeriodViews.cumulative.tmk",
+      "source": "ТМК_МАХ -01.01-25.10.xlsx",
+      "status": "PASS",
+      "sourceTotal": 69611,
+      "displayedSourceTotal": 69611,
+      "checkedPlannedOrganizations": 85,
+      "mismatchedOrganizations": 0
+    },
+    {
+      "view": "maxPeriodViews.cumulative.eln",
+      "source": "ТМК_МАХ -01.01-25.10.xlsx",
+      "status": "PASS",
+      "sourceTotal": 52716,
+      "displayedSourceTotal": 52716,
+      "checkedPlannedOrganizations": 85,
+      "mismatchedOrganizations": 0
+    },
+    {
+      "view": "maxPeriodViews.operational.tmk",
+      "source": "ТМК_МАХ 01.10.-26.10.(Выгрузка из ГИС 26.10.).xlsx",
+      "status": "PASS",
+      "sourceTotal": 11878,
+      "displayedSourceTotal": 11878,
+      "checkedPlannedOrganizations": 85,
+      "mismatchedOrganizations": 0
+    },
+    {
+      "view": "maxPeriodViews.operational.eln",
+      "source": "ТМК_МАХ 01.10.-26.10.(Выгрузка из ГИС 26.10.).xlsx",
+      "status": "PASS",
+      "sourceTotal": 9774,
+      "displayedSourceTotal": 9774,
+      "checkedPlannedOrganizations": 85,
+      "mismatchedOrganizations": 0
+    },
+    {
+      "view": "semdSummary",
+      "source": "1.Отчет СЭМД_РЭМД 01.01.-25.10.(Выгрузка из BI 26.10.).xlsx",
+      "status": "PASS",
+      "sourceTotal": 82198158,
+      "registeredTypes": 97,
+      "checkedDocumentTypes": 156
+    },
+    {
+      "view": "federal.agreement.37",
+      "source": "1.Отчет СЭМД_РЭМД 01.01.-25.10.(Выгрузка из BI 26.10.).xlsx",
+      "status": "PASS",
+      "sourceCount": 2341,
+      "displayedCount": 2341
+    },
+    {
+      "view": "federal.agreement.38",
+      "source": "1.Отчет СЭМД_РЭМД 01.01.-25.10.(Выгрузка из BI 26.10.).xlsx",
+      "status": "PASS",
+      "sourceCount": 15064,
+      "displayedCount": 15064
+    },
+    {
+      "view": "federal.agreement.39",
+      "source": "1.Отчет СЭМД_РЭМД 01.01.-25.10.(Выгрузка из BI 26.10.).xlsx",
+      "status": "PASS",
+      "sourceCount": 1364313,
+      "displayedCount": 1364313
+    }
+  ],
+  "hospitalCountCorrection": {
+    "sourceColumn": "D",
+    "period": "01.01–25.10.2026",
+    "total": 782059,
+    "sourceRows": 130,
+    "organizations": 129,
+    "repeatability": "PASS",
+    "sourceRowsAndMoValues": "PASS",
+    "published": false,
+    "managementPerimeterTotal": 781683,
+    "excludedKgmaCases": 376
+  }
+}

@@ -6,274 +6,34 @@
   "registryCoverage": "38/38",
   "mismatches": [
     {
-      "id": "birth",
+      "id": "hospitalCount",
       "field": "fact",
-      "expected": 99.90770650669127,
-      "actual": 99.85177865612648
+      "expected": 596773,
+      "actual": 781683
     },
     {
-      "id": "birth",
+      "id": "hospitalCount",
       "field": "date",
-      "expected": "21.10.2026",
+      "expected": "29.08.2026",
       "actual": "25.10.2026"
     },
     {
-      "id": "birth",
-      "field": "quantity",
-      "expected": 25980,
-      "actual": 26273
-    },
-    {
-      "id": "egpu",
-      "field": "fact",
-      "expected": 99.0146735663146,
-      "actual": 98.91523358792934
-    },
-    {
-      "id": "egpu",
-      "field": "date",
-      "expected": "22.10.2026",
-      "actual": "25.10.2026"
-    },
-    {
-      "id": "egpu",
-      "field": "quantity",
-      "expected": 41904,
-      "actual": 42219
-    },
-    {
-      "id": "egpu2days",
-      "field": "fact",
-      "expected": 84.31275253420287,
-      "actual": 84.49463474064008
-    },
-    {
-      "id": "egpu2days",
-      "field": "date",
-      "expected": "22.10.2026",
-      "actual": "25.10.2026"
-    },
-    {
-      "id": "egpu2days",
-      "field": "quantity",
-      "expected": 35682,
-      "actual": 36064
-    },
-    {
-      "id": "elmk",
-      "field": "date",
-      "expected": "22.10.2026",
-      "actual": "25.10.2026"
-    },
-    {
-      "id": "elnMaxCount",
-      "field": "fact",
-      "expected": 51879,
-      "actual": 52716
-    },
-    {
-      "id": "elnMaxCount",
-      "field": "date",
-      "expected": "22.10.2026",
-      "actual": "25.10.2026"
-    },
-    {
-      "id": "elnMaxCount",
+      "id": "hospitalCount",
       "field": "previous",
-      "expected": 50373,
-      "actual": 51879
+      "expected": 0,
+      "actual": 596773
     },
     {
-      "id": "elnMaxCount",
+      "id": "hospitalCount",
       "field": "trend",
-      "expected": 1506,
-      "actual": 837
+      "expected": 596773,
+      "actual": 184910
     },
     {
-      "id": "elnMaxCount",
+      "id": "hospitalCount",
       "field": "quantity",
-      "expected": 51879,
-      "actual": 52716
-    },
-    {
-      "id": "hospital",
-      "field": "fact",
-      "expected": 89.88976740159373,
-      "actual": 90.73036689047757
-    },
-    {
-      "id": "hospital",
-      "field": "date",
-      "expected": "22.10.2026",
-      "actual": "25.10.2026"
-    },
-    {
-      "id": "hospital",
-      "field": "quantity",
-      "expected": 695665,
-      "actual": 709565
-    },
-    {
-      "id": "semd228",
-      "field": "fact",
-      "expected": 87.49616172502127,
-      "actual": 89.76770645359703
-    },
-    {
-      "id": "semd228",
-      "field": "date",
-      "expected": "22.10.2026",
-      "actual": "25.10.2026"
-    },
-    {
-      "id": "semd228",
-      "field": "quantity",
-      "expected": 2045914,
-      "actual": 2117657
-    },
-    {
-      "id": "shortInput",
-      "field": "fact",
-      "expected": 807194,
-      "actual": 814274
-    },
-    {
-      "id": "shortInput",
-      "field": "date",
-      "expected": "22.10.2026",
-      "actual": "25.10.2026"
-    },
-    {
-      "id": "shortInput",
-      "field": "previous",
-      "expected": 788943,
-      "actual": 807194
-    },
-    {
-      "id": "shortInput",
-      "field": "trend",
-      "expected": 18251,
-      "actual": 7080
-    },
-    {
-      "id": "shortInput",
-      "field": "quantity",
-      "expected": 807194,
-      "actual": 814274
-    },
-    {
-      "id": "shortInputAmb",
-      "field": "fact",
-      "expected": 798456,
-      "actual": 805502
-    },
-    {
-      "id": "shortInputAmb",
-      "field": "date",
-      "expected": "22.10.2026",
-      "actual": "25.10.2026"
-    },
-    {
-      "id": "shortInputAmb",
-      "field": "previous",
-      "expected": 780445,
-      "actual": 798456
-    },
-    {
-      "id": "shortInputAmb",
-      "field": "trend",
-      "expected": 18011,
-      "actual": 7046
-    },
-    {
-      "id": "shortInputAmb",
-      "field": "quantity",
-      "expected": 798456,
-      "actual": 805502
-    },
-    {
-      "id": "shortInputHosp",
-      "field": "fact",
-      "expected": 8738,
-      "actual": 8772
-    },
-    {
-      "id": "shortInputHosp",
-      "field": "date",
-      "expected": "22.10.2026",
-      "actual": "25.10.2026"
-    },
-    {
-      "id": "shortInputHosp",
-      "field": "previous",
-      "expected": 8498,
-      "actual": 8738
-    },
-    {
-      "id": "shortInputHosp",
-      "field": "trend",
-      "expected": 240,
-      "actual": 34
-    },
-    {
-      "id": "shortInputHosp",
-      "field": "quantity",
-      "expected": 8738,
-      "actual": 8772
-    },
-    {
-      "id": "smp",
-      "field": "fact",
-      "expected": 94.30437969749174,
-      "actual": 94.08984618582416
-    },
-    {
-      "id": "smp",
-      "field": "date",
-      "expected": "22.10.2026",
-      "actual": "25.10.2026"
-    },
-    {
-      "id": "smp",
-      "field": "quantity",
-      "expected": 716569,
-      "actual": 724266
-    },
-    {
-      "id": "tmkMaxCount",
-      "field": "fact",
-      "expected": 68048,
-      "actual": 69610
-    },
-    {
-      "id": "tmkMaxCount",
-      "field": "date",
-      "expected": "22.10.2026",
-      "actual": "25.10.2026"
-    },
-    {
-      "id": "tmkMaxCount",
-      "field": "previous",
-      "expected": 65797,
-      "actual": 68048
-    },
-    {
-      "id": "tmkMaxCount",
-      "field": "trend",
-      "expected": 2251,
-      "actual": 1562
-    },
-    {
-      "id": "tmkMaxCount",
-      "field": "quantity",
-      "expected": 68048,
-      "actual": 69610
-    },
-    {
-      "id": "tmkRemd",
-      "field": "date",
-      "expected": "22.10.2026",
-      "actual": "25.10.2026"
+      "expected": 596773,
+      "actual": 781683
     }
   ],
   "preservedBaselineConflicts": [],
