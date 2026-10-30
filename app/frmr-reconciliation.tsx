@@ -4,6 +4,8 @@ import { useMemo, useState } from "react";
 import legacyRaw from "./frmr-reconciliation-data.json";
 import allRaw from "./frmr-all-specialties.json";
 import FrmoLinkage from "./frmo-linkage";
+import { applyFrmrScope } from "../lib/frmr-scope";
+const { data: scopedAll, excluded: scopeExcluded } = applyFrmrScope(allRaw);
 import legacyDepartments from "./frmr-department-details.json";
 import legacyRecords from "./frmr-last4-records.json";
 import styles from "./frmr-reconciliation.module.css";
@@ -37,9 +39,9 @@ const change = (row: Org) =>
 export default function FrmrReconciliation() {
   const [coverage, setCoverage] = useState<"all" | "legacy">("all");
   const isAll = coverage === "all";
-  const raw = isAll ? allRaw.summary : legacyRaw;
-  const departmentRaw = isAll ? allRaw.departments : legacyDepartments;
-  const last4Raw = isAll ? allRaw.records : legacyRecords;
+  const raw = isAll ? scopedAll.summary : legacyRaw;
+  const departmentRaw = isAll ? scopedAll.departments : legacyDepartments;
+  const last4Raw = isAll ? scopedAll.records : legacyRecords;
   const staffRecords = last4Raw.rows as unknown as StaffRecord[];
   const departmentRows: DepartmentGroup[] = (
     departmentRaw.rows as number[][]
@@ -191,20 +193,22 @@ export default function FrmrReconciliation() {
         <button className={[styles.tab, view === "linkage" ? styles.tabActive : ""].join(" ")} onClick={() => setView("linkage")} aria-pressed={view === "linkage"}>Привязки ФРМО · 30.10</button>
       </div>
 
+      {isAll && view !== "linkage" && <p className={styles.heroNote} data-testid="frmr-scope-note">Из сверки исключены: скорая помощь, врачи-стажёры и средний лабораторный персонал. Учтено {number(scopedAll.records.rows.length)} записей; исключено {number(scopeExcluded.total)}. Изменение охвата не является улучшением показателя.</p>}
+
       {view === "linkage" ? <FrmoLinkage /> : view === "minister" ? (
         <>
           <div className={styles.stats}>
-            <article className={styles.stat}><span className={styles.statLabel}>Расхождения на {cutShort}</span><strong className={styles.negative}>{number(currentTotal)}</strong><small>{isAll ? "все должности из списка расхождений" : <>снижение на {number(previousTotal - currentTotal)} к 16.10</>}</small></article>
+            <article className={styles.stat}><span className={styles.statLabel}>Расхождения на {cutShort}</span><strong className={styles.negative}>{number(currentTotal)}</strong><small>{isAll ? "с учётом исключений из сверки" : <>снижение на {number(previousTotal - currentTotal)} к 16.10</>}</small></article>
             <article className={styles.stat}><span className={styles.statLabel}>МО с расхождениями</span><strong>{affected} <span className={styles.muted}>/ {orgs.length}</span></strong><small>в проверяемом перечне</small></article>
             <article className={styles.stat}><span className={styles.statLabel}>{isAll ? "Нет должности в МО" : "Улучшили / ухудшили"}</span><strong>{isAll ? number(stage1Total) : <><span className={styles.positive}>{improvedCount}</span> / <span className={styles.negative}>{worsenedCount}</span></>}</strong><small>{isAll ? "первый этап проверки" : "изменение числа записей к 16.10"}</small></article>
             <article className={styles.stat}><span className={styles.statLabel}>{isAll ? "Не совпадает СП" : "Снижение с февраля"}</span><strong>{number(isAll ? stage2Total : febTotal - currentTotal)}</strong><small>{isAll ? "должность есть на уровне МО" : <>{number(febTotal)} → {number(currentTotal)}</>}</small></article>
           </div>
-          {isAll && <details className={styles.qualityNote}><summary>Качество исходных записей и границы расчёта</summary><p>Исходный итог 8 264 сохранён. Дополнительные признаки не исключают записи автоматически и могут пересекаться: без корректного идентификатора — {allRaw.metadata.quality.missingIdentifier}; дата окончания работы наступила — {allRaw.metadata.quality.employmentEnded}; избыточных повторов по проверенным реквизитам — {allRaw.metadata.quality.repeatedRecordExtras}; нет служебной связи МО с ФРМО — {allRaw.metadata.quality.missingOrganizationLink}.</p><p>В исходнике 13 878 отдельных признаков расхождения; одна должностная запись может содержать несколько. Поэтому они не суммируются как число сотрудников. Ставки не оцениваются. Состав включает государственные и частные МО; ведомственная принадлежность не выводится из названия.</p></details>}
+          {isAll && <details className={styles.qualityNote}><summary>Качество исходных записей и границы расчёта</summary><p>В исходнике 8 264 записи; после исключений в сверке — {number(currentTotal)}. Ниже приведены признаки качества полного исходника. Дополнительные признаки не исключают записи автоматически и могут пересекаться: без корректного идентификатора — {allRaw.metadata.quality.missingIdentifier}; дата окончания работы наступила — {allRaw.metadata.quality.employmentEnded}; избыточных повторов по проверенным реквизитам — {allRaw.metadata.quality.repeatedRecordExtras}; нет служебной связи МО с ФРМО — {allRaw.metadata.quality.missingOrganizationLink}.</p><p>В исходнике 13 878 отдельных признаков расхождения; одна должностная запись может содержать несколько. Поэтому они не суммируются как число сотрудников. Ставки не оцениваются. Состав включает государственные и частные МО; ведомственная принадлежность не выводится из названия.</p></details>}
           <div className={styles.grid}>
             <section className={styles.panel}>
-              <div className={styles.panelHead}><div><h2>{isAll ? "Новый охват контроля" : "Динамика по республике"}</h2><span className={styles.muted}>{isAll ? "Все специальности, включая единичные записи" : "Исторические точки только на датах, присутствующих в файле"}</span></div>{!isAll && <span className={styles.pill}>−{number(previousTotal - currentTotal)} за 6 дней</span>}</div>
+              <div className={styles.panelHead}><div><h2>{isAll ? "Новый охват контроля" : "Динамика по республике"}</h2><span className={styles.muted}>{isAll ? "Все применимые специальности, включая единичные записи" : "Исторические точки только на датах, присутствующих в файле"}</span></div>{!isAll && <span className={styles.pill}>−{number(previousTotal - currentTotal)} за 6 дней</span>}</div>
               {trendBars(isAll ? [["29.10", currentTotal]] : [["01.02", febTotal], ["16.10", previousTotal], ["22.10", currentTotal]])}
-              {isAll ? <p className={styles.muted}>Первая контрольная точка по всем специальностям — 29.10.2026. Прежние 1 445 записей относятся к ограниченному перечню. Рост или снижение между этими охватами не рассчитывается.</p> : <div className={styles.legend}><span>От 16.10: <b>{signed(currentTotal - previousTotal)}</b></span><span>От 01.02: <b>{signed(currentTotal - febTotal)}</b></span></div>}
+              {isAll ? <p className={styles.muted}>Первая контрольная точка по всем специальностям — 29.10.2026, с учётом исключений из сверки. Прежние 1 445 записей относятся к ограниченному перечню. Рост или снижение между этими охватами не рассчитывается.</p> : <div className={styles.legend}><span>От 16.10: <b>{signed(currentTotal - previousTotal)}</b></span><span>От 01.02: <b>{signed(currentTotal - febTotal)}</b></span></div>}
             </section>
             <section className={styles.panel}>
               <h2>Причины расхождений</h2>
