@@ -1,0 +1,10 @@
+import fs from 'node:fs';
+import {createHash} from 'node:crypto';
+import {buildSeptemberRating} from '../../lib/september-rating.js';
+const read=p=>JSON.parse(fs.readFileSync(p,'utf8'));
+const inputs=read('app/rating/september-v2-inputs.json'),legacy=read('app/rating/september-v1.json'),policy=read('config/september-rating-v2.json');
+const rows=buildSeptemberRating(inputs,legacy,policy);
+const report={month:inputs.month,baselineCommit:inputs.baselineCommit,counts:{organizations:rows.length,official:rows.filter(r=>r.complete).length,preliminary:rows.filter(r=>!r.complete).length,leaders:rows.filter(r=>r.status==='Лидер').length},hashes:{},rows:rows.map(({metrics,...r})=>({...r,missing:r.missing.map(m=>m.id),critical:r.critical.map(m=>m.id)}))};
+for(const p of ['app/rating/september-v1.json','app/rating/september-v2-inputs.json','app/rating/september-source-components.json','config/september-rating-v2.json'])report.hashes[p]=createHash('sha256').update(fs.readFileSync(p)).digest('hex');
+fs.writeFileSync('docs/rating/september-v2-results.json',JSON.stringify(report,null,2)+'\n');
+console.log(report.counts);

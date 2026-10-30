@@ -2,6 +2,8 @@
 
 import { useMemo, useState } from "react";
 import PlanTransitionStat from "./plan-transition-stat";
+import SeptemberRating from "./september-rating";
+import septemberRatingArchive from "./rating/september-v1.json";
 import { planTransition } from "../lib/plan-transitions.js";
 import { buildFederalDetailCatalog, federalMetricTarget } from "../lib/federal-navigation.js";
 import moDataRaw from "./mo-data.json";
@@ -1954,12 +1956,12 @@ const methodologies: Methodology[] = [
     formula:
       "70% × балл полноты сопровождения случаев + 20% × балл цифровых услуг + 10% × балл технической готовности",
     numerator:
-      "Средние нормированные баллы применимых показателей внутри трёх блоков. Балл отдельного показателя: факт / план × 100; для обратных показателей: план / факт × 100; максимум 100 баллов.",
+      "Сентябрь, версия 2: средние нормированные баллы применимых показателей внутри трёх блоков. Готовность: ТВСП 50%, активность врачей 25%, группа 500+ 25%. Балл отдельного показателя: факт / план × 100; для обратных показателей: план / факт × 100; максимум 100 баллов.",
     denominator:
-      "В расчёт включаются только применимые к МО показатели. Если блок неприменим, его вес исключается, остальные веса нормируются.",
+      "Официальное место требует полного обязательного набора. Пропуск даёт диапазон балла без места; вес пропуска не перераспределяется. Только неприменимый по профилю блок исключается с нормированием остальных весов.",
     source: "Расчёт дашборда на основании представленных исходников",
-    cadence: "Еженедельно, нарастающим итогом",
-    note: "МО сравниваются только внутри своего типа. Показатель КДЛ и неполная выгрузка ошибок регистрации в интегральный рейтинг не включаются. Абсолютные объёмы не влияют на место.",
+    cadence: "Ежемесячно; период каждого показателя указан отдельно",
+    note: "МО сравниваются внутри типа. Сентябрьская версия 2: кадры и ЕПГУ — за месяц, СЭМД и ТВСП — накопительно на 30.09. Октябрь исключён. Лидер: от 95 баллов при полном наборе и выполнении каждого ключевого показателя помощи не ниже 80% плана. Амбулаторные случаи исключены до подтверждения пары исходников; свидетельства без сентября и КДЛ не участвуют. Подробности и архив — в разделе 04.",
   },
   {
     id: "incident38",
@@ -3548,7 +3550,8 @@ export default function Home() {
   >("status");
   const [unitSortDirection, setUnitSortDirection] =
     useState<SortDirection>("asc");
-  const ratingRows = useMemo(() => buildOrganizationRating(), []);
+  const ratingRows = useMemo(() => septemberRatingArchive.rows as RankRow[], []);
+  const [ratingEdition, setRatingEdition] = useState("v2");
   const [hearingLevel, setHearingLevel] = useState<
     "all" | "mandatory" | "control" | "heard"
   >("all");
@@ -6725,6 +6728,12 @@ export default function Home() {
 
           {tab === "ranking" && (
             <>
+              <div className="septEdition" role="group" aria-label="Версия сентябрьского рейтинга">
+                <button className={ratingEdition === "v2" ? "active" : ""} onClick={() => setRatingEdition("v2")}>Сентябрь · новая методика</button>
+                <button className={ratingEdition === "v1" ? "active" : ""} onClick={() => setRatingEdition("v1")}>Сентябрь · прежняя версия</button>
+              </div>
+              {ratingEdition === "v2" ? <SeptemberRating /> : <>
+              <p className="prototypeNote">Архив версии 1 за сентябрь. Содержит прежние правила, включая оперативный 500+ стоматологов. Для пересчёта используйте новую методику.</p>
               <div className="pageHead ratingHead">
                 <div>
                   <p className="eyebrow">ПОСЛЕДНИЙ ПОЛНЫЙ МЕСЯЦ</p>
@@ -7332,6 +7341,7 @@ export default function Home() {
                   </p>
                 </>
               )}
+              </>}
             </>
           )}
 
