@@ -1,0 +1,7 @@
+export type SeptemberMetric = {id:string;name:string;block:string;family:string;plan:number;period:string;periodKind:string;numerator:number|null;denominator:number|null;fact:number|null;status:string;reason:string|null;mappingNote?:string;s122?:number|null;s228?:number|null};
+export type SeptemberOrganization = {key:string;name:string;type:string;metrics:SeptemberMetric[]};
+export type SeptemberPolicy = {month:string;weights:Record<string,number>;readinessFamilies:Record<string,number>;leaderScore:number;criticalCareExecution:number};
+export type SeptemberRank = SeptemberOrganization & {score:number|null;low:number|null;high:number|null;blocks:Record<string,{low:number;high:number;complete:boolean}|null>;complete:boolean;coverage:number;available:number;total:number;missing:SeptemberMetric[];passed:number;critical:SeptemberMetric[];status:string;place?:number;oldScore:number|null;oldPlace:number|null;scoreChange:number|null;reasons:string[]};
+export function metricScore(metric:SeptemberMetric):number|null;
+export function calculateSeptemberOrganization(org:SeptemberOrganization,policy:SeptemberPolicy):SeptemberRank;
+export function buildSeptemberRating(inputs:{month:string;organizations:SeptemberOrganization[]},legacy:{month:string;rows:{key:string;type:string;name:string;score:number|null;coverage:number;details:{id:string;name:string}[]}[]},policy:SeptemberPolicy):SeptemberRank[];
