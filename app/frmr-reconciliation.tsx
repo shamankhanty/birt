@@ -72,8 +72,8 @@ export default function FrmrReconciliation() {
   const [filter, setFilter] = useState<"all" | "worse" | "better" | "missing" | "zero">("all");
   const [sort, setSort] = useState<"count" | "worsening" | "improving" | "name">("count");
   const [search, setSearch] = useState("");
-  const [selectedId, setSelectedId] = useState("1094");
-  const [moQuery, setMoQuery] = useState(() => sortedOrgs.find((row) => row.id === "1094")?.name ?? "");
+  const [selectedId, setSelectedId] = useState<string | null>(null);
+  const [moQuery, setMoQuery] = useState("");
   const [moSearchOpen, setMoSearchOpen] = useState(false);
   const [moHighlight, setMoHighlight] = useState(0);
   const [roleQuery, setRoleQuery] = useState("");
@@ -82,11 +82,11 @@ export default function FrmrReconciliation() {
   const [inspectionType, setInspectionType] = useState<"all" | "mo" | "department">("all");
   const [last4Query, setLast4Query] = useState("");
 
-  const selected = orgs.find((row) => row.id === selectedId) ?? orgs[0];
+  const selected = orgs.find((row) => row.id === selectedId) ?? null;
   const moMatches = sortedOrgs.filter((row) => {
     const q = moQuery.trim().toLocaleLowerCase("ru");
-    return !q || row.name.toLocaleLowerCase("ru").includes(q) ||
-      row.id.includes(q) || (officialPrefix + row.id).includes(q);
+    return Boolean(q) && (row.name.toLocaleLowerCase("ru").includes(q) ||
+      row.id.includes(q) || (officialPrefix + row.id).includes(q));
   }).slice(0, 30);
   const previousTotal = orgs.reduce((sum, row) => sum + (row.previous ?? 0), 0);
   const currentTotal = orgs.reduce((sum, row) => sum + row.current, 0);
@@ -116,7 +116,7 @@ export default function FrmrReconciliation() {
       );
   }, [coverage, filter, search, sort]);
 
-  const allSelectedGroups = departmentRows.filter((row) => row.mo === selected.id);
+  const allSelectedGroups = departmentRows.filter((row) => row.mo === selected?.id);
   const diagnosticRoles: SpecialityGroup[] = [...allSelectedGroups.reduce((map, row) => {
     map.set(row.role, (map.get(row.role) ?? 0) + row.count);
     return map;
@@ -182,8 +182,8 @@ export default function FrmrReconciliation() {
       </section>
 
       <div className={styles.tabs} role="group" aria-label="Охват ФРМР">
-        <button className={[styles.tab, isAll ? styles.tabActive : ""].join(" ")} onClick={() => {setCoverage("all");setView("minister");setFilter("all");setSort("count");setSearch("");setMoQuery("");resetInspection();}}>Все специальности · 29.10</button>
-        <button className={[styles.tab, !isAll ? styles.tabActive : ""].join(" ")} onClick={() => {setCoverage("legacy");setView("minister");setFilter("all");setSort("count");setSearch("");setMoQuery("");resetInspection();}}>Прежний перечень · архив</button>
+        <button className={[styles.tab, isAll ? styles.tabActive : ""].join(" ")} onClick={() => {setCoverage("all");setView("minister");setFilter("all");setSort("count");setSearch("");setMoQuery("");setSelectedId(null);resetInspection();}}>Все специальности · 29.10</button>
+        <button className={[styles.tab, !isAll ? styles.tabActive : ""].join(" ")} onClick={() => {setCoverage("legacy");setView("minister");setFilter("all");setSort("count");setSearch("");setMoQuery("");setSelectedId(null);resetInspection();}}>Прежний перечень · архив</button>
       </div>
       <div className={styles.tabs} role="group" aria-label="Представление раздела">
         <button className={[styles.tab, view === "minister" ? styles.tabActive : ""].join(" ")} onClick={() => setView("minister")} aria-pressed={view === "minister"}>Обзор</button>
@@ -251,15 +251,21 @@ export default function FrmrReconciliation() {
         <>
           <section className={styles.panel}>
             <div className={styles.moHeader}>
-              <h2>Карточка медицинской организации</h2>
+              <div className={styles.moSelectionHead}>
+                <h2>{selected ? selected.name : "Выберите медицинскую организацию"}</h2>
+                {selected && <button className={[styles.button, styles.ghost].join(" ")} type="button" onClick={() => {setSelectedId(null);setMoQuery("");setMoSearchOpen(false);resetInspection();}}>Сменить МО</button>}
+              </div>
+              {selected ? <span className={styles.muted}>OID: {officialPrefix}{selected.id}</span> : <>
+              <label className={styles.moPickerLabel} htmlFor="frmr-mo-picker">Найдите свою МО по названию или OID</label>
               <div className={styles.moSearchBox}
                 onBlur={(e) => { if (!e.currentTarget.contains(e.relatedTarget)) setMoSearchOpen(false); }}>
-                <input className={[styles.input, styles.moSearchInput].join(" ")} type="search"
+                <svg className={styles.moSearchIcon} width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5"/><path d="m16 16 5 5"/></svg>
+                <input id="frmr-mo-picker" autoFocus className={[styles.input, styles.moSearchInput].join(" ")} type="search"
                   value={moQuery} role="combobox" aria-label="Поиск медицинской организации"
                   aria-autocomplete="list" aria-expanded={moSearchOpen}
                   aria-controls="frmr-mo-search-results"
                   aria-activedescendant={moSearchOpen && moMatches.length ? "frmr-mo-option-" + moHighlight : undefined}
-                  placeholder="Найти МО по названию или OID…"
+                  placeholder="Начните вводить название МО или OID"
                   onFocus={(e) => { setMoSearchOpen(true); setMoHighlight(0); e.currentTarget.select(); }}
                   onChange={(e) => { setMoQuery(e.target.value); setMoSearchOpen(true); setMoHighlight(0); }}
                   onKeyDown={(e) => {
@@ -280,26 +286,28 @@ export default function FrmrReconciliation() {
                     aria-label="Найденные медицинские организации">
                     {moMatches.length ? moMatches.map((row, index) =>
                       <button type="button" role="option" id={"frmr-mo-option-" + index}
-                        key={row.id} aria-selected={row.id === selected.id}
+                        key={row.id} aria-selected={row.id === selectedId}
                         className={[styles.moSearchOption, index === moHighlight ? styles.moSearchOptionActive : ""].join(" ")}
                         onMouseDown={(e) => e.preventDefault()}
                         onClick={() => selectOrganization(row.id)}>
                         <span>{row.name}</span><small>OID: {officialPrefix}{row.id}</small>
                       </button>
-                    ) : <p className={styles.moSearchEmpty}>МО не найдена</p>}
+                    ) : <p className={styles.moSearchEmpty}>{moQuery.trim() ? "МО не найдена. Проверьте название или OID." : "Начните вводить название своей МО или OID."}</p>}
                   </div>
                 )}
               </div>
-              <span className={styles.muted}>OID: 1.2.643.5.1.13.13.12.2.16.{selected.id}</span>
+              <p className={styles.moPickerSteps}>МО → должность → подразделение → записи для проверки</p>
+              </>}
             </div>
-            <div className={styles.miniStats}>
+            {selected && <div className={styles.miniStats}>
               <article><small>Расхождения на {cutShort}</small><b className={selected.current ? styles.negative : styles.positive}>{number(selected.current)}</b></article>
               <article><small>{isAll ? "Наименований должностей" : "Изменение к 16.10"}</small><b>{isAll ? selected.specialties.length : signed(change(selected))}</b></article>
               <article><small>Отсутствует на уровне МО</small><b>{number(selected.stage1)}</b></article>
               <article><small>Не совпадает подразделение</small><b>{number(selected.stage2)}</b></article>
-            </div>
+            </div>}
           </section>
 
+          {selected && <>
           <section className={styles.panel} data-testid="frmr-organization-diagnostic">
             <div className={styles.panelHead}>
               <div>
@@ -428,6 +436,7 @@ export default function FrmrReconciliation() {
               </div>
             </section>
           </div>
+          </>}
         </>
       )}
       <div className={styles.footnote}>
