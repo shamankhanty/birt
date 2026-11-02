@@ -4,12 +4,12 @@ import fs from 'node:fs';
 const read=p=>JSON.parse(fs.readFileSync(p,'utf8'));
 const data=read('app/frmr-all-specialties.json'), links=read('app/frmo-linkage-data.json');
 const sum=(rows,i)=>rows.reduce((s,r)=>s+r[i],0);
-test('all 8264 positions and all 77 source role names survive aggregation',()=>{
- assert.equal(data.summary.scope,'all_specialties');assert.equal(data.summary.sourceCut,'29.10.2026');assert.equal(data.summary.rows.length,137);
- assert.equal(sum(data.summary.rows,4),8264);assert.equal(sum(data.summary.rows,5),5610);assert.equal(sum(data.summary.rows,6),2654);
- assert.equal(data.departments.roles.length,77);assert.equal(data.records.rows.length,8264);
- assert.equal(data.summary.rows.filter(r=>r[4]>0).length,136);
- assert.deepEqual(data.summary.trend,[['29.10.2026',8264]]);
+test('all 8050 positions and all 77 source role names survive aggregation',()=>{
+ assert.equal(data.summary.scope,'all_specialties');assert.equal(data.summary.sourceCut,'30.10.2026');assert.equal(data.summary.rows.length,137);
+ assert.equal(sum(data.summary.rows,4),8050);assert.equal(sum(data.summary.rows,5),5456);assert.equal(sum(data.summary.rows,6),2594);
+ assert.equal(data.departments.roles.length,77);assert.equal(data.records.rows.length,8050);
+ assert.equal(data.summary.rows.filter(r=>r[4]>0).length,134);
+ assert.deepEqual(data.summary.trend,[['30.10.2026',8050]]);
  for(const r of data.summary.rows){assert.equal(r[2],null);assert.equal(r[3],null);assert.equal(r[7],null);assert.equal(r[4],r[5]+r[6]);assert.equal(r[8].reduce((s,v)=>s+v[1],0),r[4]);}
  assert.ok(data.summary.topSpecialties.some(([r])=>r==='Врач-анестезиолог-реаниматолог'));
  assert.ok(data.summary.topSpecialties.some(([r])=>r==='Медицинский психолог'));
@@ -22,7 +22,7 @@ test('every staff reference reconciles to its organization, position and exact S
   assert.ok(last4===null||/^\d{4}$/.test(last4));assert.ok(issue===0||issue===1);assert.ok(Number.isInteger(flags));assert.ok(!nums.has(row));nums.add(row);
   const k=[mo,role,sp].join('|');const c=by.get(k)??[0,0];c[issue]++;by.set(k,c);
  }
- assert.equal(Math.min(...nums),3);assert.equal(Math.max(...nums),8266);
+ assert.equal(Math.min(...nums),3);assert.equal(Math.max(...nums),25501);
  for(const [mo,role,sp,a,b] of data.departments.rows){assert.deepEqual(by.get([mo,role,sp].join('|')),[a,b]);by.delete([mo,role,sp].join('|'));}
  assert.equal(by.size,0);
  for(let mo=0;mo<data.departments.mos.length;mo++){
@@ -32,9 +32,9 @@ test('every staff reference reconciles to its organization, position and exact S
 });
 test('quality annotations preserve source counts without deleting records or exposing identifiers',()=>{
  const rs=data.records.rows;
- assert.equal(rs.filter(r=>r[6]&1).length,4);assert.equal(rs.filter(r=>r[6]&2).length,7);
+ assert.equal(rs.filter(r=>r[6]&1).length,4);assert.equal(rs.filter(r=>r[6]&2).length,16);
  assert.equal(rs.filter(r=>r[6]&4).length,23);assert.equal(rs.filter(r=>r[6]&8).length,42);
- assert.equal(data.metadata.quality.repeatedRecordExtras,12);assert.equal(data.metadata.sourceIssueCount,13878);
+ assert.equal(data.metadata.quality.repeatedRecordExtras,12);assert.equal(data.metadata.sourceIssueCount,13510);
  assert.doesNotMatch(fs.readFileSync('app/frmr-all-specialties.json','utf8'),/\b\d{11}\b|Фамилия|Дата рождения/iu);
 });
 test('FRMO computes distinct flagged rows instead of counting source group colors or row totals',()=>{
@@ -54,7 +54,7 @@ test('every FRMO OID flag is independently reproducible and overlapping reasons 
 });
 test('UI defaults to all specialties while isolating historical comparison and FRMO view',()=>{
  const ui=fs.readFileSync('app/frmr-reconciliation.tsx','utf8');
- assert.match(ui,/useState<"all" \| "legacy">\("all"\)/);assert.match(ui,/Все специальности · 29.10/);assert.match(ui,/Прежний перечень · архив/);assert.match(ui,/view === "linkage" \? <FrmoLinkage/);
- assert.match(ui,/Первая контрольная точка по всем специальностям/);assert.match(ui,/!isAll && <th>Δ<\/th>/);
+ assert.match(ui,/useState<"all" \| "legacy">\("all"\)/);assert.match(ui,/Все специальности ·/);assert.match(ui,/Прежний перечень · архив/);assert.match(ui,/view === "linkage" \? <FrmoLinkage/);
+ assert.match(ui,/Сравнение \{comparison.cut\}/);assert.match(ui,/<th>Δ<\/th>/);
  assert.doesNotMatch(ui,/\.filter\(.*role.*14/);
 });

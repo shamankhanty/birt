@@ -4,7 +4,8 @@ import { useMemo, useState } from "react";
 import legacyRaw from "./frmr-reconciliation-data.json";
 import allRaw from "./frmr-all-specialties.json";
 import spTypes from "./frmr-sp-types.json";
-import { frmrControlView } from "../lib/frmr-control";
+import previousControl from "./frmr-previous-control.json";
+import { compareFrmrControl, frmrControlView } from "../lib/frmr-control";
 import FrmoLinkage from "./frmo-linkage";
 import { applyFrmrScope } from "../lib/frmr-scope";
 const { data: scopedAll, excluded: scopeExcluded } = applyFrmrScope(allRaw, spTypes.types);
@@ -44,6 +45,7 @@ export default function FrmrReconciliation() {
   const [controlLevel, setControlLevel] = useState<"mo" | "department">("mo");
   const [spType, setSpType] = useState("");
   const controlData = useMemo(() => frmrControlView(scopedAll, controlLevel, spType, spTypes.types), [controlLevel, spType]);
+  const comparison = useMemo(() => compareFrmrControl(previousControl, controlData, controlLevel, spType), [controlData, controlLevel, spType]);
   const raw = isAll ? controlData.summary : legacyRaw;
   const departmentRaw = isAll ? controlData.departments : legacyDepartments;
   const last4Raw = isAll ? controlData.records : legacyRecords;
@@ -69,12 +71,12 @@ export default function FrmrReconciliation() {
   });
   const orgs: Org[] = (raw.rows as unknown as PositionRecord[]).map(
     ([id, name, feb, previous, current, stage1, stage2, positions, specialties]) =>
-      ({ id, name, feb, previous, current, stage1, stage2, positions, specialties }),
+      ({ id, name, feb, previous: isAll ? comparison.byMo[id] ?? null : previous, current, stage1, stage2, positions, specialties }),
   );
   const topSpecialties = raw.topSpecialties as unknown as SpecialityGroup[];
   const sortedOrgs = [...orgs].sort((a, b) => a.name.localeCompare(b.name, "ru"));
-  const cutShort = isAll ? "29.10" : "22.10";
-  const dateLabel = isAll ? "29.10.2026 · все специальности" : "22.10.2026 · архив прежнего перечня";
+  const cutShort = isAll ? allRaw.summary.sourceCut.slice(0,5) : "22.10";
+  const dateLabel = isAll ? allRaw.summary.sourceCut + " · все специальности" : "22.10.2026 · архив прежнего перечня";
   const [view, setView] = useState<"minister" | "organization" | "linkage">("minister");
   const [filter, setFilter] = useState<"all" | "worse" | "better" | "missing" | "zero">("all");
   const [sort, setSort] = useState<"count" | "worsening" | "improving" | "name">("count");
@@ -192,7 +194,7 @@ export default function FrmrReconciliation() {
       </section>
 
       <div className={styles.tabs} role="group" aria-label="Охват ФРМР">
-        <button className={[styles.tab, isAll ? styles.tabActive : ""].join(" ")} onClick={() => {setCoverage("all");setControlLevel("mo");setSpType("");setView("minister");setFilter("all");setSort("count");setSearch("");setMoQuery("");setSelectedId(null);resetInspection();}}>Все специальности · 29.10</button>
+        <button className={[styles.tab, isAll ? styles.tabActive : ""].join(" ")} onClick={() => {setCoverage("all");setControlLevel("mo");setSpType("");setView("minister");setFilter("all");setSort("count");setSearch("");setMoQuery("");setSelectedId(null);resetInspection();}}>Все специальности · {allRaw.summary.sourceCut.slice(0,5)}</button>
         <button className={[styles.tab, !isAll ? styles.tabActive : ""].join(" ")} onClick={() => {setCoverage("legacy");setSpType("");setView("minister");setFilter("all");setSort("count");setSearch("");setMoQuery("");setSelectedId(null);resetInspection();}}>Прежний перечень · архив</button>
       </div>
       <div className={styles.tabs} role="group" aria-label="Представление раздела">
@@ -219,17 +221,17 @@ export default function FrmrReconciliation() {
       {view === "linkage" ? <FrmoLinkage /> : view === "minister" ? (
         <>
           <div className={styles.stats}>
-            <article className={styles.stat}><span className={styles.statLabel}>{isAll ? (controlLevel === "mo" ? "Не найдены в МО" : "Привязки СП · справочно") : <>Расхождения на {cutShort}</>}</span><strong className={isAll && controlLevel === "department" ? styles.dark : styles.negative}>{number(currentTotal)}</strong><small>{isAll ? "должностных записей в выбранном перечне" : <>снижение на {number(previousTotal - currentTotal)} к 16.10</>}</small></article>
+            <article className={styles.stat}><span className={styles.statLabel}>{isAll ? (controlLevel === "mo" ? "Не найдены в МО" : "Привязки СП · справочно") : <>Расхождения на {cutShort}</>}</span><strong className={isAll && controlLevel === "department" ? styles.dark : styles.negative}>{number(currentTotal)}</strong><small>{isAll ? <>должностных записей в выбранном перечне{comparison.missingBaseline === 0 && <> · {signed(comparison.currentTotal-comparison.previousTotal)} к {comparison.cut.slice(0,5)}</>}</> : <>снижение на {number(previousTotal - currentTotal)} к 16.10</>}</small></article>
             <article className={styles.stat}><span className={styles.statLabel}>{isAll && controlLevel === "department" ? "МО со справочными записями" : "МО с расхождениями"}</span><strong>{affected} <span className={styles.muted}>/ {orgs.length}</span></strong><small>в проверяемом перечне</small></article>
             <article className={styles.stat}><span className={styles.statLabel}>{isAll ? "Наименований должностей" : "Улучшили / ухудшили"}</span><strong>{isAll ? number(topSpecialties.length) : <><span className={styles.positive}>{improvedCount}</span> / <span className={styles.negative}>{worsenedCount}</span></>}</strong><small>{isAll ? "в выбранном перечне" : "изменение числа записей к 16.10"}</small></article>
             <article className={styles.stat}><span className={styles.statLabel}>{isAll ? "Всего в исходной сверке" : "Снижение с февраля"}</span><strong>{number(isAll ? scopedAll.records.rows.length : febTotal - currentTotal)}</strong><small>{isAll ? "после согласованных исключений; два уровня отдельно" : <>{number(febTotal)} → {number(currentTotal)}</>}</small></article>
           </div>
-          {isAll && <details className={styles.qualityNote}><summary>Качество исходных записей и границы расчёта</summary><p>В исходнике 8 264 записи; после исключений в сверке — {number(scopedAll.records.rows.length)}. В выбранном режиме — {number(currentTotal)}. Ниже приведены признаки качества полного исходника. Дополнительные признаки не исключают записи автоматически и могут пересекаться: без корректного идентификатора — {allRaw.metadata.quality.missingIdentifier}; дата окончания работы наступила — {allRaw.metadata.quality.employmentEnded}; избыточных повторов по проверенным реквизитам — {allRaw.metadata.quality.repeatedRecordExtras}; нет служебной связи МО с ФРМО — {allRaw.metadata.quality.missingOrganizationLink}.</p><p>В исходнике 13 878 отдельных признаков расхождения; одна должностная запись может содержать несколько. Поэтому они не суммируются как число сотрудников. Ставки не оцениваются. Состав включает государственные и частные МО; ведомственная принадлежность не выводится из названия.</p></details>}
+          {isAll && <details className={styles.qualityNote}><summary>Качество исходных записей и границы расчёта</summary><p>В исходнике {number(allRaw.metadata.parsedRows)} записей с расхождениями; после исключений в сверке — {number(scopedAll.records.rows.length)}. В выбранном режиме — {number(currentTotal)}. Ниже приведены признаки качества полного исходника. Дополнительные признаки не исключают записи автоматически и могут пересекаться: без корректного идентификатора — {allRaw.metadata.quality.missingIdentifier}; дата окончания работы наступила — {allRaw.metadata.quality.employmentEnded}; избыточных повторов по проверенным реквизитам — {allRaw.metadata.quality.repeatedRecordExtras}; нет служебной связи МО с ФРМО — {allRaw.metadata.quality.missingOrganizationLink}.</p><p>В исходнике {number(allRaw.metadata.sourceIssueCount)} отдельных признаков расхождения; одна должностная запись может содержать несколько. Поэтому они не суммируются как число сотрудников. Ставки не оцениваются. Состав включает государственные и частные МО; ведомственная принадлежность не выводится из названия.</p></details>}
           <div className={styles.grid}>
             <section className={styles.panel}>
               <div className={styles.panelHead}><div><h2>{isAll ? (controlLevel === "mo" ? "Контроль на уровне МО" : "Справочная сверка СП") : "Динамика по республике"}</h2><span className={styles.muted}>{isAll ? "Все применимые специальности, включая единичные записи" : "Исторические точки только на датах, присутствующих в файле"}</span></div>{!isAll && <span className={styles.pill}>−{number(previousTotal - currentTotal)} за 6 дней</span>}</div>
-              {trendBars(isAll ? [["29.10", currentTotal]] : [["01.02", febTotal], ["16.10", previousTotal], ["22.10", currentTotal]])}
-              {isAll ? <p className={styles.muted}>Первая контрольная точка по всем специальностям — 29.10.2026, с учётом исключений из сверки. Уровни МО и СП показаны отдельно; это изменение представления, а не улучшение данных. Прежние 1 445 записей относятся к ограниченному перечню. Рост или снижение между этими охватами не рассчитывается.</p> : <div className={styles.legend}><span>От 16.10: <b>{signed(currentTotal - previousTotal)}</b></span><span>От 01.02: <b>{signed(currentTotal - febTotal)}</b></span></div>}
+              {trendBars(isAll ? [[comparison.cut.slice(0,5), comparison.previousTotal], [cutShort, comparison.currentTotal]] : [["01.02", febTotal], ["16.10", previousTotal], ["22.10", currentTotal]])}
+              {isAll ? <p className={styles.muted}>Сравнение {comparison.cut} → {raw.sourceCut}: {signed(comparison.currentTotal-comparison.previousTotal)} записей по {comparison.comparableOrganizations} сопоставимым МО. Одинаковые исключения, выбранный уровень и тип СП применены к обоим срезам. Изменение числа записей не доказывает исправление конкретных сотрудников. {comparison.missingBaseline > 0 && <>Без предыдущего среза: {comparison.missingBaseline} МО; они не включены в динамику.</>}</p> : <div className={styles.legend}><span>От 16.10: <b>{signed(currentTotal - previousTotal)}</b></span><span>От 01.02: <b>{signed(currentTotal - febTotal)}</b></span></div>}
             </section>
             <section className={styles.panel}>
               <h2>{isAll ? "Как читать результат" : "Причины расхождений"}</h2>
@@ -253,13 +255,13 @@ export default function FrmrReconciliation() {
             </div>
             <div className={styles.tableWrap}>
               <table className={styles.table}>
-                <thead><tr><th>Медицинская организация</th>{!isAll && <th>16.10</th>}<th>{isAll ? (controlLevel === "mo" ? "Не найдены в МО" : "Привязки СП · справочно") : cutShort}</th>{!isAll && <th>Δ</th>}{!isAll && <><th>Нет в МО</th><th>Не в СП</th></>}</tr></thead>
+                <thead><tr><th>Медицинская организация</th><th>{isAll ? comparison.cut.slice(0,5) : "16.10"}</th><th>{isAll ? (controlLevel === "mo" ? "Не найдены в МО" : "Привязки СП · справочно") : cutShort}</th><th>Δ</th>{!isAll && <><th>Нет в МО</th><th>Не в СП</th></>}</tr></thead>
                 <tbody>{filtered.map((row) => {
                   const delta = change(row);
                   return <tr key={row.id}>
                     <td><button type="button" className={styles.clickName} onClick={() => {selectOrganization(row.id);setView("organization");}}>{row.name}</button></td>
-                    {!isAll && <td>{number(row.previous)}</td>}<td><b>{number(row.current)}</b></td>
-                    {!isAll && <td className={[styles.delta,delta === null || delta === 0 ? styles.stable : delta > 0 ? styles.bad : styles.good].join(" ")}>{signed(delta)}</td>}
+                    <td>{number(row.previous)}</td><td><b>{number(row.current)}</b></td>
+                    <td className={[styles.delta,delta === null || delta === 0 ? styles.stable : delta > 0 ? styles.bad : styles.good].join(" ")}>{signed(delta)}</td>
                     {!isAll && <><td>{number(row.stage1)}</td><td>{number(row.stage2)}</td></>}
                   </tr>;
                 })}</tbody>
@@ -462,8 +464,8 @@ export default function FrmrReconciliation() {
           <div className={styles.grid}>
             <section className={styles.panel}>
               <h2>{isAll ? "Срез выбранной МО" : "Динамика выбранной МО"}</h2>
-              {trendBars(isAll ? [["29.10",selected.current]] : [["01.02",selected.feb??0],["16.10",selected.previous??0],["22.10",selected.current]])}
-              <p className={styles.muted}>{isAll ? "Динамика появится после следующего сопоставимого полного среза." : "Даты — контрольные точки из исходного файла. Сравнение не означает автоматически улучшение доступности записи."}</p>
+              {trendBars(isAll ? [...(selected.previous === null ? [] : [[comparison.cut.slice(0,5),selected.previous] as [string,number]]), [cutShort,selected.current]] : [["01.02",selected.feb??0],["16.10",selected.previous??0],["22.10",selected.current]])}
+              <p className={styles.muted}>{isAll ? `Сравнение ${comparison.cut} → ${raw.sourceCut}: ${signed(change(selected))} записей. Те же исключения, уровень и тип СП. Отсутствие предыдущего среза обозначается «—».` : "Даты — контрольные точки из исходного файла. Сравнение не означает автоматически улучшение доступности записи."}</p>
               <h2 style={{marginTop:24}}>Распределение по должностям</h2>
               <p className={styles.muted}>{isAll ? "Показаны все должности с расхождениями, включая единичные группы." : "Архив: показаны группы с тремя и более записями."}</p>
               {selected.specialties.length ? selected.specialties.map(([name,count])=><div className={styles.spec} key={name}><span>{name.replace(/^- /,"")}</span><strong>{count}</strong></div>) : <p className={styles.muted}>{isAll ? "Должностей с расхождениями в представленном списке нет." : "Групп из трёх и более однотипных расхождений не выявлено."}</p>}
@@ -484,7 +486,7 @@ export default function FrmrReconciliation() {
         </>
       )}
       <div className={styles.footnote}>
-        Источник: {raw.source}. {isAll ? "Представлен список проблемных записей по всем специальностям; общая численность кадровых записей для расчёта доли ошибок отсутствует." : "Архив: проверено 7 279 должностных записей."} Мониторинг {orgs.length} МО.
+        Источник: {raw.source}. {isAll ? "Представлен список проблемных записей по всем специальностям; полнота общего кадрового состава для расчёта доли ошибок отдельно не подтверждена." : "Архив: проверено 7 279 должностных записей."} Мониторинг {orgs.length} МО.
         Сверка выполнена только в направлении ФРМР → ГИС. Обратная сверка и причинная связь с инцидентом № 38 пока не подтверждены.
         Раздел экспериментальный: текущие результаты не следует использовать для санкций или формального рейтинга МО.
       </div>

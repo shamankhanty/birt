@@ -1,1 +1,2 @@
 export function frmrControlView<T>(source: T, level?: 'mo' | 'department', type?: string, types?: Record<string,string>): T;
+export function compareFrmrControl(previous: {cut: string; organizations: string[]; rows: (string | number)[][]}, current: {summary: {rows: unknown[][]}}, level?: 'mo' | 'department', type?: string): {cut: string; byMo: Record<string,number|null>; comparableOrganizations: number; missingBaseline: number; previousTotal: number; currentTotal: number};
