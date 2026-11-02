@@ -1,10 +1,11 @@
+// Dated source regression: exact accepted pre-November bytes; live October checks are in update-20261102.test.mjs.
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import crypto from 'node:crypto';
 const read=p=>JSON.parse(fs.readFileSync(p,'utf8'));
 const evidence=read('docs/update-20261029-evidence.json');
-const mo=read('app/mo-data.json');
+const mo=read('baseline/archive/before-20261102/app/mo-data.json');
 
 test('29 October archive covers 21 sources and 32 successfully staged indicators',()=>{
  assert.equal(Object.keys(evidence.sourceFiles).length,21);
@@ -19,14 +20,14 @@ test('latest cumulative source components keep their exact source cuts',()=>{
  }
 });
 test('weekly and cumulative REMD errors share a cutoff but remain independent',()=>{
- const w=read('app/error-categories.json'),c=read('app/error-cumulative.json');
+ const w=read('baseline/archive/before-20261102/app/error-categories.json'),c=read('baseline/archive/before-20261102/app/error-cumulative.json');
  assert.deepEqual([w.period,w.total],['22.10.2026–28.10.2026',86839]);
  assert.deepEqual([c.period,c.total],['01.01.2026–28.10.2026',14216686]);
- assert.equal(read('app/error-organizations.json').totalErrors,w.total);
+ assert.equal(read('baseline/archive/before-20261102/app/error-organizations.json').totalErrors,w.total);
  assert.equal(c.organizationBreakdown.totalErrors,c.total);
  assert.ok(evidence.qualityWarnings.some(x=>x.metric==='remdErrorsCumulative'));
 });
 test('full-month ratings stay preserved and prior waybill evidence remains archived',()=>{
- for(const [path,expected]of Object.entries(evidence.preservedFiles))assert.equal(crypto.createHash('sha256').update(fs.readFileSync(path==='app/electronic-waybill-weekly.json'?'baseline/archive/electronic-waybill-before-20261101.json':path)).digest('hex'),expected,path);
- assert.equal(read('app/physician-metrics.json').datasets.doctorsAll.period,'сентябрь 2026');
+ for(const [path,expected]of Object.entries(evidence.preservedFiles))assert.equal(crypto.createHash('sha256').update(fs.readFileSync(path==='app/electronic-waybill-weekly.json'?'baseline/archive/electronic-waybill-before-20261101.json':(path.startsWith('app/') && !path.includes('electronic-waybill') ? 'baseline/archive/before-20261102/'+path : path))).digest('hex'),expected,path);
+ assert.equal(read('baseline/archive/before-20261102/app/physician-metrics.json').datasets.doctorsAll.period,'сентябрь 2026');
 });

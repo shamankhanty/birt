@@ -3,10 +3,6 @@
   "createdAt": "2026-11-02",
   "rating": "mixed-coverage-not-approved",
   "closedMonthly": [
-    "egpu",
-    "egpu2days",
-    "hospital",
-    "birth",
     "tmkMaxCount",
     "elnMaxCount",
     "tvspStationary",
@@ -33,7 +29,11 @@
   "operationalOnly": [
     "shortInput",
     "shortInputAmb",
-    "shortInputHosp"
+    "shortInputHosp",
+    "egpu",
+    "egpu2days",
+    "hospital",
+    "birth"
   ],
   "methodology": {
     "monthly": "Only verified complete October cut; cumulative indicators show October closing snapshot, not October-only flow",
@@ -106,5 +106,7 @@
     "cumulativeTmkPlan": 177000,
     "cumulativeElnPlan": 90000,
     "factStatus": "not_provided"
-  }
+  },
+  "ratingStatus": "deferred",
+  "publishedRatingMonth": "2026-09"
 }

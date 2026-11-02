@@ -1,19 +1,20 @@
+// Dated source regression: exact accepted pre-November bytes; live October checks are in update-20261102.test.mjs.
 import test from "node:test";
 import assert from "node:assert/strict";
 import fs from "node:fs";
 
 const read = (name) => JSON.parse(fs.readFileSync(name, "utf8"));
-const mo = read("app/mo-data.json");
-const operational = read("app/operational-mo.json");
-const status = read("app/organization-status.json");
+const mo = read("baseline/archive/before-20261102/app/mo-data.json");
+const operational = read("baseline/archive/before-20261102/app/operational-mo.json");
+const status = read("baseline/archive/before-20261102/app/organization-status.json");
 const preventive = read("app/preventive-semd-audit.json");
-const units = read("app/unit-data.json");
-const weeklyErrors = read("app/error-categories.json");
-const cumulativeErrors = read("app/error-cumulative.json");
-const physicians = read("app/physician-weekly-snapshot.json");
-const monthly = read("app/monthly-mo.json");
-const maxViews = read("app/max-period-views.json");
-const semd = read("app/semd-summary.json");
+const units = read("baseline/archive/before-20261102/app/unit-data.json");
+const weeklyErrors = read("baseline/archive/before-20261102/app/error-categories.json");
+const cumulativeErrors = read("baseline/archive/before-20261102/app/error-cumulative.json");
+const physicians = read("baseline/archive/before-20261102/app/physician-weekly-snapshot.json");
+const monthly = read("baseline/archive/before-20261102/app/monthly-mo.json");
+const maxViews = read("baseline/archive/before-20261102/app/max-period-views.json");
+const semd = read("baseline/archive/before-20261102/app/semd-summary.json");
 const evidence = read("docs/update-20261025-evidence.json");
 
 test("25 October ZIP is inventoried and absent sources are retained", () => {

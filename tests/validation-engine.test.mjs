@@ -19,18 +19,18 @@ const base = Object.freeze({
 const cloneInput = () => structuredClone(base);
 const check = (report, id) => report.checks.find((item) => item.id === id);
 
-test("accepted current baseline is all PASS and sends nothing to AI", () => {
+test("accepted current baseline has no blocking errors and preserves reviewed source warnings", () => {
   const report = validateDashboard(base);
   assert.ok(["PASS", "WARNING"].includes(report.overallStatus));
   assert.equal(report.summary.FAIL, 0);
   assert.equal(report.summary.blocking, 0);
   assert.ok(report.summary.PASS + report.summary.WARNING === 16);
-  assert.equal(check(report, "data.spassk_legacy_context_review").status, "WARNING");
-  assert.ok(check(report, "data.spassk_legacy_context_review").issues.length > 0);
+  assert.equal(check(report, "data.spassk_legacy_context_review").status, "PASS");
+  assert.equal(check(report, "data.spassk_legacy_context_review").issues.length, 0);
   assert.ok(report.summary.WARNING >= 0);
   assert.equal(createAiReviewQueue(report).reviewCount, 0);
-  assert.equal(report.reportingPeriod.latestFullMonth, "сентябрь 2026");
-  assert.equal(report.reportingPeriod.previousFullMonth, "август 2026");
+  assert.equal(report.reportingPeriod.latestFullMonth, "октябрь 2026");
+  assert.equal(report.reportingPeriod.previousFullMonth, "сентябрь 2026");
 });
 
 test("source plan drift from the canonical registry is a methodological FAIL", () => {

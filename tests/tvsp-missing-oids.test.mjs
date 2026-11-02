@@ -1,8 +1,9 @@
+// Dated source regression: exact accepted pre-November bytes; live October checks are in update-20261102.test.mjs.
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import crypto from 'node:crypto';
-const data=JSON.parse(fs.readFileSync(new URL('../app/unit-data.json',import.meta.url)));
+const data=JSON.parse(fs.readFileSync(new URL('../baseline/archive/before-20261102/app/unit-data.json',import.meta.url)));
 test('nontransmitting OIDs match mandatory count minus passing count for every detailed object',()=>{
   for(const[id,total]of [['tvspAmbulatory',79],['tvspStationary',112],['tvspLaboratory',0]]){
     let count=0;

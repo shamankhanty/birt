@@ -1,3 +1,4 @@
+// Dated source regression: exact accepted pre-November bytes; live October checks are in update-20261102.test.mjs.
 import test from "node:test";
 import assert from "node:assert/strict";
 import fs from "node:fs";
@@ -9,11 +10,11 @@ import {
   resolveReportingPeriods,
 } from "../lib/period-engine.js";
 
-const monthlyRaw = JSON.parse(fs.readFileSync("app/monthly-mo.json", "utf8"));
-const moRaw = JSON.parse(fs.readFileSync("app/mo-data.json", "utf8"));
-const operational = JSON.parse(fs.readFileSync("app/operational-mo.json", "utf8"));
-const status = JSON.parse(fs.readFileSync("app/organization-status.json", "utf8"));
-const physicians = JSON.parse(fs.readFileSync("app/physician-metrics.json", "utf8"));
+const monthlyRaw = JSON.parse(fs.readFileSync("baseline/archive/before-20261102/app/monthly-mo.json", "utf8"));
+const moRaw = JSON.parse(fs.readFileSync("baseline/archive/before-20261102/app/mo-data.json", "utf8"));
+const operational = JSON.parse(fs.readFileSync("baseline/archive/before-20261102/app/operational-mo.json", "utf8"));
+const status = JSON.parse(fs.readFileSync("baseline/archive/before-20261102/app/organization-status.json", "utf8"));
+const physicians = JSON.parse(fs.readFileSync("baseline/archive/before-20261102/app/physician-metrics.json", "utf8"));
 const registry = JSON.parse(fs.readFileSync("config/indicator-registry.json", "utf8"));
 const page = fs.readFileSync("app/page.tsx", "utf8");
 

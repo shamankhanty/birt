@@ -58,7 +58,11 @@
       "family": "tvsp_laboratory",
       "status": "PASS",
       "sourceStart": "2026-01-01",
-      "sourceEnd": "2026-11-02"
+      "sourceEnd": "2026-10-31",
+      "originalDetectedPeriod": [
+        "2026-01-01",
+        "2026-11-02"
+      ]
     },
     {
       "file": "Отчет_Доля_ТВСП_СЭМД_Эпикр по законч случаю амбулат_Талон амбулат пациента и Протокол консульт 01.01-31.10(Выгрузка из BI 02.11.).xlsx",
@@ -66,7 +70,11 @@
       "family": "tvsp_ambulatory",
       "status": "PASS",
       "sourceStart": "2026-01-01",
-      "sourceEnd": "2026-11-02"
+      "sourceEnd": "2026-10-31",
+      "originalDetectedPeriod": [
+        "2026-01-01",
+        "2026-11-02"
+      ]
     },
     {
       "file": "Отчет_Доля_ТВСП_СЭМД_Эпикриз_в_стационаре_выписной_или_Выписной 01.01.-31.10.(Выгрузка из BI 02.11.).xlsx",
@@ -74,7 +82,11 @@
       "family": "tvsp_stationary",
       "status": "PASS",
       "sourceStart": "2026-01-01",
-      "sourceEnd": "2026-11-02"
+      "sourceEnd": "2026-10-31",
+      "originalDetectedPeriod": [
+        "2026-01-01",
+        "2026-11-02"
+      ]
     },
     {
       "file": "Отчет_СМП_ТВСП 01.01.-31.10. (Выгрузка из BI 02.11.).xlsx",
@@ -137,8 +149,12 @@
       "sha256": "fdad6af8177bf3b47132d65a3abe7b2f41cb265e33649e0725afa36dcadcc23b",
       "family": "physicians",
       "status": "PASS",
-      "sourceStart": "2026-11-01",
-      "sourceEnd": "2026-10-31"
+      "sourceStart": "2026-10-01",
+      "sourceEnd": "2026-10-31",
+      "originalDetectedPeriod": [
+        "2026-11-01",
+        "2026-10-31"
+      ]
     },
     {
       "file": "ПР_2_Кол-во заявл на прикр. от ЕГПУ за период. ИП ООГУЗ. Обраб. 2 раб.дн. 01.01.-31.10.(Выгрузка из ГИС 02.11.).xlsx",
@@ -186,7 +202,7 @@
     "cumulative": "01.01–31.10.2026 where specified",
     "operational": "shortInput remains 01.01–28.10.2026",
     "doNotChangeSourceCounts": true,
-    "nonfinalOctoberRating": "September v2 remains frozen; October has mixed coverage and is not a complete approved official rating",
+    "nonfinalOctoberRating": "Октябрьский рейтинг отложен. Обе опубликованные версии сентябрьского рейтинга неизменны.",
     "novemberMax": "October MAX TMK+ELN frozen, November planned but fact absent; October appointment source only 12 Oct and cannot be closed",
     "tvsp": "Full cumulative through 31 October is a closed October point, not a count of October-only events",
     "publicationAllowed": false
@@ -194,7 +210,7 @@
   "staging": {
     "state": "PARTIAL",
     "publicationAllowedByAutomatedGate": false,
-    "reason": "Legacy historical calculation-replay differs from approved October data; PR requires reconciliation and green regression",
+    "reason": "50 independent source checks passed; standard transactional promotion validated calculation changes for prepared indicators only; awaiting full CI",
     "prepared": 32,
     "retained": 3,
     "missing": 1,
@@ -232,14 +248,14 @@
     {
       "path": "app/error-cumulative.json",
       "baselineSha256": "c9eb03f1244c917214918a905aa90b635542d112c04a8eef3aff38620f13b051",
-      "candidateSha256": "f0b8dcb257de4c0bca2433e1fe2f9e1db4a39ea01b1fee87996ede4de6d5139d",
-      "bytes": 867407
+      "candidateSha256": "960ccd9b67bc2dd5b1346972ef8c977ac0be48e8667bc259cba75af38872a505",
+      "bytes": 867405
     },
     {
       "path": "app/error-organizations.json",
       "baselineSha256": "a0a9a30c0cd5dd038d2ea0e12f060e7c721089f5551270986e416cd0dbc29c40",
-      "candidateSha256": "4448112438ae07259613089af44d130e292c9bb23a22e6a829cdcbce5052f740",
-      "bytes": 308186
+      "candidateSha256": "894c6633c80a5ea84b6c42d00a5b994103d7ce841dc87583c9b78a69d099c993",
+      "bytes": 308184
     },
     {
       "path": "app/federal-control.json",
@@ -250,32 +266,32 @@
     {
       "path": "app/max-period-views.json",
       "baselineSha256": "605a6f0510c9bd43da9c5b801c90548bf7a1a8f1edb5e29a55332a4bc1f6ce4a",
-      "candidateSha256": "3dbbaa139ed70656c07bb26a530a994841f3378ea0d2491d7ea6b44e4268e2f1",
-      "bytes": 80883
+      "candidateSha256": "7e793169dc17b361026e29261bfe4569c4b155060aaf5ffc77bbfbcec63c3706",
+      "bytes": 172129
     },
     {
       "path": "app/mo-data.json",
       "baselineSha256": "53b3ccfb6ea3d2457670507a32eeadcf5553805b3b78bfd12cf2f543519a92d6",
-      "candidateSha256": "31b46cbdccdc3d829e4159be93b4b71cd521450f72895fed757de637132d7e4e",
-      "bytes": 304833
+      "candidateSha256": "ada129152e18f1090d72b63266251314d96235db98b2a6af1ea520623ce63524",
+      "bytes": 302728
     },
     {
       "path": "app/mo-detail-oids.json",
       "baselineSha256": "f0595094b7e07f5fb03f9c4ab5f80325c96b9a70e4cc132da6edfe743b1dcfff",
-      "candidateSha256": "877c56c71a36c9a0cc49ae8b5e4591bf856f3a734e0dc6dd099467c08c5a764d",
+      "candidateSha256": "f4310d523ba6c5798242fcbcfdefd69940b9bcaa13717beaf6f819a515574a4d",
       "bytes": 94616
     },
     {
       "path": "app/mo-details.json",
       "baselineSha256": "fcf262088ef04d93020eb2467a4b8e4039919463f71450a6c03e82fdb525d398",
-      "candidateSha256": "bfdd3c4049f5df52308c373230a8709b1f1747eb468d5af87682f5c902160471",
-      "bytes": 126951
+      "candidateSha256": "5d407ed973ad71820f312fe7b60bf1ca2e7388d92a6b1ba4e64b73470eecb4ae",
+      "bytes": 126869
     },
     {
       "path": "app/monthly-mo.json",
       "baselineSha256": "25949c7f3ad4078f66495484e39e10920f81a06bf73cc1cd2c0068023524c0f7",
-      "candidateSha256": "1a77214417f3c228a22cfedc8d6f65d22a20c62871431be3f617c3b2c700bd6f",
-      "bytes": 647641
+      "candidateSha256": "aa69322d5640c6afddc6040f1d1d165b645d0284ae794ceefaf85f7b8e3a9f2f",
+      "bytes": 600799
     },
     {
       "path": "app/operational-mo.json",
@@ -286,20 +302,20 @@
     {
       "path": "app/organization-status.json",
       "baselineSha256": "80078de8873f6bdcb64d4ea3bc9e50f8b81453511d78b90d2940f90413f4e6a0",
-      "candidateSha256": "daf8596f8041a46d23eded93d6b186cb92753549407d88c6ec1f504fc1060c8d",
-      "bytes": 25676
+      "candidateSha256": "cc4b9c14c1f603d55e567204ebac8789c68b579e729ac295d5089ae8a8406a09",
+      "bytes": 25672
     },
     {
       "path": "app/physician-metrics.json",
       "baselineSha256": "067031ce2e09b4d294dea05eade28e0b21baae789408b9964edad5f21fb9a93a",
-      "candidateSha256": "12d908b462466fc00858323fa4376877a564d817bdd4b33d894cc5ac2f387ad5",
-      "bytes": 807090
+      "candidateSha256": "2eeee2b03d16c01457de3d2da146ff45d6a5e75fecaa9f0cf2d72abfe7c9e8ab",
+      "bytes": 803876
     },
     {
       "path": "app/physician-weekly-snapshot.json",
       "baselineSha256": "5af344298b4b0c6c860ffd62b0ea6c3610627d9d60d9b4a74f9b6b4418d29b15",
-      "candidateSha256": "d0c161ee51d0d1e5a020f3508ed8c5dec61ce2d0cdc0ed5f234b62d85ab9948c",
-      "bytes": 1285466
+      "candidateSha256": "17df6ab49898f5d8537164dc03c1cc89f6a83c83a1ff1a9dd10b953eee0f78cd",
+      "bytes": 1361317
     },
     {
       "path": "app/physician500-audit.json",
@@ -322,7 +338,7 @@
   ],
   "notices": [
     "Unresolved private/external MO in full-source data remain unranked; no fabricated OID",
-    "Two historical MAX OID 1110 missing from the new monthly inputs; no zeros substituted",
+    "Historical MAX OID 1110 missing in both services from the new monthly inputs; no zeros substituted",
     "Five above-100 source ratios retained as warnings, not capped",
     "Three TVSP files end 31.10; 02.11 is export date",
     "Physician monthly period 01.10–31.10; erroneous 01.11–31.10 corrected",
@@ -339,9 +355,13 @@
     "maxElnCumulative": 55268,
     "maxTmkOctober": 15573,
     "maxElnOctober": 12498,
-    "semdRegisteredTotal": 84817652
+    "semdRegisteredTotal": 84817652,
+    "smpNumerator": 751012,
+    "smpDenominator": 792234,
+    "physiciansNumerator": 11220,
+    "physiciansDenominator": 13691
   },
-  "publicationState": "STAGING ONLY",
+  "publicationState": "VERIFIED CANDIDATE; pending full CI",
   "maxOctoberArchive": {
     "sourceEnd": "31.10.2026",
     "tmk": 15573,
@@ -366,10 +386,6 @@
     "appointmentNovemberPlan": "not_verified"
   },
   "monthlyCompletedIndicators": [
-    "egpu",
-    "egpu2days",
-    "hospital",
-    "birth",
     "tmkMaxCount",
     "elnMaxCount",
     "tvspStationary",
@@ -377,7 +393,16 @@
     "tvspLaboratory",
     "tvspDiagnostic",
     "doctorsAll",
-    "doctorsLevel3"
+    "doctorsLevel3",
+    "doctor500_obgyn",
+    "doctor500_gp",
+    "doctor500_cardiologist",
+    "doctor500_oncologist",
+    "doctor500_ophthalmologist",
+    "doctor500_pediatrician",
+    "doctor500_dentist",
+    "doctor500_therapist",
+    "doctor500_surgeon"
   ],
   "retainedIndicators": [
     "semd228",
@@ -388,5 +413,550 @@
     "shortInput",
     "shortInputAmb",
     "shortInputHosp"
-  ]
+  ],
+  "independentAudit": "docs/update-20261102-independent-audit.json",
+  "corrections": [
+    "SMP: included first organization Agriz; 751012/792234, 43 MO, matches source grand total",
+    "Physicians: replaced stale operational values, preserved actual previous 28 October cut; current 11220/13691",
+    "MAX monthly: 15573 TMK and 12498 ELN from standalone October; September monthly comparison unavailable, not cumulative substitute",
+    "Hospital: grouped two department rows under OID 15115; cases 175+522=697, no duplicate legal MO",
+    "EGPU/birth/hospital cumulative sources stay operational; standalone monthly history retained"
+  ],
+  "ratingDecision": "Defer October rating under user instruction; keep September v1/v2 data and titles",
+  "sourceControlWarnings": [
+    "Bugulma hospital: source numerator exceeds cases (101.69915297479335%); retained as source anomaly",
+    "RKB/Spassk legacy context rows remain auditable; no new branch remapping",
+    "Missing new source rows remain null"
+  ],
+  "baselineHistory": "baseline/archive/before-20261102",
+  "calculationReview": [
+    {
+      "id": "birth",
+      "field": "fact",
+      "expected": 99.87206020696144,
+      "actual": 99.87702627166014
+    },
+    {
+      "id": "birth",
+      "field": "date",
+      "expected": "28.10.2026",
+      "actual": "31.10.2026"
+    },
+    {
+      "id": "birth",
+      "field": "quantity",
+      "expected": 26541,
+      "actual": 26802
+    },
+    {
+      "id": "doctor500_cardiologist",
+      "field": "fact",
+      "expected": 56.310679611650485,
+      "actual": 58.21596244131455
+    },
+    {
+      "id": "doctor500_cardiologist",
+      "field": "date",
+      "expected": "30.09.2026",
+      "actual": "31.10.2026"
+    },
+    {
+      "id": "doctor500_cardiologist",
+      "field": "quantity",
+      "expected": 116,
+      "actual": 124
+    },
+    {
+      "id": "doctor500_dentist",
+      "field": "fact",
+      "expected": 23.31288343558282,
+      "actual": 57.02054794520548
+    },
+    {
+      "id": "doctor500_dentist",
+      "field": "date",
+      "expected": "30.09.2026",
+      "actual": "31.10.2026"
+    },
+    {
+      "id": "doctor500_dentist",
+      "field": "quantity",
+      "expected": 152,
+      "actual": 333
+    },
+    {
+      "id": "doctor500_gp",
+      "field": "fact",
+      "expected": 87.08609271523179,
+      "actual": 85.09933774834437
+    },
+    {
+      "id": "doctor500_gp",
+      "field": "date",
+      "expected": "30.09.2026",
+      "actual": "31.10.2026"
+    },
+    {
+      "id": "doctor500_gp",
+      "field": "quantity",
+      "expected": 263,
+      "actual": 257
+    },
+    {
+      "id": "doctor500_obgyn",
+      "field": "fact",
+      "expected": 57.6271186440678,
+      "actual": 66.11374407582939
+    },
+    {
+      "id": "doctor500_obgyn",
+      "field": "date",
+      "expected": "30.09.2026",
+      "actual": "31.10.2026"
+    },
+    {
+      "id": "doctor500_obgyn",
+      "field": "quantity",
+      "expected": 238,
+      "actual": 279
+    },
+    {
+      "id": "doctor500_oncologist",
+      "field": "fact",
+      "expected": 62.06896551724138,
+      "actual": 65.23605150214593
+    },
+    {
+      "id": "doctor500_oncologist",
+      "field": "date",
+      "expected": "30.09.2026",
+      "actual": "31.10.2026"
+    },
+    {
+      "id": "doctor500_oncologist",
+      "field": "quantity",
+      "expected": 144,
+      "actual": 152
+    },
+    {
+      "id": "doctor500_ophthalmologist",
+      "field": "fact",
+      "expected": 50.85470085470085,
+      "actual": 61.440677966101696
+    },
+    {
+      "id": "doctor500_ophthalmologist",
+      "field": "date",
+      "expected": "30.09.2026",
+      "actual": "31.10.2026"
+    },
+    {
+      "id": "doctor500_ophthalmologist",
+      "field": "quantity",
+      "expected": 119,
+      "actual": 145
+    },
+    {
+      "id": "doctor500_pediatrician",
+      "field": "fact",
+      "expected": 61.385408990420046,
+      "actual": 69.08424908424908
+    },
+    {
+      "id": "doctor500_pediatrician",
+      "field": "date",
+      "expected": "30.09.2026",
+      "actual": "31.10.2026"
+    },
+    {
+      "id": "doctor500_pediatrician",
+      "field": "quantity",
+      "expected": 833,
+      "actual": 943
+    },
+    {
+      "id": "doctor500_surgeon",
+      "field": "fact",
+      "expected": 49.458483754512635,
+      "actual": 61.56583629893239
+    },
+    {
+      "id": "doctor500_surgeon",
+      "field": "date",
+      "expected": "30.09.2026",
+      "actual": "31.10.2026"
+    },
+    {
+      "id": "doctor500_surgeon",
+      "field": "quantity",
+      "expected": 137,
+      "actual": 173
+    },
+    {
+      "id": "doctor500_therapist",
+      "field": "fact",
+      "expected": 62.121212121212125,
+      "actual": 66.31799163179917
+    },
+    {
+      "id": "doctor500_therapist",
+      "field": "date",
+      "expected": "30.09.2026",
+      "actual": "31.10.2026"
+    },
+    {
+      "id": "doctor500_therapist",
+      "field": "quantity",
+      "expected": 861,
+      "actual": 951
+    },
+    {
+      "id": "doctorsAll",
+      "field": "fact",
+      "expected": 78.8214443952149,
+      "actual": 81.95164706741656
+    },
+    {
+      "id": "doctorsAll",
+      "field": "date",
+      "expected": "30.09.2026",
+      "actual": "31.10.2026"
+    },
+    {
+      "id": "doctorsAll",
+      "field": "quantity",
+      "expected": 10674,
+      "actual": 11220
+    },
+    {
+      "id": "doctorsLevel3",
+      "field": "fact",
+      "expected": 78.94080996884735,
+      "actual": 83.5683629675046
+    },
+    {
+      "id": "doctorsLevel3",
+      "field": "date",
+      "expected": "30.09.2026",
+      "actual": "31.10.2026"
+    },
+    {
+      "id": "doctorsLevel3",
+      "field": "quantity",
+      "expected": 3801,
+      "actual": 4089
+    },
+    {
+      "id": "egpu",
+      "field": "fact",
+      "expected": 98.91896843937519,
+      "actual": 98.90077711453993
+    },
+    {
+      "id": "egpu",
+      "field": "date",
+      "expected": "28.10.2026",
+      "actual": "31.10.2026"
+    },
+    {
+      "id": "egpu",
+      "field": "quantity",
+      "expected": 43190,
+      "actual": 43907
+    },
+    {
+      "id": "egpu2days",
+      "field": "fact",
+      "expected": 84.56781640786039,
+      "actual": 84.75278747606713
+    },
+    {
+      "id": "egpu2days",
+      "field": "date",
+      "expected": "28.10.2026",
+      "actual": "31.10.2026"
+    },
+    {
+      "id": "egpu2days",
+      "field": "quantity",
+      "expected": 36924,
+      "actual": 37626
+    },
+    {
+      "id": "elmk",
+      "field": "date",
+      "expected": "28.10.2026",
+      "actual": "31.10.2026"
+    },
+    {
+      "id": "elnMaxCount",
+      "field": "fact",
+      "expected": 54134,
+      "actual": 55268
+    },
+    {
+      "id": "elnMaxCount",
+      "field": "date",
+      "expected": "28.10.2026",
+      "actual": "31.10.2026"
+    },
+    {
+      "id": "elnMaxCount",
+      "field": "previous",
+      "expected": 52716,
+      "actual": 54134
+    },
+    {
+      "id": "elnMaxCount",
+      "field": "trend",
+      "expected": 1418,
+      "actual": 1134
+    },
+    {
+      "id": "elnMaxCount",
+      "field": "quantity",
+      "expected": 54134,
+      "actual": 55268
+    },
+    {
+      "id": "fapSemdCount",
+      "field": "fact",
+      "expected": 3687991,
+      "actual": 3755268
+    },
+    {
+      "id": "fapSemdCount",
+      "field": "date",
+      "expected": "27.10.2026",
+      "actual": "31.10.2026"
+    },
+    {
+      "id": "fapSemdCount",
+      "field": "previous",
+      "expected": 7079135,
+      "actual": 3687991
+    },
+    {
+      "id": "fapSemdCount",
+      "field": "trend",
+      "expected": -3391144,
+      "actual": 67277
+    },
+    {
+      "id": "fapSemdCount",
+      "field": "quantity",
+      "expected": 3687991,
+      "actual": 3755268
+    },
+    {
+      "id": "hospital",
+      "field": "fact",
+      "expected": 91.25529645603989,
+      "actual": 92.38559906155554
+    },
+    {
+      "id": "hospital",
+      "field": "date",
+      "expected": "27.10.2026",
+      "actual": "31.10.2026"
+    },
+    {
+      "id": "hospital",
+      "field": "quantity",
+      "expected": 721270,
+      "actual": 741885
+    },
+    {
+      "id": "hospitalCount",
+      "field": "fact",
+      "expected": 790006,
+      "actual": 802637
+    },
+    {
+      "id": "hospitalCount",
+      "field": "date",
+      "expected": "27.10.2026",
+      "actual": "31.10.2026"
+    },
+    {
+      "id": "hospitalCount",
+      "field": "previous",
+      "expected": 781683,
+      "actual": 790006
+    },
+    {
+      "id": "hospitalCount",
+      "field": "trend",
+      "expected": 8323,
+      "actual": 12631
+    },
+    {
+      "id": "hospitalCount",
+      "field": "quantity",
+      "expected": 790006,
+      "actual": 802637
+    },
+    {
+      "id": "shortInput",
+      "field": "fact",
+      "expected": 814274,
+      "actual": 829062
+    },
+    {
+      "id": "shortInput",
+      "field": "date",
+      "expected": "25.10.2026",
+      "actual": "28.10.2026"
+    },
+    {
+      "id": "shortInput",
+      "field": "previous",
+      "expected": 807194,
+      "actual": 814274
+    },
+    {
+      "id": "shortInput",
+      "field": "trend",
+      "expected": 7080,
+      "actual": 14788
+    },
+    {
+      "id": "shortInput",
+      "field": "quantity",
+      "expected": 814274,
+      "actual": 829062
+    },
+    {
+      "id": "shortInputAmb",
+      "field": "fact",
+      "expected": 805502,
+      "actual": 820154
+    },
+    {
+      "id": "shortInputAmb",
+      "field": "date",
+      "expected": "25.10.2026",
+      "actual": "28.10.2026"
+    },
+    {
+      "id": "shortInputAmb",
+      "field": "previous",
+      "expected": 798456,
+      "actual": 805502
+    },
+    {
+      "id": "shortInputAmb",
+      "field": "trend",
+      "expected": 7046,
+      "actual": 14652
+    },
+    {
+      "id": "shortInputAmb",
+      "field": "quantity",
+      "expected": 805502,
+      "actual": 820154
+    },
+    {
+      "id": "shortInputHosp",
+      "field": "fact",
+      "expected": 8772,
+      "actual": 8908
+    },
+    {
+      "id": "shortInputHosp",
+      "field": "date",
+      "expected": "25.10.2026",
+      "actual": "28.10.2026"
+    },
+    {
+      "id": "shortInputHosp",
+      "field": "previous",
+      "expected": 8738,
+      "actual": 8772
+    },
+    {
+      "id": "shortInputHosp",
+      "field": "trend",
+      "expected": 34,
+      "actual": 136
+    },
+    {
+      "id": "shortInputHosp",
+      "field": "quantity",
+      "expected": 8772,
+      "actual": 8908
+    },
+    {
+      "id": "smp",
+      "field": "fact",
+      "expected": 94.42233739317366,
+      "actual": 94.79673934721306
+    },
+    {
+      "id": "smp",
+      "field": "date",
+      "expected": "28.10.2026",
+      "actual": "31.10.2026"
+    },
+    {
+      "id": "smp",
+      "field": "quantity",
+      "expected": 734399,
+      "actual": 751012
+    },
+    {
+      "id": "tmkMaxCount",
+      "field": "fact",
+      "expected": 71744,
+      "actual": 73478
+    },
+    {
+      "id": "tmkMaxCount",
+      "field": "date",
+      "expected": "28.10.2026",
+      "actual": "31.10.2026"
+    },
+    {
+      "id": "tmkMaxCount",
+      "field": "previous",
+      "expected": 69610,
+      "actual": 71744
+    },
+    {
+      "id": "tmkMaxCount",
+      "field": "trend",
+      "expected": 2134,
+      "actual": 1734
+    },
+    {
+      "id": "tmkMaxCount",
+      "field": "quantity",
+      "expected": 71744,
+      "actual": 73478
+    },
+    {
+      "id": "tmkRemd",
+      "field": "date",
+      "expected": "28.10.2026",
+      "actual": "31.10.2026"
+    }
+  ],
+  "calculationReviewStatus": "Reviewed against independent source controls; no plan or formula changes",
+  "localVerification": {
+    "regression": {
+      "tests": 363,
+      "pass": 363,
+      "fail": 0
+    },
+    "build": "PASS",
+    "calculationEquivalence": "38/38 PASS",
+    "indicatorMetadata": "PASS",
+    "independentSourceAudit": "50/50 PASS",
+    "validation": {
+      "fail": 0,
+      "aiReview": 0,
+      "warning": "retained older monthly periods"
+    },
+    "releaseGate": "Remote CI must pass on the exact final commit before merge"
+  }
 }

@@ -110,7 +110,7 @@ def build_sources(d:Path):
  def fapw(ws):ws.cell(5,1,name);ws.cell(5,4,12);ws.cell(6,1,name);ws.cell(6,4,0)
  wb_save(fap,[('Лист1',fapw)])
  asu=d/f'АСУ_ССМП_{end}.xlsx'
- wb=Workbook();ws=wb.active;ws.cell(9,1,name);ws.cell(9,1).font=openpyxl.styles.Font(bold=True);ws.cell(9,2,100);ws.cell(9,11,92);wb.save(asu)
+ wb=Workbook();ws=wb.active;ws.cell(5,1,"Станция СМП");ws.cell(5,2,"Количество карт");ws.cell(8,1,name);ws.cell(8,1).font=openpyxl.styles.Font(bold=True);ws.cell(8,2,20);ws.cell(8,11,19);ws.cell(9,1,name+" 2");ws.cell(9,1).font=openpyxl.styles.Font(bold=True);ws.cell(9,2,100);ws.cell(9,11,92);wb.save(asu)
  return {'egpu':p,'hospital':h,'ambulatory':a,'birth':b,'death':de,'max':mx,'errors':er,'remd':rem,'foms':fo,'combined':comb,'physicians':ph,'waybill':way,
  'tvspa':tvspa,'tvsps':tvsps,'tvspl':tvspl,'diag':diag,'smpt':smpt,'tmk':tmk,'elmk':elmk,'short':short,'fap':fap,'asu':asu}
 

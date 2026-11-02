@@ -1,25 +1,25 @@
 {
   "schemaVersion": 1,
   "baselineVersion": "5.4.5",
-  "dataDate": "29.10.2026",
+  "dataDate": "31.10.2026",
   "reportingPeriod": {
-    "latestFullMonth": "сентябрь 2026",
-    "previousFullMonth": "август 2026",
-    "hasPartialNewerMonth": true,
-    "latestObservedDate": "29.10.2026"
+    "latestFullMonth": "октябрь 2026",
+    "previousFullMonth": "сентябрь 2026",
+    "hasPartialNewerMonth": false,
+    "latestObservedDate": "31.10.2026"
   },
   "overallStatus": "WARNING",
   "summary": {
-    "checks": 15,
-    "PASS": 13,
-    "WARNING": 2,
+    "checks": 16,
+    "PASS": 15,
+    "WARNING": 1,
     "FAIL": 0,
     "blocking": 0,
-    "aiReviewItems": 4
+    "aiReviewItems": 0
   },
   "acknowledgedBaseline": {
-    "unresolvedOrganizations": 128,
-    "percentageAnomalies": 37,
+    "unresolvedOrganizations": 127,
+    "percentageAnomalies": 39,
     "missingCurrentValues": 0
   },
   "checks": [
@@ -94,9 +94,9 @@
       "status": "PASS",
       "blocking": false,
       "requiresAiReview": false,
-      "message": "5118 rows contain no duplicate organization within a dataset",
+      "message": "5131 rows contain no duplicate organization within a dataset",
       "details": {
-        "inspectedRows": 5118
+        "inspectedRows": 5131
       },
       "issues": []
     },
@@ -121,9 +121,9 @@
       "status": "PASS",
       "blocking": false,
       "requiresAiReview": false,
-      "message": "2019 trend rows reconcile to fact minus previous",
+      "message": "2017 trend rows reconcile to fact minus previous",
       "details": {
-        "inspectedRows": 2019
+        "inspectedRows": 2017
       },
       "issues": []
     },
@@ -147,26 +147,38 @@
       "status": "WARNING",
       "blocking": false,
       "requiresAiReview": false,
-      "message": "1 issue(s) detected",
+      "message": "2 issue(s) detected",
       "details": {
         "activeRatingIndicators": 16,
-        "latestFullMonth": "сентябрь 2026",
-        "previousFullMonth": "август 2026",
-        "latestObservedDate": "29.10.2026",
-        "hasPartialNewerMonth": true
+        "latestFullMonth": "октябрь 2026",
+        "previousFullMonth": "сентябрь 2026",
+        "latestObservedDate": "31.10.2026",
+        "hasPartialNewerMonth": false
       },
       "issues": [
         {
           "kind": "rating_period_retained_incomplete",
           "metric": "death",
           "field": "period",
-          "expected": "сентябрь 2026",
+          "expected": "октябрь 2026",
           "actual": "На 31.08",
           "status": "WARNING",
           "requiresAiReview": false,
           "reviewReason": "methodology",
           "acknowledged": false,
           "fingerprint": "rating_period_retained_incomplete||death|||period"
+        },
+        {
+          "kind": "rating_period_retained_incomplete",
+          "metric": "semd228",
+          "field": "period",
+          "expected": "октябрь 2026",
+          "actual": "На 30.09",
+          "status": "WARNING",
+          "requiresAiReview": false,
+          "reviewReason": "methodology",
+          "acknowledged": false,
+          "fingerprint": "rating_period_retained_incomplete||semd228|||period"
         }
       ]
     },
@@ -177,10 +189,24 @@
       "status": "PASS",
       "blocking": false,
       "requiresAiReview": false,
-      "message": "No new unresolved organizations beyond 128 acknowledged baseline rows",
+      "message": "No new unresolved organizations beyond 127 acknowledged baseline rows",
       "details": {
-        "currentUnresolvedRows": 128,
-        "acknowledgedBaselineRows": 128
+        "currentUnresolvedRows": 127,
+        "acknowledgedBaselineRows": 127
+      },
+      "issues": []
+    },
+    {
+      "id": "data.spassk_legacy_context_review",
+      "category": "completeness",
+      "title": "Историческое условное сопоставление Спасской ЦРБ требует проверки ФРМО",
+      "status": "PASS",
+      "blocking": false,
+      "requiresAiReview": false,
+      "message": "No unresolved historical contextual Spassk ownership",
+      "details": {
+        "sourceRowsUnchanged": true,
+        "reviewRequired": true
       },
       "issues": []
     },
@@ -224,126 +250,16 @@
       "id": "data.percentage_anomalies",
       "category": "anomaly",
       "title": "Новые аномальные процентные значения",
-      "status": "WARNING",
+      "status": "PASS",
       "blocking": false,
-      "requiresAiReview": true,
-      "message": "4 issue(s) detected",
+      "requiresAiReview": false,
+      "message": "No new percentage anomalies beyond 39 acknowledged baseline cases",
       "details": {
         "currentAnomalyRows": 39,
-        "acknowledgedBaselineCases": 37
+        "acknowledgedBaselineCases": 39
       },
-      "issues": [
-        {
-          "kind": "percentage_above_100",
-          "scope": "mo-data",
-          "metric": "semd228",
-          "organizationOid": "1.2.643.5.1.13.13.12.2.16.1152",
-          "organizationName": "АПАСТОВСКАЯ ЦРБ",
-          "field": "previous",
-          "value": 100.4189797842254,
-          "fingerprint": "percentage_above_100|mo-data|semd228|1.2.643.5.1.13.13.12.2.16.1152|АПАСТОВСКАЯ ЦРБ|previous",
-          "acknowledged": false,
-          "status": "WARNING",
-          "requiresAiReview": true,
-          "reviewReason": "anomaly"
-        },
-        {
-          "kind": "percentage_above_100",
-          "scope": "mo-data",
-          "metric": "semd228",
-          "organizationOid": "1.2.643.5.1.13.13.12.2.16.1105",
-          "organizationName": "ДРОЖЖАНОВСКАЯ ЦРБ",
-          "field": "previous",
-          "value": 100.91561261091184,
-          "fingerprint": "percentage_above_100|mo-data|semd228|1.2.643.5.1.13.13.12.2.16.1105|ДРОЖЖАНОВСКАЯ ЦРБ|previous",
-          "acknowledged": false,
-          "status": "WARNING",
-          "requiresAiReview": true,
-          "reviewReason": "anomaly"
-        },
-        {
-          "kind": "percentage_above_100",
-          "scope": "mo-data",
-          "metric": "semd228",
-          "organizationOid": "1.2.643.5.1.13.13.12.2.16.1171",
-          "organizationName": "НДРБ С ПЦ г.Нижнекамск",
-          "field": "fact",
-          "value": 103.14028101594899,
-          "fingerprint": "percentage_above_100|mo-data|semd228|1.2.643.5.1.13.13.12.2.16.1171|НДРБ С ПЦ г.Нижнекамск|fact",
-          "acknowledged": false,
-          "status": "WARNING",
-          "requiresAiReview": true,
-          "reviewReason": "anomaly"
-        },
-        {
-          "kind": "percentage_above_100",
-          "scope": "mo-data",
-          "metric": "hospital",
-          "organizationOid": "1.2.643.5.1.13.13.12.2.16.1092",
-          "organizationName": "АКТАНЫШСКАЯ ЦРБ",
-          "field": "previous",
-          "value": 100.47193243914556,
-          "fingerprint": "percentage_above_100|mo-data|hospital|1.2.643.5.1.13.13.12.2.16.1092|АКТАНЫШСКАЯ ЦРБ|previous",
-          "acknowledged": false,
-          "status": "WARNING",
-          "requiresAiReview": true,
-          "reviewReason": "anomaly"
-        }
-      ]
+      "issues": []
     }
   ],
-  "aiReviewItems": [
-    {
-      "checkId": "data.percentage_anomalies",
-      "category": "anomaly",
-      "status": "WARNING",
-      "reviewReason": "anomaly",
-      "fingerprint": "percentage_above_100|mo-data|semd228|1.2.643.5.1.13.13.12.2.16.1152|АПАСТОВСКАЯ ЦРБ|previous",
-      "metric": "semd228",
-      "organizationOid": "1.2.643.5.1.13.13.12.2.16.1152",
-      "organizationName": "АПАСТОВСКАЯ ЦРБ",
-      "field": "previous",
-      "expected": null,
-      "actual": 100.4189797842254
-    },
-    {
-      "checkId": "data.percentage_anomalies",
-      "category": "anomaly",
-      "status": "WARNING",
-      "reviewReason": "anomaly",
-      "fingerprint": "percentage_above_100|mo-data|semd228|1.2.643.5.1.13.13.12.2.16.1105|ДРОЖЖАНОВСКАЯ ЦРБ|previous",
-      "metric": "semd228",
-      "organizationOid": "1.2.643.5.1.13.13.12.2.16.1105",
-      "organizationName": "ДРОЖЖАНОВСКАЯ ЦРБ",
-      "field": "previous",
-      "expected": null,
-      "actual": 100.91561261091184
-    },
-    {
-      "checkId": "data.percentage_anomalies",
-      "category": "anomaly",
-      "status": "WARNING",
-      "reviewReason": "anomaly",
-      "fingerprint": "percentage_above_100|mo-data|semd228|1.2.643.5.1.13.13.12.2.16.1171|НДРБ С ПЦ г.Нижнекамск|fact",
-      "metric": "semd228",
-      "organizationOid": "1.2.643.5.1.13.13.12.2.16.1171",
-      "organizationName": "НДРБ С ПЦ г.Нижнекамск",
-      "field": "fact",
-      "expected": null,
-      "actual": 103.14028101594899
-    },
-    {
-      "checkId": "data.percentage_anomalies",
-      "category": "anomaly",
-      "status": "WARNING",
-      "reviewReason": "anomaly",
-      "fingerprint": "percentage_above_100|mo-data|hospital|1.2.643.5.1.13.13.12.2.16.1092|АКТАНЫШСКАЯ ЦРБ|previous",
-      "metric": "hospital",
-      "organizationOid": "1.2.643.5.1.13.13.12.2.16.1092",
-      "organizationName": "АКТАНЫШСКАЯ ЦРБ",
-      "field": "previous",
-      "expected": null,
-      "actual": 100.47193243914556
-    }
-  ]
+  "aiReviewItems": []
 }

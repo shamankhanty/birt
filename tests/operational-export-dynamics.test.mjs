@@ -1,12 +1,13 @@
+// Dated source regression: exact accepted pre-November bytes; live October checks are in update-20261102.test.mjs.
 import test from "node:test";
 import assert from "node:assert/strict";
 import fs from "node:fs";
 
 const page = fs.readFileSync(new URL("../app/page.tsx", import.meta.url), "utf8");
 const adapters = fs.readFileSync(new URL("../scripts/pipeline/adapters.py", import.meta.url), "utf8");
-const mo = JSON.parse(fs.readFileSync(new URL("../app/mo-data.json", import.meta.url), "utf8"));
-const operational = JSON.parse(fs.readFileSync(new URL("../app/operational-mo.json", import.meta.url), "utf8"));
-const status = JSON.parse(fs.readFileSync(new URL("../app/organization-status.json", import.meta.url), "utf8"));
+const mo = JSON.parse(fs.readFileSync(new URL("../baseline/archive/before-20261102/app/mo-data.json", import.meta.url), "utf8"));
+const operational = JSON.parse(fs.readFileSync(new URL("../baseline/archive/before-20261102/app/operational-mo.json", import.meta.url), "utf8"));
+const status = JSON.parse(fs.readFileSync(new URL("../baseline/archive/before-20261102/app/organization-status.json", import.meta.url), "utf8"));
 
 test("indicator operational mode means current export versus previous export", () => {
   assert.match(page, /useState<"operational" \| "month">\("operational"\)/u);
@@ -50,8 +51,8 @@ test("count tables show dates, absolute difference and relative change", () => {
   assert.match(page, /новое значение/u);
 });
 
-const physicianMonthly = JSON.parse(fs.readFileSync(new URL("../app/physician-metrics.json", import.meta.url), "utf8"));
-const physicianWeekly = JSON.parse(fs.readFileSync(new URL("../app/physician-weekly-snapshot.json", import.meta.url), "utf8"));
+const physicianMonthly = JSON.parse(fs.readFileSync(new URL("../baseline/archive/before-20261102/app/physician-metrics.json", import.meta.url), "utf8"));
+const physicianWeekly = JSON.parse(fs.readFileSync(new URL("../baseline/archive/before-20261102/app/physician-weekly-snapshot.json", import.meta.url), "utf8"));
 
 test("doctorsAll operational snapshot is shown instead of September monthly result", () => {
   assert.equal(physicianMonthly.datasets.doctorsAll.summary.numerator, 10674);
@@ -68,7 +69,7 @@ test("doctorsAll operational snapshot is shown instead of September monthly resu
   assert.match(page, /const indicatorRows = \(isOperationalPhysicianSnapshot/u);
   assert.match(page, /const operationalRegionalCurrent = isOperationalPhysicianSnapshot/u);
   assert.match(page, /const regionalPrevious = isOperationalPhysicianSnapshot/u);
-  assert.match(page, /Месячный результат и рейтинг остаются за/u);
+  assert.match(page, /Месячный результат:/u);
 });
 
 test("doctorsLevel3 operational snapshot retains both comparable October cuts", () => {

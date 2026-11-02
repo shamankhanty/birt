@@ -9,6 +9,7 @@ const physicians = JSON.parse(fs.readFileSync("app/physician-metrics.json", "utf
 const weekly = JSON.parse(fs.readFileSync("app/physician-weekly-snapshot.json", "utf8"));
 const periodViews = JSON.parse(fs.readFileSync("app/max-period-views.json", "utf8"));
 
+const october = periodViews.closedMonths["2026-10"].operational;
 const countTotal = (id) => operational[id].rows.reduce((sum, row) => sum + row.fact, 0);
 
 test("MAX UI uses the approved target registry and keeps TMK and ELN independent", () => {
@@ -21,12 +22,12 @@ test("MAX UI uses the approved target registry and keeps TMK and ELN independent
   assert.match(page, /maxDashboardRows/u);
   assert.match(page, /maxIndicatorForecast/u);
 
-  assert.equal(countTotal("tmkMaxCount"), 71_745);
+  assert.equal(countTotal("tmkMaxCount"), 73_479);
   // One source row is explicitly "Неизвестная МО" and is not part of the
   // resolved plan perimeter shown by the UI.
-  assert.equal(periodViews.operational.metrics.tmk.plannedMoFact, 13789);
-  assert.equal(periodViews.operational.metrics.eln.plannedMoFact, 11077);
-  assert.equal(countTotal("elnMaxCount"), 54_134);
+  assert.equal(october.metrics.tmk.plannedMoFact, 15400);
+  assert.equal(october.metrics.eln.plannedMoFact, 12378);
+  assert.equal(countTotal("elnMaxCount"), 55_268);
   assert.equal(targets.republic.tmk["2026-09"], 145_000);
   assert.equal(targets.republic.eln["2026-09"], 74_000);
   assert.equal(Number((60_015 / 145_000 * 100).toFixed(2)), 41.39);
@@ -47,21 +48,21 @@ test("block 02 MAX indicators use direct monthly and cumulative source-backed vi
   assert.match(page, /Оперативно \$\{slice\.date\.slice\(0, 5\)\}/u);
   assert.match(page, /Накопительно \$\{slice\.date\.slice\(0, 5\)\}/u);
   assert.match(page, /Факт взят напрямую из октябрьского отчёта; накопительный факт сентября из него не вычитается/u);
-  assert.match(page, /maxIndicatorSlice = maxPeriodView === "operational" \? maxPeriodViews\.operational : maxPeriodViews\.cumulative/u);
-  assert.equal(periodViews.operational.metrics.tmk.plannedMoFact, 13789);
-  assert.equal(periodViews.operational.metrics.tmk.republicPlan, 16000);
-  assert.equal(periodViews.operational.metrics.eln.plannedMoFact, 11077);
-  assert.equal(periodViews.operational.metrics.eln.republicPlan, 8000);
-  assert.equal(periodViews.cumulative.metrics.tmk.plannedMoFact, 70140);
+  assert.match(page, /maxIndicatorSlice = maxPeriodView === "operational" \? maxOperationalSlice : maxPeriodViews\.cumulative/u);
+  assert.equal(october.metrics.tmk.plannedMoFact, 15400);
+  assert.equal(october.metrics.tmk.republicPlan, 16000);
+  assert.equal(october.metrics.eln.plannedMoFact, 12378);
+  assert.equal(october.metrics.eln.republicPlan, 8000);
+  assert.equal(periodViews.cumulative.metrics.tmk.plannedMoFact, 71842);
   assert.equal(periodViews.cumulative.metrics.tmk.republicPlan, 161000);
-  assert.equal(periodViews.cumulative.metrics.eln.plannedMoFact, 53621);
+  assert.equal(periodViews.cumulative.metrics.eln.plannedMoFact, 54745);
   assert.equal(periodViews.cumulative.metrics.eln.republicPlan, 82000);
 });
 
 test("every 500+ category exposes the closed month beside numerator-derived operational control", () => {
   assert.match(page, /data-testid="physician-monthly-operational-summary"/u);
   assert.match(page, /Месячный результат/u);
-  assert.match(page, /используется в рейтинге/u);
+  assert.match(page, /закрытый месячный результат/u);
   assert.match(page, /Оперативный контроль/u);
   assert.match(page, /operational\.numerator \/ operational\.denominator/u);
 
@@ -76,10 +77,10 @@ test("every 500+ category exposes the closed month beside numerator-derived oper
   const monthlyDentist = physicians.datasets.doctor500_dentist.summary;
   const currentDentist = weekly.summary.doctor500_dentist;
   const previousDentist = weekly.previousSummary.doctor500_dentist;
-  assert.deepEqual([monthlyDentist.numerator, monthlyDentist.denominator], [152, 652]);
-  assert.deepEqual([previousDentist.numerator, previousDentist.denominator], [225, 598]);
-  assert.deepEqual([currentDentist.numerator, currentDentist.denominator], [371, 591]);
-  assert.equal(Number(monthlyDentist.fact.toFixed(2)), 23.31);
-  assert.equal(Number(previousDentist.fact.toFixed(2)), 37.63);
-  assert.equal(Number(currentDentist.fact.toFixed(2)), 62.77);
+  assert.deepEqual([monthlyDentist.numerator, monthlyDentist.denominator], [333, 584]);
+  assert.deepEqual([previousDentist.numerator, previousDentist.denominator], [371, 591]);
+  assert.deepEqual([currentDentist.numerator, currentDentist.denominator], [333, 584]);
+  assert.equal(Number(monthlyDentist.fact.toFixed(2)), 57.02);
+  assert.equal(Number(previousDentist.fact.toFixed(2)), 62.77);
+  assert.equal(Number(currentDentist.fact.toFixed(2)), 57.02);
 });

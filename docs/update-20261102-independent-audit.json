@@ -1,0 +1,682 @@
+{
+  "status": "PASS",
+  "sourceCount": 22,
+  "method": "Independent openpyxl components; no production import adapters; MAX identity lookup uses approved registry only",
+  "checks": [
+    {
+      "metric": "semdSummary",
+      "source": "1.Отчет СЭМД_РЭМД - 01.01.-31.10.(Выгрузка из BI 02.11.).xlsx",
+      "numerator": 84817652,
+      "registeredTypes": 97,
+      "status": "PASS"
+    },
+    {
+      "metric": "agreement:37",
+      "source": "1.Отчет СЭМД_РЭМД - 01.01.-31.10.(Выгрузка из BI 02.11.).xlsx",
+      "column": 76,
+      "numerator": 2413,
+      "status": "PASS"
+    },
+    {
+      "metric": "agreement:38",
+      "source": "1.Отчет СЭМД_РЭМД - 01.01.-31.10.(Выгрузка из BI 02.11.).xlsx",
+      "column": 16,
+      "numerator": 15672,
+      "status": "PASS"
+    },
+    {
+      "metric": "agreement:39",
+      "source": "1.Отчет СЭМД_РЭМД - 01.01.-31.10.(Выгрузка из BI 02.11.).xlsx",
+      "column": 72,
+      "numerator": 1389161,
+      "status": "PASS"
+    },
+    {
+      "metric": "tvspDiagnostic",
+      "source": "Доля_ТВСП,_обеспечивающих_передачу_СЭМД_«Протокол_диагностических 01.01.-31.10.(Выгрузка из BI 02.11.).xlsx",
+      "sourceRows": 309,
+      "numerator": 306,
+      "denominator": 309,
+      "status": "PASS"
+    },
+    {
+      "metric": "smp",
+      "source": "Отправка сведений в федеральные сервисы_01.01.-31.10.(Выгрузка из АСУ ССМП 02.11.).xlsx",
+      "sheet": "To_VIMIS",
+      "columns": [
+        "K",
+        "B"
+      ],
+      "sourceOrganizations": 43,
+      "matchedOrganizations": 43,
+      "numerator": 751012,
+      "denominator": 792234,
+      "unmatchedSourceKeys": [],
+      "status": "PASS"
+    },
+    {
+      "metric": "tvspLaboratory",
+      "source": "Отчет_Доля_ТВСП_СЭМД_Протокол лабораторного исследования 01.01.-31.10.(Выгрузка из BI 02.11.).xlsx",
+      "buildings": 125,
+      "numerator": 125,
+      "denominator": 125,
+      "status": "PASS"
+    },
+    {
+      "metric": "tvspAmbulatory",
+      "source": "Отчет_Доля_ТВСП_СЭМД_Эпикр по законч случаю амбулат_Талон амбулат пациента и Протокол консульт 01.01-31.10(Выгрузка из BI 02.11.).xlsx",
+      "buildings": 466,
+      "numerator": 461,
+      "denominator": 466,
+      "status": "PASS"
+    },
+    {
+      "metric": "tvspStationary",
+      "source": "Отчет_Доля_ТВСП_СЭМД_Эпикриз_в_стационаре_выписной_или_Выписной 01.01.-31.10.(Выгрузка из BI 02.11.).xlsx",
+      "buildings": 275,
+      "numerator": 274,
+      "denominator": 275,
+      "status": "PASS"
+    },
+    {
+      "metric": "smpFederal",
+      "source": "Отчет_СМП_ТВСП 01.01.-31.10. (Выгрузка из BI 02.11.).xlsx",
+      "sourceRows": 68,
+      "numerator": 67,
+      "denominator": 68,
+      "status": "PASS"
+    },
+    {
+      "metric": "tmkRemd",
+      "source": "Отчет_ТМК_РЭМД 01.01.-31.10. (Выгрузка из BI 02.11.).xlsx",
+      "sheet": "Детализированный отчет",
+      "columns": [
+        "E"
+      ],
+      "sourceOrganizations": 40,
+      "matchedOrganizations": 40,
+      "numerator": 154850,
+      "denominator": null,
+      "unmatchedSourceKeys": [],
+      "status": "PASS"
+    },
+    {
+      "metric": "fapSemdCount",
+      "source": "Отчет_по_ФАП_и_ФП_(кол-во_зарегистрированных_СЭМД)_01.01.-31.10.(Выгрузка стп ГИС 01.11.).xlsx",
+      "sheet": "Лист1",
+      "columns": [
+        "D"
+      ],
+      "sourceOrganizations": 50,
+      "matchedOrganizations": 50,
+      "numerator": 3755268,
+      "denominator": null,
+      "unmatchedSourceKeys": [],
+      "status": "PASS"
+    },
+    {
+      "metric": "hospital",
+      "source": "Отчет_по_госпитализациям_v2_01.01.-31.10.(Выгрузка стп ГИС 01.11.).xlsx",
+      "sheet": "v2",
+      "columns": [
+        "E+F",
+        "D"
+      ],
+      "sourceOrganizations": 129,
+      "matchedOrganizations": 129,
+      "numerator": 741885,
+      "denominator": 803031,
+      "unmatchedSourceKeys": [],
+      "status": "PASS"
+    },
+    {
+      "metric": "hospitalCount",
+      "source": "Отчет_по_госпитализациям_v2_01.01.-31.10.(Выгрузка стп ГИС 01.11.).xlsx",
+      "sheet": "v2",
+      "columns": [
+        "D"
+      ],
+      "sourceOrganizations": 129,
+      "matchedOrganizations": 129,
+      "numerator": 803031,
+      "denominator": null,
+      "unmatchedSourceKeys": [],
+      "status": "PASS"
+    },
+    {
+      "metric": "remdErrors:2026-01-01",
+      "source": "Отчёт - Отказы по регистрации ЭМД в РЭМД 01.01.-31.10.(Выгрузка из BI 02.11.).xlsx",
+      "numerator": 14433785,
+      "categories": 38,
+      "status": "PASS"
+    },
+    {
+      "metric": "remdErrors:2026-10-22",
+      "source": "Отчёт - Отказы по регистрации ЭМД в РЭМД 22.10.-31.10.(Выгрузка из BI 02.11.).xlsx",
+      "numerator": 303938,
+      "categories": 26,
+      "status": "PASS"
+    },
+    {
+      "metric": "doctorsAll",
+      "source": "Отчёт_по_врачам_сформировавших_СЭМД - Октябрь (Выгрузка из BI 02.11..xlsx",
+      "sheet": "Все врачи_Детализация по МО",
+      "columns": [
+        7,
+        5
+      ],
+      "sourceOrganizations": 124,
+      "matchedOrganizations": 124,
+      "numerator": 11220,
+      "denominator": 13691,
+      "unmatchedSourceKeys": [],
+      "status": "PASS"
+    },
+    {
+      "metric": "doctorsAll:operational",
+      "source": "Отчёт_по_врачам_сформировавших_СЭМД - Октябрь (Выгрузка из BI 02.11..xlsx",
+      "sheet": "Все врачи_Детализация по МО",
+      "columns": [
+        7,
+        5
+      ],
+      "sourceOrganizations": 124,
+      "matchedOrganizations": 124,
+      "numerator": 11220,
+      "denominator": 13691,
+      "unmatchedSourceKeys": [],
+      "status": "PASS"
+    },
+    {
+      "metric": "doctorsLevel3",
+      "source": "Отчёт_по_врачам_сформировавших_СЭМД - Октябрь (Выгрузка из BI 02.11..xlsx",
+      "sheet": "Все врачи_Детализация по МО",
+      "columns": [
+        7,
+        5
+      ],
+      "sourceOrganizations": 15,
+      "matchedOrganizations": 15,
+      "numerator": 4089,
+      "denominator": 4893,
+      "unmatchedSourceKeys": [],
+      "status": "PASS"
+    },
+    {
+      "metric": "doctorsLevel3:operational",
+      "source": "Отчёт_по_врачам_сформировавших_СЭМД - Октябрь (Выгрузка из BI 02.11..xlsx",
+      "sheet": "Все врачи_Детализация по МО",
+      "columns": [
+        7,
+        5
+      ],
+      "sourceOrganizations": 15,
+      "matchedOrganizations": 15,
+      "numerator": 4089,
+      "denominator": 4893,
+      "unmatchedSourceKeys": [],
+      "status": "PASS"
+    },
+    {
+      "metric": "doctor500_obgyn",
+      "source": "Отчёт_по_врачам_сформировавших_СЭМД - Октябрь (Выгрузка из BI 02.11..xlsx",
+      "sheet": "Врачи по спец-тям_По МО",
+      "columns": [
+        10,
+        6
+      ],
+      "sourceOrganizations": 91,
+      "matchedOrganizations": 91,
+      "numerator": 279,
+      "denominator": 422,
+      "unmatchedSourceKeys": [],
+      "status": "PASS"
+    },
+    {
+      "metric": "doctor500_obgyn:operational",
+      "source": "Отчёт_по_врачам_сформировавших_СЭМД - Октябрь (Выгрузка из BI 02.11..xlsx",
+      "sheet": "Врачи по спец-тям_По МО",
+      "columns": [
+        10,
+        6
+      ],
+      "sourceOrganizations": 91,
+      "matchedOrganizations": 91,
+      "numerator": 279,
+      "denominator": 422,
+      "unmatchedSourceKeys": [],
+      "status": "PASS"
+    },
+    {
+      "metric": "doctor500_gp",
+      "source": "Отчёт_по_врачам_сформировавших_СЭМД - Октябрь (Выгрузка из BI 02.11..xlsx",
+      "sheet": "Врачи по спец-тям_По МО",
+      "columns": [
+        10,
+        6
+      ],
+      "sourceOrganizations": 61,
+      "matchedOrganizations": 61,
+      "numerator": 257,
+      "denominator": 302,
+      "unmatchedSourceKeys": [],
+      "status": "PASS"
+    },
+    {
+      "metric": "doctor500_gp:operational",
+      "source": "Отчёт_по_врачам_сформировавших_СЭМД - Октябрь (Выгрузка из BI 02.11..xlsx",
+      "sheet": "Врачи по спец-тям_По МО",
+      "columns": [
+        10,
+        6
+      ],
+      "sourceOrganizations": 61,
+      "matchedOrganizations": 61,
+      "numerator": 257,
+      "denominator": 302,
+      "unmatchedSourceKeys": [],
+      "status": "PASS"
+    },
+    {
+      "metric": "doctor500_cardiologist",
+      "source": "Отчёт_по_врачам_сформировавших_СЭМД - Октябрь (Выгрузка из BI 02.11..xlsx",
+      "sheet": "Врачи по спец-тям_По МО",
+      "columns": [
+        10,
+        6
+      ],
+      "sourceOrganizations": 82,
+      "matchedOrganizations": 82,
+      "numerator": 124,
+      "denominator": 213,
+      "unmatchedSourceKeys": [],
+      "status": "PASS"
+    },
+    {
+      "metric": "doctor500_cardiologist:operational",
+      "source": "Отчёт_по_врачам_сформировавших_СЭМД - Октябрь (Выгрузка из BI 02.11..xlsx",
+      "sheet": "Врачи по спец-тям_По МО",
+      "columns": [
+        10,
+        6
+      ],
+      "sourceOrganizations": 82,
+      "matchedOrganizations": 82,
+      "numerator": 124,
+      "denominator": 213,
+      "unmatchedSourceKeys": [],
+      "status": "PASS"
+    },
+    {
+      "metric": "doctor500_oncologist",
+      "source": "Отчёт_по_врачам_сформировавших_СЭМД - Октябрь (Выгрузка из BI 02.11..xlsx",
+      "sheet": "Врачи по спец-тям_По МО",
+      "columns": [
+        10,
+        6
+      ],
+      "sourceOrganizations": 70,
+      "matchedOrganizations": 70,
+      "numerator": 152,
+      "denominator": 233,
+      "unmatchedSourceKeys": [],
+      "status": "PASS"
+    },
+    {
+      "metric": "doctor500_oncologist:operational",
+      "source": "Отчёт_по_врачам_сформировавших_СЭМД - Октябрь (Выгрузка из BI 02.11..xlsx",
+      "sheet": "Врачи по спец-тям_По МО",
+      "columns": [
+        10,
+        6
+      ],
+      "sourceOrganizations": 70,
+      "matchedOrganizations": 70,
+      "numerator": 152,
+      "denominator": 233,
+      "unmatchedSourceKeys": [],
+      "status": "PASS"
+    },
+    {
+      "metric": "doctor500_ophthalmologist",
+      "source": "Отчёт_по_врачам_сформировавших_СЭМД - Октябрь (Выгрузка из BI 02.11..xlsx",
+      "sheet": "Врачи по спец-тям_По МО",
+      "columns": [
+        10,
+        6
+      ],
+      "sourceOrganizations": 90,
+      "matchedOrganizations": 90,
+      "numerator": 145,
+      "denominator": 236,
+      "unmatchedSourceKeys": [],
+      "status": "PASS"
+    },
+    {
+      "metric": "doctor500_ophthalmologist:operational",
+      "source": "Отчёт_по_врачам_сформировавших_СЭМД - Октябрь (Выгрузка из BI 02.11..xlsx",
+      "sheet": "Врачи по спец-тям_По МО",
+      "columns": [
+        10,
+        6
+      ],
+      "sourceOrganizations": 90,
+      "matchedOrganizations": 90,
+      "numerator": 145,
+      "denominator": 236,
+      "unmatchedSourceKeys": [],
+      "status": "PASS"
+    },
+    {
+      "metric": "doctor500_pediatrician",
+      "source": "Отчёт_по_врачам_сформировавших_СЭМД - Октябрь (Выгрузка из BI 02.11..xlsx",
+      "sheet": "Врачи по спец-тям_По МО",
+      "columns": [
+        10,
+        6
+      ],
+      "sourceOrganizations": 73,
+      "matchedOrganizations": 73,
+      "numerator": 943,
+      "denominator": 1365,
+      "unmatchedSourceKeys": [],
+      "status": "PASS"
+    },
+    {
+      "metric": "doctor500_pediatrician:operational",
+      "source": "Отчёт_по_врачам_сформировавших_СЭМД - Октябрь (Выгрузка из BI 02.11..xlsx",
+      "sheet": "Врачи по спец-тям_По МО",
+      "columns": [
+        10,
+        6
+      ],
+      "sourceOrganizations": 73,
+      "matchedOrganizations": 73,
+      "numerator": 943,
+      "denominator": 1365,
+      "unmatchedSourceKeys": [],
+      "status": "PASS"
+    },
+    {
+      "metric": "doctor500_dentist",
+      "source": "Отчёт_по_врачам_сформировавших_СЭМД - Октябрь (Выгрузка из BI 02.11..xlsx",
+      "sheet": "Врачи по спец-тям_По МО",
+      "columns": [
+        10,
+        6
+      ],
+      "sourceOrganizations": 78,
+      "matchedOrganizations": 78,
+      "numerator": 333,
+      "denominator": 584,
+      "unmatchedSourceKeys": [],
+      "status": "PASS"
+    },
+    {
+      "metric": "doctor500_dentist:operational",
+      "source": "Отчёт_по_врачам_сформировавших_СЭМД - Октябрь (Выгрузка из BI 02.11..xlsx",
+      "sheet": "Врачи по спец-тям_По МО",
+      "columns": [
+        10,
+        6
+      ],
+      "sourceOrganizations": 78,
+      "matchedOrganizations": 78,
+      "numerator": 333,
+      "denominator": 584,
+      "unmatchedSourceKeys": [],
+      "status": "PASS"
+    },
+    {
+      "metric": "doctor500_therapist",
+      "source": "Отчёт_по_врачам_сформировавших_СЭМД - Октябрь (Выгрузка из BI 02.11..xlsx",
+      "sheet": "Врачи по спец-тям_По МО",
+      "columns": [
+        10,
+        6
+      ],
+      "sourceOrganizations": 84,
+      "matchedOrganizations": 84,
+      "numerator": 951,
+      "denominator": 1434,
+      "unmatchedSourceKeys": [],
+      "status": "PASS"
+    },
+    {
+      "metric": "doctor500_therapist:operational",
+      "source": "Отчёт_по_врачам_сформировавших_СЭМД - Октябрь (Выгрузка из BI 02.11..xlsx",
+      "sheet": "Врачи по спец-тям_По МО",
+      "columns": [
+        10,
+        6
+      ],
+      "sourceOrganizations": 84,
+      "matchedOrganizations": 84,
+      "numerator": 951,
+      "denominator": 1434,
+      "unmatchedSourceKeys": [],
+      "status": "PASS"
+    },
+    {
+      "metric": "doctor500_surgeon",
+      "source": "Отчёт_по_врачам_сформировавших_СЭМД - Октябрь (Выгрузка из BI 02.11..xlsx",
+      "sheet": "Врачи по спец-тям_По МО",
+      "columns": [
+        10,
+        6
+      ],
+      "sourceOrganizations": 88,
+      "matchedOrganizations": 88,
+      "numerator": 173,
+      "denominator": 281,
+      "unmatchedSourceKeys": [],
+      "status": "PASS"
+    },
+    {
+      "metric": "doctor500_surgeon:operational",
+      "source": "Отчёт_по_врачам_сформировавших_СЭМД - Октябрь (Выгрузка из BI 02.11..xlsx",
+      "sheet": "Врачи по спец-тям_По МО",
+      "columns": [
+        10,
+        6
+      ],
+      "sourceOrganizations": 88,
+      "matchedOrganizations": 88,
+      "numerator": 173,
+      "denominator": 281,
+      "unmatchedSourceKeys": [],
+      "status": "PASS"
+    },
+    {
+      "metric": "egpu",
+      "source": "ПР_2_Кол-во заявл на прикр. от ЕГПУ за период. ИП ООГУЗ. Обраб. 2 раб.дн. 01.01.-31.10.(Выгрузка из ГИС 02.11.).xlsx",
+      "sheet": "Отчет",
+      "columns": [
+        6,
+        5
+      ],
+      "sourceOrganizations": 84,
+      "matchedOrganizations": 84,
+      "numerator": 43907,
+      "denominator": 44395,
+      "unmatchedSourceKeys": [],
+      "status": "PASS"
+    },
+    {
+      "metric": "egpu2days",
+      "source": "ПР_2_Кол-во заявл на прикр. от ЕГПУ за период. ИП ООГУЗ. Обраб. 2 раб.дн. 01.01.-31.10.(Выгрузка из ГИС 02.11.).xlsx",
+      "sheet": "Отчет",
+      "columns": [
+        7,
+        5
+      ],
+      "sourceOrganizations": 84,
+      "matchedOrganizations": 84,
+      "numerator": 37626,
+      "denominator": 44395,
+      "unmatchedSourceKeys": [],
+      "status": "PASS"
+    },
+    {
+      "metric": "birth",
+      "source": "Свидетельства_о_рождении_по_РТ_(РМИАЦ) 01.01.-31.10.(Выгрузка из ГИС 02.11.).xlsx",
+      "sourceOrganizations": 41,
+      "numerator": 26802,
+      "denominator": 26835,
+      "status": "PASS"
+    },
+    {
+      "metric": "shortInput",
+      "source": "Случаи краткого ввода 01.01.-28.10.(Выгрузка из ГИС 29.10.).xlsx",
+      "sheet": "Краткий ввод",
+      "columns": [
+        "D+G",
+        "E+F"
+      ],
+      "sourceOrganizations": 169,
+      "matchedOrganizations": 169,
+      "numerator": 830759,
+      "denominator": null,
+      "unmatchedSourceKeys": [],
+      "status": "PASS"
+    },
+    {
+      "metric": "shortInputAmb",
+      "source": "Случаи краткого ввода 01.01.-28.10.(Выгрузка из ГИС 29.10.).xlsx",
+      "sheet": "Краткий ввод",
+      "columns": [
+        "D+G",
+        "E+F"
+      ],
+      "sourceOrganizations": 169,
+      "matchedOrganizations": 169,
+      "numerator": 821851,
+      "denominator": null,
+      "unmatchedSourceKeys": [],
+      "status": "PASS"
+    },
+    {
+      "metric": "shortInputHosp",
+      "source": "Случаи краткого ввода 01.01.-28.10.(Выгрузка из ГИС 29.10.).xlsx",
+      "sheet": "Краткий ввод",
+      "columns": [
+        "D+G",
+        "E+F"
+      ],
+      "sourceOrganizations": 169,
+      "matchedOrganizations": 169,
+      "numerator": 8908,
+      "denominator": null,
+      "unmatchedSourceKeys": [],
+      "status": "PASS"
+    },
+    {
+      "metric": "tmkMaxCount:month",
+      "source": "ТМК_МАХ 01.10.-31.10.(Выгрузка из ГИС 02.11.).xlsx",
+      "sheet": "Лист1",
+      "columns": [
+        4
+      ],
+      "sourceOrganizations": 97,
+      "numerator": 15573,
+      "status": "PASS"
+    },
+    {
+      "metric": "elnMaxCount:month",
+      "source": "ТМК_МАХ 01.10.-31.10.(Выгрузка из ГИС 02.11.).xlsx",
+      "sheet": "Лист1",
+      "columns": [
+        5
+      ],
+      "sourceOrganizations": 97,
+      "numerator": 12498,
+      "status": "PASS"
+    },
+    {
+      "metric": "tmkMaxCount",
+      "source": "ТМК_МАХ_01.01.-31.10.(Выгрузка из ГТС 02.11.).xlsx",
+      "sheet": "Лист1",
+      "columns": [
+        4
+      ],
+      "sourceOrganizations": 97,
+      "matchedOrganizations": 97,
+      "numerator": 73479,
+      "denominator": null,
+      "unmatchedSourceKeys": [],
+      "status": "PASS"
+    },
+    {
+      "metric": "tmkMaxCount:cumulative",
+      "source": "ТМК_МАХ_01.01.-31.10.(Выгрузка из ГТС 02.11.).xlsx",
+      "sheet": "Лист1",
+      "columns": [
+        4
+      ],
+      "sourceOrganizations": 97,
+      "numerator": 73479,
+      "status": "PASS"
+    },
+    {
+      "metric": "elnMaxCount",
+      "source": "ТМК_МАХ_01.01.-31.10.(Выгрузка из ГТС 02.11.).xlsx",
+      "sheet": "Лист1",
+      "columns": [
+        5
+      ],
+      "sourceOrganizations": 97,
+      "matchedOrganizations": 97,
+      "numerator": 55268,
+      "denominator": null,
+      "unmatchedSourceKeys": [],
+      "status": "PASS"
+    },
+    {
+      "metric": "elnMaxCount:cumulative",
+      "source": "ТМК_МАХ_01.01.-31.10.(Выгрузка из ГТС 02.11.).xlsx",
+      "sheet": "Лист1",
+      "columns": [
+        5
+      ],
+      "sourceOrganizations": 97,
+      "numerator": 55268,
+      "status": "PASS"
+    }
+  ],
+  "acceptedAppSha256": {
+    "app/electronic-waybill-weekly.json": "4b96a10a3143cdbec0b5d5302e418db3c70bb183f5acac828b1c94e7c6a65a89",
+    "app/electronic-waybill.json": "d682decfa448f6fd17c8df1fdcf088b105cff03080daf029849a4d039c638dbc",
+    "app/error-categories.json": "7be83a4bf3e8d8501709d0fab85d3f1e23b70a563b136ad80230207ffce24879",
+    "app/error-cumulative.json": "960ccd9b67bc2dd5b1346972ef8c977ac0be48e8667bc259cba75af38872a505",
+    "app/error-guidance.json": "460b271d119f5b38a701a7a3eb0e85bdfb9dab9bac0ef2b36de0fbedb5fb12da",
+    "app/error-organizations.json": "894c6633c80a5ea84b6c42d00a5b994103d7ce841dc87583c9b78a69d099c993",
+    "app/federal-control.json": "61adac28a6631708dd14088dfba1a60cac2a0b6474c3e8ab8e032f044f39401d",
+    "app/frmo-linkage-data.json": "efe007ff14d9e0895d9be2f5f6c72caf84ea75c75edbd87026ce6ede2839cc0d",
+    "app/frmr-all-specialties.json": "fe1a59124218ed5bf59f6df2f25f276378646c4917f9bddf474d86a6e346fbf1",
+    "app/frmr-department-details.json": "72cbfce41c5b182ed75cc98a31646a4d80c3d434c8b73abdf00825cc245ba7e6",
+    "app/frmr-last4-records.json": "b4e20438e3e789df06be5e0261f7b435125e7d59e997db22261a76fa40ffa214",
+    "app/frmr-previous-control.json": "8a66d25fa781e5823078f74a45b3408d509ce2d987246427a20ca54b107dc3a2",
+    "app/frmr-reconciliation-data.json": "b1c85fc40b20d814a70ed0b004c6e9f92df365f2cd7a5dab1446d73438234aa8",
+    "app/frmr-sp-types.json": "87381d03a7015c36060720062d85a0e52ef000e801750bcb9758a1655ee12a9f",
+    "app/hearing-priority-policy.json": "fbcd82250f0bd81f7bf601a7f5637384632b6c1d8fb072acddf061c5ca7e8817",
+    "app/hearing-snapshots.json": "54c2f55708aa3ef8165a058142f468d2b6f104d5ecab2d02c377d1447d44e965",
+    "app/max-appointments-municipal.json": "b951215cc53ca0e9eca54d6d1917dbe625f915b66764ef9d0a830dc57484202d",
+    "app/max-monthly-visits.json": "4ccd792fbc854b92ec7b5161e2e6e00ab68c3c5f14a06278e4332f63f522b31a",
+    "app/max-period-views.json": "7e793169dc17b361026e29261bfe4569c4b155060aaf5ffc77bbfbcec63c3706",
+    "app/methodology-audit.json": "d15739980906b1a697a8f4c80d09c940836c896371eb3cbe268b8d9022fb5774",
+    "app/mo-data.json": "ada129152e18f1090d72b63266251314d96235db98b2a6af1ea520623ce63524",
+    "app/mo-detail-oids.json": "f4310d523ba6c5798242fcbcfdefd69940b9bcaa13717beaf6f819a515574a4d",
+    "app/mo-details.json": "5d407ed973ad71820f312fe7b60bf1ca2e7388d92a6b1ba4e64b73470eecb4ae",
+    "app/mo-registry.json": "62202e489fced8a93c40867f04f5b3a021030cf4da1b0d0da6ce3a8cff088ea3",
+    "app/month-closure-2026-10.json": "11e71b145415c9b344de4470b9b1d2e4f69d31bd7cbe65e894dbcc3adf491695",
+    "app/monthly-mo.json": "aa69322d5640c6afddc6040f1d1d165b645d0284ae794ceefaf85f7b8e3a9f2f",
+    "app/operational-mo.json": "fe507a191e57410efc95e139a2e6bce010c7bfdb1c298dd35ee6cf9b8e1b0378",
+    "app/organization-status.json": "cc4b9c14c1f603d55e567204ebac8789c68b579e729ac295d5089ae8a8406a09",
+    "app/physician-metrics.json": "2eeee2b03d16c01457de3d2da146ff45d6a5e75fecaa9f0cf2d72abfe7c9e8ab",
+    "app/physician-weekly-snapshot.json": "17df6ab49898f5d8537164dc03c1cc89f6a83c83a1ff1a9dd10b953eee0f78cd",
+    "app/physician500-audit.json": "33badec7e53d8019a1207078a681e0f0b511d54b3b8cc6c1506bdc008c6b13da",
+    "app/preventive-semd-audit.json": "3967e9d84fbaec32cd0b4d66f9f98ce06a2747f850a77a6c4fa79d43b80c4918",
+    "app/semd-summary.json": "cd1937c7759bedb39a83927b064e35cf032ef471e3fda16f272eead739c343ad",
+    "app/unit-data.json": "c16e58512106a224c7ef9f3dcdb678346a7a8fb0c094b4106bfa87ef9891e1c4"
+  }
+}

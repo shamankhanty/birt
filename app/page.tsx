@@ -51,6 +51,8 @@ import {
   buildFullMonthComparison,
   datasetBelongsToReportingMonth,
   resolveReportingPeriods,
+  monthDescriptor,
+  previousMonth,
 } from "../lib/period-engine.js";
 import {
   aggregateComponents,
@@ -865,11 +867,13 @@ const previousMonthName = previousFullMonth.label.replace(/\s+\d{4}$/u, "");
 const previousMonthDative = previousFullMonth.dative.replace(/\s+\d{4}$/u, "");
 const previousMonthInstrumental = previousFullMonth.instrumental.replace(/\s+\d{4}$/u, "");
 const latestMonthGenitive = latestFullMonth.genitive.replace(/\s+\d{4}$/u, "");
+const ratingMonth = monthDescriptor({ year: 2026, month: 9 });
+const ratingPreviousMonth = monthDescriptor(previousMonth(ratingMonth));
 const ratingPeriodShort = `${latestFullMonth.startDate.slice(0, 5)}–${latestFullMonth.endDate.slice(0, 5)}`;
 const releaseRuntime = createReleaseRuntimeMetadata({
   operationalRuntime: currentOperationalRuntime,
   physicianWeeklySnapshot: physicianWeeklySnapshotRaw,
-  ratingPeriod: latestFullMonth.label,
+  ratingPeriod: ratingMonth.label,
 });
 type MoDetail = { volume: number; registered: number };
 const moDetails = moDetailsRaw as Record<string, Record<string, MoDetail>>;
@@ -6765,7 +6769,7 @@ export default function Home() {
               <div className="pageHead ratingHead">
                 <div>
                   <p className="eyebrow">ПОСЛЕДНИЙ ПОЛНЫЙ МЕСЯЦ</p>
-                  <h1>Месячный рейтинг МО — {latestFullMonth.label}</h1>
+                  <h1>Месячный рейтинг МО — {ratingMonth.label}</h1>
                   {/* Baseline v4.6.0: Рейтинг медицинских организаций — август 2026 */}
                   <p>
                     МО сравниваются только внутри своего типа · {reportingPeriods.hasPartialNewerMonth
@@ -6776,8 +6780,8 @@ export default function Home() {
                 </div>
                 <div className="ratingFormula">
                   <small>Период рейтинга</small>
-                  <strong>{ratingPeriodShort}</strong>
-                  <span>динамика: {latestMonthName} к {previousMonthDative} {previousFullMonth.year}</span>
+                  <strong>{`${ratingMonth.startDate.slice(0, 5)}–${ratingMonth.endDate.slice(0, 5)}`}</strong>
+                  <span>динамика: {"сентябрь"} к {"августу"} {ratingPreviousMonth.year}</span>
                 </div>
               </div>
               <div
@@ -6959,7 +6963,7 @@ export default function Home() {
                       <span>
                         <b>Методика расчёта рейтинга</b>
                         <small>
-                          {latestFullMonth.label} · последний полный месяц
+                          {ratingMonth.label} · последний полный месяц
                         </small>
                       </span>
                       <i>⌄</i>
@@ -6970,7 +6974,7 @@ export default function Home() {
                         <b>Сопровождение случаев</b>
                         <p>
                           СЭМД №228, амбулаторные и выписные эпикризы —
-                          результат МО за {latestMonthName} либо накопительный срез на {latestFullMonth.endDate.slice(0, 5)} — согласно периодичности показателя.
+                          результат МО за {"сентябрь"} либо накопительный срез на {ratingMonth.endDate.slice(0, 5)} — согласно периодичности показателя.
                         </p>
                       </article>
                       <article>
@@ -6978,7 +6982,7 @@ export default function Home() {
                         <b>Цифровые услуги</b>
                         <p>
                           В рейтинг включена доля медицинских свидетельств о
-                          смерти за {latestMonthName}. Показатели ЕПГУ и свидетельств о
+                          смерти за {"сентябрь"}. Показатели ЕПГУ и свидетельств о
                           рождении остаются в мониторинге, но из рейтинга
                           исключены.
                         </p>
@@ -6987,14 +6991,14 @@ export default function Home() {
                         <strong>10%</strong>
                         <b>Блок ТВСП</b>
                         <p>
-                          ТВСП учитываются накопительным итогом на {latestFullMonth.endDate.slice(0, 5)}. Динамика
-                          показывается только при наличии сопоставимого среза на {previousFullMonth.endDate.slice(0, 5)}.
+                          ТВСП учитываются накопительным итогом на {ratingMonth.endDate.slice(0, 5)}. Динамика
+                          показывается только при наличии сопоставимого среза на {ratingPreviousMonth.endDate.slice(0, 5)}.
                         </p>
                       </article>
                       <p>
                         <b>Дополнительно исключено:</b> рассмотрение заявлений
                         за 2 рабочих дня — показатель признан некорректным для
-                        рейтинга. <b>Баллы:</b> результат {latestMonthGenitive} ÷ план × 100,
+                        рейтинга. <b>Баллы:</b> результат {"сентября"} ÷ план × 100,
                         максимум — 100. Неприменимый показатель исключается;
                         обязательный показатель без строки помечается «Нет данных»
                         и не получает фиктивного нулевого результата.
@@ -7060,7 +7064,7 @@ export default function Home() {
                     />
                     <RatingPanel
                       title="Наибольший рост"
-                      subtitle={`${latestMonthName} по сравнению с ${previousMonthInstrumental}`}
+                      subtitle={`${"сентябрь"} по сравнению с ${"августом"}`}
                       rows={[...currentRating]
                         .filter((r) => r.change !== null)
                         .sort((a, b) => (b.change ?? 0) - (a.change ?? 0))
@@ -7176,7 +7180,7 @@ export default function Home() {
                             </button>
                           </th>
                           <th>
-                            ТВСП<small>накопительно на {latestFullMonth.endDate.slice(0, 5)}</small>
+                            ТВСП<small>накопительно на {ratingMonth.endDate.slice(0, 5)}</small>
                           </th>
                           <th>
                             <button
@@ -7286,7 +7290,7 @@ export default function Home() {
                                         key={`missing-${name}`}
                                       >
                                         <span>{name}</span>
-                                        <b>Нет данных за {latestMonthName}</b>
+                                        <b>Нет данных за {"сентябрь"}</b>
                                         <em>без оценки</em>
                                       </p>
                                     ))}
@@ -9027,7 +9031,7 @@ export default function Home() {
               ) : selectedDataset.note && matrixMetric !== "semd228" && (
                 <p className="sourceDataNote">
                   <b>Источник и ограничение:</b> {isOperationalPhysicianSnapshot
-                    ? `Оперативный срез ${physicianWeeklySnapshot.periods?.[matrixMetric]?.period ?? physicianWeeklySnapshot.period}; источник — ${physicianWeeklySnapshot.periods?.[matrixMetric]?.source ?? physicianWeeklySnapshot.source}. Месячный результат и рейтинг остаются за ${selectedDataset.period}.`
+                    ? `Оперативный срез ${physicianWeeklySnapshot.periods?.[matrixMetric]?.period ?? physicianWeeklySnapshot.period}; источник — ${physicianWeeklySnapshot.periods?.[matrixMetric]?.source ?? physicianWeeklySnapshot.source}. Месячный результат: ${selectedDataset.period}. Рейтинг МО: ${ratingMonth.label}.`
                     : selectedDataset.note}
                 </p>
               )}
@@ -9137,7 +9141,7 @@ export default function Home() {
                     <small>Месячный результат</small>
                     <h2>{latestFullMonth.label}</h2>
                     <strong>{format(physicianMetrics.datasets[matrixMetric].summary.fact, 2)}%</strong>
-                    <span>{format(physicianMetrics.datasets[matrixMetric].summary.numerator, 0)} / {format(physicianMetrics.datasets[matrixMetric].summary.denominator, 0)} · используется в рейтинге</span>
+                    <span>{format(physicianMetrics.datasets[matrixMetric].summary.numerator, 0)} / {format(physicianMetrics.datasets[matrixMetric].summary.denominator, 0)} · закрытый месячный результат</span>
                   </article>
                   <article aria-label="Оперативный недельный контроль «500+»">
                     <small>Оперативный контроль {russianMonthLabel(monthKeyFromRussianDate(physicianWeeklySnapshot.periods?.[matrixMetric]?.date ?? physicianWeeklySnapshot.date) ?? "2026-09").replace(/\s+\d{4}$/u, "").toLocaleLowerCase("ru")}</small>

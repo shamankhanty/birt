@@ -4,7 +4,7 @@
   "totalErrors": 303938,
   "attributedErrors": 303938,
   "unassignedErrors": 0,
-  "coveragePercent": 100.0,
+  "coveragePercent": 100,
   "sourceRows": 3394,
   "attributedRows": 3394,
   "organizationCount": 198,

@@ -1,12 +1,13 @@
+// Dated source regression: exact accepted pre-November bytes; live October checks are in update-20261102.test.mjs.
 import test from "node:test";
 import assert from "node:assert/strict";
 import fs from "node:fs";
 
 const page = fs.readFileSync("app/page.tsx", "utf8");
-const monthly = JSON.parse(fs.readFileSync("app/monthly-mo.json", "utf8"));
+const monthly = JSON.parse(fs.readFileSync("baseline/archive/before-20261102/app/monthly-mo.json", "utf8"));
 const appointments = JSON.parse(fs.readFileSync("app/max-appointments-municipal.json", "utf8"));
 const registry = JSON.parse(fs.readFileSync("config/indicator-registry.json", "utf8"));
-const periodViews = JSON.parse(fs.readFileSync("app/max-period-views.json", "utf8"));
+const periodViews = JSON.parse(fs.readFileSync("baseline/archive/before-20261102/app/max-period-views.json", "utf8"));
 
 test("Removing standalone MAX does not alter annual, cumulative or operational source plans", () => {
   assert.equal(registry.indicators.visitMax.plan.value, 654000);
@@ -17,7 +18,7 @@ test("Removing standalone MAX does not alter annual, cumulative or operational s
   assert.equal(periodViews.cumulative.metrics.tmk.republicPlan, 161000);
   assert.equal(periodViews.cumulative.metrics.eln.republicPlan, 82000);
   assert.match(page, /data-testid="max-indicator-period-switch"/u);
-  assert.match(page, /maxIndicatorSlice = maxPeriodView === "operational" \? maxPeriodViews.operational : maxPeriodViews.cumulative/u);
+  assert.match(page, /maxIndicatorSlice = maxPeriodView === "operational" \? maxOperationalSlice : maxPeriodViews.cumulative/u);
 });
 
 test("MAX regional appointments source remains distinct from organizational data", () => {

@@ -1901,13 +1901,7 @@
       "maternity": 0
     },
     "центр микрохирургии глаза прозрение отделение в г елабуге": {
-      "volume": 175,
-      "registered": 0,
-      "inpatient": 0,
-      "maternity": 0
-    },
-    "центр микрохирургии глаза прозрение": {
-      "volume": 522,
+      "volume": 697,
       "registered": 0,
       "inpatient": 0,
       "maternity": 0
@@ -2022,6 +2016,10 @@
     }
   },
   "smp": {
+    "агрызская црб": {
+      "volume": 6687,
+      "registered": 6503
+    },
     "азнакаевская црб": {
       "volume": 12425,
       "registered": 12209

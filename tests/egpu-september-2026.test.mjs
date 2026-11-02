@@ -1,9 +1,10 @@
+// Dated source regression: exact accepted pre-November bytes; live October checks are in update-20261102.test.mjs.
 import test from "node:test";
 import assert from "node:assert/strict";
 import { readFileSync } from "node:fs";
 
-const mo = JSON.parse(readFileSync(new URL("../app/mo-data.json", import.meta.url), "utf8"));
-const monthly = JSON.parse(readFileSync(new URL("../app/monthly-mo.json", import.meta.url), "utf8"));
+const mo = JSON.parse(readFileSync(new URL("../baseline/archive/before-20261102/app/mo-data.json", import.meta.url), "utf8"));
+const monthly = JSON.parse(readFileSync(new URL("../baseline/archive/before-20261102/app/monthly-mo.json", import.meta.url), "utf8"));
 const page = readFileSync(new URL("../app/page.tsx", import.meta.url), "utf8");
 
 const quantity = (value) => value.split("/").map((part) => Number(part.replace(/\s/g, "")));

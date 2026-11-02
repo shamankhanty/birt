@@ -377,8 +377,17 @@ def parse_remd_hospital_numerators(path: Path) -> dict[str, dict]:
 def adapt_hospital(app: Path, source: Path, end: date, remd_source: Path | None = None) -> AdapterResult:
     mo, details, oids, monthly = (load(app, x) for x in ["mo-data.json", "mo-details.json", "mo-detail-oids.json", "monthly-mo.json"])
     hospital_rows = parse_hospital_cases(source)
-    denominators = hospital_rows
-    numerators = {x["oid"]: x for x in hospital_rows}
+    # Multiple departments can share one legal MO OID. Sum both components
+    # before joining, otherwise the last numerator is reused for each row.
+    grouped = {}
+    for item in hospital_rows:
+        if item["oid"] not in grouped:
+            grouped[item["oid"]] = item.copy()
+        else:
+            for field in ("volume", "count", "inpatient", "maternity"):
+                grouped[item["oid"]][field] += item[field]
+    denominators = list(grouped.values())
+    numerators = grouped
     base = mo.get("hospital", {})
     prev = previous_rows_from_dataset(base)
     same_cut = base.get("date") == date_ru(end)
@@ -1185,8 +1194,14 @@ def adapt_fap(app: Path, source: Path, end: date) -> AdapterResult:
 def _asu_rows(path: Path):
     if path.suffix.casefold()==".xlsx":
         wb=open_workbook(path,read_only=False,data_only=True);ws=wb.active
-        for row in ws.iter_rows(min_row=9):
-            vals=[c.value for c in row];yield vals,bool(row[0].font.bold)
+        header_seen = False
+        for row in ws.iter_rows():
+            vals = [c.value for c in row]
+            if str(vals[0] or "").strip() == "Станция СМП" and "Количество карт" in str(vals[1]):
+                header_seen = True
+                continue
+            if header_seen:
+                yield vals, bool(row[0].font.bold)
         return
     try:
         import xlrd  # type: ignore

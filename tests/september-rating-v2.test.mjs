@@ -1,3 +1,4 @@
+// Dated source regression: exact accepted pre-November bytes; live October checks are in update-20261102.test.mjs.
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
@@ -37,7 +38,7 @@ test('all preventive numerators use per-MO maximum rather than sum',()=>{
  for(const r of inputs.organizations)for(const m of r.metrics.filter(m=>m.id==='semd228'&&m.status==='available'))assert.equal(m.numerator,Math.max(m.s122,m.s228));
 });
 test('dental organizations use September physician counts without October override',()=>{
- const physician=read('app/physician-metrics.json');
+ const physician=read('baseline/archive/before-20261102/app/physician-metrics.json');
  for(const r of inputs.organizations.filter(r=>r.type==='Стоматологические поликлиники')){
   const m=r.metrics.find(m=>m.id==='doctor500_dentist');assert.ok(m);
   const source=physician.datasets.doctor500_dentist.rows.find(p=>p.oid===r.key);

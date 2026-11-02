@@ -38,7 +38,7 @@ test("desktop primary menu mirrors mobile and brings methodology/FRMR out of dev
   assert.doesNotMatch(source,/tab === "max"/u);
 });
 test("month rating and methodology headings follow navigation; content remains available", () => {
-  assert.match(source,/<h1>Месячный рейтинг МО — \{latestFullMonth.label\}<\/h1>/);
+  assert.match(source,/<h1>Месячный рейтинг МО — \{ratingMonth.label\}<\/h1>/);
   assert.match(source,/<h1>Методика расчёта показателей<\/h1>/);
   for (const tab of ["methods","frmr","remdErrors","waybill","ranking","hearings"]) {
     assert.match(source, new RegExp('tab === "'+tab+'"'), tab);

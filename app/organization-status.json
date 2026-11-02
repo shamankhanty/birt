@@ -6,7 +6,7 @@
     "date": "31.10.2026",
     "mode": "presence",
     "note": "Применимый перечень — 73 МО. МКДЦ исключён: лицензия отозвана. На 31.10.2026 передача подтверждена у 73 МО.",
-    "fact": 100.0,
+    "fact": 100,
     "quantity": 73,
     "quantityLabel": "из 73 применимых медицинских организаций",
     "rows": [
@@ -942,7 +942,7 @@
     "previousDenominator": 40,
     "numerator": 40,
     "denominator": 40,
-    "fact": 100.0,
+    "fact": 100,
     "quantity": 40,
     "quantityLabel": "из 40 медицинских организаций",
     "comparisonReset": false,
