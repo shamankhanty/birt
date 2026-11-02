@@ -26,7 +26,7 @@ test('weekly and cumulative REMD errors share a cutoff but remain independent',(
  assert.equal(c.organizationBreakdown.totalErrors,c.total);
  assert.ok(evidence.qualityWarnings.some(x=>x.metric==='remdErrorsCumulative'));
 });
-test('full-month ratings and absent waybill source are byte-preserved',()=>{
- for(const [path,expected]of Object.entries(evidence.preservedFiles))assert.equal(crypto.createHash('sha256').update(fs.readFileSync(path)).digest('hex'),expected,path);
+test('full-month ratings stay preserved and prior waybill evidence remains archived',()=>{
+ for(const [path,expected]of Object.entries(evidence.preservedFiles))assert.equal(crypto.createHash('sha256').update(fs.readFileSync(path==='app/electronic-waybill-weekly.json'?'baseline/archive/electronic-waybill-before-20261101.json':path)).digest('hex'),expected,path);
  assert.equal(read('app/physician-metrics.json').datasets.doctorsAll.period,'сентябрь 2026');
 });

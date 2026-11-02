@@ -953,10 +953,31 @@ def extract_waybill(path: Path, period: str) -> dict:
                    if str(row[0] or "").strip() == "№ п/п" and "Наименование организации" in str(row[1] or "")), None)
     if header is None:
         raise ValueError("ЭЛП: не найдена строка заголовков детализации")
-    start=header+1; rows=[]
-    for v in ws.iter_rows(min_row=start,values_only=True):
-        if len(v)<13 or not isinstance(v[0],(int,float)) or not v[1]:continue
-        vehicles=n(v[2]);moved=n(v[5]);rows.append({"sourceNumber":n(v[0]),"name":str(v[1]).strip(),"vehicles":vehicles,"ambulanceVehicles":n(v[3]),"otherVehicles":n(v[4]),"moved":moved,"movementShare":moved/vehicles*100 if vehicles else None,"drivers":n(v[6]),"mechanics":n(v[7]),"medics":n(v[8]),"waybills":n(v[9]),"ambulanceWaybills":n(v[10]),"otherWaybills":n(v[11]),"driversWithWaybills":n(v[12])})
+    start=header+1; groups={}; current_group=None; source_rows=0; grand_total=None
+    fields=['vehicles','ambulanceVehicles','otherVehicles','moved','drivers','mechanics','medics','waybills','ambulanceWaybills','otherWaybills','driversWithWaybills']
+    for source_row,v in enumerate(ws.iter_rows(min_row=start,values_only=True),start):
+        if len(v)<13 or not v[1]:continue
+        if str(v[1]).strip().casefold()=='итого':
+            grand_total=v;break
+        if isinstance(v[0],(int,float)):
+            current_group=n(v[0])
+            if current_group in groups:raise ValueError(f'ЭЛП: повтор номера группы {current_group}')
+            groups[current_group]={'sourceNumber':current_group,'name':str(v[1]).strip(),**{k:0 for k in fields},'components':[]}
+        if current_group is None:raise ValueError('ЭЛП: строка подразделения до первой группы')
+        if any(not isinstance(v[i],(int,float)) or v[i]<0 or int(v[i])!=v[i] for i in range(2,13)):
+            raise ValueError(f'ЭЛП: отсутствуют или некорректны числа в строке {source_row}')
+        part={'name':str(v[1]).strip(),**{k:int(v[i]) for i,k in enumerate(fields,2)}}
+        if part['vehicles']!=part['ambulanceVehicles']+part['otherVehicles'] or part['waybills']!=part['ambulanceWaybills']+part['otherWaybills'] or part['moved']>part['vehicles']:
+            raise ValueError(f'ЭЛП: нарушен баланс строки {source_row}')
+        part['movementShare']=part['moved']/part['vehicles']*100 if part['vehicles'] else None
+        group=groups[current_group];group['components'].append(part)
+        for k in fields:group[k]+=part[k]
+        source_rows+=1
+    rows=list(groups.values())
+    for row in rows:row['movementShare']=row['moved']/row['vehicles']*100 if row['vehicles'] else None
+    if grand_total is None:raise ValueError('ЭЛП: нет строки Итого для проверки полноты')
+    for i,k in enumerate(fields,2):
+        if sum(r[k] for r in rows)!=grand_total[i]:raise ValueError(f'ЭЛП: сумма детализации не совпадает с Итого: {k}')
     if not rows:raise ValueError("ЭЛП: не найдено строк детализации")
     vehicles=sum(r["vehicles"] for r in rows); moved=sum(r["moved"] for r in rows)
     detail={"organizations":len(rows),"vehicles":vehicles,"vehiclesWithMovement":moved,"movementShare":moved/vehicles*100 if vehicles else None,"waybills":sum(r["waybills"] for r in rows),"driversWithWaybills":sum(r["driversWithWaybills"] for r in rows),"organizationsWithMovement":sum(r["vehicles"]>0 and r["moved"]>0 for r in rows),"zeroMovementOrganizations":sum(r["vehicles"]>0 and r["moved"]==0 for r in rows),"zeroVehicleOrganizations":sum(r["vehicles"]==0 for r in rows)}
@@ -972,9 +993,11 @@ def extract_waybill(path: Path, period: str) -> dict:
         "organizations":n(organizations[2]),"vehicles":n(vehicles_row[2]),
         "vehiclesWithWaybills":n(vehicles_row[4]),"vehiclesWithMovement":n(vehicles_row[7]),
     }
+    if system_summary['organizations']!=len(rows) or system_summary['vehicles']!=vehicles or system_summary['vehiclesWithMovement']!=moved:
+        raise ValueError('ЭЛП: группы не воспроизводят региональный итог')
     heading=next((str(value).strip() for values in ws.iter_rows(max_row=header-1, values_only=True)
                   for value in values if isinstance(value,str) and "электронный путевой лист" in value.casefold()), "")
-    return {"source":path.name,"period":period,"sourceHeading":heading,"systemSummary":system_summary,"detail":detail,"rows":rows}
+    return {"source":path.name,"period":period,"sourceHeading":heading,"systemSummary":system_summary,"sourceRows":source_rows,"detail":detail,"rows":rows}
 
 
 def adapt_waybill(app: Path, source: Path, end: date, previous_source: Path|None=None, previous_end: date|None=None) -> AdapterResult:
