@@ -4,6 +4,7 @@ import { useMemo, useState } from "react";
 import PlanTransitionStat from "./plan-transition-stat";
 import SeptemberRating from "./september-rating";
 import septemberRatingArchive from "./rating/september-v1.json";
+import { maxHearingPlan } from "../lib/max-hearing-plan.js";
 import { planTransition } from "../lib/plan-transitions.js";
 import { buildFederalDetailCatalog, federalMetricTarget } from "../lib/federal-navigation.js";
 import moDataRaw from "./mo-data.json";
@@ -2735,6 +2736,7 @@ type RatingSortKey =
   | "coverage"
   | "status";
 type HearingMetric = {
+  planLabel?: string;
   id: string;
   name: string;
   fact: number | null;
@@ -3623,7 +3625,8 @@ export default function Home() {
         if (!registry || registry.type === "Вне рейтинга") return;
         const owner = byOrg.get(registry.oid);
         if (!owner) return;
-        const applicable = applicableForRegistry(registry, id);
+        const maxPlan = maxHearingPlan(maxTargets, id, registry.oid, dataset.date, dataset.period ?? dataset.date);
+        const applicable = maxPlan ? maxPlan.assigned : applicableForRegistry(registry, id);
         const direction = indicatorRegistry.direction(id);
         const reverse =
           direction === "lower" || calculatedIndicatorById[id]?.reverse === true;
@@ -3635,9 +3638,9 @@ export default function Home() {
           evaluableForRegistry(registry, id) &&
           !isUnavailableSourceRow(row) &&
           !isSmallPhysicianDenominator(id, row, registry);
-        const plan = hasComparablePlan && (isOperationalMetric || isMonthlyMetric)
-          ? dataset.plan
-          : null;
+        const plan = maxPlan
+          ? (isUnavailableSourceRow(row) ? null : maxPlan.plan)
+          : hasComparablePlan && (isOperationalMetric || isMonthlyMetric) ? dataset.plan : null;
         const passed =
           plan === null ? null : reverse ? row.fact <= plan : row.fact >= plan;
         const previousPassed =
@@ -3661,6 +3664,7 @@ export default function Home() {
           fact: row.fact,
           previous: row.previous,
           plan,
+          planLabel: maxPlan?.label,
           unit: dataset.unit,
           date: dataset.date,
           period: dataset.period ?? dataset.date,
@@ -3674,7 +3678,7 @@ export default function Home() {
             row.previous !== null &&
             (reverse ? row.fact > row.previous : row.fact < row.previous),
           score,
-          status: plan !== null ? (passed ? "good" : "bad") : "reference",
+          status: maxPlan ? "reference" : plan !== null ? (passed ? "good" : "bad") : "reference",
         });
       }),
     );
@@ -3683,7 +3687,8 @@ export default function Home() {
       Object.keys(moData).forEach((id) => {
           const dataset = moData[id];
           if (!dataset || present.has(id)) return;
-          const applicable = applicableForRegistry(owner.registry, id);
+          const maxPlan = maxHearingPlan(maxTargets, id, owner.registry.oid, dataset.date, dataset.period ?? dataset.date);
+          const applicable = maxPlan ? maxPlan.assigned : applicableForRegistry(owner.registry, id);
           const isOperationalMetric = isOperationalHearingMetric(id);
           const isMonthlyMetric = isMonthlyWorkforceMetric(id);
           const priorityDataExpected =
@@ -3701,7 +3706,8 @@ export default function Home() {
             name: dataset.name,
             fact: null,
             previous: null,
-            plan: priorityDataExpected || monthlyDataExpected ? dataset.plan : null,
+            plan: maxPlan ? maxPlan.plan : priorityDataExpected || monthlyDataExpected ? dataset.plan : null,
+            planLabel: maxPlan?.label,
             unit: dataset.unit,
             date: dataset.date,
             period: dataset.period ?? dataset.date,
@@ -7736,9 +7742,10 @@ export default function Home() {
                                     : `${metric.count !== null && metric.volume !== null ? `${format(metric.count, 0)} из ${format(metric.volume, 0)} · ` : ""}${format(metric.fact, 2)}${metric.unit}`}
                                   <small>
                                     {metric.plan === null
-                                      ? "без персонального плана МО"
+                                      ? metric.planLabel ?? "без персонального плана МО"
                                       : `план ${format(metric.plan, 2)}${metric.unit}`}
                                   </small>
+                                  {metric.plan !== null && metric.planLabel && <small>{metric.planLabel}</small>}
                                 </b>
                                 <em className={comparison.direction}>
                                   {comparison.change === null
@@ -7747,7 +7754,9 @@ export default function Home() {
                                       : metric.applicable === false
                                         ? "неприменимо · не влияет"
                                       : metric.status === "reference"
-                                        ? "справочно · не влияет"
+                                        ? metric.planLabel && metric.passed !== null
+                                          ? `план ${metric.passed ? "достигнут" : "не достигнут"} · справочно`
+                                          : "справочно · не влияет"
                                         : metric.status === "missing"
                                           ? "обязательный показатель"
                                           : metric.passed
