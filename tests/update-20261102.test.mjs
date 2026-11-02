@@ -30,13 +30,13 @@ test('October physician month is self-consistent in the two reporting stores',()
 });
 test('MAX retains separate October and cumulative source totals, without adding them',()=>{
   assert.equal(views.cumulative.date,'31.10.2026');
-  assert.equal(views.operational.date,'31.10.2026');
+  assert.equal(views.closedMonths['2026-10'].operational.date,'31.10.2026');
   for(const [service,total,monthlyTotal,metric] of [['tmk',73479,15573,'tmkMaxCount'],['eln',55268,12498,'elnMaxCount']]){
     assert.equal(views.cumulative.metrics[service].sourceTotal,total);
-    assert.equal(views.operational.metrics[service].sourceTotal,monthlyTotal);
+    assert.equal(views.closedMonths["2026-10"].operational.metrics[service].sourceTotal,monthlyTotal);
     assert.equal(op[metric].rows.reduce((sum,r)=>sum+(r.count??0),0),total);
     assert.equal(views.cumulative.metrics[service].rows.length,85);
-    assert.equal(views.operational.metrics[service].rows.length,85);
+    assert.equal(views.closedMonths["2026-10"].operational.metrics[service].rows.length,85);
   }
 });
 test('REMD errors preserve separate periods, with no invented denominator',()=>{
@@ -60,8 +60,21 @@ test('SEMD summary reconciles 97 document types and current source evidence',()=
 });
 
 test('October gaps are explicitly marked retained, not counted as current monthly results',()=>{
- for(const id of ['death','semd228','tvspAmbulatory','tvspStationary','tvspDiagnostic']){
+ for(const id of ['death','semd228','ambulatoryCase']){
   assert.equal(monthly[id].ratingState,'retained_incomplete_period',id);
   assert.notEqual(monthly[id].currentLabel,'Октябрь 2026',id);
+ }
+});
+
+test('completed October TVSP snapshots are monthly, not provisional or operational-only',()=>{
+ for(const id of ['tvspStationary','tvspAmbulatory','tvspDiagnostic','tvspLaboratory']){
+  assert.equal(monthly[id].currentLabel,'На 31.10',id);
+  assert.equal(monthly[id].periodKind,'cumulative',id);
+  assert.equal(monthly[id].periodStatus,'closed_month_end',id);
+  assert.equal(monthly[id].rows.length,mo[id].rows.length);
+  for(const row of monthly[id].rows){
+    const source=mo[id].rows.find(r=>r.oid===row.oid);
+    assert.ok(source);assert.equal(row.july,source.fact);
+  }
  }
 });

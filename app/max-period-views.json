@@ -1,6 +1,6 @@
 {
-  "month": "2026-10",
-  "monthLabel": "Октябрь 2026",
+  "month": "2026-11",
+  "monthLabel": "Ноябрь 2026",
   "cumulative": {
     "date": "31.10.2026",
     "period": "01.01–31.10.2026",
@@ -1220,1063 +1220,1066 @@
     "previousSource": "ТМК_МАХ 01.01.-28.10.(Выгрузка из ГИС 29.10.).xlsx"
   },
   "operational": {
-    "date": "31.10.2026",
-    "period": "01.10–31.10.2026",
-    "previousDate": "29.10.2026",
-    "previousPeriod": "01.10–29.10.2026",
-    "source": "ТМК_МАХ 01.10.-31.10.(Выгрузка из ГИС 02.11.).xlsx",
-    "previousSource": "ТМК_МАХ 01.10.-29.10.(Выгрузка из ГИС 29.10.).xlsx",
+    "date": null,
+    "period": "01.11–30.11.2026",
+    "previousDate": null,
+    "previousPeriod": null,
+    "source": null,
+    "previousSource": null,
+    "status": "awaiting_first_source",
     "metrics": {
       "tmk": {
-        "sourceTotal": 15573,
-        "previousSourceTotal": 13932,
-        "plannedMoFact": 15400,
-        "previousPlannedMoFact": 13789,
+        "sourceTotal": null,
+        "previousSourceTotal": null,
+        "plannedMoFact": null,
+        "previousPlannedMoFact": null,
         "republicPlan": 16000,
         "rows": [
           {
             "name": "ГАУЗ \"ГОРОДСКАЯ БОЛЬНИЦА № 11\"",
             "oid": "1.2.643.5.1.13.13.12.2.16.1070",
-            "fact": 55,
-            "previous": 49,
+            "fact": null,
+            "previous": null,
             "plan": 150
           },
           {
             "name": "ГАУЗ \"ГКБ № 12\"",
             "oid": "1.2.643.5.1.13.13.12.2.16.28030",
-            "fact": 370,
-            "previous": 336,
+            "fact": null,
+            "previous": null,
             "plan": 247
           },
           {
             "name": "ГАУЗ \"ГОРОДСКАЯ ПОЛИКЛИНИКА № 7\"",
             "oid": "1.2.643.5.1.13.13.12.2.16.1153",
-            "fact": 181,
-            "previous": 153,
+            "fact": null,
+            "previous": null,
             "plan": 150
           },
           {
             "name": "ГАУЗ \"КЛИНИКА МЕДИЦИНСКОГО УНИВЕРСИТЕТА\"",
             "oid": "1.2.643.5.1.13.13.12.2.16.1125",
-            "fact": 346,
-            "previous": 297,
+            "fact": null,
+            "previous": null,
             "plan": 135
           },
           {
             "name": "ГАУЗ \"КЛИНИЧЕСКАЯ БОЛЬНИЦА №2\"",
             "oid": "1.2.643.5.1.13.13.12.2.16.1185",
-            "fact": 631,
-            "previous": 545,
+            "fact": null,
+            "previous": null,
             "plan": 284
           },
           {
             "name": "ГАУЗ \"ГОСПИТАЛЬ ДЛЯ ВЕТЕРАНОВ ВОЙН\" Г. КАЗАНИ",
             "oid": "1.2.643.5.1.13.13.12.2.16.1135",
-            "fact": 57,
-            "previous": 58,
+            "fact": null,
+            "previous": null,
             "plan": 99
           },
           {
             "name": "ГАУЗ \"ГКБ №16\"",
             "oid": "1.2.643.5.1.13.13.12.2.16.1136",
-            "fact": 208,
-            "previous": 186,
-            "plan": 241
+            "fact": null,
+            "previous": null,
+            "plan": 240
           },
           {
             "name": "ГАУЗ \"ГКБ№7 ИМ. М.Н.САДЫКОВА\"",
             "oid": "1.2.643.5.1.13.13.12.2.16.1163",
-            "fact": 587,
-            "previous": 534,
-            "plan": 409
+            "fact": null,
+            "previous": null,
+            "plan": 408
           },
           {
             "name": "ГАУЗ \"ГОРОДСКАЯ ПОЛИКЛИНИКА № 10\"",
             "oid": "1.2.643.5.1.13.13.12.2.16.1074",
-            "fact": 361,
-            "previous": 312,
-            "plan": 427
+            "fact": null,
+            "previous": null,
+            "plan": 428
           },
           {
             "name": "ГАУЗ \"ЦГКБ № 18 ИМ. ПРОФ. К.Ш. ЗЫЯТДИНОВА\"",
             "oid": "1.2.643.5.1.13.13.12.2.16.1151",
-            "fact": 440,
-            "previous": 381,
+            "fact": null,
+            "previous": null,
             "plan": 281
           },
           {
             "name": "ГАУЗ \"ГОРОДСКАЯ ПОЛИКЛИНИКА №18\"",
             "oid": "1.2.643.5.1.13.13.12.2.16.1080",
-            "fact": 230,
-            "previous": 212,
-            "plan": 360
+            "fact": null,
+            "previous": null,
+            "plan": 361
           },
           {
             "name": "ГАУЗ \"ГОРОДСКАЯ ПОЛИКЛИНИКА № 20\"",
             "oid": "1.2.643.5.1.13.13.12.2.16.1178",
-            "fact": 62,
-            "previous": 59,
-            "plan": 466
+            "fact": null,
+            "previous": null,
+            "plan": 465
           },
           {
             "name": "ГАУЗ \"ГОРОДСКАЯ ПОЛИКЛИНИКА № 21\"",
             "oid": "1.2.643.5.1.13.13.12.2.16.1179",
-            "fact": 16,
-            "previous": 16,
+            "fact": null,
+            "previous": null,
             "plan": 446
           },
           {
             "name": "ГАУЗ \"ГОРОДСКАЯ ПОЛИКЛИНИКА № 8\" Г.КАЗАНИ",
             "oid": "1.2.643.5.1.13.13.12.2.16.1082",
-            "fact": 283,
-            "previous": 259,
-            "plan": 388
+            "fact": null,
+            "previous": null,
+            "plan": 387
           },
           {
             "name": "ГАУЗ \"ГОРОДСКАЯ БОЛЬНИЦА №2\"",
             "oid": "1.2.643.5.1.13.13.12.2.16.1116",
-            "fact": 7,
-            "previous": 6,
-            "plan": 119
+            "fact": null,
+            "previous": null,
+            "plan": 118
           },
           {
             "name": "ГАУЗ \"ГОРОДСКАЯ ПОЛИКЛИНИКА №3\"",
             "oid": "1.2.643.5.1.13.13.12.2.16.1208",
-            "fact": 40,
-            "previous": 25,
-            "plan": 284
+            "fact": null,
+            "previous": null,
+            "plan": 283
           },
           {
             "name": "ГАУЗ \"ГОРОДСКАЯ БОЛЬНИЦА №5\"",
             "oid": "1.2.643.5.1.13.13.12.2.16.1112",
-            "fact": 77,
-            "previous": 71,
+            "fact": null,
+            "previous": null,
             "plan": 394
           },
           {
             "name": "ГАУЗ \"ГОСПИТАЛЬ ДЛЯ ВЕТЕРАНОВ ВОЙН\" Г. Н. ЧЕЛНЫ",
             "oid": "1.2.643.5.1.13.13.12.2.16.1085",
-            "fact": 128,
-            "previous": 123,
-            "plan": 109
+            "fact": null,
+            "previous": null,
+            "plan": 108
           },
           {
             "name": "ГАУЗ \"ГОРОДСКАЯ ПОЛИКЛИНИКА №4 ИМ.Л.Н.ГАНИЕВОЙ\"",
             "oid": "1.2.643.5.1.13.13.12.2.16.1147",
-            "fact": 107,
-            "previous": 83,
-            "plan": 305
+            "fact": null,
+            "previous": null,
+            "plan": 306
           },
           {
             "name": "ГАУЗ \"ГОРОДСКАЯ ПОЛИКЛИНИКА №6\"",
             "oid": "1.2.643.5.1.13.13.12.2.16.1051",
-            "fact": 315,
-            "previous": 297,
+            "fact": null,
+            "previous": null,
             "plan": 304
           },
           {
             "name": "ГАУЗ \"ГОРОДСКАЯ ПОЛИКЛИНИКА №7\"",
             "oid": "1.2.643.5.1.13.13.12.2.16.1115",
-            "fact": 237,
-            "previous": 203,
-            "plan": 323
+            "fact": null,
+            "previous": null,
+            "plan": 324
           },
           {
             "name": "ГАУЗ \"КДМЦ\"",
             "oid": "1.2.643.5.1.13.13.12.2.16.1065",
-            "fact": 104,
-            "previous": 94,
+            "fact": null,
+            "previous": null,
             "plan": 90
           },
           {
             "name": "ГАУЗ НДРБ С ПЦ",
             "oid": "1.2.643.5.1.13.13.12.2.16.1171",
-            "fact": 786,
-            "previous": 737,
-            "plan": 243
+            "fact": null,
+            "previous": null,
+            "plan": 242
           },
           {
             "name": "ГАУЗ \"КПРБ\"",
             "oid": "1.2.643.5.1.13.13.12.2.16.1165",
-            "fact": 1,
-            "previous": 1,
-            "plan": 90
+            "fact": null,
+            "previous": null,
+            "plan": 89
           },
           {
             "name": "ГАУЗ \"НЦРМБ\"",
             "oid": "1.2.643.5.1.13.13.12.2.16.1192",
-            "fact": 402,
-            "previous": 360,
-            "plan": 682
+            "fact": null,
+            "previous": null,
+            "plan": 683
           },
           {
             "name": "ГАУЗ \"АГРЫЗСКАЯ ЦРБ\"",
             "oid": "1.2.643.5.1.13.13.12.2.16.1088",
-            "fact": 42,
-            "previous": 33,
+            "fact": null,
+            "previous": null,
             "plan": 102
           },
           {
             "name": "АЗНАКАЕВСКАЯ ЦРБ",
             "oid": "1.2.643.5.1.13.13.12.2.16.1084",
-            "fact": 505,
-            "previous": 473,
-            "plan": 236
+            "fact": null,
+            "previous": null,
+            "plan": 237
           },
           {
             "name": "ГАУЗ \"АКСУБАЕВСКАЯ ЦРБ\"",
             "oid": "1.2.643.5.1.13.13.12.2.16.1156",
-            "fact": 26,
-            "previous": 20,
-            "plan": 89
+            "fact": null,
+            "previous": null,
+            "plan": 88
           },
           {
             "name": "ГАУЗ \"АКТАНЫШСКАЯ ЦРБ\"",
             "oid": "1.2.643.5.1.13.13.12.2.16.1092",
-            "fact": 89,
-            "previous": 64,
+            "fact": null,
+            "previous": null,
             "plan": 104
           },
           {
             "name": "ГАУЗ \"АЛЕКСЕЕВСКАЯ ЦРБ\"",
             "oid": "1.2.643.5.1.13.13.12.2.16.1087",
-            "fact": 27,
-            "previous": 26,
-            "plan": 97
+            "fact": null,
+            "previous": null,
+            "plan": 96
           },
           {
             "name": "ГАУЗ \"БАЗАРНО-МАТАКСКАЯ ЦРБ\"",
             "oid": "1.2.643.5.1.13.13.12.2.16.1161",
-            "fact": 4,
-            "previous": 4,
-            "plan": 65
+            "fact": null,
+            "previous": null,
+            "plan": 66
           },
           {
             "name": "ГАУЗ \"АЛЬМЕТЬЕВСКАЯ ГП № 3\"",
             "oid": "1.2.643.5.1.13.13.12.2.16.1107",
-            "fact": 1,
-            "previous": 1,
+            "fact": null,
+            "previous": null,
             "plan": 192
           },
           {
             "name": "ГАУЗ \"АДРБ С ПЦ\"",
             "oid": "1.2.643.5.1.13.13.12.2.16.1146",
-            "fact": 16,
-            "previous": 16,
+            "fact": null,
+            "previous": null,
             "plan": 185
           },
           {
             "name": "ГАУЗ \"АЛЬМЕТЬЕВСКАЯ ЦРБ\"",
             "oid": "1.2.643.5.1.13.13.12.2.16.1108",
-            "fact": 1402,
-            "previous": 1243,
+            "fact": null,
+            "previous": null,
             "plan": 389
           },
           {
             "name": "ГАУЗ \"АЛЬМЕТЬЕВСКАЯ РМБ\"",
             "oid": "1.2.643.5.1.13.13.12.2.16.44921",
-            "fact": 376,
-            "previous": 358,
-            "plan": 94
+            "fact": null,
+            "previous": null,
+            "plan": 93
           },
           {
             "name": "ГАУЗ \"АПАСТОВСКАЯ ЦРБ\"",
             "oid": "1.2.643.5.1.13.13.12.2.16.1152",
-            "fact": 147,
-            "previous": 134,
-            "plan": 68
+            "fact": null,
+            "previous": null,
+            "plan": 69
           },
           {
             "name": "ГАУЗ \"АРСКАЯ ЦРБ\"",
             "oid": "1.2.643.5.1.13.13.12.2.16.1164",
-            "fact": 34,
-            "previous": 32,
-            "plan": 210
+            "fact": null,
+            "previous": null,
+            "plan": 209
           },
           {
             "name": "ГАУЗ \"АТНИНСКАЯ ЦРБ\"",
             "oid": "1.2.643.5.1.13.13.12.2.16.1078",
-            "fact": 122,
-            "previous": 102,
-            "plan": 51
+            "fact": null,
+            "previous": null,
+            "plan": 52
           },
           {
             "name": "ГАУЗ \"БАВЛИНСКАЯ ЦРБ\"",
             "oid": "1.2.643.5.1.13.13.12.2.16.1129",
-            "fact": 65,
-            "previous": 56,
-            "plan": 125
+            "fact": null,
+            "previous": null,
+            "plan": 124
           },
           {
             "name": "ГАУЗ \"БАЛТАСИНСКАЯ ЦРБ\"",
             "oid": "1.2.643.5.1.13.13.12.2.16.1081",
-            "fact": 129,
-            "previous": 112,
+            "fact": null,
+            "previous": null,
             "plan": 127
           },
           {
             "name": "ГАУЗ \"БУГУЛЬМИНСКАЯ ЦРБ\"",
             "oid": "1.2.643.5.1.13.13.12.2.16.1042",
-            "fact": 92,
-            "previous": 80,
-            "plan": 358
+            "fact": null,
+            "previous": null,
+            "plan": 359
           },
           {
             "name": "ГАУЗ \"БУИНСКАЯ ЦРБ\"",
             "oid": "1.2.643.5.1.13.13.12.2.16.1120",
-            "fact": 78,
-            "previous": 51,
+            "fact": null,
+            "previous": null,
             "plan": 154
           },
           {
             "name": "ВЕРХНЕУСЛОНСКАЯ ЦРБ",
             "oid": "1.2.643.5.1.13.13.12.2.16.1052",
-            "fact": 20,
-            "previous": 3,
+            "fact": null,
+            "previous": null,
             "plan": 61
           },
           {
             "name": "ГАУЗ \"ВЫСОКОГОРСКАЯ ЦРБ\"",
             "oid": "1.2.643.5.1.13.13.12.2.16.1050",
-            "fact": 99,
-            "previous": 93,
-            "plan": 223
+            "fact": null,
+            "previous": null,
+            "plan": 222
           },
           {
             "name": "ГАУЗ \"ДРОЖЖАНОВСКАЯ ЦРБ\"",
             "oid": "1.2.643.5.1.13.13.12.2.16.1105",
-            "fact": 75,
-            "previous": 66,
-            "plan": 72
+            "fact": null,
+            "previous": null,
+            "plan": 71
           },
           {
             "name": "ГАУЗ \"ЕЦРБ\"",
             "oid": "1.2.643.5.1.13.13.12.2.16.1093",
-            "fact": 838,
-            "previous": 781,
-            "plan": 355
+            "fact": null,
+            "previous": null,
+            "plan": 354
           },
           {
             "name": "ГАУЗ \"ЗАИНСКАЯ ЦРБ\"",
             "oid": "1.2.643.5.1.13.13.12.2.16.1072",
-            "fact": 678,
-            "previous": 623,
+            "fact": null,
+            "previous": null,
             "plan": 191
           },
           {
             "name": "ГАУЗ \"ЗЕЛЕНОДОЛЬСКАЯ ЦРБ\"",
             "oid": "1.2.643.5.1.13.13.12.2.16.1139",
-            "fact": 272,
-            "previous": 248,
+            "fact": null,
+            "previous": null,
             "plan": 694
           },
           {
             "name": "ГАУЗ \"КАЙБИЦКАЯ ЦЕНТРАЛЬНАЯ РАЙОННАЯ БОЛЬНИЦА\"",
             "oid": "1.2.643.5.1.13.13.12.2.16.1131",
-            "fact": 52,
-            "previous": 52,
-            "plan": 44
+            "fact": null,
+            "previous": null,
+            "plan": 43
           },
           {
             "name": "ГАУЗ \"КАМСКО-УСТЬИНСКАЯ ЦРБ\"",
             "oid": "1.2.643.5.1.13.13.12.2.16.1044",
-            "fact": 29,
-            "previous": 29,
-            "plan": 56
+            "fact": null,
+            "previous": null,
+            "plan": 57
           },
           {
             "name": "ГАУЗ \"КУКМОРСКАЯ ЦРБ\"",
             "oid": "1.2.643.5.1.13.13.12.2.16.1144",
-            "fact": 53,
-            "previous": 46,
-            "plan": 204
+            "fact": null,
+            "previous": null,
+            "plan": 203
           },
           {
             "name": "ЛАИШЕВСКАЯ ЦРБ",
             "oid": "1.2.643.5.1.13.13.12.2.16.1149",
-            "fact": 39,
-            "previous": 36,
-            "plan": 241
+            "fact": null,
+            "previous": null,
+            "plan": 242
           },
           {
             "name": "ГАУЗ \"ЛЕНИНОГОРСКАЯ ЦРБ\"",
             "oid": "1.2.643.5.1.13.13.12.2.16.1073",
-            "fact": 0,
-            "previous": 0,
+            "fact": null,
+            "previous": null,
             "plan": 302
           },
           {
             "name": "ГАУЗ \"МАМАДЫШСКАЯ ЦРБ\"",
             "oid": "1.2.643.5.1.13.13.12.2.16.1104",
-            "fact": 90,
-            "previous": 79,
-            "plan": 149
+            "fact": null,
+            "previous": null,
+            "plan": 148
           },
           {
             "name": "ГАУЗ \"МЕНДЕЛЕЕВСКАЯ ЦРБ\"",
             "oid": "1.2.643.5.1.13.13.12.2.16.1058",
-            "fact": 99,
-            "previous": 79,
-            "plan": 116
+            "fact": null,
+            "previous": null,
+            "plan": 115
           },
           {
             "name": "ГАУЗ \"МЕНЗЕЛИНСКАЯ ЦРБ\"",
             "oid": "1.2.643.5.1.13.13.12.2.16.1101",
-            "fact": 163,
-            "previous": 127,
-            "plan": 104
+            "fact": null,
+            "previous": null,
+            "plan": 103
           },
           {
             "name": "МУСЛЮМОВСКАЯ ЦРБ",
             "oid": "1.2.643.5.1.13.13.12.2.16.1055",
-            "fact": 22,
-            "previous": 19,
+            "fact": null,
+            "previous": null,
             "plan": 78
           },
           {
             "name": "ГАУЗ \"НОВОШЕШМИНСКАЯ ЦРБ\"",
             "oid": "1.2.643.5.1.13.13.12.2.16.1059",
-            "fact": 42,
-            "previous": 39,
+            "fact": null,
+            "previous": null,
             "plan": 51
           },
           {
             "name": "ГАУЗ \"НУРЛАТСКАЯ ЦРБ\"",
             "oid": "1.2.643.5.1.13.13.12.2.16.1138",
-            "fact": 117,
-            "previous": 95,
-            "plan": 209
+            "fact": null,
+            "previous": null,
+            "plan": 208
           },
           {
             "name": "ГАУЗ \"ПЕСТРЕЧИНСКАЯ ЦРБ\"",
             "oid": "1.2.643.5.1.13.13.12.2.16.1109",
-            "fact": 43,
-            "previous": 39,
-            "plan": 228
+            "fact": null,
+            "previous": null,
+            "plan": 227
           },
           {
             "name": "ГАУЗ \"РЫБНО-СЛОБОДСКАЯ ЦРБ\"",
             "oid": "1.2.643.5.1.13.13.12.2.16.1133",
-            "fact": 7,
-            "previous": 6,
+            "fact": null,
+            "previous": null,
             "plan": 91
           },
           {
             "name": "ГАУЗ \"САБИНСКАЯ ЦРБ\"",
             "oid": "1.2.643.5.1.13.13.12.2.16.1126",
-            "fact": 111,
-            "previous": 109,
-            "plan": 131
+            "fact": null,
+            "previous": null,
+            "plan": 132
           },
           {
             "name": "ГАУЗ \"САРМАНОВСКАЯ ЦРБ\"",
             "oid": "1.2.643.5.1.13.13.12.2.16.1169",
-            "fact": 317,
-            "previous": 284,
-            "plan": 129
+            "fact": null,
+            "previous": null,
+            "plan": 128
           },
           {
             "name": "Филиал ГАУЗ «Республиканская клиническая больница Министерства здравоохранения Республики Татарстан» - «Спасская ЦРБ»",
             "oid": "1.2.643.5.1.13.13.12.2.16.18650",
             "fact": null,
             "previous": null,
-            "plan": 65
+            "plan": 66
           },
           {
             "name": "ГАУЗ \"ТЕТЮШСКАЯ ЦРБ\"",
             "oid": "1.2.643.5.1.13.13.12.2.16.1130",
-            "fact": 102,
-            "previous": 94,
+            "fact": null,
+            "previous": null,
             "plan": 77
           },
           {
             "name": "ГАУЗ \"ТУКАЕВСКАЯ ЦРБ\"",
             "oid": "1.2.643.5.1.13.13.12.2.16.1140",
-            "fact": 99,
-            "previous": 89,
+            "fact": null,
+            "previous": null,
             "plan": 168
           },
           {
             "name": "ГАУЗ \"ТЮЛЯЧИНСКАЯ ЦРБ\"",
             "oid": "1.2.643.5.1.13.13.12.2.16.1039",
-            "fact": 127,
-            "previous": 109,
-            "plan": 50
+            "fact": null,
+            "previous": null,
+            "plan": 51
           },
           {
             "name": "ГАУЗ \"ЧЕРЕМШАНСКАЯ ЦРБ\"",
             "oid": "1.2.643.5.1.13.13.12.2.16.1162",
-            "fact": 39,
-            "previous": 33,
+            "fact": null,
+            "previous": null,
             "plan": 63
           },
           {
             "name": "ГАУЗ \"ЧИСТОПОЛЬСКАЯ ЦРБ\"",
             "oid": "1.2.643.5.1.13.13.12.2.16.1038",
-            "fact": 96,
-            "previous": 77,
+            "fact": null,
+            "previous": null,
             "plan": 284
           },
           {
             "name": "ГАУЗ \"УРУССИНСКАЯ ЦРБ\"",
             "oid": "1.2.643.5.1.13.13.12.2.16.1097",
-            "fact": 24,
-            "previous": 19,
+            "fact": null,
+            "previous": null,
             "plan": 81
           },
           {
             "name": "ГАУЗ \"ДГП № 2\"",
             "oid": "1.2.643.5.1.13.13.12.2.16.1182",
-            "fact": 68,
-            "previous": 66,
+            "fact": null,
+            "previous": null,
             "plan": 90
           },
           {
             "name": "ГАУЗ \"ДЕТСКАЯ ГОРОДСКАЯ ПОЛИКЛИНИКА № 4\"",
             "oid": "1.2.643.5.1.13.13.12.2.16.1122",
-            "fact": 62,
-            "previous": 56,
-            "plan": 152
+            "fact": null,
+            "previous": null,
+            "plan": 151
           },
           {
             "name": "ГАУЗ \"ГДП №7\"",
             "oid": "1.2.643.5.1.13.13.12.2.16.1113",
-            "fact": 160,
-            "previous": 147,
-            "plan": 130
+            "fact": null,
+            "previous": null,
+            "plan": 131
           },
           {
             "name": "ГАУЗ \"ДГП № 9\"",
             "oid": "1.2.643.5.1.13.13.12.2.16.1193",
-            "fact": 141,
-            "previous": 130,
+            "fact": null,
+            "previous": null,
             "plan": 97
           },
           {
             "name": "ГАУЗ \"ДЕТСКАЯ ГОРОДСКАЯ ПОЛИКЛИНИКА № 10\"",
             "oid": "1.2.643.5.1.13.13.12.2.16.1199",
-            "fact": 223,
-            "previous": 188,
-            "plan": 160
+            "fact": null,
+            "previous": null,
+            "plan": 159
           },
           {
             "name": "ГАУЗ \"ДЕТСКАЯ ГОРОДСКАЯ ПОЛИКЛИНИКА № 11\"",
             "oid": "1.2.643.5.1.13.13.12.2.16.1200",
-            "fact": 61,
-            "previous": 46,
+            "fact": null,
+            "previous": null,
             "plan": 119
           },
           {
             "name": "ГАУЗ \"ДЕТСКАЯ ГОРОДСКАЯ ПОЛИКЛИНИКА №6\"",
             "oid": "1.2.643.5.1.13.13.12.2.16.1066",
-            "fact": 26,
-            "previous": 26,
+            "fact": null,
+            "previous": null,
             "plan": 78
           },
           {
             "name": "ГАУЗ \"ДЕТСКАЯ ГОРОДСКАЯ ПОЛИКЛИНИКА №3\"",
             "oid": "1.2.643.5.1.13.13.12.2.16.1067",
-            "fact": 43,
-            "previous": 40,
+            "fact": null,
+            "previous": null,
             "plan": 89
           },
           {
             "name": "ГАУЗ \"ДЕТСКАЯ ГОРОДСКАЯ ПОЛИКЛИНИКА №2\"",
             "oid": "1.2.643.5.1.13.13.12.2.16.1045",
-            "fact": 156,
-            "previous": 147,
+            "fact": null,
+            "previous": null,
             "plan": 95
           },
           {
             "name": "ГАУЗ \"ДЕТСКАЯ ГОРОДСКАЯ ПОЛИКЛИНИКА №4 ИМ. Ф.Г. АХМЕРОВОЙ\"",
             "oid": "1.2.643.5.1.13.13.12.2.16.1127",
-            "fact": 132,
-            "previous": 115,
+            "fact": null,
+            "previous": null,
             "plan": 110
           },
           {
             "name": "ГАУЗ \"ДЕТСКАЯ ГОРОДСКАЯ ПОЛИКЛИНИКА №5\"",
             "oid": "1.2.643.5.1.13.13.12.2.16.1089",
-            "fact": 95,
-            "previous": 90,
+            "fact": null,
+            "previous": null,
             "plan": 99
           },
           {
             "name": "ГАУЗ \"ГОРОДСКАЯ ДЕТСКАЯ ПОЛИКЛИНИКА № 6\"",
             "oid": "1.2.643.5.1.13.13.12.2.16.1090",
-            "fact": 349,
-            "previous": 319,
-            "plan": 210
+            "fact": null,
+            "previous": null,
+            "plan": 209
           },
           {
             "name": "ГАУЗ \"ДРКБ МЗ РТ\"",
             "oid": "1.2.643.5.1.13.13.12.2.16.1155",
-            "fact": 527,
-            "previous": 484,
+            "fact": null,
+            "previous": null,
             "plan": 177
           },
           {
             "name": "ГАУЗ \"ГДБ № 1\"",
             "oid": "1.2.643.5.1.13.13.12.2.16.1148",
-            "fact": 37,
-            "previous": 34,
+            "fact": null,
+            "previous": null,
             "plan": 80
           },
           {
             "name": "ГАУЗ \"ДГКБ № 7\"",
             "oid": "1.2.643.5.1.13.13.12.2.16.1123",
-            "fact": 481,
-            "previous": 425,
-            "plan": 132
+            "fact": null,
+            "previous": null,
+            "plan": 133
           }
-        ]
+        ],
+        "factStatus": "awaiting_november_source",
+        "cumulativeTarget": 177000
       },
       "eln": {
-        "sourceTotal": 12498,
-        "previousSourceTotal": 11184,
-        "plannedMoFact": 12378,
-        "previousPlannedMoFact": 11077,
+        "sourceTotal": null,
+        "previousSourceTotal": null,
+        "plannedMoFact": null,
+        "previousPlannedMoFact": null,
         "republicPlan": 8000,
         "rows": [
           {
             "name": "ГАУЗ \"ГОРОДСКАЯ БОЛЬНИЦА № 11\"",
             "oid": "1.2.643.5.1.13.13.12.2.16.1070",
-            "fact": 114,
-            "previous": 105,
+            "fact": null,
+            "previous": null,
             "plan": 75
           },
           {
             "name": "ГАУЗ \"ГКБ № 12\"",
             "oid": "1.2.643.5.1.13.13.12.2.16.28030",
-            "fact": 334,
-            "previous": 303,
-            "plan": 123
+            "fact": null,
+            "previous": null,
+            "plan": 124
           },
           {
             "name": "ГАУЗ \"ГОРОДСКАЯ ПОЛИКЛИНИКА № 7\"",
             "oid": "1.2.643.5.1.13.13.12.2.16.1153",
-            "fact": 131,
-            "previous": 115,
+            "fact": null,
+            "previous": null,
             "plan": 75
           },
           {
             "name": "ГАУЗ \"КЛИНИКА МЕДИЦИНСКОГО УНИВЕРСИТЕТА\"",
             "oid": "1.2.643.5.1.13.13.12.2.16.1125",
-            "fact": 183,
-            "previous": 165,
-            "plan": 68
+            "fact": null,
+            "previous": null,
+            "plan": 67
           },
           {
             "name": "ГАУЗ \"КЛИНИЧЕСКАЯ БОЛЬНИЦА №2\"",
             "oid": "1.2.643.5.1.13.13.12.2.16.1185",
-            "fact": 181,
-            "previous": 159,
+            "fact": null,
+            "previous": null,
             "plan": 142
           },
           {
             "name": "ГАУЗ \"ГОСПИТАЛЬ ДЛЯ ВЕТЕРАНОВ ВОЙН\" Г. КАЗАНИ",
             "oid": "1.2.643.5.1.13.13.12.2.16.1135",
-            "fact": 188,
-            "previous": 179,
-            "plan": 50
+            "fact": null,
+            "previous": null,
+            "plan": 49
           },
           {
             "name": "ГАУЗ \"ГКБ №16\"",
             "oid": "1.2.643.5.1.13.13.12.2.16.1136",
-            "fact": 279,
-            "previous": 141,
+            "fact": null,
+            "previous": null,
             "plan": 120
           },
           {
             "name": "ГАУЗ \"ГКБ№7 ИМ. М.Н.САДЫКОВА\"",
             "oid": "1.2.643.5.1.13.13.12.2.16.1163",
-            "fact": 695,
-            "previous": 638,
+            "fact": null,
+            "previous": null,
             "plan": 204
           },
           {
             "name": "ГАУЗ \"ГОРОДСКАЯ ПОЛИКЛИНИКА № 10\"",
             "oid": "1.2.643.5.1.13.13.12.2.16.1074",
-            "fact": 246,
-            "previous": 219,
-            "plan": 214
+            "fact": null,
+            "previous": null,
+            "plan": 213
           },
           {
             "name": "ГАУЗ \"ЦГКБ № 18 ИМ. ПРОФ. К.Ш. ЗЫЯТДИНОВА\"",
             "oid": "1.2.643.5.1.13.13.12.2.16.1151",
-            "fact": 255,
-            "previous": 228,
-            "plan": 141
+            "fact": null,
+            "previous": null,
+            "plan": 140
           },
           {
             "name": "ГАУЗ \"ГОРОДСКАЯ ПОЛИКЛИНИКА №18\"",
             "oid": "1.2.643.5.1.13.13.12.2.16.1080",
-            "fact": 321,
-            "previous": 281,
+            "fact": null,
+            "previous": null,
             "plan": 180
           },
           {
             "name": "ГАУЗ \"ГОРОДСКАЯ ПОЛИКЛИНИКА № 20\"",
             "oid": "1.2.643.5.1.13.13.12.2.16.1178",
-            "fact": 200,
-            "previous": 177,
+            "fact": null,
+            "previous": null,
             "plan": 233
           },
           {
             "name": "ГАУЗ \"ГОРОДСКАЯ ПОЛИКЛИНИКА № 21\"",
             "oid": "1.2.643.5.1.13.13.12.2.16.1179",
-            "fact": 94,
-            "previous": 66,
+            "fact": null,
+            "previous": null,
             "plan": 223
           },
           {
             "name": "ГАУЗ \"ГОРОДСКАЯ ПОЛИКЛИНИКА № 8\" Г.КАЗАНИ",
             "oid": "1.2.643.5.1.13.13.12.2.16.1082",
-            "fact": 312,
-            "previous": 286,
-            "plan": 194
+            "fact": null,
+            "previous": null,
+            "plan": 193
           },
           {
             "name": "ГАУЗ \"ГОРОДСКАЯ БОЛЬНИЦА №2\"",
             "oid": "1.2.643.5.1.13.13.12.2.16.1116",
-            "fact": 6,
-            "previous": 5,
+            "fact": null,
+            "previous": null,
             "plan": 59
           },
           {
             "name": "ГАУЗ \"ГОРОДСКАЯ ПОЛИКЛИНИКА №3\"",
             "oid": "1.2.643.5.1.13.13.12.2.16.1208",
-            "fact": 30,
-            "previous": 29,
+            "fact": null,
+            "previous": null,
             "plan": 142
           },
           {
             "name": "ГАУЗ \"ГОРОДСКАЯ БОЛЬНИЦА №5\"",
             "oid": "1.2.643.5.1.13.13.12.2.16.1112",
-            "fact": 86,
-            "previous": 78,
+            "fact": null,
+            "previous": null,
             "plan": 197
           },
           {
             "name": "ГАУЗ \"ГОСПИТАЛЬ ДЛЯ ВЕТЕРАНОВ ВОЙН\" Г. Н. ЧЕЛНЫ",
             "oid": "1.2.643.5.1.13.13.12.2.16.1085",
-            "fact": 105,
-            "previous": 96,
-            "plan": 55
+            "fact": null,
+            "previous": null,
+            "plan": 54
           },
           {
             "name": "ГАУЗ \"ГОРОДСКАЯ ПОЛИКЛИНИКА №4 ИМ.Л.Н.ГАНИЕВОЙ\"",
             "oid": "1.2.643.5.1.13.13.12.2.16.1147",
-            "fact": 67,
-            "previous": 55,
-            "plan": 152
+            "fact": null,
+            "previous": null,
+            "plan": 153
           },
           {
             "name": "ГАУЗ \"ГОРОДСКАЯ ПОЛИКЛИНИКА №6\"",
             "oid": "1.2.643.5.1.13.13.12.2.16.1051",
-            "fact": 228,
-            "previous": 213,
+            "fact": null,
+            "previous": null,
             "plan": 152
           },
           {
             "name": "ГАУЗ \"ГОРОДСКАЯ ПОЛИКЛИНИКА №7\"",
             "oid": "1.2.643.5.1.13.13.12.2.16.1115",
-            "fact": 251,
-            "previous": 214,
-            "plan": 162
+            "fact": null,
+            "previous": null,
+            "plan": 161
           },
           {
             "name": "ГАУЗ \"КДМЦ\"",
             "oid": "1.2.643.5.1.13.13.12.2.16.1065",
-            "fact": 49,
-            "previous": 43,
+            "fact": null,
+            "previous": null,
             "plan": 45
           },
           {
             "name": "ГАУЗ НДРБ С ПЦ",
             "oid": "1.2.643.5.1.13.13.12.2.16.1171",
-            "fact": 162,
-            "previous": 153,
-            "plan": 122
+            "fact": null,
+            "previous": null,
+            "plan": 121
           },
           {
             "name": "ГАУЗ \"КПРБ\"",
             "oid": "1.2.643.5.1.13.13.12.2.16.1165",
-            "fact": 1,
-            "previous": 1,
-            "plan": 45
+            "fact": null,
+            "previous": null,
+            "plan": 44
           },
           {
             "name": "ГАУЗ \"НЦРМБ\"",
             "oid": "1.2.643.5.1.13.13.12.2.16.1192",
-            "fact": 677,
-            "previous": 604,
+            "fact": null,
+            "previous": null,
             "plan": 341
           },
           {
             "name": "ГАУЗ \"АГРЫЗСКАЯ ЦРБ\"",
             "oid": "1.2.643.5.1.13.13.12.2.16.1088",
-            "fact": 33,
-            "previous": 27,
-            "plan": 50
+            "fact": null,
+            "previous": null,
+            "plan": 51
           },
           {
             "name": "АЗНАКАЕВСКАЯ ЦРБ",
             "oid": "1.2.643.5.1.13.13.12.2.16.1084",
-            "fact": 306,
-            "previous": 291,
+            "fact": null,
+            "previous": null,
             "plan": 118
           },
           {
             "name": "ГАУЗ \"АКСУБАЕВСКАЯ ЦРБ\"",
             "oid": "1.2.643.5.1.13.13.12.2.16.1156",
-            "fact": 64,
-            "previous": 55,
-            "plan": 45
+            "fact": null,
+            "previous": null,
+            "plan": 44
           },
           {
             "name": "ГАУЗ \"АКТАНЫШСКАЯ ЦРБ\"",
             "oid": "1.2.643.5.1.13.13.12.2.16.1092",
-            "fact": 180,
-            "previous": 170,
+            "fact": null,
+            "previous": null,
             "plan": 52
           },
           {
             "name": "ГАУЗ \"АЛЕКСЕЕВСКАЯ ЦРБ\"",
             "oid": "1.2.643.5.1.13.13.12.2.16.1087",
-            "fact": 15,
-            "previous": 15,
+            "fact": null,
+            "previous": null,
             "plan": 48
           },
           {
             "name": "ГАУЗ \"БАЗАРНО-МАТАКСКАЯ ЦРБ\"",
             "oid": "1.2.643.5.1.13.13.12.2.16.1161",
-            "fact": 9,
-            "previous": 8,
+            "fact": null,
+            "previous": null,
             "plan": 33
           },
           {
             "name": "ГАУЗ \"АЛЬМЕТЬЕВСКАЯ ГП № 3\"",
             "oid": "1.2.643.5.1.13.13.12.2.16.1107",
-            "fact": 0,
-            "previous": 0,
-            "plan": 96
+            "fact": null,
+            "previous": null,
+            "plan": 97
           },
           {
             "name": "ГАУЗ \"АДРБ С ПЦ\"",
             "oid": "1.2.643.5.1.13.13.12.2.16.1146",
-            "fact": 2,
-            "previous": 2,
-            "plan": 92
+            "fact": null,
+            "previous": null,
+            "plan": 93
           },
           {
             "name": "ГАУЗ \"АЛЬМЕТЬЕВСКАЯ ЦРБ\"",
             "oid": "1.2.643.5.1.13.13.12.2.16.1108",
-            "fact": 136,
-            "previous": 119,
-            "plan": 195
+            "fact": null,
+            "previous": null,
+            "plan": 194
           },
           {
             "name": "ГАУЗ \"АЛЬМЕТЬЕВСКАЯ РМБ\"",
             "oid": "1.2.643.5.1.13.13.12.2.16.44921",
-            "fact": 51,
-            "previous": 50,
+            "fact": null,
+            "previous": null,
             "plan": 47
           },
           {
             "name": "ГАУЗ \"АПАСТОВСКАЯ ЦРБ\"",
             "oid": "1.2.643.5.1.13.13.12.2.16.1152",
-            "fact": 0,
-            "previous": 0,
-            "plan": 35
+            "fact": null,
+            "previous": null,
+            "plan": 34
           },
           {
             "name": "ГАУЗ \"АРСКАЯ ЦРБ\"",
             "oid": "1.2.643.5.1.13.13.12.2.16.1164",
-            "fact": 30,
-            "previous": 28,
+            "fact": null,
+            "previous": null,
             "plan": 105
           },
           {
             "name": "ГАУЗ \"АТНИНСКАЯ ЦРБ\"",
             "oid": "1.2.643.5.1.13.13.12.2.16.1078",
-            "fact": 23,
-            "previous": 21,
-            "plan": 26
+            "fact": null,
+            "previous": null,
+            "plan": 25
           },
           {
             "name": "ГАУЗ \"БАВЛИНСКАЯ ЦРБ\"",
             "oid": "1.2.643.5.1.13.13.12.2.16.1129",
-            "fact": 243,
-            "previous": 222,
-            "plan": 62
+            "fact": null,
+            "previous": null,
+            "plan": 63
           },
           {
             "name": "ГАУЗ \"БАЛТАСИНСКАЯ ЦРБ\"",
             "oid": "1.2.643.5.1.13.13.12.2.16.1081",
-            "fact": 16,
-            "previous": 16,
-            "plan": 63
+            "fact": null,
+            "previous": null,
+            "plan": 64
           },
           {
             "name": "ГАУЗ \"БУГУЛЬМИНСКАЯ ЦРБ\"",
             "oid": "1.2.643.5.1.13.13.12.2.16.1042",
-            "fact": 15,
-            "previous": 15,
-            "plan": 179
+            "fact": null,
+            "previous": null,
+            "plan": 180
           },
           {
             "name": "ГАУЗ \"БУИНСКАЯ ЦРБ\"",
             "oid": "1.2.643.5.1.13.13.12.2.16.1120",
-            "fact": 16,
-            "previous": 15,
+            "fact": null,
+            "previous": null,
             "plan": 77
           },
           {
             "name": "ВЕРХНЕУСЛОНСКАЯ ЦРБ",
             "oid": "1.2.643.5.1.13.13.12.2.16.1052",
-            "fact": 17,
-            "previous": 12,
-            "plan": 30
+            "fact": null,
+            "previous": null,
+            "plan": 31
           },
           {
             "name": "ГАУЗ \"ВЫСОКОГОРСКАЯ ЦРБ\"",
             "oid": "1.2.643.5.1.13.13.12.2.16.1050",
-            "fact": 19,
-            "previous": 18,
+            "fact": null,
+            "previous": null,
             "plan": 111
           },
           {
             "name": "ГАУЗ \"ДРОЖЖАНОВСКАЯ ЦРБ\"",
             "oid": "1.2.643.5.1.13.13.12.2.16.1105",
-            "fact": 34,
-            "previous": 30,
+            "fact": null,
+            "previous": null,
             "plan": 36
           },
           {
             "name": "ГАУЗ \"ЕЦРБ\"",
             "oid": "1.2.643.5.1.13.13.12.2.16.1093",
-            "fact": 1021,
-            "previous": 942,
+            "fact": null,
+            "previous": null,
             "plan": 177
           },
           {
             "name": "ГАУЗ \"ЗАИНСКАЯ ЦРБ\"",
             "oid": "1.2.643.5.1.13.13.12.2.16.1072",
-            "fact": 568,
-            "previous": 519,
-            "plan": 95
+            "fact": null,
+            "previous": null,
+            "plan": 96
           },
           {
             "name": "ГАУЗ \"ЗЕЛЕНОДОЛЬСКАЯ ЦРБ\"",
             "oid": "1.2.643.5.1.13.13.12.2.16.1139",
-            "fact": 241,
-            "previous": 217,
+            "fact": null,
+            "previous": null,
             "plan": 347
           },
           {
             "name": "ГАУЗ \"КАЙБИЦКАЯ ЦЕНТРАЛЬНАЯ РАЙОННАЯ БОЛЬНИЦА\"",
             "oid": "1.2.643.5.1.13.13.12.2.16.1131",
-            "fact": 39,
-            "previous": 39,
-            "plan": 21
+            "fact": null,
+            "previous": null,
+            "plan": 22
           },
           {
             "name": "ГАУЗ \"КАМСКО-УСТЬИНСКАЯ ЦРБ\"",
             "oid": "1.2.643.5.1.13.13.12.2.16.1044",
-            "fact": 13,
-            "previous": 13,
+            "fact": null,
+            "previous": null,
             "plan": 28
           },
           {
             "name": "ГАУЗ \"КУКМОРСКАЯ ЦРБ\"",
             "oid": "1.2.643.5.1.13.13.12.2.16.1144",
-            "fact": 39,
-            "previous": 34,
+            "fact": null,
+            "previous": null,
             "plan": 102
           },
           {
             "name": "ЛАИШЕВСКАЯ ЦРБ",
             "oid": "1.2.643.5.1.13.13.12.2.16.1149",
-            "fact": 17,
-            "previous": 17,
-            "plan": 120
+            "fact": null,
+            "previous": null,
+            "plan": 121
           },
           {
             "name": "ГАУЗ \"ЛЕНИНОГОРСКАЯ ЦРБ\"",
             "oid": "1.2.643.5.1.13.13.12.2.16.1073",
-            "fact": 0,
-            "previous": 0,
+            "fact": null,
+            "previous": null,
             "plan": 151
           },
           {
             "name": "ГАУЗ \"МАМАДЫШСКАЯ ЦРБ\"",
             "oid": "1.2.643.5.1.13.13.12.2.16.1104",
-            "fact": 89,
-            "previous": 76,
+            "fact": null,
+            "previous": null,
             "plan": 74
           },
           {
             "name": "ГАУЗ \"МЕНДЕЛЕЕВСКАЯ ЦРБ\"",
             "oid": "1.2.643.5.1.13.13.12.2.16.1058",
-            "fact": 92,
-            "previous": 75,
-            "plan": 58
+            "fact": null,
+            "previous": null,
+            "plan": 57
           },
           {
             "name": "ГАУЗ \"МЕНЗЕЛИНСКАЯ ЦРБ\"",
             "oid": "1.2.643.5.1.13.13.12.2.16.1101",
-            "fact": 85,
-            "previous": 74,
+            "fact": null,
+            "previous": null,
             "plan": 52
           },
           {
             "name": "МУСЛЮМОВСКАЯ ЦРБ",
             "oid": "1.2.643.5.1.13.13.12.2.16.1055",
-            "fact": 40,
-            "previous": 36,
-            "plan": 38
+            "fact": null,
+            "previous": null,
+            "plan": 39
           },
           {
             "name": "ГАУЗ \"НОВОШЕШМИНСКАЯ ЦРБ\"",
             "oid": "1.2.643.5.1.13.13.12.2.16.1059",
-            "fact": 31,
-            "previous": 29,
-            "plan": 25
+            "fact": null,
+            "previous": null,
+            "plan": 26
           },
           {
             "name": "ГАУЗ \"НУРЛАТСКАЯ ЦРБ\"",
             "oid": "1.2.643.5.1.13.13.12.2.16.1138",
-            "fact": 56,
-            "previous": 46,
-            "plan": 104
+            "fact": null,
+            "previous": null,
+            "plan": 105
           },
           {
             "name": "ГАУЗ \"ПЕСТРЕЧИНСКАЯ ЦРБ\"",
             "oid": "1.2.643.5.1.13.13.12.2.16.1109",
-            "fact": 259,
-            "previous": 235,
-            "plan": 114
+            "fact": null,
+            "previous": null,
+            "plan": 113
           },
           {
             "name": "ГАУЗ \"РЫБНО-СЛОБОДСКАЯ ЦРБ\"",
             "oid": "1.2.643.5.1.13.13.12.2.16.1133",
-            "fact": 4,
-            "previous": 3,
-            "plan": 46
+            "fact": null,
+            "previous": null,
+            "plan": 45
           },
           {
             "name": "ГАУЗ \"САБИНСКАЯ ЦРБ\"",
             "oid": "1.2.643.5.1.13.13.12.2.16.1126",
-            "fact": 73,
-            "previous": 73,
+            "fact": null,
+            "previous": null,
             "plan": 66
           },
           {
             "name": "ГАУЗ \"САРМАНОВСКАЯ ЦРБ\"",
             "oid": "1.2.643.5.1.13.13.12.2.16.1169",
-            "fact": 99,
-            "previous": 94,
+            "fact": null,
+            "previous": null,
             "plan": 64
           },
           {
@@ -2284,156 +2287,158 @@
             "oid": "1.2.643.5.1.13.13.12.2.16.18650",
             "fact": null,
             "previous": null,
-            "plan": 33
+            "plan": 32
           },
           {
             "name": "ГАУЗ \"ТЕТЮШСКАЯ ЦРБ\"",
             "oid": "1.2.643.5.1.13.13.12.2.16.1130",
-            "fact": 3,
-            "previous": 3,
-            "plan": 39
+            "fact": null,
+            "previous": null,
+            "plan": 38
           },
           {
             "name": "ГАУЗ \"ТУКАЕВСКАЯ ЦРБ\"",
             "oid": "1.2.643.5.1.13.13.12.2.16.1140",
-            "fact": 76,
-            "previous": 72,
+            "fact": null,
+            "previous": null,
             "plan": 84
           },
           {
             "name": "ГАУЗ \"ТЮЛЯЧИНСКАЯ ЦРБ\"",
             "oid": "1.2.643.5.1.13.13.12.2.16.1039",
-            "fact": 30,
-            "previous": 25,
+            "fact": null,
+            "previous": null,
             "plan": 25
           },
           {
             "name": "ГАУЗ \"ЧЕРЕМШАНСКАЯ ЦРБ\"",
             "oid": "1.2.643.5.1.13.13.12.2.16.1162",
-            "fact": 38,
-            "previous": 30,
-            "plan": 32
+            "fact": null,
+            "previous": null,
+            "plan": 31
           },
           {
             "name": "ГАУЗ \"ЧИСТОПОЛЬСКАЯ ЦРБ\"",
             "oid": "1.2.643.5.1.13.13.12.2.16.1038",
-            "fact": 304,
-            "previous": 264,
+            "fact": null,
+            "previous": null,
             "plan": 142
           },
           {
             "name": "ГАУЗ \"УРУССИНСКАЯ ЦРБ\"",
             "oid": "1.2.643.5.1.13.13.12.2.16.1097",
-            "fact": 54,
-            "previous": 47,
-            "plan": 40
+            "fact": null,
+            "previous": null,
+            "plan": 41
           },
           {
             "name": "ГАУЗ \"ДГП № 2\"",
             "oid": "1.2.643.5.1.13.13.12.2.16.1182",
-            "fact": 120,
-            "previous": 119,
-            "plan": 46
+            "fact": null,
+            "previous": null,
+            "plan": 45
           },
           {
             "name": "ГАУЗ \"ДЕТСКАЯ ГОРОДСКАЯ ПОЛИКЛИНИКА № 4\"",
             "oid": "1.2.643.5.1.13.13.12.2.16.1122",
-            "fact": 92,
-            "previous": 88,
+            "fact": null,
+            "previous": null,
             "plan": 76
           },
           {
             "name": "ГАУЗ \"ГДП №7\"",
             "oid": "1.2.643.5.1.13.13.12.2.16.1113",
-            "fact": 186,
-            "previous": 172,
-            "plan": 66
+            "fact": null,
+            "previous": null,
+            "plan": 65
           },
           {
             "name": "ГАУЗ \"ДГП № 9\"",
             "oid": "1.2.643.5.1.13.13.12.2.16.1193",
-            "fact": 98,
-            "previous": 88,
+            "fact": null,
+            "previous": null,
             "plan": 48
           },
           {
             "name": "ГАУЗ \"ДЕТСКАЯ ГОРОДСКАЯ ПОЛИКЛИНИКА № 10\"",
             "oid": "1.2.643.5.1.13.13.12.2.16.1199",
-            "fact": 190,
-            "previous": 173,
-            "plan": 79
+            "fact": null,
+            "previous": null,
+            "plan": 80
           },
           {
             "name": "ГАУЗ \"ДЕТСКАЯ ГОРОДСКАЯ ПОЛИКЛИНИКА № 11\"",
             "oid": "1.2.643.5.1.13.13.12.2.16.1200",
-            "fact": 108,
-            "previous": 88,
-            "plan": 59
+            "fact": null,
+            "previous": null,
+            "plan": 60
           },
           {
             "name": "ГАУЗ \"ДЕТСКАЯ ГОРОДСКАЯ ПОЛИКЛИНИКА №6\"",
             "oid": "1.2.643.5.1.13.13.12.2.16.1066",
-            "fact": 31,
-            "previous": 31,
+            "fact": null,
+            "previous": null,
             "plan": 39
           },
           {
             "name": "ГАУЗ \"ДЕТСКАЯ ГОРОДСКАЯ ПОЛИКЛИНИКА №3\"",
             "oid": "1.2.643.5.1.13.13.12.2.16.1067",
-            "fact": 77,
-            "previous": 69,
-            "plan": 45
+            "fact": null,
+            "previous": null,
+            "plan": 44
           },
           {
             "name": "ГАУЗ \"ДЕТСКАЯ ГОРОДСКАЯ ПОЛИКЛИНИКА №2\"",
             "oid": "1.2.643.5.1.13.13.12.2.16.1045",
-            "fact": 122,
-            "previous": 109,
-            "plan": 47
+            "fact": null,
+            "previous": null,
+            "plan": 48
           },
           {
             "name": "ГАУЗ \"ДЕТСКАЯ ГОРОДСКАЯ ПОЛИКЛИНИКА №4 ИМ. Ф.Г. АХМЕРОВОЙ\"",
             "oid": "1.2.643.5.1.13.13.12.2.16.1127",
-            "fact": 118,
-            "previous": 108,
+            "fact": null,
+            "previous": null,
             "plan": 55
           },
           {
             "name": "ГАУЗ \"ДЕТСКАЯ ГОРОДСКАЯ ПОЛИКЛИНИКА №5\"",
             "oid": "1.2.643.5.1.13.13.12.2.16.1089",
-            "fact": 112,
-            "previous": 100,
-            "plan": 49
+            "fact": null,
+            "previous": null,
+            "plan": 50
           },
           {
             "name": "ГАУЗ \"ГОРОДСКАЯ ДЕТСКАЯ ПОЛИКЛИНИКА № 6\"",
             "oid": "1.2.643.5.1.13.13.12.2.16.1090",
-            "fact": 485,
-            "previous": 434,
-            "plan": 104
+            "fact": null,
+            "previous": null,
+            "plan": 105
           },
           {
             "name": "ГАУЗ \"ДРКБ МЗ РТ\"",
             "oid": "1.2.643.5.1.13.13.12.2.16.1155",
-            "fact": 301,
-            "previous": 276,
-            "plan": 89
+            "fact": null,
+            "previous": null,
+            "plan": 88
           },
           {
             "name": "ГАУЗ \"ГДБ № 1\"",
             "oid": "1.2.643.5.1.13.13.12.2.16.1148",
-            "fact": 54,
-            "previous": 54,
+            "fact": null,
+            "previous": null,
             "plan": 40
           },
           {
             "name": "ГАУЗ \"ДГКБ № 7\"",
             "oid": "1.2.643.5.1.13.13.12.2.16.1123",
-            "fact": 609,
-            "previous": 538,
+            "fact": null,
+            "previous": null,
             "plan": 66
           }
-        ]
+        ],
+        "factStatus": "awaiting_november_source",
+        "cumulativeTarget": 90000
       }
     }
   },
@@ -2442,6 +2447,2459 @@
     "missing": "Отсутствие строки не заменяется нулём",
     "forecast": "Текущий факт плюс темп между двумя последними месячными выгрузками до конца месяца",
     "cumulativeComparison": "Накопительный срез сопоставляется только с более ранним накопительным срезом с начала года",
-    "monthlyComparison": "Оперативный месячный срез сопоставляется только с более ранним срезом того же календарного месяца"
+    "monthlyComparison": "Оперативный месячный срез сопоставляется только с более ранним срезом того же календарного месяца",
+    "novemberStart": "План ноября = утверждённая контрольная точка ноября − контрольная точка октября. Факт и прогноз до первой ноябрьской выгрузки отсутствуют; октябрьский факт не переносится.",
+    "closedOctober": "Октябрьские факты, планы, периоды и сравнительные срезы зафиксированы в closedMonths. Данные за октябрь не являются ноябрьской динамикой."
+  },
+  "closedMonths": {
+    "2026-10": {
+      "monthLabel": "Октябрь 2026",
+      "status": "closed",
+      "closedAt": "31.10.2026",
+      "operational": {
+        "date": "31.10.2026",
+        "period": "01.10–31.10.2026",
+        "previousDate": "29.10.2026",
+        "previousPeriod": "01.10–29.10.2026",
+        "source": "ТМК_МАХ 01.10.-31.10.(Выгрузка из ГИС 02.11.).xlsx",
+        "previousSource": "ТМК_МАХ 01.10.-29.10.(Выгрузка из ГИС 29.10.).xlsx",
+        "metrics": {
+          "tmk": {
+            "sourceTotal": 15573,
+            "previousSourceTotal": 13932,
+            "plannedMoFact": 15400,
+            "previousPlannedMoFact": 13789,
+            "republicPlan": 16000,
+            "rows": [
+              {
+                "name": "ГАУЗ \"ГОРОДСКАЯ БОЛЬНИЦА № 11\"",
+                "oid": "1.2.643.5.1.13.13.12.2.16.1070",
+                "fact": 55,
+                "previous": 49,
+                "plan": 150
+              },
+              {
+                "name": "ГАУЗ \"ГКБ № 12\"",
+                "oid": "1.2.643.5.1.13.13.12.2.16.28030",
+                "fact": 370,
+                "previous": 336,
+                "plan": 247
+              },
+              {
+                "name": "ГАУЗ \"ГОРОДСКАЯ ПОЛИКЛИНИКА № 7\"",
+                "oid": "1.2.643.5.1.13.13.12.2.16.1153",
+                "fact": 181,
+                "previous": 153,
+                "plan": 150
+              },
+              {
+                "name": "ГАУЗ \"КЛИНИКА МЕДИЦИНСКОГО УНИВЕРСИТЕТА\"",
+                "oid": "1.2.643.5.1.13.13.12.2.16.1125",
+                "fact": 346,
+                "previous": 297,
+                "plan": 135
+              },
+              {
+                "name": "ГАУЗ \"КЛИНИЧЕСКАЯ БОЛЬНИЦА №2\"",
+                "oid": "1.2.643.5.1.13.13.12.2.16.1185",
+                "fact": 631,
+                "previous": 545,
+                "plan": 284
+              },
+              {
+                "name": "ГАУЗ \"ГОСПИТАЛЬ ДЛЯ ВЕТЕРАНОВ ВОЙН\" Г. КАЗАНИ",
+                "oid": "1.2.643.5.1.13.13.12.2.16.1135",
+                "fact": 57,
+                "previous": 58,
+                "plan": 99
+              },
+              {
+                "name": "ГАУЗ \"ГКБ №16\"",
+                "oid": "1.2.643.5.1.13.13.12.2.16.1136",
+                "fact": 208,
+                "previous": 186,
+                "plan": 241
+              },
+              {
+                "name": "ГАУЗ \"ГКБ№7 ИМ. М.Н.САДЫКОВА\"",
+                "oid": "1.2.643.5.1.13.13.12.2.16.1163",
+                "fact": 587,
+                "previous": 534,
+                "plan": 409
+              },
+              {
+                "name": "ГАУЗ \"ГОРОДСКАЯ ПОЛИКЛИНИКА № 10\"",
+                "oid": "1.2.643.5.1.13.13.12.2.16.1074",
+                "fact": 361,
+                "previous": 312,
+                "plan": 427
+              },
+              {
+                "name": "ГАУЗ \"ЦГКБ № 18 ИМ. ПРОФ. К.Ш. ЗЫЯТДИНОВА\"",
+                "oid": "1.2.643.5.1.13.13.12.2.16.1151",
+                "fact": 440,
+                "previous": 381,
+                "plan": 281
+              },
+              {
+                "name": "ГАУЗ \"ГОРОДСКАЯ ПОЛИКЛИНИКА №18\"",
+                "oid": "1.2.643.5.1.13.13.12.2.16.1080",
+                "fact": 230,
+                "previous": 212,
+                "plan": 360
+              },
+              {
+                "name": "ГАУЗ \"ГОРОДСКАЯ ПОЛИКЛИНИКА № 20\"",
+                "oid": "1.2.643.5.1.13.13.12.2.16.1178",
+                "fact": 62,
+                "previous": 59,
+                "plan": 466
+              },
+              {
+                "name": "ГАУЗ \"ГОРОДСКАЯ ПОЛИКЛИНИКА № 21\"",
+                "oid": "1.2.643.5.1.13.13.12.2.16.1179",
+                "fact": 16,
+                "previous": 16,
+                "plan": 446
+              },
+              {
+                "name": "ГАУЗ \"ГОРОДСКАЯ ПОЛИКЛИНИКА № 8\" Г.КАЗАНИ",
+                "oid": "1.2.643.5.1.13.13.12.2.16.1082",
+                "fact": 283,
+                "previous": 259,
+                "plan": 388
+              },
+              {
+                "name": "ГАУЗ \"ГОРОДСКАЯ БОЛЬНИЦА №2\"",
+                "oid": "1.2.643.5.1.13.13.12.2.16.1116",
+                "fact": 7,
+                "previous": 6,
+                "plan": 119
+              },
+              {
+                "name": "ГАУЗ \"ГОРОДСКАЯ ПОЛИКЛИНИКА №3\"",
+                "oid": "1.2.643.5.1.13.13.12.2.16.1208",
+                "fact": 40,
+                "previous": 25,
+                "plan": 284
+              },
+              {
+                "name": "ГАУЗ \"ГОРОДСКАЯ БОЛЬНИЦА №5\"",
+                "oid": "1.2.643.5.1.13.13.12.2.16.1112",
+                "fact": 77,
+                "previous": 71,
+                "plan": 394
+              },
+              {
+                "name": "ГАУЗ \"ГОСПИТАЛЬ ДЛЯ ВЕТЕРАНОВ ВОЙН\" Г. Н. ЧЕЛНЫ",
+                "oid": "1.2.643.5.1.13.13.12.2.16.1085",
+                "fact": 128,
+                "previous": 123,
+                "plan": 109
+              },
+              {
+                "name": "ГАУЗ \"ГОРОДСКАЯ ПОЛИКЛИНИКА №4 ИМ.Л.Н.ГАНИЕВОЙ\"",
+                "oid": "1.2.643.5.1.13.13.12.2.16.1147",
+                "fact": 107,
+                "previous": 83,
+                "plan": 305
+              },
+              {
+                "name": "ГАУЗ \"ГОРОДСКАЯ ПОЛИКЛИНИКА №6\"",
+                "oid": "1.2.643.5.1.13.13.12.2.16.1051",
+                "fact": 315,
+                "previous": 297,
+                "plan": 304
+              },
+              {
+                "name": "ГАУЗ \"ГОРОДСКАЯ ПОЛИКЛИНИКА №7\"",
+                "oid": "1.2.643.5.1.13.13.12.2.16.1115",
+                "fact": 237,
+                "previous": 203,
+                "plan": 323
+              },
+              {
+                "name": "ГАУЗ \"КДМЦ\"",
+                "oid": "1.2.643.5.1.13.13.12.2.16.1065",
+                "fact": 104,
+                "previous": 94,
+                "plan": 90
+              },
+              {
+                "name": "ГАУЗ НДРБ С ПЦ",
+                "oid": "1.2.643.5.1.13.13.12.2.16.1171",
+                "fact": 786,
+                "previous": 737,
+                "plan": 243
+              },
+              {
+                "name": "ГАУЗ \"КПРБ\"",
+                "oid": "1.2.643.5.1.13.13.12.2.16.1165",
+                "fact": 1,
+                "previous": 1,
+                "plan": 90
+              },
+              {
+                "name": "ГАУЗ \"НЦРМБ\"",
+                "oid": "1.2.643.5.1.13.13.12.2.16.1192",
+                "fact": 402,
+                "previous": 360,
+                "plan": 682
+              },
+              {
+                "name": "ГАУЗ \"АГРЫЗСКАЯ ЦРБ\"",
+                "oid": "1.2.643.5.1.13.13.12.2.16.1088",
+                "fact": 42,
+                "previous": 33,
+                "plan": 102
+              },
+              {
+                "name": "АЗНАКАЕВСКАЯ ЦРБ",
+                "oid": "1.2.643.5.1.13.13.12.2.16.1084",
+                "fact": 505,
+                "previous": 473,
+                "plan": 236
+              },
+              {
+                "name": "ГАУЗ \"АКСУБАЕВСКАЯ ЦРБ\"",
+                "oid": "1.2.643.5.1.13.13.12.2.16.1156",
+                "fact": 26,
+                "previous": 20,
+                "plan": 89
+              },
+              {
+                "name": "ГАУЗ \"АКТАНЫШСКАЯ ЦРБ\"",
+                "oid": "1.2.643.5.1.13.13.12.2.16.1092",
+                "fact": 89,
+                "previous": 64,
+                "plan": 104
+              },
+              {
+                "name": "ГАУЗ \"АЛЕКСЕЕВСКАЯ ЦРБ\"",
+                "oid": "1.2.643.5.1.13.13.12.2.16.1087",
+                "fact": 27,
+                "previous": 26,
+                "plan": 97
+              },
+              {
+                "name": "ГАУЗ \"БАЗАРНО-МАТАКСКАЯ ЦРБ\"",
+                "oid": "1.2.643.5.1.13.13.12.2.16.1161",
+                "fact": 4,
+                "previous": 4,
+                "plan": 65
+              },
+              {
+                "name": "ГАУЗ \"АЛЬМЕТЬЕВСКАЯ ГП № 3\"",
+                "oid": "1.2.643.5.1.13.13.12.2.16.1107",
+                "fact": 1,
+                "previous": 1,
+                "plan": 192
+              },
+              {
+                "name": "ГАУЗ \"АДРБ С ПЦ\"",
+                "oid": "1.2.643.5.1.13.13.12.2.16.1146",
+                "fact": 16,
+                "previous": 16,
+                "plan": 185
+              },
+              {
+                "name": "ГАУЗ \"АЛЬМЕТЬЕВСКАЯ ЦРБ\"",
+                "oid": "1.2.643.5.1.13.13.12.2.16.1108",
+                "fact": 1402,
+                "previous": 1243,
+                "plan": 389
+              },
+              {
+                "name": "ГАУЗ \"АЛЬМЕТЬЕВСКАЯ РМБ\"",
+                "oid": "1.2.643.5.1.13.13.12.2.16.44921",
+                "fact": 376,
+                "previous": 358,
+                "plan": 94
+              },
+              {
+                "name": "ГАУЗ \"АПАСТОВСКАЯ ЦРБ\"",
+                "oid": "1.2.643.5.1.13.13.12.2.16.1152",
+                "fact": 147,
+                "previous": 134,
+                "plan": 68
+              },
+              {
+                "name": "ГАУЗ \"АРСКАЯ ЦРБ\"",
+                "oid": "1.2.643.5.1.13.13.12.2.16.1164",
+                "fact": 34,
+                "previous": 32,
+                "plan": 210
+              },
+              {
+                "name": "ГАУЗ \"АТНИНСКАЯ ЦРБ\"",
+                "oid": "1.2.643.5.1.13.13.12.2.16.1078",
+                "fact": 122,
+                "previous": 102,
+                "plan": 51
+              },
+              {
+                "name": "ГАУЗ \"БАВЛИНСКАЯ ЦРБ\"",
+                "oid": "1.2.643.5.1.13.13.12.2.16.1129",
+                "fact": 65,
+                "previous": 56,
+                "plan": 125
+              },
+              {
+                "name": "ГАУЗ \"БАЛТАСИНСКАЯ ЦРБ\"",
+                "oid": "1.2.643.5.1.13.13.12.2.16.1081",
+                "fact": 129,
+                "previous": 112,
+                "plan": 127
+              },
+              {
+                "name": "ГАУЗ \"БУГУЛЬМИНСКАЯ ЦРБ\"",
+                "oid": "1.2.643.5.1.13.13.12.2.16.1042",
+                "fact": 92,
+                "previous": 80,
+                "plan": 358
+              },
+              {
+                "name": "ГАУЗ \"БУИНСКАЯ ЦРБ\"",
+                "oid": "1.2.643.5.1.13.13.12.2.16.1120",
+                "fact": 78,
+                "previous": 51,
+                "plan": 154
+              },
+              {
+                "name": "ВЕРХНЕУСЛОНСКАЯ ЦРБ",
+                "oid": "1.2.643.5.1.13.13.12.2.16.1052",
+                "fact": 20,
+                "previous": 3,
+                "plan": 61
+              },
+              {
+                "name": "ГАУЗ \"ВЫСОКОГОРСКАЯ ЦРБ\"",
+                "oid": "1.2.643.5.1.13.13.12.2.16.1050",
+                "fact": 99,
+                "previous": 93,
+                "plan": 223
+              },
+              {
+                "name": "ГАУЗ \"ДРОЖЖАНОВСКАЯ ЦРБ\"",
+                "oid": "1.2.643.5.1.13.13.12.2.16.1105",
+                "fact": 75,
+                "previous": 66,
+                "plan": 72
+              },
+              {
+                "name": "ГАУЗ \"ЕЦРБ\"",
+                "oid": "1.2.643.5.1.13.13.12.2.16.1093",
+                "fact": 838,
+                "previous": 781,
+                "plan": 355
+              },
+              {
+                "name": "ГАУЗ \"ЗАИНСКАЯ ЦРБ\"",
+                "oid": "1.2.643.5.1.13.13.12.2.16.1072",
+                "fact": 678,
+                "previous": 623,
+                "plan": 191
+              },
+              {
+                "name": "ГАУЗ \"ЗЕЛЕНОДОЛЬСКАЯ ЦРБ\"",
+                "oid": "1.2.643.5.1.13.13.12.2.16.1139",
+                "fact": 272,
+                "previous": 248,
+                "plan": 694
+              },
+              {
+                "name": "ГАУЗ \"КАЙБИЦКАЯ ЦЕНТРАЛЬНАЯ РАЙОННАЯ БОЛЬНИЦА\"",
+                "oid": "1.2.643.5.1.13.13.12.2.16.1131",
+                "fact": 52,
+                "previous": 52,
+                "plan": 44
+              },
+              {
+                "name": "ГАУЗ \"КАМСКО-УСТЬИНСКАЯ ЦРБ\"",
+                "oid": "1.2.643.5.1.13.13.12.2.16.1044",
+                "fact": 29,
+                "previous": 29,
+                "plan": 56
+              },
+              {
+                "name": "ГАУЗ \"КУКМОРСКАЯ ЦРБ\"",
+                "oid": "1.2.643.5.1.13.13.12.2.16.1144",
+                "fact": 53,
+                "previous": 46,
+                "plan": 204
+              },
+              {
+                "name": "ЛАИШЕВСКАЯ ЦРБ",
+                "oid": "1.2.643.5.1.13.13.12.2.16.1149",
+                "fact": 39,
+                "previous": 36,
+                "plan": 241
+              },
+              {
+                "name": "ГАУЗ \"ЛЕНИНОГОРСКАЯ ЦРБ\"",
+                "oid": "1.2.643.5.1.13.13.12.2.16.1073",
+                "fact": 0,
+                "previous": 0,
+                "plan": 302
+              },
+              {
+                "name": "ГАУЗ \"МАМАДЫШСКАЯ ЦРБ\"",
+                "oid": "1.2.643.5.1.13.13.12.2.16.1104",
+                "fact": 90,
+                "previous": 79,
+                "plan": 149
+              },
+              {
+                "name": "ГАУЗ \"МЕНДЕЛЕЕВСКАЯ ЦРБ\"",
+                "oid": "1.2.643.5.1.13.13.12.2.16.1058",
+                "fact": 99,
+                "previous": 79,
+                "plan": 116
+              },
+              {
+                "name": "ГАУЗ \"МЕНЗЕЛИНСКАЯ ЦРБ\"",
+                "oid": "1.2.643.5.1.13.13.12.2.16.1101",
+                "fact": 163,
+                "previous": 127,
+                "plan": 104
+              },
+              {
+                "name": "МУСЛЮМОВСКАЯ ЦРБ",
+                "oid": "1.2.643.5.1.13.13.12.2.16.1055",
+                "fact": 22,
+                "previous": 19,
+                "plan": 78
+              },
+              {
+                "name": "ГАУЗ \"НОВОШЕШМИНСКАЯ ЦРБ\"",
+                "oid": "1.2.643.5.1.13.13.12.2.16.1059",
+                "fact": 42,
+                "previous": 39,
+                "plan": 51
+              },
+              {
+                "name": "ГАУЗ \"НУРЛАТСКАЯ ЦРБ\"",
+                "oid": "1.2.643.5.1.13.13.12.2.16.1138",
+                "fact": 117,
+                "previous": 95,
+                "plan": 209
+              },
+              {
+                "name": "ГАУЗ \"ПЕСТРЕЧИНСКАЯ ЦРБ\"",
+                "oid": "1.2.643.5.1.13.13.12.2.16.1109",
+                "fact": 43,
+                "previous": 39,
+                "plan": 228
+              },
+              {
+                "name": "ГАУЗ \"РЫБНО-СЛОБОДСКАЯ ЦРБ\"",
+                "oid": "1.2.643.5.1.13.13.12.2.16.1133",
+                "fact": 7,
+                "previous": 6,
+                "plan": 91
+              },
+              {
+                "name": "ГАУЗ \"САБИНСКАЯ ЦРБ\"",
+                "oid": "1.2.643.5.1.13.13.12.2.16.1126",
+                "fact": 111,
+                "previous": 109,
+                "plan": 131
+              },
+              {
+                "name": "ГАУЗ \"САРМАНОВСКАЯ ЦРБ\"",
+                "oid": "1.2.643.5.1.13.13.12.2.16.1169",
+                "fact": 317,
+                "previous": 284,
+                "plan": 129
+              },
+              {
+                "name": "Филиал ГАУЗ «Республиканская клиническая больница Министерства здравоохранения Республики Татарстан» - «Спасская ЦРБ»",
+                "oid": "1.2.643.5.1.13.13.12.2.16.18650",
+                "fact": null,
+                "previous": null,
+                "plan": 65
+              },
+              {
+                "name": "ГАУЗ \"ТЕТЮШСКАЯ ЦРБ\"",
+                "oid": "1.2.643.5.1.13.13.12.2.16.1130",
+                "fact": 102,
+                "previous": 94,
+                "plan": 77
+              },
+              {
+                "name": "ГАУЗ \"ТУКАЕВСКАЯ ЦРБ\"",
+                "oid": "1.2.643.5.1.13.13.12.2.16.1140",
+                "fact": 99,
+                "previous": 89,
+                "plan": 168
+              },
+              {
+                "name": "ГАУЗ \"ТЮЛЯЧИНСКАЯ ЦРБ\"",
+                "oid": "1.2.643.5.1.13.13.12.2.16.1039",
+                "fact": 127,
+                "previous": 109,
+                "plan": 50
+              },
+              {
+                "name": "ГАУЗ \"ЧЕРЕМШАНСКАЯ ЦРБ\"",
+                "oid": "1.2.643.5.1.13.13.12.2.16.1162",
+                "fact": 39,
+                "previous": 33,
+                "plan": 63
+              },
+              {
+                "name": "ГАУЗ \"ЧИСТОПОЛЬСКАЯ ЦРБ\"",
+                "oid": "1.2.643.5.1.13.13.12.2.16.1038",
+                "fact": 96,
+                "previous": 77,
+                "plan": 284
+              },
+              {
+                "name": "ГАУЗ \"УРУССИНСКАЯ ЦРБ\"",
+                "oid": "1.2.643.5.1.13.13.12.2.16.1097",
+                "fact": 24,
+                "previous": 19,
+                "plan": 81
+              },
+              {
+                "name": "ГАУЗ \"ДГП № 2\"",
+                "oid": "1.2.643.5.1.13.13.12.2.16.1182",
+                "fact": 68,
+                "previous": 66,
+                "plan": 90
+              },
+              {
+                "name": "ГАУЗ \"ДЕТСКАЯ ГОРОДСКАЯ ПОЛИКЛИНИКА № 4\"",
+                "oid": "1.2.643.5.1.13.13.12.2.16.1122",
+                "fact": 62,
+                "previous": 56,
+                "plan": 152
+              },
+              {
+                "name": "ГАУЗ \"ГДП №7\"",
+                "oid": "1.2.643.5.1.13.13.12.2.16.1113",
+                "fact": 160,
+                "previous": 147,
+                "plan": 130
+              },
+              {
+                "name": "ГАУЗ \"ДГП № 9\"",
+                "oid": "1.2.643.5.1.13.13.12.2.16.1193",
+                "fact": 141,
+                "previous": 130,
+                "plan": 97
+              },
+              {
+                "name": "ГАУЗ \"ДЕТСКАЯ ГОРОДСКАЯ ПОЛИКЛИНИКА № 10\"",
+                "oid": "1.2.643.5.1.13.13.12.2.16.1199",
+                "fact": 223,
+                "previous": 188,
+                "plan": 160
+              },
+              {
+                "name": "ГАУЗ \"ДЕТСКАЯ ГОРОДСКАЯ ПОЛИКЛИНИКА № 11\"",
+                "oid": "1.2.643.5.1.13.13.12.2.16.1200",
+                "fact": 61,
+                "previous": 46,
+                "plan": 119
+              },
+              {
+                "name": "ГАУЗ \"ДЕТСКАЯ ГОРОДСКАЯ ПОЛИКЛИНИКА №6\"",
+                "oid": "1.2.643.5.1.13.13.12.2.16.1066",
+                "fact": 26,
+                "previous": 26,
+                "plan": 78
+              },
+              {
+                "name": "ГАУЗ \"ДЕТСКАЯ ГОРОДСКАЯ ПОЛИКЛИНИКА №3\"",
+                "oid": "1.2.643.5.1.13.13.12.2.16.1067",
+                "fact": 43,
+                "previous": 40,
+                "plan": 89
+              },
+              {
+                "name": "ГАУЗ \"ДЕТСКАЯ ГОРОДСКАЯ ПОЛИКЛИНИКА №2\"",
+                "oid": "1.2.643.5.1.13.13.12.2.16.1045",
+                "fact": 156,
+                "previous": 147,
+                "plan": 95
+              },
+              {
+                "name": "ГАУЗ \"ДЕТСКАЯ ГОРОДСКАЯ ПОЛИКЛИНИКА №4 ИМ. Ф.Г. АХМЕРОВОЙ\"",
+                "oid": "1.2.643.5.1.13.13.12.2.16.1127",
+                "fact": 132,
+                "previous": 115,
+                "plan": 110
+              },
+              {
+                "name": "ГАУЗ \"ДЕТСКАЯ ГОРОДСКАЯ ПОЛИКЛИНИКА №5\"",
+                "oid": "1.2.643.5.1.13.13.12.2.16.1089",
+                "fact": 95,
+                "previous": 90,
+                "plan": 99
+              },
+              {
+                "name": "ГАУЗ \"ГОРОДСКАЯ ДЕТСКАЯ ПОЛИКЛИНИКА № 6\"",
+                "oid": "1.2.643.5.1.13.13.12.2.16.1090",
+                "fact": 349,
+                "previous": 319,
+                "plan": 210
+              },
+              {
+                "name": "ГАУЗ \"ДРКБ МЗ РТ\"",
+                "oid": "1.2.643.5.1.13.13.12.2.16.1155",
+                "fact": 527,
+                "previous": 484,
+                "plan": 177
+              },
+              {
+                "name": "ГАУЗ \"ГДБ № 1\"",
+                "oid": "1.2.643.5.1.13.13.12.2.16.1148",
+                "fact": 37,
+                "previous": 34,
+                "plan": 80
+              },
+              {
+                "name": "ГАУЗ \"ДГКБ № 7\"",
+                "oid": "1.2.643.5.1.13.13.12.2.16.1123",
+                "fact": 481,
+                "previous": 425,
+                "plan": 132
+              }
+            ]
+          },
+          "eln": {
+            "sourceTotal": 12498,
+            "previousSourceTotal": 11184,
+            "plannedMoFact": 12378,
+            "previousPlannedMoFact": 11077,
+            "republicPlan": 8000,
+            "rows": [
+              {
+                "name": "ГАУЗ \"ГОРОДСКАЯ БОЛЬНИЦА № 11\"",
+                "oid": "1.2.643.5.1.13.13.12.2.16.1070",
+                "fact": 114,
+                "previous": 105,
+                "plan": 75
+              },
+              {
+                "name": "ГАУЗ \"ГКБ № 12\"",
+                "oid": "1.2.643.5.1.13.13.12.2.16.28030",
+                "fact": 334,
+                "previous": 303,
+                "plan": 123
+              },
+              {
+                "name": "ГАУЗ \"ГОРОДСКАЯ ПОЛИКЛИНИКА № 7\"",
+                "oid": "1.2.643.5.1.13.13.12.2.16.1153",
+                "fact": 131,
+                "previous": 115,
+                "plan": 75
+              },
+              {
+                "name": "ГАУЗ \"КЛИНИКА МЕДИЦИНСКОГО УНИВЕРСИТЕТА\"",
+                "oid": "1.2.643.5.1.13.13.12.2.16.1125",
+                "fact": 183,
+                "previous": 165,
+                "plan": 68
+              },
+              {
+                "name": "ГАУЗ \"КЛИНИЧЕСКАЯ БОЛЬНИЦА №2\"",
+                "oid": "1.2.643.5.1.13.13.12.2.16.1185",
+                "fact": 181,
+                "previous": 159,
+                "plan": 142
+              },
+              {
+                "name": "ГАУЗ \"ГОСПИТАЛЬ ДЛЯ ВЕТЕРАНОВ ВОЙН\" Г. КАЗАНИ",
+                "oid": "1.2.643.5.1.13.13.12.2.16.1135",
+                "fact": 188,
+                "previous": 179,
+                "plan": 50
+              },
+              {
+                "name": "ГАУЗ \"ГКБ №16\"",
+                "oid": "1.2.643.5.1.13.13.12.2.16.1136",
+                "fact": 279,
+                "previous": 141,
+                "plan": 120
+              },
+              {
+                "name": "ГАУЗ \"ГКБ№7 ИМ. М.Н.САДЫКОВА\"",
+                "oid": "1.2.643.5.1.13.13.12.2.16.1163",
+                "fact": 695,
+                "previous": 638,
+                "plan": 204
+              },
+              {
+                "name": "ГАУЗ \"ГОРОДСКАЯ ПОЛИКЛИНИКА № 10\"",
+                "oid": "1.2.643.5.1.13.13.12.2.16.1074",
+                "fact": 246,
+                "previous": 219,
+                "plan": 214
+              },
+              {
+                "name": "ГАУЗ \"ЦГКБ № 18 ИМ. ПРОФ. К.Ш. ЗЫЯТДИНОВА\"",
+                "oid": "1.2.643.5.1.13.13.12.2.16.1151",
+                "fact": 255,
+                "previous": 228,
+                "plan": 141
+              },
+              {
+                "name": "ГАУЗ \"ГОРОДСКАЯ ПОЛИКЛИНИКА №18\"",
+                "oid": "1.2.643.5.1.13.13.12.2.16.1080",
+                "fact": 321,
+                "previous": 281,
+                "plan": 180
+              },
+              {
+                "name": "ГАУЗ \"ГОРОДСКАЯ ПОЛИКЛИНИКА № 20\"",
+                "oid": "1.2.643.5.1.13.13.12.2.16.1178",
+                "fact": 200,
+                "previous": 177,
+                "plan": 233
+              },
+              {
+                "name": "ГАУЗ \"ГОРОДСКАЯ ПОЛИКЛИНИКА № 21\"",
+                "oid": "1.2.643.5.1.13.13.12.2.16.1179",
+                "fact": 94,
+                "previous": 66,
+                "plan": 223
+              },
+              {
+                "name": "ГАУЗ \"ГОРОДСКАЯ ПОЛИКЛИНИКА № 8\" Г.КАЗАНИ",
+                "oid": "1.2.643.5.1.13.13.12.2.16.1082",
+                "fact": 312,
+                "previous": 286,
+                "plan": 194
+              },
+              {
+                "name": "ГАУЗ \"ГОРОДСКАЯ БОЛЬНИЦА №2\"",
+                "oid": "1.2.643.5.1.13.13.12.2.16.1116",
+                "fact": 6,
+                "previous": 5,
+                "plan": 59
+              },
+              {
+                "name": "ГАУЗ \"ГОРОДСКАЯ ПОЛИКЛИНИКА №3\"",
+                "oid": "1.2.643.5.1.13.13.12.2.16.1208",
+                "fact": 30,
+                "previous": 29,
+                "plan": 142
+              },
+              {
+                "name": "ГАУЗ \"ГОРОДСКАЯ БОЛЬНИЦА №5\"",
+                "oid": "1.2.643.5.1.13.13.12.2.16.1112",
+                "fact": 86,
+                "previous": 78,
+                "plan": 197
+              },
+              {
+                "name": "ГАУЗ \"ГОСПИТАЛЬ ДЛЯ ВЕТЕРАНОВ ВОЙН\" Г. Н. ЧЕЛНЫ",
+                "oid": "1.2.643.5.1.13.13.12.2.16.1085",
+                "fact": 105,
+                "previous": 96,
+                "plan": 55
+              },
+              {
+                "name": "ГАУЗ \"ГОРОДСКАЯ ПОЛИКЛИНИКА №4 ИМ.Л.Н.ГАНИЕВОЙ\"",
+                "oid": "1.2.643.5.1.13.13.12.2.16.1147",
+                "fact": 67,
+                "previous": 55,
+                "plan": 152
+              },
+              {
+                "name": "ГАУЗ \"ГОРОДСКАЯ ПОЛИКЛИНИКА №6\"",
+                "oid": "1.2.643.5.1.13.13.12.2.16.1051",
+                "fact": 228,
+                "previous": 213,
+                "plan": 152
+              },
+              {
+                "name": "ГАУЗ \"ГОРОДСКАЯ ПОЛИКЛИНИКА №7\"",
+                "oid": "1.2.643.5.1.13.13.12.2.16.1115",
+                "fact": 251,
+                "previous": 214,
+                "plan": 162
+              },
+              {
+                "name": "ГАУЗ \"КДМЦ\"",
+                "oid": "1.2.643.5.1.13.13.12.2.16.1065",
+                "fact": 49,
+                "previous": 43,
+                "plan": 45
+              },
+              {
+                "name": "ГАУЗ НДРБ С ПЦ",
+                "oid": "1.2.643.5.1.13.13.12.2.16.1171",
+                "fact": 162,
+                "previous": 153,
+                "plan": 122
+              },
+              {
+                "name": "ГАУЗ \"КПРБ\"",
+                "oid": "1.2.643.5.1.13.13.12.2.16.1165",
+                "fact": 1,
+                "previous": 1,
+                "plan": 45
+              },
+              {
+                "name": "ГАУЗ \"НЦРМБ\"",
+                "oid": "1.2.643.5.1.13.13.12.2.16.1192",
+                "fact": 677,
+                "previous": 604,
+                "plan": 341
+              },
+              {
+                "name": "ГАУЗ \"АГРЫЗСКАЯ ЦРБ\"",
+                "oid": "1.2.643.5.1.13.13.12.2.16.1088",
+                "fact": 33,
+                "previous": 27,
+                "plan": 50
+              },
+              {
+                "name": "АЗНАКАЕВСКАЯ ЦРБ",
+                "oid": "1.2.643.5.1.13.13.12.2.16.1084",
+                "fact": 306,
+                "previous": 291,
+                "plan": 118
+              },
+              {
+                "name": "ГАУЗ \"АКСУБАЕВСКАЯ ЦРБ\"",
+                "oid": "1.2.643.5.1.13.13.12.2.16.1156",
+                "fact": 64,
+                "previous": 55,
+                "plan": 45
+              },
+              {
+                "name": "ГАУЗ \"АКТАНЫШСКАЯ ЦРБ\"",
+                "oid": "1.2.643.5.1.13.13.12.2.16.1092",
+                "fact": 180,
+                "previous": 170,
+                "plan": 52
+              },
+              {
+                "name": "ГАУЗ \"АЛЕКСЕЕВСКАЯ ЦРБ\"",
+                "oid": "1.2.643.5.1.13.13.12.2.16.1087",
+                "fact": 15,
+                "previous": 15,
+                "plan": 48
+              },
+              {
+                "name": "ГАУЗ \"БАЗАРНО-МАТАКСКАЯ ЦРБ\"",
+                "oid": "1.2.643.5.1.13.13.12.2.16.1161",
+                "fact": 9,
+                "previous": 8,
+                "plan": 33
+              },
+              {
+                "name": "ГАУЗ \"АЛЬМЕТЬЕВСКАЯ ГП № 3\"",
+                "oid": "1.2.643.5.1.13.13.12.2.16.1107",
+                "fact": 0,
+                "previous": 0,
+                "plan": 96
+              },
+              {
+                "name": "ГАУЗ \"АДРБ С ПЦ\"",
+                "oid": "1.2.643.5.1.13.13.12.2.16.1146",
+                "fact": 2,
+                "previous": 2,
+                "plan": 92
+              },
+              {
+                "name": "ГАУЗ \"АЛЬМЕТЬЕВСКАЯ ЦРБ\"",
+                "oid": "1.2.643.5.1.13.13.12.2.16.1108",
+                "fact": 136,
+                "previous": 119,
+                "plan": 195
+              },
+              {
+                "name": "ГАУЗ \"АЛЬМЕТЬЕВСКАЯ РМБ\"",
+                "oid": "1.2.643.5.1.13.13.12.2.16.44921",
+                "fact": 51,
+                "previous": 50,
+                "plan": 47
+              },
+              {
+                "name": "ГАУЗ \"АПАСТОВСКАЯ ЦРБ\"",
+                "oid": "1.2.643.5.1.13.13.12.2.16.1152",
+                "fact": 0,
+                "previous": 0,
+                "plan": 35
+              },
+              {
+                "name": "ГАУЗ \"АРСКАЯ ЦРБ\"",
+                "oid": "1.2.643.5.1.13.13.12.2.16.1164",
+                "fact": 30,
+                "previous": 28,
+                "plan": 105
+              },
+              {
+                "name": "ГАУЗ \"АТНИНСКАЯ ЦРБ\"",
+                "oid": "1.2.643.5.1.13.13.12.2.16.1078",
+                "fact": 23,
+                "previous": 21,
+                "plan": 26
+              },
+              {
+                "name": "ГАУЗ \"БАВЛИНСКАЯ ЦРБ\"",
+                "oid": "1.2.643.5.1.13.13.12.2.16.1129",
+                "fact": 243,
+                "previous": 222,
+                "plan": 62
+              },
+              {
+                "name": "ГАУЗ \"БАЛТАСИНСКАЯ ЦРБ\"",
+                "oid": "1.2.643.5.1.13.13.12.2.16.1081",
+                "fact": 16,
+                "previous": 16,
+                "plan": 63
+              },
+              {
+                "name": "ГАУЗ \"БУГУЛЬМИНСКАЯ ЦРБ\"",
+                "oid": "1.2.643.5.1.13.13.12.2.16.1042",
+                "fact": 15,
+                "previous": 15,
+                "plan": 179
+              },
+              {
+                "name": "ГАУЗ \"БУИНСКАЯ ЦРБ\"",
+                "oid": "1.2.643.5.1.13.13.12.2.16.1120",
+                "fact": 16,
+                "previous": 15,
+                "plan": 77
+              },
+              {
+                "name": "ВЕРХНЕУСЛОНСКАЯ ЦРБ",
+                "oid": "1.2.643.5.1.13.13.12.2.16.1052",
+                "fact": 17,
+                "previous": 12,
+                "plan": 30
+              },
+              {
+                "name": "ГАУЗ \"ВЫСОКОГОРСКАЯ ЦРБ\"",
+                "oid": "1.2.643.5.1.13.13.12.2.16.1050",
+                "fact": 19,
+                "previous": 18,
+                "plan": 111
+              },
+              {
+                "name": "ГАУЗ \"ДРОЖЖАНОВСКАЯ ЦРБ\"",
+                "oid": "1.2.643.5.1.13.13.12.2.16.1105",
+                "fact": 34,
+                "previous": 30,
+                "plan": 36
+              },
+              {
+                "name": "ГАУЗ \"ЕЦРБ\"",
+                "oid": "1.2.643.5.1.13.13.12.2.16.1093",
+                "fact": 1021,
+                "previous": 942,
+                "plan": 177
+              },
+              {
+                "name": "ГАУЗ \"ЗАИНСКАЯ ЦРБ\"",
+                "oid": "1.2.643.5.1.13.13.12.2.16.1072",
+                "fact": 568,
+                "previous": 519,
+                "plan": 95
+              },
+              {
+                "name": "ГАУЗ \"ЗЕЛЕНОДОЛЬСКАЯ ЦРБ\"",
+                "oid": "1.2.643.5.1.13.13.12.2.16.1139",
+                "fact": 241,
+                "previous": 217,
+                "plan": 347
+              },
+              {
+                "name": "ГАУЗ \"КАЙБИЦКАЯ ЦЕНТРАЛЬНАЯ РАЙОННАЯ БОЛЬНИЦА\"",
+                "oid": "1.2.643.5.1.13.13.12.2.16.1131",
+                "fact": 39,
+                "previous": 39,
+                "plan": 21
+              },
+              {
+                "name": "ГАУЗ \"КАМСКО-УСТЬИНСКАЯ ЦРБ\"",
+                "oid": "1.2.643.5.1.13.13.12.2.16.1044",
+                "fact": 13,
+                "previous": 13,
+                "plan": 28
+              },
+              {
+                "name": "ГАУЗ \"КУКМОРСКАЯ ЦРБ\"",
+                "oid": "1.2.643.5.1.13.13.12.2.16.1144",
+                "fact": 39,
+                "previous": 34,
+                "plan": 102
+              },
+              {
+                "name": "ЛАИШЕВСКАЯ ЦРБ",
+                "oid": "1.2.643.5.1.13.13.12.2.16.1149",
+                "fact": 17,
+                "previous": 17,
+                "plan": 120
+              },
+              {
+                "name": "ГАУЗ \"ЛЕНИНОГОРСКАЯ ЦРБ\"",
+                "oid": "1.2.643.5.1.13.13.12.2.16.1073",
+                "fact": 0,
+                "previous": 0,
+                "plan": 151
+              },
+              {
+                "name": "ГАУЗ \"МАМАДЫШСКАЯ ЦРБ\"",
+                "oid": "1.2.643.5.1.13.13.12.2.16.1104",
+                "fact": 89,
+                "previous": 76,
+                "plan": 74
+              },
+              {
+                "name": "ГАУЗ \"МЕНДЕЛЕЕВСКАЯ ЦРБ\"",
+                "oid": "1.2.643.5.1.13.13.12.2.16.1058",
+                "fact": 92,
+                "previous": 75,
+                "plan": 58
+              },
+              {
+                "name": "ГАУЗ \"МЕНЗЕЛИНСКАЯ ЦРБ\"",
+                "oid": "1.2.643.5.1.13.13.12.2.16.1101",
+                "fact": 85,
+                "previous": 74,
+                "plan": 52
+              },
+              {
+                "name": "МУСЛЮМОВСКАЯ ЦРБ",
+                "oid": "1.2.643.5.1.13.13.12.2.16.1055",
+                "fact": 40,
+                "previous": 36,
+                "plan": 38
+              },
+              {
+                "name": "ГАУЗ \"НОВОШЕШМИНСКАЯ ЦРБ\"",
+                "oid": "1.2.643.5.1.13.13.12.2.16.1059",
+                "fact": 31,
+                "previous": 29,
+                "plan": 25
+              },
+              {
+                "name": "ГАУЗ \"НУРЛАТСКАЯ ЦРБ\"",
+                "oid": "1.2.643.5.1.13.13.12.2.16.1138",
+                "fact": 56,
+                "previous": 46,
+                "plan": 104
+              },
+              {
+                "name": "ГАУЗ \"ПЕСТРЕЧИНСКАЯ ЦРБ\"",
+                "oid": "1.2.643.5.1.13.13.12.2.16.1109",
+                "fact": 259,
+                "previous": 235,
+                "plan": 114
+              },
+              {
+                "name": "ГАУЗ \"РЫБНО-СЛОБОДСКАЯ ЦРБ\"",
+                "oid": "1.2.643.5.1.13.13.12.2.16.1133",
+                "fact": 4,
+                "previous": 3,
+                "plan": 46
+              },
+              {
+                "name": "ГАУЗ \"САБИНСКАЯ ЦРБ\"",
+                "oid": "1.2.643.5.1.13.13.12.2.16.1126",
+                "fact": 73,
+                "previous": 73,
+                "plan": 66
+              },
+              {
+                "name": "ГАУЗ \"САРМАНОВСКАЯ ЦРБ\"",
+                "oid": "1.2.643.5.1.13.13.12.2.16.1169",
+                "fact": 99,
+                "previous": 94,
+                "plan": 64
+              },
+              {
+                "name": "Филиал ГАУЗ «Республиканская клиническая больница Министерства здравоохранения Республики Татарстан» - «Спасская ЦРБ»",
+                "oid": "1.2.643.5.1.13.13.12.2.16.18650",
+                "fact": null,
+                "previous": null,
+                "plan": 33
+              },
+              {
+                "name": "ГАУЗ \"ТЕТЮШСКАЯ ЦРБ\"",
+                "oid": "1.2.643.5.1.13.13.12.2.16.1130",
+                "fact": 3,
+                "previous": 3,
+                "plan": 39
+              },
+              {
+                "name": "ГАУЗ \"ТУКАЕВСКАЯ ЦРБ\"",
+                "oid": "1.2.643.5.1.13.13.12.2.16.1140",
+                "fact": 76,
+                "previous": 72,
+                "plan": 84
+              },
+              {
+                "name": "ГАУЗ \"ТЮЛЯЧИНСКАЯ ЦРБ\"",
+                "oid": "1.2.643.5.1.13.13.12.2.16.1039",
+                "fact": 30,
+                "previous": 25,
+                "plan": 25
+              },
+              {
+                "name": "ГАУЗ \"ЧЕРЕМШАНСКАЯ ЦРБ\"",
+                "oid": "1.2.643.5.1.13.13.12.2.16.1162",
+                "fact": 38,
+                "previous": 30,
+                "plan": 32
+              },
+              {
+                "name": "ГАУЗ \"ЧИСТОПОЛЬСКАЯ ЦРБ\"",
+                "oid": "1.2.643.5.1.13.13.12.2.16.1038",
+                "fact": 304,
+                "previous": 264,
+                "plan": 142
+              },
+              {
+                "name": "ГАУЗ \"УРУССИНСКАЯ ЦРБ\"",
+                "oid": "1.2.643.5.1.13.13.12.2.16.1097",
+                "fact": 54,
+                "previous": 47,
+                "plan": 40
+              },
+              {
+                "name": "ГАУЗ \"ДГП № 2\"",
+                "oid": "1.2.643.5.1.13.13.12.2.16.1182",
+                "fact": 120,
+                "previous": 119,
+                "plan": 46
+              },
+              {
+                "name": "ГАУЗ \"ДЕТСКАЯ ГОРОДСКАЯ ПОЛИКЛИНИКА № 4\"",
+                "oid": "1.2.643.5.1.13.13.12.2.16.1122",
+                "fact": 92,
+                "previous": 88,
+                "plan": 76
+              },
+              {
+                "name": "ГАУЗ \"ГДП №7\"",
+                "oid": "1.2.643.5.1.13.13.12.2.16.1113",
+                "fact": 186,
+                "previous": 172,
+                "plan": 66
+              },
+              {
+                "name": "ГАУЗ \"ДГП № 9\"",
+                "oid": "1.2.643.5.1.13.13.12.2.16.1193",
+                "fact": 98,
+                "previous": 88,
+                "plan": 48
+              },
+              {
+                "name": "ГАУЗ \"ДЕТСКАЯ ГОРОДСКАЯ ПОЛИКЛИНИКА № 10\"",
+                "oid": "1.2.643.5.1.13.13.12.2.16.1199",
+                "fact": 190,
+                "previous": 173,
+                "plan": 79
+              },
+              {
+                "name": "ГАУЗ \"ДЕТСКАЯ ГОРОДСКАЯ ПОЛИКЛИНИКА № 11\"",
+                "oid": "1.2.643.5.1.13.13.12.2.16.1200",
+                "fact": 108,
+                "previous": 88,
+                "plan": 59
+              },
+              {
+                "name": "ГАУЗ \"ДЕТСКАЯ ГОРОДСКАЯ ПОЛИКЛИНИКА №6\"",
+                "oid": "1.2.643.5.1.13.13.12.2.16.1066",
+                "fact": 31,
+                "previous": 31,
+                "plan": 39
+              },
+              {
+                "name": "ГАУЗ \"ДЕТСКАЯ ГОРОДСКАЯ ПОЛИКЛИНИКА №3\"",
+                "oid": "1.2.643.5.1.13.13.12.2.16.1067",
+                "fact": 77,
+                "previous": 69,
+                "plan": 45
+              },
+              {
+                "name": "ГАУЗ \"ДЕТСКАЯ ГОРОДСКАЯ ПОЛИКЛИНИКА №2\"",
+                "oid": "1.2.643.5.1.13.13.12.2.16.1045",
+                "fact": 122,
+                "previous": 109,
+                "plan": 47
+              },
+              {
+                "name": "ГАУЗ \"ДЕТСКАЯ ГОРОДСКАЯ ПОЛИКЛИНИКА №4 ИМ. Ф.Г. АХМЕРОВОЙ\"",
+                "oid": "1.2.643.5.1.13.13.12.2.16.1127",
+                "fact": 118,
+                "previous": 108,
+                "plan": 55
+              },
+              {
+                "name": "ГАУЗ \"ДЕТСКАЯ ГОРОДСКАЯ ПОЛИКЛИНИКА №5\"",
+                "oid": "1.2.643.5.1.13.13.12.2.16.1089",
+                "fact": 112,
+                "previous": 100,
+                "plan": 49
+              },
+              {
+                "name": "ГАУЗ \"ГОРОДСКАЯ ДЕТСКАЯ ПОЛИКЛИНИКА № 6\"",
+                "oid": "1.2.643.5.1.13.13.12.2.16.1090",
+                "fact": 485,
+                "previous": 434,
+                "plan": 104
+              },
+              {
+                "name": "ГАУЗ \"ДРКБ МЗ РТ\"",
+                "oid": "1.2.643.5.1.13.13.12.2.16.1155",
+                "fact": 301,
+                "previous": 276,
+                "plan": 89
+              },
+              {
+                "name": "ГАУЗ \"ГДБ № 1\"",
+                "oid": "1.2.643.5.1.13.13.12.2.16.1148",
+                "fact": 54,
+                "previous": 54,
+                "plan": 40
+              },
+              {
+                "name": "ГАУЗ \"ДГКБ № 7\"",
+                "oid": "1.2.643.5.1.13.13.12.2.16.1123",
+                "fact": 609,
+                "previous": 538,
+                "plan": 66
+              }
+            ]
+          }
+        }
+      },
+      "cumulative": {
+        "date": "31.10.2026",
+        "period": "01.01–31.10.2026",
+        "source": "ТМК_МАХ_01.01.-31.10.(Выгрузка из ГТС 02.11.).xlsx",
+        "metrics": {
+          "tmk": {
+            "sourceTotal": 73479,
+            "previousSourceTotal": 71745,
+            "plannedMoFact": 71842,
+            "previousPlannedMoFact": 70140,
+            "republicPlan": 161000,
+            "rows": [
+              {
+                "name": "ГАУЗ \"ГОРОДСКАЯ БОЛЬНИЦА № 11\"",
+                "oid": "1.2.643.5.1.13.13.12.2.16.1070",
+                "fact": 565,
+                "previous": 560,
+                "plan": 1506
+              },
+              {
+                "name": "ГАУЗ \"ГКБ № 12\"",
+                "oid": "1.2.643.5.1.13.13.12.2.16.28030",
+                "fact": 2186,
+                "previous": 2151,
+                "plan": 2486
+              },
+              {
+                "name": "ГАУЗ \"ГОРОДСКАЯ ПОЛИКЛИНИКА № 7\"",
+                "oid": "1.2.643.5.1.13.13.12.2.16.1153",
+                "fact": 977,
+                "previous": 949,
+                "plan": 1508
+              },
+              {
+                "name": "ГАУЗ \"КЛИНИКА МЕДИЦИНСКОГО УНИВЕРСИТЕТА\"",
+                "oid": "1.2.643.5.1.13.13.12.2.16.1125",
+                "fact": 1072,
+                "previous": 1023,
+                "plan": 1360
+              },
+              {
+                "name": "ГАУЗ \"КЛИНИЧЕСКАЯ БОЛЬНИЦА №2\"",
+                "oid": "1.2.643.5.1.13.13.12.2.16.1185",
+                "fact": 1990,
+                "previous": 1904,
+                "plan": 2857
+              },
+              {
+                "name": "ГАУЗ \"ГОСПИТАЛЬ ДЛЯ ВЕТЕРАНОВ ВОЙН\" Г. КАЗАНИ",
+                "oid": "1.2.643.5.1.13.13.12.2.16.1135",
+                "fact": 363,
+                "previous": 364,
+                "plan": 999
+              },
+              {
+                "name": "ГАУЗ \"ГКБ №16\"",
+                "oid": "1.2.643.5.1.13.13.12.2.16.1136",
+                "fact": 706,
+                "previous": 684,
+                "plan": 2421
+              },
+              {
+                "name": "ГАУЗ \"ГКБ№7 ИМ. М.Н.САДЫКОВА\"",
+                "oid": "1.2.643.5.1.13.13.12.2.16.1163",
+                "fact": 3832,
+                "previous": 3779,
+                "plan": 4110
+              },
+              {
+                "name": "ГАУЗ \"ГОРОДСКАЯ ПОЛИКЛИНИКА № 10\"",
+                "oid": "1.2.643.5.1.13.13.12.2.16.1074",
+                "fact": 914,
+                "previous": 864,
+                "plan": 4297
+              },
+              {
+                "name": "ГАУЗ \"ЦГКБ № 18 ИМ. ПРОФ. К.Ш. ЗЫЯТДИНОВА\"",
+                "oid": "1.2.643.5.1.13.13.12.2.16.1151",
+                "fact": 2654,
+                "previous": 2592,
+                "plan": 2827
+              },
+              {
+                "name": "ГАУЗ \"ГОРОДСКАЯ ПОЛИКЛИНИКА №18\"",
+                "oid": "1.2.643.5.1.13.13.12.2.16.1080",
+                "fact": 1381,
+                "previous": 1363,
+                "plan": 3628
+              },
+              {
+                "name": "ГАУЗ \"ГОРОДСКАЯ ПОЛИКЛИНИКА № 20\"",
+                "oid": "1.2.643.5.1.13.13.12.2.16.1178",
+                "fact": 274,
+                "previous": 271,
+                "plan": 4685
+              },
+              {
+                "name": "ГАУЗ \"ГОРОДСКАЯ ПОЛИКЛИНИКА № 21\"",
+                "oid": "1.2.643.5.1.13.13.12.2.16.1179",
+                "fact": 906,
+                "previous": 906,
+                "plan": 4491
+              },
+              {
+                "name": "ГАУЗ \"ГОРОДСКАЯ ПОЛИКЛИНИКА № 8\" Г.КАЗАНИ",
+                "oid": "1.2.643.5.1.13.13.12.2.16.1082",
+                "fact": 916,
+                "previous": 892,
+                "plan": 3897
+              },
+              {
+                "name": "ГАУЗ \"ГОРОДСКАЯ БОЛЬНИЦА №2\"",
+                "oid": "1.2.643.5.1.13.13.12.2.16.1116",
+                "fact": 154,
+                "previous": 153,
+                "plan": 1194
+              },
+              {
+                "name": "ГАУЗ \"ГОРОДСКАЯ ПОЛИКЛИНИКА №3\"",
+                "oid": "1.2.643.5.1.13.13.12.2.16.1208",
+                "fact": 157,
+                "previous": 142,
+                "plan": 2853
+              },
+              {
+                "name": "ГАУЗ \"ГОРОДСКАЯ БОЛЬНИЦА №5\"",
+                "oid": "1.2.643.5.1.13.13.12.2.16.1112",
+                "fact": 542,
+                "previous": 536,
+                "plan": 3966
+              },
+              {
+                "name": "ГАУЗ \"ГОСПИТАЛЬ ДЛЯ ВЕТЕРАНОВ ВОЙН\" Г. Н. ЧЕЛНЫ",
+                "oid": "1.2.643.5.1.13.13.12.2.16.1085",
+                "fact": 780,
+                "previous": 775,
+                "plan": 1091
+              },
+              {
+                "name": "ГАУЗ \"ГОРОДСКАЯ ПОЛИКЛИНИКА №4 ИМ.Л.Н.ГАНИЕВОЙ\"",
+                "oid": "1.2.643.5.1.13.13.12.2.16.1147",
+                "fact": 232,
+                "previous": 208,
+                "plan": 3071
+              },
+              {
+                "name": "ГАУЗ \"ГОРОДСКАЯ ПОЛИКЛИНИКА №6\"",
+                "oid": "1.2.643.5.1.13.13.12.2.16.1051",
+                "fact": 585,
+                "previous": 566,
+                "plan": 3061
+              },
+              {
+                "name": "ГАУЗ \"ГОРОДСКАЯ ПОЛИКЛИНИКА №7\"",
+                "oid": "1.2.643.5.1.13.13.12.2.16.1115",
+                "fact": 464,
+                "previous": 430,
+                "plan": 3258
+              },
+              {
+                "name": "ГАУЗ \"КДМЦ\"",
+                "oid": "1.2.643.5.1.13.13.12.2.16.1065",
+                "fact": 957,
+                "previous": 947,
+                "plan": 907
+              },
+              {
+                "name": "ГАУЗ НДРБ С ПЦ",
+                "oid": "1.2.643.5.1.13.13.12.2.16.1171",
+                "fact": 2291,
+                "previous": 2238,
+                "plan": 2442
+              },
+              {
+                "name": "ГАУЗ \"КПРБ\"",
+                "oid": "1.2.643.5.1.13.13.12.2.16.1165",
+                "fact": 12,
+                "previous": 12,
+                "plan": 897
+              },
+              {
+                "name": "ГАУЗ \"НЦРМБ\"",
+                "oid": "1.2.643.5.1.13.13.12.2.16.1192",
+                "fact": 1676,
+                "previous": 1580,
+                "plan": 6865
+              },
+              {
+                "name": "ГАУЗ \"АГРЫЗСКАЯ ЦРБ\"",
+                "oid": "1.2.643.5.1.13.13.12.2.16.1088",
+                "fact": 531,
+                "previous": 523,
+                "plan": 1024
+              },
+              {
+                "name": "АЗНАКАЕВСКАЯ ЦРБ",
+                "oid": "1.2.643.5.1.13.13.12.2.16.1084",
+                "fact": 3334,
+                "previous": 3299,
+                "plan": 2381
+              },
+              {
+                "name": "ГАУЗ \"АКСУБАЕВСКАЯ ЦРБ\"",
+                "oid": "1.2.643.5.1.13.13.12.2.16.1156",
+                "fact": 196,
+                "previous": 191,
+                "plan": 893
+              },
+              {
+                "name": "ГАУЗ \"АКТАНЫШСКАЯ ЦРБ\"",
+                "oid": "1.2.643.5.1.13.13.12.2.16.1092",
+                "fact": 781,
+                "previous": 756,
+                "plan": 1050
+              },
+              {
+                "name": "ГАУЗ \"АЛЕКСЕЕВСКАЯ ЦРБ\"",
+                "oid": "1.2.643.5.1.13.13.12.2.16.1087",
+                "fact": 168,
+                "previous": 167,
+                "plan": 969
+              },
+              {
+                "name": "ГАУЗ \"БАЗАРНО-МАТАКСКАЯ ЦРБ\"",
+                "oid": "1.2.643.5.1.13.13.12.2.16.1161",
+                "fact": 22,
+                "previous": 22,
+                "plan": 660
+              },
+              {
+                "name": "ГАУЗ \"АЛЬМЕТЬЕВСКАЯ ГП № 3\"",
+                "oid": "1.2.643.5.1.13.13.12.2.16.1107",
+                "fact": 433,
+                "previous": 433,
+                "plan": 1935
+              },
+              {
+                "name": "ГАУЗ \"АДРБ С ПЦ\"",
+                "oid": "1.2.643.5.1.13.13.12.2.16.1146",
+                "fact": 730,
+                "previous": 730,
+                "plan": 1864
+              },
+              {
+                "name": "ГАУЗ \"АЛЬМЕТЬЕВСКАЯ ЦРБ\"",
+                "oid": "1.2.643.5.1.13.13.12.2.16.1108",
+                "fact": 3746,
+                "previous": 3582,
+                "plan": 3915
+              },
+              {
+                "name": "ГАУЗ \"АЛЬМЕТЬЕВСКАЯ РМБ\"",
+                "oid": "1.2.643.5.1.13.13.12.2.16.44921",
+                "fact": 928,
+                "previous": 910,
+                "plan": 937
+              },
+              {
+                "name": "ГАУЗ \"АПАСТОВСКАЯ ЦРБ\"",
+                "oid": "1.2.643.5.1.13.13.12.2.16.1152",
+                "fact": 305,
+                "previous": 293,
+                "plan": 688
+              },
+              {
+                "name": "ГАУЗ \"АРСКАЯ ЦРБ\"",
+                "oid": "1.2.643.5.1.13.13.12.2.16.1164",
+                "fact": 378,
+                "previous": 376,
+                "plan": 2109
+              },
+              {
+                "name": "ГАУЗ \"АТНИНСКАЯ ЦРБ\"",
+                "oid": "1.2.643.5.1.13.13.12.2.16.1078",
+                "fact": 155,
+                "previous": 134,
+                "plan": 515
+              },
+              {
+                "name": "ГАУЗ \"БАВЛИНСКАЯ ЦРБ\"",
+                "oid": "1.2.643.5.1.13.13.12.2.16.1129",
+                "fact": 145,
+                "previous": 136,
+                "plan": 1250
+              },
+              {
+                "name": "ГАУЗ \"БАЛТАСИНСКАЯ ЦРБ\"",
+                "oid": "1.2.643.5.1.13.13.12.2.16.1081",
+                "fact": 212,
+                "previous": 196,
+                "plan": 1277
+              },
+              {
+                "name": "ГАУЗ \"БУГУЛЬМИНСКАЯ ЦРБ\"",
+                "oid": "1.2.643.5.1.13.13.12.2.16.1042",
+                "fact": 610,
+                "previous": 598,
+                "plan": 3607
+              },
+              {
+                "name": "ГАУЗ \"БУИНСКАЯ ЦРБ\"",
+                "oid": "1.2.643.5.1.13.13.12.2.16.1120",
+                "fact": 240,
+                "previous": 213,
+                "plan": 1552
+              },
+              {
+                "name": "ВЕРХНЕУСЛОНСКАЯ ЦРБ",
+                "oid": "1.2.643.5.1.13.13.12.2.16.1052",
+                "fact": 144,
+                "previous": 127,
+                "plan": 615
+              },
+              {
+                "name": "ГАУЗ \"ВЫСОКОГОРСКАЯ ЦРБ\"",
+                "oid": "1.2.643.5.1.13.13.12.2.16.1050",
+                "fact": 836,
+                "previous": 830,
+                "plan": 2241
+              },
+              {
+                "name": "ГАУЗ \"ДРОЖЖАНОВСКАЯ ЦРБ\"",
+                "oid": "1.2.643.5.1.13.13.12.2.16.1105",
+                "fact": 375,
+                "previous": 365,
+                "plan": 717
+              },
+              {
+                "name": "ГАУЗ \"ЕЦРБ\"",
+                "oid": "1.2.643.5.1.13.13.12.2.16.1093",
+                "fact": 3355,
+                "previous": 3297,
+                "plan": 3568
+              },
+              {
+                "name": "ГАУЗ \"ЗАИНСКАЯ ЦРБ\"",
+                "oid": "1.2.643.5.1.13.13.12.2.16.1072",
+                "fact": 1900,
+                "previous": 1844,
+                "plan": 1919
+              },
+              {
+                "name": "ГАУЗ \"ЗЕЛЕНОДОЛЬСКАЯ ЦРБ\"",
+                "oid": "1.2.643.5.1.13.13.12.2.16.1139",
+                "fact": 1926,
+                "previous": 1903,
+                "plan": 6982
+              },
+              {
+                "name": "ГАУЗ \"КАЙБИЦКАЯ ЦЕНТРАЛЬНАЯ РАЙОННАЯ БОЛЬНИЦА\"",
+                "oid": "1.2.643.5.1.13.13.12.2.16.1131",
+                "fact": 425,
+                "previous": 425,
+                "plan": 439
+              },
+              {
+                "name": "ГАУЗ \"КАМСКО-УСТЬИНСКАЯ ЦРБ\"",
+                "oid": "1.2.643.5.1.13.13.12.2.16.1044",
+                "fact": 420,
+                "previous": 420,
+                "plan": 567
+              },
+              {
+                "name": "ГАУЗ \"КУКМОРСКАЯ ЦРБ\"",
+                "oid": "1.2.643.5.1.13.13.12.2.16.1144",
+                "fact": 184,
+                "previous": 177,
+                "plan": 2050
+              },
+              {
+                "name": "ЛАИШЕВСКАЯ ЦРБ",
+                "oid": "1.2.643.5.1.13.13.12.2.16.1149",
+                "fact": 351,
+                "previous": 348,
+                "plan": 2429
+              },
+              {
+                "name": "ГАУЗ \"ЛЕНИНОГОРСКАЯ ЦРБ\"",
+                "oid": "1.2.643.5.1.13.13.12.2.16.1073",
+                "fact": 36,
+                "previous": 37,
+                "plan": 3043
+              },
+              {
+                "name": "ГАУЗ \"МАМАДЫШСКАЯ ЦРБ\"",
+                "oid": "1.2.643.5.1.13.13.12.2.16.1104",
+                "fact": 357,
+                "previous": 346,
+                "plan": 1493
+              },
+              {
+                "name": "ГАУЗ \"МЕНДЕЛЕЕВСКАЯ ЦРБ\"",
+                "oid": "1.2.643.5.1.13.13.12.2.16.1058",
+                "fact": 313,
+                "previous": 295,
+                "plan": 1162
+              },
+              {
+                "name": "ГАУЗ \"МЕНЗЕЛИНСКАЯ ЦРБ\"",
+                "oid": "1.2.643.5.1.13.13.12.2.16.1101",
+                "fact": 606,
+                "previous": 571,
+                "plan": 1039
+              },
+              {
+                "name": "МУСЛЮМОВСКАЯ ЦРБ",
+                "oid": "1.2.643.5.1.13.13.12.2.16.1055",
+                "fact": 133,
+                "previous": 130,
+                "plan": 784
+              },
+              {
+                "name": "ГАУЗ \"НОВОШЕШМИНСКАЯ ЦРБ\"",
+                "oid": "1.2.643.5.1.13.13.12.2.16.1059",
+                "fact": 232,
+                "previous": 229,
+                "plan": 515
+              },
+              {
+                "name": "ГАУЗ \"НУРЛАТСКАЯ ЦРБ\"",
+                "oid": "1.2.643.5.1.13.13.12.2.16.1138",
+                "fact": 441,
+                "previous": 418,
+                "plan": 2096
+              },
+              {
+                "name": "ГАУЗ \"ПЕСТРЕЧИНСКАЯ ЦРБ\"",
+                "oid": "1.2.643.5.1.13.13.12.2.16.1109",
+                "fact": 434,
+                "previous": 430,
+                "plan": 2291
+              },
+              {
+                "name": "ГАУЗ \"РЫБНО-СЛОБОДСКАЯ ЦРБ\"",
+                "oid": "1.2.643.5.1.13.13.12.2.16.1133",
+                "fact": 81,
+                "previous": 80,
+                "plan": 914
+              },
+              {
+                "name": "ГАУЗ \"САБИНСКАЯ ЦРБ\"",
+                "oid": "1.2.643.5.1.13.13.12.2.16.1126",
+                "fact": 220,
+                "previous": 218,
+                "plan": 1323
+              },
+              {
+                "name": "ГАУЗ \"САРМАНОВСКАЯ ЦРБ\"",
+                "oid": "1.2.643.5.1.13.13.12.2.16.1169",
+                "fact": 1663,
+                "previous": 1628,
+                "plan": 1290
+              },
+              {
+                "name": "Филиал ГАУЗ «Республиканская клиническая больница Министерства здравоохранения Республики Татарстан» - «Спасская ЦРБ»",
+                "oid": "1.2.643.5.1.13.13.12.2.16.18650",
+                "fact": null,
+                "previous": null,
+                "plan": 659
+              },
+              {
+                "name": "ГАУЗ \"ТЕТЮШСКАЯ ЦРБ\"",
+                "oid": "1.2.643.5.1.13.13.12.2.16.1130",
+                "fact": 301,
+                "previous": 293,
+                "plan": 773
+              },
+              {
+                "name": "ГАУЗ \"ТУКАЕВСКАЯ ЦРБ\"",
+                "oid": "1.2.643.5.1.13.13.12.2.16.1140",
+                "fact": 745,
+                "previous": 735,
+                "plan": 1689
+              },
+              {
+                "name": "ГАУЗ \"ТЮЛЯЧИНСКАЯ ЦРБ\"",
+                "oid": "1.2.643.5.1.13.13.12.2.16.1039",
+                "fact": 702,
+                "previous": 684,
+                "plan": 506
+              },
+              {
+                "name": "ГАУЗ \"ЧЕРЕМШАНСКАЯ ЦРБ\"",
+                "oid": "1.2.643.5.1.13.13.12.2.16.1162",
+                "fact": 152,
+                "previous": 146,
+                "plan": 635
+              },
+              {
+                "name": "ГАУЗ \"ЧИСТОПОЛЬСКАЯ ЦРБ\"",
+                "oid": "1.2.643.5.1.13.13.12.2.16.1038",
+                "fact": 812,
+                "previous": 791,
+                "plan": 2859
+              },
+              {
+                "name": "ГАУЗ \"УРУССИНСКАЯ ЦРБ\"",
+                "oid": "1.2.643.5.1.13.13.12.2.16.1097",
+                "fact": 275,
+                "previous": 270,
+                "plan": 814
+              },
+              {
+                "name": "ГАУЗ \"ДГП № 2\"",
+                "oid": "1.2.643.5.1.13.13.12.2.16.1182",
+                "fact": 207,
+                "previous": 205,
+                "plan": 906
+              },
+              {
+                "name": "ГАУЗ \"ДЕТСКАЯ ГОРОДСКАЯ ПОЛИКЛИНИКА № 4\"",
+                "oid": "1.2.643.5.1.13.13.12.2.16.1122",
+                "fact": 1422,
+                "previous": 1416,
+                "plan": 1522
+              },
+              {
+                "name": "ГАУЗ \"ГДП №7\"",
+                "oid": "1.2.643.5.1.13.13.12.2.16.1113",
+                "fact": 626,
+                "previous": 613,
+                "plan": 1316
+              },
+              {
+                "name": "ГАУЗ \"ДГП № 9\"",
+                "oid": "1.2.643.5.1.13.13.12.2.16.1193",
+                "fact": 982,
+                "previous": 971,
+                "plan": 972
+              },
+              {
+                "name": "ГАУЗ \"ДЕТСКАЯ ГОРОДСКАЯ ПОЛИКЛИНИКА № 10\"",
+                "oid": "1.2.643.5.1.13.13.12.2.16.1199",
+                "fact": 1174,
+                "previous": 1137,
+                "plan": 1605
+              },
+              {
+                "name": "ГАУЗ \"ДЕТСКАЯ ГОРОДСКАЯ ПОЛИКЛИНИКА № 11\"",
+                "oid": "1.2.643.5.1.13.13.12.2.16.1200",
+                "fact": 250,
+                "previous": 233,
+                "plan": 1196
+              },
+              {
+                "name": "ГАУЗ \"ДЕТСКАЯ ГОРОДСКАЯ ПОЛИКЛИНИКА №6\"",
+                "oid": "1.2.643.5.1.13.13.12.2.16.1066",
+                "fact": 266,
+                "previous": 266,
+                "plan": 783
+              },
+              {
+                "name": "ГАУЗ \"ДЕТСКАЯ ГОРОДСКАЯ ПОЛИКЛИНИКА №3\"",
+                "oid": "1.2.643.5.1.13.13.12.2.16.1067",
+                "fact": 208,
+                "previous": 205,
+                "plan": 897
+              },
+              {
+                "name": "ГАУЗ \"ДЕТСКАЯ ГОРОДСКАЯ ПОЛИКЛИНИКА №2\"",
+                "oid": "1.2.643.5.1.13.13.12.2.16.1045",
+                "fact": 554,
+                "previous": 545,
+                "plan": 957
+              },
+              {
+                "name": "ГАУЗ \"ДЕТСКАЯ ГОРОДСКАЯ ПОЛИКЛИНИКА №4 ИМ. Ф.Г. АХМЕРОВОЙ\"",
+                "oid": "1.2.643.5.1.13.13.12.2.16.1127",
+                "fact": 453,
+                "previous": 436,
+                "plan": 1108
+              },
+              {
+                "name": "ГАУЗ \"ДЕТСКАЯ ГОРОДСКАЯ ПОЛИКЛИНИКА №5\"",
+                "oid": "1.2.643.5.1.13.13.12.2.16.1089",
+                "fact": 412,
+                "previous": 407,
+                "plan": 998
+              },
+              {
+                "name": "ГАУЗ \"ГОРОДСКАЯ ДЕТСКАЯ ПОЛИКЛИНИКА № 6\"",
+                "oid": "1.2.643.5.1.13.13.12.2.16.1090",
+                "fact": 929,
+                "previous": 899,
+                "plan": 2106
+              },
+              {
+                "name": "ГАУЗ \"ДРКБ МЗ РТ\"",
+                "oid": "1.2.643.5.1.13.13.12.2.16.1155",
+                "fact": 2878,
+                "previous": 2824,
+                "plan": 1784
+              },
+              {
+                "name": "ГАУЗ \"ГДБ № 1\"",
+                "oid": "1.2.643.5.1.13.13.12.2.16.1148",
+                "fact": 900,
+                "previous": 897,
+                "plan": 807
+              },
+              {
+                "name": "ГАУЗ \"ДГКБ № 7\"",
+                "oid": "1.2.643.5.1.13.13.12.2.16.1123",
+                "fact": 3662,
+                "previous": 3601,
+                "plan": 1333
+              }
+            ]
+          },
+          "eln": {
+            "sourceTotal": 55268,
+            "previousSourceTotal": 54134,
+            "plannedMoFact": 54745,
+            "previousPlannedMoFact": 53621,
+            "republicPlan": 82000,
+            "rows": [
+              {
+                "name": "ГАУЗ \"ГОРОДСКАЯ БОЛЬНИЦА № 11\"",
+                "oid": "1.2.643.5.1.13.13.12.2.16.1070",
+                "fact": 486,
+                "previous": 482,
+                "plan": 767
+              },
+              {
+                "name": "ГАУЗ \"ГКБ № 12\"",
+                "oid": "1.2.643.5.1.13.13.12.2.16.28030",
+                "fact": 1895,
+                "previous": 1894,
+                "plan": 1266
+              },
+              {
+                "name": "ГАУЗ \"ГОРОДСКАЯ ПОЛИКЛИНИКА № 7\"",
+                "oid": "1.2.643.5.1.13.13.12.2.16.1153",
+                "fact": 563,
+                "previous": 557,
+                "plan": 768
+              },
+              {
+                "name": "ГАУЗ \"КЛИНИКА МЕДИЦИНСКОГО УНИВЕРСИТЕТА\"",
+                "oid": "1.2.643.5.1.13.13.12.2.16.1125",
+                "fact": 834,
+                "previous": 822,
+                "plan": 693
+              },
+              {
+                "name": "ГАУЗ \"КЛИНИЧЕСКАЯ БОЛЬНИЦА №2\"",
+                "oid": "1.2.643.5.1.13.13.12.2.16.1185",
+                "fact": 898,
+                "previous": 907,
+                "plan": 1455
+              },
+              {
+                "name": "ГАУЗ \"ГОСПИТАЛЬ ДЛЯ ВЕТЕРАНОВ ВОЙН\" Г. КАЗАНИ",
+                "oid": "1.2.643.5.1.13.13.12.2.16.1135",
+                "fact": 1035,
+                "previous": 1025,
+                "plan": 509
+              },
+              {
+                "name": "ГАУЗ \"ГКБ №16\"",
+                "oid": "1.2.643.5.1.13.13.12.2.16.1136",
+                "fact": 987,
+                "previous": 717,
+                "plan": 1233
+              },
+              {
+                "name": "ГАУЗ \"ГКБ№7 ИМ. М.Н.САДЫКОВА\"",
+                "oid": "1.2.643.5.1.13.13.12.2.16.1163",
+                "fact": 3859,
+                "previous": 3836,
+                "plan": 2093
+              },
+              {
+                "name": "ГАУЗ \"ГОРОДСКАЯ ПОЛИКЛИНИКА № 10\"",
+                "oid": "1.2.643.5.1.13.13.12.2.16.1074",
+                "fact": 2008,
+                "previous": 1987,
+                "plan": 2189
+              },
+              {
+                "name": "ГАУЗ \"ЦГКБ № 18 ИМ. ПРОФ. К.Ш. ЗЫЯТДИНОВА\"",
+                "oid": "1.2.643.5.1.13.13.12.2.16.1151",
+                "fact": 1699,
+                "previous": 1685,
+                "plan": 1440
+              },
+              {
+                "name": "ГАУЗ \"ГОРОДСКАЯ ПОЛИКЛИНИКА №18\"",
+                "oid": "1.2.643.5.1.13.13.12.2.16.1080",
+                "fact": 1226,
+                "previous": 1214,
+                "plan": 1848
+              },
+              {
+                "name": "ГАУЗ \"ГОРОДСКАЯ ПОЛИКЛИНИКА № 20\"",
+                "oid": "1.2.643.5.1.13.13.12.2.16.1178",
+                "fact": 1916,
+                "previous": 1893,
+                "plan": 2386
+              },
+              {
+                "name": "ГАУЗ \"ГОРОДСКАЯ ПОЛИКЛИНИКА № 21\"",
+                "oid": "1.2.643.5.1.13.13.12.2.16.1179",
+                "fact": 873,
+                "previous": 868,
+                "plan": 2287
+              },
+              {
+                "name": "ГАУЗ \"ГОРОДСКАЯ ПОЛИКЛИНИКА № 8\" Г.КАЗАНИ",
+                "oid": "1.2.643.5.1.13.13.12.2.16.1082",
+                "fact": 967,
+                "previous": 941,
+                "plan": 1985
+              },
+              {
+                "name": "ГАУЗ \"ГОРОДСКАЯ БОЛЬНИЦА №2\"",
+                "oid": "1.2.643.5.1.13.13.12.2.16.1116",
+                "fact": 41,
+                "previous": 45,
+                "plan": 608
+              },
+              {
+                "name": "ГАУЗ \"ГОРОДСКАЯ ПОЛИКЛИНИКА №3\"",
+                "oid": "1.2.643.5.1.13.13.12.2.16.1208",
+                "fact": 137,
+                "previous": 135,
+                "plan": 1453
+              },
+              {
+                "name": "ГАУЗ \"ГОРОДСКАЯ БОЛЬНИЦА №5\"",
+                "oid": "1.2.643.5.1.13.13.12.2.16.1112",
+                "fact": 708,
+                "previous": 705,
+                "plan": 2020
+              },
+              {
+                "name": "ГАУЗ \"ГОСПИТАЛЬ ДЛЯ ВЕТЕРАНОВ ВОЙН\" Г. Н. ЧЕЛНЫ",
+                "oid": "1.2.643.5.1.13.13.12.2.16.1085",
+                "fact": 582,
+                "previous": 572,
+                "plan": 556
+              },
+              {
+                "name": "ГАУЗ \"ГОРОДСКАЯ ПОЛИКЛИНИКА №4 ИМ.Л.Н.ГАНИЕВОЙ\"",
+                "oid": "1.2.643.5.1.13.13.12.2.16.1147",
+                "fact": 165,
+                "previous": 153,
+                "plan": 1564
+              },
+              {
+                "name": "ГАУЗ \"ГОРОДСКАЯ ПОЛИКЛИНИКА №6\"",
+                "oid": "1.2.643.5.1.13.13.12.2.16.1051",
+                "fact": 439,
+                "previous": 425,
+                "plan": 1559
+              },
+              {
+                "name": "ГАУЗ \"ГОРОДСКАЯ ПОЛИКЛИНИКА №7\"",
+                "oid": "1.2.643.5.1.13.13.12.2.16.1115",
+                "fact": 367,
+                "previous": 330,
+                "plan": 1660
+              },
+              {
+                "name": "ГАУЗ \"КДМЦ\"",
+                "oid": "1.2.643.5.1.13.13.12.2.16.1065",
+                "fact": 180,
+                "previous": 176,
+                "plan": 462
+              },
+              {
+                "name": "ГАУЗ НДРБ С ПЦ",
+                "oid": "1.2.643.5.1.13.13.12.2.16.1171",
+                "fact": 444,
+                "previous": 435,
+                "plan": 1244
+              },
+              {
+                "name": "ГАУЗ \"КПРБ\"",
+                "oid": "1.2.643.5.1.13.13.12.2.16.1165",
+                "fact": 9,
+                "previous": 9,
+                "plan": 457
+              },
+              {
+                "name": "ГАУЗ \"НЦРМБ\"",
+                "oid": "1.2.643.5.1.13.13.12.2.16.1192",
+                "fact": 1559,
+                "previous": 1494,
+                "plan": 3497
+              },
+              {
+                "name": "ГАУЗ \"АГРЫЗСКАЯ ЦРБ\"",
+                "oid": "1.2.643.5.1.13.13.12.2.16.1088",
+                "fact": 316,
+                "previous": 310,
+                "plan": 521
+              },
+              {
+                "name": "АЗНАКАЕВСКАЯ ЦРБ",
+                "oid": "1.2.643.5.1.13.13.12.2.16.1084",
+                "fact": 1757,
+                "previous": 1749,
+                "plan": 1213
+              },
+              {
+                "name": "ГАУЗ \"АКСУБАЕВСКАЯ ЦРБ\"",
+                "oid": "1.2.643.5.1.13.13.12.2.16.1156",
+                "fact": 247,
+                "previous": 239,
+                "plan": 455
+              },
+              {
+                "name": "ГАУЗ \"АКТАНЫШСКАЯ ЦРБ\"",
+                "oid": "1.2.643.5.1.13.13.12.2.16.1092",
+                "fact": 987,
+                "previous": 978,
+                "plan": 535
+              },
+              {
+                "name": "ГАУЗ \"АЛЕКСЕЕВСКАЯ ЦРБ\"",
+                "oid": "1.2.643.5.1.13.13.12.2.16.1087",
+                "fact": 77,
+                "previous": 78,
+                "plan": 493
+              },
+              {
+                "name": "ГАУЗ \"БАЗАРНО-МАТАКСКАЯ ЦРБ\"",
+                "oid": "1.2.643.5.1.13.13.12.2.16.1161",
+                "fact": 33,
+                "previous": 32,
+                "plan": 336
+              },
+              {
+                "name": "ГАУЗ \"АЛЬМЕТЬЕВСКАЯ ГП № 3\"",
+                "oid": "1.2.643.5.1.13.13.12.2.16.1107",
+                "fact": 575,
+                "previous": 575,
+                "plan": 985
+              },
+              {
+                "name": "ГАУЗ \"АДРБ С ПЦ\"",
+                "oid": "1.2.643.5.1.13.13.12.2.16.1146",
+                "fact": 259,
+                "previous": 259,
+                "plan": 949
+              },
+              {
+                "name": "ГАУЗ \"АЛЬМЕТЬЕВСКАЯ ЦРБ\"",
+                "oid": "1.2.643.5.1.13.13.12.2.16.1108",
+                "fact": 1270,
+                "previous": 1256,
+                "plan": 1994
+              },
+              {
+                "name": "ГАУЗ \"АЛЬМЕТЬЕВСКАЯ РМБ\"",
+                "oid": "1.2.643.5.1.13.13.12.2.16.44921",
+                "fact": 89,
+                "previous": 90,
+                "plan": 477
+              },
+              {
+                "name": "ГАУЗ \"АПАСТОВСКАЯ ЦРБ\"",
+                "oid": "1.2.643.5.1.13.13.12.2.16.1152",
+                "fact": 27,
+                "previous": 27,
+                "plan": 351
+              },
+              {
+                "name": "ГАУЗ \"АРСКАЯ ЦРБ\"",
+                "oid": "1.2.643.5.1.13.13.12.2.16.1164",
+                "fact": 254,
+                "previous": 255,
+                "plan": 1074
+              },
+              {
+                "name": "ГАУЗ \"АТНИНСКАЯ ЦРБ\"",
+                "oid": "1.2.643.5.1.13.13.12.2.16.1078",
+                "fact": 42,
+                "previous": 40,
+                "plan": 263
+              },
+              {
+                "name": "ГАУЗ \"БАВЛИНСКАЯ ЦРБ\"",
+                "oid": "1.2.643.5.1.13.13.12.2.16.1129",
+                "fact": 338,
+                "previous": 318,
+                "plan": 636
+              },
+              {
+                "name": "ГАУЗ \"БАЛТАСИНСКАЯ ЦРБ\"",
+                "oid": "1.2.643.5.1.13.13.12.2.16.1081",
+                "fact": 53,
+                "previous": 53,
+                "plan": 650
+              },
+              {
+                "name": "ГАУЗ \"БУГУЛЬМИНСКАЯ ЦРБ\"",
+                "oid": "1.2.643.5.1.13.13.12.2.16.1042",
+                "fact": 117,
+                "previous": 117,
+                "plan": 1837
+              },
+              {
+                "name": "ГАУЗ \"БУИНСКАЯ ЦРБ\"",
+                "oid": "1.2.643.5.1.13.13.12.2.16.1120",
+                "fact": 151,
+                "previous": 151,
+                "plan": 790
+              },
+              {
+                "name": "ВЕРХНЕУСЛОНСКАЯ ЦРБ",
+                "oid": "1.2.643.5.1.13.13.12.2.16.1052",
+                "fact": 116,
+                "previous": 111,
+                "plan": 313
+              },
+              {
+                "name": "ГАУЗ \"ВЫСОКОГОРСКАЯ ЦРБ\"",
+                "oid": "1.2.643.5.1.13.13.12.2.16.1050",
+                "fact": 192,
+                "previous": 195,
+                "plan": 1141
+              },
+              {
+                "name": "ГАУЗ \"ДРОЖЖАНОВСКАЯ ЦРБ\"",
+                "oid": "1.2.643.5.1.13.13.12.2.16.1105",
+                "fact": 116,
+                "previous": 113,
+                "plan": 365
+              },
+              {
+                "name": "ГАУЗ \"ЕЦРБ\"",
+                "oid": "1.2.643.5.1.13.13.12.2.16.1093",
+                "fact": 3784,
+                "previous": 3710,
+                "plan": 1817
+              },
+              {
+                "name": "ГАУЗ \"ЗАИНСКАЯ ЦРБ\"",
+                "oid": "1.2.643.5.1.13.13.12.2.16.1072",
+                "fact": 1345,
+                "previous": 1304,
+                "plan": 977
+              },
+              {
+                "name": "ГАУЗ \"ЗЕЛЕНОДОЛЬСКАЯ ЦРБ\"",
+                "oid": "1.2.643.5.1.13.13.12.2.16.1139",
+                "fact": 1254,
+                "previous": 1250,
+                "plan": 3556
+              },
+              {
+                "name": "ГАУЗ \"КАЙБИЦКАЯ ЦЕНТРАЛЬНАЯ РАЙОННАЯ БОЛЬНИЦА\"",
+                "oid": "1.2.643.5.1.13.13.12.2.16.1131",
+                "fact": 282,
+                "previous": 282,
+                "plan": 223
+              },
+              {
+                "name": "ГАУЗ \"КАМСКО-УСТЬИНСКАЯ ЦРБ\"",
+                "oid": "1.2.643.5.1.13.13.12.2.16.1044",
+                "fact": 108,
+                "previous": 109,
+                "plan": 289
+              },
+              {
+                "name": "ГАУЗ \"КУКМОРСКАЯ ЦРБ\"",
+                "oid": "1.2.643.5.1.13.13.12.2.16.1144",
+                "fact": 100,
+                "previous": 95,
+                "plan": 1044
+              },
+              {
+                "name": "ЛАИШЕВСКАЯ ЦРБ",
+                "oid": "1.2.643.5.1.13.13.12.2.16.1149",
+                "fact": 180,
+                "previous": 181,
+                "plan": 1237
+              },
+              {
+                "name": "ГАУЗ \"ЛЕНИНОГОРСКАЯ ЦРБ\"",
+                "oid": "1.2.643.5.1.13.13.12.2.16.1073",
+                "fact": 37,
+                "previous": 37,
+                "plan": 1550
+              },
+              {
+                "name": "ГАУЗ \"МАМАДЫШСКАЯ ЦРБ\"",
+                "oid": "1.2.643.5.1.13.13.12.2.16.1104",
+                "fact": 328,
+                "previous": 315,
+                "plan": 760
+              },
+              {
+                "name": "ГАУЗ \"МЕНДЕЛЕЕВСКАЯ ЦРБ\"",
+                "oid": "1.2.643.5.1.13.13.12.2.16.1058",
+                "fact": 240,
+                "previous": 233,
+                "plan": 592
+              },
+              {
+                "name": "ГАУЗ \"МЕНЗЕЛИНСКАЯ ЦРБ\"",
+                "oid": "1.2.643.5.1.13.13.12.2.16.1101",
+                "fact": 155,
+                "previous": 148,
+                "plan": 529
+              },
+              {
+                "name": "МУСЛЮМОВСКАЯ ЦРБ",
+                "oid": "1.2.643.5.1.13.13.12.2.16.1055",
+                "fact": 206,
+                "previous": 202,
+                "plan": 399
+              },
+              {
+                "name": "ГАУЗ \"НОВОШЕШМИНСКАЯ ЦРБ\"",
+                "oid": "1.2.643.5.1.13.13.12.2.16.1059",
+                "fact": 175,
+                "previous": 173,
+                "plan": 262
+              },
+              {
+                "name": "ГАУЗ \"НУРЛАТСКАЯ ЦРБ\"",
+                "oid": "1.2.643.5.1.13.13.12.2.16.1138",
+                "fact": 194,
+                "previous": 184,
+                "plan": 1067
+              },
+              {
+                "name": "ГАУЗ \"ПЕСТРЕЧИНСКАЯ ЦРБ\"",
+                "oid": "1.2.643.5.1.13.13.12.2.16.1109",
+                "fact": 1381,
+                "previous": 1357,
+                "plan": 1167
+              },
+              {
+                "name": "ГАУЗ \"РЫБНО-СЛОБОДСКАЯ ЦРБ\"",
+                "oid": "1.2.643.5.1.13.13.12.2.16.1133",
+                "fact": 28,
+                "previous": 28,
+                "plan": 466
+              },
+              {
+                "name": "ГАУЗ \"САБИНСКАЯ ЦРБ\"",
+                "oid": "1.2.643.5.1.13.13.12.2.16.1126",
+                "fact": 146,
+                "previous": 146,
+                "plan": 674
+              },
+              {
+                "name": "ГАУЗ \"САРМАНОВСКАЯ ЦРБ\"",
+                "oid": "1.2.643.5.1.13.13.12.2.16.1169",
+                "fact": 691,
+                "previous": 694,
+                "plan": 657
+              },
+              {
+                "name": "Филиал ГАУЗ «Республиканская клиническая больница Министерства здравоохранения Республики Татарстан» - «Спасская ЦРБ»",
+                "oid": "1.2.643.5.1.13.13.12.2.16.18650",
+                "fact": null,
+                "previous": null,
+                "plan": 336
+              },
+              {
+                "name": "ГАУЗ \"ТЕТЮШСКАЯ ЦРБ\"",
+                "oid": "1.2.643.5.1.13.13.12.2.16.1130",
+                "fact": 25,
+                "previous": 25,
+                "plan": 394
+              },
+              {
+                "name": "ГАУЗ \"ТУКАЕВСКАЯ ЦРБ\"",
+                "oid": "1.2.643.5.1.13.13.12.2.16.1140",
+                "fact": 553,
+                "previous": 549,
+                "plan": 860
+              },
+              {
+                "name": "ГАУЗ \"ТЮЛЯЧИНСКАЯ ЦРБ\"",
+                "oid": "1.2.643.5.1.13.13.12.2.16.1039",
+                "fact": 128,
+                "previous": 123,
+                "plan": 258
+              },
+              {
+                "name": "ГАУЗ \"ЧЕРЕМШАНСКАЯ ЦРБ\"",
+                "oid": "1.2.643.5.1.13.13.12.2.16.1162",
+                "fact": 103,
+                "previous": 95,
+                "plan": 324
+              },
+              {
+                "name": "ГАУЗ \"ЧИСТОПОЛЬСКАЯ ЦРБ\"",
+                "oid": "1.2.643.5.1.13.13.12.2.16.1038",
+                "fact": 596,
+                "previous": 561,
+                "plan": 1456
+              },
+              {
+                "name": "ГАУЗ \"УРУССИНСКАЯ ЦРБ\"",
+                "oid": "1.2.643.5.1.13.13.12.2.16.1097",
+                "fact": 243,
+                "previous": 236,
+                "plan": 414
+              },
+              {
+                "name": "ГАУЗ \"ДГП № 2\"",
+                "oid": "1.2.643.5.1.13.13.12.2.16.1182",
+                "fact": 380,
+                "previous": 380,
+                "plan": 462
+              },
+              {
+                "name": "ГАУЗ \"ДЕТСКАЯ ГОРОДСКАЯ ПОЛИКЛИНИКА № 4\"",
+                "oid": "1.2.643.5.1.13.13.12.2.16.1122",
+                "fact": 923,
+                "previous": 920,
+                "plan": 775
+              },
+              {
+                "name": "ГАУЗ \"ГДП №7\"",
+                "oid": "1.2.643.5.1.13.13.12.2.16.1113",
+                "fact": 538,
+                "previous": 528,
+                "plan": 671
+              },
+              {
+                "name": "ГАУЗ \"ДГП № 9\"",
+                "oid": "1.2.643.5.1.13.13.12.2.16.1193",
+                "fact": 554,
+                "previous": 544,
+                "plan": 495
+              },
+              {
+                "name": "ГАУЗ \"ДЕТСКАЯ ГОРОДСКАЯ ПОЛИКЛИНИКА № 10\"",
+                "oid": "1.2.643.5.1.13.13.12.2.16.1199",
+                "fact": 739,
+                "previous": 722,
+                "plan": 817
+              },
+              {
+                "name": "ГАУЗ \"ДЕТСКАЯ ГОРОДСКАЯ ПОЛИКЛИНИКА № 11\"",
+                "oid": "1.2.643.5.1.13.13.12.2.16.1200",
+                "fact": 457,
+                "previous": 437,
+                "plan": 609
+              },
+              {
+                "name": "ГАУЗ \"ДЕТСКАЯ ГОРОДСКАЯ ПОЛИКЛИНИКА №6\"",
+                "oid": "1.2.643.5.1.13.13.12.2.16.1066",
+                "fact": 155,
+                "previous": 155,
+                "plan": 399
+              },
+              {
+                "name": "ГАУЗ \"ДЕТСКАЯ ГОРОДСКАЯ ПОЛИКЛИНИКА №3\"",
+                "oid": "1.2.643.5.1.13.13.12.2.16.1067",
+                "fact": 190,
+                "previous": 184,
+                "plan": 457
+              },
+              {
+                "name": "ГАУЗ \"ДЕТСКАЯ ГОРОДСКАЯ ПОЛИКЛИНИКА №2\"",
+                "oid": "1.2.643.5.1.13.13.12.2.16.1045",
+                "fact": 406,
+                "previous": 394,
+                "plan": 487
+              },
+              {
+                "name": "ГАУЗ \"ДЕТСКАЯ ГОРОДСКАЯ ПОЛИКЛИНИКА №4 ИМ. Ф.Г. АХМЕРОВОЙ\"",
+                "oid": "1.2.643.5.1.13.13.12.2.16.1127",
+                "fact": 483,
+                "previous": 473,
+                "plan": 564
+              },
+              {
+                "name": "ГАУЗ \"ДЕТСКАЯ ГОРОДСКАЯ ПОЛИКЛИНИКА №5\"",
+                "oid": "1.2.643.5.1.13.13.12.2.16.1089",
+                "fact": 360,
+                "previous": 349,
+                "plan": 508
+              },
+              {
+                "name": "ГАУЗ \"ГОРОДСКАЯ ДЕТСКАЯ ПОЛИКЛИНИКА № 6\"",
+                "oid": "1.2.643.5.1.13.13.12.2.16.1090",
+                "fact": 1674,
+                "previous": 1616,
+                "plan": 1072
+              },
+              {
+                "name": "ГАУЗ \"ДРКБ МЗ РТ\"",
+                "oid": "1.2.643.5.1.13.13.12.2.16.1155",
+                "fact": 1163,
+                "previous": 1148,
+                "plan": 909
+              },
+              {
+                "name": "ГАУЗ \"ГДБ № 1\"",
+                "oid": "1.2.643.5.1.13.13.12.2.16.1148",
+                "fact": 560,
+                "previous": 560,
+                "plan": 411
+              },
+              {
+                "name": "ГАУЗ \"ДГКБ № 7\"",
+                "oid": "1.2.643.5.1.13.13.12.2.16.1123",
+                "fact": 2988,
+                "previous": 2921,
+                "plan": 679
+              }
+            ]
+          }
+        },
+        "previousDate": "28.10.2026",
+        "previousPeriod": "01.01–28.10.2026",
+        "previousSource": "ТМК_МАХ 01.01.-28.10.(Выгрузка из ГИС 29.10.).xlsx"
+      }
+    }
+  },
+  "nextCumulativeTarget": {
+    "month": "2026-11",
+    "monthLabel": "Ноябрь 2026",
+    "tmk": 177000,
+    "eln": 90000,
+    "basis": "approved-control-points",
+    "fact": null
   }
 }

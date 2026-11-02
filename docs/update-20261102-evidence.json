@@ -186,12 +186,15 @@
     "cumulative": "01.01–31.10.2026 where specified",
     "operational": "shortInput remains 01.01–28.10.2026",
     "doNotChangeSourceCounts": true,
-    "nonfinalOctoberRating": "September v2 remains frozen; October has mixed coverage and is not a complete approved official rating"
+    "nonfinalOctoberRating": "September v2 remains frozen; October has mixed coverage and is not a complete approved official rating",
+    "novemberMax": "October MAX TMK+ELN frozen, November planned but fact absent; October appointment source only 12 Oct and cannot be closed",
+    "tvsp": "Full cumulative through 31 October is a closed October point, not a count of October-only events",
+    "publicationAllowed": false
   },
   "staging": {
     "state": "PARTIAL",
     "publicationAllowedByAutomatedGate": false,
-    "reason": "Historical replay source-backed manifest absent; manual review and CI required",
+    "reason": "Legacy historical calculation-replay differs from approved October data; PR requires reconciliation and green regression",
     "prepared": 32,
     "retained": 3,
     "missing": 1,
@@ -324,7 +327,10 @@
     "Three TVSP files end 31.10; 02.11 is export date",
     "Physician monthly period 01.10–31.10; erroneous 01.11–31.10 corrected",
     "RKB/Spassk rules from PR147 preserved",
-    "Incomplete October sources from September (and August death certificates) carry explicit retained_incomplete_period; no manufactured October ratings"
+    "Incomplete October sources from September (and August death certificates) carry explicit retained_incomplete_period; no manufactured October ratings",
+    "Confirmed closed October TVSP cumulative snapshots are shown with latest month-end numerator/denominator, not October-only increments",
+    "MAX November starts without new source; approved 85 MO plans are differences of cumulative November and October approved points, not a redistributed target",
+    "Appointment MAX October available only to 12.10 and remains incomplete; November appointment plan not verified"
   ],
   "referenceKpis": {
     "remdErrors22to31Oct": 303938,
@@ -335,5 +341,52 @@
     "maxElnOctober": 12498,
     "semdRegisteredTotal": 84817652
   },
-  "publicationState": "STAGING ONLY"
+  "publicationState": "STAGING ONLY",
+  "maxOctoberArchive": {
+    "sourceEnd": "31.10.2026",
+    "tmk": 15573,
+    "eln": 12498,
+    "cumulativeTmk": 73479,
+    "cumulativeEln": 55268,
+    "recordedIn": "app/max-period-views.json/closedMonths/2026-10"
+  },
+  "maxNovemberStart": {
+    "sourceStatus": "not_provided",
+    "monthlyPlan": {
+      "tmk": 16000,
+      "eln": 8000
+    },
+    "cumulativePlan": {
+      "tmk": 177000,
+      "eln": 90000
+    },
+    "matchedMoPlans": 85,
+    "noFactsSubstituted": true,
+    "appointmentSourceIncompleteTo": "12.10.2026",
+    "appointmentNovemberPlan": "not_verified"
+  },
+  "monthlyCompletedIndicators": [
+    "egpu",
+    "egpu2days",
+    "hospital",
+    "birth",
+    "tmkMaxCount",
+    "elnMaxCount",
+    "tvspStationary",
+    "tvspAmbulatory",
+    "tvspLaboratory",
+    "tvspDiagnostic",
+    "doctorsAll",
+    "doctorsLevel3"
+  ],
+  "retainedIndicators": [
+    "semd228",
+    "ambulatoryCase",
+    "death"
+  ],
+  "operativePartialIndicators": [
+    "shortInput",
+    "shortInputAmb",
+    "shortInputHosp"
+  ]
 }

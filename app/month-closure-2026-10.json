@@ -1,0 +1,110 @@
+{
+  "cut": "2026-10-31",
+  "createdAt": "2026-11-02",
+  "rating": "mixed-coverage-not-approved",
+  "closedMonthly": [
+    "egpu",
+    "egpu2days",
+    "hospital",
+    "birth",
+    "tmkMaxCount",
+    "elnMaxCount",
+    "tvspStationary",
+    "tvspAmbulatory",
+    "tvspLaboratory",
+    "tvspDiagnostic",
+    "doctorsAll",
+    "doctorsLevel3",
+    "doctor500_obgyn",
+    "doctor500_gp",
+    "doctor500_cardiologist",
+    "doctor500_oncologist",
+    "doctor500_ophthalmologist",
+    "doctor500_pediatrician",
+    "doctor500_dentist",
+    "doctor500_therapist",
+    "doctor500_surgeon"
+  ],
+  "retained": [
+    "semd228",
+    "ambulatoryCase",
+    "death"
+  ],
+  "operationalOnly": [
+    "shortInput",
+    "shortInputAmb",
+    "shortInputHosp"
+  ],
+  "methodology": {
+    "monthly": "Only verified complete October cut; cumulative indicators show October closing snapshot, not October-only flow",
+    "operational": "Interim or latest known source cut, with its original date",
+    "max": "October frozen; November plan active but no confirmed November facts; no fabricated zero"
+  },
+  "tvspAudit": [
+    {
+      "metric": "tvspStationary",
+      "rows": 93,
+      "missingPrevious": 1,
+      "missingQuantities": 89,
+      "example": [
+        "ГАУЗ \"АГРЫЗСКАЯ ЦРБ\"",
+        "ГАУЗ \"АДРБ С ПЦ\"",
+        "ГАУЗ \"АКСУБАЕВСКАЯ ЦРБ\"",
+        "ГАУЗ \"АКТАНЫШСКАЯ ЦРБ\"",
+        "ГАУЗ \"АЛЕКСЕЕВСКАЯ ЦРБ\""
+      ]
+    },
+    {
+      "metric": "tvspAmbulatory",
+      "rows": 112,
+      "missingPrevious": 1,
+      "missingQuantities": 108,
+      "example": [
+        "ГАУЗ \"АГРЫЗСКАЯ ЦРБ\"",
+        "ГАУЗ \"АДРБ С ПЦ\"",
+        "ГАУЗ \"АКСУБАЕВСКАЯ ЦРБ\"",
+        "ГАУЗ \"АКТАНЫШСКАЯ ЦРБ\"",
+        "ГАУЗ \"АЛЕКСЕЕВСКАЯ ЦРБ\""
+      ]
+    },
+    {
+      "metric": "tvspLaboratory",
+      "rows": 84,
+      "missingPrevious": 3,
+      "missingQuantities": 81,
+      "example": [
+        "ГАУЗ \"АГРЫЗСКАЯ ЦРБ\"",
+        "ГАУЗ \"АДРБ С ПЦ\"",
+        "ГАУЗ \"АКСУБАЕВСКАЯ ЦРБ\"",
+        "ГАУЗ \"АЛЕКСЕЕВСКАЯ ЦРБ\"",
+        "ГАУЗ \"АЛЬМЕТЬЕВСКАЯ ГП № 3\""
+      ]
+    },
+    {
+      "metric": "tvspDiagnostic",
+      "rows": 108,
+      "missingPrevious": 2,
+      "missingQuantities": 103,
+      "example": [
+        "ГАУЗ \"АГРЫЗСКАЯ ЦРБ\"",
+        "ГАУЗ \"АКСУБАЕВСКАЯ ЦРБ\"",
+        "ГАУЗ \"АКТАНЫШСКАЯ ЦРБ\"",
+        "ГАУЗ \"АЛЕКСЕЕВСКАЯ ЦРБ\"",
+        "ГАУЗ \"АЛЬМЕТЬЕВСКАЯ ГП № 3\""
+      ]
+    }
+  ],
+  "maxOctober": {
+    "tmk": 15573,
+    "eln": 12498,
+    "cumulativeTmk": 73479,
+    "cumulativeEln": 55268
+  },
+  "maxNovember": {
+    "tmkPlan": 16000,
+    "elnPlan": 8000,
+    "cumulativeTmkPlan": 177000,
+    "cumulativeElnPlan": 90000,
+    "factStatus": "not_provided"
+  }
+}
