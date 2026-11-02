@@ -1,4 +1,4 @@
-import test from 'node:test';import assert from 'node:assert/strict';import fs from 'node:fs';import {maxHearingPlan} from '../lib/max-hearing-plan.js';
+import test from 'node:test';import assert from 'node:assert/strict';import fs from 'node:fs';import {maxHearingPlan,maxHearingDeficit} from '../lib/max-hearing-plan.js';
 const targets=JSON.parse(fs.readFileSync('config/max-targets-2026.json','utf8'));
 test('hearing MAX plans use exact approved MO OIDs and the month of the cumulative fact',()=>{
  for(const [oid,row] of Object.entries(targets.organizationPlans))for(const [id,service] of [['tmkMaxCount','tmk'],['elnMaxCount','eln']])for(const month of targets.months){
@@ -17,12 +17,23 @@ test('monthly facts, missing control points and unknown OIDs never inherit a reg
  assert.equal(maxHearingPlan(targets,'tmkMaxCount',oid,'31.02.2026','01.01–31.02.2026').plan,null);
  assert.equal(maxHearingPlan(targets,'other',oid,'28.10.2026','01.01–28.10.2026'),null);
 });
-test('hearing profiles resolve MAX applicability from approved plans without changing priority weights',()=>{
+test('hearing profiles resolve MAX applicability from approved plans and include MAX in operational priority',()=>{
  const page=fs.readFileSync('app/page.tsx','utf8'),policy=JSON.parse(fs.readFileSync('app/hearing-priority-policy.json','utf8'));
  assert.match(page,/maxHearingPlan\(maxTargets, id, registry.oid, dataset.date/);
  assert.match(page,/maxPlan \? maxPlan.assigned : applicableForRegistry/);
  assert.match(page,/planLabel: maxPlan\?\.label/);
- assert.match(page,/status: maxPlan \? "reference"/);
- assert.match(page,/affectsPriority: isOperationalMetric && plan !== null/);
- assert.ok(!JSON.stringify(policy.blocks).includes('tmkMaxCount'));assert.ok(!JSON.stringify(policy.blocks).includes('elnMaxCount'));
+ assert.doesNotMatch(page,/status: maxPlan \? "reference"/);
+ assert.match(page,/affectsPriority: applicable && isOperationalMetric && plan !== null/);
+ assert.ok(policy.blocks.services.metrics.tmkMaxCount > 0);assert.ok(policy.blocks.services.metrics.elnMaxCount > 0);
+});
+
+test('MAX count deficit affects priority only for comparable assigned data',()=>{
+ assert.deepEqual(maxHearingDeficit('tmkMaxCount',1580,6865),{targetCount:6865,deficitCount:5285});
+ assert.deepEqual(maxHearingDeficit('elnMaxCount',1494,3497),{targetCount:3497,deficitCount:2003});
+ assert.equal(maxHearingDeficit('tmkMaxCount',null,100),null);
+ assert.equal(maxHearingDeficit('tmkMaxCount',0,null),null);
+ assert.equal(maxHearingDeficit('tmkMaxCount',0,100,false),null);
+ assert.deepEqual(maxHearingDeficit('tmkMaxCount',0,100),{targetCount:100,deficitCount:100});
+ assert.equal(maxHearingDeficit('tmkMaxCount',101,100).deficitCount,0);
+ assert.equal(maxHearingDeficit('tmkMaxCount',0,0).deficitCount,0);
 });
