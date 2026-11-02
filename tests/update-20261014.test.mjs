@@ -1,3 +1,4 @@
+// Dated source regression: exact accepted pre-November bytes; live October checks are in update-20261102.test.mjs.
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
@@ -22,12 +23,12 @@ with tempfile.TemporaryDirectory() as td:
  assert.equal(r.status,0,r.stderr);
 });
 test('REMD source total and registered types reconcile without mixing periods',()=>{
- const s=read('app/semd-summary.json');
+ const s=read('baseline/archive/before-20261102/app/semd-summary.json');
  assert.equal(s.total,83476149);assert.equal(s.registeredTypes,97);
  assert.equal(s.period,'01.01.2026–28.10.2026');assert.equal(s.formed,'29.10.2026 08:32');
  assert.equal(s.items.reduce((n,r)=>n+r.count,0),s.total);
  assert.equal(s.items.filter(r=>r.count>0).length,s.registeredTypes);
- const month=read('app/physician-metrics.json');const op=read('app/physician-weekly-snapshot.json');
+ const month=read('baseline/archive/before-20261102/app/physician-metrics.json');const op=read('baseline/archive/before-20261102/app/physician-weekly-snapshot.json');
  assert.equal(month.period,'сентябрь 2026');assert.equal(op.date,'28.10.2026');
  assert.equal(month.datasets.doctorsAll.summary.numerator,10674);assert.equal(op.summary.doctorsAll.numerator,11031);
 });
@@ -42,7 +43,7 @@ test('approved statuses and current methodology audit are wired into the page',(
  assert.ok(audit.items.some(r=>r.source.includes('МБТ 37')&&r.status==='Исправлена'));
 });
 test('physician month comparison uses full-month components rather than October facts',()=>{
- const rows=read('app/monthly-mo.json').doctor500_pediatrician.rows;
+ const rows=read('baseline/archive/before-20261102/app/monthly-mo.json').doctor500_pediatrician.rows;
  const previous=aggregateQuantityPairs(rows,'juneQuantity');
  const current=aggregateQuantityPairs(rows,'julyQuantity');
  assert.deepEqual([previous.numerator,previous.denominator],[797,1353]);

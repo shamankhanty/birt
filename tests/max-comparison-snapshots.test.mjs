@@ -1,8 +1,9 @@
+// Dated source regression: exact accepted pre-November bytes; live October checks are in update-20261102.test.mjs.
 import test from "node:test";
 import assert from "node:assert/strict";
 import fs from "node:fs";
 
-const periodViews = JSON.parse(fs.readFileSync(new URL("../app/max-period-views.json", import.meta.url), "utf8"));
+const periodViews = JSON.parse(fs.readFileSync(new URL("../baseline/archive/before-20261102/app/max-period-views.json", import.meta.url), "utf8"));
 
 test("MAX comparison snapshots use like-for-like periods and preserve missing rows", () => {
   assert.deepEqual([periodViews.operational.previousDate, periodViews.operational.date], ["26.10.2026", "29.10.2026"]);

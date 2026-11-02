@@ -1,13 +1,14 @@
+// Dated source regression: exact accepted pre-November bytes; live October checks are in update-20261102.test.mjs.
 import test from "node:test";
 import assert from "node:assert/strict";
 import fs from "node:fs";
 
-const weekly = JSON.parse(fs.readFileSync("app/physician-weekly-snapshot.json", "utf8"));
-const mo = JSON.parse(fs.readFileSync("app/mo-data.json", "utf8"));
+const weekly = JSON.parse(fs.readFileSync("baseline/archive/before-20261102/app/physician-weekly-snapshot.json", "utf8"));
+const mo = JSON.parse(fs.readFileSync("baseline/archive/before-20261102/app/mo-data.json", "utf8"));
 const page = fs.readFileSync("app/page.tsx", "utf8");
 
 test("500+ keeps September rating and exposes the October operational delta", () => {
-  const september = JSON.parse(fs.readFileSync("app/physician-metrics.json", "utf8")).datasets.doctor500_pediatrician.summary;
+  const september = JSON.parse(fs.readFileSync("baseline/archive/before-20261102/app/physician-metrics.json", "utf8")).datasets.doctor500_pediatrician.summary;
   const current = weekly.summary.doctor500_pediatrician;
   const previous = weekly.previousSummary.doctor500_pediatrician;
   assert.equal(september.fact, 833 / 1357 * 100);

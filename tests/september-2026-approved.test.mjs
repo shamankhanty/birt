@@ -1,8 +1,9 @@
+// Dated source regression: exact accepted pre-November bytes; live October checks are in update-20261102.test.mjs.
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
 const read = p => JSON.parse(fs.readFileSync(p,'utf8'));
-const data=read('app/physician-metrics.json');
+const data=read('baseline/archive/before-20261102/app/physician-metrics.json');
 test('all eleven September metrics reconcile to source and retain missing data',()=>{
   const expected={doctorsAll:[10674,13542],doctorsLevel3:[3801,4815],doctor500_obgyn:[238,413],doctor500_gp:[263,302],doctor500_cardiologist:[116,206],doctor500_oncologist:[144,232],doctor500_ophthalmologist:[119,234],doctor500_pediatrician:[833,1357],doctor500_dentist:[152,652],doctor500_therapist:[861,1386],doctor500_surgeon:[137,277]};
   for(const [id,[num,den]] of Object.entries(expected)){
@@ -17,7 +18,7 @@ test('all eleven September metrics reconcile to source and retain missing data',
   assert.equal(first.count,952); assert.equal(first.volume,1055);
 });
 test('approved MBT 37–39 preserve independent cumulative period and plans',()=>{
-  const rows=read('app/federal-control.json').agreement;
+  const rows=read('baseline/archive/before-20261102/app/federal-control.json').agreement;
   for(const [id,n] of [['37',2367],['38',15306],['39',1373983]]){
     const r=rows.find(r=>r.id===id);
     assert.equal(Number(r.regionalFact.replace(/\D/g,'')),n);

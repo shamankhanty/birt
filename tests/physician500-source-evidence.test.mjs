@@ -1,9 +1,10 @@
+// Dated source regression: exact accepted pre-November bytes; live October checks are in update-20261102.test.mjs.
 import fs from "node:fs";
 import test from "node:test";
 import assert from "node:assert/strict";
 
 const report = JSON.parse(fs.readFileSync("docs/physician500-reconciliation-20261024.json", "utf8"));
-const snapshot = JSON.parse(fs.readFileSync("app/physician-weekly-snapshot.json", "utf8"));
+const snapshot = JSON.parse(fs.readFileSync("baseline/archive/before-20261102/app/physician-weekly-snapshot.json", "utf8"));
 
 test("primary workbook audit covers every source MO and all nine 500+ specialties", () => {
   assert.equal(report.issue, "https://github.com/shamankhanty/birt/issues/100");

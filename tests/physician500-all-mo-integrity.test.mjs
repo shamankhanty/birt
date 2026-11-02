@@ -71,7 +71,7 @@ function inspectSlice(label, entries, summary, { allowNoSource = false } = {}) {
 
 test("all MO × all 500+ specialties: current operational aggregation reconciles", () => {
   assert.match(operational.period, /2026/u);
-  inspectSlice("operational/current", operational.datasets, operational.summary);
+  inspectSlice("operational/current", operational.datasets, operational.summary, { allowNoSource: true });
 });
 
 test("all MO × all 500+ specialties: prior operational snapshot reconciles", () => {

@@ -1,5 +1,6 @@
 """Workbook signatures and reporting periods, independent of filenames."""
 from datetime import date, datetime, timedelta
+import calendar
 import re
 import openpyxl
 
@@ -72,7 +73,16 @@ def inspect_workbook(path):
             formed = [v.date() for row in rows if 'Дата формирования' in str(row[0]) for v in row if isinstance(v, datetime)]
             if formed:
                 cut = formed[0] - timedelta(days=1)
-                periods.append((cut.replace(day=1), cut))
+                names = ['январь','февраль','март','апрель','май','июнь','июль','август','сентябрь','октябрь','ноябрь','декабрь']
+                explicit = []
+                for row in rows:
+                    if 'Период формирования' not in str(row[0]): continue
+                    year = next((int(v) for v in row if isinstance(v, (int,float)) and 2000 <= v <= 2100), None)
+                    month = next((names.index(str(v).lower()) + 1 for v in row if str(v).lower() in names), None)
+                    if year and month:
+                        end = min(cut, date(year,month,calendar.monthrange(year,month)[1]))
+                        explicit.append((date(year,month,1),end))
+                periods.extend(explicit or [(cut.replace(day=1),cut)])
         if family in ('tvsp_ambulatory', 'tvsp_stationary', 'tvsp_laboratory'):
             # BI TVSP exports encode the reporting window as year + month range
             # (e.g. "Январь-Сентябрь") and the actual cut date as generation date.
@@ -83,7 +93,17 @@ def inspect_workbook(path):
                           ' '.join(str(v).lower() for v in row if v is not None))
                 for row in rows
             )
-            if formed and month_range: periods.append((date(formed[0].year, 1, 1), formed[0]))
+            if formed and month_range:
+                names = ['январь','февраль','март','апрель','май','июнь','июль','август','сентябрь','октябрь','ноябрь','декабрь']
+                for row in rows:
+                    if 'Период формирования' not in str(row[0]): continue
+                    label = ' '.join(str(v).lower() for v in row if v is not None)
+                    match = re.search(r'январь\s*[-–]\s*([а-я]+)', label)
+                    year = next((int(v) for v in row if isinstance(v,(int,float)) and 2000 <= v <= 2100), formed[0].year)
+                    if match and match[1] in names:
+                        month = names.index(match[1])+1
+                        end = min(formed[0],date(year,month,calendar.monthrange(year,month)[1]))
+                        periods.append((date(year,1,1),end))
         unique = sorted(set(periods))
         result = {'family': family, 'sheets': sheets}
         if len(unique) > 1:

@@ -324,7 +324,6 @@
       "visitMax": "readiness"
     },
     "activeIds": [
-      "ambulatoryCase",
       "doctor500_cardiologist",
       "doctor500_dentist",
       "doctor500_gp",
@@ -336,7 +335,6 @@
       "doctor500_therapist",
       "doctorsAll",
       "doctorsLevel3",
-      "semd228",
       "tvspAmbulatory",
       "tvspDiagnostic",
       "tvspStationary"

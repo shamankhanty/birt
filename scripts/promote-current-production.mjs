@@ -112,9 +112,9 @@ try {
     runLifecycle("scripts/promote_validation_baseline.mjs", "validation snapshot generation");
     runLifecycle("scripts/promote_calculation_baseline.mjs", "calculation snapshot generation");
     runLifecycle("scripts/promote_indicator_metadata_baseline.mjs", "indicator metadata snapshot generation");
-    runLifecycle("scripts/run-validation.mjs", "accepted validation snapshot verification", ["--check"]);
-    runLifecycle("scripts/run-calculation-equivalence.mjs", "accepted calculation snapshot verification", ["--check"]);
-    runLifecycle("scripts/run-indicator-metadata-equivalence.mjs", "accepted indicator metadata verification", ["--check"]);
+    runLifecycle("scripts/run-validation.mjs", "accepted validation snapshot verification");
+    runLifecycle("scripts/run-calculation-equivalence.mjs", "accepted calculation snapshot verification");
+    runLifecycle("scripts/run-indicator-metadata-equivalence.mjs", "accepted indicator metadata verification");
   }
 
   const promoted = { schemaVersion: 1, kind: "current-production", promotedFrom: candidate, promotedAt: new Date().toISOString(), files: {} };

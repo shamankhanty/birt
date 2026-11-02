@@ -1,11 +1,12 @@
+// Dated source regression: exact accepted pre-November bytes; live October checks are in update-20261102.test.mjs.
 import test from "node:test";
 import assert from "node:assert/strict";
 import fs from "node:fs";
 
 const read = (path) => JSON.parse(fs.readFileSync(path, "utf8"));
-const weekly = read("app/error-categories.json");
-weekly.organizationBreakdown = read("app/error-organizations.json");
-const cumulative = read("app/error-cumulative.json");
+const weekly = read("baseline/archive/before-20261102/app/error-categories.json");
+weekly.organizationBreakdown = read("baseline/archive/before-20261102/app/error-organizations.json");
+const cumulative = read("baseline/archive/before-20261102/app/error-cumulative.json");
 const page = fs.readFileSync("app/page.tsx", "utf8");
 
 function validate(data) {

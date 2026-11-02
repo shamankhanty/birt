@@ -55,13 +55,13 @@ test('duplicate same family and period becomes FAIL',()=>{
 test('partial source does not regress the accepted full-month baseline',()=>{
  const d=fs.mkdtempSync(path.join(os.tmpdir(),'rt-pipe-')); makeXlsx(path.join(d,'ПР_2_07.09.2026.xlsx'));
  const code=`import sys,json;from pathlib import Path;sys.path.insert(0,'scripts/pipeline');from source_catalog import scan;print(json.dumps(scan(Path(sys.argv[1])),ensure_ascii=False))`;
- const r=py(code,[d]); const x=JSON.parse(r.stdout); assert.equal(x.summary.effectiveLatestFullMonthEnd,'2026-09-30'); assert.equal(x.summary.previousComparableMonthEnd,'2026-08-31'); assert.equal(x.summary.hasPartialNewerMonth,false);
+ const r=py(code,[d]); const x=JSON.parse(r.stdout); assert.equal(x.summary.effectiveLatestFullMonthEnd,'2026-10-31'); assert.equal(x.summary.previousComparableMonthEnd,'2026-09-30'); assert.equal(x.summary.hasPartialNewerMonth,false);
 });
 
-test('closed September automatically advances full month',()=>{
+test('older closed September cannot regress the accepted October month',()=>{
  const d=fs.mkdtempSync(path.join(os.tmpdir(),'rt-pipe-')); makeXlsx(path.join(d,'ПР_2_30.09.2026.xlsx'));
  const code=`import sys,json;from pathlib import Path;sys.path.insert(0,'scripts/pipeline');from source_catalog import scan;print(json.dumps(scan(Path(sys.argv[1])),ensure_ascii=False))`;
- const r=py(code,[d]); const x=JSON.parse(r.stdout); assert.equal(x.summary.effectiveLatestFullMonthEnd,'2026-09-30'); assert.equal(x.summary.previousComparableMonthEnd,'2026-08-31');
+ const r=py(code,[d]); const x=JSON.parse(r.stdout); assert.equal(x.summary.effectiveLatestFullMonthEnd,'2026-10-31'); assert.equal(x.summary.previousComparableMonthEnd,'2026-09-30');
 });
 
 test('current TVSP month range uses workbook formation date instead of month end',()=>{
