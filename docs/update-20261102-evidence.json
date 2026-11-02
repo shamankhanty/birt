@@ -1,0 +1,338 @@
+{
+  "date": "2026-11-02",
+  "baselineCommit": "1467a5466dd722e11fae04b72c5dcbc650ce7128",
+  "inputArchive": "Исходники 02.11.26 (2).rar",
+  "sourceCount": 22,
+  "sources": [
+    {
+      "file": "1.Отчет СЭМД_РЭМД - 01.01.-31.10.(Выгрузка из BI 02.11.).xlsx",
+      "sha256": "007e390a864f41796242fd38ad75636392f127c39b78389ea39f8bd31b94c220",
+      "family": "elmk",
+      "status": "PASS",
+      "sourceStart": "2026-01-01",
+      "sourceEnd": "2026-10-31"
+    },
+    {
+      "file": "I_Свид-ва о смерти по РТ (РМИАЦ) 01.01.-31.10.(Выгрузка из ГИС 02.11.).xlsx",
+      "sha256": "447c9e925efded292d9ba96add8d1c88614cb0a3d3255d36cb6109d2483c5d65",
+      "family": "death_certificates",
+      "status": "PASS",
+      "sourceStart": "2026-01-01",
+      "sourceEnd": "2026-10-31"
+    },
+    {
+      "file": "Доля_ТВСП,_обеспечивающих_передачу_СЭМД_«Протокол_диагностических 01.01.-31.10.(Выгрузка из BI 02.11.).xlsx",
+      "sha256": "86107f31795d02d6dc46f5f15766bc85013ed1f976372006e05e0ebc597b8fbd",
+      "family": "tvsp_diagnostic",
+      "status": "PASS",
+      "sourceStart": "2026-01-01",
+      "sourceEnd": "2026-10-31"
+    },
+    {
+      "file": "Закрытые случаи ДОГВН ПМО и зарегистрированные СЭМД 122 и 228 - 01.01.-31.10.(Выгрузка из ГИС 02.11.).xlsx",
+      "sha256": "1c29a34da65df9c17eb8ea475f2e33c27cd4ad912db7ac1a89ec8657b7e01dbc",
+      "family": "preventive_remd",
+      "status": "PASS",
+      "sourceStart": "2026-01-01",
+      "sourceEnd": "2026-10-31"
+    },
+    {
+      "file": "Количество_СЭМД_Результаты_профилактического_медицинского_осмотрадиспансеризации 01.01.-31.10.(Выгрузка из ГИС 02.11.).xlsx",
+      "sha256": "ec6c54c31f9b2fd8932f0c1dc34da74d36cc8153b5d4bc2456255e35985d53d6",
+      "family": "preventive_foms",
+      "status": "PASS",
+      "sourceStart": "2026-01-01",
+      "sourceEnd": "2026-10-31"
+    },
+    {
+      "file": "Отправка сведений в федеральные сервисы_01.01.-31.10.(Выгрузка из АСУ ССМП 02.11.).xlsx",
+      "sha256": "afcc9d365ef6fd3e4980fb54dd637c2a150625bbd1b39f060564a11bf97f0ddc",
+      "family": "asu_smp",
+      "status": "PASS",
+      "sourceStart": "2026-01-01",
+      "sourceEnd": "2026-10-31"
+    },
+    {
+      "file": "Отчет_Доля_ТВСП_СЭМД_Протокол лабораторного исследования 01.01.-31.10.(Выгрузка из BI 02.11.).xlsx",
+      "sha256": "410877a2b651d99f2b4aaf74b7b0361ab3a69e4340c8def868882d65c71aa1ae",
+      "family": "tvsp_laboratory",
+      "status": "PASS",
+      "sourceStart": "2026-01-01",
+      "sourceEnd": "2026-11-02"
+    },
+    {
+      "file": "Отчет_Доля_ТВСП_СЭМД_Эпикр по законч случаю амбулат_Талон амбулат пациента и Протокол консульт 01.01-31.10(Выгрузка из BI 02.11.).xlsx",
+      "sha256": "53aa01e313c040713c38b7f55d6fdab05d546efa93e5bd22c5174d1fd7b043bf",
+      "family": "tvsp_ambulatory",
+      "status": "PASS",
+      "sourceStart": "2026-01-01",
+      "sourceEnd": "2026-11-02"
+    },
+    {
+      "file": "Отчет_Доля_ТВСП_СЭМД_Эпикриз_в_стационаре_выписной_или_Выписной 01.01.-31.10.(Выгрузка из BI 02.11.).xlsx",
+      "sha256": "0bf6e3dabd9332ef8960c13007c03ac1ddde049ffc2f31ec3cd79c330690fd11",
+      "family": "tvsp_stationary",
+      "status": "PASS",
+      "sourceStart": "2026-01-01",
+      "sourceEnd": "2026-11-02"
+    },
+    {
+      "file": "Отчет_СМП_ТВСП 01.01.-31.10. (Выгрузка из BI 02.11.).xlsx",
+      "sha256": "4cc34451b9e171d8bfff84e1415830f222cb75ebb094dfd5b4f9cb0a22106124",
+      "family": "smp_tvsp",
+      "status": "PASS",
+      "sourceStart": "2026-01-01",
+      "sourceEnd": "2026-10-31"
+    },
+    {
+      "file": "Отчет_ТМК_РЭМД 01.01.-31.10. (Выгрузка из BI 02.11.).xlsx",
+      "sha256": "dd2e182021d103ffabe5df7cef516961b279a958bd2ecfb19448c824268fc353",
+      "family": "tmk_remd",
+      "status": "PASS",
+      "sourceStart": "2026-01-01",
+      "sourceEnd": "2026-10-31"
+    },
+    {
+      "file": "Отчет_по_ФАП_и_ФП_(кол-во_зарегистрированных_СЭМД)_01.01.-31.10.(Выгрузка стп ГИС 01.11.).xlsx",
+      "sha256": "cb829f94cb821a133a6001530c8eff4524bde053a1c0c64be874cb4a56273186",
+      "family": "fap_fp",
+      "status": "PASS",
+      "sourceStart": "2026-01-01",
+      "sourceEnd": "2026-10-31"
+    },
+    {
+      "file": "Отчет_по_госпитализациям_v2_01.01.-31.10.(Выгрузка стп ГИС 01.11.).xlsx",
+      "sha256": "f4e19ceaf84465b037fec200a7e22df89b18598841f5b4383284281464793690",
+      "family": "hospital_cases",
+      "status": "PASS",
+      "sourceStart": "2026-01-01",
+      "sourceEnd": "2026-10-31"
+    },
+    {
+      "file": "Отчет_по_законченному_случаю_амбулаторный_01.01.-31.10.(Выгрузка стп ГИС 01.11.).xlsx",
+      "sha256": "b4f063dacb52853b877cd60d8bf2b7d170ea237fa12f55e87a3e8177b2f50330",
+      "family": "ambulatory_cases",
+      "status": "PASS",
+      "sourceStart": "2026-01-01",
+      "sourceEnd": "2026-10-31"
+    },
+    {
+      "file": "Отчёт - Отказы по регистрации ЭМД в РЭМД 01.01.-31.10.(Выгрузка из BI 02.11.).xlsx",
+      "sha256": "9a1cd552199c238ea7074891432ba148a481210bb8063fe905c4ea304bfadbcf",
+      "family": "remd_errors",
+      "status": "PASS",
+      "sourceStart": "2026-01-01",
+      "sourceEnd": "2026-10-31"
+    },
+    {
+      "file": "Отчёт - Отказы по регистрации ЭМД в РЭМД 22.10.-31.10.(Выгрузка из BI 02.11.).xlsx",
+      "sha256": "2bd3c889f2e51009937a92da0ecafbd0930ebfde9408c974b2bdec78da46448b",
+      "family": "remd_errors",
+      "status": "PASS",
+      "sourceStart": "2026-10-22",
+      "sourceEnd": "2026-10-31"
+    },
+    {
+      "file": "Отчёт_по_врачам_сформировавших_СЭМД - Октябрь (Выгрузка из BI 02.11..xlsx",
+      "sha256": "fdad6af8177bf3b47132d65a3abe7b2f41cb265e33649e0725afa36dcadcc23b",
+      "family": "physicians",
+      "status": "PASS",
+      "sourceStart": "2026-11-01",
+      "sourceEnd": "2026-10-31"
+    },
+    {
+      "file": "ПР_2_Кол-во заявл на прикр. от ЕГПУ за период. ИП ООГУЗ. Обраб. 2 раб.дн. 01.01.-31.10.(Выгрузка из ГИС 02.11.).xlsx",
+      "sha256": "aca2077a55a3dcadb2ef1ef7021eae8fcf45132baad3dbd2d0956de31836c005",
+      "family": "egpu_attachment",
+      "status": "PASS",
+      "sourceStart": "2026-01-01",
+      "sourceEnd": "2026-10-31"
+    },
+    {
+      "file": "Свидетельства_о_рождении_по_РТ_(РМИАЦ) 01.01.-31.10.(Выгрузка из ГИС 02.11.).xlsx",
+      "sha256": "5cdd1a329192080d98e25bdde986b091d4d04b4f177841a090755e376a68ab97",
+      "family": "birth_certificates",
+      "status": "PASS",
+      "sourceStart": "2026-01-01",
+      "sourceEnd": "2026-10-31"
+    },
+    {
+      "file": "Случаи краткого ввода 01.01.-28.10.(Выгрузка из ГИС 29.10.).xlsx",
+      "sha256": "7d9cb6cbae077dcb7e372c3fcf0ebefbf7ce26aadfcb8e0c13eea08b89873517",
+      "family": "short_input",
+      "status": "PASS",
+      "sourceStart": "2026-01-01",
+      "sourceEnd": "2026-10-28"
+    },
+    {
+      "file": "ТМК_МАХ 01.10.-31.10.(Выгрузка из ГИС 02.11.).xlsx",
+      "sha256": "f44227011a272666aff51721e0e86405f9539b2e32d2228fde9bd3fd06d3b675",
+      "family": "max_tmk_eln",
+      "status": "WARNING",
+      "sourceStart": "2026-10-01",
+      "sourceEnd": "2026-10-31"
+    },
+    {
+      "file": "ТМК_МАХ_01.01.-31.10.(Выгрузка из ГТС 02.11.).xlsx",
+      "sha256": "4e35068906269e794a35406dd08de13417ac1389037bab88a36e0f86149848b8",
+      "family": "max_tmk_eln",
+      "status": "PASS",
+      "sourceStart": "2026-01-01",
+      "sourceEnd": "2026-10-31"
+    }
+  ],
+  "periodPolicy": {
+    "monthly": "october 2026 only for successfully validated full-month sources",
+    "cumulative": "01.01–31.10.2026 where specified",
+    "operational": "shortInput remains 01.01–28.10.2026",
+    "doNotChangeSourceCounts": true,
+    "nonfinalOctoberRating": "September v2 remains frozen; October has mixed coverage and is not a complete approved official rating"
+  },
+  "staging": {
+    "state": "PARTIAL",
+    "publicationAllowedByAutomatedGate": false,
+    "reason": "Historical replay source-backed manifest absent; manual review and CI required",
+    "prepared": 32,
+    "retained": 3,
+    "missing": 1,
+    "warning": true
+  },
+  "retained": [
+    {
+      "indicator": "ambulatoryCase",
+      "source": "ambulatory_cases",
+      "reason": "unsupported operand type(s) for -: 'float' and 'NoneType'"
+    },
+    {
+      "indicator": "semd228",
+      "source": "preventive_remd",
+      "reason": "data.new_unresolved_organizations: ООО \"КДЦ Авиастроительного района\" unresolved_organization; data.new_unresolved_organizations: ООО \"КДЦ Аракчино\" unresolved_organization; data.new_unresolved_organizations: ООО \"КДЦ на Четаева\" unresolved_organization; data.new_unresolved_organizations: ООО \"Красноключинский центр семейной медицины\" unresolved_organization; data.new_unresolved_organizations: ООО \"ММЦ Профмедицина-НК\" unresolved_organization; da"
+    },
+    {
+      "indicator": "death",
+      "source": "death_certificates",
+      "reason": "data.new_unresolved_organizations: ЧУЗ \"КБ \"РЖД-Медицина\" г. Казани\" unresolved_organization; data.new_unresolved_organizations: ООО \"ММЦ Профмедицина-НК\" unresolved_organization; data.new_unresolved_organizations: ГАУЗ \"Спасская ЦРБ\" unresolved_organization"
+    },
+    {
+      "indicator": "electronicWaybill",
+      "source": "electronic_waybill",
+      "reason": "Нет входного источника показателя"
+    }
+  ],
+  "changedFiles": [
+    {
+      "path": "app/error-categories.json",
+      "baselineSha256": "76df666719dcb0294348f4c5c7457aced6f72f4ac91422087216bf67355b336b",
+      "candidateSha256": "7be83a4bf3e8d8501709d0fab85d3f1e23b70a563b136ad80230207ffce24879",
+      "bytes": 4863
+    },
+    {
+      "path": "app/error-cumulative.json",
+      "baselineSha256": "c9eb03f1244c917214918a905aa90b635542d112c04a8eef3aff38620f13b051",
+      "candidateSha256": "f0b8dcb257de4c0bca2433e1fe2f9e1db4a39ea01b1fee87996ede4de6d5139d",
+      "bytes": 867407
+    },
+    {
+      "path": "app/error-organizations.json",
+      "baselineSha256": "a0a9a30c0cd5dd038d2ea0e12f060e7c721089f5551270986e416cd0dbc29c40",
+      "candidateSha256": "4448112438ae07259613089af44d130e292c9bb23a22e6a829cdcbce5052f740",
+      "bytes": 308186
+    },
+    {
+      "path": "app/federal-control.json",
+      "baselineSha256": "7fd8ffcb0bf6251ead33832453677c03844ab7ad274a2c28ddeadf2bb567e895",
+      "candidateSha256": "61adac28a6631708dd14088dfba1a60cac2a0b6474c3e8ab8e032f044f39401d",
+      "bytes": 43301
+    },
+    {
+      "path": "app/max-period-views.json",
+      "baselineSha256": "605a6f0510c9bd43da9c5b801c90548bf7a1a8f1edb5e29a55332a4bc1f6ce4a",
+      "candidateSha256": "3dbbaa139ed70656c07bb26a530a994841f3378ea0d2491d7ea6b44e4268e2f1",
+      "bytes": 80883
+    },
+    {
+      "path": "app/mo-data.json",
+      "baselineSha256": "53b3ccfb6ea3d2457670507a32eeadcf5553805b3b78bfd12cf2f543519a92d6",
+      "candidateSha256": "31b46cbdccdc3d829e4159be93b4b71cd521450f72895fed757de637132d7e4e",
+      "bytes": 304833
+    },
+    {
+      "path": "app/mo-detail-oids.json",
+      "baselineSha256": "f0595094b7e07f5fb03f9c4ab5f80325c96b9a70e4cc132da6edfe743b1dcfff",
+      "candidateSha256": "877c56c71a36c9a0cc49ae8b5e4591bf856f3a734e0dc6dd099467c08c5a764d",
+      "bytes": 94616
+    },
+    {
+      "path": "app/mo-details.json",
+      "baselineSha256": "fcf262088ef04d93020eb2467a4b8e4039919463f71450a6c03e82fdb525d398",
+      "candidateSha256": "bfdd3c4049f5df52308c373230a8709b1f1747eb468d5af87682f5c902160471",
+      "bytes": 126951
+    },
+    {
+      "path": "app/monthly-mo.json",
+      "baselineSha256": "25949c7f3ad4078f66495484e39e10920f81a06bf73cc1cd2c0068023524c0f7",
+      "candidateSha256": "898fec66baa499b4d4e0ca64503ddb1991a88c29194847c046dfe5fe6bfe4199",
+      "bytes": 647445
+    },
+    {
+      "path": "app/operational-mo.json",
+      "baselineSha256": "4e20569cc3848096b1b5b0fe0ccd09b0f6e10c8add975fd5aee292ca2090cd54",
+      "candidateSha256": "fe507a191e57410efc95e139a2e6bce010c7bfdb1c298dd35ee6cf9b8e1b0378",
+      "bytes": 214225
+    },
+    {
+      "path": "app/organization-status.json",
+      "baselineSha256": "80078de8873f6bdcb64d4ea3bc9e50f8b81453511d78b90d2940f90413f4e6a0",
+      "candidateSha256": "daf8596f8041a46d23eded93d6b186cb92753549407d88c6ec1f504fc1060c8d",
+      "bytes": 25676
+    },
+    {
+      "path": "app/physician-metrics.json",
+      "baselineSha256": "067031ce2e09b4d294dea05eade28e0b21baae789408b9964edad5f21fb9a93a",
+      "candidateSha256": "12d908b462466fc00858323fa4376877a564d817bdd4b33d894cc5ac2f387ad5",
+      "bytes": 807090
+    },
+    {
+      "path": "app/physician-weekly-snapshot.json",
+      "baselineSha256": "5af344298b4b0c6c860ffd62b0ea6c3610627d9d60d9b4a74f9b6b4418d29b15",
+      "candidateSha256": "d0c161ee51d0d1e5a020f3508ed8c5dec61ce2d0cdc0ed5f234b62d85ab9948c",
+      "bytes": 1285466
+    },
+    {
+      "path": "app/physician500-audit.json",
+      "baselineSha256": "e564cefd6d4da5786cf10e40898f56f4a20dcea3ac6b039e09ce04aea7e1261d",
+      "candidateSha256": "33badec7e53d8019a1207078a681e0f0b511d54b3b8cc6c1506bdc008c6b13da",
+      "bytes": 59218
+    },
+    {
+      "path": "app/semd-summary.json",
+      "baselineSha256": "764a39d16e11f4b8a9f0451fdea7ff9587cbc957ea1794bd90892b0b009c9ef3",
+      "candidateSha256": "cd1937c7759bedb39a83927b064e35cf032ef471e3fda16f272eead739c343ad",
+      "bytes": 36428
+    },
+    {
+      "path": "app/unit-data.json",
+      "baselineSha256": "861b01f3325e593aba8eb568763cc05a66fa83891d7a68948e47b7e8f0600bec",
+      "candidateSha256": "c16e58512106a224c7ef9f3dcdb678346a7a8fb0c094b4106bfa87ef9891e1c4",
+      "bytes": 541177
+    }
+  ],
+  "notices": [
+    "Unresolved private/external MO in full-source data remain unranked; no fabricated OID",
+    "Two historical MAX OID 1110 missing from the new monthly inputs; no zeros substituted",
+    "Five above-100 source ratios retained as warnings, not capped",
+    "Three TVSP files end 31.10; 02.11 is export date",
+    "Physician monthly period 01.10–31.10; erroneous 01.11–31.10 corrected",
+    "RKB/Spassk rules from PR147 preserved"
+  ],
+  "referenceKpis": {
+    "remdErrors22to31Oct": 303938,
+    "remdErrorsCumulativeTo31Oct": 14433785,
+    "maxTmkCumulative": 73479,
+    "maxElnCumulative": 55268,
+    "maxTmkOctober": 15573,
+    "maxElnOctober": 12498,
+    "semdRegisteredTotal": 84817652
+  },
+  "publicationState": "STAGING ONLY"
+}
