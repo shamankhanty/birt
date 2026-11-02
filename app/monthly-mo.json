@@ -2414,7 +2414,8 @@
         "julyQuantity": null,
         "sourceStatus": "no_source_row"
       }
-    ]
+    ],
+    "ratingState": "retained_incomplete_period"
   },
   "hospital": {
     "unit": "%",
@@ -16562,7 +16563,8 @@
         "julyQuantity": null,
         "sourceStatus": "no_source_row"
       }
-    ]
+    ],
+    "ratingState": "retained_incomplete_period"
   },
   "tvspAmbulatory": {
     "unit": "%",
@@ -17578,7 +17580,8 @@
         "julyQuantity": null,
         "sourceStatus": "no_source_row"
       }
-    ]
+    ],
+    "ratingState": "retained_incomplete_period"
   },
   "tvspDiagnostic": {
     "unit": "%",
@@ -18539,7 +18542,8 @@
         "juneQuantity": "1 ТВСП",
         "julyQuantity": "1 / 1"
       }
-    ]
+    ],
+    "ratingState": "retained_incomplete_period"
   },
   "tvspLaboratory": {
     "unit": "%",

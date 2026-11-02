@@ -271,8 +271,8 @@
     {
       "path": "app/monthly-mo.json",
       "baselineSha256": "25949c7f3ad4078f66495484e39e10920f81a06bf73cc1cd2c0068023524c0f7",
-      "candidateSha256": "898fec66baa499b4d4e0ca64503ddb1991a88c29194847c046dfe5fe6bfe4199",
-      "bytes": 647445
+      "candidateSha256": "1a77214417f3c228a22cfedc8d6f65d22a20c62871431be3f617c3b2c700bd6f",
+      "bytes": 647641
     },
     {
       "path": "app/operational-mo.json",
@@ -323,7 +323,8 @@
     "Five above-100 source ratios retained as warnings, not capped",
     "Three TVSP files end 31.10; 02.11 is export date",
     "Physician monthly period 01.10–31.10; erroneous 01.11–31.10 corrected",
-    "RKB/Spassk rules from PR147 preserved"
+    "RKB/Spassk rules from PR147 preserved",
+    "Incomplete October sources from September (and August death certificates) carry explicit retained_incomplete_period; no manufactured October ratings"
   ],
   "referenceKpis": {
     "remdErrors22to31Oct": 303938,

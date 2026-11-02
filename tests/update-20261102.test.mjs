@@ -58,3 +58,10 @@ test('SEMD summary reconciles 97 document types and current source evidence',()=
   assert.ok(evidence.retained.some(x=>x.indicator==='ambulatoryCase'));
   assert.ok(evidence.retained.some(x=>x.indicator==='death'));
 });
+
+test('October gaps are explicitly marked retained, not counted as current monthly results',()=>{
+ for(const id of ['death','semd228','tvspAmbulatory','tvspStationary','tvspDiagnostic']){
+  assert.equal(monthly[id].ratingState,'retained_incomplete_period',id);
+  assert.notEqual(monthly[id].currentLabel,'Октябрь 2026',id);
+ }
+});
