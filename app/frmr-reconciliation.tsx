@@ -3,9 +3,11 @@
 import { useMemo, useState } from "react";
 import legacyRaw from "./frmr-reconciliation-data.json";
 import allRaw from "./frmr-all-specialties.json";
+import spTypes from "./frmr-sp-types.json";
+import { frmrControlView } from "../lib/frmr-control";
 import FrmoLinkage from "./frmo-linkage";
 import { applyFrmrScope } from "../lib/frmr-scope";
-const { data: scopedAll, excluded: scopeExcluded } = applyFrmrScope(allRaw);
+const { data: scopedAll, excluded: scopeExcluded } = applyFrmrScope(allRaw, spTypes.types);
 import legacyDepartments from "./frmr-department-details.json";
 import legacyRecords from "./frmr-last4-records.json";
 import styles from "./frmr-reconciliation.module.css";
@@ -39,9 +41,12 @@ const change = (row: Org) =>
 export default function FrmrReconciliation() {
   const [coverage, setCoverage] = useState<"all" | "legacy">("all");
   const isAll = coverage === "all";
-  const raw = isAll ? scopedAll.summary : legacyRaw;
-  const departmentRaw = isAll ? scopedAll.departments : legacyDepartments;
-  const last4Raw = isAll ? scopedAll.records : legacyRecords;
+  const [controlLevel, setControlLevel] = useState<"mo" | "department">("mo");
+  const [spType, setSpType] = useState("");
+  const controlData = useMemo(() => frmrControlView(scopedAll, controlLevel, spType, spTypes.types), [controlLevel, spType]);
+  const raw = isAll ? controlData.summary : legacyRaw;
+  const departmentRaw = isAll ? controlData.departments : legacyDepartments;
+  const last4Raw = isAll ? controlData.records : legacyRecords;
   const staffRecords = last4Raw.rows as unknown as StaffRecord[];
   const departmentRows: DepartmentGroup[] = (
     departmentRaw.rows as number[][]
@@ -116,7 +121,7 @@ export default function FrmrReconciliation() {
         sort === "name" ? a.name.localeCompare(b.name, "ru") :
         b.current - a.current || a.name.localeCompare(b.name, "ru"),
       );
-  }, [coverage, filter, search, sort]);
+  }, [coverage, controlLevel, spType, filter, search, sort]);
 
   const allSelectedGroups = departmentRows.filter((row) => row.mo === selected?.id);
   const diagnosticRoles: SpecialityGroup[] = [...allSelectedGroups.reduce((map, row) => {
@@ -127,6 +132,9 @@ export default function FrmrReconciliation() {
     .sort((a,b)=>b[1]-a[1] || a[0].localeCompare(b[0],"ru"));
   const roleDepartments = allSelectedGroups.filter((row) => row.role === activeRole)
     .sort((a,b) => b.count-a.count || a.name.localeCompare(b.name,"ru"));
+  const selectedRoleIndices = new Set(roleDepartments.map(row => row.roleIndex));
+  const moRoleRecords = staffRecords.filter(rec => selected && departmentRaw.mos[rec[0]] === selected.id && selectedRoleIndices.has(rec[1]));
+  const visibleMoRecords = moRoleRecords.filter(rec => !last4Query.trim() || (rec[3] !== null && rec[3].includes(last4Query.replace(/\D/g,""))));
   const selectedDepartment = roleDepartments.find((row)=>row.oid===activeDepartment) ?? null;
   const detailRecords = selectedDepartment
     ? staffRecords.filter(([mo,role,sp,,issue]) =>
@@ -176,7 +184,7 @@ export default function FrmrReconciliation() {
       <section className={styles.hero}>
         <span className={styles.tag}>ФРМР · ФРМО · ГИС</span>
         <h1>ФРМР ↔ ГИС: достоверность должностей</h1>
-        <p>Единый контроль расхождений между федеральным регистром и региональной ГИС. Для руководителя — масштаб, динамика и МО с ухудшением. Для МО — структура проблем и конкретные действия.</p>
+        <p>Единый контроль расхождений между федеральным регистром и региональной ГИС. Основной контроль — наличие должности на уровне медицинской организации. Привязки подразделений доступны отдельно, справочно.</p>
         <div className={styles.heroBottom}>
           <span className={styles.eyebrow}>Срез {dateLabel}</span>
           <span className={styles.heroNote}>Единица учёта — должностная запись, а не уникальный сотрудник. Влияние на запись пациентов пока не подтверждено.</span>
@@ -184,8 +192,8 @@ export default function FrmrReconciliation() {
       </section>
 
       <div className={styles.tabs} role="group" aria-label="Охват ФРМР">
-        <button className={[styles.tab, isAll ? styles.tabActive : ""].join(" ")} onClick={() => {setCoverage("all");setView("minister");setFilter("all");setSort("count");setSearch("");setMoQuery("");setSelectedId(null);resetInspection();}}>Все специальности · 29.10</button>
-        <button className={[styles.tab, !isAll ? styles.tabActive : ""].join(" ")} onClick={() => {setCoverage("legacy");setView("minister");setFilter("all");setSort("count");setSearch("");setMoQuery("");setSelectedId(null);resetInspection();}}>Прежний перечень · архив</button>
+        <button className={[styles.tab, isAll ? styles.tabActive : ""].join(" ")} onClick={() => {setCoverage("all");setControlLevel("mo");setSpType("");setView("minister");setFilter("all");setSort("count");setSearch("");setMoQuery("");setSelectedId(null);resetInspection();}}>Все специальности · 29.10</button>
+        <button className={[styles.tab, !isAll ? styles.tabActive : ""].join(" ")} onClick={() => {setCoverage("legacy");setSpType("");setView("minister");setFilter("all");setSort("count");setSearch("");setMoQuery("");setSelectedId(null);resetInspection();}}>Прежний перечень · архив</button>
       </div>
       <div className={styles.tabs} role="group" aria-label="Представление раздела">
         <button className={[styles.tab, view === "minister" ? styles.tabActive : ""].join(" ")} onClick={() => setView("minister")} aria-pressed={view === "minister"}>Обзор</button>
@@ -193,29 +201,43 @@ export default function FrmrReconciliation() {
         <button className={[styles.tab, view === "linkage" ? styles.tabActive : ""].join(" ")} onClick={() => setView("linkage")} aria-pressed={view === "linkage"}>Привязки ФРМО · 30.10</button>
       </div>
 
+      {isAll && view !== "linkage" && <div className={styles.filters}>
+        <div className={styles.tabs} role="group" aria-label="Уровень контроля ФРМР">
+          <button className={[styles.tab, controlLevel === "mo" ? styles.tabActive : ""].join(" ")} aria-pressed={controlLevel === "mo"} onClick={() => {setControlLevel("mo");setFilter("all");resetInspection();}}>На уровне МО</button>
+          <button className={[styles.tab, controlLevel === "department" ? styles.tabActive : ""].join(" ")} aria-pressed={controlLevel === "department"} onClick={() => {setControlLevel("department");setFilter("all");resetInspection();}}>Привязки СП · справочно</button>
+        </div>
+        <select className={styles.select} value={spType} aria-label="Тип структурного подразделения" onChange={e => {setSpType(e.target.value);resetInspection();}}>
+          <option value="">Все типы СП</option>
+          {[...new Set(Object.values(spTypes.types))].filter(type => type !== "Скорая медицинская помощь").sort((a,b)=>a.localeCompare(b,"ru")).map(type=><option key={type}>{type}</option>)}
+          <option value="Не указан">Тип не указан</option>
+        </select>
+      </div>}
+      {isAll && view !== "linkage" && <p className={styles.muted} data-testid="frmr-control-note">{controlLevel === "mo" ? "Основной контроль: должность не найдена на уровне МО. Расхождения привязок СП в этот итог не входят." : "Справочно: должность найдена в МО, но не совпадает привязка СП. Эти записи не входят в основной итог проблем МО."} {spType && <>Тип СП: {spType}. </>}Все специальности сохранены с учётом согласованных исключений. Тип СП не определяет работу по ОМС или платно.</p>}
+
       {isAll && view !== "linkage" && <p className={styles.muted} data-testid="frmr-scope-note">Из сверки исключены: скорая помощь, врачи-стажёры и средний лабораторный персонал. Учтено {number(scopedAll.records.rows.length)} записей; исключено {number(scopeExcluded.total)}. Изменение охвата не является улучшением показателя.</p>}
 
       {view === "linkage" ? <FrmoLinkage /> : view === "minister" ? (
         <>
           <div className={styles.stats}>
-            <article className={styles.stat}><span className={styles.statLabel}>Расхождения на {cutShort}</span><strong className={styles.negative}>{number(currentTotal)}</strong><small>{isAll ? "с учётом исключений из сверки" : <>снижение на {number(previousTotal - currentTotal)} к 16.10</>}</small></article>
-            <article className={styles.stat}><span className={styles.statLabel}>МО с расхождениями</span><strong>{affected} <span className={styles.muted}>/ {orgs.length}</span></strong><small>в проверяемом перечне</small></article>
-            <article className={styles.stat}><span className={styles.statLabel}>{isAll ? "Нет должности в МО" : "Улучшили / ухудшили"}</span><strong>{isAll ? number(stage1Total) : <><span className={styles.positive}>{improvedCount}</span> / <span className={styles.negative}>{worsenedCount}</span></>}</strong><small>{isAll ? "первый этап проверки" : "изменение числа записей к 16.10"}</small></article>
-            <article className={styles.stat}><span className={styles.statLabel}>{isAll ? "Не совпадает СП" : "Снижение с февраля"}</span><strong>{number(isAll ? stage2Total : febTotal - currentTotal)}</strong><small>{isAll ? "должность есть на уровне МО" : <>{number(febTotal)} → {number(currentTotal)}</>}</small></article>
+            <article className={styles.stat}><span className={styles.statLabel}>{isAll ? (controlLevel === "mo" ? "Не найдены в МО" : "Привязки СП · справочно") : <>Расхождения на {cutShort}</>}</span><strong className={isAll && controlLevel === "department" ? styles.dark : styles.negative}>{number(currentTotal)}</strong><small>{isAll ? "должностных записей в выбранном перечне" : <>снижение на {number(previousTotal - currentTotal)} к 16.10</>}</small></article>
+            <article className={styles.stat}><span className={styles.statLabel}>{isAll && controlLevel === "department" ? "МО со справочными записями" : "МО с расхождениями"}</span><strong>{affected} <span className={styles.muted}>/ {orgs.length}</span></strong><small>в проверяемом перечне</small></article>
+            <article className={styles.stat}><span className={styles.statLabel}>{isAll ? "Наименований должностей" : "Улучшили / ухудшили"}</span><strong>{isAll ? number(topSpecialties.length) : <><span className={styles.positive}>{improvedCount}</span> / <span className={styles.negative}>{worsenedCount}</span></>}</strong><small>{isAll ? "в выбранном перечне" : "изменение числа записей к 16.10"}</small></article>
+            <article className={styles.stat}><span className={styles.statLabel}>{isAll ? "Всего в исходной сверке" : "Снижение с февраля"}</span><strong>{number(isAll ? scopedAll.records.rows.length : febTotal - currentTotal)}</strong><small>{isAll ? "после согласованных исключений; два уровня отдельно" : <>{number(febTotal)} → {number(currentTotal)}</>}</small></article>
           </div>
-          {isAll && <details className={styles.qualityNote}><summary>Качество исходных записей и границы расчёта</summary><p>В исходнике 8 264 записи; после исключений в сверке — {number(currentTotal)}. Ниже приведены признаки качества полного исходника. Дополнительные признаки не исключают записи автоматически и могут пересекаться: без корректного идентификатора — {allRaw.metadata.quality.missingIdentifier}; дата окончания работы наступила — {allRaw.metadata.quality.employmentEnded}; избыточных повторов по проверенным реквизитам — {allRaw.metadata.quality.repeatedRecordExtras}; нет служебной связи МО с ФРМО — {allRaw.metadata.quality.missingOrganizationLink}.</p><p>В исходнике 13 878 отдельных признаков расхождения; одна должностная запись может содержать несколько. Поэтому они не суммируются как число сотрудников. Ставки не оцениваются. Состав включает государственные и частные МО; ведомственная принадлежность не выводится из названия.</p></details>}
+          {isAll && <details className={styles.qualityNote}><summary>Качество исходных записей и границы расчёта</summary><p>В исходнике 8 264 записи; после исключений в сверке — {number(scopedAll.records.rows.length)}. В выбранном режиме — {number(currentTotal)}. Ниже приведены признаки качества полного исходника. Дополнительные признаки не исключают записи автоматически и могут пересекаться: без корректного идентификатора — {allRaw.metadata.quality.missingIdentifier}; дата окончания работы наступила — {allRaw.metadata.quality.employmentEnded}; избыточных повторов по проверенным реквизитам — {allRaw.metadata.quality.repeatedRecordExtras}; нет служебной связи МО с ФРМО — {allRaw.metadata.quality.missingOrganizationLink}.</p><p>В исходнике 13 878 отдельных признаков расхождения; одна должностная запись может содержать несколько. Поэтому они не суммируются как число сотрудников. Ставки не оцениваются. Состав включает государственные и частные МО; ведомственная принадлежность не выводится из названия.</p></details>}
           <div className={styles.grid}>
             <section className={styles.panel}>
-              <div className={styles.panelHead}><div><h2>{isAll ? "Новый охват контроля" : "Динамика по республике"}</h2><span className={styles.muted}>{isAll ? "Все применимые специальности, включая единичные записи" : "Исторические точки только на датах, присутствующих в файле"}</span></div>{!isAll && <span className={styles.pill}>−{number(previousTotal - currentTotal)} за 6 дней</span>}</div>
+              <div className={styles.panelHead}><div><h2>{isAll ? (controlLevel === "mo" ? "Контроль на уровне МО" : "Справочная сверка СП") : "Динамика по республике"}</h2><span className={styles.muted}>{isAll ? "Все применимые специальности, включая единичные записи" : "Исторические точки только на датах, присутствующих в файле"}</span></div>{!isAll && <span className={styles.pill}>−{number(previousTotal - currentTotal)} за 6 дней</span>}</div>
               {trendBars(isAll ? [["29.10", currentTotal]] : [["01.02", febTotal], ["16.10", previousTotal], ["22.10", currentTotal]])}
-              {isAll ? <p className={styles.muted}>Первая контрольная точка по всем специальностям — 29.10.2026, с учётом исключений из сверки. Прежние 1 445 записей относятся к ограниченному перечню. Рост или снижение между этими охватами не рассчитывается.</p> : <div className={styles.legend}><span>От 16.10: <b>{signed(currentTotal - previousTotal)}</b></span><span>От 01.02: <b>{signed(currentTotal - febTotal)}</b></span></div>}
+              {isAll ? <p className={styles.muted}>Первая контрольная точка по всем специальностям — 29.10.2026, с учётом исключений из сверки. Уровни МО и СП показаны отдельно; это изменение представления, а не улучшение данных. Прежние 1 445 записей относятся к ограниченному перечню. Рост или снижение между этими охватами не рассчитывается.</p> : <div className={styles.legend}><span>От 16.10: <b>{signed(currentTotal - previousTotal)}</b></span><span>От 01.02: <b>{signed(currentTotal - febTotal)}</b></span></div>}
             </section>
             <section className={styles.panel}>
-              <h2>Причины расхождений</h2>
+              <h2>{isAll ? "Как читать результат" : "Причины расхождений"}</h2>
+              {isAll ? <p className={styles.muted}>{controlLevel === "mo" ? "Сверьте сотрудника и должность на уровне МО. Выберите МО, затем должность — конкретные записи появятся сразу, без выбора подразделения." : "Привязки СП служат для поиска причин. Различие подразделений не означает отсутствия сотрудника в МО и не увеличивает основной итог."} Отсутствие должности не доказывает отсутствие СЭМД. Административные СП и платные услуги автоматически не исключаются.</p> : <>
               <div className={styles.muted}>Две взаимоисключающие группы: при отсутствии должности в МО запись учитывается на первом этапе, а не повторно в СП</div>
-              <div className={styles.reason}><div className={styles.reasonTop}><span>Должность отсутствует на уровне МО</span><strong>{number(stage1Total)}</strong></div><div className={styles.reasonTrack}><div className={[styles.reasonFill,styles.one].join(" ")} style={{width:(stage1Total/currentTotal*100)+"%"}} /></div></div>
-              <div className={styles.reason}><div className={styles.reasonTop}><span>Не совпадает структурное подразделение</span><strong>{number(stage2Total)}</strong></div><div className={styles.reasonTrack}><div className={[styles.reasonFill,styles.two].join(" ")} style={{width:(stage2Total/currentTotal*100)+"%"}} /></div></div>
-              <p className={styles.muted}>Обе категории требуют проверки фактического трудоустройства, OID МО, подразделения и должности; автоматическое изменение ФРМР недопустимо.</p>
+              <div className={styles.reason}><div className={styles.reasonTop}><span>Должность отсутствует на уровне МО</span><strong>{number(stage1Total)}</strong></div></div>
+              <div className={styles.reason}><div className={styles.reasonTop}><span>Не совпадает структурное подразделение</span><strong>{number(stage2Total)}</strong></div></div>
+              </>}
             </section>
           </div>
           <section className={styles.panel}>
@@ -231,14 +253,14 @@ export default function FrmrReconciliation() {
             </div>
             <div className={styles.tableWrap}>
               <table className={styles.table}>
-                <thead><tr><th>Медицинская организация</th>{!isAll && <th>16.10</th>}<th>{cutShort}</th>{!isAll && <th>Δ</th>}<th>Нет в МО</th><th>Не в СП</th></tr></thead>
+                <thead><tr><th>Медицинская организация</th>{!isAll && <th>16.10</th>}<th>{isAll ? (controlLevel === "mo" ? "Не найдены в МО" : "Привязки СП · справочно") : cutShort}</th>{!isAll && <th>Δ</th>}{!isAll && <><th>Нет в МО</th><th>Не в СП</th></>}</tr></thead>
                 <tbody>{filtered.map((row) => {
                   const delta = change(row);
                   return <tr key={row.id}>
                     <td><button type="button" className={styles.clickName} onClick={() => {selectOrganization(row.id);setView("organization");}}>{row.name}</button></td>
                     {!isAll && <td>{number(row.previous)}</td>}<td><b>{number(row.current)}</b></td>
                     {!isAll && <td className={[styles.delta,delta === null || delta === 0 ? styles.stable : delta > 0 ? styles.bad : styles.good].join(" ")}>{signed(delta)}</td>}
-                    <td>{number(row.stage1)}</td><td>{number(row.stage2)}</td>
+                    {!isAll && <><td>{number(row.stage1)}</td><td>{number(row.stage2)}</td></>}
                   </tr>;
                 })}</tbody>
               </table>
@@ -300,14 +322,13 @@ export default function FrmrReconciliation() {
                   </div>
                 )}
               </div>
-              <p className={styles.moPickerSteps}>МО → должность → подразделение → записи для проверки</p>
+              <p className={styles.moPickerSteps}>{isAll && controlLevel === "mo" ? "МО → должность → записи для проверки" : "МО → должность → подразделение → записи для проверки"}</p>
               </>}
             </div>
-            {selected && <div className={styles.miniStats}>
-              <article><small>Расхождения на {cutShort}</small><b className={selected.current ? styles.negative : styles.positive}>{number(selected.current)}</b></article>
+            {selected && <div className={[styles.miniStats, isAll ? styles.moStats : ""].join(" ")}>
+              <article><small>{isAll ? (controlLevel === "mo" ? "Не найдены в МО" : "СП · справочно") : <>Расхождения на {cutShort}</>}</small><b className={selected.current ? styles.negative : styles.positive}>{number(selected.current)}</b></article>
               <article><small>{isAll ? "Наименований должностей" : "Изменение к 16.10"}</small><b>{isAll ? selected.specialties.length : signed(change(selected))}</b></article>
-              <article><small>Отсутствует на уровне МО</small><b>{number(selected.stage1)}</b></article>
-              <article><small>Не совпадает подразделение</small><b>{number(selected.stage2)}</b></article>
+              {!isAll && <><article><small>Отсутствует на уровне МО</small><b>{number(selected.stage1)}</b></article><article><small>Не совпадает подразделение</small><b>{number(selected.stage2)}</b></article></>}
             </div>}
           </section>
 
@@ -316,7 +337,7 @@ export default function FrmrReconciliation() {
             <div className={styles.panelHead}>
               <div>
                 <h2>Где искать расхождения — маршрут для МО</h2>
-                <p className={styles.muted}>Выберите должность и конкретное структурное подразделение. Ниже появятся записи с четырьмя последними цифрами СНИЛС, OID СП и способом исправления.</p>
+                <p className={styles.muted}>{isAll && controlLevel === "mo" ? "Выберите должность. Все её записи в выбранной МО появятся сразу; подразделение можно раскрыть справочно." : "Выберите должность и конкретное структурное подразделение. Ниже появятся записи с четырьмя последними цифрами СНИЛС, OID СП и способом исправления."}</p>
               </div>
               <span className={styles.pill}>Срез · {raw.sourceCut}</span>
             </div>
@@ -341,6 +362,24 @@ export default function FrmrReconciliation() {
                 <p className={styles.muted}>Всего расхождений по всем должностям МО: <b>{number(allSelectedGroups.reduce((sum,r)=>sum+r.count,0))}</b>. Одна запись — не обязательно отдельный врач.</p>
               </div>
               <div className={styles.diagnosticGuide}>
+                {isAll && controlLevel === "mo" ? <>
+                  <h3>2. Записи на уровне МО</h3>
+                  {activeRole ? <section data-testid="frmr-mo-records">
+                    <p className={styles.muted}>Должность «{activeRole}»: {number(moRoleRecords.length)} записей. Сверьте сотрудника и должность в ФРМР и ГИС на уровне МО; установите, какая запись неактуальна. Не создавайте дубли автоматически.</p>
+                    <input className={styles.input} type="search" value={last4Query} onChange={e=>setLast4Query(e.target.value)} placeholder="Найти по последним 4 цифрам…" aria-label="Поиск по последним четырем цифрам СНИЛС" inputMode="numeric" maxLength={4}/>
+                    <div className={styles.frmrRecordTableWrap}><table className={styles.table}>
+                      <thead><tr><th>Строка в выгрузке</th><th>СНИЛС (4 цифры)</th><th>Сведения для проверки</th></tr></thead>
+                      <tbody>{visibleMoRecords.map(rec=><tr key={rec[5]}>
+                        <td>№ {rec[5]}</td><td className={styles.frmrLastFour}>{rec[3]===null ? "Нет СНИЛС" : "•••-•••-•"+rec[3]}</td>
+                        <td>Должность не найдена на уровне МО.
+                          {Boolean(rec[6]) && <small className={styles.cellNote}>{Object.entries(allRaw.records.qualityBits).filter(([bit])=>(rec[6]??0)&Number(bit)).map(([,label])=>label).join("; ")}</small>}
+                          <details><summary>Подразделение · справочно</summary><span>{departmentRaw.sp[rec[2]][2]}</span><small className={styles.cellNote}>OID СП: {officialPrefix}{selected.id}.0.{departmentRaw.sp[rec[2]][1]}</small></details>
+                        </td>
+                      </tr>)}</tbody>
+                    </table></div>
+                    {!visibleMoRecords.length && <p className={styles.muted}>Записей по выбранному запросу нет.</p>}
+                  </section> : <p className={styles.muted}>Выберите должность слева. Записи появятся без дополнительного выбора СП.</p>}
+                </> : <>
                 <h3>2. Структурное подразделение</h3>
                 {activeRole ? (
                   <>
@@ -355,9 +394,10 @@ export default function FrmrReconciliation() {
                     </div>
                   </>
                 ) : <p className={styles.muted}>Выберите должность слева. Здесь появятся все её подразделения, включая единичные расхождения.</p>}
+                </>}
               </div>
             </div>
-            <div className={styles.frmrDepartmentDetails}>
+            {(!isAll || controlLevel === "department") && <div className={styles.frmrDepartmentDetails}>
               <h3>3. Причина и как исправить</h3>
               {selectedDepartment ? (
                 <>
@@ -417,7 +457,7 @@ export default function FrmrReconciliation() {
                   </section>
                 </>
               ) : <p className={styles.muted}>Выберите должность и подразделение выше. Будут показаны только подтверждённые для этого СП категории ошибок.</p>}
-            </div>
+            </div>}
           </section>
           <div className={styles.grid}>
             <section className={styles.panel}>
@@ -430,9 +470,9 @@ export default function FrmrReconciliation() {
               {selected.current > selected.specialties.reduce((sum,[,n])=>sum+n,0) && <p className={styles.muted}>Остальные записи: {selected.current-selected.specialties.reduce((sum,[,n])=>sum+n,0)} — без раскрытия малочисленных категорий.</p>}
             </section>
             <section className={styles.panel}>
-              <h2>Что нужно сделать МО</h2>
-              <div className={styles.action}><b className={styles.actionNum}>1</b><div><b>Проверить отсутствующие должности ({number(selected.stage1)})</b><span>Сверить кадровый приказ и фактическое трудоустройство, OID МО и запись в ГИС. Не создавать дубли автоматически.</span></div></div>
-              <div className={styles.action}><b className={styles.actionNum}>2</b><div><b>Уточнить подразделения ({number(selected.stage2)})</b><span>Сопоставить подразделение из ФРМО, филиал, должность и фактическое место работы.</span></div></div>
+              <h2>{isAll && controlLevel === "department" ? "Справочная проверка СП" : "Что нужно сделать МО"}</h2>
+              {(!isAll || controlLevel === "mo") && <div className={styles.action}><b className={styles.actionNum}>1</b><div><b>Проверить отсутствующие должности ({number(selected.stage1)})</b><span>Сверить кадровый приказ и фактическое трудоустройство, OID МО и запись в ГИС. Не создавать дубли автоматически.</span></div></div>}
+              {(!isAll || controlLevel === "department") && <div className={styles.action}><b className={styles.actionNum}>2</b><div><b>Уточнить подразделения ({number(selected.stage2)})</b><span>Сопоставить подразделение из ФРМО, филиал, должность и фактическое место работы. Эта сверка не входит в основной итог проблем МО.</span></div></div>}
               <div className={styles.action}><b className={styles.actionNum}>3</b><div><b>Проверить запись пациентов</b><span>Выяснить, относится ли должность к амбулаторному приёму, есть ли расписание и опубликованы ли слоты на ЕПГУ.</span></div></div>
               <div className={styles.action}><b className={styles.actionNum}>4</b><div><b>Подтвердить исправление</b><span>Указать ответственного, срок, первопричину и результат повторной сверки.</span></div></div>
               <div className={styles.linkrow}>
