@@ -1,0 +1,1 @@
+export function maxHearingPlan(targets: {organizationPlans:Record<string,{tmk:Record<string,number>;eln:Record<string,number>}>}, id:string, oid:string, date:string, period:string): {assigned:boolean;plan:number|null;label:string} | null;
