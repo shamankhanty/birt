@@ -70,9 +70,13 @@ def build_sources(d:Path):
  way=d/f'Отчёт_по_использованию_системы_24.09.2026_30.09.2026.xlsx'
  def wayw(ws):ws['B2']='тест';vals=[1,name,10,4,6,8,5,1,1,12,5,7,4];
  def fillway(ws):
-  ws['B2']='Отчет по использованию Системы "Электронный путевой лист"'; ws.cell(6,2,'Организации');ws.cell(6,3,1);ws.cell(7,2,'Транспортные средства');ws.cell(7,3,10);ws.cell(7,5,8);ws.cell(7,8,8)
+  ws['B2']='Отчет по использованию Системы "Электронный путевой лист"'; ws.cell(6,2,'Организации');ws.cell(6,3,1);ws.cell(7,2,'Транспортные средства');ws.cell(7,3,12);ws.cell(7,5,9);ws.cell(7,8,9)
   ws.cell(13,1,'№ п/п');ws.cell(13,2,'Наименование организации'); vals=[1,name,10,4,6,8,5,1,1,12,5,7,4]
   for j,v in enumerate(vals,1):ws.cell(14,j,v)
+  child=[None,'Подразделение',2,0,2,1,1,0,0,1,0,1,1]
+  total=[None,'Итого',12,4,8,9,6,1,1,13,5,8,5]
+  for j,v in enumerate(child,1):ws.cell(15,j,v)
+  for j,v in enumerate(total,1):ws.cell(16,j,v)
  wb_save(way,[('Лист1',fillway)])
  def spfile(filename):
   path=d/filename
@@ -142,7 +146,20 @@ def main():
     payload=json.loads((a/'error-categories.json').read_text(encoding='utf-8')); bd=payload['organizationBreakdown']
     assert payload['total']==20,payload['total'];assert bd['attributedErrors']==15,bd;assert bd['unassignedErrors']==5,bd;assert bd['coveragePercent']==75.0,bd
     assert bd['organizations'][0]['oid']==test_oid,bd['organizations'][0];assert bd['organizations'][0]['topCategories'][0]['name']=='Ошибка тест'
+   if label=='waybill':
+    payload=json.loads((a/'electronic-waybill-weekly.json').read_text(encoding='utf-8'))['current']
+    assert payload['detail']['vehicles']==12 and payload['detail']['vehiclesWithMovement']==9
+    assert len(payload['rows'])==1 and len(payload['rows'][0]['components'])==2
    results.append({'adapter':label,'changed':r.changedFiles,'facts':r.facts})
+  # A missing child value or a broken grand total must not become a healthy zero.
+  for label in ['blank-child','bad-total']:
+   bad=d/(label+'.xlsx');book=openpyxl.load_workbook(src['waybill'])
+   if label=='blank-child':book.active.cell(15,6).value=None
+   else:book.active.cell(16,3).value=999
+   book.save(bad);book.close()
+   try:adapt_waybill(fresh(d,'app-'+label),bad,end)
+   except ValueError:pass
+   else:raise AssertionError('Invalid waybill input must fail: '+label)
   # The valid presence fixture covers every planned OID. An absent row must
   # still fail: fixing the fixture must never turn absence into an implicit zero.
   missing_oid_source=d/'tmk-missing-oid.xlsx'
