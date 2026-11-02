@@ -21,10 +21,12 @@
       "name": "Цифровые сервисы и регистрация",
       "weight": 0.2,
       "metrics": {
-        "egpu": 0.25,
-        "egpu2days": 0.25,
-        "birth": 0.25,
-        "death": 0.25
+        "egpu": 0.16666666666666666,
+        "egpu2days": 0.16666666666666666,
+        "birth": 0.16666666666666666,
+        "death": 0.16666666666666666,
+        "tmkMaxCount": 0.16666666666666666,
+        "elnMaxCount": 0.16666666666666666
       }
     },
     "readiness": {
@@ -39,9 +41,16 @@
     }
   },
   "monthlyWorkforce": {
-    "prefixes": ["doctor500_"],
-    "metrics": ["doctorsAll", "doctorsLevel3"],
-    "partialPrefixes": ["operational500_"]
+    "prefixes": [
+      "doctor500_"
+    ],
+    "metrics": [
+      "doctorsAll",
+      "doctorsLevel3"
+    ],
+    "partialPrefixes": [
+      "operational500_"
+    ]
   },
   "mandatory": {
     "impactRank": 5,

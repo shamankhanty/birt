@@ -4,7 +4,7 @@ import { useMemo, useState } from "react";
 import PlanTransitionStat from "./plan-transition-stat";
 import SeptemberRating from "./september-rating";
 import septemberRatingArchive from "./rating/september-v1.json";
-import { maxHearingPlan } from "../lib/max-hearing-plan.js";
+import { maxHearingPlan, maxHearingDeficit } from "../lib/max-hearing-plan.js";
 import { planTransition } from "../lib/plan-transitions.js";
 import { buildFederalDetailCatalog, federalMetricTarget } from "../lib/federal-navigation.js";
 import moDataRaw from "./mo-data.json";
@@ -2908,7 +2908,7 @@ function hearingDisplayGroup(metric: HearingMetric): HearingDisplayGroup {
   if (["hospital", "ambulatoryCase", "semd228", "smp"].includes(metric.id)) return hearingDisplayGroups.semd;
   if (["tvspStationary", "tvspAmbulatory", "tvspLaboratory", "tvspDiagnostic", "smpFederal"].includes(metric.id)) return hearingDisplayGroups.tvsp;
   if (metric.id === "doctorsLevel3" || metric.id === "doctorsAll" || metric.id.startsWith("doctor500_")) return hearingDisplayGroups.doctors;
-  if (["egpu", "egpu2days"].includes(metric.id)) return hearingDisplayGroups.egpu;
+  if (["egpu", "egpu2days", "tmkMaxCount", "elnMaxCount"].includes(metric.id)) return hearingDisplayGroups.egpu;
   return hearingDisplayGroups.technology;
 }
 
@@ -3652,6 +3652,7 @@ export default function Home() {
         const score =
           plan === null
             ? null
+            : maxPlan && plan === 0 ? 100
             : reverse
               ? row.fact <= 0
                 ? 100
@@ -3671,14 +3672,14 @@ export default function Home() {
           count: typeof row.count === "number" ? row.count : null,
           volume: detail?.volume ?? null,
           applicable,
-          affectsPriority: isOperationalMetric && plan !== null,
+          affectsPriority: applicable && isOperationalMetric && plan !== null,
           passed,
-          persistent: passed === false && previousPassed === false,
+          persistent: !maxPlan && passed === false && previousPassed === false,
           adverseChange:
             row.previous !== null &&
             (reverse ? row.fact > row.previous : row.fact < row.previous),
           score,
-          status: maxPlan ? "reference" : plan !== null ? (passed ? "good" : "bad") : "reference",
+          status: plan !== null && applicable ? (passed ? "good" : "bad") : "reference",
         });
       }),
     );
@@ -3694,7 +3695,7 @@ export default function Home() {
           const priorityDataExpected =
             applicable &&
             !blockedIndicatorIds.has(id) &&
-            dataset.plan !== null &&
+            (maxPlan ? maxPlan.plan !== null : dataset.plan !== null) &&
             isOperationalMetric;
           const monthlyDataExpected =
             applicable &&
@@ -3794,6 +3795,9 @@ export default function Home() {
     const regionalDenominators = new Map<string, number>();
     byOrg.forEach(({ metrics }) =>
       metrics.forEach((metric) => {
+        if (metric.affectsPriority && maxHearingDeficit(metric.id, metric.fact, metric.plan, metric.applicable)) {
+          regionalDenominators.set(metric.id, (regionalDenominators.get(metric.id) ?? 0) + (metric.plan ?? 0));
+        }
         if (
           isOperationalHearingMetric(metric.id) &&
           metric.affectsPriority &&
@@ -3814,6 +3818,14 @@ export default function Home() {
     const withDeficits = [...byOrg.values()].map(({ registry, metrics: sourceMetrics }) => ({
       registry,
       metrics: sourceMetrics.map((metric) => {
+        const maxDeficit = metric.affectsPriority
+          ? maxHearingDeficit(metric.id, metric.fact, metric.plan, metric.applicable)
+          : null;
+        if (maxDeficit) {
+          const regionalPlan = regionalDenominators.get(metric.id) ?? 0;
+          return { ...metric, ...maxDeficit, regionalDenominator: regionalPlan,
+            regionalContribution: regionalPlan > 0 ? maxDeficit.deficitCount / regionalPlan * 100 : 0 };
+        }
         const regionalDenominator = regionalDenominators.get(metric.id) ?? null;
         if (
           !isOperationalHearingMetric(metric.id) ||
@@ -3860,7 +3872,7 @@ export default function Home() {
           ? activeMetricWeightByBlock.get(config.block) ?? 0
           : 0;
         if (!config || regionalDeficit <= 0 || activeMetricWeight <= 0)
-          return { ...metric, deficitShare: null, weightedImpact: null };
+          return { ...metric, deficitShare: null, weightedImpact: metric.affectsPriority && metric.fact !== null ? 0 : null };
         const deficitShare = ((metric.deficitCount ?? 0) / regionalDeficit) * 100;
         return {
           ...metric,
@@ -7423,7 +7435,7 @@ export default function Home() {
                 <div>
                   <p>
                     <b>1</b>
-                    <span>целевое количество = план × знаменатель МО</span>
+                    <span>целевое количество для долей = план / 100 × знаменатель МО; для МАХ — персональный накопительный план МО</span>
                   </p>
                   <p>
                     <b>2</b>
@@ -7435,7 +7447,7 @@ export default function Home() {
                   </p>
                   <p>
                     <b>4</b>
-                    <span>оперативный вес блоков: помощь 70%, сервисы 20%, готовность 10%</span>
+                    <span>оперативный вес блоков: помощь 70%, сервисы 20% (ЕПГУ, свидетельства, ТМК и ЛВН МАХ), готовность 10%</span>
                   </p>
                   <p>
                     <b>5</b>
@@ -7717,7 +7729,7 @@ export default function Home() {
                                       ? "Неприменимо"
                                       : metric.status === "missing"
                                         ? "Нет данных"
-                                        : metric.weightedImpact !== null && metric.weightedImpact !== undefined
+                                        : metric.affectsPriority
                                           ? "Влияет на оперативный приоритет"
                                           : isMonthlyWorkforceMetric(metric.id) && !metric.id.startsWith("operational500_")
                                             ? "Месячный контроль"
