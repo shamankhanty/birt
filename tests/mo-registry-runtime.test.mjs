@@ -154,7 +154,7 @@ test("Kazan and Naberezhnye Chelny numbered pediatric clinics stay separate", ()
 
 test("bare RKB cannot be mapped to Spassk without explicit branch evidence", () => {
   assert.equal(runtime.organizationByMetricAndName("egpu", "РКБ"), null);
-  assert.equal(runtime.organizationByMetricAndName("egpu", "ГАУЗ \\"РКБ МЗ РТ\\"")?.oid, "1.2.643.5.1.13.13.12.2.16.1094");
+  assert.equal(runtime.organizationByMetricAndName("egpu", 'ГАУЗ "РКБ МЗ РТ"')?.oid, "1.2.643.5.1.13.13.12.2.16.1094");
   assert.equal(runtime.organizationByMetricAndName("egpu", "Спасская ЦРБ")?.oid, SPASSK_CRB_ORGANIZATION.oid);
   assert.equal(
     runtime.organizationForMetric("birth", { name: "РКБ", oid: "1.2.643.5.1.13.13.12.2.16.1094" })?.oid,
