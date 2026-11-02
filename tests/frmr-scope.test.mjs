@@ -34,7 +34,7 @@ test('exceptions are narrow: retain independent doctors, biologists, FAP staff a
 });
 test('overview and MO diagnostics share the filtered dataset while archive and FRMO remain separate',()=>{
  const ui=fs.readFileSync('app/frmr-reconciliation.tsx','utf8');
- for(const part of ['summary','departments','records'])assert.ok(ui.includes(`isAll ? scopedAll.${part}`));
+ for(const part of ['summary','departments','records'])assert.ok(ui.includes(`isAll ? controlData.${part}`));
  assert.match(ui,/Изменение охвата не является улучшением показателя/);
  assert.match(ui,/view === "linkage" \? <FrmoLinkage/);
 });

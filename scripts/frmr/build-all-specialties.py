@@ -13,10 +13,11 @@ for r in wb['OID МО. СВОД расхождений'].iter_rows(min_row=2,val
  if r[2] and r[13]:
   oid=clean(r[13]);assert oid.startswith(prefix) and oid not in summary
   assert isinstance(r[19],(int,float));summary[oid]={'name':clean(r[2]),'count':int(r[19]),'state':r[3]==1}
-mos=sorted(summary);mi={oid:i for i,oid in enumerate(mos)};roles=[];sp=[];ri={};si={};records=[];employment=[];group=collections.defaultdict(lambda:[0,0]);by=collections.defaultdict(collections.Counter);specialties=collections.Counter();quality=collections.Counter();boundary=[];sourceIssueSum=0
+mos=sorted(summary);mi={oid:i for i,oid in enumerate(mos)};roles=[];sp=[];ri={};si={};records=[];employment=[];group=collections.defaultdict(lambda:[0,0]);by=collections.defaultdict(collections.Counter);specialties=collections.Counter();quality=collections.Counter();boundary=[];sourceIssueSum=0;spTypes=collections.defaultdict(set)
 for rownum,r in enumerate(ws.iter_rows(min_row=3,values_only=True),3):
  if not r[12] or not r[23]:continue
  oid=clean(r[12]);role=clean(r[23]);spoid=clean(r[16]);name=clean(r[19]) or 'Наименование СП не указано'
+ spTypes[spoid].add(clean(r[17]))
  assert oid in mi and r[38]==1
  assert not spoid or spoid.startswith(oid+'.0.'),f'Unsupported SP OID at row {rownum}'
  if role not in ri:ri[role]=len(roles);roles.append(role)
@@ -45,6 +46,7 @@ summaryOut={'schemaVersion':2,'source':f.name,'sourceCut':'29.10.2026','baseline
 mosuffix=[o.removeprefix(prefix) for o in mos]
 out={'summary':summaryOut,'departments':{'cut':'29.10.2026','unit':'должностная запись','mos':mosuffix,'roles':roles,'sp':sp,'rows':[[*key,*value] for key,value in sorted(group.items())]},'records':{'cut':'29.10.2026','issues':['Должность не найдена на уровне МО в ГИС','Должность есть в МО, но не найдена в указанном СП'],'qualityBits':{'1':'Отсутствует корректный идентификатор в исходнике','2':'Дата окончания работы наступила к дате среза','4':'Совпадают проверенные реквизиты кадровых записей; требуется проверка повтора','8':'В служебном поле источника нет связи МО с ФРМО'},'rows':records},'metadata':{'source':source(f),'sourceRowRange':[boundary[0],boundary[-1]],'parsedRows':len(records),'sourceIssueCount':sourceIssueSum,'quality':quality,'scopeNote':'Все должности из представленного списка расхождений. Общая численность всех кадровых записей в выгрузке не представлена; доля ошибок не рассчитывается. История 22.10 имеет другой охват.','stateOrganizations':sum(v['state'] for v in summary.values()),'stateProblemRecords':sum(v['count'] for v in summary.values() if v['state'])}}
 write('frmr-all-specialties.json',out)
+write('frmr-sp-types.json',{'source':source(f),'types':{k:next(iter(v)) for k,v in spTypes.items() if k and len(v)==1 and next(iter(v))},'ambiguousOids':[k for k,v in spTypes.items() if len(v)>1]})
 # Source FRMO summary counts department rows, not validated deviations.
 wb=openpyxl.load_workbook(p,read_only=True,data_only=True);s=wb['Отделения и СП (филиалы)'];h=next(s.iter_rows(min_row=2,max_row=2,values_only=True));assert h[0]=='Код МО' and 'ОИД' in h[4]
 sourceSummary={clean(r[0]):[clean(r[1]),r[2],r[3]] for r in wb['СВОД на актуальную дату'].iter_rows(min_row=4,values_only=True) if r[0] and r[1]}
