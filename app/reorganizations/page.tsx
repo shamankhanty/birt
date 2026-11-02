@@ -1,3 +1,4 @@
+import rkbBranch from "../../config/rkb-spassk-branch.json";
 import registry from "../../config/mo-reorganizations.json";
 
 const statusLabel = (value: string) =>
@@ -57,6 +58,48 @@ export default function ReorganizationsPage() {
           </div>
         </section>
       ))}
+      <section style={{ marginTop: 28, padding: 24, background: "#fff", border: "1px solid #d8e5df", borderRadius: 18 }}>
+        <p style={{ marginTop: 0, color: "#167e68", fontWeight: 700 }}>РКБ · ФИЛИАЛЬНАЯ СТРУКТУРА</p>
+        <h2 style={{ fontSize: 25, margin: "0 0 12px" }}>Спасская ЦРБ — филиал РКБ</h2>
+        <p style={{ lineHeight: 1.6 }}>
+          Код филиала в исторических данных: <strong>{rkbBranch.branch.historicCode}</strong>.
+          Действующий код юридического лица: <strong>{rkbBranch.parent.currentCode}</strong>.
+          OID юридического лица: <code>{rkbBranch.parent.oid}</code>.
+          Дата реорганизации по письму: 14.09.2020.
+        </p>
+        <p style={{ lineHeight: 1.6 }}>
+          По файлу «РКБ.xlsx» определены <strong>{rkbBranch.provenance.uniqueSpOids} OID подразделений</strong>
+          {" "}и <strong>{rkbBranch.provenance.uniqueBuildingIds} ID зданий</strong>.
+          Период выгрузки не указан; это справочник принадлежности, а не новый факт или основание для пересчёта показателей.
+        </p>
+        <p style={{ padding: 14, background: "#fff5df", color: "#6d5727", borderRadius: 10, lineHeight: 1.6 }}>
+          Проверка ФРМО на 30.10.2026: по коду 4001 в {rkbBranch.frmoAudit.rows} строках выявлено {rkbBranch.frmoAudit.issues} замечание(й),
+          {" "}встречаются три варианта родительского OID (1094, 1132, 18650).
+          До сверки ФРМО не суммировать строки филиала с итогом РКБ, не считать варианты адреса разными ЭМД
+          и не присваивать Спасской ЦРБ отдельное место в рейтинге или очереди заслушивания.
+        </p>
+        <details style={{ marginTop: 18 }}>
+          <summary style={{ cursor: "pointer", fontWeight: 700, color: "#167e68" }}>Показать 39 структурных подразделений и идентификаторы</summary>
+          <div style={{ overflowX: "auto", marginTop: 14 }}>
+            <table style={{ width: "100%", minWidth: 800, borderCollapse: "collapse", fontSize: 13 }}>
+              <thead>
+                <tr style={{ background: "#edf4f1", textAlign: "left" }}>
+                  {["Подразделение", "OID СП МО", "ID здания"].map((h) => <th key={h} style={{ padding: 10, borderBottom: "1px solid #d8e5df" }}>{h}</th>)}
+                </tr>
+              </thead>
+              <tbody>
+                {rkbBranch.subunits.map((unit) => (
+                  <tr key={unit.spOid}>
+                    <td style={{ padding: 9, borderBottom: "1px solid #e8efec" }}>{unit.name}</td>
+                    <td style={{ padding: 9, borderBottom: "1px solid #e8efec", fontFamily: "monospace" }}>{unit.spOid}</td>
+                    <td style={{ padding: 9, borderBottom: "1px solid #e8efec" }}>{unit.buildingId}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </details>
+      </section>
     </main>
   );
 }

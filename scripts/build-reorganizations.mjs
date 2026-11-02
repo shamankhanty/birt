@@ -3,6 +3,7 @@ import path from "node:path";
 
 const output = process.argv[2] || path.join("_site", "reorganizations", "index.html");
 const registry = JSON.parse(await readFile("config/mo-reorganizations.json", "utf8"));
+const rkbBranch = JSON.parse(await readFile("config/rkb-spassk-branch.json", "utf8"));
 const escapeHtml = (value) => String(value ?? "").replace(/[&<>"']/g, (char) => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[char]));
 const status = (value) => value === "verified" ? "Подтверждено" : "Проверяется";
 const date = (value) => String(value).split("-").reverse().join(".");
@@ -34,6 +35,26 @@ const groups = registry.groups.map((group) => `
   </div>
 </section>`).join("");
 
+const branchSection = `
+<section class="card">
+  <div class="head"><p>РКБ · ФИЛИАЛЬНАЯ СТРУКТУРА</p><h2>Спасская ЦРБ — филиал РКБ</h2><span class="badge">ФРМО: сверка идентификаторов</span></div>
+  <div class="body">
+    <p><b>Код филиала (исторический):</b> ${escapeHtml(rkbBranch.branch.historicCode)};
+    <b>код юридического лица:</b> ${escapeHtml(rkbBranch.parent.currentCode)};
+    <b>OID РКБ:</b> <span class="oid">${escapeHtml(rkbBranch.parent.oid)}</span>.</p>
+    <p>Реорганизация с 14.09.2020 по письму МО. Источник «РКБ.xlsx»: <b>${rkbBranch.provenance.uniqueSpOids} OID СП</b>,
+    <b>${rkbBranch.provenance.uniqueBuildingIds} зданий</b>; дата среза и идентификаторы отдельных ЭМД отсутствуют.</p>
+    <p class="notice">По сверке ФРМО на 30.10.2026: ${rkbBranch.frmoAudit.rows} записей кода 4001 и ${rkbBranch.frmoAudit.issues} замечаний.
+    Присутствуют три варианта родительского OID: 1094, 1132, 18650. До подтверждения ФРМО филиал не получает
+    самостоятельное место или оценку; его данные нельзя суммировать с РКБ по одному OID либо вариантам адресов.</p>
+    <details>
+      <summary><b>Раскрыть ${rkbBranch.subunits.length} структурных подразделений филиала</b></summary>
+      <div class="table-wrap"><table><thead><tr><th>Подразделение</th><th>OID СП МО</th><th>ID здания</th></tr></thead>
+      <tbody>${rkbBranch.subunits.map(unit => `<tr><td>${escapeHtml(unit.name)}</td><td class="oid">${escapeHtml(unit.spOid)}</td><td>${escapeHtml(unit.buildingId)}</td></tr>`).join("")}</tbody></table></div>
+    </details>
+  </div>
+</section>`;
+
 const html = `<!doctype html>
 <html lang="ru"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Реестр реорганизаций МО — Цифровое здравоохранение РТ</title>
@@ -43,8 +64,9 @@ const html = `<!doctype html>
 <a href="/birt/">← К дашборду</a><p class="eyebrow">РЕЕСТР ИЗМЕНЕНИЙ МО</p><h1>Реорганизация: контроль идентификаторов</h1>
 <p class="intro">Письмо подтверждает реорганизацию, но не заменяет сверку ФРМО, ФРМР и фактических выгрузок. До подтверждения связок строки остаются отдельными; исторические факты и рейтинги не переписываются.</p>
 ${groups}
+${branchSection}
 </main></body></html>`;
 
 await mkdir(path.dirname(output), { recursive: true });
 await writeFile(output, html, "utf8");
-console.log(JSON.stringify({ output, groups: registry.groups.length }, null, 2));
+console.log(JSON.stringify({ output, groups: registry.groups.length, spasskSubunits: rkbBranch.subunits.length }, null, 2));

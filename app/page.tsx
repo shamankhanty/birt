@@ -3361,7 +3361,7 @@ function buildOrganizationRating(): RankRow[] {
     string,
     { registry: RegistryOrganization; details: RankDetail[] }
   >();
-  [...moRegistry.organizations, spasskCrbOrganization]
+  moRegistry.organizations
     .filter((org) => org.type !== "Вне рейтинга")
     .forEach((org) => byOrg.set(org.oid, { registry: org, details: [] }));
   Object.entries(monthlyMoData).forEach(([id, dataset]) => {
@@ -3613,7 +3613,7 @@ export default function Home() {
       string,
       { registry: RegistryOrganization; metrics: HearingMetric[] }
     >();
-    [...moRegistry.organizations, spasskCrbOrganization]
+    moRegistry.organizations
       .filter((org) => org.type !== "Вне рейтинга")
       .forEach((registry) =>
         byOrg.set(registry.oid, { registry, metrics: [] }),
@@ -7356,6 +7356,9 @@ export default function Home() {
                     справочника «МО по показателям». ДРКБ и РКБ занимают по
                     одному месту. ДЦ МЗ РТ и самостоятельные ССМП в сводном
                     рейтинге не участвуют.
+                    Спасская ЦРБ — филиал РКБ, отдельное место ей не присваивается;
+                    показатели филиала не суммируются по одному лишь OID РКБ.
+                    <a href="/birt/reorganizations" style={{ marginLeft: 8 }}>Сверка филиала и OID СП</a>.
                   </p>
                 </>
               )}
@@ -7371,7 +7374,9 @@ export default function Home() {
                   <h1>МО для заслушивания</h1>
                   <p>
                     Три очереди: оперативные антилидеры, закрытый месячный
-                    контроль кадровых показателей и повторный контроль заслушанных МО
+                    контроль кадровых показателей и повторный контроль заслушанных МО.
+                    Спасская ЦРБ учитывается как филиал РКБ без отдельной управленческой позиции.
+                    <a href="/birt/reorganizations" style={{ marginLeft: 8 }}>Справочник подразделений</a>
                   </p>
                 </div>
                 <div className="hearingPeriod">
