@@ -745,7 +745,7 @@
       "plan": 654000,
       "planPeriod": "план 2026",
       "direction": "higher",
-      "periodKind": "operational",
+      "periodKind": "cumulative",
       "ratingPolicy": "not_applicable",
       "ratingActive": false,
       "ratingBlock": "readiness",

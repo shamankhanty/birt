@@ -71,8 +71,7 @@ jobs:
       - name: Prepare executable scripts
         run: chmod +x scripts/*.sh scripts/pipeline/*.sh 2>/dev/null || true
 
-      - name: Install Python pipeline dependencies
-        if: steps.changes.outputs.pipeline == 'true'
+      - name: Install Python test and pipeline dependencies
         run: python3 -m pip install --disable-pip-version-check openpyxl
 
       - name: Validate UTF-8 and JSON integrity

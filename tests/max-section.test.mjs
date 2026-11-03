@@ -22,7 +22,7 @@ test("Removing standalone MAX does not alter annual, cumulative or operational s
 });
 
 test("MAX regional appointments source remains distinct from organizational data", () => {
-  assert.match(registry.indicators.visitMax.name, /записей к врачу на телеконсультацию посредством МАХ/u);
+  assert.match(registry.indicators.visitMax.name, /Запись на приём к врачу через МАХ/u);
   assert.equal(appointments.dimension, "municipality");
   assert.equal(appointments.bindingToMedicalOrganization, false);
   assert.equal(appointments.totals["2026-08"],6537);
