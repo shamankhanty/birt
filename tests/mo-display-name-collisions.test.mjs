@@ -101,3 +101,11 @@ test("indicator table and ranking cards use the same OID-aware report display", 
   assert.match(page, /const displayName = displayReportMoName\(metric, row\)/u);
   assert.match(page, /\? displayReportMoName\(metric, r\)/u);
 });
+
+test("source-confirmed Spassk identity is displayed in indicator tables", () => {
+  const catalog = JSON.parse(fs.readFileSync('config/rkb-spassk-branch.json', 'utf8'));
+  const row = {name:'РКБ',oid:catalog.parent.oid,spOid:catalog.subunits[0].spOid};
+  assert.equal(displayReport('semd228',row),'Спасская ЦРБ');
+  assert.equal(displayReport('egpu',{name:'РКБ',oid:catalog.parent.oid,sourceReport:'gis-epgu-attachments'}),'Спасская ЦРБ');
+  assert.equal(displayReport('death',{name:'РКБ',oid:catalog.parent.oid,sourceReport:'gis-epgu-attachments'}),'РКБ МЗ РТ');
+});

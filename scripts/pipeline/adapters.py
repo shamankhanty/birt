@@ -86,8 +86,15 @@ def resolve_rows(rows, metric):
 def source_rows(rows, metric):
     """Aggregate source facts only after the same deterministic MO resolution as the UI."""
     grouped={}
-    for row in resolve_rows(rows,metric):
-        key=row.get('oid') or norm(row['name'])
+    resolved = resolve_rows(rows,metric)
+    parent_oid = '1.2.643.5.1.13.13.12.2.16.1094'
+    for row in resolved:
+        if row.get('oid') == parent_oid and any(row.get(k) for k in ('spOid', 'subunitOid', 'buildingId', 'OID СП МО', 'ID здания')):
+            raise ValueError('РКБ/Спасск: принадлежность подразделения не подтверждает аддитивность строк; требуется отдельная проверка периода и дубликатов ЭМД')
+    if any(r.get('reportingEntityId') == 'context:spassk-crb' for r in resolved) and any(r.get('oid') == parent_oid and not r.get('reportingEntityId') for r in resolved):
+        raise ValueError('РКБ/Спасск: общий итог юридического лица нельзя складывать со строкой филиала')
+    for row in resolved:
+        key=row.get('reportingEntityId') or row.get('oid') or norm(row['name'])
         if key not in grouped:
             grouped[key]=row.copy()
         else:

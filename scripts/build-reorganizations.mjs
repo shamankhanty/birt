@@ -37,20 +37,33 @@ const groups = registry.groups.map((group) => `
 
 const branchSection = `
 <section class="card">
-  <div class="head"><p>РКБ · ФИЛИАЛЬНАЯ СТРУКТУРА</p><h2>Спасская ЦРБ — филиал РКБ</h2><span class="badge">ФРМО: сверка идентификаторов</span></div>
+  <div class="head"><p>РКБ · ФИЛИАЛЬНАЯ СТРУКТУРА</p><h2>Спасская ЦРБ — филиал РКБ</h2><span class="badge">Принадлежность подразделений подтверждена</span></div>
   <div class="body">
     <p><b>Код филиала (исторический):</b> ${escapeHtml(rkbBranch.branch.historicCode)};
     <b>код юридического лица:</b> ${escapeHtml(rkbBranch.parent.currentCode)};
     <b>OID РКБ:</b> <span class="oid">${escapeHtml(rkbBranch.parent.oid)}</span>.</p>
-    <p>Реорганизация с 14.09.2020 по письму МО. Источник «РКБ.xlsx»: <b>${rkbBranch.provenance.uniqueSpOids} OID СП</b>,
-    <b>${rkbBranch.provenance.uniqueBuildingIds} зданий</b>; дата среза и идентификаторы отдельных ЭМД отсутствуют.</p>
+    <p>Реорганизация с 14.09.2020 по письму МО. По файлу «РКБ.xlsx» подтверждены два непересекающихся списка:
+    <b>Спасская ЦРБ — ${rkbBranch.provenance.uniqueSpOids} подразделений и ${rkbBranch.provenance.uniqueBuildingIds} зданий</b>;
+    <b>РКБ — ${rkbBranch.parentProvenance.uniqueSpOids} подразделений и ${rkbBranch.parentProvenance.uniqueBuildingIds} зданий</b>.
+    Разделение применяется по OID подразделения или ID здания. Дата среза и идентификаторы отдельных ЭМД отсутствуют;
+    для расчёта показателей нужны сопоставимые числитель и знаменатель.</p>
     <p class="notice">По сверке ФРМО на 30.10.2026: ${rkbBranch.frmoAudit.rows} записей кода 4001 и ${rkbBranch.frmoAudit.issues} замечаний.
-    Присутствуют три варианта родительского OID: 1094, 1132, 18650. До подтверждения ФРМО филиал не получает
-    самостоятельное место или оценку; его данные нельзя суммировать с РКБ по одному OID либо вариантам адресов.</p>
+    В ${rkbBranch.frmoAudit.linkComparison.mismatchedRows} строках различаются привязки филиала и отделения;
+    ${rkbBranch.frmoAudit.linkComparison.departmentRowsMatchingSpasskCatalog} строки отделений совпадают с подтверждённым списком Спасска.
+    Исправление привязок ФРМО ведётся отдельно от распознавания подразделений. Итог РКБ и филиал не суммируются повторно;
+    варианты адресов не считаются разными ЭМД.</p>
+    <p><b>Согласованные виды отчётов:</b> эпикризы, профилактические обращения, прикрепление ЕПГУ, краткий ввод,
+    ТМК и ЛВН через МАХ — строка «РКБ» относится к Спасской ЦРБ при явно указанном виде отчёта ГИС.
+    Свидетельства о рождении и смерти и общий отчёт РЭМД сохраняются за РКБ. Отдельное место филиалу в месячном рейтинге не присваивается.</p>
     <details>
       <summary><b>Раскрыть ${rkbBranch.subunits.length} структурных подразделений филиала</b></summary>
       <div class="table-wrap"><table><thead><tr><th>Подразделение</th><th>OID СП МО</th><th>ID здания</th></tr></thead>
       <tbody>${rkbBranch.subunits.map(unit => `<tr><td>${escapeHtml(unit.name)}</td><td class="oid">${escapeHtml(unit.spOid)}</td><td>${escapeHtml(unit.buildingId)}</td></tr>`).join("")}</tbody></table></div>
+    </details>
+    <details>
+      <summary><b>Раскрыть ${rkbBranch.parentSubunits.length} структурных подразделений РКБ</b></summary>
+      <div class="table-wrap"><table><thead><tr><th>Подразделение</th><th>OID СП МО</th><th>ID зданий</th></tr></thead>
+      <tbody>${rkbBranch.parentSubunits.map(unit => `<tr><td>${escapeHtml(unit.name)}</td><td class="oid">${escapeHtml(unit.spOid)}</td><td>${escapeHtml(unit.buildingIds.join(", "))}</td></tr>`).join("")}</tbody></table></div>
     </details>
   </div>
 </section>`;

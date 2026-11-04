@@ -1,0 +1,77 @@
+{
+  "verifiedAt": "2026-11-04",
+  "identityStatus": "confirmed",
+  "sources": [
+    {
+      "file": "РКБ.xlsx",
+      "sha256": "de862e6cbfdb73f6cc83f6c9388d20d21c7aedc991a99a6ee9ee4a59ce729595"
+    },
+    {
+      "file": "Привязка_СП_и_отд._к_ФРМО 30.10..2026 ВСЕ СПЕЦ. Для ВКС МЗ РТ.xlsx",
+      "sha256": "ce799fa2d359a268f475a93e8aa9da6a872281b31db2163f9826faa6911645fd"
+    }
+  ],
+  "structure": {
+    "РКБ": {
+      "rows": 240,
+      "subunits": 98,
+      "buildings": 11
+    },
+    "Спаск": {
+      "rows": 74,
+      "subunits": 39,
+      "buildings": 37
+    }
+  },
+  "overlappingSubunitOids": 0,
+  "frmo": {
+    "sourceRows": 71,
+    "mismatchedLinks": 70,
+    "matchingDepartmentRows": 34,
+    "missingDepartmentOid": 35,
+    "foreignDepartmentOid": 2,
+    "branchParentCounts": {
+      "1.2.643.5.1.13.13.12.2.16.18650": 35,
+      "1.2.643.5.1.13.13.12.2.16.1094": 1,
+      "1.2.643.5.1.13.13.12.2.16.1132": 35
+    }
+  },
+  "preventiveComponents": [
+    {
+      "file": "1.Отчет СЭМД_РЭМД - 01.01.-31.10.(Выгрузка из BI 02.11.).xlsx",
+      "sha256": "007e390a864f41796242fd38ad75636392f127c39b78389ea39f8bd31b94c220",
+      "sheet": "Отчет РЭМД по МО",
+      "row": 64,
+      "period": "01.01–31.10.2026",
+      "sourceOid": "1.2.643.5.1.13.13.12.2.16.1094",
+      "scope": "legal-entity-remd",
+      "semd122": 7309,
+      "semd228": 6076
+    },
+    {
+      "file": "Закрытые случаи ДОГВН ПМО и зарегистрированные СЭМД 122 и 228 - 01.01.-31.10.(Выгрузка из ГИС 02.11.).xlsx",
+      "sha256": "1c29a34da65df9c17eb8ea475f2e33c27cd4ad912db7ac1a89ec8657b7e01dbc",
+      "sheet": "1",
+      "row": 79,
+      "period": "01.01–31.10.2026",
+      "sourceOid": "1.2.643.5.1.13.13.12.2.16.1094",
+      "scope": "closed-gis-cases",
+      "semd122": 6592,
+      "semd228": 6012,
+      "closedCases": 8318
+    },
+    {
+      "file": "Количество_СЭМД_Результаты_профилактического_медицинского_осмотрадиспансеризации 01.01.-31.10.(Выгрузка из ГИС 02.11.).xlsx",
+      "sha256": "ec6c54c31f9b2fd8932f0c1dc34da74d36cc8153b5d4bc2456255e35985d53d6",
+      "sheet": "Лист1",
+      "row": 79,
+      "period": "01.01–31.10.2026",
+      "sourceOid": "1.2.643.5.1.13.13.12.2.16.1094",
+      "scope": "preventive-encounters",
+      "encounters": 8369,
+      "semd228": 6009
+    }
+  ],
+  "preventiveStatus": "branch-numerator-attribution-pending",
+  "limitation": "Общий РЭМД содержит итог юридического лица; специальный отчёт ГИС считает зарегистрированные документы по закрытым случаям. Равенство периода и OID не доказывает одинаковый охват. В РКБ.xlsx нет СЭМД 122/228 и отчётного периода. Числовой факт филиала автоматически не переносится."
+}

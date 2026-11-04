@@ -25,7 +25,10 @@ export type MoRegistry = {
   };
 };
 
-export type RegistryRow = { name: string; oid?: string };
+export type RegistryRow = {
+  name: string; oid?: string; moOid?: string; organizationOid?: string;
+  spOid?: string; subunitOid?: string; buildingId?: string; sourceReport?: string;
+};
 
 export const SPASSK_CRB_REPORT_METRICS: Set<string>;
 export const SPASSK_CRB_ORGANIZATION: Readonly<RegistryOrganization>;
