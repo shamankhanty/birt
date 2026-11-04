@@ -68,15 +68,26 @@ export default function ReorganizationsPage() {
           Дата реорганизации по письму: 14.09.2020.
         </p>
         <p style={{ lineHeight: 1.6 }}>
-          По файлу «РКБ.xlsx» определены <strong>{rkbBranch.provenance.uniqueSpOids} OID подразделений</strong>
-          {" "}и <strong>{rkbBranch.provenance.uniqueBuildingIds} ID зданий</strong>.
-          Период выгрузки не указан; это справочник принадлежности, а не новый факт или основание для пересчёта показателей.
+          Принадлежность подразделений подтверждена файлом «РКБ.xlsx»: Спасская ЦРБ —
+          {" "}<strong>{rkbBranch.provenance.uniqueSpOids} подразделений и {rkbBranch.provenance.uniqueBuildingIds} зданий</strong>,
+          {" "}РКБ — <strong>{rkbBranch.parentProvenance.uniqueSpOids} подразделений и {rkbBranch.parentProvenance.uniqueBuildingIds} зданий</strong>.
+          OID подразделений и ID зданий между двумя списками не пересекаются. Разделение применяется по этим идентификаторам.
+          Период выгрузки не указан; для расчёта показателей нужны сопоставимые числитель и знаменатель.
         </p>
         <p style={{ padding: 14, background: "#fff5df", color: "#6d5727", borderRadius: 10, lineHeight: 1.6 }}>
           Проверка ФРМО на 30.10.2026: по коду 4001 в {rkbBranch.frmoAudit.rows} строках выявлено {rkbBranch.frmoAudit.issues} замечание(й),
           {" "}встречаются три варианта родительского OID (1094, 1132, 18650).
-          До сверки ФРМО не суммировать строки филиала с итогом РКБ, не считать варианты адреса разными ЭМД
-          и не присваивать Спасской ЦРБ отдельное место в рейтинге или очереди заслушивания.
+          В {rkbBranch.frmoAudit.linkComparison.mismatchedRows} строках различаются привязки филиала и отделения;
+          {" "}{rkbBranch.frmoAudit.linkComparison.departmentRowsMatchingSpasskCatalog} строки отделений уже совпадают с подтверждённым списком Спасска.
+          Исправление привязок ФРМО ведётся отдельно от распознавания подразделений.
+          Итог РКБ и его филиал не суммируются повторно; варианты адресов не считаются разными ЭМД.
+        </p>
+        <p style={{ lineHeight: 1.6 }}>
+          <b>Согласованные виды отчётов:</b> в отчётах ГИС по эпикризам, профилактическим обращениям,
+          прикреплению ЕПГУ, краткому вводу, ТМК и ЛВН через МАХ строка «РКБ» относится к Спасской ЦРБ.
+          Для этого у строки должен быть указан соответствующий вид отчёта.
+          В свидетельствах о рождении и смерти и общем отчёте РЭМД сохраняется РКБ.
+          Отдельное место филиалу в месячном рейтинге не присваивается.
         </p>
         <details style={{ marginTop: 18 }}>
           <summary style={{ cursor: "pointer", fontWeight: 700, color: "#167e68" }}>Показать 39 структурных подразделений и идентификаторы</summary>
@@ -96,6 +107,19 @@ export default function ReorganizationsPage() {
                   </tr>
                 ))}
               </tbody>
+            </table>
+          </div>
+        </details>
+        <details style={{ marginTop: 18 }}>
+          <summary style={{ cursor: "pointer", fontWeight: 700, color: "#167e68" }}>Показать 98 структурных подразделений РКБ</summary>
+          <div style={{ overflowX: "auto", marginTop: 14 }}>
+            <table style={{ width: "100%", minWidth: 800, borderCollapse: "collapse", fontSize: 13 }}>
+              <thead><tr>{["Подразделение", "OID СП МО", "ID зданий"].map((h) => <th key={h} style={{ padding: 10, textAlign: "left" }}>{h}</th>)}</tr></thead>
+              <tbody>{rkbBranch.parentSubunits.map((unit) => <tr key={unit.spOid}>
+                <td style={{ padding: 9 }}>{unit.name}</td>
+                <td style={{ padding: 9, fontFamily: "monospace" }}>{unit.spOid}</td>
+                <td style={{ padding: 9 }}>{unit.buildingIds.join(", ")}</td>
+              </tr>)}</tbody>
             </table>
           </div>
         </details>

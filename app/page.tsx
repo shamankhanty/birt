@@ -764,6 +764,7 @@ function displayMoName(name: string, oid?: string | null) {
 }
 function displayReportMoName(metric: string, row: MoRow) {
   const organization = registryOrganizationForMetric(metric, row);
+  if (organization?.oid === "context:spassk-crb") return organization.shortName;
   return displayMoName(reportMoName(metric, row.name), organization?.oid);
 }
 

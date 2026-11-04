@@ -1,6 +1,7 @@
 import assert from "node:assert/strict";
 import fs from "node:fs";
 import test from "node:test";
+import { spawnSync } from "node:child_process";
 import { classifyRkbSourceRow, validateRkbBranchCatalog } from "../lib/rkb-branch.js";
 import { createMoRegistryRuntime, reportMoName } from "../lib/mo-registry.js";
 
@@ -61,4 +62,87 @@ test("current FRMO linkage for code 4001 is inconsistent, so aggregation gate mu
   assert.equal(source.issues, 71);
   assert.deepEqual(new Set(source.parentOids), new Set(catalog.frmoAudit.parentOidVariants));
   assert.equal(frmo.cut, "30.10.2026");
+});
+
+test("both source sheets resolve independently through the runtime without changing legal OIDs", () => {
+  for (const [units, expected] of [[catalog.subunits, 'context:spassk-crb'], [catalog.parentSubunits, rootOid]]) {
+    for (const unit of units) {
+      const row = { name: 'ГАУЗ "РКБ МЗ РТ"', oid: rootOid, spOid: unit.spOid };
+      assert.equal(runtime.organizationForMetric('semd228', row)?.oid, expected);
+      assert.equal(row.oid, rootOid);
+    }
+  }
+  assert.equal(validateRkbBranchCatalog(catalog).parentBuildingCount, 11);
+});
+
+test("approved report aliases require matching report and metric; certificates and general REMD stay RKB", () => {
+  for (const rule of catalog.reportAliases.rules) {
+    for (const metric of rule.metrics) {
+      const row = { name: 'РКБ', oid: rootOid, sourceReport: rule.sourceReport };
+      assert.equal(runtime.organizationForMetric(metric, row)?.oid, 'context:spassk-crb');
+      assert.equal(runtime.organizationForMetric('birth', row)?.oid, rootOid);
+      assert.equal(runtime.organizationForMetric('death', row)?.oid, rootOid);
+      assert.equal(runtime.organizationForMetric(metric, {...row, sourceReport: 'general-remd'})?.oid, rootOid);
+    }
+  }
+});
+
+test("conflicting structural identifiers stop attribution and unrelated MO still resolves", () => {
+  assert.equal(runtime.organizationForMetric('semd228', {
+    name: 'РКБ', oid: rootOid, spOid: catalog.subunits[0].spOid,
+    buildingId: catalog.parentSubunits[0].buildingIds[0],
+  }), null);
+  assert.equal(runtime.organizationForMetric('semd228', {
+    name: 'РКБ', oid: rootOid, spOid: catalog.parentSubunits[0].spOid,
+    sourceReport: 'gis-preventive-encounters',
+  }), null);
+  const other = registry.organizations.find(org => org.oid.endsWith('.1153'));
+  assert.equal(runtime.organizationForMetric('semd228', {
+    name: other.name, oid: other.oid, spOid: other.oid + '.0.123',
+  })?.oid, other.oid);
+});
+
+test("pipeline preserves source OID and records branch identity separately", () => {
+  const source = { name: 'РКБ', oid: rootOid, spOid: catalog.subunits[0].spOid, count: 20 };
+  const result = spawnSync(process.execPath, ['scripts/pipeline/resolve-organizations.mjs'], {
+    input: JSON.stringify({metric:'semd228', rows:[source], registry}), encoding:'utf8',
+  });
+  assert.equal(result.status, 0, result.stderr);
+  const [row] = JSON.parse(result.stdout);
+  assert.equal(row.oid, rootOid);
+  assert.equal(row.reportingEntityId, 'context:spassk-crb');
+  assert.equal(row.name, 'Спасская ЦРБ');
+  assert.equal(row.count, source.count);
+});
+
+test("source evidence distinguishes parent REMD from closed GIS cases and encounters", () => {
+  const audit = read('docs/rkb-spassk-source-audit-20261104.json');
+  assert.equal(audit.structure['Спаск'].subunits,39);
+  assert.equal(audit.structure['РКБ'].subunits,98);
+  assert.equal(audit.overlappingSubunitOids,0);
+  assert.equal(audit.frmo.mismatchedLinks,70);
+  assert.equal(audit.preventiveStatus,'branch-numerator-attribution-pending');
+  const byScope = Object.fromEntries(audit.preventiveComponents.map(r=>[r.scope,r]));
+  assert.equal(byScope['legal-entity-remd'].semd122,7309);
+  assert.equal(byScope['closed-gis-cases'].semd122,6592);
+  assert.equal(byScope['preventive-encounters'].encounters,8369);
+});
+
+test("pipeline rejects unverified aggregation of subunits and parent/branch overlap", () => {
+  const code = `import json, sys
+from scripts.pipeline.adapters import source_rows
+cases=json.load(sys.stdin)
+for rows in cases:
+    try:
+        source_rows(rows, 'semd228')
+    except ValueError:
+        continue
+    raise AssertionError('Unreconciled rows were accepted')
+`;
+  const cases = [
+    [{name:'РКБ',oid:rootOid,spOid:catalog.subunits[0].spOid,count:20}],
+    [{name:'Спасская ЦРБ',oid:rootOid,count:20},{name:'РКБ',oid:rootOid,count:100}],
+  ];
+  const result = spawnSync('python3',['-c',code],{input:JSON.stringify(cases),encoding:'utf8'});
+  assert.equal(result.status,0,result.stderr);
 });
