@@ -292,14 +292,14 @@
       "source": "page-baseline"
     },
     "semd228": {
-      "fact": 90.37832060481826,
+      "fact": 91.00932454209062,
       "plan": 95,
-      "date": "28.10.2026",
+      "date": "31.10.2026",
       "previous": null,
       "trend": null,
-      "quantity": 2163037,
-      "numerator": 2163037,
-      "denominator": 2393314,
+      "quantity": 2201997,
+      "numerator": 2201997,
+      "denominator": 2419529,
       "method": "ratio_components",
       "source": "mo-details"
     },
@@ -562,9 +562,9 @@
       "source": "page-baseline"
     },
     "semd228": {
-      "fact": 90.37832060481826,
+      "fact": 91.00932454209062,
       "plan": 95,
-      "date": "28.10.2026",
+      "date": "31.10.2026",
       "quantity": 1751161,
       "numerator": 1751161,
       "denominator": 2200567,

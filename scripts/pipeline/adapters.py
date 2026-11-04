@@ -935,12 +935,19 @@ def parse_foms(path: Path) -> dict:
 def adapt_preventive(app: Path, remd: Path, foms_path: Path, end: date, registry_path: Path, approved_missing_oids=()) -> AdapterResult:
     rr,ff=parse_remd(remd),parse_foms(foms_path); mo,details,oids,monthly=(load(app,x) for x in ["mo-data.json","mo-details.json","mo-detail-oids.json","monthly-mo.json"]); base=mo.get("semd228",{}); same_cut=base.get("date")==date_ru(end); prev=previous_rows_from_dataset(base); rows=[]; audit_rows=[]; dn={};do={};excluded=[]
     child_oids={str(o["oid"]) for o in json.loads(registry_path.read_text(encoding="utf-8"))["organizations"] if re.search(r"детск|\b(?:адрб|дркб|ндрб|кдмц)\b",(str(o.get("type",""))+" "+str(o.get("name",""))).casefold())}
+    attribution=json.loads((Path(__file__).resolve().parents[2]/'config/rkb-spassk-branch.json').read_text(encoding='utf-8')).get('preventiveAttribution',{})
     for oid,v in ff.items():
+        source_name=v['name']
+        if oid == attribution.get('sourceOid'):
+            v={**v,'name':attribution['name']}
         rv=rr.get(oid)
         if not rv: excluded.append({"oid":oid,"name":v["name"],"denominator":v["den"]});continue
         num=max(rv["s122"],rv["s228"]) if end.year<=2026 else rv['s228']; den=v["den"]; fact=num/den*100 if den else None; old=prev.get(oid); oldfact=(old.get("previous") if same_cut else old.get("fact")) if old else None
         selected="122" if rv["s122"]>=rv["s228"] else "228"; audit_rows.append({"name":v["name"],"oid":oid,"child":oid in child_oids,"semd122":rv["s122"],"semd228":rv["s228"],"selected":num,"selectedType":selected,"foms":den,"share":fact,"oldShare":oldfact,"change":None if oldfact is None or fact is None else fact-oldfact,"issues":[] if fact is None or fact<=100 else ["Значение выше 100%"]})
         row={"name":v["name"],"oid":oid,"fact":fact,"count":num,"previous":oldfact,"trend":None if oldfact is None or fact is None else fact-oldfact}
+        if oid == attribution.get('sourceOid'):
+            audit_rows[-1].update(sourceName=source_name,reportingEntityId=attribution['reportingEntityId'],attributionBasis=attribution['basis'])
+            row['reportingEntityId']=attribution['reportingEntityId']
         if is_external_source_name(v["name"]): row["sourceStatus"]="external_source"
         rows.append(row);d={"volume":den,"registered":num};dn[norm(v["name"])]=d;do[oid]=d
     if not rows: raise ValueError('СЭМД 122/228: ни один OID числителя не сопоставлен со знаменателем')

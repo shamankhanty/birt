@@ -29,7 +29,7 @@ test("25 October ZIP is inventoried and absent sources are retained", () => {
 test("core cumulative numerators and denominators match primary sources", () => {
   assert.deepEqual([mo.hospital.date, mo.hospital.numerator, mo.hospital.denominator], ["27.10.2026", 721270, 790387]);
   assert.deepEqual([mo.ambulatoryCase.date, mo.ambulatoryCase.numerator, mo.ambulatoryCase.denominator], ["27.10.2026", 13163346, 14291248]);
-  assert.deepEqual([preventive.summary.numerator, preventive.summary.denominator], [2163037, 2393314]);
+  assert.deepEqual([preventive.summary.numerator, preventive.summary.denominator], [2201997, 2419529]);
   assert.deepEqual([mo.birth.numerator, mo.birth.denominator], [26541, 26575]);
   assert.deepEqual([mo.death.numerator, mo.death.denominator], [33618, 34048]);
   assert.deepEqual([mo.smp.numerator, mo.smp.denominator], [734399, 777781]);

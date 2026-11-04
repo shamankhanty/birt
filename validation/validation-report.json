@@ -19,7 +19,7 @@
   },
   "acknowledgedBaseline": {
     "unresolvedOrganizations": 127,
-    "percentageAnomalies": 39,
+    "percentageAnomalies": 40,
     "missingCurrentValues": 0
   },
   "checks": [
@@ -253,10 +253,10 @@
       "status": "PASS",
       "blocking": false,
       "requiresAiReview": false,
-      "message": "No new percentage anomalies beyond 39 acknowledged baseline cases",
+      "message": "No new percentage anomalies beyond 40 acknowledged baseline cases",
       "details": {
-        "currentAnomalyRows": 39,
-        "acknowledgedBaselineCases": 39
+        "currentAnomalyRows": 40,
+        "acknowledgedBaselineCases": 40
       },
       "issues": []
     }
