@@ -2,6 +2,7 @@ export type RegistryOrganization = {
   name: string;
   shortName: string;
   oid: string;
+  parentOid?: string;
   type: string;
   district?: string;
   level?: string;

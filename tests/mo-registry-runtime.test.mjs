@@ -78,14 +78,15 @@ test("canonical MO keeps its immutable OID mapping", () => {
   assert.equal(runtime.organization({ oid: canonical.oid })?.oid, canonical.oid);
 });
 
-test("canonical RKB row retains parent identity instead of being converted into Spassk", () => {
+test("preventive attribution identifies Spassk while preserving the RKB legal OID", () => {
   const canonical = moData.semd228.rows.find((row) => row.oid === "1.2.643.5.1.13.13.12.2.16.1094");
   assert.ok(canonical);
   const canonicalOid = canonical.oid;
   const resolved = runtime.organizationForMetric("semd228", canonical);
   assert.equal(canonical.oid, canonicalOid);
   assert.equal(runtime.organization({ oid: canonicalOid })?.oid, canonicalOid);
-  assert.equal(resolved?.oid, canonicalOid);
+  assert.equal(resolved?.oid, 'context:spassk-crb');
+  assert.equal(resolved?.parentOid, canonicalOid);
 });
 
 test("explicit external entity may carry a valid OID outside the canonical registry", () => {

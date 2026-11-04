@@ -22,11 +22,12 @@
     "percentage_above_100|mo-data|semd228|1.2.643.5.1.13.13.12.2.16.1105|ДРОЖЖАНОВСКАЯ ЦРБ|previous",
     "percentage_above_100|mo-data|semd228|1.2.643.5.1.13.13.12.2.16.1122|ДГП № 4 г.Казань|fact",
     "percentage_above_100|mo-data|semd228|1.2.643.5.1.13.13.12.2.16.1122|ДГП № 4 г.Казань|previous",
+    "percentage_above_100|mo-data|semd228|1.2.643.5.1.13.13.12.2.16.1133|РЫБНО-СЛОБОДСКАЯ ЦРБ|fact",
     "percentage_above_100|mo-data|semd228|1.2.643.5.1.13.13.12.2.16.1138|НУРЛАТСКАЯ ЦРБ|fact",
     "percentage_above_100|mo-data|semd228|1.2.643.5.1.13.13.12.2.16.1138|НУРЛАТСКАЯ ЦРБ|previous",
-    "percentage_above_100|mo-data|semd228|1.2.643.5.1.13.13.12.2.16.1144|КУКМОРСКАЯ ЦРБ|previous",
-    "percentage_above_100|mo-data|semd228|1.2.643.5.1.13.13.12.2.16.1152|АПАСТОВСКАЯ ЦРБ|previous",
     "percentage_above_100|mo-data|semd228|1.2.643.5.1.13.13.12.2.16.1171|НДРБ С ПЦ г.Нижнекамск|fact",
+    "percentage_above_100|mo-data|semd228|1.2.643.5.1.13.13.12.2.16.1171|НДРБ С ПЦ г.Нижнекамск|previous",
+    "percentage_above_100|mo-data|semd228|1.2.643.5.1.13.13.12.2.16.1192|НЦРМБ г.Нижнекамск|fact",
     "percentage_above_100|monthly-mo|hospital|1.2.643.5.1.13.13.12.2.16.1042|БУГУЛЬМИНСКАЯ ЦРБ|july",
     "percentage_above_100|monthly-mo|hospital|1.2.643.5.1.13.13.12.2.16.1061|ЦЕНТР РЕАБИЛИТАЦИИ СЛУХА г.Наб.Челны|july",
     "percentage_above_100|monthly-mo|hospital|1.2.643.5.1.13.13.12.2.16.1061|ЦЕНТР РЕАБИЛИТАЦИИ СЛУХА г.Наб.Челны|june",
@@ -463,7 +464,8 @@
       "1.2.643.5.1.13.13.12.2.16.1208",
       "1.2.643.5.1.13.13.12.2.16.1231",
       "1.2.643.5.1.13.13.12.2.16.28030",
-      "1.2.643.5.1.13.13.12.2.16.44921"
+      "1.2.643.5.1.13.13.12.2.16.44921",
+      "context:spassk-crb"
     ],
     "mo-data:hospital": [
       "1.2.643.5.1.13.13.12.2.16.1038",
@@ -5159,7 +5161,7 @@
   },
   "acknowledgedCounts": {
     "unresolvedOrganizations": 127,
-    "percentageAnomalies": 39,
+    "percentageAnomalies": 40,
     "missingCurrentValues": 0
   }
 }

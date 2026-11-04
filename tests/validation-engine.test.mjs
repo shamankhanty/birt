@@ -1,7 +1,7 @@
 import test from "node:test";
 import assert from "node:assert/strict";
 import fs from "node:fs";
-import { createAiReviewQueue, validateDashboard } from "../lib/validation-engine.js";
+import { createAiReviewQueue, createValidationSnapshot, validateDashboard } from "../lib/validation-engine.js";
 
 const readJson = (path) => JSON.parse(fs.readFileSync(path, "utf8"));
 const base = Object.freeze({
@@ -18,6 +18,23 @@ const base = Object.freeze({
 
 const cloneInput = () => structuredClone(base);
 const check = (report, id) => report.checks.find((item) => item.id === id);
+
+test("confirmed branch lineage preserves legal source identity without hiding removal", () => {
+  const input = cloneInput();
+  const oid = '1.2.643.5.1.13.13.12.2.16.1094';
+  const row = input.moData.semd228.rows.find(r => r.oid === oid);
+  Object.assign(row, {name:'Спасская ЦРБ',reportingEntityId:'context:spassk-crb'});
+  const snapshot = createValidationSnapshot(input);
+  assert.ok(snapshot.resolvedOidsByDataset['mo-data:semd228'].includes(oid));
+  input.baselineSnapshot = snapshot;
+  assert.equal(check(validateDashboard(input),'data.dropped_organizations').status,'PASS');
+  input.moData.semd228.rows = input.moData.semd228.rows.filter(r => r !== row);
+  const removed = check(validateDashboard(input),'data.dropped_organizations');
+  assert.equal(removed.status,'FAIL');
+  assert.ok(removed.issues.some(issue => issue.organizationOid === oid));
+  input.moData.semd228.rows.push({...row,oid:'1.2.643.5.1.13.13.12.2.16.1132'});
+  assert.equal(check(validateDashboard(input),'data.dropped_organizations').status,'FAIL');
+});
 
 test("accepted current baseline has no blocking errors and preserves reviewed source warnings", () => {
   const report = validateDashboard(base);

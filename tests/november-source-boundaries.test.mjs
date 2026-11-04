@@ -15,7 +15,11 @@ test('accepted October values have an independent primary-source audit and exact
  assert.equal(audit.sourceCount,22);
  assert.equal(audit.checks.length,50);
  assert.ok(audit.checks.every(c=>c.status==='PASS'));
- for(const [path,hash] of Object.entries(audit.acceptedAppSha256))
+ const preventive=read('docs/preventive-20261104.json');
+ assert.equal(preventive.summary.numerator,2201997);
+ assert.equal(preventive.summary.denominator,2419529);
+ assert.deepEqual(Object.keys(preventive.acceptedAppSha256).sort(),['app/mo-data.json','app/mo-detail-oids.json','app/mo-details.json','app/preventive-semd-audit.json']);
+ for(const [path,hash] of Object.entries({...audit.acceptedAppSha256,...preventive.acceptedAppSha256,...preventive.unchangedFileSha256}))
   assert.equal(crypto.createHash('sha256').update(fs.readFileSync(path)).digest('hex'),hash,path);
 });
 

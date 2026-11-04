@@ -1,0 +1,220 @@
+{
+  "state": "READY",
+  "statistics": {
+    "preparedIndicators": 1
+  },
+  "indicators": [
+    {
+      "metric": "semd228",
+      "state": "PREPARED"
+    }
+  ],
+  "changedFiles": [
+    "preventive-semd-audit.json",
+    "mo-data.json",
+    "mo-details.json",
+    "mo-detail-oids.json"
+  ],
+  "sources": [
+    {
+      "file": "1.Отчет СЭМД_РЭМД - 01.01.-31.10.(Выгрузка из BI 02.11.).xlsx",
+      "sheet": "Отчет РЭМД по МО",
+      "sha256": "007e390a864f41796242fd38ad75636392f127c39b78389ea39f8bd31b94c220",
+      "matchedRows": 95,
+      "firstOid": "1.2.643.5.1.13.13.12.2.16.10323",
+      "lastOid": "1.2.643.5.1.13.13.12.2.16.44921"
+    },
+    {
+      "file": "Количество_СЭМД_Результаты_профилактического_медицинского_осмотрадиспансеризации 01.01.-31.10.(Выгрузка из ГИС 02.11.).xlsx",
+      "sheet": "Лист1",
+      "sha256": "ec6c54c31f9b2fd8932f0c1dc34da74d36cc8153b5d4bc2456255e35985d53d6",
+      "matchedRows": 95,
+      "firstOid": "1.2.643.5.1.13.13.12.2.16.1088",
+      "lastOid": "1.2.643.5.1.13.13.12.2.16.1197"
+    }
+  ],
+  "monthlySnapshotUnchanged": true,
+  "attribution": {
+    "confirmedAt": "2026-11-04",
+    "basis": "Уточнение пользователя: профилактические осмотры и СЭМД 122/228 по OID РКБ относятся только к Спасской ЦРБ; сама РКБ их не проводит.",
+    "metric": "semd228",
+    "sourceOid": "1.2.643.5.1.13.13.12.2.16.1094",
+    "reportingEntityId": "context:spassk-crb",
+    "name": "Спасская ЦРБ",
+    "parentApplicable": false,
+    "preserveLegalOid": true,
+    "sources": [
+      "general-remd-122-228",
+      "preventive-foms"
+    ],
+    "rewriteHistoricalSnapshots": false
+  },
+  "summary": {
+    "status": "ready",
+    "year": 2026,
+    "formula": "MAX(СЭМД 122; СЭМД 228) по каждой МО",
+    "period122": "01.01–31.10.2026",
+    "period228": "01.01–31.10.2026",
+    "source122": "1.Отчет СЭМД_РЭМД - 01.01.-31.10.(Выгрузка из BI 02.11.).xlsx",
+    "source228": "1.Отчет СЭМД_РЭМД - 01.01.-31.10.(Выгрузка из BI 02.11.).xlsx",
+    "sourceDenominator": "Количество_СЭМД_Результаты_профилактического_медицинского_осмотрадиспансеризации 01.01.-31.10.(Выгрузка из ГИС 02.11.).xlsx",
+    "organizations": 95,
+    "numerator": 2201997,
+    "denominator": 2419529,
+    "share": 91.00932454209062,
+    "selected122": 77,
+    "selected228": 18,
+    "selectedEqual": 1,
+    "over100": 10,
+    "missing": 1,
+    "excluded": [
+      {
+        "oid": "1.2.643.5.1.13.13.12.2.18.1384",
+        "name": "ЧУЗ \"Больница \"РЖД-Медицина\" города Ижевск\"",
+        "denominator": 1
+      }
+    ],
+    "note": "Включены взрослые и детские МО из ФОМС; строки без соответствия РЭМД остаются в аудите и не оцениваются.",
+    "attributionNote": "Уточнение пользователя: профилактические осмотры и СЭМД 122/228 по OID РКБ относятся только к Спасской ЦРБ; сама РКБ их не проводит."
+  },
+  "excluded": [
+    {
+      "oid": "1.2.643.5.1.13.13.12.2.18.1384",
+      "name": "ЧУЗ \"Больница \"РЖД-Медицина\" города Ижевск\"",
+      "denominator": 1
+    }
+  ],
+  "formalValidation": {
+    "status": "WARNING",
+    "summary": {
+      "checks": 16,
+      "PASS": 14,
+      "WARNING": 2,
+      "FAIL": 0,
+      "blocking": 0,
+      "aiReviewItems": 3
+    }
+  },
+  "reviewedWarnings": {
+    "decision": "Исходные значения выше 100% сохранены без ограничения; опубликованы как аномалии источников для дальнейшей сверки, без включения накопительного среза в месячный рейтинг.",
+    "issues": [
+      {
+        "kind": "rating_period_retained_incomplete",
+        "metric": "death",
+        "field": "period",
+        "expected": "октябрь 2026",
+        "actual": "На 31.08",
+        "status": "WARNING",
+        "requiresAiReview": false,
+        "reviewReason": "methodology",
+        "acknowledged": false,
+        "fingerprint": "rating_period_retained_incomplete||death|||period"
+      },
+      {
+        "kind": "rating_period_retained_incomplete",
+        "metric": "semd228",
+        "field": "period",
+        "expected": "октябрь 2026",
+        "actual": "На 30.09",
+        "status": "WARNING",
+        "requiresAiReview": false,
+        "reviewReason": "methodology",
+        "acknowledged": false,
+        "fingerprint": "rating_period_retained_incomplete||semd228|||period"
+      },
+      {
+        "kind": "percentage_above_100",
+        "scope": "mo-data",
+        "metric": "semd228",
+        "organizationOid": "1.2.643.5.1.13.13.12.2.16.1171",
+        "organizationName": "НДРБ С ПЦ г.Нижнекамск",
+        "field": "previous",
+        "value": 103.14028101594899,
+        "fingerprint": "percentage_above_100|mo-data|semd228|1.2.643.5.1.13.13.12.2.16.1171|НДРБ С ПЦ г.Нижнекамск|previous",
+        "acknowledged": false,
+        "status": "WARNING",
+        "requiresAiReview": true,
+        "reviewReason": "anomaly"
+      },
+      {
+        "kind": "percentage_above_100",
+        "scope": "mo-data",
+        "metric": "semd228",
+        "organizationOid": "1.2.643.5.1.13.13.12.2.16.1192",
+        "organizationName": "НЦРМБ г.Нижнекамск",
+        "field": "fact",
+        "value": 101.13743755906575,
+        "fingerprint": "percentage_above_100|mo-data|semd228|1.2.643.5.1.13.13.12.2.16.1192|НЦРМБ г.Нижнекамск|fact",
+        "acknowledged": false,
+        "status": "WARNING",
+        "requiresAiReview": true,
+        "reviewReason": "anomaly"
+      },
+      {
+        "kind": "percentage_above_100",
+        "scope": "mo-data",
+        "metric": "semd228",
+        "organizationOid": "1.2.643.5.1.13.13.12.2.16.1133",
+        "organizationName": "РЫБНО-СЛОБОДСКАЯ ЦРБ",
+        "field": "fact",
+        "value": 101.64784864205065,
+        "fingerprint": "percentage_above_100|mo-data|semd228|1.2.643.5.1.13.13.12.2.16.1133|РЫБНО-СЛОБОДСКАЯ ЦРБ|fact",
+        "acknowledged": false,
+        "status": "WARNING",
+        "requiresAiReview": true,
+        "reviewReason": "anomaly"
+      }
+    ]
+  },
+  "acceptedAppSha256": {
+    "app/preventive-semd-audit.json": "a9dcad9f6cee0fdae798f8695ad881333f623f41faf96a02ed959ec85ef95070",
+    "app/mo-data.json": "b9f853fe7a2c94000c6f0b0da1875bef2bdf856165b446e71067bf074d4585c5",
+    "app/mo-details.json": "9f3ae5b988ba02782fdd3bafa351cf6377075b74761750698eb642025c2b8414",
+    "app/mo-detail-oids.json": "160afd7bc3af4a7de76838fe1383a72cb3f3f4442c881e64c271a83a6d92a764"
+  },
+  "preservedSections": {
+    "app/mo-data.json": [
+      "ambulatoryCase",
+      "birth",
+      "death",
+      "egpu",
+      "egpu2days",
+      "hospital",
+      "smp",
+      "smpFederal",
+      "tvspAmbulatory",
+      "tvspDiagnostic",
+      "tvspLaboratory",
+      "tvspStationary"
+    ],
+    "app/mo-details.json": [
+      "ambulatoryCase",
+      "birth",
+      "death",
+      "egpu",
+      "egpu2days",
+      "hospital",
+      "smp",
+      "smpFederal",
+      "tvspAmbulatory",
+      "tvspDiagnostic",
+      "tvspLaboratory",
+      "tvspStationary"
+    ],
+    "app/mo-detail-oids.json": [
+      "ambulatoryCase",
+      "egpu",
+      "egpu2days",
+      "hospital",
+      "smpFederal",
+      "tvspAmbulatory",
+      "tvspDiagnostic",
+      "tvspLaboratory",
+      "tvspStationary"
+    ]
+  },
+  "unchangedFileSha256": {
+    "app/monthly-mo.json": "aa69322d5640c6afddc6040f1d1d165b645d0284ae794ceefaf85f7b8e3a9f2f",
+    "app/september-rating.tsx": "b0e5adfa26687c21dd56dadabcde62c6cbda4471d2491ff85f4580900efacbc0"
+  }
+}
