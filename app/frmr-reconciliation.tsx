@@ -193,6 +193,7 @@ export default function FrmrReconciliation() {
         </div>
       </section>
 
+      <div className={styles.workspaceControls}>
       <div className={styles.tabs} role="group" aria-label="Охват ФРМР">
         <button className={[styles.tab, isAll ? styles.tabActive : ""].join(" ")} onClick={() => {setCoverage("all");setControlLevel("mo");setSpType("");setView("minister");setFilter("all");setSort("count");setSearch("");setMoQuery("");setSelectedId(null);resetInspection();}}>Все специальности · {allRaw.summary.sourceCut.slice(0,5)}</button>
         <button className={[styles.tab, !isAll ? styles.tabActive : ""].join(" ")} onClick={() => {setCoverage("legacy");setSpType("");setView("minister");setFilter("all");setSort("count");setSearch("");setMoQuery("");setSelectedId(null);resetInspection();}}>Прежний перечень · архив</button>
@@ -214,9 +215,12 @@ export default function FrmrReconciliation() {
           <option value="Не указан">Тип не указан</option>
         </select>
       </div>}
-      {isAll && view !== "linkage" && <p className={styles.muted} data-testid="frmr-control-note">{controlLevel === "mo" ? "Основной контроль: должность не найдена на уровне МО. Расхождения привязок СП в этот итог не входят." : "Справочно: должность найдена в МО, но не совпадает привязка СП. Эти записи не входят в основной итог проблем МО."} {spType && <>Тип СП: {spType}. </>}Все специальности сохранены с учётом согласованных исключений. Тип СП не определяет работу по ОМС или платно.</p>}
-
-      {isAll && view !== "linkage" && <p className={styles.muted} data-testid="frmr-scope-note">Из сверки исключены: скорая помощь, врачи-стажёры и средний лабораторный персонал. Учтено {number(scopedAll.records.rows.length)} записей; исключено {number(scopeExcluded.total)}. Изменение охвата не является улучшением показателя.</p>}
+      </div>
+      {isAll && view !== "linkage" && <details className={styles.scopeDetails}>
+        <summary>Методика и охват сверки</summary>
+        <p className={styles.muted} data-testid="frmr-control-note">{controlLevel === "mo" ? "Основной контроль: должность не найдена на уровне МО. Расхождения привязок СП в этот итог не входят." : "Справочно: должность найдена в МО, но не совпадает привязка СП. Эти записи не входят в основной итог проблем МО."} {spType && <>Тип СП: {spType}. </>}Все специальности сохранены с учётом согласованных исключений. Тип СП не определяет работу по ОМС или платно.</p>
+        <p className={styles.muted} data-testid="frmr-scope-note">Из сверки исключены: скорая помощь, врачи-стажёры и средний лабораторный персонал. Учтено {number(scopedAll.records.rows.length)} записей; исключено {number(scopeExcluded.total)}. Изменение охвата не является улучшением показателя.</p>
+      </details>}
 
       {view === "linkage" ? <FrmoLinkage /> : view === "minister" ? (
         <>
@@ -367,16 +371,16 @@ export default function FrmrReconciliation() {
                 {isAll && controlLevel === "mo" ? <>
                   <h3>2. Записи на уровне МО</h3>
                   {activeRole ? <section data-testid="frmr-mo-records">
-                    <p className={styles.muted}>Должность «{activeRole}»: {number(moRoleRecords.length)} записей. Сверьте сотрудника и должность в ФРМР и ГИС на уровне МО; установите, какая запись неактуальна. Не создавайте дубли автоматически.</p>
+                    <p className={styles.muted}>Должность «{activeRole}»: {number(moRoleRecords.length)} записей. Для всех строк ниже должность не найдена на уровне МО. Проверьте актуальность записи сотрудника в ФРМР и ГИС; дубли автоматически не создавайте.</p>
                     <input className={styles.input} type="search" value={last4Query} onChange={e=>setLast4Query(e.target.value)} placeholder="Найти по последним 4 цифрам…" aria-label="Поиск по последним четырем цифрам СНИЛС" inputMode="numeric" maxLength={4}/>
                     <div className={styles.frmrRecordTableWrap}><table className={styles.table}>
-                      <thead><tr><th>Строка в выгрузке</th><th>СНИЛС (4 цифры)</th><th>Что проверить</th></tr></thead>
+                      <thead><tr><th>Строка</th><th>СНИЛС · 4 цифры</th><th>Структурное подразделение и OID</th></tr></thead>
                       <tbody>{visibleMoRecords.map(rec=><tr key={rec[5]}>
                         <td>№ {rec[5]}</td><td className={styles.frmrLastFour}>{rec[3]===null ? "Нет СНИЛС" : "•••-•••-•"+rec[3]}</td>
                         <td><div className={styles.frmrCheckCell}>
-                          <span className={styles.frmrCheckStatus}>Нет должности на уровне МО</span>
+                          <strong>{departmentRaw.sp[rec[2]][2]}</strong>
+                          <code>{officialPrefix}{selected.id}.0.{departmentRaw.sp[rec[2]][1]}</code>
                           {Boolean(rec[6]) && <small>{Object.entries(allRaw.records.qualityBits).filter(([bit])=>(rec[6]??0)&Number(bit)).map(([,label])=>label).join("; ")}</small>}
-                          <details><summary>Показать СП и OID</summary><span>{departmentRaw.sp[rec[2]][2]}</span><small>OID СП: {officialPrefix}{selected.id}.0.{departmentRaw.sp[rec[2]][1]}</small></details>
                         </div></td>
                       </tr>)}</tbody>
                     </table></div>
