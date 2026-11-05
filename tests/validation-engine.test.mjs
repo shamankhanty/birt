@@ -45,7 +45,8 @@ test("accepted current baseline has no blocking errors and preserves reviewed so
   assert.equal(check(report, "data.spassk_legacy_context_review").status, "PASS");
   assert.equal(check(report, "data.spassk_legacy_context_review").issues.length, 0);
   assert.ok(report.summary.WARNING >= 0);
-  assert.equal(createAiReviewQueue(report).reviewCount, 0);
+  assert.equal(createAiReviewQueue(report).reviewCount, 6);
+  assert.ok(report.aiReviewItems.every(item=>item.reviewReason==='anomaly'));
   assert.equal(report.reportingPeriod.latestFullMonth, "октябрь 2026");
   assert.equal(report.reportingPeriod.previousFullMonth, "сентябрь 2026");
 });

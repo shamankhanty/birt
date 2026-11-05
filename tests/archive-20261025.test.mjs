@@ -7,7 +7,7 @@ const read = (name) => JSON.parse(fs.readFileSync(name, "utf8"));
 const mo = read("baseline/archive/before-20261102/app/mo-data.json");
 const operational = read("baseline/archive/before-20261102/app/operational-mo.json");
 const status = read("baseline/archive/before-20261102/app/organization-status.json");
-const preventive = read("app/preventive-semd-audit.json");
+const preventive = read("docs/preventive-20261104.json");
 const units = read("baseline/archive/before-20261102/app/unit-data.json");
 const weeklyErrors = read("baseline/archive/before-20261102/app/error-categories.json");
 const cumulativeErrors = read("baseline/archive/before-20261102/app/error-cumulative.json");

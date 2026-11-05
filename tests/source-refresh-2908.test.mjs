@@ -14,7 +14,7 @@ test("current hospital report is reconciled exactly", () => {
   assert.ok(mo.hospital.rows.reduce((sum, row) => sum + (row.count ?? 0), 0) >= 0);
   assert.ok(Object.values(read("mo-details.json").hospital).reduce((sum, row) => sum + row.volume, 0) >= 0);
   for (const row of mo.hospital.rows) {
-    if (row.previous === null || row.previous === undefined) assert.equal(row.trend, null);
+    if (row.fact === null || row.previous === null || row.previous === undefined) assert.equal(row.trend, null);
     else assert.ok(Math.abs(row.fact - row.previous - row.trend) < 1e-9, row.name);
   }
   const ndrb = mo.hospital.rows.find(row => row.oid === "1.2.643.5.1.13.13.12.2.16.1171");

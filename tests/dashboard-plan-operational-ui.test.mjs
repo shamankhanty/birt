@@ -22,12 +22,12 @@ test("MAX UI uses the approved target registry and keeps TMK and ELN independent
   assert.match(page, /maxDashboardRows/u);
   assert.match(page, /maxIndicatorForecast/u);
 
-  assert.equal(countTotal("tmkMaxCount"), 73_479);
+  assert.equal(countTotal("tmkMaxCount"), 74_774);
   // One source row is explicitly "Неизвестная МО" and is not part of the
   // resolved plan perimeter shown by the UI.
   assert.equal(october.metrics.tmk.plannedMoFact, 15400);
   assert.equal(october.metrics.eln.plannedMoFact, 12378);
-  assert.equal(countTotal("elnMaxCount"), 55_268);
+  assert.equal(countTotal("elnMaxCount"), 55_899);
   assert.equal(targets.republic.tmk["2026-09"], 145_000);
   assert.equal(targets.republic.eln["2026-09"], 74_000);
   assert.equal(Number((60_015 / 145_000 * 100).toFixed(2)), 41.39);
@@ -78,9 +78,9 @@ test("every 500+ category exposes the closed month beside numerator-derived oper
   const currentDentist = weekly.summary.doctor500_dentist;
   const previousDentist = weekly.previousSummary.doctor500_dentist;
   assert.deepEqual([monthlyDentist.numerator, monthlyDentist.denominator], [333, 584]);
-  assert.deepEqual([previousDentist.numerator, previousDentist.denominator], [371, 591]);
-  assert.deepEqual([currentDentist.numerator, currentDentist.denominator], [333, 584]);
+  assert.deepEqual([previousDentist.numerator, previousDentist.denominator], [333, 584]);
+  assert.deepEqual([currentDentist.numerator, currentDentist.denominator], [11, 582]);
   assert.equal(Number(monthlyDentist.fact.toFixed(2)), 57.02);
-  assert.equal(Number(previousDentist.fact.toFixed(2)), 62.77);
-  assert.equal(Number(currentDentist.fact.toFixed(2)), 57.02);
+  assert.equal(Number(previousDentist.fact.toFixed(2)), 57.02);
+  assert.equal(Number(currentDentist.fact.toFixed(2)), 1.89);
 });

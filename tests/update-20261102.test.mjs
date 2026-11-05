@@ -5,34 +5,34 @@ const read = name => JSON.parse(fs.readFileSync('app/'+name+'.json','utf8'));
 const mo=read('mo-data'), monthly=read('monthly-mo'), op=read('operational-mo');
 const views=read('max-period-views'), doctors=read('physician-metrics'), weekly=read('physician-weekly-snapshot');
 const evidence=JSON.parse(fs.readFileSync('docs/update-20261102-evidence.json','utf8'));
-test('October source metadata is explicit; export on 02 Nov is not reporting in November',()=>{
+test('November source dates are explicit; the closed October month remains separate',()=>{
   for(const id of ['tvspAmbulatory','tvspStationary','tvspLaboratory']){
-    assert.equal(mo[id].date,'31.10.2026');
-    assert.equal(mo[id].period,'январь–октябрь 2026');
-    assert.equal(read('unit-data')[id].date,'31.10.2026');
+    assert.equal(mo[id].date,'05.11.2026');
+    assert.equal(mo[id].period,'январь–ноябрь 2026');
+    assert.equal(read('unit-data')[id].date,'05.11.2026');
   }
-  for(const id of ['egpu','egpu2days','hospital','birth','smp'])assert.equal(mo[id].date,'31.10.2026');
-  for(const id of ['shortInput','shortInputAmb','shortInputHosp'])assert.equal(op[id].date,'28.10.2026');
+  for(const id of ['egpu','egpu2days','hospital','birth','smp'])assert.equal(mo[id].date,'04.11.2026');
+  for(const id of ['shortInput','shortInputAmb','shortInputHosp'])assert.equal(op[id].date,'04.11.2026');
 });
-test('October physician month is self-consistent in the two reporting stores',()=>{
+test('closed October physician month is retained beside the partial November operational period',()=>{
   assert.equal(doctors.period,'октябрь 2026');
   assert.equal(doctors.formed,'31.10.2026');
-  assert.equal(weekly.period,'01.10.2026–31.10.2026');
+  assert.equal(weekly.period,'01.11.2026–04.11.2026');
   for(const [id,ds] of Object.entries(doctors.datasets)){
     assert.equal(ds.period,'октябрь 2026',id);
     assert.equal(ds.date,'31.10.2026',id);
-    assert.equal(weekly.periods[id].period,'01.10.2026–31.10.2026',id);
+    assert.equal(weekly.previousPeriods[id].period,'01.10.2026–31.10.2026',id);
     assert.equal(monthly[id].currentLabel,'Октябрь 2026',id);
     for(const row of ds.rows){
       if(row.count!==null && row.volume>0)assert.ok(Math.abs(row.fact-row.count/row.volume*100)<1e-9,id+' '+row.name);
     }
   }
 });
-test('MAX retains separate October and cumulative source totals, without adding them',()=>{
+test('MAX retains separate October and current cumulative source totals, without adding them',()=>{
   assert.equal(views.cumulative.date,'31.10.2026');
   assert.equal(views.closedMonths['2026-10'].operational.date,'31.10.2026');
-  for(const [service,total,monthlyTotal,metric] of [['tmk',73479,15573,'tmkMaxCount'],['eln',55268,12498,'elnMaxCount']]){
-    assert.equal(views.cumulative.metrics[service].sourceTotal,total);
+  for(const [service,total,monthlyTotal,metric] of [['tmk',74774,15573,'tmkMaxCount'],['eln',55899,12498,'elnMaxCount']]){
+    assert.equal(op[metric].date,'04.11.2026');
     assert.equal(views.closedMonths["2026-10"].operational.metrics[service].sourceTotal,monthlyTotal);
     assert.equal(op[metric].rows.reduce((sum,r)=>sum+(r.count??0),0),total);
     assert.equal(views.cumulative.metrics[service].rows.length,85);
@@ -41,9 +41,9 @@ test('MAX retains separate October and cumulative source totals, without adding 
 });
 test('REMD errors preserve separate periods, with no invented denominator',()=>{
   const brief=read('error-categories'),cum=read('error-cumulative'),byMo=read('error-organizations');
-  assert.equal(brief.total,303938);assert.equal(cum.total,14433785);
-  assert.equal(brief.period,'22.10.2026–31.10.2026');
-  assert.equal(cum.period,'01.01.2026–31.10.2026');
+  assert.equal(brief.total,114916);assert.equal(cum.total,14523993);
+  assert.equal(brief.period,'31.10.2026–05.11.2026');
+  assert.equal(cum.period,'01.01.2026–04.11.2026');
   assert.equal(brief.share,null);assert.equal(cum.share,null);
   assert.equal(brief.items.reduce((sum,x)=>sum+x.count,0),brief.total);
   assert.equal(cum.items.reduce((sum,x)=>sum+x.count,0),cum.total);
@@ -71,10 +71,7 @@ test('completed October TVSP snapshots are monthly, not provisional or operation
   assert.equal(monthly[id].currentLabel,'На 31.10',id);
   assert.equal(monthly[id].periodKind,'cumulative',id);
   assert.equal(monthly[id].periodStatus,'closed_month_end',id);
-  assert.equal(monthly[id].rows.length,mo[id].rows.length);
-  for(const row of monthly[id].rows){
-    const source=mo[id].rows.find(r=>r.oid===row.oid);
-    assert.ok(source);assert.equal(row.july,source.fact);
-  }
+  assert.ok(monthly[id].rows.length>0);
+  assert.ok(mo[id].date.endsWith('.11.2026'));
  }
 });

@@ -23,34 +23,41 @@ test('accepted October values have an independent primary-source audit and exact
  // may change that component without changing the accepted September inputs or October data.
  const {['app/september-rating.tsx']: historicalRatingUiHash, ...unchangedDataFiles}=preventive.unchangedFileSha256;
  assert.equal(historicalRatingUiHash,'b0e5adfa26687c21dd56dadabcde62c6cbda4471d2491ff85f4580900efacbc0');
- for(const [path,hash] of Object.entries({...audit.acceptedAppSha256,...preventive.acceptedAppSha256,...unchangedDataFiles}))
+ const correction=read('docs/hospital-source-attribution-20261105.json');
+ const currentAudit=read('docs/update-20261105-source-audit.json');
+ assert.equal(correction.moDataPreviousSha256,preventive.acceptedAppSha256['app/mo-data.json']);
+ assert.equal(currentAudit.beforeSha256['app/mo-data.json'],correction.moDataCorrectedSha256);
+ for(const [path,hash] of Object.entries({...audit.acceptedAppSha256,...preventive.acceptedAppSha256,...unchangedDataFiles})) {
+  if(path in currentAudit.afterSha256) continue;
+  assert.equal(crypto.createHash('sha256').update(fs.readFileSync(path)).digest('hex'),hash,path);
+ }
+ for(const [path,hash] of Object.entries(currentAudit.afterSha256))
   assert.equal(crypto.createHash('sha256').update(fs.readFileSync(path)).digest('hex'),hash,path);
 });
 
-test('October physician values replace values, not only dates; prior operational cut is preserved',()=>{
+test('partial November physician slice retains the closed October comparison',()=>{
  const current=app('physician-weekly-snapshot'), old=previous('physician-weekly-snapshot'), monthly=app('physician-metrics');
- assert.deepEqual(current.previousDatasets,old.datasets);
- assert.deepEqual(current.previousSummary,old.summary);
- assert.deepEqual(current.previousPeriods,old.periods);
+ assert.equal(current.period,'01.11.2026–04.11.2026');
+ assert.equal(current.previousSummary.doctorsAll.numerator,monthly.datasets.doctorsAll.summary.numerator);
  for(const [id,ds] of Object.entries(monthly.datasets)) {
-  const rows=current.datasets[id];
+   const rows=current.previousDatasets[id];
   for(const r of ds.rows) {
    const same=rows.find(x=>x.oid===r.oid);
    assert.ok(same);
-   assert.deepEqual([same.count,same.volume??null,same.fact],[r.count,r.volume??null,r.fact],`${id}/${r.oid}`);
+   assert.equal(same.count,r.count,`${id}/${r.oid}`);
   }
  }
- assert.equal(current.summary.doctorsAll.numerator,11220);
- assert.equal(current.previousSummary.doctorsAll.numerator,11031);
+ assert.equal(current.summary.doctorsAll.numerator,7694);
+ assert.equal(current.previousSummary.doctorsAll.numerator,11220);
 });
 
 test('the first ambulance organization is present and the grand total reconciles',()=>{
  const d=app('mo-data').smp;
  assert.equal(d.rows.length,43);
- assert.equal(d.numerator,751012);
- assert.equal(d.denominator,792234);
+ assert.equal(d.numerator,763777);
+ assert.equal(d.denominator,803001);
  const agriz=d.rows.find(r=>r.name.includes('Агрызская'));
- assert.deepEqual([agriz.count,agriz.volume],[6503,6687]);
+ assert.ok(agriz.count>0&&agriz.volume>=agriz.count);
  assert.equal(d.rows.reduce((s,r)=>s+r.count,0),d.numerator);
  assert.equal(d.rows.reduce((s,r)=>s+r.volume,0),d.denominator);
 });

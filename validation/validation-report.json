@@ -1,21 +1,21 @@
 {
   "schemaVersion": 1,
   "baselineVersion": "5.4.5",
-  "dataDate": "31.10.2026",
+  "dataDate": "05.11.2026",
   "reportingPeriod": {
     "latestFullMonth": "октябрь 2026",
     "previousFullMonth": "сентябрь 2026",
-    "hasPartialNewerMonth": false,
-    "latestObservedDate": "31.10.2026"
+    "hasPartialNewerMonth": true,
+    "latestObservedDate": "05.11.2026"
   },
   "overallStatus": "WARNING",
   "summary": {
     "checks": 16,
-    "PASS": 15,
-    "WARNING": 1,
+    "PASS": 14,
+    "WARNING": 2,
     "FAIL": 0,
     "blocking": 0,
-    "aiReviewItems": 0
+    "aiReviewItems": 6
   },
   "acknowledgedBaseline": {
     "unresolvedOrganizations": 127,
@@ -107,9 +107,9 @@
       "status": "PASS",
       "blocking": false,
       "requiresAiReview": false,
-      "message": "1011 ratio rows reconcile to numerator/denominator components",
+      "message": "989 ratio rows reconcile to numerator/denominator components",
       "details": {
-        "inspectedRows": 1011,
+        "inspectedRows": 989,
         "tolerancePercentagePoints": 0.015
       },
       "issues": []
@@ -121,9 +121,9 @@
       "status": "PASS",
       "blocking": false,
       "requiresAiReview": false,
-      "message": "2017 trend rows reconcile to fact minus previous",
+      "message": "1956 trend rows reconcile to fact minus previous",
       "details": {
-        "inspectedRows": 2017
+        "inspectedRows": 1956
       },
       "issues": []
     },
@@ -152,8 +152,8 @@
         "activeRatingIndicators": 16,
         "latestFullMonth": "октябрь 2026",
         "previousFullMonth": "сентябрь 2026",
-        "latestObservedDate": "31.10.2026",
-        "hasPartialNewerMonth": false
+        "latestObservedDate": "05.11.2026",
+        "hasPartialNewerMonth": true
       },
       "issues": [
         {
@@ -250,16 +250,180 @@
       "id": "data.percentage_anomalies",
       "category": "anomaly",
       "title": "Новые аномальные процентные значения",
-      "status": "PASS",
+      "status": "WARNING",
       "blocking": false,
-      "requiresAiReview": false,
-      "message": "No new percentage anomalies beyond 40 acknowledged baseline cases",
+      "requiresAiReview": true,
+      "message": "6 issue(s) detected",
       "details": {
-        "currentAnomalyRows": 40,
+        "currentAnomalyRows": 45,
         "acknowledgedBaselineCases": 40
       },
-      "issues": []
+      "issues": [
+        {
+          "kind": "percentage_above_100",
+          "scope": "mo-data",
+          "metric": "semd228",
+          "organizationOid": "1.2.643.5.1.13.13.12.2.16.1084",
+          "organizationName": "АЗНАКАЕВСКАЯ ЦРБ",
+          "field": "fact",
+          "value": 100.34140285536934,
+          "fingerprint": "percentage_above_100|mo-data|semd228|1.2.643.5.1.13.13.12.2.16.1084|АЗНАКАЕВСКАЯ ЦРБ|fact",
+          "acknowledged": false,
+          "status": "WARNING",
+          "requiresAiReview": true,
+          "reviewReason": "anomaly"
+        },
+        {
+          "kind": "percentage_above_100",
+          "scope": "mo-data",
+          "metric": "semd228",
+          "organizationOid": "1.2.643.5.1.13.13.12.2.16.1042",
+          "organizationName": "БУГУЛЬМИНСКАЯ ЦРБ",
+          "field": "fact",
+          "value": 100.02205558006176,
+          "fingerprint": "percentage_above_100|mo-data|semd228|1.2.643.5.1.13.13.12.2.16.1042|БУГУЛЬМИНСКАЯ ЦРБ|fact",
+          "acknowledged": false,
+          "status": "WARNING",
+          "requiresAiReview": true,
+          "reviewReason": "anomaly"
+        },
+        {
+          "kind": "percentage_above_100",
+          "scope": "mo-data",
+          "metric": "semd228",
+          "organizationOid": "1.2.643.5.1.13.13.12.2.16.1192",
+          "organizationName": "НЦРМБ г.Нижнекамск",
+          "field": "previous",
+          "value": 101.13743755906575,
+          "fingerprint": "percentage_above_100|mo-data|semd228|1.2.643.5.1.13.13.12.2.16.1192|НЦРМБ г.Нижнекамск|previous",
+          "acknowledged": false,
+          "status": "WARNING",
+          "requiresAiReview": true,
+          "reviewReason": "anomaly"
+        },
+        {
+          "kind": "percentage_above_100",
+          "scope": "mo-data",
+          "metric": "semd228",
+          "organizationOid": "1.2.643.5.1.13.13.12.2.16.1133",
+          "organizationName": "РЫБНО-СЛОБОДСКАЯ ЦРБ",
+          "field": "previous",
+          "value": 101.64784864205065,
+          "fingerprint": "percentage_above_100|mo-data|semd228|1.2.643.5.1.13.13.12.2.16.1133|РЫБНО-СЛОБОДСКАЯ ЦРБ|previous",
+          "acknowledged": false,
+          "status": "WARNING",
+          "requiresAiReview": true,
+          "reviewReason": "anomaly"
+        },
+        {
+          "kind": "percentage_above_100",
+          "scope": "mo-data",
+          "metric": "semd228",
+          "organizationOid": "1.2.643.5.1.13.13.12.2.16.1126",
+          "organizationName": "САБИНСКАЯ ЦРБ",
+          "field": "fact",
+          "value": 100.23955681988322,
+          "fingerprint": "percentage_above_100|mo-data|semd228|1.2.643.5.1.13.13.12.2.16.1126|САБИНСКАЯ ЦРБ|fact",
+          "acknowledged": false,
+          "status": "WARNING",
+          "requiresAiReview": true,
+          "reviewReason": "anomaly"
+        },
+        {
+          "kind": "percentage_above_100",
+          "scope": "mo-data",
+          "metric": "hospital",
+          "organizationOid": "1.2.643.5.1.13.13.12.2.16.1042",
+          "organizationName": "БУГУЛЬМИНСКАЯ ЦРБ",
+          "field": "previous",
+          "value": 101.69915297479335,
+          "fingerprint": "percentage_above_100|mo-data|hospital|1.2.643.5.1.13.13.12.2.16.1042|БУГУЛЬМИНСКАЯ ЦРБ|previous",
+          "acknowledged": false,
+          "status": "WARNING",
+          "requiresAiReview": true,
+          "reviewReason": "anomaly"
+        }
+      ]
     }
   ],
-  "aiReviewItems": []
+  "aiReviewItems": [
+    {
+      "checkId": "data.percentage_anomalies",
+      "category": "anomaly",
+      "status": "WARNING",
+      "reviewReason": "anomaly",
+      "fingerprint": "percentage_above_100|mo-data|semd228|1.2.643.5.1.13.13.12.2.16.1084|АЗНАКАЕВСКАЯ ЦРБ|fact",
+      "metric": "semd228",
+      "organizationOid": "1.2.643.5.1.13.13.12.2.16.1084",
+      "organizationName": "АЗНАКАЕВСКАЯ ЦРБ",
+      "field": "fact",
+      "expected": null,
+      "actual": 100.34140285536934
+    },
+    {
+      "checkId": "data.percentage_anomalies",
+      "category": "anomaly",
+      "status": "WARNING",
+      "reviewReason": "anomaly",
+      "fingerprint": "percentage_above_100|mo-data|semd228|1.2.643.5.1.13.13.12.2.16.1042|БУГУЛЬМИНСКАЯ ЦРБ|fact",
+      "metric": "semd228",
+      "organizationOid": "1.2.643.5.1.13.13.12.2.16.1042",
+      "organizationName": "БУГУЛЬМИНСКАЯ ЦРБ",
+      "field": "fact",
+      "expected": null,
+      "actual": 100.02205558006176
+    },
+    {
+      "checkId": "data.percentage_anomalies",
+      "category": "anomaly",
+      "status": "WARNING",
+      "reviewReason": "anomaly",
+      "fingerprint": "percentage_above_100|mo-data|semd228|1.2.643.5.1.13.13.12.2.16.1192|НЦРМБ г.Нижнекамск|previous",
+      "metric": "semd228",
+      "organizationOid": "1.2.643.5.1.13.13.12.2.16.1192",
+      "organizationName": "НЦРМБ г.Нижнекамск",
+      "field": "previous",
+      "expected": null,
+      "actual": 101.13743755906575
+    },
+    {
+      "checkId": "data.percentage_anomalies",
+      "category": "anomaly",
+      "status": "WARNING",
+      "reviewReason": "anomaly",
+      "fingerprint": "percentage_above_100|mo-data|semd228|1.2.643.5.1.13.13.12.2.16.1133|РЫБНО-СЛОБОДСКАЯ ЦРБ|previous",
+      "metric": "semd228",
+      "organizationOid": "1.2.643.5.1.13.13.12.2.16.1133",
+      "organizationName": "РЫБНО-СЛОБОДСКАЯ ЦРБ",
+      "field": "previous",
+      "expected": null,
+      "actual": 101.64784864205065
+    },
+    {
+      "checkId": "data.percentage_anomalies",
+      "category": "anomaly",
+      "status": "WARNING",
+      "reviewReason": "anomaly",
+      "fingerprint": "percentage_above_100|mo-data|semd228|1.2.643.5.1.13.13.12.2.16.1126|САБИНСКАЯ ЦРБ|fact",
+      "metric": "semd228",
+      "organizationOid": "1.2.643.5.1.13.13.12.2.16.1126",
+      "organizationName": "САБИНСКАЯ ЦРБ",
+      "field": "fact",
+      "expected": null,
+      "actual": 100.23955681988322
+    },
+    {
+      "checkId": "data.percentage_anomalies",
+      "category": "anomaly",
+      "status": "WARNING",
+      "reviewReason": "anomaly",
+      "fingerprint": "percentage_above_100|mo-data|hospital|1.2.643.5.1.13.13.12.2.16.1042|БУГУЛЬМИНСКАЯ ЦРБ|previous",
+      "metric": "hospital",
+      "organizationOid": "1.2.643.5.1.13.13.12.2.16.1042",
+      "organizationName": "БУГУЛЬМИНСКАЯ ЦРБ",
+      "field": "previous",
+      "expected": null,
+      "actual": 101.69915297479335
+    }
+  ]
 }

@@ -32,14 +32,14 @@ test("current comparable cuts carry dynamics without synthetic zeros", () => {
   assert.ok(operational.shortInput.rows.some(row => row.trend < 0));
 });
 
-test("hospital slice uses REMD numerator and hospital-case denominator with only comparable dynamics", () => {
+test("hospital slice uses GIS E+F numerator and D denominator with only comparable dynamics", () => {
   assert.equal(typeof mo.hospital.comparisonReset, "boolean");
   for (const row of mo.hospital.rows) {
-    if (row.previous === null || row.previous === undefined) assert.equal(row.trend, null);
+    if (row.fact === null || row.previous === null || row.previous === undefined) assert.equal(row.trend, null);
     else assert.ok(Math.abs(row.fact - row.previous - row.trend) < 1e-9, row.name);
   }
-  assert.match(mo.hospital.note, /числитель.*РЭМД ЕГИСЗ/i);
-  assert.match(mo.hospital.note, /знаменатель.*госпитализац/i);
+  assert.match(mo.hospital.note, /числитель.*E\+F/i);
+  assert.match(mo.hospital.note, /знаменатель.*D.*ГИС/i);
 });
 
 test("current source totals reconcile for the refreshed indicators", () => {

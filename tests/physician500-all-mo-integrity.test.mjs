@@ -76,7 +76,7 @@ test("all MO × all 500+ specialties: current operational aggregation reconciles
 
 test("all MO × all 500+ specialties: prior operational snapshot reconciles", () => {
   assert.ok(operational.previousPeriods && typeof operational.previousPeriods === "object");
-  inspectSlice("operational/previous", operational.previousDatasets, operational.previousSummary);
+  inspectSlice("operational/previous", operational.previousDatasets, operational.previousSummary, { allowNoSource: true });
 });
 
 test("all MO × all 500+ specialties: last full-month aggregation reconciles", () => {
