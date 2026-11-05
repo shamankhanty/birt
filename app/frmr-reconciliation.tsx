@@ -134,9 +134,6 @@ export default function FrmrReconciliation() {
     .sort((a,b)=>b[1]-a[1] || a[0].localeCompare(b[0],"ru"));
   const roleDepartments = allSelectedGroups.filter((row) => row.role === activeRole)
     .sort((a,b) => b.count-a.count || a.name.localeCompare(b.name,"ru"));
-  const selectedRoleIndices = new Set(roleDepartments.map(row => row.roleIndex));
-  const moRoleRecords = staffRecords.filter(rec => selected && departmentRaw.mos[rec[0]] === selected.id && selectedRoleIndices.has(rec[1]));
-  const visibleMoRecords = moRoleRecords.filter(rec => !last4Query.trim() || (rec[3] !== null && rec[3].includes(last4Query.replace(/\D/g,""))));
   const selectedDepartment = roleDepartments.find((row)=>row.oid===activeDepartment) ?? null;
   const detailRecords = selectedDepartment
     ? staffRecords.filter(([mo,role,sp,,issue]) =>
@@ -328,7 +325,7 @@ export default function FrmrReconciliation() {
                   </div>
                 )}
               </div>
-              <p className={styles.moPickerSteps}>{isAll && controlLevel === "mo" ? "МО → должность → записи для проверки" : "МО → должность → подразделение → записи для проверки"}</p>
+              <p className={styles.moPickerSteps}>МО → должность → СП → проблемы и записи для проверки</p>
               </>}
             </div>
             {selected && <div className={[styles.miniStats, isAll ? styles.moStats : ""].join(" ")}>
@@ -343,7 +340,7 @@ export default function FrmrReconciliation() {
             <div className={styles.panelHead}>
               <div>
                 <h2>Где искать расхождения — маршрут для МО</h2>
-                <p className={styles.muted}>{isAll && controlLevel === "mo" ? "Выберите должность. Все её записи в выбранной МО появятся сразу; подразделение можно раскрыть справочно." : "Выберите должность и конкретное структурное подразделение. Ниже появятся записи с четырьмя последними цифрами СНИЛС, OID СП и способом исправления."}</p>
+                <p className={styles.muted}>Выберите должность, затем структурное подразделение. Ниже появятся проблемы, конкретные записи и рекомендации по исправлению только для выбранного СП.</p>
               </div>
               <span className={styles.pill}>Срез · {raw.sourceCut}</span>
             </div>
@@ -368,25 +365,6 @@ export default function FrmrReconciliation() {
                 <p className={styles.muted}>Всего расхождений по всем должностям МО: <b>{number(allSelectedGroups.reduce((sum,r)=>sum+r.count,0))}</b>. Одна запись — не обязательно отдельный врач.</p>
               </div>
               <div className={styles.diagnosticGuide}>
-                {isAll && controlLevel === "mo" ? <>
-                  <h3>2. Записи на уровне МО</h3>
-                  {activeRole ? <section data-testid="frmr-mo-records">
-                    <p className={styles.muted}>Должность «{activeRole}»: {number(moRoleRecords.length)} записей. Для всех строк ниже должность не найдена на уровне МО. Проверьте актуальность записи сотрудника в ФРМР и ГИС; дубли автоматически не создавайте.</p>
-                    <input className={styles.input} type="search" value={last4Query} onChange={e=>setLast4Query(e.target.value)} placeholder="Найти по последним 4 цифрам…" aria-label="Поиск по последним четырем цифрам СНИЛС" inputMode="numeric" maxLength={4}/>
-                    <div className={styles.frmrRecordTableWrap}><table className={styles.table}>
-                      <thead><tr><th>Строка</th><th>СНИЛС · 4 цифры</th><th>Структурное подразделение и OID</th></tr></thead>
-                      <tbody>{visibleMoRecords.map(rec=><tr key={rec[5]}>
-                        <td>№ {rec[5]}</td><td className={styles.frmrLastFour}>{rec[3]===null ? "Нет СНИЛС" : "•••-•••-•"+rec[3]}</td>
-                        <td><div className={styles.frmrCheckCell}>
-                          <strong>{departmentRaw.sp[rec[2]][2]}</strong>
-                          <code>{officialPrefix}{selected.id}.0.{departmentRaw.sp[rec[2]][1]}</code>
-                          {Boolean(rec[6]) && <small>{Object.entries(allRaw.records.qualityBits).filter(([bit])=>(rec[6]??0)&Number(bit)).map(([,label])=>label).join("; ")}</small>}
-                        </div></td>
-                      </tr>)}</tbody>
-                    </table></div>
-                    {!visibleMoRecords.length && <p className={styles.muted}>Записей по выбранному запросу нет.</p>}
-                  </section> : <p className={styles.muted}>Выберите должность слева. Записи появятся без дополнительного выбора СП.</p>}
-                </> : <>
                 <h3>2. Структурное подразделение</h3>
                 {activeRole ? (
                   <>
@@ -401,10 +379,9 @@ export default function FrmrReconciliation() {
                     </div>
                   </>
                 ) : <p className={styles.muted}>Выберите должность слева. Здесь появятся все её подразделения, включая единичные расхождения.</p>}
-                </>}
               </div>
             </div>
-            {(!isAll || controlLevel === "department") && <div className={styles.frmrDepartmentDetails}>
+            <div className={styles.frmrDepartmentDetails}>
               <h3>3. Причина и как исправить</h3>
               {selectedDepartment ? (
                 <>
@@ -464,7 +441,7 @@ export default function FrmrReconciliation() {
                   </section>
                 </>
               ) : <p className={styles.muted}>Выберите должность и подразделение выше. Будут показаны только подтверждённые для этого СП категории ошибок.</p>}
-            </div>}
+            </div>
           </section>
           <div className={styles.grid}>
             <section className={styles.panel}>
