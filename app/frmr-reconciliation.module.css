@@ -145,10 +145,12 @@
 .frmrRecordTableWrap{margin:12px 0 4px;border:1px solid #dce9df;border-radius:11px;max-height:465px;overflow:auto;overscroll-behavior:contain}
 .frmrRecordTableWrap .table{min-width:0;width:100%;font-size:12px;table-layout:fixed}
 .frmrRecordTableWrap .table th,.frmrRecordTableWrap .table td{text-align:left;white-space:normal;line-height:1.45}
-.frmrRecordTableWrap .table th:first-child,.frmrRecordTableWrap .table td:first-child{width:18%;min-width:0}
-.frmrRecordTableWrap .table th:nth-child(2),.frmrRecordTableWrap .table td:nth-child(2){width:24%}
-.frmrRecordTableWrap .table th:nth-child(3),.frmrRecordTableWrap .table td:nth-child(3){width:58%}
+.frmrRecordTableWrap .table th:first-child,.frmrRecordTableWrap .table td:first-child{width:17%;min-width:0}
+.frmrRecordTableWrap .table th:nth-child(2),.frmrRecordTableWrap .table td:nth-child(2){width:20%}
+.frmrRecordTableWrap .table th:nth-child(3),.frmrRecordTableWrap .table td:nth-child(3){width:35%}
+.frmrRecordTableWrap .table th:nth-child(4),.frmrRecordTableWrap .table td:nth-child(4){width:28%}
 .frmrLastFour{font:750 13px ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;white-space:nowrap!important;color:#205d46}
+.frmrRecordOid{font-size:11px;overflow-wrap:anywhere;word-break:break-word;color:#527264}
 .frmrCheckCell{display:grid;gap:6px;min-width:260px}.frmrCheckStatus{justify-self:start;padding:4px 8px;border-radius:999px;background:#fff3df;color:#8a5b12;font-size:11px;font-weight:750}.frmrCheckCell>small{color:#6b7f76;font-size:11px;line-height:1.4}.frmrCheckCell details{font-size:11px;color:#61786d}.frmrCheckCell summary{cursor:pointer;color:#287057;font-weight:650}.frmrCheckCell details>span,.frmrCheckCell details>small{display:block;margin-top:5px;overflow-wrap:anywhere;line-height:1.4}.frmrCheckCell details>small{color:#718179}
 @media(max-width:650px){.frmrEmployeeHeader>strong{font-size:11px}.frmrRecordTableWrap{max-height:55vh}.frmrRecordTableWrap .table th,.frmrRecordTableWrap .table td{padding:8px 7px}.frmrRecordTableWrap .table th:first-child,.frmrRecordTableWrap .table td:first-child{width:22%}.frmrRecordTableWrap .table th:nth-child(2),.frmrRecordTableWrap .table td:nth-child(2){width:31%}.frmrRecordTableWrap .table th:nth-child(3),.frmrRecordTableWrap .table td:nth-child(3){width:47%}}
 

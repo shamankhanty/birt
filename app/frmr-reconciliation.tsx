@@ -425,15 +425,12 @@ export default function FrmrReconciliation() {
                       inputMode="numeric" maxLength={4}/>
                     <div className={styles.frmrRecordTableWrap}>
                       <table className={styles.table}>
-                        <thead><tr><th>Строка в выгрузке</th><th>СНИЛС</th><th>Причина расхождения</th><th>Что проверить</th></tr></thead>
+                        <thead><tr><th>Строка в выгрузке</th><th>СНИЛС</th><th>Должность</th><th>OID СП</th></tr></thead>
                         <tbody>{visibleRecords.map((rec,i)=><tr key={rec[5]+"-"+i}>
                           <td>№ {rec[5]}</td>
                           <td className={styles.frmrLastFour}>{rec[3]===null ? "Нет СНИЛС" : "•••-•••-•"+rec[3]}</td>
-                          <td>{last4Raw.issues[rec[4]]}</td>
-                          <td>{isAll && Boolean(rec[6]) && <small className={styles.cellNote}>{Object.entries(allRaw.records.qualityBits).filter(([bit]) => (rec[6] ?? 0) & Number(bit)).map(([, label]) => label).join("; ")}</small>}
-                          {rec[4]===0
-                            ? "Сверить сотрудника и должность на уровне МО в ФРМР и ГИС; установить, какая запись неактуальна."
-                            : "Сверить OID СП и филиала в ФРМР и ГИС; при спорном сопоставлении обратиться в РМИАЦ."}</td>
+                          <td>{departmentRaw.roles[rec[1]]}</td>
+                          <td><code className={styles.frmrRecordOid}>{selectedDepartment?.oid ?? "Не указан"}</code></td>
                         </tr>)}</tbody>
                       </table>
                       {visibleRecords.length===0 && <p className={styles.muted}>Записей с такими последними цифрами в выбранном подразделении нет.</p>}
@@ -444,15 +441,6 @@ export default function FrmrReconciliation() {
             </div>
           </section>
           <div className={styles.grid}>
-            <section className={styles.panel}>
-              <h2>{isAll ? "Срез выбранной МО" : "Динамика выбранной МО"}</h2>
-              {trendBars(isAll ? [...(selected.previous === null ? [] : [[comparison.cut.slice(0,5),selected.previous] as [string,number]]), [cutShort,selected.current]] : [["01.02",selected.feb??0],["16.10",selected.previous??0],["22.10",selected.current]])}
-              <p className={styles.muted}>{isAll ? `Сравнение ${comparison.cut} → ${raw.sourceCut}: ${signed(change(selected))} записей. Те же исключения, уровень и тип СП. Отсутствие предыдущего среза обозначается «—».` : "Даты — контрольные точки из исходного файла. Сравнение не означает автоматически улучшение доступности записи."}</p>
-              <h2 style={{marginTop:24}}>Распределение по должностям</h2>
-              <p className={styles.muted}>{isAll ? "Показаны все должности с расхождениями, включая единичные группы." : "Архив: показаны группы с тремя и более записями."}</p>
-              {selected.specialties.length ? selected.specialties.map(([name,count])=><div className={styles.spec} key={name}><span>{name.replace(/^- /,"")}</span><strong>{count}</strong></div>) : <p className={styles.muted}>{isAll ? "Должностей с расхождениями в представленном списке нет." : "Групп из трёх и более однотипных расхождений не выявлено."}</p>}
-              {selected.current > selected.specialties.reduce((sum,[,n])=>sum+n,0) && <p className={styles.muted}>Остальные записи: {selected.current-selected.specialties.reduce((sum,[,n])=>sum+n,0)} — без раскрытия малочисленных категорий.</p>}
-            </section>
             <section className={styles.panel}>
               <h2>{isAll && controlLevel === "department" ? "Справочная проверка СП" : "Что нужно сделать МО"}</h2>
               {(!isAll || controlLevel === "mo") && <div className={styles.action}><b className={styles.actionNum}>1</b><div><b>Проверить отсутствующие должности ({number(selected.stage1)})</b><span>Сверить кадровый приказ и фактическое трудоустройство, OID МО и запись в ГИС. Не создавать дубли автоматически.</span></div></div>}
