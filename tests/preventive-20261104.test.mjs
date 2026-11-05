@@ -8,15 +8,15 @@ const audit = read('app/preventive-semd-audit.json');
 const dataset = read('app/mo-data.json').semd228;
 const runtime = createMoRegistryRuntime(read('app/mo-registry.json'));
 
-test('31 October preventive cut reconciles all 95 matched source rows and previous cut', () => {
-  assert.equal(dataset.date,'31.10.2026');
-  assert.equal(dataset.previousDate,'28.10.2026');
-  assert.equal(dataset.previousNumerator,2163037);
-  assert.equal(dataset.previousDenominator,2393314);
+test('04 November preventive cut reconciles 95 matched source rows and October comparison', () => {
+  assert.equal(dataset.date,'04.11.2026');
+  assert.equal(dataset.previousDate,'31.10.2026');
+  assert.equal(dataset.previousNumerator,2201997);
+  assert.equal(dataset.previousDenominator,2419529);
   assert.equal(audit.rows.length,95);
-  assert.equal(dataset.numerator,2201997);
-  assert.equal(dataset.denominator,2419529);
-  assert.equal(dataset.fact,2201997/2419529*100);
+  assert.equal(dataset.numerator,2234491);
+  assert.equal(dataset.denominator,2439787);
+  assert.equal(dataset.fact,2234491/2439787*100);
   assert.equal(audit.rows.reduce((s,r)=>s+Math.max(r.semd122,r.semd228),0),dataset.numerator);
   assert.equal(audit.rows.reduce((s,r)=>s+r.foms,0),dataset.denominator);
 });
@@ -26,10 +26,10 @@ test('Spassk receives preventive fact under preserved RKB legal OID; certificate
   const detail = audit.rows.find(r=>r.oid===row.oid);
   assert.equal(row.name,'Спасская ЦРБ');
   assert.equal(row.reportingEntityId,'context:spassk-crb');
-  assert.equal(row.fact,7309/8369*100);
-  assert.equal(detail.semd228,6076);
-  assert.equal(detail.semd122,7309);
-  assert.equal(detail.foms,8369);
+  assert.equal(row.fact,7342/8442*100);
+  assert.equal(detail.semd228,6106);
+  assert.equal(detail.semd122,7342);
+  assert.equal(detail.foms,8442);
   assert.equal(runtime.organizationForMetric('semd228',row).oid,'context:spassk-crb');
   assert.equal(runtime.organizationForMetric('death',{name:'РКБ',oid:row.oid}).oid,row.oid);
   assert.equal(runtime.organizationForMetric('birth',{name:'РКБ',oid:row.oid}).oid,row.oid);

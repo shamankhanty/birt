@@ -53,6 +53,10 @@ def inspect_workbook(path):
             family = 'ambulatory_cases'
         elif 'путев' in text and ('транспорт' in text or 'использован' in text):
             family = 'electronic_waybill'
+        if family == 'ambulatory_cases' and sheets[0] == 'Свод':
+            # This export intentionally combines a cumulative summary with
+            # monthly sheets. Only the summary defines the cumulative cut.
+            rows = [list(r) for r in book['Свод'].iter_rows(max_row=6, max_col=18, values_only=True)]
         periods = []
         for row in rows:
             label = ' '.join(str(v) for v in row if v is not None).lower()

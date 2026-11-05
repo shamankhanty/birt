@@ -953,13 +953,6 @@
         "entity": "spassk"
       },
       {
-        "sourceReport": "gis-hospital-cases",
-        "metrics": [
-          "hospital"
-        ],
-        "entity": "spassk"
-      },
-      {
         "sourceReport": "gis-ambulatory-cases",
         "metrics": [
           "ambulatoryCase"

@@ -1,0 +1,846 @@
+{
+  "date": "2026-11-05",
+  "sourceArchive": "Исходники(3).rar",
+  "sourceArchiveSha256": "6b7361190d445c6e17d80269011846885d3c3a4c2bf8892ed809d30fdede97fa",
+  "sourceFiles": [
+    {
+      "name": "1.Отчет СЭМД_РЭМД 01.01.-04.11.(Выгрузка из BI 05.11.).xlsx",
+      "family": "elmk",
+      "startDate": "2026-01-01",
+      "endDate": "2026-11-04",
+      "status": "PASS",
+      "reason": null,
+      "sha256": "16bce6a6682fbfb49c1f72ea03778965a565a4788549180bfb627a6167db932c"
+    },
+    {
+      "name": "I_Свид-ва о смерти по РТ (РМИАЦ) 01.01.-04.11.(Выгрузука из ГИС 05.11.).xlsx",
+      "family": "death_certificates",
+      "startDate": "2026-01-01",
+      "endDate": "2026-11-04",
+      "status": "PASS",
+      "reason": null,
+      "sha256": "a108a587ada19109355ca89cf62812a794e2caeee31e5df88c3b9d6d857b49c2"
+    },
+    {
+      "name": "Доля_ТВСП,_обеспечивающих_передачу_СЭМД_«Протокол_диагностических_01.01.-04.11.(Выгрузка из BI 05.11.).xlsx",
+      "family": "tvsp_diagnostic",
+      "startDate": "2026-01-01",
+      "endDate": "2026-11-04",
+      "status": "PASS",
+      "reason": null,
+      "sha256": "55b1b4eb623e107424e26a943062b2bccd4a0a4ae29ee77ed19bc1d8d1792b80"
+    },
+    {
+      "name": "Закрытые случаи ДОГВН ПМО и зарегистрированные СЭМД 122 и 228_01.01.-04.11.(Выгрузка из ГИС 05.11.).xlsx",
+      "family": "preventive_remd",
+      "startDate": "2026-01-01",
+      "endDate": "2026-11-04",
+      "status": "PASS",
+      "reason": null,
+      "sha256": "2b2abc7da556ded130e4e6d815bdb0870de20c007ae396e89ca9148dc709e524"
+    },
+    {
+      "name": "Количество_СЭМД_Результаты_профилактического_медицинского_осмотрадиспансеризации_01.01.-04.11.(Выгрузка из ГИС 05.11.).xlsx",
+      "family": "preventive_foms",
+      "startDate": "2026-01-01",
+      "endDate": "2026-11-04",
+      "status": "PASS",
+      "reason": null,
+      "sha256": "5592e426abe342e55633834007ad81321f1924f206caeac5e9d1877a890391e9"
+    },
+    {
+      "name": "Отправка сведений в федеральные сервисы 01.01.-04.11. (Выгрузка из АСУ ССМП 05.11.).xlsx",
+      "family": "asu_smp",
+      "startDate": "2026-01-01",
+      "endDate": "2026-11-04",
+      "status": "PASS",
+      "reason": null,
+      "sha256": "20dffe0f65f70fa0fd48890741264ec579fcfcbf132f00387bdf2870760b976c"
+    },
+    {
+      "name": "Отчет по госпитализациям_v2 - 01.01.-04.11.(Выгрузка из ГИС 05.11.).xlsx",
+      "family": "hospital_cases",
+      "startDate": "2026-01-01",
+      "endDate": "2026-11-04",
+      "status": "PASS",
+      "reason": null,
+      "sha256": "818547f7ca969e2801952e13f1c79d05f4c4cbb14c3ba67ba79475b9526e58a7"
+    },
+    {
+      "name": "Отчет_Доля_ТВСП_СЭМД_Протокол лабораторного исследования_Январь-Ноябрь(Выгрузка из BI 05.11.).xlsx",
+      "family": "tvsp_laboratory",
+      "startDate": "2026-01-01",
+      "endDate": "2026-11-05",
+      "status": "PASS",
+      "reason": null,
+      "sha256": "0c81c6b8eb087dc5392aa3403243f2b5686dfb87685c719b2d7a70d3630e53e5"
+    },
+    {
+      "name": "Отчет_Доля_ТВСП_СЭМД_Эпикриз по законч случаю амбулат_Талон амбулат пациента и Протокол консульт_Январь-Ноябрь(Выгрузка из BI 05.11.).xlsx",
+      "family": "tvsp_ambulatory",
+      "startDate": "2026-01-01",
+      "endDate": "2026-11-05",
+      "status": "PASS",
+      "reason": null,
+      "sha256": "76db30b806599a87b7ebc09241e596c02259a0ee6e3f43b311dae917a91d924d"
+    },
+    {
+      "name": "Отчет_Доля_ТВСП_СЭМД_Эпикриз_в_стац_выпис_или_Выписной_Январь-Ноябрь(Выгрузка из BI 05.11.).xlsx",
+      "family": "tvsp_stationary",
+      "startDate": "2026-01-01",
+      "endDate": "2026-11-05",
+      "status": "PASS",
+      "reason": null,
+      "sha256": "22642cb4f6e5fad3d24b7287f5952a662f637cc8e98e6b6561b4a52a15d0bf17"
+    },
+    {
+      "name": "Отчет_СМП_ТВСП_01.01.-04.11. (Выгрузка из BI 05.11.).xlsx",
+      "family": "smp_tvsp",
+      "startDate": "2026-01-01",
+      "endDate": "2026-11-04",
+      "status": "PASS",
+      "reason": null,
+      "sha256": "c67faded0a9e3b243199bba7b2c4cc5c1038d4d84bbe4659ad90d5fe32ef158f"
+    },
+    {
+      "name": "Отчет_ТМК_РЭМД_01.01.-04.11.(Выгрузка из BI 05.11.).xlsx",
+      "family": "tmk_remd",
+      "startDate": "2026-01-01",
+      "endDate": "2026-11-04",
+      "status": "PASS",
+      "reason": null,
+      "sha256": "6be724a2fa2e574c392870a14424f9a12c158a1505f5fd1b0b08aca7f6e33b37"
+    },
+    {
+      "name": "Отчет_по_ФАП_и_ФП_(кол-во_зарегистрированных_СЭМД)_01.01.-03.11.(Выгрузка стп ГИС 04.11.).xlsx",
+      "family": "fap_fp",
+      "startDate": "2026-01-01",
+      "endDate": "2026-11-03",
+      "status": "PASS",
+      "reason": null,
+      "sha256": "d4b7d750e38384c973d8fd0258e106aec5a85cbfe2e94d148461c532b50401e9"
+    },
+    {
+      "name": "Отчет_по_законченному_случаю_амбулаторный__01.01.-03.11.(Выгрузка стп ГИС 05.11.).xlsx",
+      "family": "ambulatory_cases",
+      "startDate": "2026-01-01",
+      "endDate": "2026-11-03",
+      "status": "PASS",
+      "reason": null,
+      "sha256": "97eae202c0c5bc18e12be7276d5c2106ecd9405135b877df5387d4292b173508"
+    },
+    {
+      "name": "Отчёт - Отказы по регистрации ЭМД в РЭМД 01.01.-04.11. (Выгрузка из BI 05.11.).xlsx",
+      "family": "remd_errors",
+      "startDate": "2026-01-01",
+      "endDate": "2026-11-04",
+      "status": "PASS",
+      "reason": null,
+      "sha256": "64737699305b69d3cd6275467eeb8352ae9c06f6e0bfbd8d2ec908b5d7fb8672"
+    },
+    {
+      "name": "Отчёт - Отказы по регистрации ЭМД в РЭМД 31.10.-05.11. (Выгрузка из BI 05.11.).xlsx",
+      "family": "remd_errors",
+      "startDate": "2026-10-31",
+      "endDate": "2026-11-05",
+      "status": "PASS",
+      "reason": null,
+      "sha256": "e5b02dfc402a2b62a9c8240ba13b1e324512278398c8f41a1a62e448f09baef2"
+    },
+    {
+      "name": "Отчёт_по_врачам_сформировавших_СЭМД__Ноябрь(Выгрузка из BI 05.11..xlsx",
+      "family": "physicians",
+      "startDate": "2026-11-01",
+      "endDate": "2026-11-04",
+      "status": "PASS",
+      "reason": null,
+      "sha256": "b9d7f9969edebee794ffcd87e28813188e27826105e505ded78f7d456e67f4f1"
+    },
+    {
+      "name": "ПР_2_Кол-во заявл на прикр. от ЕГПУ за период. ИП ООГУЗ. Обраб. 2 раб.дн. 01.01.-04.11.(Выгрузка из ГИС 05.11.).xlsx",
+      "family": "egpu_attachment",
+      "startDate": "2026-01-01",
+      "endDate": "2026-11-04",
+      "status": "PASS",
+      "reason": null,
+      "sha256": "ac09895059a87a2c8aae614108a9b0ca6570525ba9054a70e6d628b79c432d48"
+    },
+    {
+      "name": "Свидетельства_о_рождении_по_РТ_(РМИАЦ) 01.01.-04.11.(Выгрузка из ГИС 05.11.).xlsx",
+      "family": "birth_certificates",
+      "startDate": "2026-01-01",
+      "endDate": "2026-11-04",
+      "status": "PASS",
+      "reason": null,
+      "sha256": "e94951677bbf7edd5124bf2083a3d887e7877a52de2ba73ea89af737830ce299"
+    },
+    {
+      "name": "Случаи краткого ввода 01.01.-04.11.(Выгрузка из ГИС 05.11.).xlsx",
+      "family": "short_input",
+      "startDate": "2026-01-01",
+      "endDate": "2026-11-04",
+      "status": "PASS",
+      "reason": null,
+      "sha256": "5895a290de515f53aff3b9f3f90989d4e8afc02d505814d7628a5ceb890e718c"
+    },
+    {
+      "name": "ТМК_МАХ 01.01.-04.11.(Выгрузка из ГИС 05.11.).xlsx",
+      "family": "max_tmk_eln",
+      "startDate": "2026-01-01",
+      "endDate": "2026-11-04",
+      "status": "PASS",
+      "reason": null,
+      "sha256": "98a2159ad3979014f255b9ca145bc6ffe7181795b7d85788b5c9f856f71e23d0"
+    },
+    {
+      "name": "ТМК_МАХ 01.11.-05.11.(Выгрузка из ГИС 05.11.).xlsx",
+      "family": "max_tmk_eln",
+      "startDate": "2026-11-01",
+      "endDate": "2026-11-05",
+      "status": "PASS",
+      "reason": null,
+      "sha256": "04b51c0b6867d52e50aa9d2dd35bab6a30ed9ea691e23c096c663c6cf80f3142"
+    }
+  ],
+  "staging": {
+    "state": "PARTIAL",
+    "statistics": {
+      "expectedIndicators": 36,
+      "receivedIndicators": 35,
+      "preparedIndicators": 34,
+      "unchangedIndicators": 0,
+      "retainedInvalidIndicators": 1,
+      "missingSourceIndicators": 1
+    },
+    "formalValidation": {
+      "checks": 16,
+      "PASS": 14,
+      "WARNING": 2,
+      "FAIL": 0,
+      "blocking": 0,
+      "aiReviewItems": 6
+    },
+    "prepared": [
+      {
+        "metric": "egpu",
+        "period": {
+          "date": "04.11.2026",
+          "period": "01.01–04.11.2026"
+        },
+        "facts": {
+          "egpu": {
+            "rows": 84,
+            "numerator": 44682,
+            "denominator": 45223
+          }
+        },
+        "warnings": []
+      },
+      {
+        "metric": "egpu2days",
+        "period": {
+          "date": "04.11.2026",
+          "period": "01.01–04.11.2026"
+        },
+        "facts": {
+          "egpu2days": {
+            "rows": 84,
+            "numerator": 38403,
+            "denominator": 45223
+          }
+        },
+        "warnings": []
+      },
+      {
+        "metric": "hospital",
+        "period": {
+          "date": "04.11.2026",
+          "period": "01.01–04.11.2026"
+        },
+        "facts": {
+          "rows": 129,
+          "matched": 107,
+          "numerator": 747202,
+          "denominator": 805961,
+          "fact": 92.70944872022343
+        },
+        "warnings": []
+      },
+      {
+        "metric": "hospitalCount",
+        "period": {
+          "date": "04.11.2026",
+          "period": "01.01–04.11.2026"
+        },
+        "facts": {
+          "sourceRows": 107,
+          "organizations": 107,
+          "total": 805961
+        },
+        "warnings": []
+      },
+      {
+        "metric": "semd228",
+        "period": {
+          "date": "04.11.2026",
+          "period": "01.01–04.11.2026"
+        },
+        "facts": {
+          "organizations": 95,
+          "numerator": 2234491,
+          "denominator": 2439787,
+          "share": 91.58549496328983,
+          "excluded": 1
+        },
+        "warnings": [
+          "Есть строки ФОМС без РЭМД; сохранены в audit"
+        ]
+      },
+      {
+        "metric": "birth",
+        "period": {
+          "date": "04.11.2026",
+          "period": "01.01–04.11.2026"
+        },
+        "facts": {
+          "rows": 41,
+          "numerator": 27026,
+          "denominator": 27167,
+          "fact": 99.48098796333788
+        },
+        "warnings": []
+      },
+      {
+        "metric": "death",
+        "period": {
+          "date": "04.11.2026",
+          "period": "01.01–04.11.2026"
+        },
+        "facts": {
+          "rows": 89,
+          "numerator": 34150,
+          "denominator": 34741,
+          "fact": 98.29883998733486
+        },
+        "warnings": []
+      },
+      {
+        "metric": "tmkMaxCount",
+        "period": {
+          "date": "04.11.2026",
+          "period": "01.01–04.11.2026"
+        },
+        "facts": {
+          "tmkMaxCount": {
+            "rows": 98,
+            "total": 74774
+          }
+        },
+        "warnings": []
+      },
+      {
+        "metric": "elnMaxCount",
+        "period": {
+          "date": "04.11.2026",
+          "period": "01.01–04.11.2026"
+        },
+        "facts": {
+          "elnMaxCount": {
+            "rows": 98,
+            "total": 55899
+          }
+        },
+        "warnings": []
+      },
+      {
+        "metric": "doctorsAll",
+        "period": {
+          "date": "04.11.2026",
+          "period": "01.11.2026–04.11.2026",
+          "source": "Отчёт_по_врачам_сформировавших_СЭМД__Ноябрь(Выгрузка из BI 05.11..xlsx"
+        },
+        "facts": {
+          "doctorsAll": {
+            "numerator": 7694,
+            "denominator": 13712,
+            "fact": 56.11143523920653
+          }
+        },
+        "warnings": [
+          "Неполный текущий месяц сохранён только для оперативного контроля; рейтинг и последний полный месяц не изменены."
+        ]
+      },
+      {
+        "metric": "doctorsLevel3",
+        "period": {
+          "date": "04.11.2026",
+          "period": "01.11.2026–04.11.2026",
+          "source": "Отчёт_по_врачам_сформировавших_СЭМД__Ноябрь(Выгрузка из BI 05.11..xlsx"
+        },
+        "facts": {
+          "doctorsLevel3": {
+            "numerator": 2425,
+            "denominator": 4913,
+            "fact": 49.35884388357419
+          }
+        },
+        "warnings": [
+          "Неполный текущий месяц сохранён только для оперативного контроля; рейтинг и последний полный месяц не изменены."
+        ]
+      },
+      {
+        "metric": "doctor500_obgyn",
+        "period": {
+          "date": "04.11.2026",
+          "period": "01.11.2026–04.11.2026",
+          "source": "Отчёт_по_врачам_сформировавших_СЭМД__Ноябрь(Выгрузка из BI 05.11..xlsx"
+        },
+        "facts": {
+          "doctor500_obgyn": {
+            "numerator": 8,
+            "denominator": 422,
+            "fact": 1.8957345971563981
+          }
+        },
+        "warnings": [
+          "Неполный текущий месяц сохранён только для оперативного контроля; рейтинг и последний полный месяц не изменены."
+        ]
+      },
+      {
+        "metric": "doctor500_gp",
+        "period": {
+          "date": "04.11.2026",
+          "period": "01.11.2026–04.11.2026",
+          "source": "Отчёт_по_врачам_сформировавших_СЭМД__Ноябрь(Выгрузка из BI 05.11..xlsx"
+        },
+        "facts": {
+          "doctor500_gp": {
+            "numerator": 21,
+            "denominator": 301,
+            "fact": 6.976744186046512
+          }
+        },
+        "warnings": [
+          "Неполный текущий месяц сохранён только для оперативного контроля; рейтинг и последний полный месяц не изменены."
+        ]
+      },
+      {
+        "metric": "doctor500_cardiologist",
+        "period": {
+          "date": "04.11.2026",
+          "period": "01.11.2026–04.11.2026",
+          "source": "Отчёт_по_врачам_сформировавших_СЭМД__Ноябрь(Выгрузка из BI 05.11..xlsx"
+        },
+        "facts": {
+          "doctor500_cardiologist": {
+            "numerator": 5,
+            "denominator": 213,
+            "fact": 2.3474178403755865
+          }
+        },
+        "warnings": [
+          "Неполный текущий месяц сохранён только для оперативного контроля; рейтинг и последний полный месяц не изменены."
+        ]
+      },
+      {
+        "metric": "doctor500_oncologist",
+        "period": {
+          "date": "04.11.2026",
+          "period": "01.11.2026–04.11.2026",
+          "source": "Отчёт_по_врачам_сформировавших_СЭМД__Ноябрь(Выгрузка из BI 05.11..xlsx"
+        },
+        "facts": {
+          "doctor500_oncologist": {
+            "numerator": 2,
+            "denominator": 233,
+            "fact": 0.8583690987124464
+          }
+        },
+        "warnings": [
+          "Неполный текущий месяц сохранён только для оперативного контроля; рейтинг и последний полный месяц не изменены."
+        ]
+      },
+      {
+        "metric": "doctor500_ophthalmologist",
+        "period": {
+          "date": "04.11.2026",
+          "period": "01.11.2026–04.11.2026",
+          "source": "Отчёт_по_врачам_сформировавших_СЭМД__Ноябрь(Выгрузка из BI 05.11..xlsx"
+        },
+        "facts": {
+          "doctor500_ophthalmologist": {
+            "numerator": 1,
+            "denominator": 237,
+            "fact": 0.42194092827004215
+          }
+        },
+        "warnings": [
+          "Неполный текущий месяц сохранён только для оперативного контроля; рейтинг и последний полный месяц не изменены."
+        ]
+      },
+      {
+        "metric": "doctor500_pediatrician",
+        "period": {
+          "date": "04.11.2026",
+          "period": "01.11.2026–04.11.2026",
+          "source": "Отчёт_по_врачам_сформировавших_СЭМД__Ноябрь(Выгрузка из BI 05.11..xlsx"
+        },
+        "facts": {
+          "doctor500_pediatrician": {
+            "numerator": 39,
+            "denominator": 1360,
+            "fact": 2.8676470588235294
+          }
+        },
+        "warnings": [
+          "Неполный текущий месяц сохранён только для оперативного контроля; рейтинг и последний полный месяц не изменены."
+        ]
+      },
+      {
+        "metric": "doctor500_dentist",
+        "period": {
+          "date": "04.11.2026",
+          "period": "01.11.2026–04.11.2026",
+          "source": "Отчёт_по_врачам_сформировавших_СЭМД__Ноябрь(Выгрузка из BI 05.11..xlsx"
+        },
+        "facts": {
+          "doctor500_dentist": {
+            "numerator": 11,
+            "denominator": 582,
+            "fact": 1.8900343642611683
+          }
+        },
+        "warnings": [
+          "Неполный текущий месяц сохранён только для оперативного контроля; рейтинг и последний полный месяц не изменены."
+        ]
+      },
+      {
+        "metric": "doctor500_therapist",
+        "period": {
+          "date": "04.11.2026",
+          "period": "01.11.2026–04.11.2026",
+          "source": "Отчёт_по_врачам_сформировавших_СЭМД__Ноябрь(Выгрузка из BI 05.11..xlsx"
+        },
+        "facts": {
+          "doctor500_therapist": {
+            "numerator": 64,
+            "denominator": 1441,
+            "fact": 4.441360166551006
+          }
+        },
+        "warnings": [
+          "Неполный текущий месяц сохранён только для оперативного контроля; рейтинг и последний полный месяц не изменены."
+        ]
+      },
+      {
+        "metric": "doctor500_surgeon",
+        "period": {
+          "date": "04.11.2026",
+          "period": "01.11.2026–04.11.2026",
+          "source": "Отчёт_по_врачам_сформировавших_СЭМД__Ноябрь(Выгрузка из BI 05.11..xlsx"
+        },
+        "facts": {
+          "doctor500_surgeon": {
+            "numerator": 2,
+            "denominator": 280,
+            "fact": 0.7142857142857143
+          }
+        },
+        "warnings": [
+          "Неполный текущий месяц сохранён только для оперативного контроля; рейтинг и последний полный месяц не изменены."
+        ]
+      },
+      {
+        "metric": "remdErrors",
+        "period": {
+          "date": "05.11.2026",
+          "period": "31.10.2026–05.11.2026"
+        },
+        "facts": {
+          "errors": 114916,
+          "categories": 26,
+          "organizations": 169,
+          "attributedErrors": 114916,
+          "unassignedErrors": 0,
+          "coveragePercent": 100.0
+        },
+        "warnings": []
+      },
+      {
+        "metric": "remdErrorsCumulative",
+        "period": {
+          "date": "04.11.2026",
+          "period": "01.01.2026–04.11.2026"
+        },
+        "facts": {
+          "errors": 14523993,
+          "categories": 38,
+          "organizations": 338,
+          "attributedErrors": 14523993,
+          "unassignedErrors": 0,
+          "coveragePercent": 100.0
+        },
+        "warnings": []
+      },
+      {
+        "metric": "tvspAmbulatory",
+        "period": {
+          "date": "05.11.2026",
+          "period": "январь–ноябрь 2026"
+        },
+        "facts": {
+          "objects": 466,
+          "plan": 466,
+          "fact": 461,
+          "subunits": 894,
+          "registeredSubunits": 812
+        },
+        "warnings": []
+      },
+      {
+        "metric": "tvspStationary",
+        "period": {
+          "date": "05.11.2026",
+          "period": "январь–ноябрь 2026"
+        },
+        "facts": {
+          "objects": 275,
+          "plan": 275,
+          "fact": 275,
+          "subunits": 811,
+          "registeredSubunits": 713
+        },
+        "warnings": []
+      },
+      {
+        "metric": "tvspLaboratory",
+        "period": {
+          "date": "05.11.2026",
+          "period": "январь–ноябрь 2026"
+        },
+        "facts": {
+          "objects": 125,
+          "plan": 125,
+          "fact": 125,
+          "subunits": 141,
+          "registeredSubunits": 141
+        },
+        "warnings": []
+      },
+      {
+        "metric": "tvspDiagnostic",
+        "period": {
+          "date": "04.11.2026",
+          "period": "01.01–04.11.2026"
+        },
+        "facts": {
+          "objects": 309,
+          "fact": 307
+        },
+        "warnings": []
+      },
+      {
+        "metric": "smpFederal",
+        "period": {
+          "date": "04.11.2026",
+          "period": "01.01–04.11.2026"
+        },
+        "facts": {
+          "objects": 68,
+          "fact": 67
+        },
+        "warnings": []
+      },
+      {
+        "metric": "tmkRemd",
+        "period": {
+          "date": "04.11.2026",
+          "period": "01.01–04.11.2026"
+        },
+        "facts": {
+          "planOrganizations": 40,
+          "transmitting": 40
+        },
+        "warnings": []
+      },
+      {
+        "metric": "elmk",
+        "period": {
+          "date": "04.11.2026",
+          "period": "01.01–04.11.2026"
+        },
+        "facts": {
+          "planOrganizations": 73,
+          "transmitting": 73
+        },
+        "warnings": []
+      },
+      {
+        "metric": "shortInput",
+        "period": {
+          "date": "04.11.2026",
+          "period": "01.01–04.11.2026"
+        },
+        "facts": {
+          "shortInput": 843214
+        },
+        "warnings": []
+      },
+      {
+        "metric": "shortInputAmb",
+        "period": {
+          "date": "04.11.2026",
+          "period": "01.01–04.11.2026"
+        },
+        "facts": {
+          "shortInputAmb": 834182
+        },
+        "warnings": []
+      },
+      {
+        "metric": "shortInputHosp",
+        "period": {
+          "date": "04.11.2026",
+          "period": "01.01–04.11.2026"
+        },
+        "facts": {
+          "shortInputHosp": 9032
+        },
+        "warnings": []
+      },
+      {
+        "metric": "fapSemdCount",
+        "period": {
+          "date": "03.11.2026",
+          "period": "01.01–03.11.2026"
+        },
+        "facts": {
+          "organizations": 50,
+          "units": 1671,
+          "zeroUnits": 24,
+          "documents": 3777164
+        },
+        "warnings": []
+      },
+      {
+        "metric": "smp",
+        "period": {
+          "date": "04.11.2026",
+          "period": "01.01–04.11.2026"
+        },
+        "facts": {
+          "organizations": 43,
+          "volume": 803001,
+          "registered": 763777
+        },
+        "warnings": []
+      }
+    ],
+    "retained": [
+      {
+        "metric": "ambulatoryCase",
+        "reason": [
+          "Амбулаторный эпикриз: пустой числитель у 19 строк при 148907 случаях знаменателя; нулём не заменяется. OID: 1.2.643.5.1.13.13.12.4.16.1135, 1.2.643.5.1.13.13.12.2.16.30686, 1.2.643.5.1.13.13.12.2.16.12357, 1.2.643.5.1.13.13.12.2.16.62692, 1.2.643.5.1.13.13.12.2.16.10323"
+        ]
+      },
+      {
+        "metric": "electronicWaybill",
+        "reason": [
+          "Нет входного источника показателя"
+        ]
+      }
+    ]
+  },
+  "policy": "Ноябрьский неполный срез — оперативный; сентябрьский рейтинг и закрытые месячные снимки сохранены. Исходные аномалии >100% остаются предупреждениями и не приняты в историческую базу. Лист «Свод» определяет накопительный период, но пустой числитель 19 строк с 148 907 случаями знаменателя блокирует амбулаторный показатель.",
+  "beforeSha256": {
+    "app/error-categories.json": "7be83a4bf3e8d8501709d0fab85d3f1e23b70a563b136ad80230207ffce24879",
+    "app/error-cumulative.json": "960ccd9b67bc2dd5b1346972ef8c977ac0be48e8667bc259cba75af38872a505",
+    "app/error-organizations.json": "894c6633c80a5ea84b6c42d00a5b994103d7ce841dc87583c9b78a69d099c993",
+    "app/mo-data.json": "c6e166e5059db0ad3925fbc1291b91b86b35cefb1a194f96ee689d8aede4f5ca",
+    "app/mo-detail-oids.json": "160afd7bc3af4a7de76838fe1383a72cb3f3f4442c881e64c271a83a6d92a764",
+    "app/mo-details.json": "9f3ae5b988ba02782fdd3bafa351cf6377075b74761750698eb642025c2b8414",
+    "app/operational-mo.json": "fe507a191e57410efc95e139a2e6bce010c7bfdb1c298dd35ee6cf9b8e1b0378",
+    "app/organization-status.json": "cc4b9c14c1f603d55e567204ebac8789c68b579e729ac295d5089ae8a8406a09",
+    "app/physician-weekly-snapshot.json": "17df6ab49898f5d8537164dc03c1cc89f6a83c83a1ff1a9dd10b953eee0f78cd",
+    "app/physician500-audit.json": "33badec7e53d8019a1207078a681e0f0b511d54b3b8cc6c1506bdc008c6b13da",
+    "app/preventive-semd-audit.json": "a9dcad9f6cee0fdae798f8695ad881333f623f41faf96a02ed959ec85ef95070",
+    "app/unit-data.json": "c16e58512106a224c7ef9f3dcdb678346a7a8fb0c094b4106bfa87ef9891e1c4"
+  },
+  "afterSha256": {
+    "app/error-categories.json": "77368a030b1810bbb6cc2c524a808ea20d43d54f31852865d1bf20813e87cece",
+    "app/error-cumulative.json": "e6a741ed4bf0249c4b195926cc7579fc396cbd57db38e507bccaaa34aa58889c",
+    "app/error-organizations.json": "c5b2ff7ffc20bc3bdf36360bf57e6572cf86374d0b5f7a7a9f425636a31213f7",
+    "app/mo-data.json": "9b9824f68227d87e35aa3c5d72e415f12a276241f08206ccc2ce4f309b2b4393",
+    "app/mo-detail-oids.json": "fe3ed19cd143e176c6ebebb1adc3a3fec42d0e78c0b8f7143ab6797fe7fb44ff",
+    "app/mo-details.json": "96a06ce3ca74fad9035f8e5482bed89401418880a8d559b33f14a14c2c3afd0b",
+    "app/operational-mo.json": "4603279ab55dd94221c891c850921f469a7537a39caec0f4e7c81188f727f078",
+    "app/organization-status.json": "474545f28fe3e55e6237538f4e42b6490051d57fb939b8f52347c184de8722a1",
+    "app/physician-weekly-snapshot.json": "beb261015f8871f0fd918f79690239703e41ac718a889d67a3c396f54ddeac6a",
+    "app/physician500-audit.json": "586c3cb8a5da4ae2b198dec6246c95d0f3e6d96df06b5260ead6948de954b7b8",
+    "app/preventive-semd-audit.json": "f08cd574733308e41dde94c31c516823d19d43c84e7b2862b592b330c2592ff3",
+    "app/unit-data.json": "7a365a869c429fab8e271cfecd96f91eeca7b89abe0fc436663847954ba8ea46"
+  },
+  "unacceptedAnomalies": [
+    {
+      "metric": "semd228",
+      "organizationOid": "1.2.643.5.1.13.13.12.2.16.1084",
+      "organizationName": "АЗНАКАЕВСКАЯ ЦРБ",
+      "field": "fact",
+      "actual": 100.34140285536934
+    },
+    {
+      "metric": "semd228",
+      "organizationOid": "1.2.643.5.1.13.13.12.2.16.1042",
+      "organizationName": "БУГУЛЬМИНСКАЯ ЦРБ",
+      "field": "fact",
+      "actual": 100.02205558006176
+    },
+    {
+      "metric": "semd228",
+      "organizationOid": "1.2.643.5.1.13.13.12.2.16.1192",
+      "organizationName": "НЦРМБ г.Нижнекамск",
+      "field": "previous",
+      "actual": 101.13743755906575
+    },
+    {
+      "metric": "semd228",
+      "organizationOid": "1.2.643.5.1.13.13.12.2.16.1133",
+      "organizationName": "РЫБНО-СЛОБОДСКАЯ ЦРБ",
+      "field": "previous",
+      "actual": 101.64784864205065
+    },
+    {
+      "metric": "semd228",
+      "organizationOid": "1.2.643.5.1.13.13.12.2.16.1126",
+      "organizationName": "САБИНСКАЯ ЦРБ",
+      "field": "fact",
+      "actual": 100.23955681988322
+    },
+    {
+      "metric": "hospital",
+      "organizationOid": "1.2.643.5.1.13.13.12.2.16.1042",
+      "organizationName": "БУГУЛЬМИНСКАЯ ЦРБ",
+      "field": "previous",
+      "actual": 101.69915297479335
+    }
+  ],
+  "validation": {
+    "summary": {
+      "checks": 16,
+      "PASS": 14,
+      "WARNING": 2,
+      "FAIL": 0,
+      "blocking": 0,
+      "aiReviewItems": 6
+    },
+    "ratingsUnchanged": "app/rating/september-v2-inputs.json",
+    "monthlyUnchanged": "app/monthly-mo.json"
+  },
+  "followupValidation": {
+    "state": "PARTIAL",
+    "filesRecognized": 22,
+    "repeatStageChangedFiles": [],
+    "retainedInvalidIndicators": 1,
+    "missingSourceIndicators": 1
+  }
+}

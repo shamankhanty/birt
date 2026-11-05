@@ -87,6 +87,20 @@ test("approved report aliases require matching report and metric; certificates a
   }
 });
 
+test("hospital report has no branch attribution without a branch identifier", () => {
+  const source={name:'ГАУЗ "РКБ МЗ РТ"',oid:rootOid,sourceReport:'gis-hospital-cases'};
+  assert.equal(runtime.organizationForMetric('hospital',source)?.oid,rootOid);
+  assert.ok(!catalog.reportAliases.rules.some(rule=>rule.sourceReport==='gis-hospital-cases'));
+  assert.equal(runtime.organizationForMetric('semd228',{
+    ...source,sourceReport:'gis-preventive-encounters',
+  })?.oid,'context:spassk-crb');
+  const dataset=read('app/mo-data.json').hospital;
+  const row=dataset.rows.find(item=>item.oid===rootOid);
+  assert.equal(row.name,'ГАУЗ "РКБ МЗ РТ"');
+  assert.equal(row.count,2291);
+  assert.equal(read('app/mo-detail-oids.json').hospital[rootOid].volume,3644);
+});
+
 test("conflicting structural identifiers stop attribution and unrelated MO still resolves", () => {
   assert.equal(runtime.organizationForMetric('semd228', {
     name: 'РКБ', oid: rootOid, spOid: catalog.subunits[0].spOid,

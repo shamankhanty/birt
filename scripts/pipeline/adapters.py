@@ -460,15 +460,11 @@ def adapt_hospital(app: Path, source: Path, end: date, remd_source: Path | None 
         "denominator": denominator_total,
         "fact": (numerator_total / denominator_total * 100 if denominator_total else None),
         "comparisonReset": comparison_reset,
-        "note": (
-            "Числитель — РЭМД ЕГИСЗ, знаменатель — случаи стационарной помощи из отчёта по госпитализациям. "
-            "Сопоставление по OID МО. Первый срез после исправления источника числителя не сравнивается со старой методикой."
-            if comparison_reset
-            else "Числитель — РЭМД ЕГИСЗ, знаменатель — случаи стационарной помощи из отчёта по госпитализациям. Сопоставление по OID МО; динамика рассчитана к непосредственно предыдущему срезу той же методики."
-        ),
+        "note": "Числитель — столбцы E+F, знаменатель — столбец D одного отчёта ГИС по госпитализациям. Строка OID 1094 названа в отчёте РКБ МЗ РТ; раздельного факта центральной больницы и Спасской ЦРБ нет.",
+        "source": "ГИС ЭЗ РТ: отчёт по госпитализациям v2, столбцы E+F / D",
         "sourceNumerator": source.name,
         "sourceDenominator": source.name,
-        "rows": rows,
+        "rows": retain_no_source_rows(prev, rows),
     }
     details["hospital"], oids["hospital"] = dn, do
     # Неполный сентябрьский срез не заменяет месячный августовский набор.
@@ -496,11 +492,17 @@ def adapt_hospital(app: Path, source: Path, end: date, remd_source: Path | None 
 def parse_ambulatory_cases(path: Path) -> list[dict]:
     wb = open_workbook(path, read_only=True, data_only=True)
     out = []
+    missing = []
     for r in wb.active.iter_rows(min_row=5, values_only=True):
         if len(r) < 4 or not r[0] or not r[1] or is_total(r[0]):
             continue
+        if r[2] is not None and r[3] is None:
+            missing.append((str(r[1]), n(r[2])))
+            continue
         denominator, numerator = n(r[2]), n(r[3])
         out.append({"name": str(r[0]), "oid": str(r[1]), "fact": numerator / denominator * 100 if denominator else 0, "count": numerator, "volume": denominator})
+    if missing:
+        raise ValueError(f"Амбулаторный эпикриз: пустой числитель у {len(missing)} строк при {sum(volume for _, volume in missing)} случаях знаменателя; нулём не заменяется. OID: {', '.join(oid for oid, _ in missing[:5])}")
     if not out:
         raise ValueError("Амбулаторный эпикриз: не найдено строк данных")
     return out
