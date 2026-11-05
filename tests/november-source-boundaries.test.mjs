@@ -19,7 +19,11 @@ test('accepted October values have an independent primary-source audit and exact
  assert.equal(preventive.summary.numerator,2201997);
  assert.equal(preventive.summary.denominator,2419529);
  assert.deepEqual(Object.keys(preventive.acceptedAppSha256).sort(),['app/mo-data.json','app/mo-detail-oids.json','app/mo-details.json','app/preventive-semd-audit.json']);
- for(const [path,hash] of Object.entries({...audit.acceptedAppSha256,...preventive.acceptedAppSha256,...preventive.unchangedFileSha256}))
+ // The preventive audit records the rating UI as unchanged on 04.11, but later visual edits
+ // may change that component without changing the accepted September inputs or October data.
+ const {['app/september-rating.tsx']: historicalRatingUiHash, ...unchangedDataFiles}=preventive.unchangedFileSha256;
+ assert.equal(historicalRatingUiHash,'b0e5adfa26687c21dd56dadabcde62c6cbda4471d2491ff85f4580900efacbc0');
+ for(const [path,hash] of Object.entries({...audit.acceptedAppSha256,...preventive.acceptedAppSha256,...unchangedDataFiles}))
   assert.equal(crypto.createHash('sha256').update(fs.readFileSync(path)).digest('hex'),hash,path);
 });
 
