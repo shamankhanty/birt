@@ -29,7 +29,8 @@ METRICS = {
     'fap_fp': ['fapSemdCount'], 'asu_smp': ['smp'],
 }
 MAPS = ['mo-data.json', 'operational-mo.json', 'organization-status.json',
-        'mo-details.json', 'mo-detail-oids.json', 'monthly-mo.json', 'unit-data.json']
+        'mo-details.json', 'mo-detail-oids.json', 'monthly-mo.json', 'unit-data.json',
+        'unit-mo-snapshots.json']
 
 
 class SystemicError(Exception):

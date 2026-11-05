@@ -1,0 +1,47 @@
+{
+  "tvspStationary": {
+    "previous": {
+      "date": "31.10.2026",
+      "total": 93,
+      "good": 65,
+      "partial": 28,
+      "none": 0
+    }
+  },
+  "tvspAmbulatory": {
+    "previous": {
+      "date": "31.10.2026",
+      "total": 111,
+      "good": 86,
+      "partial": 24,
+      "none": 1
+    }
+  },
+  "tvspLaboratory": {
+    "previous": {
+      "date": "31.10.2026",
+      "total": 81,
+      "good": 81,
+      "partial": 0,
+      "none": 0
+    }
+  },
+  "tvspDiagnostic": {
+    "previous": {
+      "date": "31.10.2026",
+      "total": 107,
+      "good": 104,
+      "partial": 2,
+      "none": 1
+    }
+  },
+  "smpFederal": {
+    "previous": {
+      "date": "31.10.2026",
+      "total": 42,
+      "good": 41,
+      "partial": 1,
+      "none": 0
+    }
+  }
+}
