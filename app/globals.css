@@ -698,9 +698,37 @@ body{font-size:14px}
 .septTypeTabs {display:flex;gap:8px;flex-wrap:wrap;margin-bottom:16px}.septTypeTabs small {margin-left:8px;opacity:.8}
 .septStats {display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:16px}.septStats article {background:#fff;border:1px solid #d0e2dc;border-radius:16px;padding:16px 20px}.septStats small {display:block;color:#6b807b}.septStats strong {font-size:30px;display:block;margin-top:6px;color:#0b6855}
 .septTools {display:flex;gap:20px;align-items:center;flex-wrap:wrap;margin-bottom:16px}.septTools>input {flex:1;min-width:210px;border:1px solid #c5ded7;background:white;padding:12px 16px;border-radius:12px}.septTools label {display:flex;gap:8px;align-items:center;font-size:13px}
-.septTableWrap {background:#fff;border:1px solid #d0e2dc;border-radius:18px;overflow:auto}.septTable {width:100%;min-width:1050px;border-collapse:collapse;font-size:13px}.septTable th {text-align:left;background:#eff6f3;color:#496e65;padding:16px 12px;font-size:12px;white-space:nowrap}.septTable td {padding:16px 12px;border-top:1px solid #e7eeeb;vertical-align:top}.septTable td:first-child {width:34%;min-width:300px}.septRecalc {display:block;color:#7a8984;font-size:11px;margin-top:5px}.septOrg summary {cursor:pointer}.septOrg summary b {font-size:14px}.septOrg summary small,.septOrg summary span {display:block;margin:5px 0 0 16px;color:#778f88;font-size:11px}.septOrg summary span {color:#11795d}.septOrgDetails {padding-top:12px;line-height:1.5}.septOrgDetails p {margin:0 0 14px}.septMetricList article {padding:10px 0;border-top:1px solid #e7eeeb}.septMetricList b,.septMetricList small,.septMetricList span {display:block}.septMetricList small {color:#72877f;margin:5px 0}.septMissing {color:#ab6020}.septStatus {display:inline-block;border-radius:9px;padding:6px 10px;font-size:11px;white-space:nowrap}.septStatus.leader {background:#e1f4eb;color:#087657}.septStatus.preliminary {background:#edf1f3;color:#657985}.septStatus.attention {background:#fff2dc;color:#9a6506}.septEmpty {padding:20px}
+.septStatus {display:inline-block;border-radius:9px;padding:6px 10px;font-size:11px;white-space:nowrap}.septStatus.leader {background:#e1f4eb;color:#087657}.septStatus.preliminary {background:#edf1f3;color:#657985}.septStatus.attention {background:#fff2dc;color:#9a6506}.septEmpty {padding:20px}
 @media(max-width:700px){.septStats{grid-template-columns:repeat(2,1fr)}.septEdition button{flex:1;padding:10px;font-size:12px}.septTypeTabs{flex-wrap:nowrap;overflow:auto}.septTypeTabs button{min-width:180px;font-size:12px}.septMethod{padding:14px}.septTools label{font-size:12px}.septStats article{padding:13px}.septemberRating .ratingHead{align-items:flex-start}}
 .septemberRating .ratingFormula {display:flex;flex-direction:column;gap:5px;min-width:265px}.septemberRating .ratingFormula small,.septemberRating .ratingFormula span {white-space:nowrap}
 @media(max-width:700px){.septemberRating .ratingFormula{min-width:0;align-items:flex-start}.septemberRating .ratingFormula strong{font-size:26px}}
+/* The current September rating uses the same readable card hierarchy as hearings. */
+.septTools .septVisibleCount{margin-left:auto;color:#176d56;font-size:12px;font-weight:800}
+.septCards{display:grid;gap:12px}.septCard{min-width:0;overflow:hidden;border:1px solid #d0e2dc;border-left:5px solid #d29a35;border-radius:18px;background:#fff}
+.septCard.leader{border-left-color:#12896b}.septCard.preliminary{border-left-color:#93a6ae}
+.septCardHead{display:grid;grid-template-columns:36px minmax(0,1fr) auto auto;align-items:center;gap:14px;padding:16px 18px}
+.septPlace{display:grid;place-items:center;width:36px;height:36px;border-radius:11px;background:#edf3f1;color:#255a50;font-size:14px;font-weight:850}
+.septCardIdentity{min-width:0}.septCardIdentity h2{margin:0;color:#153a32;font-size:17px;line-height:1.25;overflow-wrap:anywhere}
+.septCardIdentity small{display:block;margin-top:4px;color:#71857e;font-size:11px;overflow-wrap:anywhere}
+.septCardScore{text-align:right}.septCardScore strong{display:block;color:#116a53;font-size:25px;line-height:1.1;white-space:nowrap}
+.septCardScore small{display:block;margin-top:3px;color:#748880;font-size:10px}
+.septCard .septStatus{min-width:118px;text-align:center;font-weight:800}
+.septCardSignals{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));border-top:1px solid #e3ece8;border-bottom:1px solid #e3ece8;background:#f7faf9}
+.septCardSignals p{min-width:0;margin:0;padding:12px 15px;border-right:1px solid #e3ece8}.septCardSignals p:last-child{border-right:0}
+.septCardSignals small,.septCardSignals span{display:block;color:#6f837c;font-size:10px;line-height:1.35}
+.septCardSignals b{display:block;margin-top:4px;color:#174c3d;font-size:15px;overflow-wrap:anywhere}
+.septCardReason{display:grid;gap:3px;padding:13px 18px}.septCardReason small{color:#71857e;font-size:10px}.septCardReason b{font-size:12px;line-height:1.45}
+.septCardDetails{border-top:1px solid #e3ece8}.septCardDetails summary{padding:13px 18px;color:#176d56;font-size:12px;font-weight:800;cursor:pointer}
+.septCardDetails>div{padding:0 18px 16px}.septReasons{margin:4px 0 15px;padding:13px 15px;border-radius:11px;background:#f4f8f6;font-size:11px;line-height:1.5}
+.septReasons strong{color:#145e49}.septReasons ul{margin:7px 0 0;padding-left:17px}.septReasons li+li{margin-top:4px}.septReasons p{margin:8px 0 0;color:#ac5c30}
+.septMetricGroup h3{margin:18px 0 7px;color:#12684f;font-size:12px}.septMetric{display:grid;grid-template-columns:minmax(0,1.6fr) minmax(220px,.75fr);align-items:center;gap:20px;padding:12px 0;border-top:1px solid #e8efec;font-size:12px}
+.septMetric>div{min-width:0}.septMetric b{display:block;overflow-wrap:anywhere}.septMetric small{display:block;margin-top:4px;color:#748981;font-size:10px;line-height:1.4}
+.septMetric>strong{padding:11px 13px;border:1px solid #dfe9e5;border-radius:10px;background:#f5f8f7;color:#275e50;font-size:12px}
+.septMetric.good>strong{border-color:#b7dfcf;background:#eaf7f1;color:#087858}
+.septMetric.bad>strong{border-color:#efc1c4;background:#fff0f1;color:#bb3340}
+.septMetric.missing>strong{border-color:#e1e8e5;background:#f5f7f6;color:#667d75}
+.septMetric.not_applicable>strong{color:#647a72}
+@media(max-width:1050px){.septCardSignals{grid-template-columns:repeat(3,minmax(0,1fr))}.septCardSignals p:nth-child(3){border-right:0}.septCardSignals p:nth-child(-n+3){border-bottom:1px solid #e3ece8}}
+@media(max-width:700px){.septCardHead{grid-template-columns:36px minmax(0,1fr);gap:9px 12px;padding:14px}.septCardScore,.septCard .septStatus{grid-column:2;justify-self:start;text-align:left}.septCardScore strong{font-size:22px;white-space:normal}.septCardSignals{grid-template-columns:repeat(2,minmax(0,1fr))}.septCardSignals p:nth-child(3){border-right:1px solid #e3ece8}.septCardSignals p:nth-child(even){border-right:0}.septCardSignals p:nth-child(-n+4){border-bottom:1px solid #e3ece8}.septCardSignals p{padding:10px 12px}.septCardSignals b{font-size:13px}.septMetric{grid-template-columns:1fr;gap:8px}.septMetric>strong{width:100%}.septCardDetails>div{padding:0 14px 14px}}
 /* Keep long organization names inside EPL signal cards on narrow screens. */
 .waybillSignals article{min-width:0}.waybillSignals article p{overflow-wrap:anywhere}
