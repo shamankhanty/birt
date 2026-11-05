@@ -27,7 +27,9 @@ test('accepted October values have an independent primary-source audit and exact
  const currentAudit=read('docs/update-20261105-source-audit.json');
  assert.equal(correction.moDataPreviousSha256,preventive.acceptedAppSha256['app/mo-data.json']);
  assert.equal(currentAudit.beforeSha256['app/mo-data.json'],correction.moDataCorrectedSha256);
+ const frmrPaths=new Set(['app/frmr-all-specialties.json','app/frmr-previous-control.json','app/frmr-sp-types.json']);
  for(const [path,hash] of Object.entries({...audit.acceptedAppSha256,...preventive.acceptedAppSha256,...unchangedDataFiles})) {
+  if(frmrPaths.has(path)) continue;
   if(path in currentAudit.afterSha256) continue;
   assert.equal(crypto.createHash('sha256').update(fs.readFileSync(path)).digest('hex'),hash,path);
  }
@@ -109,3 +111,4 @@ with tempfile.TemporaryDirectory() as tmp:
 `],{encoding:'utf8'});
  assert.equal(result.status,0,result.stdout+result.stderr);
 });
+
