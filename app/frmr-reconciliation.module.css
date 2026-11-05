@@ -147,6 +147,7 @@
 .frmrRecordTableWrap .table th,.frmrRecordTableWrap .table td{text-align:left;white-space:normal;line-height:1.45}
 .frmrRecordTableWrap .table td:first-child{min-width:98px}
 .frmrLastFour{font:750 13px ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;white-space:nowrap!important;color:#205d46}
+.frmrCheckCell{display:grid;gap:6px;min-width:260px}.frmrCheckStatus{justify-self:start;padding:4px 8px;border-radius:999px;background:#fff3df;color:#8a5b12;font-size:11px;font-weight:750}.frmrCheckCell>small{color:#6b7f76;font-size:11px;line-height:1.4}.frmrCheckCell details{font-size:11px;color:#61786d}.frmrCheckCell summary{cursor:pointer;color:#287057;font-weight:650}.frmrCheckCell details>span,.frmrCheckCell details>small{display:block;margin-top:5px;overflow-wrap:anywhere;line-height:1.4}.frmrCheckCell details>small{color:#718179}
 @media(max-width:650px){.frmrEmployeeHeader>strong{font-size:11px}.frmrRecordTableWrap .table{min-width:610px}}
 
 

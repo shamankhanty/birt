@@ -370,13 +370,14 @@ export default function FrmrReconciliation() {
                     <p className={styles.muted}>Должность «{activeRole}»: {number(moRoleRecords.length)} записей. Сверьте сотрудника и должность в ФРМР и ГИС на уровне МО; установите, какая запись неактуальна. Не создавайте дубли автоматически.</p>
                     <input className={styles.input} type="search" value={last4Query} onChange={e=>setLast4Query(e.target.value)} placeholder="Найти по последним 4 цифрам…" aria-label="Поиск по последним четырем цифрам СНИЛС" inputMode="numeric" maxLength={4}/>
                     <div className={styles.frmrRecordTableWrap}><table className={styles.table}>
-                      <thead><tr><th>Строка в выгрузке</th><th>СНИЛС (4 цифры)</th><th>Сведения для проверки</th></tr></thead>
+                      <thead><tr><th>Строка в выгрузке</th><th>СНИЛС (4 цифры)</th><th>Что проверить</th></tr></thead>
                       <tbody>{visibleMoRecords.map(rec=><tr key={rec[5]}>
                         <td>№ {rec[5]}</td><td className={styles.frmrLastFour}>{rec[3]===null ? "Нет СНИЛС" : "•••-•••-•"+rec[3]}</td>
-                        <td>Должность не найдена на уровне МО.
-                          {Boolean(rec[6]) && <small className={styles.cellNote}>{Object.entries(allRaw.records.qualityBits).filter(([bit])=>(rec[6]??0)&Number(bit)).map(([,label])=>label).join("; ")}</small>}
-                          <details><summary>Подразделение · справочно</summary><span>{departmentRaw.sp[rec[2]][2]}</span><small className={styles.cellNote}>OID СП: {officialPrefix}{selected.id}.0.{departmentRaw.sp[rec[2]][1]}</small></details>
-                        </td>
+                        <td><div className={styles.frmrCheckCell}>
+                          <span className={styles.frmrCheckStatus}>Нет должности на уровне МО</span>
+                          {Boolean(rec[6]) && <small>{Object.entries(allRaw.records.qualityBits).filter(([bit])=>(rec[6]??0)&Number(bit)).map(([,label])=>label).join("; ")}</small>}
+                          <details><summary>Показать СП и OID</summary><span>{departmentRaw.sp[rec[2]][2]}</span><small>OID СП: {officialPrefix}{selected.id}.0.{departmentRaw.sp[rec[2]][1]}</small></details>
+                        </div></td>
                       </tr>)}</tbody>
                     </table></div>
                     {!visibleMoRecords.length && <p className={styles.muted}>Записей по выбранному запросу нет.</p>}

@@ -1091,9 +1091,29 @@ def adapt_tvsp_subunits(app: Path, source: Path, end: date, metric: str, family:
     if "Сводный" in wb.sheetnames:
         vals=next(wb["Сводный"].iter_rows(min_row=7,max_row=7,values_only=True),None)
         if vals and len(vals)>3 and n(vals[2])>0: plan=n(vals[2]);fact=n(vals[3])
+    snapshots=load(app,"unit-mo-snapshots.json")
+    if old_units.get("date") and old_units.get("rows") and old_units["date"] != date_ru(end):
+        snapshots[metric]={"previous":{"date":old_units["date"],**_unit_mo_status_summary(old_units["rows"])}}
+        save(app,"unit-mo-snapshots.json",snapshots)
     units=load(app,"unit-data.json");units[metric]={"name":title,"entity":entity,"plan":plan,"fact":fact,"date":date_ru(end),"rows":rows};save(app,"unit-data.json",units)
     _aggregate_unit_metric(app,metric,units[metric],end,f"январь–{month_label(end)}",True)
-    return AdapterResult("tvsp",[family],"PASS",["unit-data.json","mo-data.json","mo-details.json","mo-detail-oids.json"],[source.name],{"objects":len(rows),"plan":plan,"fact":fact,"subunits":sum(r["plannedSubunits"] for r in rows),"registeredSubunits":sum(r["registeredSubunits"] for r in rows)},[],[])
+    return AdapterResult("tvsp",[family],"PASS",["unit-data.json","unit-mo-snapshots.json","mo-data.json","mo-details.json","mo-detail-oids.json"],[source.name],{"objects":len(rows),"plan":plan,"fact":fact,"subunits":sum(r["plannedSubunits"] for r in rows),"registeredSubunits":sum(r["registeredSubunits"] for r in rows)},[],[])
+
+
+def _unit_mo_status_summary(rows):
+    groups={}
+    for row in rows:
+        key=row.get("moOid") or row.get("mo")
+        group=groups.setdefault(key,{"plan":0,"fact":0})
+        planned=row.get("plannedSubunits",1)
+        registered=row.get("registeredSubunits")
+        if registered is None:
+            registered=planned if row.get("registered") and not row.get("partial") else max(1,planned-1) if row.get("registered") else 0
+        group["plan"]+=planned
+        group["fact"]+=min(registered,planned)
+    good=sum(g["fact"]==g["plan"] for g in groups.values())
+    none=sum(g["fact"]==0 for g in groups.values())
+    return {"total":len(groups),"good":good,"partial":len(groups)-good-none,"none":none}
 
 
 def adapt_tvsp_buildings(app: Path, source: Path, end: date, metric: str, family: str, title: str, entity: str, start_row: int) -> AdapterResult:

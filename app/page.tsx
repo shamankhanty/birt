@@ -22,6 +22,7 @@ import maxAppointmentsMunicipalRaw from "./max-appointments-municipal.json";
 import maxPeriodViewsRaw from "./max-period-views.json";
 import maxAppointmentPlanRaw from "./max-appointment-plan.json";
 import unitDataRaw from "./unit-data.json";
+import unitMoSnapshotsRaw from "./unit-mo-snapshots.json";
 import organizationStatusRaw from "./organization-status.json";
 import moRegistryRaw from "./mo-registry.json";
 import electronicWaybillRaw from "./electronic-waybill.json";
@@ -728,7 +729,9 @@ type UnitDataset = {
   date: string;
   rows: UnitRow[];
 };
+type UnitMoSummary = { date: string; total: number; good: number; partial: number; none: number };
 const unitData = unitDataRaw as Record<string, UnitDataset>;
+const unitMoSnapshots = unitMoSnapshotsRaw as Record<string, { previous: UnitMoSummary }>;
 const moRegistry = moRegistryRaw as MoRegistry;
 const {
   byOid: registryByOid,
@@ -9455,7 +9458,7 @@ export default function Home() {
                 <>
                   {selectedUnitDataset ? (
                     <>
-                      <UnitMoOverview dataset={selectedUnitDataset} />
+                      <UnitMoOverview dataset={selectedUnitDataset} previous={unitMoSnapshots[matrixMetric]?.previous} />
                       {selectedGuidance && (
                         <ActionGuide guidance={selectedGuidance} />
                       )}
@@ -10802,7 +10805,7 @@ function PreventiveAuditTable({
   );
 }
 
-function UnitMoOverview({ dataset }: { dataset: UnitDataset }) {
+function UnitMoOverview({ dataset, previous }: { dataset: UnitDataset; previous?: UnitMoSummary }) {
   const [openMo, setOpenMo] = useState<string | null>(null);
   const [query, setQuery] = useState("");
   const [sortKey, setSortKey] = useState<
@@ -10889,6 +10892,17 @@ function UnitMoOverview({ dataset }: { dataset: UnitDataset }) {
   const good = groups.filter((g) => g.status === "good").length,
     partial = groups.filter((g) => g.status === "warn").length,
     none = groups.filter((g) => g.status === "bad").length;
+  const renderMoCount = (value: number, oldValue?: number) => (
+    <>
+      {value}
+      {oldValue !== undefined && (
+        <span className="unitMoChange">
+          {value - oldValue > 0 ? "+" : ""}{value - oldValue}
+        </span>
+      )}
+      {oldValue !== undefined && <em className="unitMoPrevious">было {oldValue}</em>}
+    </>
+  );
   const leaders = [...groups]
     .sort((a, b) => b.share - a.share || b.plan - a.plan)
     .slice(0, 10);
@@ -10921,26 +10935,31 @@ function UnitMoOverview({ dataset }: { dataset: UnitDataset }) {
         объектов. Управленческий статус ниже — по всем обязательным
         подразделениям, поэтому суммы двух уровней могут различаться.
       </p>
+      {previous && (
+        <p className="unitMoComparison">
+          МО: было на {previous.date} → стало на {dataset.date}. Изменение показано рядом с текущим числом.
+        </p>
+      )}
       <div className="unitMoStats">
         <article>
           <small>МО участвуют</small>
-          <strong>{groups.length}</strong>
+          <strong>{renderMoCount(groups.length, previous?.total)}</strong>
         </article>
         <article>
           <small>Все объекты передают</small>
-          <strong className="green">{good}</strong>
+          <strong className="green">{renderMoCount(good, previous?.good)}</strong>
         </article>
         <article>
           <small>Передают частично</small>
-          <strong className="amber">{partial}</strong>
+          <strong className="amber">{renderMoCount(partial, previous?.partial)}</strong>
         </article>
         <article>
           <small>Не передаёт ни один</small>
-          <strong className="red">{none}</strong>
+          <strong className="red">{renderMoCount(none, previous?.none)}</strong>
         </article>
         <article>
           <small>МО с проблемами</small>
-          <strong className="red">{partial + none}</strong>
+          <strong className="red">{renderMoCount(partial + none, previous ? previous.partial + previous.none : undefined)}</strong>
         </article>
       </div>
       <div className="unitMoPanels">
