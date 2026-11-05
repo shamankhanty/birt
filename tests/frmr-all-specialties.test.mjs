@@ -52,9 +52,12 @@ test('every FRMO OID flag is independently reproducible and overlapping reasons 
  assert.ok(Object.values(links.totals.flagCounts).reduce((s,n)=>s+n,0)>links.totals.issues);
  const spassk=links.organizations.find(r=>r.code==='4001');assert.equal(spassk.parentOids.length,3);
 });
-test('UI defaults to all specialties while isolating historical comparison and FRMO view',()=>{
+test('UI keeps all specialties and MO controls while removing obsolete archive and FRMO tabs',()=>{
  const ui=fs.readFileSync('app/frmr-reconciliation.tsx','utf8');
- assert.match(ui,/useState<"all" \| "legacy">\("all"\)/);assert.match(ui,/Все специальности ·/);assert.match(ui,/Прежний перечень · архив/);assert.match(ui,/view === "linkage" \? <FrmoLinkage/);
+ assert.match(ui,/Все специальности ·/);
+ assert.doesNotMatch(ui,/Прежний перечень · архив/);
+ assert.doesNotMatch(ui,/Привязки ФРМО · 30\.10/);
+ assert.match(ui,/На уровне МО/);assert.match(ui,/Привязки СП · справочно/);
  assert.match(ui,/Сравнение \{comparison.cut\}/);assert.match(ui,/<th>Δ<\/th>/);
  assert.doesNotMatch(ui,/\.filter\(.*role.*14/);
 });

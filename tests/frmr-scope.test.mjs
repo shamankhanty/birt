@@ -32,9 +32,9 @@ test('exceptions are narrow: retain independent doctors, biologists, FAP staff a
  for(const [role,sp] of [['Врач-бактериолог','Клинико-диагностическая лаборатория'],['Биолог','Клинико-диагностическая лаборатория'],['Фельдшер','Фельдшерско-акушерский пункт'],['Врач-терапевт','Отделение неотложной медицинской помощи']])assert.equal(frmrExclusionReason(role,sp),null);
  for(const [role,sp,why] of [['Врач-стажёр','Поликлиника','trainee'],['Медицинский лабораторный техник','Поликлиника','laboratory'],['Старший фельдшер-лаборант','КДЛ','laboratory'],['Фельдшер скорой медицинской помощи','Амбулатория','ambulance'],['Фельдшер','Станция скорой медицинской помощи','ambulance'],['Врач-анестезиолог-реаниматолог','Специализированная выездная бригада скорой медицинской помощи анестезиологии-реанимации','ambulance']])assert.equal(frmrExclusionReason(role,sp),why);
 });
-test('overview and MO diagnostics share the filtered dataset while archive and FRMO remain separate',()=>{
+test('overview and MO diagnostics use the current dataset without obsolete archive or FRMO tabs',()=>{
  const ui=fs.readFileSync('app/frmr-reconciliation.tsx','utf8');
- for(const part of ['summary','departments','records'])assert.ok(ui.includes(`isAll ? controlData.${part}`));
+ for(const part of ['summary','departments','records'])assert.ok(ui.includes(`controlData.${part}`));
  assert.match(ui,/Изменение охвата не является улучшением показателя/);
- assert.match(ui,/view === "linkage" \? <FrmoLinkage/);
+ assert.doesNotMatch(ui,/view === "linkage" \? <FrmoLinkage/);
 });
