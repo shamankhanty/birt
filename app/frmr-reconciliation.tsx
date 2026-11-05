@@ -1,16 +1,12 @@
 "use client";
 
 import { useMemo, useState } from "react";
-import legacyRaw from "./frmr-reconciliation-data.json";
 import allRaw from "./frmr-all-specialties.json";
 import spTypes from "./frmr-sp-types.json";
 import previousControl from "./frmr-previous-control.json";
 import { compareFrmrControl, frmrControlView } from "../lib/frmr-control";
-import FrmoLinkage from "./frmo-linkage";
 import { applyFrmrScope } from "../lib/frmr-scope";
 const { data: scopedAll, excluded: scopeExcluded } = applyFrmrScope(allRaw, spTypes.types);
-import legacyDepartments from "./frmr-department-details.json";
-import legacyRecords from "./frmr-last4-records.json";
 import styles from "./frmr-reconciliation.module.css";
 
 type DepartmentGroup = { mo: string; role: string; name: string; oid: string; moIndex: number; roleIndex: number; spIndex: number; noPosition: number; wrongDepartment: number; count: number };
@@ -40,15 +36,14 @@ const change = (row: Org) =>
   row.previous === null ? null : row.current - row.previous;
 
 export default function FrmrReconciliation() {
-  const [coverage, setCoverage] = useState<"all" | "legacy">("all");
-  const isAll = coverage === "all";
+  const isAll = true;
   const [controlLevel, setControlLevel] = useState<"mo" | "department">("mo");
   const [spType, setSpType] = useState("");
   const controlData = useMemo(() => frmrControlView(scopedAll, controlLevel, spType, spTypes.types), [controlLevel, spType]);
   const comparison = useMemo(() => compareFrmrControl(previousControl, controlData, controlLevel, spType), [controlData, controlLevel, spType]);
-  const raw = isAll ? controlData.summary : legacyRaw;
-  const departmentRaw = isAll ? controlData.departments : legacyDepartments;
-  const last4Raw = isAll ? controlData.records : legacyRecords;
+  const raw = controlData.summary;
+  const departmentRaw = controlData.departments;
+  const last4Raw = controlData.records;
   const staffRecords = last4Raw.rows as unknown as StaffRecord[];
   const departmentRows: DepartmentGroup[] = (
     departmentRaw.rows as number[][]
@@ -71,13 +66,13 @@ export default function FrmrReconciliation() {
   });
   const orgs: Org[] = (raw.rows as unknown as PositionRecord[]).map(
     ([id, name, feb, previous, current, stage1, stage2, positions, specialties]) =>
-      ({ id, name, feb, previous: isAll ? comparison.byMo[id] ?? null : previous, current, stage1, stage2, positions, specialties }),
+      ({ id, name, feb, previous: comparison.byMo[id] ?? null, current, stage1, stage2, positions, specialties }),
   );
   const topSpecialties = raw.topSpecialties as unknown as SpecialityGroup[];
   const sortedOrgs = [...orgs].sort((a, b) => a.name.localeCompare(b.name, "ru"));
-  const cutShort = isAll ? allRaw.summary.sourceCut.slice(0,5) : "22.10";
-  const dateLabel = isAll ? allRaw.summary.sourceCut + " · все специальности" : "22.10.2026 · архив прежнего перечня";
-  const [view, setView] = useState<"minister" | "organization" | "linkage">("minister");
+  const cutShort = allRaw.summary.sourceCut.slice(0,5);
+  const dateLabel = allRaw.summary.sourceCut + " · все специальности";
+  const [view, setView] = useState<"minister" | "organization">("minister");
   const [filter, setFilter] = useState<"all" | "worse" | "better" | "missing" | "zero">("all");
   const [sort, setSort] = useState<"count" | "worsening" | "improving" | "name">("count");
   const [search, setSearch] = useState("");
@@ -123,7 +118,7 @@ export default function FrmrReconciliation() {
         sort === "name" ? a.name.localeCompare(b.name, "ru") :
         b.current - a.current || a.name.localeCompare(b.name, "ru"),
       );
-  }, [coverage, controlLevel, spType, filter, search, sort]);
+  }, [controlLevel, spType, filter, search, sort]);
 
   const allSelectedGroups = departmentRows.filter((row) => row.mo === selected?.id);
   const diagnosticRoles: SpecialityGroup[] = [...allSelectedGroups.reduce((map, row) => {
@@ -191,17 +186,13 @@ export default function FrmrReconciliation() {
       </section>
 
       <div className={styles.workspaceControls}>
-      <div className={styles.tabs} role="group" aria-label="Охват ФРМР">
-        <button className={[styles.tab, isAll ? styles.tabActive : ""].join(" ")} onClick={() => {setCoverage("all");setControlLevel("mo");setSpType("");setView("minister");setFilter("all");setSort("count");setSearch("");setMoQuery("");setSelectedId(null);resetInspection();}}>Все специальности · {allRaw.summary.sourceCut.slice(0,5)}</button>
-        <button className={[styles.tab, !isAll ? styles.tabActive : ""].join(" ")} onClick={() => {setCoverage("legacy");setSpType("");setView("minister");setFilter("all");setSort("count");setSearch("");setMoQuery("");setSelectedId(null);resetInspection();}}>Прежний перечень · архив</button>
-      </div>
+      <span className={styles.pill}>Все специальности · {allRaw.summary.sourceCut.slice(0,5)}</span>
       <div className={styles.tabs} role="group" aria-label="Представление раздела">
         <button className={[styles.tab, view === "minister" ? styles.tabActive : ""].join(" ")} onClick={() => setView("minister")} aria-pressed={view === "minister"}>Обзор</button>
         <button className={[styles.tab, view === "organization" ? styles.tabActive : ""].join(" ")} onClick={() => setView("organization")} aria-pressed={view === "organization"}>Карточка МО и действия</button>
-        <button className={[styles.tab, view === "linkage" ? styles.tabActive : ""].join(" ")} onClick={() => setView("linkage")} aria-pressed={view === "linkage"}>Привязки ФРМО · 30.10</button>
       </div>
 
-      {isAll && view !== "linkage" && <div className={styles.filters}>
+      <div className={styles.filters}>
         <div className={styles.tabs} role="group" aria-label="Уровень контроля ФРМР">
           <button className={[styles.tab, controlLevel === "mo" ? styles.tabActive : ""].join(" ")} aria-pressed={controlLevel === "mo"} onClick={() => {setControlLevel("mo");setFilter("all");resetInspection();}}>На уровне МО</button>
           <button className={[styles.tab, controlLevel === "department" ? styles.tabActive : ""].join(" ")} aria-pressed={controlLevel === "department"} onClick={() => {setControlLevel("department");setFilter("all");resetInspection();}}>Привязки СП · справочно</button>
@@ -211,15 +202,15 @@ export default function FrmrReconciliation() {
           {[...new Set(Object.values(spTypes.types))].filter(type => type !== "Скорая медицинская помощь").sort((a,b)=>a.localeCompare(b,"ru")).map(type=><option key={type}>{type}</option>)}
           <option value="Не указан">Тип не указан</option>
         </select>
-      </div>}
       </div>
-      {isAll && view !== "linkage" && <details className={styles.scopeDetails}>
+      </div>
+      <details className={styles.scopeDetails}>
         <summary>Методика и охват сверки</summary>
         <p className={styles.muted} data-testid="frmr-control-note">{controlLevel === "mo" ? "Основной контроль: должность не найдена на уровне МО. Расхождения привязок СП в этот итог не входят." : "Справочно: должность найдена в МО, но не совпадает привязка СП. Эти записи не входят в основной итог проблем МО."} {spType && <>Тип СП: {spType}. </>}Все специальности сохранены с учётом согласованных исключений. Тип СП не определяет работу по ОМС или платно.</p>
         <p className={styles.muted} data-testid="frmr-scope-note">Из сверки исключены: скорая помощь, врачи-стажёры и средний лабораторный персонал. Учтено {number(scopedAll.records.rows.length)} записей; исключено {number(scopeExcluded.total)}. Изменение охвата не является улучшением показателя.</p>
-      </details>}
+      </details>
 
-      {view === "linkage" ? <FrmoLinkage /> : view === "minister" ? (
+      {view === "minister" ? (
         <>
           <div className={styles.stats}>
             <article className={styles.stat}><span className={styles.statLabel}>{isAll ? (controlLevel === "mo" ? "Не найдены в МО" : "Привязки СП · справочно") : <>Расхождения на {cutShort}</>}</span><strong className={isAll && controlLevel === "department" ? styles.dark : styles.negative}>{number(currentTotal)}</strong><small>{isAll ? <>должностных записей в выбранном перечне{comparison.missingBaseline === 0 && <> · {signed(comparison.currentTotal-comparison.previousTotal)} к {comparison.cut.slice(0,5)}</>}</> : <>снижение на {number(previousTotal - currentTotal)} к 16.10</>}</small></article>
