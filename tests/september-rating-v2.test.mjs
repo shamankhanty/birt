@@ -84,3 +84,14 @@ test('frozen inputs retain verifiable source provenance without depending on fut
  for(const [id,source] of Object.entries(raw.sources))assert.deepEqual(source,inputs.sources[id]);
  for(const hash of Object.values(inputs.acceptedDatasetHashes))assert.match(hash,/^[a-f0-9]{64}$/);
 });
+
+test('September rating shows five official best and worst places before the full list',()=>{
+ const ui=fs.readFileSync('app/september-rating.tsx','utf8');
+ assert.match(ui,/rankedGroup=group\.filter\(r=>r\.complete&&r\.place!==null\)/);
+ assert.match(ui,/rankedGroup\.slice\(0,5\)/);
+ assert.match(ui,/slice\(-5\)\.reverse\(\)/);
+ assert.match(ui,/Топ‑5 лучших/);assert.match(ui,/Топ‑5 худших/);
+ assert.ok(ui.indexOf('septTopLists')<ui.indexOf('className="septTools"'));
+ const style=fs.readFileSync('app/globals.css','utf8');
+ assert.match(style,/\.septTopLists\{display:grid/);assert.match(style,/\.septTopLists\{grid-template-columns:1fr/);
+});
