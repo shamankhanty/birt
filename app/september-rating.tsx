@@ -22,6 +22,9 @@ export default function SeptemberRating(){
   const [query,setQuery]=useState('');
   const [onlyMissing,setOnlyMissing]=useState(false);
   const group=rows.filter(r=>r.type===type);
+  const rankedGroup=group.filter(r=>r.complete&&r.place!==null).sort((a,b)=>(a.place??999)-(b.place??999)||a.name.localeCompare(b.name,'ru'));
+  const topBest=rankedGroup.slice(0,5);
+  const topWorst=[...rankedGroup].slice(-5).reverse();
   const visible=group
     .filter(r=>(!onlyMissing||!r.complete)&&`${r.name} ${r.key}`.toLocaleLowerCase('ru').includes(query.toLocaleLowerCase('ru')))
     .sort((a,b)=>(a.place??999)-(b.place??999)||a.name.localeCompare(b.name,'ru'));
@@ -62,6 +65,19 @@ export default function SeptemberRating(){
       <article><small>Предварительно</small><strong>{group.filter(r=>!r.complete).length}</strong></article>
       <article><small>Лидеры</small><strong>{group.filter(r=>r.status==='Лидер').length}</strong></article>
     </div>
+    <section className="septTopLists" aria-label={`Топ-5 лучших и худших МО: ${type}`}>
+      {[{title:'Топ‑5 лучших',items:topBest,kind:'best'},{title:'Топ‑5 худших',items:topWorst,kind:'worst'}].map(list=>
+        <article className={`septTopList ${list.kind}`} key={list.kind}>
+          <h2>{list.title}<small>{type}</small></h2>
+          <ol>{list.items.map(r=><li key={r.key}>
+            <span className="septTopPlace">{r.place}</span>
+            <span className="septTopName">{r.name}</span>
+            <b>{fmt(r.score)}<small>балла</small></b>
+          </li>)}</ol>
+        </article>
+      )}
+      <p>Показаны только МО с официальным местом в выбранной группе. Предварительные оценки без полного набора данных остаются в общем списке.</p>
+    </section>
     <div className="septTools">
       <input aria-label="Найти МО в сентябрьском рейтинге" placeholder="Найти МО или OID" value={query} onChange={e=>setQuery(e.target.value)}/>
       <label><input type="checkbox" checked={onlyMissing} onChange={e=>setOnlyMissing(e.target.checked)}/> Только с неполными данными</label>
