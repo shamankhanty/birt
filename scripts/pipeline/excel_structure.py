@@ -64,7 +64,7 @@ def inspect_workbook(path):
             if ('период' not in label and 'выданные медицинские свидетельства' not in label) or label.startswith('дата формирования'):
                 continue
             dates = [v.date() if isinstance(v, datetime) else v for v in row if isinstance(v, date)]
-            for d, m, y in re.findall(r'(?<!\d)(\d{2})[.](\d{2})[.](20\d{2})', label.split('Дата формирования')[0]):
+            for d, m, y in re.findall(r'(?<!\d)(\d{2})[.](\d{2})[.](20\d{2})', label.split('дата формирования', 1)[0]):
                 dates.append(date(int(y), int(m), int(d)))
             if dates:
                 # Excel reports can include unrelated hidden technical dates after columns C/D.

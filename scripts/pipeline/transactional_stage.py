@@ -282,6 +282,8 @@ def stage(input_dir, output_dir, replay_manifest=None):
         items=by.get(family,[])
         if family == 'remd_errors' and metric:
             items = [i for i in items if bool((i.get('startDate') or '').endswith('-01-01')) == (metric == 'remdErrorsCumulative')]
+        if family=='egpu_attachment':
+            items=[i for i in items if not i.get('startDate') or i['startDate'].endswith('-01-01')]
         if family=='max_tmk_eln': items=[i for i in items if (i.get('startDate') or '').endswith('-01-01')]
         selected=max(items,key=lambda i:i.get('endDate') or '') if items else None
         if selected and family=='electronic_waybill':
