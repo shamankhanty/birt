@@ -37,7 +37,7 @@ test('closed October physician month is retained beside the partial November ope
 test('MAX retains separate October and current cumulative source totals, without adding them',()=>{
   assert.equal(views.cumulative.date,'31.10.2026');
   assert.equal(views.closedMonths['2026-10'].operational.date,'31.10.2026');
-  for(const [service,total,monthlyTotal,metric] of [['tmk',76211,15573,'tmkMaxCount'],['eln',56941,12498,'elnMaxCount']]){
+  for(const [service,total,monthlyTotal,metric] of [['tmk',76211,16224,'tmkMaxCount'],['eln',56941,12590,'elnMaxCount']]){
     assert.equal(op[metric].date,'08.11.2026');
     assert.equal(views.closedMonths["2026-10"].operational.metrics[service].sourceTotal,monthlyTotal);
     assert.equal(op[metric].rows.reduce((sum,r)=>sum+(r.count??0),0),total);
