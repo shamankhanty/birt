@@ -36,11 +36,8 @@ function isTechnicalRow(name) {
 }
 function isExcludedFromIndicators(name) {
   const normalized = String(name ?? "").replace(/[«»"']/g, " ").replace(/[–—-]/g, " ").replace(/\s+/g, " ").trim();
-  return (
-    /(?:^|\s)КГМА(?=\s|$).*?(?:^|\s)РМАНПО(?=\s|$)/iu.test(normalized) ||
-    /(?:^|\s)[АР]ЦОЗ\s+и\s+МП(?:\s|$)/iu.test(normalized) ||
-    /(?:^|\s)Казанск(?:ий|ого)\s+ГМУ(?=\s|$).*?(?:^|\s)Минздрава\s+России/iu.test(normalized)
-  );
+  // KGMA–RMANPO and the university clinic are not excluded from case totals.
+  return /(?:^|\s)[АР]ЦОЗ\s+и\s+МП(?:\s|$)/iu.test(normalized);
 }
 function isMaxProfileInapplicable(name) {
   return /ркпд|противотуберкул|(?:^|\s)птд(?:\s|$)/iu.test(String(name ?? "").toLocaleLowerCase("ru"));
