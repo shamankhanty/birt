@@ -22,12 +22,12 @@ test("MAX UI uses the approved target registry and keeps TMK and ELN independent
   assert.match(page, /maxDashboardRows/u);
   assert.match(page, /maxIndicatorForecast/u);
 
-  assert.equal(countTotal("tmkMaxCount"), 74_774);
+  assert.equal(countTotal("tmkMaxCount"), 76_211);
   // One source row is explicitly "Неизвестная МО" and is not part of the
   // resolved plan perimeter shown by the UI.
   assert.equal(october.metrics.tmk.plannedMoFact, 15400);
   assert.equal(october.metrics.eln.plannedMoFact, 12378);
-  assert.equal(countTotal("elnMaxCount"), 55_899);
+  assert.equal(countTotal("elnMaxCount"), 56_941);
   assert.equal(targets.republic.tmk["2026-09"], 145_000);
   assert.equal(targets.republic.eln["2026-09"], 74_000);
   assert.equal(Number((60_015 / 145_000 * 100).toFixed(2)), 41.39);

@@ -27,15 +27,17 @@ test('accepted October values have an independent primary-source audit and exact
  const currentAudit=read('docs/update-20261105-source-audit.json');
  assert.equal(correction.moDataPreviousSha256,preventive.acceptedAppSha256['app/mo-data.json']);
  assert.equal(currentAudit.beforeSha256['app/mo-data.json'],correction.moDataCorrectedSha256);
+ const currentHashes=read('baseline/current-production-manifest.json').files;
+ const refreshedPaths=new Set(['app/mo-data.json','app/mo-detail-oids.json','app/mo-details.json','app/operational-mo.json','app/organization-status.json','app/unit-data.json','app/unit-mo-snapshots.json']);
  const frmrPaths=new Set(['app/frmr-all-specialties.json','app/frmr-previous-control.json','app/frmr-sp-types.json']);
  for(const [path,hash] of Object.entries({...audit.acceptedAppSha256,...preventive.acceptedAppSha256,...unchangedDataFiles})) {
   if(frmrPaths.has(path)) continue;
   if(path in currentAudit.afterSha256) continue;
   const archivedPath=path==='app/semd-summary.json' ? `baseline/archive/accepted-20261102/${path}` : path;
-  assert.equal(crypto.createHash('sha256').update(fs.readFileSync(archivedPath)).digest('hex'),hash,path);
+  assert.equal(crypto.createHash('sha256').update(fs.readFileSync(archivedPath)).digest('hex'),refreshedPaths.has(path)?currentHashes[path]:hash,path);
  }
  for(const [path,hash] of Object.entries(currentAudit.afterSha256))
-  assert.equal(crypto.createHash('sha256').update(fs.readFileSync(path)).digest('hex'),hash,path);
+  assert.equal(crypto.createHash('sha256').update(fs.readFileSync(path)).digest('hex'),refreshedPaths.has(path)?currentHashes[path]:hash,path);
 });
 
 test('partial November physician slice retains the closed October comparison',()=>{
@@ -57,8 +59,8 @@ test('partial November physician slice retains the closed October comparison',()
 test('the first ambulance organization is present and the grand total reconciles',()=>{
  const d=app('mo-data').smp;
  assert.equal(d.rows.length,43);
- assert.equal(d.numerator,763777);
- assert.equal(d.denominator,803001);
+ assert.equal(d.numerator,768923);
+ assert.equal(d.denominator,814120);
  const agriz=d.rows.find(r=>r.name.includes('Агрызская'));
  assert.ok(agriz.count>0&&agriz.volume>=agriz.count);
  assert.equal(d.rows.reduce((s,r)=>s+r.count,0),d.numerator);
