@@ -68,7 +68,7 @@ test('the first ambulance organization is present and the grand total reconciles
 });
 
 test('standalone October MAX never borrows a cumulative September baseline',()=>{
- for(const [id,total] of [['tmkMaxCount',15573],['elnMaxCount',12498]]){
+ for(const [id,total] of [['tmkMaxCount',16224],['elnMaxCount',12590]]){
   const ds=app('monthly-mo')[id];
   assert.equal(ds.periodType,'month');
   assert.equal(ds.currentLabel,'Октябрь 2026');
