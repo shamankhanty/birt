@@ -8,6 +8,7 @@ import SeptemberRating from "./september-rating";
 import septemberRatingArchive from "./rating/september-v1.json";
 import spasskIdentity from "../config/rkb-spassk-branch.json";
 import { monthlyRatingBranchKeys, excludeMonthlyRatingBranches } from "../lib/monthly-rating-scope.js";
+import { excludeWaybillGroupsWithoutTransport } from "../lib/electronic-waybill-scope.js";
 import { maxHearingPlan, maxHearingDeficit } from "../lib/max-hearing-plan.js";
 import { planTransition } from "../lib/plan-transitions.js";
 import { buildFederalDetailCatalog, federalMetricTarget } from "../lib/federal-navigation.js";
@@ -4525,10 +4526,14 @@ export default function Home() {
       );
     }
   };
-  const waybillRows =
-    waybillMode === "week"
-      ? electronicWaybillWeekly.current.rows
-      : electronicWaybill.rows;
+  const waybillRows = useMemo(
+    () => excludeWaybillGroupsWithoutTransport(
+      waybillMode === "week"
+        ? electronicWaybillWeekly.current.rows
+        : electronicWaybill.rows,
+    ),
+    [waybillMode],
+  );
   const waybillMovementDelta =
     (electronicWaybillWeekly.current.systemSummary.vehiclesWithMovement /
       Math.max(1, electronicWaybillWeekly.current.systemSummary.vehicles)) * 100 -
@@ -4610,7 +4615,6 @@ export default function Home() {
       low: waybillRows.filter((r) => waybillZone(r) === "low").length,
       noMovement: waybillRows.filter((r) => waybillZone(r) === "noMovement")
         .length,
-      noFleet: waybillRows.filter((r) => waybillZone(r) === "noFleet").length,
     }),
     [waybillRows],
   );
@@ -8120,7 +8124,8 @@ export default function Home() {
               <p className="sourceDataNote" data-testid="epl-source-perimeter-warning">
                 <b>Контроль состава:</b> {waybillMode === "week"
                   ? electronicWaybillWeekly.periodCorrection
-                  : "В октябрьском отчёте указано 126 организаций, но имеются 123 номерные группы: 39–41 отсутствуют. Их показатели не заменяются нулём."}
+                  : "В октябрьском отчёте указано 126 организаций, но имеются 123 номерные группы: 39–41 отсутствуют. Их показатели не заменяются нулём."}{" "}
+                В детализации скрыты только группы с 0 ТС; исходный региональный итог не пересчитывается.
               </p>
               <section
                 className="waybillZones"
@@ -8149,11 +8154,6 @@ export default function Home() {
                   <i className="zoneZero" />
                   <strong>{waybillZones.noMovement}</strong>
                   <span>нет движения · 0%</span>
-                </button>
-                <button onClick={() => setWaybillStatus("noFleet")}>
-                  <i className="zoneNA" />
-                  <strong>{waybillZones.noFleet}</strong>
-                  <span>нет данных по ТС</span>
                 </button>
               </section>
               <div className="meetingBlocks waybillRankings twoBlocks">
@@ -8246,7 +8246,8 @@ export default function Home() {
               <div className="allMosHead">
                 <div>
                   <p className="eyebrow">ДЕТАЛИЗАЦИЯ ПО ОРГАНИЗАЦИЯМ</p>
-                  <h2>Все медицинские организации</h2>
+                  <h2>МО с транспортом</h2>
+                  <small>Организации с подтверждённым отсутствием ТС не отображаются</small>
                 </div>
                 <span>
                   {visibleWaybillRows.length} из {waybillRows.length}
@@ -8267,7 +8268,6 @@ export default function Home() {
                   <option value="partial">Частично · 30–79%</option>
                   <option value="low">Низко · 1–29%</option>
                   <option value="noMovement">Нет движения · 0%</option>
-                  <option value="noFleet">Нет данных по ТС</option>
                 </select>
                 <span className="sortHint">
                   Нажмите заголовок столбца для сортировки
