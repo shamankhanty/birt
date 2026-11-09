@@ -462,12 +462,12 @@
   },
   "regional": {
     "ambulatoryCase": {
-      "fact": 92.10774314461551,
+      "fact": 92.60751859372446,
       "plan": 95,
-      "date": "27.10.2026",
-      "quantity": 11399403,
-      "numerator": 9549272,
-      "denominator": 10948601,
+      "date": "07.11.2026",
+      "quantity": 13756858,
+      "numerator": 13756858,
+      "denominator": 14855012,
       "method": "ratio_components",
       "source": "mo-details"
     },
@@ -542,12 +542,12 @@
       "source": "page-baseline"
     },
     "hospital": {
-      "fact": 92.70944872022343,
+      "fact": 92.45358150124649,
       "plan": 95,
-      "date": "04.11.2026",
-      "quantity": 653780,
-      "numerator": 653780,
-      "denominator": 701746,
+      "date": "08.11.2026",
+      "quantity": 756911,
+      "numerator": 756911,
+      "denominator": 818693,
       "method": "ratio_components",
       "source": "mo-details"
     },
@@ -562,12 +562,12 @@
       "source": "page-baseline"
     },
     "semd228": {
-      "fact": 91.58549496328983,
+      "fact": 90.92783200174118,
       "plan": 95,
-      "date": "04.11.2026",
-      "quantity": 1751161,
-      "numerator": 1751161,
-      "denominator": 2200567,
+      "date": "08.11.2026",
+      "quantity": 2151548,
+      "numerator": 2151548,
+      "denominator": 2366215,
       "method": "ratio_components",
       "source": "mo-details"
     },
