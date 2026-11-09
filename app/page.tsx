@@ -2,7 +2,7 @@
 
 import { useMemo, useState } from "react";
 import PlanTransitionStat from "./plan-transition-stat";
-import OctoberPreventiveRating from "./october-preventive-rating";
+import OctoberPreventiveRating, { closedPreventiveOperationalFact } from "./october-preventive-rating";
 import SeptemberRating from "./september-rating";
 import septemberRatingArchive from "./rating/september-v1.json";
 import { maxHearingPlan, maxHearingDeficit } from "../lib/max-hearing-plan.js";
@@ -5597,6 +5597,7 @@ export default function Home() {
     return { achievement, fact, forecast, label: maxPeriodView === "operational" ? (slice.date ? `Оперативно ${slice.date.slice(0, 5)}` : "Ноябрь · нет данных") : `Накопительно ${slice.date.slice(0, 5)}`, plan };
   };
   const sidebarMetricValue = (id: string) => {
+    if (id === "semd228") return `${format(closedPreventiveOperationalFact, 2)}%`;
     const dataset = moData[id];
     if (id === "visitMax" || id === "tmkMaxCount" || id === "elnMaxCount") {
       const { achievement, fact, label, plan } = maxSidebarSnapshot(id);
@@ -5630,6 +5631,7 @@ export default function Home() {
     return `${format(fact, 2)}%`;
   };
   const sidebarMetricTone = (id: string) => {
+    if (id === "semd228") return statusFor(closedPreventiveOperationalFact, 95, false);
     if (id === "visitMax" || id === "tmkMaxCount" || id === "elnMaxCount") {
       const { achievement, forecast, plan } = maxSidebarSnapshot(id);
       if (achievement === null) return "neutral";
@@ -9001,7 +9003,7 @@ export default function Home() {
                     <p>Федеральная оценка не подставляется вместо факта РТ и не используется как предыдущий срез.</p>
                   </details>
                 </section>
-              ) : (
+              ) : matrixMetric === "semd228" ? <OctoberPreventiveRating indicator /> : (
                 <>
               <div className="pageHead compactHead indicatorTitle">
                 <h1>
