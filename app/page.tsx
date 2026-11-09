@@ -2,6 +2,7 @@
 
 import { useMemo, useState } from "react";
 import PlanTransitionStat from "./plan-transition-stat";
+import OctoberPreventiveRating from "./october-preventive-rating";
 import SeptemberRating from "./september-rating";
 import septemberRatingArchive from "./rating/september-v1.json";
 import { maxHearingPlan, maxHearingDeficit } from "../lib/max-hearing-plan.js";
@@ -3578,7 +3579,7 @@ export default function Home() {
   const [unitSortDirection, setUnitSortDirection] =
     useState<SortDirection>("asc");
   const ratingRows = useMemo(() => septemberRatingArchive.rows as RankRow[], []);
-  const [ratingEdition, setRatingEdition] = useState("v2");
+  const [ratingEdition, setRatingEdition] = useState("october");
   const [hearingLevel, setHearingLevel] = useState<
     "all" | "mandatory" | "control" | "heard"
   >("all");
@@ -6782,11 +6783,12 @@ export default function Home() {
 
           {tab === "ranking" && (
             <>
-              <div className="septEdition" role="group" aria-label="Версия сентябрьского рейтинга">
+              <div className="septEdition" role="group" aria-label="Период рейтинга">
+                <button className={ratingEdition === "october" ? "active" : ""} onClick={() => setRatingEdition("october")}>Октябрь · срез 122/228</button>
                 <button className={ratingEdition === "v2" ? "active" : ""} onClick={() => setRatingEdition("v2")}>Сентябрь · новая методика</button>
                 <button className={ratingEdition === "v1" ? "active" : ""} onClick={() => setRatingEdition("v1")}>Сентябрь · прежняя версия</button>
               </div>
-              {ratingEdition === "v2" ? <SeptemberRating /> : <>
+              {ratingEdition === "october" ? <OctoberPreventiveRating /> : ratingEdition === "v2" ? <SeptemberRating /> : <>
               <p className="prototypeNote">Архив версии 1 за сентябрь. Содержит прежние правила, включая оперативный 500+ стоматологов. Для пересчёта используйте новую методику.</p>
               <div className="pageHead ratingHead">
                 <div>
