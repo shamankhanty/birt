@@ -5726,7 +5726,7 @@
     "periodType": "month",
     "previousLabel": "Сентябрь 2026",
     "currentLabel": "Октябрь 2026",
-    "source": "ТМК_МАХ 01.10.-31.10.(Выгрузка из ГИС 02.11.).xlsx",
+    "source": "ТМК_МАХ - 01.10.2026-31.10.2026.xlsx (выгрузка от 09.11)",
     "previousSourceStatus": "no_comparable_monthly_source",
     "sourceWarning": "Отдельный месячный источник сентября не подтверждён; накопительный факт сентября не подставляется.",
     "rows": [
@@ -5734,10 +5734,10 @@
         "name": "АГРЫЗСКАЯ ЦРБ",
         "oid": "1.2.643.5.1.13.13.12.2.16.1088",
         "june": null,
-        "july": 42,
+        "july": 49,
         "change": null,
         "juneQuantity": null,
-        "julyQuantity": "42"
+        "julyQuantity": "49"
       },
       {
         "name": "АДРБ С ПЦ",
@@ -5752,28 +5752,28 @@
         "name": "АЗНАКАЕВСКАЯ ЦРБ",
         "oid": "1.2.643.5.1.13.13.12.2.16.1084",
         "june": null,
-        "july": 505,
+        "july": 545,
         "change": null,
         "juneQuantity": null,
-        "julyQuantity": "505"
+        "julyQuantity": "545"
       },
       {
         "name": "АКСУБАЕВСКАЯ ЦРБ",
         "oid": "1.2.643.5.1.13.13.12.2.16.1156",
         "june": null,
-        "july": 26,
+        "july": 28,
         "change": null,
         "juneQuantity": null,
-        "julyQuantity": "26"
+        "julyQuantity": "28"
       },
       {
         "name": "АКТАНЫШСКАЯ ЦРБ",
         "oid": "1.2.643.5.1.13.13.12.2.16.1092",
         "june": null,
-        "july": 89,
+        "july": 92,
         "change": null,
         "juneQuantity": null,
-        "julyQuantity": "89"
+        "julyQuantity": "92"
       },
       {
         "name": "АЛЕКСЕЕВСКАЯ ЦРБ",
@@ -5797,28 +5797,28 @@
         "name": "АЛЬМЕТЬЕВСКАЯ РМБ",
         "oid": "1.2.643.5.1.13.13.12.2.16.44921",
         "june": null,
-        "july": 376,
+        "july": 384,
         "change": null,
         "juneQuantity": null,
-        "julyQuantity": "376"
+        "julyQuantity": "384"
       },
       {
         "name": "АЛЬМЕТЬЕВСКАЯ ЦРБ",
         "oid": "1.2.643.5.1.13.13.12.2.16.1108",
         "june": null,
-        "july": 1402,
+        "july": 1488,
         "change": null,
         "juneQuantity": null,
-        "julyQuantity": "1402"
+        "julyQuantity": "1488"
       },
       {
         "name": "АПАСТОВСКАЯ ЦРБ",
         "oid": "1.2.643.5.1.13.13.12.2.16.1152",
         "june": null,
-        "july": 147,
+        "july": 149,
         "change": null,
         "juneQuantity": null,
-        "julyQuantity": "147"
+        "julyQuantity": "149"
       },
       {
         "name": "АРСКАЯ ЦРБ",
@@ -5833,37 +5833,37 @@
         "name": "АТНИНСКАЯ ЦРБ",
         "oid": "1.2.643.5.1.13.13.12.2.16.1078",
         "june": null,
-        "july": 122,
+        "july": 124,
         "change": null,
         "juneQuantity": null,
-        "julyQuantity": "122"
+        "julyQuantity": "124"
       },
       {
         "name": "БАВЛИНСКАЯ ЦРБ",
         "oid": "1.2.643.5.1.13.13.12.2.16.1129",
         "june": null,
-        "july": 65,
+        "july": 67,
         "change": null,
         "juneQuantity": null,
-        "julyQuantity": "65"
+        "julyQuantity": "67"
       },
       {
         "name": "БАЗАРНО-МАТАКСКАЯ ЦРБ",
         "oid": "1.2.643.5.1.13.13.12.2.16.1161",
         "june": null,
-        "july": 4,
+        "july": 6,
         "change": null,
         "juneQuantity": null,
-        "julyQuantity": "4"
+        "julyQuantity": "6"
       },
       {
         "name": "БАЛТАСИНСКАЯ ЦРБ",
         "oid": "1.2.643.5.1.13.13.12.2.16.1081",
         "june": null,
-        "july": 129,
+        "july": 134,
         "change": null,
         "juneQuantity": null,
-        "julyQuantity": "129"
+        "julyQuantity": "134"
       },
       {
         "name": "БУГУЛЬМИНСКАЯ ЦРБ",
@@ -5878,10 +5878,10 @@
         "name": "БУИНСКАЯ ЦРБ",
         "oid": "1.2.643.5.1.13.13.12.2.16.1120",
         "june": null,
-        "july": 78,
+        "july": 87,
         "change": null,
         "juneQuantity": null,
-        "julyQuantity": "78"
+        "julyQuantity": "87"
       },
       {
         "name": "ВЕРХНЕУСЛОНСКАЯ ЦРБ",
@@ -5896,46 +5896,46 @@
         "name": "ВЫСОКОГОРСКАЯ ЦРБ",
         "oid": "1.2.643.5.1.13.13.12.2.16.1050",
         "june": null,
-        "july": 99,
+        "july": 101,
         "change": null,
         "juneQuantity": null,
-        "julyQuantity": "99"
+        "julyQuantity": "101"
       },
       {
         "name": "ДГП №7 г.Казань",
         "oid": "1.2.643.5.1.13.13.12.2.16.1113",
         "june": null,
-        "july": 160,
+        "july": 161,
         "change": null,
         "juneQuantity": null,
-        "julyQuantity": "160"
+        "julyQuantity": "161"
       },
       {
         "name": "ГКБ № 12 г.Казань",
         "oid": "1.2.643.5.1.13.13.12.2.16.28030",
         "june": null,
-        "july": 370,
+        "july": 372,
         "change": null,
         "juneQuantity": null,
-        "julyQuantity": "370"
+        "julyQuantity": "372"
       },
       {
         "name": "ГКБ №16 г.Казань",
         "oid": "1.2.643.5.1.13.13.12.2.16.1136",
         "june": null,
-        "july": 208,
+        "july": 229,
         "change": null,
         "juneQuantity": null,
-        "julyQuantity": "208"
+        "julyQuantity": "229"
       },
       {
         "name": "ГКБ№7 ИМ. М.Н.САДЫКОВА г.Казань",
         "oid": "1.2.643.5.1.13.13.12.2.16.1163",
         "june": null,
-        "july": 587,
+        "july": 594,
         "change": null,
         "juneQuantity": null,
-        "julyQuantity": "587"
+        "julyQuantity": "594"
       },
       {
         "name": "ГБ № 11 г.Казань",
@@ -5959,10 +5959,10 @@
         "name": "ГБ №5 г.Наб. Челны",
         "oid": "1.2.643.5.1.13.13.12.2.16.1112",
         "june": null,
-        "july": 77,
+        "july": 78,
         "change": null,
         "juneQuantity": null,
-        "julyQuantity": "77"
+        "julyQuantity": "78"
       },
       {
         "name": "ДГБ № 1 г.Казань",
@@ -5977,37 +5977,37 @@
         "name": "ДГП № 6 г.Казань",
         "oid": "1.2.643.5.1.13.13.12.2.16.1090",
         "june": null,
-        "july": 349,
+        "july": 352,
         "change": null,
         "juneQuantity": null,
-        "julyQuantity": "349"
+        "julyQuantity": "352"
       },
       {
         "name": "ГП № 10 г.Казань",
         "oid": "1.2.643.5.1.13.13.12.2.16.1074",
         "june": null,
-        "july": 361,
+        "july": 373,
         "change": null,
         "juneQuantity": null,
-        "julyQuantity": "361"
+        "julyQuantity": "373"
       },
       {
         "name": "ГП №18 г.Казань",
         "oid": "1.2.643.5.1.13.13.12.2.16.1080",
         "june": null,
-        "july": 230,
+        "july": 231,
         "change": null,
         "juneQuantity": null,
-        "julyQuantity": "230"
+        "julyQuantity": "231"
       },
       {
         "name": "ГП № 20 г.Казань",
         "oid": "1.2.643.5.1.13.13.12.2.16.1178",
         "june": null,
-        "july": 62,
+        "july": 64,
         "change": null,
         "juneQuantity": null,
-        "julyQuantity": "62"
+        "julyQuantity": "64"
       },
       {
         "name": "ГП № 21 г.Казань",
@@ -6031,136 +6031,136 @@
         "name": "ГП №4 ИМ.Л.Н.ГАНИЕВОЙ г.Наб.Челны",
         "oid": "1.2.643.5.1.13.13.12.2.16.1147",
         "june": null,
-        "july": 107,
+        "july": 118,
         "change": null,
         "juneQuantity": null,
-        "julyQuantity": "107"
+        "julyQuantity": "118"
       },
       {
         "name": "ГП №6 г.Наб.Челны",
         "oid": "1.2.643.5.1.13.13.12.2.16.1051",
         "june": null,
-        "july": 315,
+        "july": 323,
         "change": null,
         "juneQuantity": null,
-        "julyQuantity": "315"
+        "julyQuantity": "323"
       },
       {
         "name": "ГП № 7 г. Казань",
         "oid": "1.2.643.5.1.13.13.12.2.16.1153",
         "june": null,
-        "july": 181,
+        "july": 187,
         "change": null,
         "juneQuantity": null,
-        "julyQuantity": "181"
+        "julyQuantity": "187"
       },
       {
         "name": "ГП №7 г.Наб.Челны",
         "oid": "1.2.643.5.1.13.13.12.2.16.1115",
         "june": null,
-        "july": 237,
+        "july": 246,
         "change": null,
         "juneQuantity": null,
-        "julyQuantity": "237"
+        "julyQuantity": "246"
       },
       {
         "name": "ГП № 8 г.Казань",
         "oid": "1.2.643.5.1.13.13.12.2.16.1082",
         "june": null,
-        "july": 283,
+        "july": 286,
         "change": null,
         "juneQuantity": null,
-        "julyQuantity": "283"
+        "julyQuantity": "286"
       },
       {
         "name": "ГВВ г.Казань",
         "oid": "1.2.643.5.1.13.13.12.2.16.1135",
         "june": null,
-        "july": 57,
+        "july": 59,
         "change": null,
         "juneQuantity": null,
-        "julyQuantity": "57"
+        "julyQuantity": "59"
       },
       {
         "name": "ГВВ г.Наб.Челны",
         "oid": "1.2.643.5.1.13.13.12.2.16.1085",
         "june": null,
-        "july": 128,
+        "july": 135,
         "change": null,
         "juneQuantity": null,
-        "julyQuantity": "128"
+        "julyQuantity": "135"
       },
       {
         "name": "ДГКБ № 7 г.Казань",
         "oid": "1.2.643.5.1.13.13.12.2.16.1123",
         "june": null,
-        "july": 481,
+        "july": 512,
         "change": null,
         "juneQuantity": null,
-        "julyQuantity": "481"
+        "julyQuantity": "512"
       },
       {
         "name": "ДГП № 11 г.Казань",
         "oid": "1.2.643.5.1.13.13.12.2.16.1200",
         "june": null,
-        "july": 61,
+        "july": 66,
         "change": null,
         "juneQuantity": null,
-        "julyQuantity": "61"
+        "julyQuantity": "66"
       },
       {
         "name": "ДГП № 10 г.Казань",
         "oid": "1.2.643.5.1.13.13.12.2.16.1199",
         "june": null,
-        "july": 223,
+        "july": 229,
         "change": null,
         "juneQuantity": null,
-        "julyQuantity": "223"
+        "julyQuantity": "229"
       },
       {
         "name": "ДГП № 2 г.Казань",
         "oid": "1.2.643.5.1.13.13.12.2.16.1182",
         "june": null,
-        "july": 68,
+        "july": 69,
         "change": null,
         "juneQuantity": null,
-        "julyQuantity": "68"
+        "julyQuantity": "69"
       },
       {
         "name": "ДГП №2 г.Наб.Челны",
         "oid": "1.2.643.5.1.13.13.12.2.16.1045",
         "june": null,
-        "july": 156,
+        "july": 174,
         "change": null,
         "juneQuantity": null,
-        "julyQuantity": "156"
+        "julyQuantity": "174"
       },
       {
         "name": "ДГП №3 г.Наб.Челны",
         "oid": "1.2.643.5.1.13.13.12.2.16.1067",
         "june": null,
-        "july": 43,
+        "july": 46,
         "change": null,
         "juneQuantity": null,
-        "julyQuantity": "43"
+        "julyQuantity": "46"
       },
       {
         "name": "ДГП №4 ИМ. Ф.Г. АХМЕРОВОЙ г.Наб.Челны",
         "oid": "1.2.643.5.1.13.13.12.2.16.1127",
         "june": null,
-        "july": 132,
+        "july": 134,
         "change": null,
         "juneQuantity": null,
-        "julyQuantity": "132"
+        "julyQuantity": "134"
       },
       {
         "name": "ДГП № 4 г.Казань",
         "oid": "1.2.643.5.1.13.13.12.2.16.1122",
         "june": null,
-        "july": 62,
+        "july": 63,
         "change": null,
         "juneQuantity": null,
-        "julyQuantity": "62"
+        "julyQuantity": "63"
       },
       {
         "name": "ДГП №5 г.Наб.Челны",
@@ -6184,55 +6184,55 @@
         "name": "ДГП № 9 г.Казань",
         "oid": "1.2.643.5.1.13.13.12.2.16.1193",
         "june": null,
-        "july": 141,
+        "july": 144,
         "change": null,
         "juneQuantity": null,
-        "julyQuantity": "141"
+        "julyQuantity": "144"
       },
       {
         "name": "ДРКБ МЗ РТ",
         "oid": "1.2.643.5.1.13.13.12.2.16.1155",
         "june": null,
-        "july": 527,
+        "july": 534,
         "change": null,
         "juneQuantity": null,
-        "julyQuantity": "527"
+        "julyQuantity": "534"
       },
       {
         "name": "ДРОЖЖАНОВСКАЯ ЦРБ",
         "oid": "1.2.643.5.1.13.13.12.2.16.1105",
         "june": null,
-        "july": 75,
+        "july": 81,
         "change": null,
         "juneQuantity": null,
-        "julyQuantity": "75"
+        "julyQuantity": "81"
       },
       {
         "name": "ЕЛАБУЖСКАЯ ЦРБ",
         "oid": "1.2.643.5.1.13.13.12.2.16.1093",
         "june": null,
-        "july": 838,
+        "july": 861,
         "change": null,
         "juneQuantity": null,
-        "julyQuantity": "838"
+        "julyQuantity": "861"
       },
       {
         "name": "ЗАИНСКАЯ ЦРБ",
         "oid": "1.2.643.5.1.13.13.12.2.16.1072",
         "june": null,
-        "july": 678,
+        "july": 728,
         "change": null,
         "juneQuantity": null,
-        "julyQuantity": "678"
+        "julyQuantity": "728"
       },
       {
         "name": "ЗЕЛЕНОДОЛЬСКАЯ ЦРБ",
         "oid": "1.2.643.5.1.13.13.12.2.16.1139",
         "june": null,
-        "july": 272,
+        "july": 281,
         "change": null,
         "juneQuantity": null,
-        "julyQuantity": "272"
+        "julyQuantity": "281"
       },
       {
         "name": "КАЙБИЦКАЯ ЦРБ",
@@ -6256,55 +6256,55 @@
         "name": "КАМСКО-УСТЬИНСКАЯ ЦРБ",
         "oid": "1.2.643.5.1.13.13.12.2.16.1044",
         "june": null,
-        "july": 29,
+        "july": 34,
         "change": null,
         "juneQuantity": null,
-        "julyQuantity": "29"
+        "julyQuantity": "34"
       },
       {
         "name": "КДМЦ г.Наб.Челны",
         "oid": "1.2.643.5.1.13.13.12.2.16.1065",
         "june": null,
-        "july": 104,
+        "july": 106,
         "change": null,
         "juneQuantity": null,
-        "julyQuantity": "104"
+        "julyQuantity": "106"
       },
       {
         "name": "КМУ г.Казань",
         "oid": "1.2.643.5.1.13.13.12.2.16.1125",
         "june": null,
-        "july": 346,
+        "july": 358,
         "change": null,
         "juneQuantity": null,
-        "julyQuantity": "346"
+        "julyQuantity": "358"
       },
       {
         "name": "КБ №2 г.Казань",
         "oid": "1.2.643.5.1.13.13.12.2.16.1185",
         "june": null,
-        "july": 631,
+        "july": 640,
         "change": null,
         "juneQuantity": null,
-        "julyQuantity": "631"
+        "julyQuantity": "640"
       },
       {
         "name": "КУКМОРСКАЯ ЦРБ",
         "oid": "1.2.643.5.1.13.13.12.2.16.1144",
         "june": null,
-        "july": 53,
+        "july": 57,
         "change": null,
         "juneQuantity": null,
-        "julyQuantity": "53"
+        "julyQuantity": "57"
       },
       {
         "name": "ЛАИШЕВСКАЯ ЦРБ",
         "oid": "1.2.643.5.1.13.13.12.2.16.1149",
         "june": null,
-        "july": 39,
+        "july": 40,
         "change": null,
         "juneQuantity": null,
-        "julyQuantity": "39"
+        "julyQuantity": "40"
       },
       {
         "name": "ЛЕНИНОГОРСКАЯ ЦРБ",
@@ -6319,91 +6319,91 @@
         "name": "МАМАДЫШСКАЯ ЦРБ",
         "oid": "1.2.643.5.1.13.13.12.2.16.1104",
         "june": null,
-        "july": 90,
+        "july": 93,
         "change": null,
         "juneQuantity": null,
-        "julyQuantity": "90"
+        "julyQuantity": "93"
       },
       {
         "name": "МЕНДЕЛЕЕВСКАЯ ЦРБ",
         "oid": "1.2.643.5.1.13.13.12.2.16.1058",
         "june": null,
-        "july": 99,
+        "july": 104,
         "change": null,
         "juneQuantity": null,
-        "julyQuantity": "99"
+        "julyQuantity": "104"
       },
       {
         "name": "МЕНЗЕЛИНСКАЯ ЦРБ",
         "oid": "1.2.643.5.1.13.13.12.2.16.1101",
         "june": null,
-        "july": 163,
+        "july": 166,
         "change": null,
         "juneQuantity": null,
-        "julyQuantity": "163"
+        "julyQuantity": "166"
       },
       {
         "name": "МУСЛЮМОВСКАЯ ЦРБ",
         "oid": "1.2.643.5.1.13.13.12.2.16.1055",
         "june": null,
-        "july": 22,
+        "july": 27,
         "change": null,
         "juneQuantity": null,
-        "julyQuantity": "22"
+        "julyQuantity": "27"
       },
       {
         "name": "НДРБ С ПЦ г.Нижнекамск",
         "oid": "1.2.643.5.1.13.13.12.2.16.1171",
         "june": null,
-        "july": 786,
+        "july": 800,
         "change": null,
         "juneQuantity": null,
-        "julyQuantity": "786"
+        "julyQuantity": "800"
       },
       {
         "name": "НОВОШЕШМИНСКАЯ ЦРБ",
         "oid": "1.2.643.5.1.13.13.12.2.16.1059",
         "june": null,
-        "july": 42,
+        "july": 45,
         "change": null,
         "juneQuantity": null,
-        "julyQuantity": "42"
+        "julyQuantity": "45"
       },
       {
         "name": "НУРЛАТСКАЯ ЦРБ",
         "oid": "1.2.643.5.1.13.13.12.2.16.1138",
         "june": null,
-        "july": 117,
+        "july": 120,
         "change": null,
         "juneQuantity": null,
-        "julyQuantity": "117"
+        "julyQuantity": "120"
       },
       {
         "name": "НЦРМБ г.Нижнекамск",
         "oid": "1.2.643.5.1.13.13.12.2.16.1192",
         "june": null,
-        "july": 402,
+        "july": 423,
         "change": null,
         "juneQuantity": null,
-        "julyQuantity": "402"
+        "julyQuantity": "423"
       },
       {
         "name": "ПЕСТРЕЧИНСКАЯ ЦРБ",
         "oid": "1.2.643.5.1.13.13.12.2.16.1109",
         "june": null,
-        "july": 43,
+        "july": 44,
         "change": null,
         "juneQuantity": null,
-        "julyQuantity": "43"
+        "julyQuantity": "44"
       },
       {
         "name": "РКБ МЗ РТ",
         "oid": "1.2.643.5.1.13.13.12.2.16.1094",
         "june": null,
-        "july": 54,
+        "july": 66,
         "change": null,
         "juneQuantity": null,
-        "julyQuantity": "54"
+        "julyQuantity": "66"
       },
       {
         "name": "РКОД МЗ РТ ИМ. ПРОФ. М.З.СИГАЛА г.Казань",
@@ -6427,55 +6427,55 @@
         "name": "РЫБНО-СЛОБОДСКАЯ ЦРБ",
         "oid": "1.2.643.5.1.13.13.12.2.16.1133",
         "june": null,
-        "july": 7,
+        "july": 27,
         "change": null,
         "juneQuantity": null,
-        "julyQuantity": "7"
+        "julyQuantity": "27"
       },
       {
         "name": "САБИНСКАЯ ЦРБ",
         "oid": "1.2.643.5.1.13.13.12.2.16.1126",
         "june": null,
-        "july": 111,
+        "july": 121,
         "change": null,
         "juneQuantity": null,
-        "julyQuantity": "111"
+        "julyQuantity": "121"
       },
       {
         "name": "САРМАНОВСКАЯ ЦРБ",
         "oid": "1.2.643.5.1.13.13.12.2.16.1169",
         "june": null,
-        "july": 317,
+        "july": 324,
         "change": null,
         "juneQuantity": null,
-        "julyQuantity": "317"
+        "julyQuantity": "324"
       },
       {
         "name": "ТЕТЮШСКАЯ ЦРБ",
         "oid": "1.2.643.5.1.13.13.12.2.16.1130",
         "june": null,
-        "july": 102,
+        "july": 103,
         "change": null,
         "juneQuantity": null,
-        "julyQuantity": "102"
+        "julyQuantity": "103"
       },
       {
         "name": "ТУКАЕВСКАЯ ЦРБ",
         "oid": "1.2.643.5.1.13.13.12.2.16.1140",
         "june": null,
-        "july": 99,
+        "july": 128,
         "change": null,
         "juneQuantity": null,
-        "julyQuantity": "99"
+        "julyQuantity": "128"
       },
       {
         "name": "ТЮЛЯЧИНСКАЯ ЦРБ",
         "oid": "1.2.643.5.1.13.13.12.2.16.1039",
         "june": null,
-        "july": 127,
+        "july": 136,
         "change": null,
         "juneQuantity": null,
-        "julyQuantity": "127"
+        "julyQuantity": "136"
       },
       {
         "name": "УРУССИНСКАЯ ЦРБ",
@@ -6490,10 +6490,10 @@
         "name": "ЦГКБ № 18 ИМ. ПРОФ. К.Ш. ЗЫЯТДИНОВА г.Казань",
         "oid": "1.2.643.5.1.13.13.12.2.16.1151",
         "june": null,
-        "july": 440,
+        "july": 459,
         "change": null,
         "juneQuantity": null,
-        "julyQuantity": "440"
+        "julyQuantity": "459"
       },
       {
         "name": "ЧЕРЕМШАНСКАЯ ЦРБ",
@@ -6508,10 +6508,10 @@
         "name": "ЧИСТОПОЛЬСКАЯ ЦРБ",
         "oid": "1.2.643.5.1.13.13.12.2.16.1038",
         "june": null,
-        "july": 96,
+        "july": 110,
         "change": null,
         "juneQuantity": null,
-        "julyQuantity": "96"
+        "julyQuantity": "110"
       },
       {
         "name": "Неизвестная МО",
@@ -6536,30 +6536,30 @@
         "name": "ООО \"КДЦ на Четаева\"",
         "oid": null,
         "june": null,
-        "july": 29,
+        "july": 30,
         "change": null,
         "juneQuantity": null,
-        "julyQuantity": "29",
+        "julyQuantity": "30",
         "sourceStatus": "external_source"
       },
       {
         "name": "ООО \"Красноключинский центр семейной медицины\"",
         "oid": null,
         "june": null,
-        "july": 40,
+        "july": 46,
         "change": null,
         "juneQuantity": null,
-        "julyQuantity": "40",
+        "julyQuantity": "46",
         "sourceStatus": "external_source"
       },
       {
         "name": "ООО \"ММЦ Профмедицина-НК\"",
         "oid": null,
         "june": null,
-        "july": 43,
+        "july": 44,
         "change": null,
         "juneQuantity": null,
-        "julyQuantity": "43",
+        "julyQuantity": "44",
         "sourceStatus": "external_source"
       },
       {
@@ -6630,7 +6630,8 @@
         "julyQuantity": null,
         "sourceStatus": "no_source_row"
       }
-    ]
+    ],
+    "auditNote": "Принят больший подтверждённый факт за закрытый октябрь: 16224. Состав 97 МО, включая ГДБ №1 г. Казани (OID 1148)."
   },
   "elnMaxCount": {
     "unit": "count",
@@ -6639,7 +6640,7 @@
     "periodType": "month",
     "previousLabel": "Сентябрь 2026",
     "currentLabel": "Октябрь 2026",
-    "source": "ТМК_МАХ 01.10.-31.10.(Выгрузка из ГИС 02.11.).xlsx",
+    "source": "ТМК_МАХ - 01.10.2026-31.10.2026.xlsx (выгрузка от 09.11)",
     "previousSourceStatus": "no_comparable_monthly_source",
     "sourceWarning": "Отдельный месячный источник сентября не подтверждён; накопительный факт сентября не подставляется.",
     "rows": [
@@ -6665,28 +6666,28 @@
         "name": "АЗНАКАЕВСКАЯ ЦРБ",
         "oid": "1.2.643.5.1.13.13.12.2.16.1084",
         "june": null,
-        "july": 306,
+        "july": 307,
         "change": null,
         "juneQuantity": null,
-        "julyQuantity": "306"
+        "julyQuantity": "307"
       },
       {
         "name": "АКСУБАЕВСКАЯ ЦРБ",
         "oid": "1.2.643.5.1.13.13.12.2.16.1156",
         "june": null,
-        "july": 64,
+        "july": 65,
         "change": null,
         "juneQuantity": null,
-        "julyQuantity": "64"
+        "julyQuantity": "65"
       },
       {
         "name": "АКТАНЫШСКАЯ ЦРБ",
         "oid": "1.2.643.5.1.13.13.12.2.16.1092",
         "june": null,
-        "july": 180,
+        "july": 183,
         "change": null,
         "juneQuantity": null,
-        "julyQuantity": "180"
+        "julyQuantity": "183"
       },
       {
         "name": "АЛЕКСЕЕВСКАЯ ЦРБ",
@@ -6710,10 +6711,10 @@
         "name": "АЛЬМЕТЬЕВСКАЯ РМБ",
         "oid": "1.2.643.5.1.13.13.12.2.16.44921",
         "june": null,
-        "july": 51,
+        "july": 52,
         "change": null,
         "juneQuantity": null,
-        "julyQuantity": "51"
+        "julyQuantity": "52"
       },
       {
         "name": "АЛЬМЕТЬЕВСКАЯ ЦРБ",
@@ -6764,10 +6765,10 @@
         "name": "БАЗАРНО-МАТАКСКАЯ ЦРБ",
         "oid": "1.2.643.5.1.13.13.12.2.16.1161",
         "june": null,
-        "july": 9,
+        "july": 10,
         "change": null,
         "juneQuantity": null,
-        "julyQuantity": "9"
+        "julyQuantity": "10"
       },
       {
         "name": "БАЛТАСИНСКАЯ ЦРБ",
@@ -6836,10 +6837,10 @@
         "name": "ГКБ №16 г.Казань",
         "oid": "1.2.643.5.1.13.13.12.2.16.1136",
         "june": null,
-        "july": 279,
+        "july": 280,
         "change": null,
         "juneQuantity": null,
-        "julyQuantity": "279"
+        "julyQuantity": "280"
       },
       {
         "name": "ГКБ№7 ИМ. М.Н.САДЫКОВА г.Казань",
@@ -6854,10 +6855,10 @@
         "name": "ГБ № 11 г.Казань",
         "oid": "1.2.643.5.1.13.13.12.2.16.1070",
         "june": null,
-        "july": 114,
+        "july": 115,
         "change": null,
         "juneQuantity": null,
-        "julyQuantity": "114"
+        "julyQuantity": "115"
       },
       {
         "name": "ГБ №2 г.Наб.Челны",
@@ -6872,10 +6873,10 @@
         "name": "ГБ №5 г.Наб. Челны",
         "oid": "1.2.643.5.1.13.13.12.2.16.1112",
         "june": null,
-        "july": 86,
+        "july": 87,
         "change": null,
         "juneQuantity": null,
-        "julyQuantity": "86"
+        "julyQuantity": "87"
       },
       {
         "name": "ДГБ № 1 г.Казань",
@@ -6890,28 +6891,28 @@
         "name": "ДГП № 6 г.Казань",
         "oid": "1.2.643.5.1.13.13.12.2.16.1090",
         "june": null,
-        "july": 485,
+        "july": 487,
         "change": null,
         "juneQuantity": null,
-        "julyQuantity": "485"
+        "julyQuantity": "487"
       },
       {
         "name": "ГП № 10 г.Казань",
         "oid": "1.2.643.5.1.13.13.12.2.16.1074",
         "june": null,
-        "july": 246,
+        "july": 248,
         "change": null,
         "juneQuantity": null,
-        "julyQuantity": "246"
+        "julyQuantity": "248"
       },
       {
         "name": "ГП №18 г.Казань",
         "oid": "1.2.643.5.1.13.13.12.2.16.1080",
         "june": null,
-        "july": 321,
+        "july": 324,
         "change": null,
         "juneQuantity": null,
-        "julyQuantity": "321"
+        "julyQuantity": "324"
       },
       {
         "name": "ГП № 20 г.Казань",
@@ -6953,28 +6954,28 @@
         "name": "ГП №6 г.Наб.Челны",
         "oid": "1.2.643.5.1.13.13.12.2.16.1051",
         "june": null,
-        "july": 228,
+        "july": 229,
         "change": null,
         "juneQuantity": null,
-        "julyQuantity": "228"
+        "julyQuantity": "229"
       },
       {
         "name": "ГП № 7 г. Казань",
         "oid": "1.2.643.5.1.13.13.12.2.16.1153",
         "june": null,
-        "july": 131,
+        "july": 133,
         "change": null,
         "juneQuantity": null,
-        "julyQuantity": "131"
+        "julyQuantity": "133"
       },
       {
         "name": "ГП №7 г.Наб.Челны",
         "oid": "1.2.643.5.1.13.13.12.2.16.1115",
         "june": null,
-        "july": 251,
+        "july": 252,
         "change": null,
         "juneQuantity": null,
-        "julyQuantity": "251"
+        "julyQuantity": "252"
       },
       {
         "name": "ГП № 8 г.Казань",
@@ -6998,28 +6999,28 @@
         "name": "ГВВ г.Наб.Челны",
         "oid": "1.2.643.5.1.13.13.12.2.16.1085",
         "june": null,
-        "july": 105,
+        "july": 106,
         "change": null,
         "juneQuantity": null,
-        "julyQuantity": "105"
+        "julyQuantity": "106"
       },
       {
         "name": "ДГКБ № 7 г.Казань",
         "oid": "1.2.643.5.1.13.13.12.2.16.1123",
         "june": null,
-        "july": 609,
+        "july": 615,
         "change": null,
         "juneQuantity": null,
-        "julyQuantity": "609"
+        "julyQuantity": "615"
       },
       {
         "name": "ДГП № 11 г.Казань",
         "oid": "1.2.643.5.1.13.13.12.2.16.1200",
         "june": null,
-        "july": 108,
+        "july": 107,
         "change": null,
         "juneQuantity": null,
-        "julyQuantity": "108"
+        "julyQuantity": "107"
       },
       {
         "name": "ДГП № 10 г.Казань",
@@ -7034,10 +7035,10 @@
         "name": "ДГП № 2 г.Казань",
         "oid": "1.2.643.5.1.13.13.12.2.16.1182",
         "june": null,
-        "july": 120,
+        "july": 147,
         "change": null,
         "juneQuantity": null,
-        "julyQuantity": "120"
+        "julyQuantity": "147"
       },
       {
         "name": "ДГП №2 г.Наб.Челны",
@@ -7052,10 +7053,10 @@
         "name": "ДГП №3 г.Наб.Челны",
         "oid": "1.2.643.5.1.13.13.12.2.16.1067",
         "june": null,
-        "july": 77,
+        "july": 78,
         "change": null,
         "juneQuantity": null,
-        "julyQuantity": "77"
+        "julyQuantity": "78"
       },
       {
         "name": "ДГП №4 ИМ. Ф.Г. АХМЕРОВОЙ г.Наб.Челны",
@@ -7124,28 +7125,28 @@
         "name": "ЕЛАБУЖСКАЯ ЦРБ",
         "oid": "1.2.643.5.1.13.13.12.2.16.1093",
         "june": null,
-        "july": 1021,
+        "july": 1041,
         "change": null,
         "juneQuantity": null,
-        "julyQuantity": "1021"
+        "julyQuantity": "1041"
       },
       {
         "name": "ЗАИНСКАЯ ЦРБ",
         "oid": "1.2.643.5.1.13.13.12.2.16.1072",
         "june": null,
-        "july": 568,
+        "july": 569,
         "change": null,
         "juneQuantity": null,
-        "julyQuantity": "568"
+        "julyQuantity": "569"
       },
       {
         "name": "ЗЕЛЕНОДОЛЬСКАЯ ЦРБ",
         "oid": "1.2.643.5.1.13.13.12.2.16.1139",
         "june": null,
-        "july": 241,
+        "july": 244,
         "change": null,
         "juneQuantity": null,
-        "julyQuantity": "241"
+        "julyQuantity": "244"
       },
       {
         "name": "КАЙБИЦКАЯ ЦРБ",
@@ -7187,10 +7188,10 @@
         "name": "КМУ г.Казань",
         "oid": "1.2.643.5.1.13.13.12.2.16.1125",
         "june": null,
-        "july": 183,
+        "july": 187,
         "change": null,
         "juneQuantity": null,
-        "julyQuantity": "183"
+        "julyQuantity": "187"
       },
       {
         "name": "КБ №2 г.Казань",
@@ -7259,19 +7260,19 @@
         "name": "МУСЛЮМОВСКАЯ ЦРБ",
         "oid": "1.2.643.5.1.13.13.12.2.16.1055",
         "june": null,
-        "july": 40,
+        "july": 42,
         "change": null,
         "juneQuantity": null,
-        "julyQuantity": "40"
+        "julyQuantity": "42"
       },
       {
         "name": "НДРБ С ПЦ г.Нижнекамск",
         "oid": "1.2.643.5.1.13.13.12.2.16.1171",
         "june": null,
-        "july": 162,
+        "july": 164,
         "change": null,
         "juneQuantity": null,
-        "julyQuantity": "162"
+        "julyQuantity": "164"
       },
       {
         "name": "НОВОШЕШМИНСКАЯ ЦРБ",
@@ -7295,19 +7296,19 @@
         "name": "НЦРМБ г.Нижнекамск",
         "oid": "1.2.643.5.1.13.13.12.2.16.1192",
         "june": null,
-        "july": 677,
+        "july": 676,
         "change": null,
         "juneQuantity": null,
-        "julyQuantity": "677"
+        "julyQuantity": "676"
       },
       {
         "name": "ПЕСТРЕЧИНСКАЯ ЦРБ",
         "oid": "1.2.643.5.1.13.13.12.2.16.1109",
         "june": null,
-        "july": 259,
+        "july": 261,
         "change": null,
         "juneQuantity": null,
-        "julyQuantity": "259"
+        "julyQuantity": "261"
       },
       {
         "name": "РКБ МЗ РТ",
@@ -7376,19 +7377,19 @@
         "name": "ТУКАЕВСКАЯ ЦРБ",
         "oid": "1.2.643.5.1.13.13.12.2.16.1140",
         "june": null,
-        "july": 76,
+        "july": 77,
         "change": null,
         "juneQuantity": null,
-        "julyQuantity": "76"
+        "julyQuantity": "77"
       },
       {
         "name": "ТЮЛЯЧИНСКАЯ ЦРБ",
         "oid": "1.2.643.5.1.13.13.12.2.16.1039",
         "june": null,
-        "july": 30,
+        "july": 29,
         "change": null,
         "juneQuantity": null,
-        "julyQuantity": "30"
+        "julyQuantity": "29"
       },
       {
         "name": "УРУССИНСКАЯ ЦРБ",
@@ -7403,10 +7404,10 @@
         "name": "ЦГКБ № 18 ИМ. ПРОФ. К.Ш. ЗЫЯТДИНОВА г.Казань",
         "oid": "1.2.643.5.1.13.13.12.2.16.1151",
         "june": null,
-        "july": 255,
+        "july": 256,
         "change": null,
         "juneQuantity": null,
-        "julyQuantity": "255"
+        "julyQuantity": "256"
       },
       {
         "name": "ЧЕРЕМШАНСКАЯ ЦРБ",
@@ -7421,10 +7422,10 @@
         "name": "ЧИСТОПОЛЬСКАЯ ЦРБ",
         "oid": "1.2.643.5.1.13.13.12.2.16.1038",
         "june": null,
-        "july": 304,
+        "july": 307,
         "change": null,
         "juneQuantity": null,
-        "julyQuantity": "304"
+        "julyQuantity": "307"
       },
       {
         "name": "Неизвестная МО",
@@ -7449,10 +7450,10 @@
         "name": "ООО \"КДЦ на Четаева\"",
         "oid": null,
         "june": null,
-        "july": 32,
+        "july": 33,
         "change": null,
         "juneQuantity": null,
-        "julyQuantity": "32",
+        "julyQuantity": "33",
         "sourceStatus": "external_source"
       },
       {
@@ -7469,10 +7470,10 @@
         "name": "ООО \"ММЦ Профмедицина-НК\"",
         "oid": null,
         "june": null,
-        "july": 36,
+        "july": 35,
         "change": null,
         "juneQuantity": null,
-        "julyQuantity": "36",
+        "julyQuantity": "35",
         "sourceStatus": "external_source"
       },
       {
@@ -7543,7 +7544,8 @@
         "julyQuantity": null,
         "sourceStatus": "no_source_row"
       }
-    ]
+    ],
+    "auditNote": "Принят больший подтверждённый факт за закрытый октябрь: 12590. Состав 97 МО, включая ГДБ №1 г. Казани (OID 1148)."
   },
   "doctorsAll": {
     "unit": "%",
