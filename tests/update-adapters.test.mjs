@@ -11,3 +11,9 @@ test('stage9 source adapters are deterministic and staging-only',()=>{
   assert.equal(x.canonicalUnchanged,true);
   assert.equal(x.endToEndStaging,'PASS');
 });
+
+test('ambulatory missing baseline and duplicate private OID are regression-tested',()=>{
+  const r=spawnSync(process.platform === 'win32' ? 'python' : 'python3',
+    ['-m','unittest','discover','-s','tests','-p','test_ambulatory_source.py','-v'],{encoding:'utf8'});
+  assert.equal(r.status,0,`${r.stdout}\n${r.stderr}`);
+});

@@ -22,6 +22,12 @@ test("confirmed previous components expose the real cumulative movements", () =>
     assert.equal(dataset.numerator, sum(metric, "registered"), `${metric} current numerator`);
     assert.equal(dataset.denominator, sum(metric, "volume"), `${metric} current denominator`);
     if (!("previousNumerator" in dataset) || !("previousDenominator" in dataset)) continue;
+    // Earlier federal and current internal 122/228 cuts have no matching component pair.
+    // Preserve null: a previous percentage must not be reverse-engineered as components.
+    if (dataset.previousNumerator === null || dataset.previousDenominator === null) {
+      assert.equal(metric, "semd228", `${metric}: unexpected absent baseline components`);
+      continue;
+    }
     assert.equal(typeof dataset.previousNumerator, "number", `${metric} previous numerator`);
     assert.equal(typeof dataset.previousDenominator, "number", `${metric} previous denominator`);
     assert.ok(dataset.previousPeriod && dataset.period, `${metric} periods are present`);

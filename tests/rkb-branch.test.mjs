@@ -97,8 +97,8 @@ test("hospital report has no branch attribution without a branch identifier", ()
   const dataset=read('app/mo-data.json').hospital;
   const row=dataset.rows.find(item=>item.oid===rootOid);
   assert.equal(row.name,'ГАУЗ "РКБ МЗ РТ"');
-  assert.equal(row.count,2291);
-  assert.equal(read('app/mo-detail-oids.json').hospital[rootOid].volume,3644);
+  assert.equal(row.count,2335);
+  assert.equal(read('app/mo-detail-oids.json').hospital[rootOid].volume,3673);
 });
 
 test("conflicting structural identifiers stop attribution and unrelated MO still resolves", () => {

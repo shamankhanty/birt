@@ -8,17 +8,21 @@ const audit = read('app/preventive-semd-audit.json');
 const dataset = read('app/mo-data.json').semd228;
 const runtime = createMoRegistryRuntime(read('app/mo-registry.json'));
 
-test('04 November preventive cut reconciles 95 matched source rows and October comparison', () => {
-  assert.equal(dataset.date,'04.11.2026');
-  assert.equal(dataset.previousDate,'31.10.2026');
-  assert.equal(dataset.previousNumerator,2201997);
-  assert.equal(dataset.previousDenominator,2419529);
+test('internal 08 November preventive cut reconciles 86 MO and preserves historical 04 November audit', () => {
+  assert.equal(dataset.date,'08.11.2026');
+  assert.equal(dataset.previousDate,'04.11.2026');
+  assert.equal(dataset.previousNumerator,null);
+  assert.equal(dataset.previousDenominator,null);
+  assert.equal(dataset.rows.length,86);
+  assert.equal(dataset.numerator,2151548);
+  assert.equal(dataset.denominator,2366215);
+  assert.equal(dataset.fact,2151548/2366215*100);
+  const source=read('app/mo-detail-oids.json').semd228;
+  assert.equal(Object.values(source).reduce((s,r)=>s+r.registered,0),dataset.numerator);
+  assert.equal(Object.values(source).reduce((s,r)=>s+r.volume,0),dataset.denominator);
   assert.equal(audit.rows.length,95);
-  assert.equal(dataset.numerator,2234491);
-  assert.equal(dataset.denominator,2439787);
-  assert.equal(dataset.fact,2234491/2439787*100);
-  assert.equal(audit.rows.reduce((s,r)=>s+Math.max(r.semd122,r.semd228),0),dataset.numerator);
-  assert.equal(audit.rows.reduce((s,r)=>s+r.foms,0),dataset.denominator);
+  assert.equal(audit.summary.numerator,2234491);
+  assert.equal(audit.summary.denominator,2439787);
 });
 
 test('Spassk receives preventive fact under preserved RKB legal OID; certificates stay RKB', () => {
@@ -26,7 +30,7 @@ test('Spassk receives preventive fact under preserved RKB legal OID; certificate
   const detail = audit.rows.find(r=>r.oid===row.oid);
   assert.equal(row.name,'Спасская ЦРБ');
   assert.equal(row.reportingEntityId,'context:spassk-crb');
-  assert.equal(row.fact,7342/8442*100);
+  assert.equal(row.fact,6635/8398*100);
   assert.equal(detail.semd228,6106);
   assert.equal(detail.semd122,7342);
   assert.equal(detail.foms,8442);

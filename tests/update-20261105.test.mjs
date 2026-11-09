@@ -16,7 +16,7 @@ test('November intake prepares 34 indicators and retains invalid or missing sour
  assert.equal(audit.staging.statistics.preparedIndicators,34);
  assert.deepEqual(audit.staging.retained.map(x=>x.metric).sort(),['ambulatoryCase','electronicWaybill']);
  assert.match(audit.staging.retained.find(x=>x.metric==='ambulatoryCase').reason[0],/пустой числитель у 19 строк при 148907 случаях/u);
- assert.equal(mo.ambulatoryCase.date,'27.10.2026');
+ assert.equal(mo.ambulatoryCase.date,'07.11.2026');
  assert.equal(audit.sourceFiles.find(x=>x.family==='ambulatory_cases').status,'PASS');
  assert.equal(audit.sourceFiles.find(x=>x.family==='ambulatory_cases').endDate,'2026-11-03');
  assert.deepEqual(audit.followupValidation.repeatStageChangedFiles,[]);
@@ -28,16 +28,16 @@ test('hospital legal entity and Spassk preventive branch use their own source co
  const spassk=mo.semd228.rows.find(x=>x.oid===oid);
  const source=preventive.rows.find(x=>x.oid===oid);
  assert.equal(rkb.name,'ГАУЗ "РКБ МЗ РТ"');
- assert.equal(rkb.count,2291);
- assert.equal(read('app/mo-detail-oids.json').hospital[oid].volume,3644);
- assert.equal(rkb.fact,2291/3644*100);
+ assert.equal(rkb.count,2335);
+ assert.equal(read('app/mo-detail-oids.json').hospital[oid].volume,3673);
+ assert.equal(rkb.fact,2335/3673*100);
  assert.equal(spassk.name,'Спасская ЦРБ');
  assert.equal(spassk.reportingEntityId,'context:spassk-crb');
  assert.equal(source.selected,Math.max(source.semd122,source.semd228));
  assert.deepEqual([source.selected,source.foms],[7342,8442]);
- assert.equal(spassk.fact,7342/8442*100);
- assert.equal(operational.hospitalCount.rows.find(x=>x.oid===oid).fact,3644);
- assert.equal(mo.hospital.rows.filter(x=>x.sourceStatus==='no_source_row').length,22);
+ assert.equal(spassk.fact,6635/8398*100);
+ assert.equal(operational.hospitalCount.rows.find(x=>x.oid===oid).fact,3673);
+ assert.equal(mo.hospital.rows.filter(x=>x.sourceStatus==='no_source_row').length,0);
  assert.ok(mo.hospital.rows.filter(x=>x.sourceStatus==='no_source_row').every(x=>x.fact===null));
 });
 

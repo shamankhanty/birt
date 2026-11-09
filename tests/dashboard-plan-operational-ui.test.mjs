@@ -25,8 +25,8 @@ test("MAX UI uses the approved target registry and keeps TMK and ELN independent
   assert.equal(countTotal("tmkMaxCount"), 76_211);
   // One source row is explicitly "Неизвестная МО" and is not part of the
   // resolved plan perimeter shown by the UI.
-  assert.equal(october.metrics.tmk.plannedMoFact, 15400);
-  assert.equal(october.metrics.eln.plannedMoFact, 12378);
+  assert.equal(october.metrics.tmk.plannedMoFact, 16031);
+  assert.equal(october.metrics.eln.plannedMoFact, 12470);
   assert.equal(countTotal("elnMaxCount"), 56_941);
   assert.equal(targets.republic.tmk["2026-09"], 145_000);
   assert.equal(targets.republic.eln["2026-09"], 74_000);
@@ -49,9 +49,9 @@ test("block 02 MAX indicators use direct monthly and cumulative source-backed vi
   assert.match(page, /Накопительно \$\{slice\.date\.slice\(0, 5\)\}/u);
   assert.match(page, /Факт взят напрямую из октябрьского отчёта; накопительный факт сентября из него не вычитается/u);
   assert.match(page, /maxIndicatorSlice = maxPeriodView === "operational" \? maxOperationalSlice : maxPeriodViews\.cumulative/u);
-  assert.equal(october.metrics.tmk.plannedMoFact, 15400);
+  assert.equal(october.metrics.tmk.plannedMoFact, 16031);
   assert.equal(october.metrics.tmk.republicPlan, 16000);
-  assert.equal(october.metrics.eln.plannedMoFact, 12378);
+  assert.equal(october.metrics.eln.plannedMoFact, 12470);
   assert.equal(october.metrics.eln.republicPlan, 8000);
   assert.equal(periodViews.cumulative.metrics.tmk.plannedMoFact, 71842);
   assert.equal(periodViews.cumulative.metrics.tmk.republicPlan, 161000);

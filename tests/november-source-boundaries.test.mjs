@@ -28,7 +28,9 @@ test('accepted October values have an independent primary-source audit and exact
  assert.equal(correction.moDataPreviousSha256,preventive.acceptedAppSha256['app/mo-data.json']);
  assert.equal(currentAudit.beforeSha256['app/mo-data.json'],correction.moDataCorrectedSha256);
  const currentHashes=read('baseline/current-production-manifest.json').files;
- const refreshedPaths=new Set(['app/mo-data.json','app/mo-detail-oids.json','app/mo-details.json','app/operational-mo.json','app/organization-status.json','app/unit-data.json','app/unit-mo-snapshots.json']);
+ // The November 09 promotion explicitly replaces these October MAX snapshots.
+ // Historic evidence hashes stay fixed; promoted hashes are verified against the production manifest.
+ const refreshedPaths=new Set(['app/mo-data.json','app/mo-detail-oids.json','app/mo-details.json','app/operational-mo.json','app/organization-status.json','app/unit-data.json','app/unit-mo-snapshots.json','app/max-period-views.json','app/monthly-mo.json','app/month-closure-2026-10.json']);
  const frmrPaths=new Set(['app/frmr-all-specialties.json','app/frmr-previous-control.json','app/frmr-sp-types.json']);
  for(const [path,hash] of Object.entries({...audit.acceptedAppSha256,...preventive.acceptedAppSha256,...unchangedDataFiles})) {
   if(frmrPaths.has(path)) continue;
@@ -38,6 +40,27 @@ test('accepted October values have an independent primary-source audit and exact
  }
  for(const [path,hash] of Object.entries(currentAudit.afterSha256))
   assert.equal(crypto.createHash('sha256').update(fs.readFileSync(path)).digest('hex'),refreshedPaths.has(path)?currentHashes[path]:hash,path);
+});
+
+test('09 November MAX promotion keeps historic audit immutable and reconciles new October figures',()=>{
+ const source=read('docs/update-20261109-max-components.json');
+ const views=app('max-period-views');
+ const monthly=app('monthly-mo');
+ const closure=app('month-closure-2026-10').maxOctober;
+ assert.equal(source.rows.split(';').length,97);
+ assert.deepEqual(source.totals.octoberMonthly,[16224,12590]);
+ const metrics=[['tmkMaxCount','tmk',16224],['elnMaxCount','eln',12590]];
+ for(const [id,key,expected] of metrics){
+  assert.equal(monthly[id].rows.reduce((sum,r)=>sum+(r.july??0),0),expected);
+  assert.equal(views.closedMonths['2026-10'].operational.metrics[key].sourceTotal,expected);
+  assert.equal(closure[key],expected);
+ }
+ assert.equal(closure.cumulativeTmk,74208);
+ assert.equal(closure.cumulativeEln,55268);
+ const manifest=read('baseline/current-production-manifest.json');
+ for(const file of ['app/max-period-views.json','app/monthly-mo.json','app/month-closure-2026-10.json']){
+  assert.equal(crypto.createHash('sha256').update(fs.readFileSync(file)).digest('hex'),manifest.files[file]);
+ }
 });
 
 test('partial November physician slice retains the closed October comparison',()=>{
@@ -68,7 +91,7 @@ test('the first ambulance organization is present and the grand total reconciles
 });
 
 test('standalone October MAX never borrows a cumulative September baseline',()=>{
- for(const [id,total] of [['tmkMaxCount',15573],['elnMaxCount',12498]]){
+ for(const [id,total] of [['tmkMaxCount',16224],['elnMaxCount',12590]]){
   const ds=app('monthly-mo')[id];
   assert.equal(ds.periodType,'month');
   assert.equal(ds.currentLabel,'Октябрь 2026');

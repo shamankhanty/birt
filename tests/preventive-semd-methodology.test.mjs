@@ -19,7 +19,7 @@ test("federal 2026 calculation uses per-organization MAX from REMD and FOMS",asy
     denominator:1,
   }]);
   const dataset=JSON.parse(await readFile(new URL('../app/mo-data.json',import.meta.url),'utf8')).semd228;
-  assert.equal(dataset.rows.filter(r=>r.fact===null || r.count===null).length,1);
+  assert.equal(dataset.rows.filter(r=>r.fact===null || r.count===null).length,0);
   assert.ok(audit.summary.numerator > 0);
   assert.ok(audit.summary.denominator > 0);
   assert.equal(audit.summary.share, audit.summary.numerator / audit.summary.denominator * 100);
