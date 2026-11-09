@@ -5104,10 +5104,10 @@
     "mo-data:egpu": 84,
     "mo-data:birth": 41,
     "mo-data:death": 89,
-    "mo-data:semd228": 96,
+    "mo-data:semd228": 86,
     "mo-data:hospital": 129,
     "mo-data:smp": 43,
-    "mo-data:ambulatoryCase": 146,
+    "mo-data:ambulatoryCase": 142,
     "mo-data:tvspStationary": 93,
     "mo-data:tvspAmbulatory": 112,
     "mo-data:tvspLaboratory": 84,
@@ -5163,5 +5163,21 @@
     "unresolvedOrganizations": 127,
     "percentageAnomalies": 40,
     "missingCurrentValues": 0
+  },
+  "acceptedPerimeterAdjustments": {
+    "2026-11-09": [
+      {
+        "dataset": "mo-data:ambulatoryCase",
+        "previousRows": 146,
+        "currentRows": 142,
+        "reason": "Две строки частной клиники с общим OID объединены по числителю и знаменателю; другие изменения состава OID за период сохраняются в исходном аудите."
+      },
+      {
+        "dataset": "mo-data:semd228",
+        "previousRows": 96,
+        "currentRows": 86,
+        "reason": "Оперативная карточка закрытых случаев использует согласованный периметр 86 МО. Исходные 96 строк доступны в docs/update-20261109-source-components.json."
+      }
+    ]
   }
 }
