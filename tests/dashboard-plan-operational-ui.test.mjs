@@ -53,10 +53,12 @@ test("block 02 MAX indicators use direct monthly and cumulative source-backed vi
   assert.equal(october.metrics.tmk.republicPlan, 16000);
   assert.equal(october.metrics.eln.plannedMoFact, 12470);
   assert.equal(october.metrics.eln.republicPlan, 8000);
-  assert.equal(periodViews.cumulative.metrics.tmk.plannedMoFact, 71842);
-  assert.equal(periodViews.cumulative.metrics.tmk.republicPlan, 161000);
-  assert.equal(periodViews.cumulative.metrics.eln.plannedMoFact, 54745);
-  assert.equal(periodViews.cumulative.metrics.eln.republicPlan, 82000);
+  assert.equal(periodViews.operational.metrics.tmk.plannedMoFact, 1988);
+  assert.equal(periodViews.operational.metrics.eln.plannedMoFact, 1925);
+  assert.equal(periodViews.cumulative.metrics.tmk.plannedMoFact, 74536);
+  assert.equal(periodViews.cumulative.metrics.tmk.republicPlan, 177000);
+  assert.equal(periodViews.cumulative.metrics.eln.plannedMoFact, 56411);
+  assert.equal(periodViews.cumulative.metrics.eln.republicPlan, 90000);
 });
 
 test("every 500+ category exposes the closed month beside numerator-derived operational control", () => {
