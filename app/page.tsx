@@ -7838,7 +7838,7 @@ export default function Home() {
                     <span>
                       {waybillMode === "week"
                         ? "Региональные итоги двух полных недель; детализация МО — по текущему срезу"
-                        : "Июль показан отдельно от текущих недельных срезов"}
+                        : "Закрытый октябрь показан отдельно от текущих недельных срезов"}
                     </span>
                   </div>
                   <div
@@ -7965,7 +7965,7 @@ export default function Home() {
                       <strong>
                         {format(electronicWaybill.detail.organizations, 0)}
                       </strong>
-                      <span>единый сопоставимый перечень</span>
+                      <span>номерные группы исходного отчёта</span>
                     </article>
                     <article>
                       <small>Транспортные средства</small>
@@ -8024,7 +8024,7 @@ export default function Home() {
                       <span>по итоговой строке текущей недели</span>
                     </article>
                     <article>
-                      <small>МО с движением</small>
+                      <small>Группы с движением</small>
                       <strong>
                         {format(
                           electronicWaybillWeekly.current.detail
@@ -8042,7 +8042,7 @@ export default function Home() {
                       </span>
                     </article>
                     <article>
-                      <small>МО без движения</small>
+                      <small>Группы без движения</small>
                       <strong>
                         {format(
                           electronicWaybillWeekly.current.detail
@@ -8066,7 +8066,7 @@ export default function Home() {
                 ) : (
                   <>
                     <article>
-                      <small>МО с движением</small>
+                      <small>Группы с движением</small>
                       <strong>
                         {format(
                           electronicWaybill.rows.filter((r) => r.moved > 0)
@@ -8076,11 +8076,11 @@ export default function Home() {
                       </strong>
                       <span>
                         из {format(electronicWaybill.detail.organizations, 0)}{" "}
-                        организаций
+                        групп
                       </span>
                     </article>
                     <article>
-                      <small>МО без движения</small>
+                      <small>Группы без движения</small>
                       <strong>
                         {format(
                           electronicWaybill.detail.zeroMovementOrganizations,
@@ -8109,6 +8109,11 @@ export default function Home() {
                   </>
                 )}
               </div>
+              <p className="sourceDataNote" data-testid="epl-source-perimeter-warning">
+                <b>Контроль состава:</b> {waybillMode === "week"
+                  ? electronicWaybillWeekly.periodCorrection
+                  : "В октябрьском отчёте указано 126 организаций, но имеются 123 номерные группы: 39–41 отсутствуют. Их показатели не заменяются нулём."}
+              </p>
               <section
                 className="waybillZones"
                 aria-label="Зоны использования ЭПЛ"
