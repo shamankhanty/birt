@@ -13,9 +13,9 @@ test('hospital count reconciles with case denominator from the 08 November sourc
   assert.equal(count.rows.reduce((sum, row) => sum + (row.sourceRows ?? 0), 0), 107);
   assert.equal(new Set(count.rows.map(row => row.oid)).size, count.rows.length);
   assert.equal(count.rows.length, 129);
-  assert.equal(count.rows.find(row => row.oid === '1.2.643.5.1.13.13.12.2.16.1094').fact, 3644);
-  assert.equal(ratio.numerator, 747202);
-  assert.ok(count.rows.some(row => row.sourceStatus === 'no_source_row' && row.fact === null));
+  assert.equal(count.rows.find(row => row.oid === '1.2.643.5.1.13.13.12.2.16.1094').fact, 3673);
+  assert.equal(ratio.numerator, 756911);
+  assert.ok(count.rows.every(row => Number.isFinite(row.fact)));
   assert.equal(count.plan, null);
 });
 
