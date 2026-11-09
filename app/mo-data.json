@@ -2647,94 +2647,6 @@
         "sourceNumerator228": 24347
       },
       {
-        "name": "ООО \"КДЦ Авиастроительного района\"",
-        "oid": "1.2.643.5.1.13.13.12.2.16.1188",
-        "fact": 14.947876788974616,
-        "count": 2538,
-        "previous": null,
-        "trend": null,
-        "sourceStatus": "external_source",
-        "sourceNumerator122": 2123,
-        "sourceNumerator228": 2538
-      },
-      {
-        "name": "ООО \"КДЦ Аракчино\"",
-        "oid": "1.2.643.5.1.13.13.12.2.16.10323",
-        "fact": 0,
-        "count": 0,
-        "previous": null,
-        "trend": null,
-        "sourceStatus": "external_source",
-        "sourceNumerator122": 0,
-        "sourceNumerator228": 0
-      },
-      {
-        "name": "ООО \"КДЦ на Четаева\"",
-        "oid": "1.2.643.5.1.13.13.12.2.16.1228",
-        "fact": 61.11401218450827,
-        "count": 3511,
-        "previous": null,
-        "trend": null,
-        "sourceStatus": "external_source",
-        "sourceNumerator122": 3511,
-        "sourceNumerator228": 0
-      },
-      {
-        "name": "ООО \"Красноключинский центр семейной медицины\"",
-        "oid": "1.2.643.5.1.13.13.12.2.16.1083",
-        "fact": 10.81081081081081,
-        "count": 168,
-        "previous": null,
-        "trend": null,
-        "sourceStatus": "external_source",
-        "sourceNumerator122": 168,
-        "sourceNumerator228": 0
-      },
-      {
-        "name": "ООО \"ММЦ Профмедицина-НК\"",
-        "oid": "1.2.643.5.1.13.13.12.2.16.1224",
-        "fact": 61.295336787564764,
-        "count": 4732,
-        "previous": null,
-        "trend": null,
-        "sourceStatus": "external_source",
-        "sourceNumerator122": 4732,
-        "sourceNumerator228": 3694
-      },
-      {
-        "name": "ООО \"Ситидок-Эксперт Казань\"",
-        "oid": "1.2.643.5.1.13.13.12.2.16.12459",
-        "fact": 3.2391894048188927,
-        "count": 406,
-        "previous": null,
-        "trend": null,
-        "sourceStatus": "external_source",
-        "sourceNumerator122": 406,
-        "sourceNumerator228": 0
-      },
-      {
-        "name": "ООО Ассоциация Клиник \"Медицина будущего\"",
-        "oid": "1.2.643.5.1.13.13.12.2.16.1229",
-        "fact": 0,
-        "count": 0,
-        "previous": null,
-        "trend": null,
-        "sourceStatus": "external_source",
-        "sourceNumerator122": 0,
-        "sourceNumerator228": 0
-      },
-      {
-        "name": "ООО МО СПАСЕНИЕ",
-        "oid": "1.2.643.5.1.13.13.12.2.16.1190",
-        "fact": 94.70152505446623,
-        "count": 10867,
-        "previous": null,
-        "trend": null,
-        "sourceStatus": "external_source",
-        "sourceNumerator122": 10867,
-        "sourceNumerator228": 1225
-      },
-      {
         "name": "ФГАОУВО Казанский (Приволжский) федеральный университет",
         "oid": "1.2.643.5.1.13.13.12.2.16.1231",
         "fact": 90.58654938973169,
@@ -2743,29 +2655,6 @@
         "trend": null,
         "sourceNumerator122": 18332,
         "sourceNumerator228": 18216
-      },
-      {
-        "name": "ЧУЗ \"Больница \"РЖД-Медицина\" города Ижевск\"",
-        "oid": "1.2.643.5.1.13.13.12.2.18.1384",
-        "fact": 0,
-        "count": 0,
-        "previous": null,
-        "trend": null,
-        "sourceStatus": "external_source",
-        "sourceWarning": "Нет строки в актуальной выгрузке; значение не заменено нулём.",
-        "sourceNumerator122": 0,
-        "sourceNumerator228": 0
-      },
-      {
-        "name": "ЧУЗ \"КБ \"РЖД-Медицина\" г. Казани\"",
-        "oid": "1.2.643.5.1.13.13.12.2.16.1197",
-        "fact": 77.82003395585738,
-        "count": 11459,
-        "previous": null,
-        "trend": null,
-        "sourceStatus": "external_source",
-        "sourceNumerator122": 11459,
-        "sourceNumerator228": 1994
       }
     ],
     "numerator": 2151548,
