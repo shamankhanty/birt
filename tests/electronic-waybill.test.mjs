@@ -48,7 +48,7 @@ test("regional November summary uses exact source totals 02–08.11",()=>{
   assert.equal(weekly.current.detail.organizationsWithMovement,98);
   assert.equal(weekly.current.detail.zeroMovementOrganizations,23);
   assert.equal(weekly.current.detail.zeroVehicleOrganizations,2);
-  assert.equal(weekly.current.detail.movementShare,736/1691*100);
+  assert.ok(Math.abs(weekly.current.detail.movementShare-736/1691*100)<1e-10);
   assert.equal(weekly.previous.systemSummary.vehiclesWithMovement,110);
   assert.equal(weekly.previous.systemSummary.vehiclesWithWaybills,149);
   assert.equal(weekly.previous.detail.waybills,301);
