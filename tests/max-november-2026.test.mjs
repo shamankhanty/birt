@@ -55,7 +55,7 @@ test('MAX November uses 94 direct monthly source rows for 01–08.11 without sub
  assert.equal(source.alignedSourceRows,97);
  const pairs=source.rows.split(';').map(item=>item==='-'?[null,null]:item.split('/').map(Number));
  assert.equal(pairs.length,97);
- assert.deepEqual(source.missingSourceIndexes,[1,94,96]);
+ assert.deepEqual(source.noSourceRowIndexes,[1,94,96]);
  for(const [id,idx,region,inPlan,missingCount] of [['tmk',0,2006,1988,2],['eln',1,1939,1925,2]]){
    const metric=views.operational.metrics[id];
    assert.equal(pairs.reduce((sum,p)=>sum+(p[idx]??0),0),region);
