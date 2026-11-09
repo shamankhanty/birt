@@ -11,7 +11,7 @@ test('November source dates are explicit; the closed October month remains separ
     assert.equal(mo[id].period,'январь–ноябрь 2026');
     assert.equal(read('unit-data')[id].date,'08.11.2026');
   }
-  assert.equal(mo.hospital.date,'04.11.2026');
+  assert.equal(mo.hospital.date,'08.11.2026');
   for(const [id,numerator] of [['egpu',45069],['egpu2days',38845]]) {
     assert.equal(mo[id].date,'08.11.2026');
     assert.equal(mo[id].numerator,numerator);
