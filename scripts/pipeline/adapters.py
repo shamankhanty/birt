@@ -561,28 +561,73 @@ def adapt_hospital_count(app: Path, source: Path, end: date) -> AdapterResult:
 
 def adapt_ambulatory_cases(app: Path, source: Path, end: date) -> AdapterResult:
     mo, details, oids, monthly = (load(app, x) for x in ["mo-data.json", "mo-details.json", "mo-detail-oids.json", "monthly-mo.json"])
-    current = parse_ambulatory_cases(source)
-    previous = previous_rows_from_dataset(mo.get("ambulatoryCase", {}))
+    raw_current = parse_ambulatory_cases(source)
+    base = mo.get("ambulatoryCase", {})
+    previous = previous_rows_from_dataset(base)
+    same_cut = base.get("date") == date_ru(end)
+
+    # The source can contain multiple subdivisions of one private provider
+    # with the same legal OID. Keep their entire numerator and denominator
+    # but expose one organization row and one OID detail, never last-row-wins.
+    grouped = {}
+    for item in raw_current:
+        oid = item["oid"]
+        if oid not in grouped:
+            grouped[oid] = {**item, "sourceRows": 1, "sourceNames": [item["name"]]}
+            continue
+        agg = grouped[oid]
+        if is_external_source_name(agg["name"]) != is_external_source_name(item["name"]):
+            raise ValueError(f"Амбулаторный эпикриз: OID {oid} одновременно у внешней и внутренней МО")
+        agg["count"] += item["count"]
+        agg["volume"] += item["volume"]
+        agg["sourceRows"] += 1
+        if item["name"] not in agg["sourceNames"]:
+            agg["sourceNames"].append(item["name"])
+        agg["fact"] = agg["count"] / agg["volume"] * 100 if agg["volume"] else 0
+
+    previous_oid_counts = {}
+    for old_row in base.get("rows", []):
+        old_oid = old_row.get("oid")
+        if old_oid:
+            previous_oid_counts[old_oid] = previous_oid_counts.get(old_oid, 0) + 1
+
     rows, details_by_name, details_by_oid = [], {}, {}
-    for item in current:
-        old = previous.get(item["oid"])
-        row={"name": item["name"], "oid": item["oid"], "fact": item["fact"], "count": item["count"], "previous": old.get("fact") if old else None, "trend": None if not old else item["fact"] - old.get("fact", 0)}
-        if is_external_source_name(item["name"]): row["sourceStatus"]="external_source"
+    for item in grouped.values():
+        oid = item["oid"]
+        # When the previous slice itself had duplicate OIDs, its last row
+        # was not a legal-organization total. Reset that row's comparison.
+        old = previous.get(oid) if previous_oid_counts.get(oid, 0) == 1 else None
+        previous_fact = (old.get("previous") if same_cut else old.get("fact")) if old else None
+        trend = item["fact"] - previous_fact if previous_fact is not None and item["fact"] is not None else None
+        row = {"name": item["name"], "oid": oid, "fact": item["fact"], "count": item["count"],
+               "previous": previous_fact, "trend": trend}
+        if item["sourceRows"] > 1:
+            row["sourceRows"] = item["sourceRows"]
+            row["sourceNames"] = item["sourceNames"]
+        if any(is_external_source_name(name) for name in item["sourceNames"]):
+            row["sourceStatus"] = "external_source"
         rows.append(row)
         detail = {"volume": item["volume"], "registered": item["count"]}
-        details_by_name[norm(item["name"])], details_by_oid[item["oid"]] = detail, detail
-    base = mo.get("ambulatoryCase", {})
-    current_numerator = sum(item["count"] for item in current)
-    current_denominator = sum(item["volume"] for item in current)
+        for source_name in item["sourceNames"]:
+            details_by_name[norm(source_name)] = detail
+        details_by_oid[oid] = detail
+
+    current_numerator = sum(item["count"] for item in grouped.values())
+    current_denominator = sum(item["volume"] for item in grouped.values())
     mo["ambulatoryCase"] = {**base, "date": date_ru(end), "period": period_cumulative(end),
                             **previous_cut_metadata(base, end), **previous_summary_metadata(base, end),
                             "numerator": current_numerator, "denominator": current_denominator,
                             "rows": retain_no_source_rows(previous, rows)}
     details["ambulatoryCase"], oids["ambulatoryCase"] = details_by_name, details_by_oid
-    if is_full_month(end): monthly["ambulatoryCase"] = monthly_payload(previous, current, end)
+    if is_full_month(end):
+        monthly["ambulatoryCase"] = monthly_payload(previous, list(grouped.values()), end)
     for name, data in [("mo-data.json", mo), ("mo-details.json", details), ("mo-detail-oids.json", oids), ("monthly-mo.json", monthly)]:
         save(app, name, data)
-    return AdapterResult("core_monthly", ["ambulatory_cases"], "PASS", ["mo-data.json", "mo-details.json", "mo-detail-oids.json", "monthly-mo.json"], [source.name], {"rows": len(rows), "numerator": sum(item["count"] for item in current), "denominator": sum(item["volume"] for item in current)}, [], [])
+    return AdapterResult("core_monthly", ["ambulatory_cases"], "PASS",
+                         ["mo-data.json", "mo-details.json", "mo-detail-oids.json", "monthly-mo.json"],
+                         [source.name], {"rows": len(rows), "sourceRows": len(raw_current),
+                                         "mergedOids": sum(1 for item in grouped.values() if item["sourceRows"] > 1),
+                                         "numerator": current_numerator, "denominator": current_denominator}, [], [])
 
 
 def parse_certificates(path: Path) -> list[dict]:
