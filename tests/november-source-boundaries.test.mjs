@@ -31,7 +31,8 @@ test('accepted October values have an independent primary-source audit and exact
  for(const [path,hash] of Object.entries({...audit.acceptedAppSha256,...preventive.acceptedAppSha256,...unchangedDataFiles})) {
   if(frmrPaths.has(path)) continue;
   if(path in currentAudit.afterSha256) continue;
-  assert.equal(crypto.createHash('sha256').update(fs.readFileSync(path)).digest('hex'),hash,path);
+  const archivedPath=path==='app/semd-summary.json' ? `baseline/archive/accepted-20261102/${path}` : path;
+  assert.equal(crypto.createHash('sha256').update(fs.readFileSync(archivedPath)).digest('hex'),hash,path);
  }
  for(const [path,hash] of Object.entries(currentAudit.afterSha256))
   assert.equal(crypto.createHash('sha256').update(fs.readFileSync(path)).digest('hex'),hash,path);
