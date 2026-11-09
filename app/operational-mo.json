@@ -3089,9 +3089,7 @@
         "fact": 395,
         "count": 395,
         "previous": null,
-        "trend": null,
-        "sourceStatus": "no_source_row",
-        "sourceWarning": "Нет строки в актуальной выгрузке; значение не заменено нулём."
+        "trend": null
       },
       {
         "name": "МАНО «Казанский хоспис «Наташа»",
@@ -3099,9 +3097,7 @@
         "fact": 44,
         "count": 44,
         "previous": null,
-        "trend": null,
-        "sourceStatus": "no_source_row",
-        "sourceWarning": "Нет строки в актуальной выгрузке; значение не заменено нулём."
+        "trend": null
       },
       {
         "name": "НМЧУ \"ДЕТСКИЙ ХОСПИС\"",
@@ -3109,9 +3105,7 @@
         "fact": 104,
         "count": 104,
         "previous": null,
-        "trend": null,
-        "sourceStatus": "no_source_row",
-        "sourceWarning": "Нет строки в актуальной выгрузке; значение не заменено нулём."
+        "trend": null
       },
       {
         "name": "ООО \"ДИОН МЕДИКАЛ ГРУПП МЦ \"Millenium Clinic\"",
@@ -3119,9 +3113,7 @@
         "fact": 100,
         "count": 100,
         "previous": null,
-        "trend": null,
-        "sourceStatus": "no_source_row",
-        "sourceWarning": "Нет строки в актуальной выгрузке; значение не заменено нулём."
+        "trend": null
       },
       {
         "name": "ООО \"КДЦ Авиастроительного района\"",
@@ -3129,9 +3121,7 @@
         "fact": 755,
         "count": 755,
         "previous": null,
-        "trend": null,
-        "sourceStatus": "no_source_row",
-        "sourceWarning": "Нет строки в актуальной выгрузке; значение не заменено нулём."
+        "trend": null
       },
       {
         "name": "ООО \"КДЦ на Четаева\"",
@@ -3139,9 +3129,7 @@
         "fact": 224,
         "count": 224,
         "previous": null,
-        "trend": null,
-        "sourceStatus": "no_source_row",
-        "sourceWarning": "Нет строки в актуальной выгрузке; значение не заменено нулём."
+        "trend": null
       },
       {
         "name": "ООО \"КЛИНИКА ВОССТАНОВИТЕЛЬНОЙ МЕДИЦИНЫ\"",
@@ -3149,9 +3137,7 @@
         "fact": 81,
         "count": 81,
         "previous": null,
-        "trend": null,
-        "sourceStatus": "no_source_row",
-        "sourceWarning": "Нет строки в актуальной выгрузке; значение не заменено нулём."
+        "trend": null
       },
       {
         "name": "ООО \"Красноключинский центр семейной медицины\"",
@@ -3159,9 +3145,7 @@
         "fact": 40,
         "count": 40,
         "previous": null,
-        "trend": null,
-        "sourceStatus": "no_source_row",
-        "sourceWarning": "Нет строки в актуальной выгрузке; значение не заменено нулём."
+        "trend": null
       },
       {
         "name": "ООО \"КСМ\"",
@@ -3169,9 +3153,7 @@
         "fact": 35,
         "count": 35,
         "previous": null,
-        "trend": null,
-        "sourceStatus": "no_source_row",
-        "sourceWarning": "Нет строки в актуальной выгрузке; значение не заменено нулём."
+        "trend": null
       },
       {
         "name": "ООО \"МЕДЕЛ\"",
@@ -3179,9 +3161,7 @@
         "fact": 48,
         "count": 48,
         "previous": null,
-        "trend": null,
-        "sourceStatus": "no_source_row",
-        "sourceWarning": "Нет строки в актуальной выгрузке; значение не заменено нулём."
+        "trend": null
       },
       {
         "name": "ООО \"ММЦ Профмедицина-НК\"",
@@ -3189,9 +3169,7 @@
         "fact": 553,
         "count": 553,
         "previous": null,
-        "trend": null,
-        "sourceStatus": "no_source_row",
-        "sourceWarning": "Нет строки в актуальной выгрузке; значение не заменено нулём."
+        "trend": null
       },
       {
         "name": "ООО \"МЦГХ Хузангаево\"",
@@ -3199,9 +3177,7 @@
         "fact": 234,
         "count": 234,
         "previous": null,
-        "trend": null,
-        "sourceStatus": "no_source_row",
-        "sourceWarning": "Нет строки в актуальной выгрузке; значение не заменено нулём."
+        "trend": null
       },
       {
         "name": "ООО \"Прозрение\"",
@@ -3209,9 +3185,7 @@
         "fact": 1051,
         "count": 1051,
         "previous": null,
-        "trend": null,
-        "sourceStatus": "no_source_row",
-        "sourceWarning": "Нет строки в актуальной выгрузке; значение не заменено нулём."
+        "trend": null
       },
       {
         "name": "ООО \"Ситидок-Эксперт Казань\"",
@@ -3219,9 +3193,7 @@
         "fact": 630,
         "count": 630,
         "previous": null,
-        "trend": null,
-        "sourceStatus": "no_source_row",
-        "sourceWarning": "Нет строки в актуальной выгрузке; значение не заменено нулём."
+        "trend": null
       },
       {
         "name": "ООО \"СИТИКОМ\"",
@@ -3229,9 +3201,7 @@
         "fact": 72,
         "count": 72,
         "previous": null,
-        "trend": null,
-        "sourceStatus": "no_source_row",
-        "sourceWarning": "Нет строки в актуальной выгрузке; значение не заменено нулём."
+        "trend": null
       },
       {
         "name": "ООО \"Центр микрохирургии глаза \"Прозрение\" Отделение в г. Елабуге",
@@ -3239,9 +3209,7 @@
         "fact": 698,
         "count": 698,
         "previous": null,
-        "trend": null,
-        "sourceStatus": "no_source_row",
-        "sourceWarning": "Нет строки в актуальной выгрузке; значение не заменено нулём."
+        "trend": null
       },
       {
         "name": "ООО \"Центр репродуктивной медицины \"Аист\"",
@@ -3249,9 +3217,7 @@
         "fact": 225,
         "count": 225,
         "previous": null,
-        "trend": null,
-        "sourceStatus": "no_source_row",
-        "sourceWarning": "Нет строки в актуальной выгрузке; значение не заменено нулём."
+        "trend": null
       },
       {
         "name": "ООО «Клиника лазерной хирургии»",
@@ -3259,9 +3225,7 @@
         "fact": 95,
         "count": 95,
         "previous": null,
-        "trend": null,
-        "sourceStatus": "no_source_row",
-        "sourceWarning": "Нет строки в актуальной выгрузке; значение не заменено нулём."
+        "trend": null
       },
       {
         "name": "ООО «Отель-Клиника» ",
@@ -3269,9 +3233,7 @@
         "fact": 421,
         "count": 421,
         "previous": null,
-        "trend": null,
-        "sourceStatus": "no_source_row",
-        "sourceWarning": "Нет строки в актуальной выгрузке; значение не заменено нулём."
+        "trend": null
       },
       {
         "name": "ООО «ЮНИМЕД»",
@@ -3279,9 +3241,7 @@
         "fact": 86,
         "count": 86,
         "previous": null,
-        "trend": null,
-        "sourceStatus": "no_source_row",
-        "sourceWarning": "Нет строки в актуальной выгрузке; значение не заменено нулём."
+        "trend": null
       },
       {
         "name": "ООО МО СПАСЕНИЕ",
@@ -3289,9 +3249,7 @@
         "fact": 666,
         "count": 666,
         "previous": null,
-        "trend": null,
-        "sourceStatus": "no_source_row",
-        "sourceWarning": "Нет строки в актуальной выгрузке; значение не заменено нулём."
+        "trend": null
       },
       {
         "name": "ПАО «Татнефть» им. В.Д. Шашина",
@@ -3299,9 +3257,7 @@
         "fact": 205,
         "count": 205,
         "previous": null,
-        "trend": null,
-        "sourceStatus": "no_source_row",
-        "sourceWarning": "Нет строки в актуальной выгрузке; значение не заменено нулём."
+        "trend": null
       },
       {
         "name": "РКПБ им. акад. В.М. Бехтерева МЗ РТ",
