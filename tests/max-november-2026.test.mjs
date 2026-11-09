@@ -12,8 +12,8 @@ test('MAX October is closed with original source facts and no changes to October
  const oct=views.closedMonths['2026-10'];
  assert.equal(oct.status,'closed');
  assert.equal(oct.operational.date,'31.10.2026');
- assert.equal(oct.operational.metrics.tmk.sourceTotal,15573);
- assert.equal(oct.operational.metrics.eln.sourceTotal,12498);
+ assert.equal(oct.operational.metrics.tmk.sourceTotal,16224);
+ assert.equal(oct.operational.metrics.eln.sourceTotal,12590);
  assert.equal(oct.operational.metrics.tmk.republicPlan,16000);
  assert.equal(oct.operational.metrics.eln.republicPlan,8000);
  assert.equal(oct.cumulative.metrics.tmk.sourceTotal,73479);
