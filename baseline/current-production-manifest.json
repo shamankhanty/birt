@@ -1,11 +1,11 @@
 {
   "schemaVersion": 1,
   "kind": "current-production",
-  "promotedFrom": "МАХ: прямой месячный 01–08.11 и отдельный накопительный 01.01–08.11, только 83 из 85 плановых МО с данными",
+  "promotedFrom": "ЭПЛ: полный октябрь 01–31.10 и неделя 02–08.11, 168 строк и 123 группы, отчеты Excel 09.11",
   "promotedAt": "2026-11-09",
   "files": {
-    "app/electronic-waybill-weekly.json": "4b96a10a3143cdbec0b5d5302e418db3c70bb183f5acac828b1c94e7c6a65a89",
-    "app/electronic-waybill.json": "d682decfa448f6fd17c8df1fdcf088b105cff03080daf029849a4d039c638dbc",
+    "app/electronic-waybill-weekly.json": "9ac5145f4e9310e1c71091fd0ceadc3d7b313c6b12c164fa1f90a00159ddc2f2",
+    "app/electronic-waybill.json": "742d3fa047467913da6d1fbc8abe10ad14eda7001cca63a3c3248783d23bc494",
     "app/error-categories.json": "77368a030b1810bbb6cc2c524a808ea20d43d54f31852865d1bf20813e87cece",
     "app/error-cumulative.json": "e6a741ed4bf0249c4b195926cc7579fc396cbd57db38e507bccaaa34aa58889c",
     "app/error-guidance.json": "460b271d119f5b38a701a7a3eb0e85bdfb9dab9bac0ef2b36de0fbedb5fb12da",
