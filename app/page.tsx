@@ -8024,7 +8024,7 @@ export default function Home() {
                       <span>по итоговой строке текущей недели</span>
                     </article>
                     <article>
-                      <small>МО с движением</small>
+                      <small>Группы с движением</small>
                       <strong>
                         {format(
                           electronicWaybillWeekly.current.detail
@@ -8042,7 +8042,7 @@ export default function Home() {
                       </span>
                     </article>
                     <article>
-                      <small>МО без движения</small>
+                      <small>Группы без движения</small>
                       <strong>
                         {format(
                           electronicWaybillWeekly.current.detail
@@ -8066,7 +8066,7 @@ export default function Home() {
                 ) : (
                   <>
                     <article>
-                      <small>МО с движением</small>
+                      <small>Группы с движением</small>
                       <strong>
                         {format(
                           electronicWaybill.rows.filter((r) => r.moved > 0)
@@ -8076,11 +8076,11 @@ export default function Home() {
                       </strong>
                       <span>
                         из {format(electronicWaybill.detail.organizations, 0)}{" "}
-                        организаций
+                        групп
                       </span>
                     </article>
                     <article>
-                      <small>МО без движения</small>
+                      <small>Группы без движения</small>
                       <strong>
                         {format(
                           electronicWaybill.detail.zeroMovementOrganizations,
