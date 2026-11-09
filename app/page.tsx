@@ -2675,20 +2675,10 @@ function isPrivateOrganization(name: string) {
 }
 
 function isExcludedFromIndicators(name: string) {
-  const normalized = name
-    .replace(/[«»"']/g, " ")
-    .replace(/[–—-]/g, " ")
-    .replace(/\s+/g, " ")
-    .trim();
-  return (
-    /(?:^|\s)КГМА(?=\s|$).*?(?:^|\s)РМАНПО(?=\s|$)/iu.test(normalized) ||
-    /(?:^|\s)[АР]ЦОЗ\s+и\s+МП(?:\s|$)/iu.test(normalized) ||
-    /(?:^|\s)Казанск(?:ий|ого)\s+ГМУ(?=\s|$).*?(?:^|\s)Минздрава\s+России/iu.test(
-      normalized,
-    )
-  );
+  const normalized = name.replace(/[«»"']/g, " ").replace(/[–—-]/g, " ").replace(/\s+/g, " ").trim();
+  // Medical academies and universities are standalone providers like KGMU/KFU.
+  return /(?:^|\s)[АР]ЦОЗ\s+и\s+МП(?:\s|$)/iu.test(normalized);
 }
-
 function isMaxProfileInapplicable(name: string) {
   const normalized = name.toLocaleLowerCase("ru");
   return /ркпд|противотуберкул|(?:^|\s)птд(?:\s|$)/iu.test(normalized);
