@@ -1,6 +1,7 @@
 import assert from "node:assert/strict";
 import test from "node:test";
 import { readFile } from "node:fs/promises";
+import { excludeZeroFleetOrganizations } from "../lib/epl-display-scope.js";
 
 const read = async path => JSON.parse(await readFile(new URL("../" + path, import.meta.url), "utf8"));
 const data = await read("app/electronic-waybill.json");
@@ -108,4 +109,50 @@ test("UI names October, flags 126/123 discrepancy and avoids an invented plan",a
   assert.equal(data.plan,null);
   assert.ok(weekly.comparisonRule.includes("26.10"));
   assert.ok(weekly.comparisonRule.includes("02–08"));
+});
+
+test("EPL hides exactly the two organizations with zero vehicles in week and month, preserving sources", () => {
+  const expectedNames = [
+    'Арский филиал "База медицинского обеспечения"',
+    'ГАУЗ "Республиканский детский психоневрологический санаторий"',
+  ].sort();
+  for (const rows of [data.rows, weekly.current.rows, weekly.previous.rows]) {
+    const excluded = rows.filter(row => row.vehicles === 0);
+    assert.deepEqual(excluded.map(row => row.name).sort(), expectedNames);
+    const visible = excludeZeroFleetOrganizations(rows);
+    assert.equal(visible.length, rows.length - 2);
+    assert.ok(visible.every(row => row.vehicles !== 0));
+    assert.equal(visible.reduce((s,r) => s + r.vehicles,0), rows.reduce((s,r) => s+r.vehicles,0));
+    assert.equal(visible.reduce((s,r) => s + r.moved,0), rows.reduce((s,r) => s+r.moved,0));
+    assert.equal(visible.reduce((s,r) => s + r.waybills,0), rows.reduce((s,r) => s+r.waybills,0));
+    assert.ok(visible.some(row => row.vehicles > 0 && row.moved === 0), "MO with fleet but no movement stay under control");
+  }
+  assert.equal(excludeZeroFleetOrganizations(data.rows).length,121);
+  assert.equal(excludeZeroFleetOrganizations(weekly.current.rows).length,121);
+  assert.equal(data.rows.length,123);
+  assert.equal(weekly.current.rows.length,123);
+  assert.equal(weekly.current.systemSummary.organizations,126);
+  assert.equal(data.summary.organizations,126);
+});
+
+test("EPL filter is based on confirmed zero fleet, never equates missing source with no fleet", () => {
+  const rows = [
+    {name:"zero fleet", vehicles:0},
+    {name:"missing source", vehicles:null},
+    {name:"not supplied", vehicles:undefined},
+    {name:"fleet without movement", vehicles:8, moved:0},
+  ];
+  assert.deepEqual(excludeZeroFleetOrganizations(rows).map(r=>r.name), [
+    "missing source","not supplied","fleet without movement",
+  ]);
+});
+
+test("both EPL detail periods apply no-fleet scope before zones, sorting and display", async () => {
+  const page = await readFile(new URL("../app/page.tsx",import.meta.url),"utf8");
+  assert.match(page,/const waybillRows = excludeZeroFleetOrganizations\(/u);
+  assert.match(page,/waybillMode === "week"[\s\S]*?electronicWaybillWeekly\.current\.rows[\s\S]*?electronicWaybill\.rows/u);
+  assert.match(page,/Медицинские организации с транспортом/u);
+  assert.doesNotMatch(page,/setWaybillStatus\("noFleet"\)/u);
+  assert.doesNotMatch(page,/<option value="noFleet">/u);
+  assert.match(page,/waybillRows\.filter\(\(r\) => waybillZone\(r\) === "noMovement"\)/u);
 });
