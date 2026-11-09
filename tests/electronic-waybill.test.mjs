@@ -2,84 +2,110 @@ import assert from "node:assert/strict";
 import test from "node:test";
 import { readFile } from "node:fs/promises";
 
-const data = JSON.parse(await readFile(new URL("../app/electronic-waybill.json", import.meta.url), "utf8"));
-const weekly = JSON.parse(await readFile(new URL("../app/electronic-waybill-weekly.json", import.meta.url), "utf8"));
+const read = async path => JSON.parse(await readFile(new URL("../" + path, import.meta.url), "utf8"));
+const data = await read("app/electronic-waybill.json");
+const weekly = await read("app/electronic-waybill-weekly.json");
+const octSource = await read("docs/waybill/epl-source-202610.json");
+const novSource = await read("docs/waybill/epl-source-20261102-08.json");
+const fields = ["vehicles","ambulanceVehicles","otherVehicles","moved","drivers","mechanics","medics","waybills","ambulanceWaybills","otherWaybills","driversWithWaybills"];
+const validNumbers = Array.from({length:126},(_,i)=>i+1).filter(n=>![39,40,41].includes(n));
+const parseRows = src => src.raw.split(";").map(line=>line.split(",").map(Number));
+const detailTotals = src => fields.map((field,idx)=>parseRows(src).reduce((sum,r)=>sum+r[idx],0));
 
-test("electronic waybill detail keeps all source organizations", () => {
-  assert.equal(data.rows.length, 126);
-  assert.equal(new Set(data.rows.map(row => row.name)).size, 126);
-  assert.equal(data.detail.organizations, 126);
-});
-
-test("electronic waybill summary percentages reproduce the source totals", () => {
-  assert.equal(data.summary.vehiclesWithWaybillsShare, data.summary.vehiclesWithWaybills / data.summary.vehicles * 100);
-  assert.equal(data.summary.vehiclesWithMovementShare, data.summary.vehiclesWithMovement / data.summary.vehicles * 100);
-  assert.equal(data.summary.ambulanceVehiclesWithWaybillsShare, data.summary.ambulanceVehiclesWithWaybills / data.summary.ambulanceVehicles * 100);
-});
-
-test("electronic waybill detail totals are preserved and source differences stay visible", () => {
-  assert.equal(data.rows.reduce((sum, row) => sum + row.waybills, 0), 9070);
-  assert.equal(data.rows.reduce((sum, row) => sum + row.driversWithWaybills, 0), 852);
-  assert.equal(data.quality.length, 3);
-  assert.ok(data.quality.every(item => item.difference !== 0));
-});
-
-test("weekly EPL comparison uses the latest two comparable weeks", () => {
-  const parsePeriod = period => period.split("–").map(value => {
-    const [day, month, year] = value.split(".").map(Number);
-    return Date.UTC(year, month - 1, day);
+test("monthly October and weekly November are separate observed periods", () => {
+  assert.equal(data.period,"01.10.2026–31.10.2026");
+  assert.equal(weekly.previous.period,"26.10.2026–01.11.2026");
+  assert.equal(weekly.current.period,"02.11.2026–08.11.2026");
+  const d = period => period.split("–").map(value=>{
+    const [day,month,year] = value.split(".").map(Number);
+    return Date.UTC(year,month-1,day);
   });
-  const [previousStart, previousEnd] = parsePeriod(weekly.previous.period);
-  const [currentStart, currentEnd] = parsePeriod(weekly.current.period);
-  const day = 24 * 60 * 60 * 1000;
-  assert.equal(previousEnd - previousStart, 6 * day);
-  assert.equal(currentEnd - currentStart, 6 * day);
-  assert.equal(currentStart - previousEnd, day);
-  assert.equal(weekly.previous.rows.length, 126);
-  assert.equal(weekly.current.rows.length, 126);
-  for (const cut of [weekly.previous, weekly.current]) {
-    assert.equal(cut.systemSummary.organizations, cut.rows.length);
-    assert.ok(cut.systemSummary.vehicles >= cut.systemSummary.vehiclesWithMovement);
-    assert.ok(cut.systemSummary.vehicles >= cut.systemSummary.vehiclesWithWaybills);
+  const [a,b] = d(weekly.previous.period),[c,e]=d(weekly.current.period);
+  const day=86400000;
+  assert.equal(b-a,6*day);assert.equal(e-c,6*day);assert.equal(c-b,day);
+});
+
+test("regional October summary is not replaced by organizational waybill counts",()=>{
+  assert.equal(data.summary.organizations,126);
+  assert.equal(data.summary.vehicles,1693);
+  assert.equal(data.summary.vehiclesWithWaybills,162);
+  assert.equal(data.summary.vehiclesWithMovement,113);
+  assert.equal(data.detail.waybills,608);
+  assert.equal(data.detail.driversWithWaybills,176);
+  assert.equal(data.summary.vehiclesWithWaybillsShare,162/1693*100);
+  assert.equal(data.summary.vehiclesWithMovementShare,113/1693*100);
+  assert.equal(data.summary.ambulanceVehiclesWithWaybillsShare,32/497*100);
+  assert.notEqual(data.summary.vehiclesWithWaybills,data.detail.waybills);
+});
+
+test("regional November summary uses exact source totals 02–08.11",()=>{
+  assert.deepEqual(weekly.current.systemSummary,{
+    organizations:126,vehicles:1691,vehiclesWithWaybills:878,vehiclesWithMovement:736
+  });
+  assert.equal(weekly.current.detail.waybills,3171);
+  assert.equal(weekly.current.detail.driversWithWaybills,1453);
+  assert.equal(weekly.current.detail.vehiclesWithMovement,736);
+  assert.equal(weekly.current.detail.organizationsWithMovement,98);
+  assert.equal(weekly.current.detail.zeroMovementOrganizations,23);
+  assert.equal(weekly.current.detail.zeroVehicleOrganizations,2);
+  assert.equal(weekly.current.detail.movementShare,736/1691*100);
+  assert.equal(weekly.previous.systemSummary.vehiclesWithMovement,110);
+  assert.equal(weekly.previous.systemSummary.vehiclesWithWaybills,149);
+  assert.equal(weekly.previous.detail.waybills,301);
+});
+
+test("123 groups and all 168 primary-source rows are preserved; missing 39–41 are not zeros",()=>{
+  for(const [slice,source] of [[data,octSource],[weekly.current,novSource]]){
+    assert.equal(source.declaredOrganizations,126);
+    assert.equal(source.numberedGroups,123);
+    assert.equal(source.sourceRows,168);
+    assert.deepEqual(source.missingGroupNumbers,[39,40,41]);
+    assert.equal(slice.rows.length,123);
+    assert.equal(slice.detail.organizations,123);
+    assert.deepEqual(slice.rows.map(r=>r.sourceNumber),validNumbers);
+    assert.equal(slice.rows.reduce((n,r)=>n+r.components.length,0),168);
+    assert.equal(new Set(slice.rows.map(r=>r.sourceNumber)).size,123);
+    for(const row of slice.rows){
+      assert.ok(row.components.length>0);
+      for(const field of fields)
+        assert.equal(row[field],row.components.reduce((n,c)=>n+c[field],0),`${row.sourceNumber}:${field}`);
+    }
+    assert.deepEqual(detailTotals(source),source.detailTotal);
+    const raw=parseRows(source);
+    const restored=slice.rows.flatMap(r=>r.components);
+    assert.deepEqual(restored.map(r=>fields.map(f=>r[f])),raw);
+    assert.equal(slice.detail.vehicles,source.systemSummary.vehicles);
+    assert.equal(slice.detail.vehiclesWithMovement,source.systemSummary.vehiclesWithMovement);
   }
-  assert.equal(weekly.current.detail.vehicles, weekly.current.rows.reduce((sum, row) => sum + row.vehicles, 0));
-  assert.equal(weekly.current.detail.vehiclesWithMovement, weekly.current.rows.reduce((sum, row) => sum + row.moved, 0));
-  assert.equal(weekly.current.detail.waybills, weekly.current.rows.reduce((sum, row) => sum + row.waybills, 0));
-  assert.deepEqual(weekly.previous.rows.map(row => row.sourceNumber), weekly.current.rows.map(row => row.sourceNumber));
-  const kazan = weekly.current.rows.find(row => row.sourceNumber === 110);
-  assert.ok(kazan);
-  assert.equal(kazan.name, "Станции скорой медицинской помощи г. Казани Подстанция № 1");
-  assert.ok(kazan.vehicles >= kazan.moved);
-  assert.ok(kazan.waybills >= 0);
-  assert.match(weekly.comparisonRule, /по номеру группы/);
+  assert.equal(weekly.previous.rows.length,126);
+  assert.deepEqual(weekly.missingCurrentGroups,[39,40,41]);
+  assert.match(weekly.periodCorrection,/39–41/);
+  assert.equal(data.quality.find(x=>x.field==="Состав организаций").difference,-3);
 });
 
-test("weekly EPL preserves the source regional totals for the two supplied weeks", () => {
-  assert.equal(weekly.previous.period, "19.10.2026–25.10.2026");
-  assert.deepEqual(weekly.previous.systemSummary, {
-    organizations: 126, vehicles: 1699, vehiclesWithWaybills: 36, vehiclesWithMovement: 30,
-  });
-  assert.equal(weekly.current.period, "26.10.2026–01.11.2026");
-  assert.deepEqual(weekly.current.systemSummary, {
-    organizations: 126, vehicles: 1699, vehiclesWithWaybills: 149, vehiclesWithMovement: 110,
-  });
+test("source names and all subsidiary rows retain matching attribution",()=>{
+  const before=weekly.previous.rows;
+  for(const row of weekly.current.rows){
+    const base=before.find(x=>x.sourceNumber===row.sourceNumber);
+    assert.ok(base,`no previous source group ${row.sourceNumber}`);
+    assert.equal(row.components.length,base.components.length,`changed membership in group ${row.sourceNumber}`);
+    for(let i=0;i<row.components.length;i++)
+      if(row.sourceNumber!==45)assert.equal(row.components[i].name,base.components[i].name);
+  }
+  for(const row of [data.rows.find(x=>x.sourceNumber===45),weekly.current.rows.find(x=>x.sourceNumber===45)])
+    assert.equal(row.name,'ГАУЗ "Городская детская больница №1 имени М.Ш.Уразаевой"');
+  const kazan=weekly.current.rows.find(x=>x.sourceNumber===110);
+  assert.equal(kazan.vehicles,126);
+  assert.equal(kazan.moved,82);
+  assert.equal(kazan.components.length,10);
+  assert.equal(kazan.components.reduce((sum,c)=>sum+c.moved,0),82);
 });
 
-test('all 171 source rows roll into 126 groups without losing unnumbered departments',()=>{
- const fields=['vehicles','ambulanceVehicles','otherVehicles','moved','drivers','mechanics','medics','waybills','ambulanceWaybills','otherWaybills','driversWithWaybills'];
- for(const cut of [weekly.previous,weekly.current]){
-  assert.equal(cut.sourceRows,171);assert.equal(cut.rows.reduce((n,r)=>n+r.components.length,0),171);
-  for(const row of cut.rows)for(const field of fields)assert.equal(row[field],row.components.reduce((n,c)=>n+c[field],0),`${row.sourceNumber}:${field}`);
-  assert.equal(cut.detail.vehicles,cut.systemSummary.vehicles);assert.equal(cut.detail.vehiclesWithMovement,cut.systemSummary.vehiclesWithMovement);
-  assert.deepEqual(cut.rows.map(r=>r.sourceNumber),Array.from({length:126},(_,i)=>i+1));
- }
- assert.deepEqual(weekly.previous.rows.map(r=>r.name),weekly.current.rows.map(r=>r.name));
- const kazan=weekly.current.rows.find(r=>r.sourceNumber===110);assert.equal(kazan.vehicles,126);assert.equal(kazan.moved,2);assert.ok(kazan.components.length>1);
-});
-test('weekly waybill and movement units stay distinct and match the primary source',()=>{
- assert.equal(weekly.previous.detail.waybills,114);assert.equal(weekly.current.detail.waybills,301);
- assert.equal(weekly.previous.detail.driversWithWaybills,34);assert.equal(weekly.current.detail.driversWithWaybills,173);
- assert.equal(weekly.previous.detail.organizationsWithMovement,5);assert.equal(weekly.current.detail.organizationsWithMovement,27);
- assert.equal(weekly.current.systemSummary.vehiclesWithWaybills,149);assert.notEqual(weekly.current.systemSummary.vehiclesWithWaybills,weekly.current.detail.waybills);
- assert.equal(weekly.current.detail.zeroMovementOrganizations+weekly.current.detail.zeroVehicleOrganizations+weekly.current.detail.organizationsWithMovement,126);
+test("UI names October, flags 126/123 discrepancy and avoids an invented plan",async()=>{
+  const page=await readFile(new URL("../app/page.tsx",import.meta.url),"utf8");
+  assert.match(page,/Закрытый октябрь показан отдельно/u);
+  assert.match(page,/data-testid="epl-source-perimeter-warning"/u);
+  assert.equal(data.plan,null);
+  assert.ok(weekly.comparisonRule.includes("26.10"));
+  assert.ok(weekly.comparisonRule.includes("02–08"));
 });
