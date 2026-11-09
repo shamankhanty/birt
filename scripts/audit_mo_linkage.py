@@ -114,6 +114,21 @@ def main() -> None:
 
             numerator = detail.get("registered")
             denominator = detail.get("volume")
+            if metric == "hospital" and row.get("sourceStatus") == "no_registered_semd_reported":
+                # The source provides closed cases (D) but blank registered-epicrisis
+                # fields (E/F). An explicit missing value is not the numeric zero.
+                # Only allow this precisely documented and internally consistent state.
+                if (
+                    isinstance(denominator, (int, float))
+                    and denominator > 0
+                    and numerator is None
+                    and count is None
+                    and fact is None
+                    and bool(str(row.get("sourceWarning") or "").strip())
+                ):
+                    continue
+                errors.append(f"{metric}: несогласованный статус отсутствующего числителя для {name!r}: {numerator}/{denominator}")
+                continue
             if not isinstance(numerator, (int, float)) or not isinstance(denominator, (int, float)) or denominator <= 0:
                 errors.append(f"{metric}: некорректные компоненты для {name!r}: {numerator}/{denominator}")
                 continue
