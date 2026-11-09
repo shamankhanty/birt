@@ -8,6 +8,9 @@ import octoberMonthly from './monthly-2026-10.json';
 import monthly from './monthly-mo.json';
 import {buildOctoberRating} from '../lib/october-rating.js';
 import {buildSeptemberRating, metricScore} from '../lib/september-rating.js';
+import {monthlyRatingBranchKeys, excludeMonthlyRatingBranches} from '../lib/monthly-rating-scope.js';
+import moRegistry from './mo-registry.json';
+import spasskIdentity from '../config/rkb-spassk-branch.json';
 
 const fmt = (v:number|null|undefined, d=2) =>
   v == null ? '—' : (Math.abs(v)<0.005 ? 0 : v).toLocaleString('ru-RU',{maximumFractionDigits:d,minimumFractionDigits:0});
@@ -17,9 +20,12 @@ const blockNames:Record<string,string> = {
   readiness:'Готовность',
 };
 const blockWeights:Record<string,string> = {care:'70%',services:'20%',readiness:'10%'};
+const ratingBranchKeys = monthlyRatingBranchKeys(moRegistry, spasskIdentity);
+const eligibleInputs = {...inputs, organizations: excludeMonthlyRatingBranches(inputs.organizations, ratingBranchKeys)};
+const eligibleLegacy = {...legacy, rows: excludeMonthlyRatingBranches(legacy.rows, ratingBranchKeys)};
 
 export default function SeptemberRating({ october = false }: { october?: boolean }){
-  const rows=useMemo(()=>october ? buildOctoberRating(inputs,{...monthly,...octoberMonthly},policy) : buildSeptemberRating(inputs,legacy,policy),[october]);
+  const rows=useMemo(()=>october ? buildOctoberRating(eligibleInputs,{...monthly,...octoberMonthly},policy) : buildSeptemberRating(eligibleInputs,eligibleLegacy,policy),[october]);
   const types=[...new Set(rows.map(r=>r.type))];
   const [type,setType]=useState('Центральные районные больницы');
   const [query,setQuery]=useState('');
@@ -50,6 +56,7 @@ export default function SeptemberRating({ october = false }: { october?: boolean
       <div className="septMethodBody">
         <p><b>70% — медицинская помощь, 20% — цифровые услуги, 10% — готовность.</b> Каждый показатель: факт / план × 100, максимум 100 баллов. Перевыполнение не даёт дополнительных баллов.</p>
         <p>В готовности: ТВСП — 50%, активность врачей — 25%, группа специальностей 500+ — 25%. Внутри групп показатели равновесны. Неприменимые по подтверждённому профилю показатели и нулевые знаменатели исключаются; их веса перераспределяются в пределах группы, затем блока.</p>
+        <p><b>Состав рейтинга:</b> филиалы, включая Спасскую ЦРБ как филиал РКБ, не оцениваются отдельными МО. Места определяются только среди остальных организаций; исходные показатели и архивные данные сохранены.</p>
         <p><b>Официальное место — только при полном обязательном наборе.</b> При пропусках показан диапазон возможного балла и перечень недостающих данных. Пропуск не считается фактом 0 и не улучшает место. «Лидер» — от 95 баллов, если каждый ключевой показатель помощи выполнен хотя бы на 80% своего плана.</p>
         {october ? <p><b>Периоды:</b> врачи и ЕПГУ — 1–31 октября. СЭМД и ТВСП — накопительно на 31.10. Профилактика: MAX зарегистрированных 122 и 228 / закрытые случаи ДОГВН и ПМО. Применяется состав показателей сентябрьской версии 2.</p> : <>
         <p><b>Периоды:</b> врачи и ЕПГУ — 01.09–30.09; СЭМД и ТВСП — накопительно 01.01–30.09. Это оценка состояния на сентябрьском срезе, а не месячный поток СЭМД. РЭМД сформирован 30.09 в 14:44; более поздний сентябрьский результат не подразумевается.</p>
