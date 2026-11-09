@@ -50,7 +50,8 @@ test('REMD errors preserve separate periods, with no invented denominator',()=>{
   assert.equal(byMo.totalErrors,brief.total);
 });
 test('SEMD summary reconciles 97 document types and current source evidence',()=>{
-  const s=read('semd-summary');assert.equal(s.total,84817652);
+  const s=JSON.parse(fs.readFileSync('baseline/archive/accepted-20261102/app/semd-summary.json','utf8'));
+  assert.equal(s.total,84817652);
   assert.equal(s.registeredTypes,97);
   assert.equal(s.items.reduce((sum,x)=>sum+x.count,0),s.total);
   assert.equal(evidence.sourceCount,22);
