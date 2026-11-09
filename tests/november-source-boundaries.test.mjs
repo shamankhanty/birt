@@ -114,7 +114,8 @@ test('January-October reports cannot replace standalone September EPGU or the ap
  assert.equal(periods.latestFullMonth.label,'октябрь 2026');
  const page=fs.readFileSync('app/page.tsx','utf8');
  assert.match(page,/ratingPeriod: "октябрь 2026"/);
- assert.match(page,/ratingRows = useMemo\(\(\) => septemberRatingArchive.rows/);
+ assert.match(page,/excludeMonthlyRatingBranches\(\s*septemberRatingArchive\.rows as RankRow\[\]/);
+ assert.match(page,/monthlyRatingBranchKeys\(moRegistryRaw, spasskIdentity\)/);
 });
 
 test('report period recognition uses an explicit October header, even when exported in November',()=>{
