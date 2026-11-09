@@ -90,7 +90,7 @@ test('January-October reports cannot replace standalone September EPGU or the ap
  const periods=resolveReportingPeriods({physicianMetrics:app('physician-metrics'),datasets:Object.values(app('mo-data'))});
  assert.equal(periods.latestFullMonth.label,'октябрь 2026');
  const page=fs.readFileSync('app/page.tsx','utf8');
- assert.match(page,/ratingPeriod: ratingMonth.label/);
+ assert.match(page,/ratingPeriod: "октябрь 2026"/);
  assert.match(page,/ratingRows = useMemo\(\(\) => septemberRatingArchive.rows/);
 });
 
