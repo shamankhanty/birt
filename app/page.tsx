@@ -6,6 +6,8 @@ import octoberMonthlyRaw from "./monthly-2026-10.json";
 import octoberPreventiveClosed from "./rating/october-preventive-closed.json";
 import SeptemberRating from "./september-rating";
 import septemberRatingArchive from "./rating/september-v1.json";
+import spasskIdentity from "../config/rkb-spassk-branch.json";
+import { monthlyRatingBranchKeys, excludeMonthlyRatingBranches } from "../lib/monthly-rating-scope.js";
 import { maxHearingPlan, maxHearingDeficit } from "../lib/max-hearing-plan.js";
 import { planTransition } from "../lib/plan-transitions.js";
 import { buildFederalDetailCatalog, federalMetricTarget } from "../lib/federal-navigation.js";
@@ -3570,7 +3572,13 @@ export default function Home() {
   >("status");
   const [unitSortDirection, setUnitSortDirection] =
     useState<SortDirection>("asc");
-  const ratingRows = useMemo(() => septemberRatingArchive.rows as RankRow[], []);
+  const ratingRows = useMemo(
+    () => excludeMonthlyRatingBranches(
+      septemberRatingArchive.rows as RankRow[],
+      monthlyRatingBranchKeys(moRegistryRaw, spasskIdentity),
+    ),
+    [],
+  );
   const [ratingEdition, setRatingEdition] = useState("october");
   const [hearingLevel, setHearingLevel] = useState<
     "all" | "mandatory" | "control" | "heard"
@@ -6682,7 +6690,7 @@ export default function Home() {
                   <h1>Месячный рейтинг МО — {ratingMonth.label}</h1>
                   {/* Baseline v4.6.0: Рейтинг медицинских организаций — август 2026 */}
                   <p>
-                    МО сравниваются только внутри своего типа · {reportingPeriods.hasPartialNewerMonth
+                    МО сравниваются только внутри своего типа · филиалы не представлены отдельными МО · {reportingPeriods.hasPartialNewerMonth
                       ? `${reportingPeriods.latestObservedMonth.adjective} оперативные срезы на места не влияют`
                       : "оперативные срезы после закрытого месяца отсутствуют"}
                     {/* Baseline v4.6.0: сентябрьские оперативные срезы на места не влияют */}
