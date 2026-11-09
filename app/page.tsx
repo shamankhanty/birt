@@ -5254,13 +5254,13 @@ export default function Home() {
   const maxDashboardServiceKey = maxService === "tmk" ? "tmk" : "eln";
   const maxDashboardMetric = maxService === "tmk" ? "tmkMaxCount" : "elnMaxCount";
   const maxPeriodViews = maxPeriodViewsRaw as any;
-  // October is a frozen closed month. November opens with its own approved plan;
-  // no November source has been supplied, so no fact, trend or forecast exists.
+  // October is frozen. November reads its own direct month report, while
+  // cumulative control uses a separate year-to-date source; forecast needs two month cuts.
   const maxOperationalSlice = maxControlMonth === "2026-10"
     ? maxPeriodViews.closedMonths["2026-10"].operational
     : maxPeriodViews.operational;
   const maxDisplayedMonthLabel = maxPeriodView === "cumulative"
-    ? "Октябрь 2026 · последнее подтверждение"
+    ? `Ноябрь 2026 · накопительно на ${maxPeriodViews.cumulative.date}`
     : maxControlMonth === "2026-10" ? "Октябрь 2026 · закрыт" : "Ноябрь 2026 · открыт";
   const maxIndicatorServiceKey = matrixMetric === "visitMax" ? "visit" : matrixMetric === "tmkMaxCount" ? "tmk" : "eln";
   const maxIndicatorSlice = maxPeriodView === "operational" ? maxOperationalSlice : maxPeriodViews.cumulative;
@@ -8936,7 +8936,7 @@ export default function Home() {
               )}
               {isMaxMetric ? (
                 <p className="sourceDataNote">
-                  <b>Источник и ограничение:</b> {matrixMetric === "visitMax" ? "Приказ МЗ РТ № под-2291 от 28.09.2026; фактическая выгрузка записей по МО пока отсутствует" : maxIndicatorSlice.source ?? "Ноябрьская выгрузка пока отсутствует"}. В утверждённый план включены 85 МО; контрольный итог фактической выгрузки — {maxIndicatorMetricData.sourceTotal === null ? "нет данных" : format(maxIndicatorMetricData.sourceTotal, 0)}. Отсутствие строки не заменяется нулём.
+                  <b>Источник и ограничение:</b> {matrixMetric === "visitMax" ? "Приказ МЗ РТ № под-2291 от 28.09.2026; фактическая выгрузка записей по МО пока отсутствует" : maxIndicatorSlice.source ?? "Ноябрьская выгрузка пока отсутствует"}. В утверждённый план включены 85 МО; контрольный итог фактической выгрузки — {maxIndicatorMetricData.sourceTotal === null ? "нет данных" : format(maxIndicatorMetricData.sourceTotal, 0)}. {matrixMetric !== "visitMax" && maxIndicatorSlice.date ? `Факт в плановом периметре подтверждён по ${(maxIndicatorMetricData.rows as Array<any>).filter((row) => row.fact !== null).length} из 85 МО; остальные строки — нет данных.` : ""} Отсутствие строки не заменяется нулём.
                 </p>
               ) : selectedDataset.note && matrixMetric !== "semd228" && (
                 <p className="sourceDataNote">
@@ -8982,8 +8982,8 @@ export default function Home() {
                   <p>{matrixMetric === "visitMax" ? "План по приказу задан накопительным итогом. План месяца — разность соседних контрольных точек. Фактическая выгрузка ещё не поступила; выполнение, динамика и прогноз не рассчитываются." : maxPeriodView === "operational"
                     ? maxControlMonth === "2026-10"
                       ? "Факт взят напрямую из октябрьского отчёта; накопительный факт сентября из него не вычитается. Прогноз рассчитан по темпу между двумя октябрьскими выгрузками. Октябрь закрыт и сохранён."
-                      : "Ноябрь открыт по отдельному утверждённому плану (разность ноябрьской и октябрьской накопительных контрольных точек). Ноябрьский факт не поступал; октябрь не переносится, отсутствие данных не считается нулём."
-                    : "Последний подтверждённый накопительный срез — 31.10.2026, план и факт относятся к октябрю. Ноябрьский накопительный план: ТМК 177 000, ЛВН 90 000; ноябрьский факт ещё не поступил."}</p>
+                      : maxIndicatorSlice.date ? "Оперативный факт получен напрямую из месячной выгрузки 01–08.11.2026. Выполнение плана считается только по МО, включённым в утверждённый план; весь объём отчёта показан отдельно в источнике. У двух плановых МО отсутствуют строки; это не ноль. Прогноз появится после следующего сопоставимого среза ноября." : "Ноябрь открыт по отдельному утверждённому плану; до поступления прямой месячной выгрузки не подставлять октябрьские факты."
+                    : "Накопительный факт подтверждён на 08.11.2026 (отчёт 01.01–08.11), план на ноябрь — ТМК 177 000, ЛВН 90 000. Динамика накопительного показателя сравнивает полные накопительные срезы, месячный факт берётся из отдельного отчёта 01–08.11, а не разностью накопительных файлов."}</p>
                 </section>
               )}
               {isMaxMetric && (

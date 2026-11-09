@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "kind": "current-production",
-  "promotedFrom": "PR: восстановление сравнения 31.10.2026→08.11.2026, 86 МО, методика MAX(122,228)/(ДОГВН+ПМО)",
+  "promotedFrom": "МАХ: прямой месячный 01–08.11 и отдельный накопительный 01.01–08.11, только 83 из 85 плановых МО с данными",
   "promotedAt": "2026-11-09",
   "files": {
     "app/electronic-waybill-weekly.json": "4b96a10a3143cdbec0b5d5302e418db3c70bb183f5acac828b1c94e7c6a65a89",
@@ -23,7 +23,7 @@
     "app/max-appointment-plan.json": "94169a0443453d16ab9094de0e2269ecca4277ee270a10024471d276e0ac1909",
     "app/max-appointments-municipal.json": "b951215cc53ca0e9eca54d6d1917dbe625f915b66764ef9d0a830dc57484202d",
     "app/max-monthly-visits.json": "4ccd792fbc854b92ec7b5161e2e6e00ab68c3c5f14a06278e4332f63f522b31a",
-    "app/max-period-views.json": "56895ec1a8826559f49d769f32e3a0f6600cf53791bd68a924d248ffe02c7e2e",
+    "app/max-period-views.json": "64da1306a6465d75b617cd4130e29f9333fd7df44bd151c61b1e9d9aa090baa6",
     "app/methodology-audit.json": "d15739980906b1a697a8f4c80d09c940836c896371eb3cbe268b8d9022fb5774",
     "app/mo-data.json": "794082f0ccfba0e20ab54cb1b9dde307cfbb8e1290036eae8d569f961b197ca9",
     "app/mo-detail-oids.json": "e66ce6666c769a3e9326eb6afa06b029bc55a6628d9ebd6055bea914a54e57e5",
