@@ -37,7 +37,7 @@ test("Independent TMC and ELN monthly snapshots keep equal period boundaries", (
     assert.equal(monthly[id].previousLabel,"На 31.08");
     assert.equal(monthly[id].currentLabel,"На 30.09");
   }
-  assert.match(page, /maxAugustMonthlyDataset/u);
+  assert.match(page, /const isMonthlyCount = monthlyDataset/u);
   assert.match(page, /maxPeriodViews.operational/u);
   assert.match(page, /maxPeriodViews.cumulative/u);
   assert.doesNotMatch(page, /isMaxMetric\s*\?\s*"ТМК и ЛВН посредством МАХ"/u);

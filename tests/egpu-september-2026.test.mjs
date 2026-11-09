@@ -52,9 +52,9 @@ test("full September EPGU tables use separate source columns", () => {
   });
 });
 
-test("September EPGU summary uses dataset month labels and verified totals", () => {
-  assert.match(page, /6 684 из 6 690/);
-  assert.match(page, /6 077 из 6 690/);
-  assert.match(page, /matrixMetric === "egpu" \|\| matrixMetric === "egpu2days"/);
-  assert.doesNotMatch(page, /source: "Заявления, рассмотренные за 2 суток"/);
+test("EPGU month comparison uses separate verified September and October totals", () => {
+  const { egpu, egpu2days } = JSON.parse(readFileSync("app/monthly-2026-10.json", "utf8"));
+  assert.deepEqual(egpu.regional, { previous: { numerator: 6684, denominator: 6690 }, current: { numerator: 7365, denominator: 7715 } });
+  assert.deepEqual(egpu2days.regional, { previous: { numerator: 6077, denominator: 6690 }, current: { numerator: 7163, denominator: 7715 } });
+  assert.match(page, /monthlyDataset\.regional/);
 });

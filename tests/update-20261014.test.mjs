@@ -49,8 +49,8 @@ test('physician month comparison uses full-month components rather than October 
  assert.deepEqual([previous.numerator,previous.denominator],[797,1353]);
  assert.deepEqual([current.numerator,current.denominator],[833,1357]);
  const page=fs.readFileSync('app/page.tsx','utf8');
- assert.match(page,/june: physicianPreviousMonth\.fact/u);
- assert.match(page,/july: physicianCurrentMonth\.fact/u);
+ assert.match(page,/monthComponents\("juneQuantity"\)/u);
+ assert.match(page,/monthComponents\("julyQuantity"\)/u);
  assert.match(page,/monthlyDataset\?\.previousLabel/u);
  assert.match(page,/monthlyDataset\?\.currentLabel/u);
 });

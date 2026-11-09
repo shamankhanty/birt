@@ -2,7 +2,8 @@
 
 import { useMemo, useState } from "react";
 import PlanTransitionStat from "./plan-transition-stat";
-import OctoberPreventiveRating from "./october-preventive-rating";
+import octoberMonthlyRaw from "./monthly-2026-10.json";
+import octoberPreventiveClosed from "./rating/october-preventive-closed.json";
 import SeptemberRating from "./september-rating";
 import septemberRatingArchive from "./rating/september-v1.json";
 import { maxHearingPlan, maxHearingDeficit } from "../lib/max-hearing-plan.js";
@@ -577,6 +578,7 @@ type MonthlyMoDataset = {
   unit: "%" | "count";
   previousLabel?: string;
   currentLabel?: string;
+  regional?: { previous: { numerator: number; denominator: number }; current: { numerator: number; denominator: number } };
   rows: MonthlyMoRow[];
 };
 type MoSortKey =
@@ -893,7 +895,7 @@ const ratingPeriodShort = `${latestFullMonth.startDate.slice(0, 5)}–${latestFu
 const releaseRuntime = createReleaseRuntimeMetadata({
   operationalRuntime: currentOperationalRuntime,
   physicianWeeklySnapshot: physicianWeeklySnapshotRaw,
-  ratingPeriod: ratingMonth.label,
+  ratingPeriod: "октябрь 2026",
 });
 type MoDetail = { volume: number; registered: number };
 const moDetails = moDetailsRaw as Record<string, Record<string, MoDetail>>;
@@ -4757,26 +4759,6 @@ export default function Home() {
   const displayDatasetDate = isOperationalPhysicianSnapshot
     ? (physicianWeeklySnapshot.periods?.[matrixMetric]?.date ?? physicianWeeklySnapshot.date)
     : selectedDataset.date;
-  const maxAugustMonthlyDataset: MonthlyMoDataset | null = isMaxMetric && matrixMetric !== "visitMax"
-    ? {
-        unit: "count",
-        previousLabel: "Июль 2026",
-        currentLabel: "Август 2026",
-        rows: augustMaxRows.map((row) => {
-          const value = matrixMetric === "tmkMaxCount" ? row.tmk : row.eln;
-          return {
-            name: row.name,
-            june: null,
-            july: value.value,
-            change: null,
-            juneQuantity: null,
-            julyQuantity: value.value === null ? null : format(value.value, 0),
-            sourceWarning:
-              "Август рассчитан как накопительный срез 31.08 минус 31.07. Для сравнения июля с августом по МО нужен сопоставимый срез на 30.06; его в текущем наборе нет.",
-          };
-        }),
-      }
-    : null;
   const selectedUnitDataset = unitData[matrixMetric];
   const lowerIsBetter =
     matrixMetric === "shortInput" || selectedDataset.direction === "lower";
@@ -5451,127 +5433,41 @@ export default function Home() {
       ((a.forecastAchievement ?? a.achievement) ?? Number.POSITIVE_INFINITY) - ((b.forecastAchievement ?? b.achievement) ?? Number.POSITIVE_INFINITY) ||
       a.row.name.localeCompare(b.row.name, "ru"),
     );
-  type MonthlyBenchmark = {
-    june: number;
-    july: number;
-    unit: "%" | "count";
-    juneQuantity?: string;
-    julyQuantity?: string;
-    source: string;
+  const octoberMonthly = octoberMonthlyRaw as Record<string, MonthlyMoDataset>;
+  const originalMonthly = monthlyMoData[matrixMetric];
+  const monthlyDataset = octoberMonthly[matrixMetric] ??
+    (["Октябрь 2026", "На 31.10"].includes(originalMonthly?.currentLabel ?? "") ? originalMonthly : null);
+  const monthComponents = (field: "juneQuantity" | "julyQuantity") => {
+    if (!monthlyDataset) return null;
+    if (monthlyDataset.unit === "count") {
+      const values = monthlyDataset.rows.map(row => field === "juneQuantity" ? row.june : row.july)
+        .filter((value): value is number => value !== null);
+      return values.length ? { fact: values.reduce((sum, value) => sum + value, 0), numerator: 0, denominator: 0 } : null;
+    }
+    const source = monthlyDataset.regional?.[field === "juneQuantity" ? "previous" : "current"];
+    if (source) return { ...source, fact: source.numerator / source.denominator * 100 };
+    const totals = aggregateQuantityPairs(monthlyDataset.rows, field);
+    return totals.denominator > 0 ? totals : null;
   };
-  const monthlyBenchmarks: Record<string, MonthlyBenchmark> = {
-    egpu: {
-      june: 95.6268,
-      july: 99.91031390134529,
-      unit: "%",
-      juneQuantity: "3 936 из 4 116",
-      julyQuantity: "6 684 из 6 690",
-      source: "Заявления о прикреплении через ЕПГУ с финальным статусом",
-    },
-    egpu2days: {
-      june: 67.0311,
-      july: 90.83707025411061,
-      unit: "%",
-      juneQuantity: "2 759 из 4 116",
-      julyQuantity: "6 077 из 6 690",
-      source: "Заявления о прикреплении, рассмотренные за 2 рабочих дня",
-    },
-    birth: {
-      june: 99.8906,
-      july: 98.7193,
-      unit: "%",
-      juneQuantity: "2 738 из 2 741",
-      julyQuantity: "2 852 из 2 889",
-      source: "Медицинские свидетельства о рождении",
-    },
-    death: {
-      june: 95.7315,
-      july: 92.8051,
-      unit: "%",
-      juneQuantity: "2 938 из 3 069",
-      julyQuantity: "3 186 из 3 433",
-      source: "Медицинские свидетельства о смерти",
-    },
-    semd228: {
-      june: 42.8342,
-      july: 47.03,
-      unit: "%",
-      juneQuantity: "63 443 из 148 113",
-      julyQuantity: "55 715 из 118 467",
-      source: "СЭМД №228",
-    },
-    hospital: {
-      june: 65.0319,
-      july: 89.9899,
-      unit: "%",
-      juneQuantity: "54 539 из 83 865",
-      julyQuantity: "76 073 из 84 535",
-      source: "Выписные эпикризы",
-    },
-    ambulatoryCase: {
-      june: 79.9821,
-      july: 75.7095,
-      unit: "%",
-      juneQuantity: "941 206 из 1 176 771",
-      julyQuantity: "790 929 из 1 044 689",
-      source: "Амбулаторные эпикризы",
-    },
-    tmkMaxCount: {
-      june: 6125,
-      july: 6689,
-      unit: "count",
-      source: "ТМК посредством МАХ",
-    },
-    elnMaxCount: {
-      june: 5952,
-      july: 6153,
-      unit: "count",
-      source: "Закрытие ЛВН после ТМК посредством МАХ",
-    },
-  };
-  const adultPreventiveMonthlyRows = monthlyMoData.semd228?.rows ?? [];
-  const aggregatePreventiveMonth = (field: "juneQuantity" | "julyQuantity") => {
-    const totals = aggregateQuantityPairs(adultPreventiveMonthlyRows, field);
-    return {
-      fact: totals.fact,
-      label: `${format(totals.numerator, 0)} из ${format(totals.denominator, 0)}`,
-    };
-  };
-  const adultJune = aggregatePreventiveMonth("juneQuantity"),
-    adultJuly = aggregatePreventiveMonth("julyQuantity");
-  const physicianMonthRows = matrixMetric.startsWith("doctor")
-    ? monthlyMoData[matrixMetric]?.rows ?? []
-    : [];
-  const physicianPreviousMonth = aggregateQuantityPairs(physicianMonthRows, "juneQuantity");
-  const physicianCurrentMonth = aggregateQuantityPairs(physicianMonthRows, "julyQuantity");
-  const monthBenchmark =
-    matrixMetric.startsWith("doctor") && physicianPreviousMonth.denominator > 0 && physicianCurrentMonth.denominator > 0
-      ? {
-          june: physicianPreviousMonth.fact,
-          july: physicianCurrentMonth.fact,
-          unit: "%" as const,
-          juneQuantity: `${format(physicianPreviousMonth.numerator, 0)} из ${format(physicianPreviousMonth.denominator, 0)}`,
-          julyQuantity: `${format(physicianCurrentMonth.numerator, 0)} из ${format(physicianCurrentMonth.denominator, 0)}`,
-          source: "Два полных месячных источника по врачам",
-        }
-      : matrixMetric === "semd228"
-      ? {
-          june: adultJune.fact,
-          july: adultJuly.fact,
-          unit: "%" as const,
-          juneQuantity: adultJune.label,
-          julyQuantity: adultJuly.label,
-          source: "MAX СЭМД №122/228 · взрослые и детские МО",
-        }
-      : monthlyBenchmarks[matrixMetric];
-  const monthlyDataset =
-    matrixMetric === "semd228"
-      ? { ...monthlyMoData.semd228, rows: adultPreventiveMonthlyRows }
-      : isMaxMetric
-        ? maxAugustMonthlyDataset
-        : monthlyMoData[matrixMetric];
-  const usesDatasetMonthLabels =
-    matrixMetric.startsWith("doctor") || matrixMetric === "egpu" || matrixMetric === "egpu2days";
+  const previousMonthComponents = monthComponents("juneQuantity");
+  const currentMonthComponents = monthComponents("julyQuantity");
+  const currentMonthFact = currentMonthComponents?.fact ?? null;
+  const matchedMonths = monthlyDataset?.rows.filter(row => row.june !== null && row.july !== null) ?? [];
+  const monthPreviousMatched = aggregateQuantityPairs(matchedMonths, "juneQuantity");
+  const monthCurrentMatched = aggregateQuantityPairs(matchedMonths, "julyQuantity");
+  const monthlyChange = monthlyDataset?.unit === "count"
+    ? matchedMonths.length ? matchedMonths.reduce((sum, row) => sum + (row.july! - row.june!), 0) : null
+    : monthPreviousMatched.fact === null || monthCurrentMatched.fact === null
+      ? null : monthCurrentMatched.fact - monthPreviousMatched.fact;
+  const isMonthlyCount = monthlyDataset?.unit === "count";
+  const preventiveMonthMode = preventiveTransition && dynamicsMode === "month";
+  const preventiveSummary = preventiveMonthMode ? {
+    organizations: octoberPreventiveClosed.rows.length,
+    numerator: currentMonthComponents?.numerator,
+    denominator: currentMonthComponents?.denominator,
+    selected122: octoberPreventiveClosed.rows.filter(row => row.semd122 >= row.semd228).length,
+    selected228: octoberPreventiveClosed.rows.filter(row => row.semd228 > row.semd122).length,
+  } : preventiveSemdAudit.summary;
   const metricDisplayName = (id: string) =>
     id === "visitMax" ? "Запись на приём к врачу через МАХ" : id === "tmkMaxCount"
       ? "ТМК посредством МАХ"
@@ -6784,11 +6680,11 @@ export default function Home() {
           {tab === "ranking" && (
             <>
               <div className="septEdition" role="group" aria-label="Период рейтинга">
-                <button className={ratingEdition === "october" ? "active" : ""} onClick={() => setRatingEdition("october")}>Октябрь · срез 122/228</button>
+                <button className={ratingEdition === "october" ? "active" : ""} onClick={() => setRatingEdition("october")}>Октябрь 2026</button>
                 <button className={ratingEdition === "v2" ? "active" : ""} onClick={() => setRatingEdition("v2")}>Сентябрь · новая методика</button>
                 <button className={ratingEdition === "v1" ? "active" : ""} onClick={() => setRatingEdition("v1")}>Сентябрь · прежняя версия</button>
               </div>
-              {ratingEdition === "october" ? <OctoberPreventiveRating /> : ratingEdition === "v2" ? <SeptemberRating /> : <>
+              {ratingEdition === "october" ? <SeptemberRating october /> : ratingEdition === "v2" ? <SeptemberRating /> : <>
               <p className="prototypeNote">Архив версии 1 за сентябрь. Содержит прежние правила, включая оперативный 500+ стоматологов. Для пересчёта используйте новую методику.</p>
               <div className="pageHead ratingHead">
                 <div>
@@ -9031,7 +8927,7 @@ export default function Home() {
                   <span>
                     {isMaxMetric
                       ? `${maxIndicatorAchievement === null ? "—" : `${format(maxIndicatorAchievement, 1)}%`} · факт ${maxIndicatorFact === null ? "Нет данных" : format(maxIndicatorFact, 0)} ${maxIndicatorSlice.date ? `на ${maxIndicatorSlice.date}` : "(ожидается выгрузка)"}`
-                      : `актуальность ${displayDatasetDate}`}
+                      : dynamicsMode === "month" ? (monthlyDataset ? "срез на 31.10.2026" : "месячный срез отсутствует") : `актуальность ${displayDatasetDate}`}
                   </span>
                 </div>
               </div>
@@ -9188,45 +9084,45 @@ export default function Home() {
                 <section className="registrationErrors preventiveTransition">
                   <div className="registrationHead">
                     <div>
-                      <p className="eyebrow">ПЕРЕХОДНАЯ ФОРМУЛА 2026 ГОДА</p>
+                      <p className="eyebrow">{preventiveMonthMode ? "ВНУТРЕННИЙ МЕСЯЧНЫЙ СРЕЗ" : "ПЕРЕХОДНАЯ ФОРМУЛА 2026 ГОДА"}</p>
                       <h2>MAX СЭМД 122/228 рассчитан отдельно по каждой МО</h2>
                       <p>
                         В расчёт включены взрослые и детские медицинские организации
                       </p>
                     </div>
-                    <span>{preventiveSemdAudit.summary.organizations} сопоставленных МО</span>
+                    <span>{preventiveSummary.organizations} сопоставленных МО</span>
                   </div>
                   <p className="dataWarning">
-                    <b>Федеральная формула 2026 года:</b> MAX(СЭМД 122; СЭМД
+                    {preventiveMonthMode ? <>MAX зарегистрированных СЭМД 122 и 228 по каждой МО ÷ закрытые случаи ДОГВН и ПМО × 100%. Накопительный срез за 01.01–31.10.2026.</> : <><b>Федеральная формула 2026 года:</b> MAX(СЭМД 122; СЭМД
                     228) по каждой МО ÷ обращения ФОМС с профилактической целью × 100%.
                     СЭМД не суммируются. Динамика к прежнему файлу не
                     подменяется месячным приростом: сравниваются накопительные срезы
-                    на {selectedDataset.previousDate ?? "предыдущую дату"} и {selectedDataset.date}.
+                    на {selectedDataset.previousDate ?? "предыдущую дату"} и {selectedDataset.date}.</>}
                   </p>
                   <div className="errorSummary">
                     <div>
                       <strong>
-                        {format(preventiveSemdAudit.summary.numerator ?? 0, 0)}
+                        {format(preventiveSummary.numerator ?? 0, 0)}
                       </strong>
                       <span>выбрано в числитель</span>
                     </div>
                     <div>
-                      <strong>{format(preventiveSemdAudit.summary.denominator ?? 0, 0)}</strong>
-                      <span>обращений ФОМС</span>
+                      <strong>{format(preventiveSummary.denominator ?? 0, 0)}</strong>
+                      <span>{preventiveMonthMode ? "закрыто случаев" : "обращений ФОМС"}</span>
                     </div>
                     <div>
-                      <strong>{preventiveSemdAudit.summary.selected122 ?? 0} / {preventiveSemdAudit.summary.selected228 ?? 0}</strong>
+                      <strong>{preventiveSummary.selected122 ?? 0} / {preventiveSummary.selected228 ?? 0}</strong>
                       <span>выбран СЭМД 122 / 228</span>
                     </div>
                     <div>
-                      <strong>{format(regionalFact, 2)}%</strong>
-                      <span>факт РТ</span>
+                      <strong>{format(preventiveMonthMode ? currentMonthFact : regionalFact, 2)}%</strong>
+                      <span>{preventiveMonthMode ? "факт по сопоставленным МО" : "факт РТ"}</span>
                     </div>
                   </div>
                   <p className="methodNote">
-                    <b>Контроль качества:</b> одна частная строка из Ижевска со
+                    <b>Контроль качества:</b> {preventiveMonthMode ? <>Сопоставимый сентябрьский срез по закрытым случаям отсутствует.</> : <>одна частная строка из Ижевска со
                     знаменателем 1 не сопоставилась с отчётом РЭМД и исключена
-                    из расчёта. Она сохранена в аудите, а не заменена нулём.
+                    из расчёта. Она сохранена в аудите, а не заменена нулём.</>}
                   </p>
                 </section>
               )}
@@ -9236,7 +9132,7 @@ export default function Home() {
                     <b>Динамика показателя</b>
                     <span>
                       Оперативно — текущая выгрузка к предыдущей · месяцы —
-                      полный месячный период
+                      закрытые срезы сентября и октября
                     </span>
                   </div>
                   <div className="dynamicsSwitch">
@@ -9342,91 +9238,28 @@ export default function Home() {
                       </span>
                     </article>
                   </div>
-                ) : monthBenchmark ? (
+                ) : (
                   <div className="dynamicsCards month">
-                    <article>
-                      <small>Предыдущий полный месяц</small>
-                      <strong>
-                        {format(
-                          monthBenchmark.june,
-                          monthBenchmark.unit === "count" ? 0 : 2,
-                        )}
-                        {monthBenchmark.unit === "%" ? "%" : ""}
-                      </strong>
-                      <span>
-                        {usesDatasetMonthLabels ? monthlyDataset?.previousLabel : "Июль 2026"}
-                        {monthBenchmark.juneQuantity
-                          ? ` · ${monthBenchmark.juneQuantity}`
-                          : ""}
-                      </span>
-                    </article>
-                    <article>
-                      <small>Последний полный месяц</small>
-                      <strong>
-                        {format(
-                          monthBenchmark.july,
-                          monthBenchmark.unit === "count" ? 0 : 2,
-                        )}
-                        {monthBenchmark.unit === "%" ? "%" : ""}
-                      </strong>
-                      <span>
-                        {usesDatasetMonthLabels ? monthlyDataset?.currentLabel : "Август 2026"}
-                        {monthBenchmark.julyQuantity
-                          ? ` · ${monthBenchmark.julyQuantity}`
-                          : ""}
-                      </span>
-                    </article>
-                    <article
-                      className={
-                        (
-                          lowerIsBetter
-                            ? monthBenchmark.july < monthBenchmark.june
-                            : monthBenchmark.july > monthBenchmark.june
-                        )
-                          ? "positive"
-                          : "negative"
-                      }
-                    >
-                          <small>{usesDatasetMonthLabels ? `Изменение: ${monthlyDataset?.currentLabel} к ${monthlyDataset?.previousLabel}` : "Изменение: август к июлю"}</small>
-                      <strong>
-                        {monthBenchmark.july > monthBenchmark.june
-                          ? "↑"
-                          : monthBenchmark.july < monthBenchmark.june
-                            ? "↓"
-                            : "→"}{" "}
-                        {format(
-                          Math.abs(monthBenchmark.july - monthBenchmark.june),
-                          monthBenchmark.unit === "count" ? 0 : 2,
-                        )}
-                        {monthBenchmark.unit === "%" ? " п.п." : ""}
-                      </strong>
-                      <span>
-                        {monthBenchmark.unit === "count"
-                          ? `${monthBenchmark.july >= monthBenchmark.june ? "+" : "−"}${format(Math.abs(monthBenchmark.july / monthBenchmark.june - 1) * 100, 1)}% к июлю`
-                          : monthBenchmark.source}
-                      </span>
+                    {[
+                      { title: "Предыдущий полный месяц", label: monthlyDataset?.previousLabel ?? "Сентябрь 2026", value: previousMonthComponents },
+                      { title: "Последний полный месяц", label: monthlyDataset?.currentLabel ?? "Октябрь 2026", value: currentMonthComponents },
+                    ].map(({ title, label, value }) => (
+                      <article key={title}>
+                        <small>{title}</small>
+                        <strong>{value ? `${format(value.fact, isMonthlyCount ? 0 : 2)}${isMonthlyCount ? "" : "%"}` : "Нет данных"}</strong>
+                        <span>{label}{value && !isMonthlyCount ? ` · ${format(value.numerator, 0)} из ${format(value.denominator, 0)}` : ""}</span>
+                      </article>
+                    ))}
+                    <article className={monthlyChange === null ? "" : (lowerIsBetter ? monthlyChange < 0 : monthlyChange > 0) ? "positive" : "negative"}>
+                      <small>Изменение: октябрь к сентябрю</small>
+                      <strong>{monthlyChange === null ? "—" : `${monthlyChange > 0 ? "+" : ""}${format(monthlyChange, isMonthlyCount ? 0 : 2)}${isMonthlyCount ? "" : " п.п."}`}</strong>
+                      <span>{monthlyChange === null ? "Нет сопоставимой пары" : `По сопоставимым МО: ${matchedMonths.length}`}</span>
                     </article>
                     {!matrixMetric.startsWith("doctor") && <article className="preliminary">
-                      <small>Сентябрь · оперативный срез</small>
-                      <strong>
-                        {format(regionalFact, isCountMetric ? 0 : 2)}
-                        {isCountMetric ? "" : "%"}
-                      </strong>
-                      <span>
-                        {isMaxMetric
-                          ? `${maxCurrentMonthPlan ? format((regionalFact / maxCurrentMonthPlan) * 100, 1) : "—"}% плана текущего месяца · `
-                          : ""}
-                        на {selectedDataset.date} · в итог месяца не включён
-                      </span>
+                      <small>Оперативный срез</small>
+                      <strong>{format(regionalFact, isCountMetric ? 0 : 2)}{isCountMetric ? "" : "%"}</strong>
+                      <span>на {selectedDataset.date} · отдельная выгрузка</span>
                     </article>}
-                  </div>
-                ) : (
-                  <div className="monthEmpty">
-                    <b>Нет двух полных месячных исходников</b>
-                    <span>
-                      Для этого показателя нет двух подтвержденных полных месячных источников.
-                      Оперативный факт не подменяется месячным значением.
-                    </span>
                   </div>
                 )}
               </section>
@@ -9450,9 +9283,7 @@ export default function Home() {
                   <section className="monthlyNoDetail">
                     <b>Помесячной детализации по МО пока нет</b>
                     <span>
-                      По этому показателю не загружены два сопоставимых полных
-                      исходника за июль и август. Оперативная таблица остаётся
-                      доступной отдельно и не смешивается с месячным периодом.
+                      Для этого показателя нет подтверждённого месячного среза за сентябрь или октябрь.
                     </span>
                   </section>
                 )

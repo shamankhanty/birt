@@ -4,6 +4,9 @@ import {useMemo, useState} from 'react';
 import inputs from './rating/september-v2-inputs.json';
 import legacy from './rating/september-v1.json';
 import policy from '../config/september-rating-v2.json';
+import octoberMonthly from './monthly-2026-10.json';
+import monthly from './monthly-mo.json';
+import {buildOctoberRating} from '../lib/october-rating.js';
 import {buildSeptemberRating, metricScore} from '../lib/september-rating.js';
 
 const fmt = (v:number|null|undefined, d=2) =>
@@ -15,8 +18,8 @@ const blockNames:Record<string,string> = {
 };
 const blockWeights:Record<string,string> = {care:'70%',services:'20%',readiness:'10%'};
 
-export default function SeptemberRating(){
-  const rows=useMemo(()=>buildSeptemberRating(inputs,legacy,policy),[]);
+export default function SeptemberRating({ october = false }: { october?: boolean }){
+  const rows=useMemo(()=>october ? buildOctoberRating(inputs,{...monthly,...octoberMonthly},policy) : buildSeptemberRating(inputs,legacy,policy),[october]);
   const types=[...new Set(rows.map(r=>r.type))];
   const [type,setType]=useState('Центральные районные больницы');
   const [query,setQuery]=useState('');
@@ -33,14 +36,14 @@ export default function SeptemberRating(){
     return value ? value.complete ? fmt(value.low) : `${fmt(value.low)}–${fmt(value.high)}` : 'Не применяется';
   };
 
-  return <section className="septemberRating" aria-label="Сентябрьский рейтинг по новой методике">
+  return <section className="septemberRating" aria-label={october ? "Октябрьский рейтинг МО" : "Сентябрьский рейтинг по новой методике"}>
     <div className="pageHead ratingHead">
       <div>
         <p className="eyebrow">ПЕРЕСЧЁТ МЕТОДИКИ · ВЕРСИЯ 2</p>
-        <h1>Месячный рейтинг МО — сентябрь 2026</h1>
-        <p>Места внутри типа МО · прежняя версия сохранена · изменение балла не является динамикой работы</p>
+        <h1>Месячный рейтинг МО — {october ? "октябрь" : "сентябрь"} 2026</h1>
+        <p>{october ? "Места внутри типа МО по закрытым данным октября. При неполном наборе показан диапазон баллов." : "Места внутри типа МО · прежняя версия сохранена · изменение балла не является динамикой работы"}</p>
       </div>
-      <div className="ratingFormula"><small>Закрытый период</small><strong>Сентябрь 2026</strong><span>Октябрьские данные исключены</span></div>
+      <div className="ratingFormula"><small>Закрытый период</small><strong>{october ? "Октябрь 2026" : "Сентябрь 2026"}</strong><span>{october ? "Срез на 31.10" : "Октябрьские данные исключены"}</span></div>
     </div>
     <details className="septMethod">
       <summary>Методика, периоды и ограничения</summary>
@@ -48,12 +51,14 @@ export default function SeptemberRating(){
         <p><b>70% — медицинская помощь, 20% — цифровые услуги, 10% — готовность.</b> Каждый показатель: факт / план × 100, максимум 100 баллов. Перевыполнение не даёт дополнительных баллов.</p>
         <p>В готовности: ТВСП — 50%, активность врачей — 25%, группа специальностей 500+ — 25%. Внутри групп показатели равновесны. Неприменимые по подтверждённому профилю показатели и нулевые знаменатели исключаются; их веса перераспределяются в пределах группы, затем блока.</p>
         <p><b>Официальное место — только при полном обязательном наборе.</b> При пропусках показан диапазон возможного балла и перечень недостающих данных. Пропуск не считается фактом 0 и не улучшает место. «Лидер» — от 95 баллов, если каждый ключевой показатель помощи выполнен хотя бы на 80% своего плана.</p>
+        {october ? <p><b>Периоды:</b> врачи и ЕПГУ — 1–31 октября. СЭМД и ТВСП — накопительно на 31.10. Профилактика: MAX зарегистрированных 122 и 228 / закрытые случаи ДОГВН и ПМО. Применяется состав показателей сентябрьской версии 2.</p> : <>
         <p><b>Периоды:</b> врачи и ЕПГУ — 01.09–30.09; СЭМД и ТВСП — накопительно 01.01–30.09. Это оценка состояния на сентябрьском срезе, а не месячный поток СЭМД. РЭМД сформирован 30.09 в 14:44; более поздний сентябрьский результат не подразумевается.</p>
         <p>СЭМД профилактики = MAX(122; 228) / случаи ФОМС. Стационарные эпикризы = (выписной эпикриз + эпикриз роддома) / случаи ОМС из одного отчёта. ЕПГУ: финальный статус / заявления и обработка за 2 рабочих дня / заявления.</p>
         <p>{inputs.profileRule}</p>
         <ul>{inputs.exclusions.map(e=><li key={e.id}>{e.reason}</li>)}</ul>
         <p>Равные баллы дают одинаковое место. Изменение состава допущенных МО также меняет место, поэтому стрелки роста и падения здесь не используются. Объединения доступны в прежней версии; их методика этим пересчётом не изменена.</p>
         <details><summary>Исходники и контрольные суммы</summary>{Object.values(inputs.sources).map(s=><p key={s.sha256} className="septSource">{s.file}<br/><code>{s.sha256}</code></p>)}<p>Кадры и ТВСП — зафиксированные сентябрьские наборы; контрольные суммы сохранены в версии расчёта.</p></details>
+        </>}
       </div>
     </details>
     <div className="ratingTypeTabs septTypeTabs" role="group" aria-label="Тип медицинской организации">
@@ -79,7 +84,7 @@ export default function SeptemberRating(){
       <p>Показаны только МО с официальным местом в выбранной группе. Предварительные оценки без полного набора данных остаются в общем списке.</p>
     </section>
     <div className="septTools">
-      <input aria-label="Найти МО в сентябрьском рейтинге" placeholder="Найти МО или OID" value={query} onChange={e=>setQuery(e.target.value)}/>
+      <input aria-label="Найти МО в рейтинге" placeholder="Найти МО или OID" value={query} onChange={e=>setQuery(e.target.value)}/>
       <label><input type="checkbox" checked={onlyMissing} onChange={e=>setOnlyMissing(e.target.checked)}/> Только с неполными данными</label>
       <span className="septVisibleCount">{visible.length} МО</span>
     </div>
@@ -91,7 +96,7 @@ export default function SeptemberRating(){
             ? `Лидерство ограничивает показатель: ${r.critical[0].name}.`
             : r.status==='Лидер'
               ? 'Ключевые условия лидерства выполнены.'
-              : 'Баллы пересчитаны по закрытому сентябрьскому срезу.';
+              : october ? 'Баллы рассчитаны по октябрьскому срезу.' : 'Баллы пересчитаны по закрытому сентябрьскому срезу.';
         return <article className={`septCard ${r.complete?r.status==='Лидер'?'leader':'rated':'preliminary'}`} key={r.key}>
           <div className="septCardHead">
             <span className="septPlace" aria-label={r.place===null?'Без официального места':`Место ${r.place}`}>{r.place??'—'}</span>
@@ -106,8 +111,8 @@ export default function SeptemberRating(){
             <span className={`septStatus ${r.status==='Лидер'?'leader':r.complete?'attention':'preliminary'}`}>{r.status}</span>
           </div>
           <div className="septCardSignals">
-            <p><small>Место · было → стало</small><b>{r.oldPlace??'—'} → {r.place??'—'}</b></p>
-            <p><small>Балл · было → стало</small><b>{fmt(r.oldScore)} → {r.complete?fmt(r.score):r.low===null?'—':`${fmt(r.low)}–${fmt(r.high)}`}</b><span>изменение методики</span></p>
+            {!october && <><p><small>Место · было → стало</small><b>{r.oldPlace??'—'} → {r.place??'—'}</b></p>
+            <p><small>Балл · было → стало</small><b>{fmt(r.oldScore)} → {r.complete?fmt(r.score):r.low===null?'—':`${fmt(r.low)}–${fmt(r.high)}`}</b><span>изменение методики</span></p></>}
             {(['care','services','readiness'] as const).map(block=><p key={block}><small>{blockNames[block]} · {blockWeights[block]}</small><b>{blockValue(r,block)}</b></p>)}
             <p><small>Полнота обязательных</small><b>{r.available} из {r.total}</b><span>{fmt(r.coverage,1)}%</span></p>
           </div>
@@ -116,7 +121,7 @@ export default function SeptemberRating(){
             <summary>Показатели МО ({r.available} из {r.total} с данными) и причины пересчёта</summary>
             <div>
               <div className="septReasons">
-                <strong>Пересчёт того же сентября</strong>
+                <strong>{october ? "Октябрьский срез" : "Пересчёт того же сентября"}</strong>
                 <ul>{r.reasons.map((text,i)=><li key={i}>{text}</li>)}</ul>
                 {r.missing.length>0&&<p><b>Нет данных:</b> {r.missing.map(m=>m.name).join('; ')}.</p>}
               </div>
@@ -136,6 +141,6 @@ export default function SeptemberRating(){
       })}
       {!visible.length&&<p className="septEmpty">МО по выбранным условиям не найдены</p>}
     </div>
-    <p className="prototypeNote">Сравнение мест относится к двум версиям методики за сентябрь. Полнота проверяется по подтверждённому профилю МО. Архивная версия доступна переключателем сверху.</p>
+    {!october && <p className="prototypeNote">Сравнение мест относится к двум версиям методики за сентябрь. Полнота проверяется по подтверждённому профилю МО. Архивная версия доступна переключателем сверху.</p>}
   </section>;
 }
