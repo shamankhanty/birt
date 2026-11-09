@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "kind": "current-production",
-  "promotedFrom": "source-extract/2026-11-09 (GitHub PR #169; primary-source component audit)",
+  "promotedFrom": "PR: восстановление сравнения 31.10.2026→08.11.2026, 86 МО, методика MAX(122,228)/(ДОГВН+ПМО)",
   "promotedAt": "2026-11-09",
   "files": {
     "app/electronic-waybill-weekly.json": "4b96a10a3143cdbec0b5d5302e418db3c70bb183f5acac828b1c94e7c6a65a89",
@@ -25,7 +25,7 @@
     "app/max-monthly-visits.json": "4ccd792fbc854b92ec7b5161e2e6e00ab68c3c5f14a06278e4332f63f522b31a",
     "app/max-period-views.json": "56895ec1a8826559f49d769f32e3a0f6600cf53791bd68a924d248ffe02c7e2e",
     "app/methodology-audit.json": "d15739980906b1a697a8f4c80d09c940836c896371eb3cbe268b8d9022fb5774",
-    "app/mo-data.json": "4350b3bbb1d4fafe47420213c4fcef8a3ab89d63d41c97cdde1e01a0c8d78162",
+    "app/mo-data.json": "794082f0ccfba0e20ab54cb1b9dde307cfbb8e1290036eae8d569f961b197ca9",
     "app/mo-detail-oids.json": "e66ce6666c769a3e9326eb6afa06b029bc55a6628d9ebd6055bea914a54e57e5",
     "app/mo-details.json": "93e49d70a9f6dfe7bec896a51305d12a2c7aca5cc0d281c1b20cfbce4dc6a5da",
     "app/mo-registry.json": "62202e489fced8a93c40867f04f5b3a021030cf4da1b0d0da6ce3a8cff088ea3",
