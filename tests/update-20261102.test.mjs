@@ -7,12 +7,13 @@ const views=read('max-period-views'), doctors=read('physician-metrics'), weekly=
 const evidence=JSON.parse(fs.readFileSync('docs/update-20261102-evidence.json','utf8'));
 test('November source dates are explicit; the closed October month remains separate',()=>{
   for(const id of ['tvspAmbulatory','tvspStationary','tvspLaboratory']){
-    assert.equal(mo[id].date,'05.11.2026');
+    assert.equal(mo[id].date,'08.11.2026');
     assert.equal(mo[id].period,'январь–ноябрь 2026');
-    assert.equal(read('unit-data')[id].date,'05.11.2026');
+    assert.equal(read('unit-data')[id].date,'08.11.2026');
   }
-  for(const id of ['egpu','egpu2days','hospital','birth','smp'])assert.equal(mo[id].date,'04.11.2026');
-  for(const id of ['shortInput','shortInputAmb','shortInputHosp'])assert.equal(op[id].date,'04.11.2026');
+  for(const id of ['egpu','egpu2days','hospital'])assert.equal(mo[id].date,'04.11.2026');
+  for(const id of ['birth','smp'])assert.equal(mo[id].date,'08.11.2026');
+  for(const id of ['shortInput','shortInputAmb','shortInputHosp'])assert.equal(op[id].date,'08.11.2026');
 });
 test('closed October physician month is retained beside the partial November operational period',()=>{
   assert.equal(doctors.period,'октябрь 2026');
@@ -31,8 +32,8 @@ test('closed October physician month is retained beside the partial November ope
 test('MAX retains separate October and current cumulative source totals, without adding them',()=>{
   assert.equal(views.cumulative.date,'31.10.2026');
   assert.equal(views.closedMonths['2026-10'].operational.date,'31.10.2026');
-  for(const [service,total,monthlyTotal,metric] of [['tmk',74774,15573,'tmkMaxCount'],['eln',55899,12498,'elnMaxCount']]){
-    assert.equal(op[metric].date,'04.11.2026');
+  for(const [service,total,monthlyTotal,metric] of [['tmk',76211,15573,'tmkMaxCount'],['eln',56941,12498,'elnMaxCount']]){
+    assert.equal(op[metric].date,'08.11.2026');
     assert.equal(views.closedMonths["2026-10"].operational.metrics[service].sourceTotal,monthlyTotal);
     assert.equal(op[metric].rows.reduce((sum,r)=>sum+(r.count??0),0),total);
     assert.equal(views.cumulative.metrics[service].rows.length,85);
