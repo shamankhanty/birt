@@ -31,6 +31,7 @@ import organizationStatusRaw from "./organization-status.json";
 import moRegistryRaw from "./mo-registry.json";
 import electronicWaybillRaw from "./electronic-waybill.json";
 import electronicWaybillWeeklyRaw from "./electronic-waybill-weekly.json";
+import { excludeZeroFleetOrganizations } from "../lib/epl-display-scope.js";
 import federalControlRaw from "./federal-control.json";
 import hearingSnapshotsRaw from "./hearing-snapshots.json";
 import hearingPriorityPolicyRaw from "./hearing-priority-policy.json";
@@ -4525,10 +4526,12 @@ export default function Home() {
       );
     }
   };
-  const waybillRows =
+  // This affects EPL presentation only; regional source totals remain unchanged.
+  const waybillRows = excludeZeroFleetOrganizations(
     waybillMode === "week"
       ? electronicWaybillWeekly.current.rows
-      : electronicWaybill.rows;
+      : electronicWaybill.rows,
+  );
   const waybillMovementDelta =
     (electronicWaybillWeekly.current.systemSummary.vehiclesWithMovement /
       Math.max(1, electronicWaybillWeekly.current.systemSummary.vehicles)) * 100 -
@@ -4610,7 +4613,6 @@ export default function Home() {
       low: waybillRows.filter((r) => waybillZone(r) === "low").length,
       noMovement: waybillRows.filter((r) => waybillZone(r) === "noMovement")
         .length,
-      noFleet: waybillRows.filter((r) => waybillZone(r) === "noFleet").length,
     }),
     [waybillRows],
   );
@@ -8150,11 +8152,6 @@ export default function Home() {
                   <strong>{waybillZones.noMovement}</strong>
                   <span>нет движения · 0%</span>
                 </button>
-                <button onClick={() => setWaybillStatus("noFleet")}>
-                  <i className="zoneNA" />
-                  <strong>{waybillZones.noFleet}</strong>
-                  <span>нет данных по ТС</span>
-                </button>
               </section>
               <div className="meetingBlocks waybillRankings twoBlocks">
                 <section className="rankingBlock movementLeaders">
@@ -8246,7 +8243,7 @@ export default function Home() {
               <div className="allMosHead">
                 <div>
                   <p className="eyebrow">ДЕТАЛИЗАЦИЯ ПО ОРГАНИЗАЦИЯМ</p>
-                  <h2>Все медицинские организации</h2>
+                  <h2>Медицинские организации с транспортом</h2>
                 </div>
                 <span>
                   {visibleWaybillRows.length} из {waybillRows.length}
@@ -8267,7 +8264,6 @@ export default function Home() {
                   <option value="partial">Частично · 30–79%</option>
                   <option value="low">Низко · 1–29%</option>
                   <option value="noMovement">Нет движения · 0%</option>
-                  <option value="noFleet">Нет данных по ТС</option>
                 </select>
                 <span className="sortHint">
                   Нажмите заголовок столбца для сортировки
