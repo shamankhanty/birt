@@ -172,26 +172,26 @@
       "source": "physician-metrics"
     },
     "egpu": {
-      "fact": 98.80370607876523,
+      "fact": 98.64947686380948,
       "plan": 100,
-      "date": "04.11.2026",
+      "date": "08.11.2026",
       "previous": null,
       "trend": null,
-      "quantity": 44682,
-      "numerator": 44682,
-      "denominator": 45223,
+      "quantity": 45069,
+      "numerator": 45069,
+      "denominator": 45686,
       "method": "ratio_components",
       "source": "mo-details"
     },
     "egpu2days": {
-      "fact": 84.91917829423082,
+      "fact": 85.02604736680821,
       "plan": 90,
-      "date": "04.11.2026",
+      "date": "08.11.2026",
       "previous": null,
       "trend": null,
-      "quantity": 38403,
-      "numerator": 38403,
-      "denominator": 45223,
+      "quantity": 38845,
+      "numerator": 38845,
+      "denominator": 45686,
       "method": "ratio_components",
       "source": "mo-details"
     },
@@ -492,9 +492,9 @@
       "source": "mo-details"
     },
     "egpu": {
-      "fact": 98.80370607876523,
+      "fact": 98.64947686380948,
       "plan": 100,
-      "date": "04.11.2026",
+      "date": "08.11.2026",
       "quantity": 36482,
       "numerator": 31969,
       "denominator": 32606,
@@ -502,9 +502,9 @@
       "source": "mo-details"
     },
     "egpu2days": {
-      "fact": 84.91917829423082,
+      "fact": 85.02604736680821,
       "plan": 90,
-      "date": "04.11.2026",
+      "date": "08.11.2026",
       "quantity": 30469,
       "numerator": 26636,
       "denominator": 32606,
