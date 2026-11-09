@@ -138,7 +138,7 @@ export default function SeptemberRating({ october = false }: { october?: boolean
                   <h3>{label} · {blockWeights[block]}</h3>
                   {metrics.map(m=><div className={`septMetric ${m.status==='available'?(m.fact!==null&&m.fact>=m.plan?'good':'bad'):m.status}`} key={m.id}>
                     <div><b>{m.name}</b><small>{m.period} · {m.periodKind==='monthly'?'за месяц':'накопительно'}</small>{m.mappingNote&&<small>{m.mappingNote}</small>}{m.s122!==undefined&&<small>122: {fmt(m.s122,0)} · 228: {fmt(m.s228,0)} · взят максимум</small>}</div>
-                    <strong>{m.status==='available'?<>{fmt(m.numerator,0)} из {fmt(m.denominator,0)} · {fmt(m.fact)}%<small>план {fmt(m.plan)}% · {fmt(metricScore(m))} балла</small></>:m.status==='not_applicable'?'Не применяется: нулевой знаменатель':'Нет подтверждённых данных'}</strong>
+                    <strong>{m.status==='available'?<>{fmt(m.numerator,0)} из {fmt(m.denominator,0)} · {fmt(m.fact)}%<small>план {fmt(m.plan)}% · {fmt(metricScore(m))} балла</small></>:m.status==='not_applicable'?(m.reason??'Не применяется: нулевой знаменатель'):'Нет подтверждённых данных'}</strong>
                   </div>)}
                 </section>;
               })}
