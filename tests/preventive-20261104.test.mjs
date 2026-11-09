@@ -10,9 +10,13 @@ const runtime = createMoRegistryRuntime(read('app/mo-registry.json'));
 
 test('internal 08 November preventive cut reconciles 86 MO and preserves historical 04 November audit', () => {
   assert.equal(dataset.date,'08.11.2026');
-  assert.equal(dataset.previousDate,'04.11.2026');
-  assert.equal(dataset.previousNumerator,null);
-  assert.equal(dataset.previousDenominator,null);
+  assert.equal(dataset.previousDate,'31.10.2026');
+  assert.equal(dataset.previousPeriod,'01.01–31.10.2026');
+  assert.equal(dataset.previousNumerator,2145945);
+  assert.equal(dataset.previousDenominator,2349247);
+  assert.equal(dataset.previousFact,2145945/2349247*100);
+  assert.equal(dataset.historicalNonComparableReference.date,'04.11.2026');
+  assert.equal(dataset.historicalNonComparableReference.fact,90.01);
   assert.equal(dataset.rows.length,86);
   assert.equal(dataset.numerator,2151548);
   assert.equal(dataset.denominator,2366215);
@@ -23,6 +27,39 @@ test('internal 08 November preventive cut reconciles 86 MO and preserves histori
   assert.equal(audit.rows.length,95);
   assert.equal(audit.summary.numerator,2234491);
   assert.equal(audit.summary.denominator,2439787);
+});
+
+test('movement ranks compare 86 matched October/November internal MO cuts, not federal 04 November data', () => {
+  const october=read('app/rating/october-preventive-closed.json');
+  assert.equal(october.period,'01.01–31.10.2026');
+  assert.equal(october.rows.length,86);
+  const history=new Map(october.rows.map(row=>[row.key,row]));
+  assert.equal(history.size,86);
+  const ids=new Set();
+  for(const row of dataset.rows){
+    const id=row.reportingEntityId??row.oid;
+    assert.ok(id && !ids.has(id),`non-unique MO identity: ${id}`);
+    ids.add(id);
+    const old=history.get(id);
+    assert.ok(old,`missing historic organization: ${row.name}`);
+    assert.equal(old.numerator,Math.max(old.semd122,old.semd228));
+    assert.equal(old.denominator,(old.dogvn??0)+(old.pmo??0));
+    assert.ok(old.denominator>0);
+    assert.equal(row.previous,old.numerator/old.denominator*100);
+    assert.equal(row.trend,row.fact-row.previous);
+  }
+  assert.equal(ids.size,86);
+  assert.equal(october.rows.reduce((sum,row)=>sum+row.numerator,0),dataset.previousNumerator);
+  assert.equal(october.rows.reduce((sum,row)=>sum+row.denominator,0),dataset.previousDenominator);
+  const rank=(field)=>new Map([...dataset.rows]
+    .sort((a,b)=>b[field]-a[field] || a.name.localeCompare(b.name,'ru'))
+    .map((row,index)=>[row.reportingEntityId??row.oid,index+1]));
+  const before=rank('previous'),after=rank('fact');
+  const moves=dataset.rows.map(row=>before.get(row.reportingEntityId??row.oid)-after.get(row.reportingEntityId??row.oid));
+  assert.equal(moves.length,86);
+  assert.equal(moves.filter(delta=>delta>0).length,30);
+  assert.equal(moves.filter(delta=>delta<0).length,22);
+  assert.equal(moves.filter(delta=>delta===0).length,34);
 });
 
 test('Spassk receives preventive fact under preserved RKB legal OID; certificates stay RKB', () => {
