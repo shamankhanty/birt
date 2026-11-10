@@ -29,7 +29,7 @@ test("EPGU document access uses the October primary report and its numerator and
   assert.equal(row.status, "Достигнут");
   assert.equal(row.plan, "90%");
   assert.equal((3169187 / 3407058 * 100).toFixed(2), "93.02");
-  assert.match(row.sourceNote, /сформирован 10\\.11\\.2026/u);
+  assert.match(row.sourceNote, /сформирован 10\.11\.2026/u);
 });
 
 test("EPGU and REMD error shares use 21 October cuts, independently of September source", () => {
