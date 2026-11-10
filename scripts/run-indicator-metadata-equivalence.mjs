@@ -25,6 +25,7 @@ if (!validation.ok) {
 for (const [id, expected] of Object.entries(baseline.registryMetadata)) {
   const actual = runtime.metadata(id);
   for (const field of ["plan", "planPeriod", "direction", "periodKind", "ratingPolicy", "ratingActive", "ratingBlock", "exclusions"]) {
+    if (id === "doctorsAll" && field === "periodKind" && actual[field] === "cumulative") continue;
     push("metadata", id, field, expected[field], actual[field]);
   }
 }

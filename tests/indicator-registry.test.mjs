@@ -88,9 +88,10 @@ test("rating baseline preserves August weights and excludes hospital after sourc
   assert.equal(registry.indicators.hospital.rating.baselineActive, false);
 });
 
-test("monthly physician metrics are identified as monthly and errors as lower-is-better", () => {
+test("only the all-physician SEMD metric is cumulative; specialty metrics remain monthly", () => {
   for (const [id, item] of Object.entries(registry.indicators)) {
-    if (id === "doctorsAll" || id === "doctorsLevel3" || id.startsWith("doctor500_")) {
+    if (id === "doctorsAll") assert.equal(item.period.kind, "cumulative");
+    if (id === "doctorsLevel3" || id.startsWith("doctor500_")) {
       assert.equal(item.period.kind, "monthly", id);
     }
   }

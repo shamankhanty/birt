@@ -499,7 +499,7 @@
     "doctorsAll": {
       "name": "Доля врачей, подписавших хотя бы один СЭМД",
       "group": null,
-      "formula": "Врачи с ≥1 СЭМД в РЭМД / работающие врачи по ФРМР × 100%",
+      "formula": "Уникальные врачи с ≥1 зарегистрированным СЭМД за период с 01.01 / работающие врачи по ФРМР на конец периода × 100%",
       "numerator": null,
       "denominator": null,
       "source": {
@@ -507,8 +507,8 @@
         "methodology": null
       },
       "period": {
-        "kind": "monthly",
-        "cadence": null
+        "kind": "cumulative",
+        "cadence": "Ежемесячно, нарастающим итогом"
       },
       "plan": {
         "value": 80,

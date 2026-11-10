@@ -43,6 +43,26 @@ test("October MAX uses January–October cumulative actual and approved October 
   assert.equal(rows.filter(row => row.complete).length, 106);
 });
 
+test("doctors with any SEMD use a cumulative source only; the October-only export is reference data", () => {
+  const september = read("app/rating/september-v2-inputs.json");
+  const month = read("app/monthly-mo.json");
+  const datasets = {...month, ...read("app/monthly-2026-10.json")};
+  const policy = read("config/september-rating-v2.json");
+  const oid = "1.2.643.5.1.13.13.12.2.16.1088";
+  const monthly = buildOctoberRating(september, datasets, policy).find(row => row.key === oid);
+  const doctor = monthly.metrics.find(metric => metric.id === "doctorsAll");
+  assert.equal(doctor.status, "reference_only");
+  assert.equal(doctor.periodKind, "monthly");
+  assert.match(doctor.reason, /01\.01–31\.10/);
+  assert.equal(monthly.total, monthly.metrics.filter(metric => metric.status !== "not_applicable" && metric.status !== "reference_only").length);
+  const source = month.doctorsAll.rows.find(row => row.oid === oid);
+  assert.equal(doctor.numerator, Number(source.julyQuantity.split("/")[0]));
+  const cumulative = {...datasets, doctorsAll:{...month.doctorsAll, periodKind:"cumulative", rows:month.doctorsAll.rows.map(row =>
+    row.oid === oid ? {...row,julyQuantity:"100 / 120",july:100/120*100} : row)}};
+  const confirmed = buildOctoberRating(september, cumulative, policy).find(row => row.key === oid).metrics.find(metric => metric.id === "doctorsAll");
+  assert.deepEqual([confirmed.status,confirmed.periodKind,confirmed.numerator,confirmed.denominator], ["available","cumulative",100,120]);
+});
+
 test("Kazan DGP №2: dentist 500+ is not applicable for October only after staff absence confirmation", () => {
   const sept = read("app/rating/september-v2-inputs.json");
   const month = read("app/monthly-mo.json");
@@ -67,7 +87,8 @@ test("Kazan DGP №2: dentist 500+ is not applicable for October only after staf
   assert.equal(kazan.complete, true, "Other October indicators must suffice for official score");
   assert.ok(kazan.place !== null && kazan.place >= 1, "Official rank is assigned");
   assert.ok(Number.isFinite(kazan.score), "Computed score remains numeric");
-  assert.ok(kazan.metrics.filter(metric => metric.id !== "doctor500_dentist").every(metric => metric.status === "available"));
+  assert.ok(kazan.metrics.filter(metric => !["doctor500_dentist", "doctorsAll"].includes(metric.id)).every(metric => metric.status === "available"));
+  assert.equal(kazan.metrics.find(metric => metric.id === "doctorsAll").status, "reference_only");
 
   const chelny = october.find(row => row.key === chelnyOid);
   const chelnyDentist = chelny.metrics.find(metric => metric.id === "doctor500_dentist");
