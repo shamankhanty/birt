@@ -39,6 +39,7 @@ import hearingPriorityPolicyRaw from "./hearing-priority-policy.json";
 import FrmrReconciliation from "./frmr-reconciliation";
 import preventiveSemdAuditRaw from "./preventive-semd-audit.json";
 import physicianMetricsRaw from "./physician-metrics.json";
+import doctorsAllCumulativeRaw from "./physician-doctors-all-cumulative-2026-10.json";
 import physicianWeeklySnapshotRaw from "./physician-weekly-snapshot.json";
 import indicatorRegistryRaw from "../config/indicator-registry.json";
 import maxTargetsRaw from "../config/max-targets-2026.json";
@@ -52,6 +53,7 @@ import {
 } from "../lib/mo-registry.js";
 import type { MoRegistry, RegistryOrganization } from "../lib/mo-registry.js";
 import { createIndicatorRegistryRuntime } from "../lib/indicator-registry.js";
+import { createDoctorsAllCumulativeDatasets } from "../lib/physician-doctors-all-cumulative.js";
 import { createCurrentOperationalRuntime } from "../lib/current-operational-runtime.js";
 import { createReleaseRuntimeMetadata, RELEASE_VERSION } from "../lib/release-runtime-metadata.js";
 import type { IndicatorRegistryDocument } from "../lib/indicator-registry.js";
@@ -691,11 +693,19 @@ type PhysicianWeeklySnapshot = {
   previousSummary?: Record<string, { numerator: number; denominator: number; fact: number | null }>;
 };
 const physicianWeeklySnapshot = physicianWeeklySnapshotRaw as PhysicianWeeklySnapshot;
+// Closed 31.10 cumulative 1+ SEMD: unique signers matched to the current FRMR roster.
+// Keep the accepted month-only BI export intact for audit; do not rewrite September.
+const doctorsAllCumulative = createDoctorsAllCumulativeDatasets(
+  doctorsAllCumulativeRaw,
+  monthlyMoRaw.doctorsAll,
+  physicianMetricsSource.datasets.doctorsAll,
+);
 const physicianMetrics = {
   ...physicianMetricsSource,
-  datasets: indicatorRegistry.applyToDatasetMap(
-    physicianMetricsSource.datasets,
-  ),
+  datasets: indicatorRegistry.applyToDatasetMap({
+    ...physicianMetricsSource.datasets,
+    doctorsAll: doctorsAllCumulative.physician,
+  }),
 } as PhysicianMetricsData;
 const moData = indicatorRegistry.applyToDatasetMap({
   ...(moDataRaw as Record<string, MoDataset>),
@@ -803,7 +813,7 @@ function displayReportMoName(metric: string, row: MoRow) {
   return displayMoName(reportMoName(metric, row.name), organization?.oid);
 }
 
-const monthlyMoData = monthlyMoRaw as Record<string, MonthlyMoDataset>;
+const monthlyMoData = { ...monthlyMoRaw, doctorsAll: doctorsAllCumulative.monthly } as Record<string, MonthlyMoDataset>;
 const maxAppointmentsMunicipal = maxAppointmentsMunicipalRaw as MaxAppointmentMunicipalData;
 const maxTargets = maxTargetsRaw as {
   months: string[];
@@ -978,11 +988,9 @@ const calculationRuntime = createIndicatorCalculationRuntime({
     (!indicatorRegistry.hasRowExclusion(id, "max_profile_inapplicable") ||
       !isMaxProfileInapplicable(row.name)),
 });
-// The supplied doctorsAll workbook covers a single month; it cannot substantiate
-// the cumulative federal indicator. Preserve its rows for reference, not as a KPI fact.
-const liveIndicators = (calculationRuntime.indicators as Indicator[]).map(indicator =>
-  indicator.id === "doctorsAll" ? {...indicator, fact: null} : indicator,
-);
+// doctorsAll now has a verified cumulative source; the old monthly-only BI
+// extract remains untouched and is never represented as a cumulative KPI.
+const liveIndicators = calculationRuntime.indicators as Indicator[];
 const calculatedIndicatorById = calculationRuntime.allById as Record<string, Indicator>;
 
 type WaybillComponent = {
@@ -4771,6 +4779,7 @@ export default function Home() {
   const isOperationalPhysicianSnapshot =
     dynamicsMode === "operational" &&
     isPhysicianMetric(matrixMetric) &&
+    matrixMetric !== "doctorsAll" &&
     Boolean(physicianWeeklySnapshot.summary[matrixMetric]);
   const physicianOperationalSummary = isOperationalPhysicianSnapshot
     ? physicianWeeklySnapshot.summary[matrixMetric]
@@ -8957,7 +8966,7 @@ export default function Home() {
                     : selectedDataset.name}
                 </h1>
                 <div
-                  className={`titlePlan ${isMaxMetric || matrixMetric === "doctorsAll" ? "neutral" : selectedDataset.plan === null ? "neutral" : statusFor(isOperationalPhysicianSnapshot ? operationalRegionalCurrent : regionalFact, selectedDataset.plan, lowerIsBetter)}`}
+                  className={`titlePlan ${isMaxMetric ? "neutral" : selectedDataset.plan === null ? "neutral" : statusFor(isOperationalPhysicianSnapshot ? operationalRegionalCurrent : regionalFact, selectedDataset.plan, lowerIsBetter)}`}
                 >
                   <small>
                     {isMaxMetric
@@ -8978,7 +8987,7 @@ export default function Home() {
                   <span>
                     {isMaxMetric
                       ? `${maxIndicatorAchievement === null ? "—" : `${format(maxIndicatorAchievement, 1)}%`} · факт ${maxIndicatorFact === null ? "Нет данных" : format(maxIndicatorFact, 0)} ${maxIndicatorSlice.date ? `на ${maxIndicatorSlice.date}` : "(ожидается выгрузка)"}`
-                      : matrixMetric === "doctorsAll" ? "накопительный факт не представлен · ниже месячные данные справочно" : dynamicsMode === "month" ? (monthlyDataset ? "срез на 31.10.2026" : "месячный срез отсутствует") : `актуальность ${displayDatasetDate}`}
+                      : matrixMetric === "doctorsAll" ? "накопительный итог с 01.01 по 31.10.2026 · уникальные врачи в составе ФРМР на 31.10" : dynamicsMode === "month" ? (monthlyDataset ? "срез на 31.10.2026" : "месячный срез отсутствует") : `актуальность ${displayDatasetDate}`}
                   </span>
                 </div>
               </div>
@@ -9002,7 +9011,7 @@ export default function Home() {
               ) : selectedDataset.note && matrixMetric !== "semd228" && (
                 <p className="sourceDataNote">
                   <b>Источник и ограничение:</b> {matrixMetric === "doctorsAll"
-                    ? `Выгрузки за октябрь и ${physicianWeeklySnapshot.periods?.[matrixMetric]?.period ?? physicianWeeklySnapshot.period} содержат только месячную активность врачей. Методика требует уникальных врачей с ≥1 зарегистрированным СЭМД с 01.01 по дату среза и работающих врачей ФРМР на конец периода. Значения на этой странице показаны справочно, не как факт выполнения накопительного плана.`
+                    ? selectedDataset.note
                     : isOperationalPhysicianSnapshot
                     ? `Оперативный срез ${physicianWeeklySnapshot.periods?.[matrixMetric]?.period ?? physicianWeeklySnapshot.period}; источник — ${physicianWeeklySnapshot.periods?.[matrixMetric]?.source ?? physicianWeeklySnapshot.source}. Месячный результат: ${selectedDataset.period}. Рейтинг МО: ${ratingMonth.label}.`
                     : selectedDataset.note}
@@ -9425,8 +9434,8 @@ export default function Home() {
                           </>
                         ) : matrixMetric === "doctorsAll" ? (
                           <>
-                            <article><small>Врачи с СЭМД за отдельный месяц · справочно</small><strong>{format(regionalFact, 2)}%</strong></article>
-                            <article><small>Накопительный факт по методике</small><strong>Нет данных</strong></article>
+                            <article><small>Подписали ≥1 СЭМД за январь–октябрь</small><strong>{format(doctorsAllCumulative.physician.summary.numerator, 0)}</strong></article>
+                            <article><small>Врачи по ФРМР на 31.10</small><strong>{format(doctorsAllCumulative.physician.summary.denominator, 0)}</strong></article>
                           </>
                         ) : isPresenceMetric ? (
                           <>
