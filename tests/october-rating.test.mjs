@@ -10,7 +10,7 @@ test("October uses closed data in the existing rating and preserves missing comp
   const september = read("app/rating/september-v2-inputs.json");
   const rows = buildOctoberRating(september, { ...read("app/monthly-mo.json"), ...months }, read("config/september-rating-v2.json"));
   assert.equal(rows.length, september.organizations.length);
-  assert.equal(rows.filter(row => row.complete).length, 105);
+  assert.equal(rows.filter(row => row.complete).length, 106);
   assert.ok(rows.filter(row => !row.complete).every(row => row.place === null && row.score === null));
   const agryz = rows.find(row => row.key.endsWith(".1088"));
   const preventive = agryz.metrics.find(metric => metric.id === "semd228");
@@ -68,4 +68,26 @@ test("explicit October applicability does not override an actual source entry", 
   const actual = dgp.metrics.find(metric => metric.id === "doctor500_dentist");
   assert.equal(actual.status, "available");
   assert.equal(actual.denominator, 1);
+});
+
+test("DGB №8 ambulatory TVSP: October rating reconstructs the one transmitting subdivision without rewriting the export", () => {
+  const september = read("app/rating/september-v2-inputs.json");
+  const monthly = read("app/monthly-mo.json");
+  const datasets = { ...monthly, ...read("app/monthly-2026-10.json") };
+  const oid = "1.2.643.5.1.13.13.12.2.16.1202";
+  const source = monthly.tvspAmbulatory.rows.find(row => row.oid === oid);
+  assert.equal(source.julyQuantity, null);
+  const rows = buildOctoberRating(september, datasets, read("config/september-rating-v2.json"));
+  const hospital = rows.find(row => row.key === oid);
+  const tvsp = hospital.metrics.find(metric => metric.id === "tvspAmbulatory");
+  assert.deepEqual([tvsp.status, tvsp.numerator, tvsp.denominator, tvsp.fact], ["available", 1, 1, 100]);
+  assert.match(tvsp.reason, /\.0\.72464/);
+  assert.equal(hospital.complete, true);
+  assert.ok(hospital.place > 0);
+  assert.equal(rows.filter(row => row.complete).length, 106);
+  const supplied = { ...datasets, tvspAmbulatory: { ...monthly.tvspAmbulatory, rows: monthly.tvspAmbulatory.rows.map(row =>
+    row.oid === oid ? { ...row, julyQuantity: "0 / 1", july: 0 } : row) } };
+  const actual = buildOctoberRating(september, supplied, read("config/september-rating-v2.json"))
+    .find(row => row.key === oid).metrics.find(metric => metric.id === "tvspAmbulatory");
+  assert.deepEqual([actual.numerator, actual.denominator, actual.fact], [0, 1, 0]);
 });
