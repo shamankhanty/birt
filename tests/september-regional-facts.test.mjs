@@ -9,7 +9,6 @@ const expected = new Map([
   ["1.1", "99%"],
   ["20", "92,73%"],
   ["25", "55,76%"],
-  ["26", "99%"],
   ["34", "98%"],
   ["36", "99%"],
 ]);
@@ -21,6 +20,16 @@ test("new non-empty regional facts use the September 2026 period", () => {
     assert.equal(row?.regionalPeriod, "январь–сентябрь 2026", `indicator ${id}`);
     assert.match(row?.sourceNote ?? "", /числитель и знаменатель не представлены/iu, `indicator ${id}`);
   }
+});
+
+test("EPGU document access uses the October primary report and its numerator and denominator", () => {
+  const row = rows.get("26");
+  assert.equal(row.regionalFact, "3 169 187 из 3 407 058 · 93,02%");
+  assert.equal(row.regionalPeriod, "январь–октябрь 2026");
+  assert.equal(row.status, "Достигнут");
+  assert.equal(row.plan, "90%");
+  assert.equal((3169187 / 3407058 * 100).toFixed(2), "93.02");
+  assert.match(row.sourceNote, /сформирован 10\.11\.2026/u);
 });
 
 test("EPGU and REMD error shares use 21 October cuts, independently of September source", () => {
