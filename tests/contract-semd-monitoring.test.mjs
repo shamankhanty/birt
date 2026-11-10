@@ -10,13 +10,13 @@ test('contract SEMD registrations reconcile to regional totals and keep historic
   assert.match(evidence.currentPeriod, /01\.01\.2026 - 07\.11\.2026/);
   assert.match(evidence.previousPeriod, /01\.01\.2026 - 31\.10\.2026/);
   const matched = evidence.items.filter((item) => item.current > 0);
-  assert.deepEqual(matched.map((item) => item.agreementId), ['11', '12', '14']);
+  assert.deepEqual(matched.map((item) => item.agreementId), ['11', '12', '14', '15']);
   for (const item of evidence.items) {
     assert.equal(item.current, summary.items.find((row) => row.name === item.semdName)?.count);
     assert.equal(item.current, item.organizations.reduce((sum, row) => sum + row.current, 0));
     assert.equal(item.previous, item.organizations.reduce((sum, row) => sum + row.previous, 0));
     assert.equal(item.current - item.previous, item.organizations.reduce((sum, row) => sum + row.change, 0));
-    assert.equal(federal.agreement.find((row) => row.id === item.agreementId)?.status, 'В контракте');
+    assert.equal(federal.agreement.find((row) => row.id === item.agreementId)?.status, item.agreementId === '15' ? 'Нет расчёта' : 'В контракте');
   }
   assert.deepEqual(matched.find((item) => item.agreementId === '14').organizations
     .filter((row) => row.current > 0).map((row) => [row.oid, row.current]),

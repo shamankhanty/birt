@@ -196,10 +196,10 @@ const federalControl = {
   ...federalControlRaw,
   agreement: federalControlRaw.agreement.map((row) => {
     const evidence = contractSemd.items.find((item) => item.agreementId === row.id && item.current > 0);
-    return evidence && row.status === "В контракте"
+    return evidence && (row.status === "В контракте" || row.id === "15")
       ? { ...row, status: "Достигнут", regionalManualStatus: "achieved" as const,
           regionalFact: "Да", regionalPeriod: "01.01–07.11.2026",
-          sourceNote: `Статус «Достигнут» установлен по решению МЗ РТ при наличии ${evidence.current} зарегистрированных СЭМД этого вида. Отдельного подтверждения автоматизированного формирования в сводке РЭМД нет.`,
+          sourceNote: `Статус «Достигнут» установлен при наличии ${evidence.current} зарегистрированных СЭМД этого вида. Отдельного подтверждения автоматизированного формирования в сводке РЭМД нет.`,
           semdEvidence: evidence }
       : row;
   }),
@@ -8918,7 +8918,7 @@ export default function Home() {
                   <div className="federalDetailFacts">
                     <article><small>Факт РТ</small><strong>{selectedFederalDetail.row.regionalFact ?? "Нет данных"}</strong><span>{selectedFederalAssessment.period}</span></article>
                     <article><small>План</small><strong>{selectedFederalAssessment.plan}</strong><span>{selectedFederalAssessment.deviation}</span></article>
-                    <article><small>{selectedFederalDetail.row.semdEvidence ? "Регистрации СЭМД" : "Числитель и знаменатель"}</small><strong>{selectedFederalDetail.row.semdEvidence ? format(selectedFederalDetail.row.semdEvidence.current, 0) : selectedFederalAssessment.volume ?? "Не представлены"}</strong><span>{selectedFederalDetail.row.semdEvidence ? "Основание для статуса «Достигнут» · решение МЗ РТ" : "Компоненты не восстанавливаются из процента"}</span></article>
+                    <article><small>{selectedFederalDetail.row.semdEvidence ? "Регистрации СЭМД" : "Числитель и знаменатель"}</small><strong>{selectedFederalDetail.row.semdEvidence ? format(selectedFederalDetail.row.semdEvidence.current, 0) : selectedFederalAssessment.volume ?? "Не представлены"}</strong><span>{selectedFederalDetail.row.semdEvidence ? "Основание для статуса «Достигнут» · зарегистрированные СЭМД" : "Компоненты не восстанавливаются из процента"}</span></article>
                   </div>
                   <p className="sourceDataNote"><b>Источник регионального факта:</b> {selectedFederalDetail.row.sourceNote ?? "Региональный факт сохранён в перечне федерального контроля. Отдельная первичная выгрузка для этого показателя не подключена."}</p>
                   {selectedFederalDetail.row.semdEvidence && (
