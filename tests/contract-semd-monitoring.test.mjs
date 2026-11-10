@@ -6,7 +6,7 @@ const evidence = JSON.parse(readFileSync(new URL('../app/contract-semd-monitorin
 const summary = JSON.parse(readFileSync(new URL('../app/semd-summary.json', import.meta.url)));
 const federal = JSON.parse(readFileSync(new URL('../app/federal-control.json', import.meta.url)));
 
-test('contract SEMD registrations reconcile to source and are not mistaken for qualitative fulfilment', () => {
+test('contract SEMD registrations reconcile to regional totals and keep historical source status', () => {
   assert.match(evidence.currentPeriod, /01\.01\.2026 - 07\.11\.2026/);
   assert.match(evidence.previousPeriod, /01\.01\.2026 - 31\.10\.2026/);
   const matched = evidence.items.filter((item) => item.current > 0);
