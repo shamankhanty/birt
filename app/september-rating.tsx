@@ -6,6 +6,9 @@ import legacy from './rating/september-v1.json';
 import policy from '../config/september-rating-v2.json';
 import octoberMonthly from './monthly-2026-10.json';
 import monthly from './monthly-mo.json';
+import doctorsAllCumulativeRaw from './physician-doctors-all-cumulative-2026-10.json';
+import physicianMetricsRaw from './physician-metrics.json';
+import {createDoctorsAllCumulativeDatasets} from '../lib/physician-doctors-all-cumulative.js';
 import {buildOctoberRating} from '../lib/october-rating.js';
 import {buildSeptemberRating, metricScore} from '../lib/september-rating.js';
 import {monthlyRatingBranchKeys, excludeMonthlyRatingBranches} from '../lib/monthly-rating-scope.js';
@@ -23,9 +26,10 @@ const blockWeights:Record<string,string> = {care:'70%',services:'20%',readiness:
 const ratingBranchKeys = monthlyRatingBranchKeys(moRegistry, spasskIdentity);
 const eligibleInputs = {...inputs, organizations: excludeMonthlyRatingBranches(inputs.organizations, ratingBranchKeys)};
 const eligibleLegacy = {...legacy, rows: excludeMonthlyRatingBranches(legacy.rows, ratingBranchKeys)};
+const cumulativeDoctorsAll = createDoctorsAllCumulativeDatasets(doctorsAllCumulativeRaw, monthly.doctorsAll, physicianMetricsRaw.datasets.doctorsAll);
 
 export default function SeptemberRating({ october = false }: { october?: boolean }){
-  const rows=useMemo(()=>october ? buildOctoberRating(eligibleInputs,{...monthly,...octoberMonthly},policy) : buildSeptemberRating(eligibleInputs,eligibleLegacy,policy),[october]);
+  const rows=useMemo(()=>october ? buildOctoberRating(eligibleInputs,{...monthly,...octoberMonthly,doctorsAll:cumulativeDoctorsAll.monthly},policy) : buildSeptemberRating(eligibleInputs,eligibleLegacy,policy),[october]);
   const types=[...new Set(rows.map(r=>r.type))];
   const [type,setType]=useState('Центральные районные больницы');
   const [query,setQuery]=useState('');
@@ -59,7 +63,7 @@ export default function SeptemberRating({ october = false }: { october?: boolean
         <p><b>Состав рейтинга:</b> филиалы, включая Спасскую ЦРБ как филиал РКБ, не оцениваются отдельными МО. Места определяются только среди остальных организаций; исходные показатели и архивные данные сохранены.</p>
         <p><b>Детские МО:</b> терапевты 500+ показываются только справочно, без влияния на балл, полноту обязательных и место. Исходный числитель и знаменатель сохранены.</p>
         <p><b>Официальное место — только при полном обязательном наборе.</b> При пропусках показан диапазон возможного балла и перечень недостающих данных. Пропуск не считается фактом 0 и не улучшает место. «Лидер» — от 95 баллов, если каждый ключевой показатель помощи выполнен хотя бы на 80% своего плана.</p>
-        {october ? <p><b>Периоды:</b> ЕПГУ, врачи III уровня и специальности 500+ — 1–31 октября. СЭМД, ТВСП, ТМК и ЛВН посредством МАХ — накопительно на 31.10. «Хотя бы один СЭМД» по всем врачам методика считает накопительно с 01.01; имеющаяся выгрузка только за октябрь показана справочно и исключена из балла до получения накопительного источника. Для ТМК и ЛВН факт за 01.01–31.10 сопоставлен с утверждённым накопительным планом МО на 31.10; без плана показатель не применяется. Оба показателя включены в блок цифровых услуг (20%) на равных основаниях с ЕПГУ. Профилактика: MAX зарегистрированных 122 и 228 / закрытые случаи ДОГВН и ПМО.</p> : <>
+        {october ? <p><b>Периоды:</b> ЕПГУ, врачи III уровня и специальности 500+ — 1–31 октября. СЭМД, ТВСП, ТМК и ЛВН посредством МАХ — накопительно на 31.10. «Хотя бы один СЭМД» — накопительно за 01.01–31.10: уникальные OID подписантов, присутствующие в ФРМР МО на 31.10, / численность врачей ФРМР на 31.10; исключены повторы и выбывшие. Сопоставлены 10 месячных исходников, отсутствующие строки не заменены нулём. Динамика к сентябрю рассчитана по той же накопительной логике, сентябрьский архив рейтинга не переписан. Для ТМК и ЛВН факт за 01.01–31.10 сопоставлен с утверждённым накопительным планом МО на 31.10; без плана показатель не применяется. Оба показателя включены в блок цифровых услуг (20%) на равных основаниях с ЕПГУ. Профилактика: MAX зарегистрированных 122 и 228 / закрытые случаи ДОГВН и ПМО.</p> : <>
         <p><b>Периоды:</b> врачи и ЕПГУ — 01.09–30.09; СЭМД и ТВСП — накопительно 01.01–30.09. Это оценка состояния на сентябрьском срезе, а не месячный поток СЭМД. РЭМД сформирован 30.09 в 14:44; более поздний сентябрьский результат не подразумевается.</p>
         <p>СЭМД профилактики = MAX(122; 228) / случаи ФОМС. Стационарные эпикризы = (выписной эпикриз + эпикриз роддома) / случаи ОМС из одного отчёта. ЕПГУ: финальный статус / заявления и обработка за 2 рабочих дня / заявления.</p>
         <p>{inputs.profileRule}</p>
