@@ -17,6 +17,10 @@ test("runtime metadata exactly matches frozen stage-5 metadata", () => {
   for (const [id, expected] of Object.entries(baseline.registryMetadata)) {
     const actual = runtime.metadata(id);
     for (const field of ["plan", "planPeriod", "direction", "periodKind", "ratingPolicy", "ratingActive", "ratingBlock", "exclusions"]) {
+      if (id === "doctorsAll" && field === "periodKind") {
+        assert.equal(actual[field], "cumulative", "2026 methodology correction; frozen baseline stays intact");
+        continue;
+      }
       assert.deepEqual(actual[field], expected[field], `${id}:${field}`);
     }
   }
@@ -44,7 +48,7 @@ test("higher-is-better datasets remain behaviorally identical", () => {
 });
 
 test("registry period kind is accepted explicitly by the period engine", () => {
-  assert.equal(inferPeriodKind({ period: "август 2026", periodKind: runtime.periodKind("doctorsAll") }), "monthly");
+  assert.equal(inferPeriodKind({ period: "01.01–31.08.2026", periodKind: runtime.periodKind("doctorsAll") }), "cumulative");
   assert.equal(inferPeriodKind({ period: "01.01–31.08.2026", periodKind: runtime.periodKind("hospital") }), "cumulative");
   assert.equal(inferPeriodKind({ period: "на 07.09.2026", periodKind: runtime.periodKind("tmkMax") }), "operational");
 });
