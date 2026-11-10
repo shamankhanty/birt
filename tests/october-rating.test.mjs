@@ -21,6 +21,28 @@ test("October uses closed data in the existing rating and preserves missing comp
   assert.doesNotMatch(page, /Октябрь · срез 122\/228/);
 });
 
+test("October MAX uses January–October cumulative actual and approved October cumulative targets, without changing September", () => {
+  const september = read("app/rating/september-v2-inputs.json");
+  const actual = read("app/rating/max-october-2026.json");
+  const targets = read("config/max-targets-2026.json").organizationPlans;
+  const rows = buildOctoberRating(september, {...read("app/monthly-mo.json"), ...read("app/monthly-2026-10.json")}, read("config/september-rating-v2.json"));
+  assert.equal(actual.rows.length, 97);
+  assert.equal(actual.period, "01.01–31.10.2026");
+  const agryz = rows.find(row => row.key.endsWith(".1088"));
+  for (const [id, field, value] of [["tmkMax", "tmk", 538], ["elnMax", "eln", 314]]) {
+    const metric = agryz.metrics.find(item => item.id === id);
+    assert.equal(metric.status, "available");
+    assert.equal(metric.numerator, value);
+    assert.equal(metric.denominator, targets[agryz.key][field]["2026-10"]);
+    assert.ok(Math.abs(metric.fact - value / metric.denominator * 100) < 1e-9);
+    assert.equal(metric.block, "services");
+    assert.equal(metric.periodKind, "cumulative");
+    assert.equal(september.organizations.find(org => org.key === agryz.key).metrics.some(item => item.id === id), false);
+  }
+  assert.ok(rows.some(row => row.metrics.find(item => item.id === "tmkMax").status === "not_applicable"));
+  assert.equal(rows.filter(row => row.complete).length, 106);
+});
+
 test("Kazan DGP №2: dentist 500+ is not applicable for October only after staff absence confirmation", () => {
   const sept = read("app/rating/september-v2-inputs.json");
   const month = read("app/monthly-mo.json");
