@@ -22,8 +22,8 @@ test("v5.2.5 marks agreed RT facts as manual until primary reports arrive", () =
   assert.equal(byId.get("29").regionalPeriod, "01.01.2026–21.10.2026");
   assert.match(byId.get("29").sourceNote, /Ручной ввод по сообщённому значению/u);
   assert.match(byId.get("29").sourceNote, /без первичной регулярной выгрузки/u);
-  assert.match(byId.get("39.2").sourceNote, /Подтвержденное количество/u);
-  assert.equal(byId.get("39.2").regionalFact, "19 875 СЭМД");
+  assert.match(byId.get("39.2").sourceNote, /количество зарегистрированных СЭМД/u);
+  assert.equal(byId.get("39.2").regionalFact, "23 112 СЭМД");
 });
 
 test("AI imaging shares use source numerators/denominators and one-decimal rounding", () => {
