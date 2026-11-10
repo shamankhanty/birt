@@ -8919,7 +8919,7 @@ export default function Home() {
                   <div className="federalDetailFacts">
                     <article><small>Факт РТ</small><strong>{selectedFederalDetail.row.regionalFact ?? "Нет данных"}</strong><span>{selectedFederalAssessment.period}</span></article>
                     <article><small>План</small><strong>{selectedFederalAssessment.plan}</strong><span>{selectedFederalAssessment.deviation}</span></article>
-                    <article><small>Числитель и знаменатель</small><strong>{selectedFederalAssessment.volume ?? "Не представлены"}</strong><span>Компоненты не восстанавливаются из процента</span></article>
+                    <article><small>{selectedFederalDetail.row.semdEvidence ? "Регистрации СЭМД" : "Числитель и знаменатель"}</small><strong>{selectedFederalDetail.row.semdEvidence ? format(selectedFederalDetail.row.semdEvidence.current, 0) : selectedFederalAssessment.volume ?? "Не представлены"}</strong><span>{selectedFederalDetail.row.semdEvidence ? "Качественный критерий «Да» отдельно не подтверждён" : "Компоненты не восстанавливаются из процента"}</span></article>
                   </div>
                   <p className="sourceDataNote"><b>Источник регионального факта:</b> {selectedFederalDetail.row.sourceNote ?? "Региональный факт сохранён в перечне федерального контроля. Отдельная первичная выгрузка для этого показателя не подключена."}</p>
                   {selectedFederalDetail.row.semdEvidence && (
@@ -8927,7 +8927,7 @@ export default function Home() {
                       <h2>Регистрация СЭМД по медицинским организациям</h2>
                       <p><b>Вид документа:</b> {selectedFederalDetail.row.semdEvidence.semdName}</p>
                       <p><b>На 31.10:</b> {format(selectedFederalDetail.row.semdEvidence.previous, 0)} · <b>на 07.11:</b> {format(selectedFederalDetail.row.semdEvidence.current, 0)} · <b>прирост за 01–07.11:</b> {format(selectedFederalDetail.row.semdEvidence.current - selectedFederalDetail.row.semdEvidence.previous, 0)}</p>
-                      <p>{contractSemd.source}. {contractSemd.datePrecision} Срезы сформированы: {contractSemd.previousFormed.replace("Дата формирования: ", "")} и {contractSemd.currentFormed.replace("Дата формирования: ", "")}.</p>
+                      <p>{contractSemd.source}. {contractSemd.datePrecision} Срезы сформированы {contractSemd.previousFormed.replace("Дата формирования: ", "")} и {contractSemd.currentFormed.replace("Дата формирования: ", "")}.</p>
                       <div className="tableWrap"><table className="matrix"><thead><tr><th>Медицинская организация</th><th>На 31.10</th><th>На 07.11</th><th>Прирост</th></tr></thead><tbody>
                         {selectedFederalDetail.row.semdEvidence.organizations.map((entry) => <tr key={entry.oid}><td>{entry.name}<small>{entry.oid}</small></td><td>{format(entry.previous, 0)}</td><td>{format(entry.current, 0)}</td><td>{entry.change > 0 ? "+" : ""}{format(entry.change, 0)}</td></tr>)}
                       </tbody></table></div>
@@ -8939,7 +8939,7 @@ export default function Home() {
                     <p>{selectedFederalDetail.row.semdEvidence ? "Есть регистрации, но наличие документа не доказывает автоматизированное формирование. Показатель пока не оценивается как выполненный и не включается в рейтинг МО." : selectedFederalDetail.row.regionalFact
                       ? "Показано имеющееся значение по Республике Татарстан. Исходные строки медицинских организаций и подразделений к этому показателю не подключены."
                       : "В перечне есть плановый показатель, но подтверждённый факт РТ и строки медицинских организаций отсутствуют. Отсутствие данных не означает нулевое выполнение."}</p>
-                    <p><b>Динамика:</b> сопоставимый предыдущий срез не представлен.</p>
+                    <p><b>Динамика:</b> {selectedFederalDetail.row.semdEvidence ? "прирост регистраций показан по двум накопительным срезам выше; дата каждого документа неизвестна." : "сопоставимый предыдущий срез не представлен."}</p>
                     <p><b>Рейтинг МО и приоритет заслушивания:</b> по этому региональному итогу не рассчитываются.</p>
                   </div>
                   <details className="federalDetailSource">
