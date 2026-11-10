@@ -197,9 +197,9 @@ const federalControl = {
   agreement: federalControlRaw.agreement.map((row) => {
     const evidence = contractSemd.items.find((item) => item.agreementId === row.id && item.current > 0);
     return evidence && row.status === "В контракте"
-      ? { ...row, status: "Есть регистрации", regionalManualStatus: "reference" as const,
-          regionalFact: `${evidence.current} СЭМД`, regionalPeriod: "01.01–07.11.2026",
-          sourceNote: "Есть зарегистрированные СЭМД этого вида. Автоматизированное формирование и выполнение качественного критерия отдельно не подтверждены.",
+      ? { ...row, status: "Достигнут", regionalManualStatus: "achieved" as const,
+          regionalFact: "Да", regionalPeriod: "01.01–07.11.2026",
+          sourceNote: `Статус «Достигнут» установлен по решению МЗ РТ при наличии ${evidence.current} зарегистрированных СЭМД этого вида. Отдельного подтверждения автоматизированного формирования в сводке РЭМД нет.`,
           semdEvidence: evidence }
       : row;
   }),
@@ -2463,7 +2463,6 @@ function regionalControlStatus(
   const assessment = assessFederalPlan(effectiveRow);
   if (assessment.zone === "achieved") return "achieved";
   if (["critical", "lag", "near"].includes(assessment.zone)) return "notAchieved";
-  if (row.semdEvidence) return "noData";
   if (assessment.zone === "reference" || row.status === "В контракте" || row.status === "Нет расчёта") return "contract";
   return "noData";
 }
@@ -4210,7 +4209,7 @@ export default function Home() {
     () =>
       federalControl[federalSet].filter((row) => {
         const zone = assessFederalPlan(row).zone;
-        const displayStatus = row.semdEvidence ? "Справочно" : zone === "achieved" ? "Достигнут"
+        const displayStatus = zone === "achieved" ? "Достигнут"
           : zone === "other" ? "В контракте"
             : zone === "reference" ? "Справочно" : "Отклонение";
         const statusMatches =
@@ -4414,10 +4413,10 @@ export default function Home() {
   );
   const extendedFederalAchieved = {
     agreement: federalControl.agreement.filter(
-      (row) => row.status === "Достигнут",
+      (row) => row.status === "Достигнут" && !row.semdEvidence,
     ).length,
     collegium: federalControl.collegium.filter(
-      (row) => row.status === "Достигнут",
+      (row) => row.status === "Достигнут" && !row.semdEvidence,
     ).length,
   };
   const federalDetailCatalog = buildFederalDetailCatalog(federalControl, metricIds);
@@ -4459,7 +4458,7 @@ export default function Home() {
       improved = 0,
       worsened = 0;
     federalControl[federalSet].forEach((row) => {
-      if (row.status === "Достигнут") federalAchieved += 1;
+      if (row.status === "Достигнут" && !row.semdEvidence) federalAchieved += 1;
       const regionalStatus = regionalControlStatus(row);
       if (regionalStatus === "achieved") regionalAchieved += 1;
       else if (regionalStatus === "notAchieved") regionalNotAchieved += 1;
@@ -6380,7 +6379,7 @@ export default function Home() {
                   <article className={"federalPlanCard " + assessment.zone} key={federalSet + "-" + row.id}>
                     <div className="federalPlanCardTop">
                       <span>{federalSet === "agreement" ? "С" : "К"} № {row.id} · {federalSet === "agreement" ? "Соглашение" : "Коллегия"}</span>
-                      <b>{row.semdEvidence ? "Есть регистрации · проверка автоматизации" : ({
+                      <b>{({
                         critical: "Критическое отставание",
                         lag: "Есть отставание",
                         near: "Близко к плану",
@@ -6410,7 +6409,7 @@ export default function Home() {
                     </div>
                     {assessment.plan === "Да" ? (
                       <div className="federalPlanQualitative" aria-label="Качественный критерий">
-                        {row.semdEvidence ? "Регистрация подтверждена · автоматизация не проверена" : assessment.fact === "Да" ? "✓ Условие выполнено" :
+                        {assessment.fact === "Да" ? "✓ Условие выполнено" :
                           assessment.fact === "Нет" ? "✕ Условие не выполнено" :
                           "Нет подтверждённого значения"}
                       </div>
@@ -6427,7 +6426,7 @@ export default function Home() {
                       </div>
                     )}
                     <div className="federalPlanProgress">
-                      <span>{row.semdEvidence ? "СЭМД зарегистрированы · условие «Да» требует отдельной проверки" : assessment.plan === "Да" ? "Качественный критерий" : assessment.score === null ? "В контракте · расчёт не представлен" : "Исполнение плана: " + format(assessment.score, 2) + "%"}</span>
+                      <span>{row.semdEvidence ? `Подтверждено регистрациями: ${format(row.semdEvidence.current, 0)} СЭМД` : assessment.plan === "Да" ? "Качественный критерий" : assessment.score === null ? "В контракте · расчёт не представлен" : "Исполнение плана: " + format(assessment.score, 2) + "%"}</span>
                       <b>{assessment.deviation}</b>
                     </div>
                     {(assessment.volume || assessment.shortage !== null) && (
@@ -6533,7 +6532,7 @@ export default function Home() {
                           ? federalLowerIsBetter(row)
                             ? federal.value < planMetric.value
                             : federal.value >= planMetric.value
-                          : row.status === "Достигнут";
+                          : row.status === "Достигнут" && !row.semdEvidence;
                       const deltaTone =
                         delta === null
                           ? "na"
@@ -6547,7 +6546,7 @@ export default function Home() {
                           ? "В контракте"
                           : row.status;
                       const fallbackTone =
-                        row.semdEvidence ? "warn" : row.status === "Достигнут"
+                        row.status === "Достигнут"
                           ? "good"
                           : row.status === "Отклонение"
                             ? "bad"
@@ -6679,7 +6678,7 @@ export default function Home() {
                               <span
                                 className={`federalStatus ${regionalStatus}`}
                               >
-                                {row.semdEvidence ? "Есть регистрации · проверка автоматизации" : regionalStatus === "good"
+                                {regionalStatus === "good"
                                   ? "Достигнут"
                                   : regionalStatus === "na"
                                     ? "Нет сопоставимого плана"
@@ -8919,7 +8918,7 @@ export default function Home() {
                   <div className="federalDetailFacts">
                     <article><small>Факт РТ</small><strong>{selectedFederalDetail.row.regionalFact ?? "Нет данных"}</strong><span>{selectedFederalAssessment.period}</span></article>
                     <article><small>План</small><strong>{selectedFederalAssessment.plan}</strong><span>{selectedFederalAssessment.deviation}</span></article>
-                    <article><small>{selectedFederalDetail.row.semdEvidence ? "Регистрации СЭМД" : "Числитель и знаменатель"}</small><strong>{selectedFederalDetail.row.semdEvidence ? format(selectedFederalDetail.row.semdEvidence.current, 0) : selectedFederalAssessment.volume ?? "Не представлены"}</strong><span>{selectedFederalDetail.row.semdEvidence ? "Качественный критерий «Да» отдельно не подтверждён" : "Компоненты не восстанавливаются из процента"}</span></article>
+                    <article><small>{selectedFederalDetail.row.semdEvidence ? "Регистрации СЭМД" : "Числитель и знаменатель"}</small><strong>{selectedFederalDetail.row.semdEvidence ? format(selectedFederalDetail.row.semdEvidence.current, 0) : selectedFederalAssessment.volume ?? "Не представлены"}</strong><span>{selectedFederalDetail.row.semdEvidence ? "Основание для статуса «Достигнут» · решение МЗ РТ" : "Компоненты не восстанавливаются из процента"}</span></article>
                   </div>
                   <p className="sourceDataNote"><b>Источник регионального факта:</b> {selectedFederalDetail.row.sourceNote ?? "Региональный факт сохранён в перечне федерального контроля. Отдельная первичная выгрузка для этого показателя не подключена."}</p>
                   {selectedFederalDetail.row.semdEvidence && (
@@ -8931,12 +8930,12 @@ export default function Home() {
                       <div className="tableWrap"><table className="matrix"><thead><tr><th>Медицинская организация</th><th>На 31.10</th><th>На 07.11</th><th>Прирост</th></tr></thead><tbody>
                         {selectedFederalDetail.row.semdEvidence.organizations.map((entry) => <tr key={entry.oid}><td>{entry.name}<small>{entry.oid}</small></td><td>{format(entry.previous, 0)}</td><td>{format(entry.current, 0)}</td><td>{entry.change > 0 ? "+" : ""}{format(entry.change, 0)}</td></tr>)}
                       </tbody></table></div>
-                      <p><b>Вывод:</b> регистрация документа подтверждена; факт автоматизированного формирования или передачи по методике качественного показателя требует отдельного подтверждения.</p>
+                      <p><b>Вывод:</b> статус «Достигнут» установлен по регистрациям этого вида СЭМД по решению МЗ РТ. Автоматизированное формирование отдельно не подтверждено сводкой РЭМД.</p>
                     </div>
                   )}
                   <div className="federalDetailAvailability">
                     <h2>{selectedFederalDetail.row.semdEvidence ? "Статус качественного критерия" : selectedFederalDetail.row.regionalFact ? "Региональный итог без детализации по МО" : "Региональные данные не представлены"}</h2>
-                    <p>{selectedFederalDetail.row.semdEvidence ? "Есть регистрации, но наличие документа не доказывает автоматизированное формирование. Показатель пока не оценивается как выполненный и не включается в рейтинг МО." : selectedFederalDetail.row.regionalFact
+                    <p>{selectedFederalDetail.row.semdEvidence ? "Достигнут по решению МЗ РТ на основании регистрации СЭМД; при следующих выгрузках количество и состав отправивших МО обновляются. Федеральная оценка за 6 месяцев сохраняется отдельно." : selectedFederalDetail.row.regionalFact
                       ? "Показано имеющееся значение по Республике Татарстан. Исходные строки медицинских организаций и подразделений к этому показателю не подключены."
                       : "В перечне есть плановый показатель, но подтверждённый факт РТ и строки медицинских организаций отсутствуют. Отсутствие данных не означает нулевое выполнение."}</p>
                     <p><b>Динамика:</b> {selectedFederalDetail.row.semdEvidence ? "прирост регистраций показан по двум накопительным срезам выше; дата каждого документа неизвестна." : "сопоставимый предыдущий срез не представлен."}</p>
