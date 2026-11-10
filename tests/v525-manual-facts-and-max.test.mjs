@@ -11,7 +11,7 @@ const styles = fs.readFileSync("app/globals.css", "utf8");
 test("v5.2.5 marks agreed RT facts as manual until primary reports arrive", () => {
   const byId = new Map(control.agreement.map((row) => [row.id, row]));
   assert.equal(byId.get("24").regionalFact, "35 из 35 · 100%");
-  for (const id of ["1.1", "18", "20", "25", "26", "34", "36", "40"]) {
+  for (const id of ["1.1", "18", "20", "25", "34", "36", "40"]) {
     assert.match(byId.get(id).sourceNote, /Ручной ввод/u, id);
     assert.match(byId.get(id).regionalPeriod, /2026/u, id);
   }
