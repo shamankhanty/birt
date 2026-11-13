@@ -1,7 +1,7 @@
 import fs from 'node:fs';
 import test from 'node:test';
 import assert from 'node:assert/strict';
-const read = name => JSON.parse(fs.readFileSync('app/'+name+'.json','utf8'));
+const read = name => JSON.parse(fs.readFileSync('baseline/archive/pre-20261113/app/'+name+'.json','utf8'));
 const mo=read('mo-data'), monthly=read('monthly-mo'), op=read('operational-mo');
 const views=read('max-period-views'), doctors=read('physician-metrics'), weekly=read('physician-weekly-snapshot');
 const evidence=JSON.parse(fs.readFileSync('docs/update-20261102-evidence.json','utf8'));

@@ -70,6 +70,8 @@ class AmbulatorySourceTests(unittest.TestCase):
             dataset = json.loads((path / "mo-data.json").read_text())["ambulatoryCase"]
             detail = json.loads((path / "mo-detail-oids.json").read_text())["ambulatoryCase"][oid]
             self.assertEqual((dataset["numerator"], dataset["denominator"]), (125, 150))
+            self.assertAlmostEqual(dataset["fact"], 125 / 150 * 100)
+            self.assertIn("07.11.2026", dataset["source"])
             self.assertEqual((result.facts["sourceRows"], result.facts["mergedOids"]), (2, 1))
             self.assertEqual(len(dataset["rows"]), 1)
             item = dataset["rows"][0]

@@ -200,7 +200,7 @@ const federalControl = {
     const evidence = contractSemd.items.find((item) => item.agreementId === row.id && item.current > 0);
     return evidence && (row.status === "В контракте" || row.id === "15")
       ? { ...row, status: "Достигнут", regionalManualStatus: "achieved" as const,
-          regionalFact: "Да", regionalPeriod: "01.01–07.11.2026",
+          regionalFact: "Да", regionalPeriod: contractSemd.currentPeriod.replace(/^.*?за период /u, "").replace(" - ", "–"),
           sourceNote: `Статус «Достигнут» установлен при наличии ${evidence.current} зарегистрированных СЭМД этого вида. Отдельного подтверждения автоматизированного формирования в сводке РЭМД нет.`,
           semdEvidence: evidence }
       : row;
@@ -8934,9 +8934,9 @@ export default function Home() {
                     <div className="federalDetailAvailability">
                       <h2>Регистрация СЭМД по медицинским организациям</h2>
                       <p><b>Вид документа:</b> {selectedFederalDetail.row.semdEvidence.semdName}</p>
-                      <p><b>На 31.10:</b> {format(selectedFederalDetail.row.semdEvidence.previous, 0)} · <b>на 07.11:</b> {format(selectedFederalDetail.row.semdEvidence.current, 0)} · <b>прирост за 01–07.11:</b> {format(selectedFederalDetail.row.semdEvidence.current - selectedFederalDetail.row.semdEvidence.previous, 0)}</p>
+                      <p><b>На {contractSemd.previousPeriod.match(/\d{2}\.\d{2}\.\d{4}$/u)?.[0]}:</b> {format(selectedFederalDetail.row.semdEvidence.previous, 0)} · <b>на {contractSemd.currentPeriod.match(/\d{2}\.\d{2}\.\d{4}$/u)?.[0]}:</b> {format(selectedFederalDetail.row.semdEvidence.current, 0)} · <b>прирост между срезами:</b> {format(selectedFederalDetail.row.semdEvidence.current - selectedFederalDetail.row.semdEvidence.previous, 0)}</p>
                       <p>{contractSemd.source}. {contractSemd.datePrecision} Срезы сформированы {contractSemd.previousFormed.replace("Дата формирования: ", "")} и {contractSemd.currentFormed.replace("Дата формирования: ", "")}.</p>
-                      <div className="tableWrap"><table className="matrix"><thead><tr><th>Медицинская организация</th><th>На 31.10</th><th>На 07.11</th><th>Прирост</th></tr></thead><tbody>
+                      <div className="tableWrap"><table className="matrix"><thead><tr><th>Медицинская организация</th><th>На {contractSemd.previousPeriod.match(/\d{2}\.\d{2}\.\d{4}$/u)?.[0]}</th><th>На {contractSemd.currentPeriod.match(/\d{2}\.\d{2}\.\d{4}$/u)?.[0]}</th><th>Прирост</th></tr></thead><tbody>
                         {selectedFederalDetail.row.semdEvidence.organizations.map((entry) => <tr key={entry.oid}><td>{entry.name}<small>{entry.oid}</small></td><td>{format(entry.previous, 0)}</td><td>{format(entry.current, 0)}</td><td>{entry.change > 0 ? "+" : ""}{format(entry.change, 0)}</td></tr>)}
                       </tbody></table></div>
                       <p><b>Вывод:</b> статус «Достигнут» установлен по регистрациям этого вида СЭМД по решению МЗ РТ. Автоматизированное формирование отдельно не подтверждено сводкой РЭМД.</p>

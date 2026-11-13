@@ -6,14 +6,26 @@ const page = fs.readFileSync("app/page.tsx", "utf8");
 const adapters = fs.readFileSync("scripts/pipeline/adapters.py", "utf8");
 const mo = JSON.parse(fs.readFileSync("app/mo-data.json", "utf8"));
 const details = JSON.parse(fs.readFileSync("app/mo-details.json", "utf8"));
+const detailsByOid = JSON.parse(fs.readFileSync("app/mo-detail-oids.json", "utf8"));
 const sourceBacked = ["egpu", "egpu2days", "birth", "death", "semd228", "hospital", "ambulatoryCase", "smp"];
-const sum = (metric, field) => Object.values(details[metric] ?? {}).reduce((total, row) => total + Number(row?.[field] ?? 0), 0);
+const sum = (metric, field) => {
+  const byOid = Object.values(detailsByOid[metric] ?? {});
+  return (byOid.length ? byOid : Object.values(details[metric] ?? {}))
+    .reduce((total, row) => total + Number(row?.[field] ?? 0), 0);
+};
 
 test("all source-backed cumulative shares persist current numerator and denominator", () => {
   for (const metric of sourceBacked) {
     assert.equal(mo[metric].numerator, sum(metric, "registered"), `${metric} numerator`);
     assert.equal(mo[metric].denominator, sum(metric, "volume"), `${metric} denominator`);
   }
+});
+
+test("ambulatory aliases share one legal OID and do not double-count the denominator", () => {
+  assert.ok(Object.keys(details.ambulatoryCase).length > Object.keys(detailsByOid.ambulatoryCase).length);
+  assert.equal(mo.ambulatoryCase.denominator, sum("ambulatoryCase", "volume"));
+  assert.equal(mo.ambulatoryCase.fact,
+    mo.ambulatoryCase.numerator / mo.ambulatoryCase.denominator * 100);
 });
 
 test("confirmed previous components expose the real cumulative movements", () => {

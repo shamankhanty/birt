@@ -7,8 +7,8 @@ const summary = JSON.parse(readFileSync(new URL('../app/semd-summary.json', impo
 const federal = JSON.parse(readFileSync(new URL('../app/federal-control.json', import.meta.url)));
 
 test('contract SEMD registrations reconcile to regional totals and keep historical source status', () => {
-  assert.match(evidence.currentPeriod, /01\.01\.2026 - 07\.11\.2026/);
-  assert.match(evidence.previousPeriod, /01\.01\.2026 - 31\.10\.2026/);
+  assert.match(evidence.currentPeriod, /01\.01\.2026 - 13\.11\.2026/);
+  assert.match(evidence.previousPeriod, /01\.01\.2026 - 07\.11\.2026/);
   const matched = evidence.items.filter((item) => item.current > 0);
   assert.deepEqual(matched.map((item) => item.agreementId), ['11', '12', '14', '15']);
   for (const item of evidence.items) {

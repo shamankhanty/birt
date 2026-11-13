@@ -4,10 +4,10 @@ import test from "node:test";
 
 const page = fs.readFileSync("app/page.tsx", "utf8");
 const targets = JSON.parse(fs.readFileSync("config/max-targets-2026.json", "utf8"));
-const operational = JSON.parse(fs.readFileSync("app/operational-mo.json", "utf8"));
-const physicians = JSON.parse(fs.readFileSync("app/physician-metrics.json", "utf8"));
-const weekly = JSON.parse(fs.readFileSync("app/physician-weekly-snapshot.json", "utf8"));
-const periodViews = JSON.parse(fs.readFileSync("app/max-period-views.json", "utf8"));
+const operational = JSON.parse(fs.readFileSync("baseline/archive/pre-20261113/app/operational-mo.json", "utf8"));
+const physicians = JSON.parse(fs.readFileSync("baseline/archive/pre-20261113/app/physician-metrics.json", "utf8"));
+const weekly = JSON.parse(fs.readFileSync("baseline/archive/pre-20261113/app/physician-weekly-snapshot.json", "utf8"));
+const periodViews = JSON.parse(fs.readFileSync("baseline/archive/pre-20261113/app/max-period-views.json", "utf8"));
 
 const october = periodViews.closedMonths["2026-10"].operational;
 const countTotal = (id) => operational[id].rows.reduce((sum, row) => sum + row.fact, 0);
