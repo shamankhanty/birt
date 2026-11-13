@@ -450,9 +450,11 @@
     },
     {
       "oid": "1.2.643.5.1.13.13.12.2.16.1094",
-      "name": "РКБ МЗ РТ",
+      "name": "Спасская ЦРБ",
       "tmk": 1295,
-      "eln": 36
+      "eln": 36,
+      "reportingEntityId": "context:spassk-crb",
+      "sourceReports": ["gis-max-tmk","gis-max-eln"]
     },
     {
       "oid": "1.2.643.5.1.13.13.12.2.16.1063",
