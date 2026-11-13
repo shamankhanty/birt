@@ -4,8 +4,8 @@ import assert from 'node:assert/strict';
 import { createMoRegistryRuntime } from '../lib/mo-registry.js';
 
 const read = file => JSON.parse(fs.readFileSync(file,'utf8'));
-const audit = read('app/preventive-semd-audit.json');
-const dataset = read('app/mo-data.json').semd228;
+const audit = read('baseline/archive/pre-20261113/app/preventive-semd-audit.json');
+const dataset = read('baseline/archive/pre-20261113/app/mo-data.json').semd228;
 const runtime = createMoRegistryRuntime(read('app/mo-registry.json'));
 
 test('internal 08 November preventive cut reconciles 86 MO and preserves historical 04 November audit', () => {
@@ -21,7 +21,7 @@ test('internal 08 November preventive cut reconciles 86 MO and preserves histori
   assert.equal(dataset.numerator,2151548);
   assert.equal(dataset.denominator,2366215);
   assert.equal(dataset.fact,2151548/2366215*100);
-  const source=read('app/mo-detail-oids.json').semd228;
+  const source=read('baseline/archive/pre-20261113/app/mo-detail-oids.json').semd228;
   assert.equal(Object.values(source).reduce((s,r)=>s+r.registered,0),dataset.numerator);
   assert.equal(Object.values(source).reduce((s,r)=>s+r.volume,0),dataset.denominator);
   assert.equal(audit.rows.length,95);
@@ -83,7 +83,7 @@ test('missing external source stays excluded and cumulative export preserves Sep
   assert.ok(!dataset.rows.some(r=>r.oid===audit.excluded[0].oid&&r.count===0));
   const evidence = read('docs/preventive-20261104.json');
   assert.equal(evidence.monthlySnapshotUnchanged,true);
-  const monthly=read('app/monthly-mo.json').semd228;
+  const monthly=read('baseline/archive/pre-20261113/app/monthly-mo.json').semd228;
   assert.equal(monthly.currentLabel,'На 30.09');
   assert.equal(monthly.ratingState,'retained_incomplete_period');
 });

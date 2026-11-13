@@ -1,1639 +1,1425 @@
 {
   "semd228": {
     "1.2.643.5.1.13.13.12.2.16.1088": {
-      "volume": 17031,
-      "registered": 13451,
-      "semd122": 13451,
-      "semd228": 9976,
-      "dogvn": 10910,
-      "pmo": 6121
-    },
-    "1.2.643.5.1.13.13.12.2.16.1146": {
-      "volume": 42351,
-      "registered": 38563,
-      "semd122": 38563,
-      "semd228": 197,
-      "dogvn": null,
-      "pmo": 42351
+      "volume": 17564,
+      "registered": 15268
     },
     "1.2.643.5.1.13.13.12.2.16.1084": {
-      "volume": 38666,
-      "registered": 37769,
-      "semd122": 37769,
-      "semd228": 35583,
-      "dogvn": 24298,
-      "pmo": 14368
+      "volume": 39540,
+      "registered": 38443
     },
     "1.2.643.5.1.13.13.12.2.16.1156": {
-      "volume": 15767,
-      "registered": 14527,
-      "semd122": 14527,
-      "semd228": 11405,
-      "dogvn": 11580,
-      "pmo": 4187
+      "volume": 16117,
+      "registered": 14826
     },
     "1.2.643.5.1.13.13.12.2.16.1092": {
-      "volume": 18674,
-      "registered": 14282,
-      "semd122": 14282,
-      "semd228": 9612,
-      "dogvn": 13520,
-      "pmo": 5154
+      "volume": 19089,
+      "registered": 14690
     },
     "1.2.643.5.1.13.13.12.2.16.1087": {
-      "volume": 13888,
-      "registered": 12897,
-      "semd122": 12897,
-      "semd228": 2890,
-      "dogvn": 9270,
-      "pmo": 4618
-    },
-    "1.2.643.5.1.13.13.12.2.16.1107": {
-      "volume": 18677,
-      "registered": 14173,
-      "semd122": 14173,
-      "semd228": 13114,
-      "dogvn": 15774,
-      "pmo": 2903
+      "volume": 14195,
+      "registered": 13211
     },
     "1.2.643.5.1.13.13.12.2.16.44921": {
-      "volume": 13344,
-      "registered": 10535,
-      "semd122": 10535,
-      "semd228": 6782,
-      "dogvn": 11166,
-      "pmo": 2178
+      "volume": 13678,
+      "registered": 10849
     },
     "1.2.643.5.1.13.13.12.2.16.1108": {
-      "volume": 53832,
-      "registered": 45922,
-      "semd122": 45922,
-      "semd228": 25384,
-      "dogvn": 38388,
-      "pmo": 15444
+      "volume": 117210,
+      "registered": 100134
     },
     "1.2.643.5.1.13.13.12.2.16.1152": {
-      "volume": 10086,
-      "registered": 9883,
-      "semd122": 9883,
-      "semd228": 6430,
-      "dogvn": 6900,
-      "pmo": 3186
+      "volume": 10317,
+      "registered": 10061
     },
     "1.2.643.5.1.13.13.12.2.16.1164": {
-      "volume": 30755,
-      "registered": 23787,
-      "semd122": 23787,
-      "semd228": 5030,
-      "dogvn": 19264,
-      "pmo": 11491
+      "volume": 31480,
+      "registered": 26359
     },
     "1.2.643.5.1.13.13.12.2.16.1078": {
-      "volume": 9790,
-      "registered": 9266,
-      "semd122": 9266,
-      "semd228": 8003,
-      "dogvn": 7219,
-      "pmo": 2571
+      "volume": 9976,
+      "registered": 9316
     },
     "1.2.643.5.1.13.13.12.2.16.1129": {
-      "volume": 19176,
-      "registered": 16224,
-      "semd122": 16224,
-      "semd228": 14748,
-      "dogvn": 11585,
-      "pmo": 7591
+      "volume": 19461,
+      "registered": 16352
     },
     "1.2.643.5.1.13.13.12.2.16.1161": {
-      "volume": 8680,
-      "registered": 8376,
-      "semd122": 6280,
-      "semd228": 8376,
-      "dogvn": 5847,
-      "pmo": 2833
+      "volume": 8912,
+      "registered": 8423
     },
     "1.2.643.5.1.13.13.12.2.16.1081": {
-      "volume": 23159,
-      "registered": 22656,
-      "semd122": 22656,
-      "semd228": 15858,
-      "dogvn": 16088,
-      "pmo": 7071
+      "volume": 23509,
+      "registered": 22832
     },
     "1.2.643.5.1.13.13.12.2.16.1042": {
-      "volume": 45272,
-      "registered": 44161,
-      "semd122": 44161,
-      "semd228": 41857,
-      "dogvn": 27150,
-      "pmo": 18122
+      "volume": 46033,
+      "registered": 44901
     },
     "1.2.643.5.1.13.13.12.2.16.1120": {
-      "volume": 20652,
-      "registered": 17393,
-      "semd122": 15234,
-      "semd228": 17393,
-      "dogvn": 13302,
-      "pmo": 7350
+      "volume": 21019,
+      "registered": 17440
     },
     "1.2.643.5.1.13.13.12.2.16.1052": {
-      "volume": 8206,
-      "registered": 7294,
-      "semd122": 7294,
-      "semd228": 3800,
-      "dogvn": 5432,
-      "pmo": 2774
+      "volume": 8398,
+      "registered": 7404
     },
     "1.2.643.5.1.13.13.12.2.16.1050": {
-      "volume": 31415,
-      "registered": 28582,
-      "semd122": 28582,
-      "semd228": 12219,
-      "dogvn": 15226,
-      "pmo": 16189
+      "volume": 32117,
+      "registered": 28920
     },
     "1.2.643.5.1.13.13.12.2.16.1113": {
-      "volume": 22925,
-      "registered": 17085,
-      "semd122": 17085,
-      "semd228": 12225,
-      "dogvn": null,
-      "pmo": 22925
+      "volume": 23317,
+      "registered": 20122
     },
     "1.2.643.5.1.13.13.12.2.16.28030": {
-      "volume": 30809,
-      "registered": 28612,
-      "semd122": 28546,
-      "semd228": 28612,
-      "dogvn": 26589,
-      "pmo": 4220
+      "volume": 31440,
+      "registered": 28937
     },
     "1.2.643.5.1.13.13.12.2.16.1136": {
-      "volume": 33739,
-      "registered": 33018,
-      "semd122": 32899,
-      "semd228": 33018,
-      "dogvn": 28463,
-      "pmo": 5276
+      "volume": 34622,
+      "registered": 33578
     },
     "1.2.643.5.1.13.13.12.2.16.1163": {
-      "volume": 69761,
-      "registered": 66543,
-      "semd122": 66543,
-      "semd228": 59356,
-      "dogvn": 59311,
-      "pmo": 10450
+      "volume": 71443,
+      "registered": 66710
     },
     "1.2.643.5.1.13.13.12.2.16.1070": {
-      "volume": 21584,
-      "registered": 18504,
-      "semd122": 18504,
-      "semd228": 2306,
-      "dogvn": 19281,
-      "pmo": 2303
+      "volume": 21907,
+      "registered": 18818
     },
     "1.2.643.5.1.13.13.12.2.16.1116": {
-      "volume": 10210,
-      "registered": 9707,
-      "semd122": 9707,
-      "semd228": 7190,
-      "dogvn": 8987,
-      "pmo": 1223
+      "volume": 10441,
+      "registered": 9902
     },
     "1.2.643.5.1.13.13.12.2.16.1112": {
-      "volume": 53202,
-      "registered": 49963,
-      "semd122": 44206,
-      "semd228": 49963,
-      "dogvn": 48294,
-      "pmo": 4908
+      "volume": 54128,
+      "registered": 50031
     },
     "1.2.643.5.1.13.13.12.2.16.1148": {
-      "volume": 15523,
-      "registered": 13640,
-      "semd122": 13640,
-      "semd228": 4802,
-      "dogvn": null,
-      "pmo": 15523
+      "volume": 16014,
+      "registered": 13641
     },
     "1.2.643.5.1.13.13.12.2.16.1090": {
-      "volume": 46667,
-      "registered": 44186,
-      "semd122": 44186,
-      "semd228": 1284,
-      "dogvn": null,
-      "pmo": 46667
+      "volume": 47890,
+      "registered": 44794
     },
     "1.2.643.5.1.13.13.12.2.16.1074": {
-      "volume": 57736,
-      "registered": 53058,
-      "semd122": 53058,
-      "semd228": 52665,
-      "dogvn": 48532,
-      "pmo": 9204
+      "volume": 59089,
+      "registered": 53676
     },
     "1.2.643.5.1.13.13.12.2.16.1080": {
-      "volume": 45990,
-      "registered": 41602,
-      "semd122": 41602,
-      "semd228": 21416,
-      "dogvn": 38779,
-      "pmo": 7211
+      "volume": 46821,
+      "registered": 42075
     },
     "1.2.643.5.1.13.13.12.2.16.1178": {
-      "volume": 51437,
-      "registered": 42765,
-      "semd122": 40885,
-      "semd228": 42765,
-      "dogvn": 41892,
-      "pmo": 9545
+      "volume": 52235,
+      "registered": 43545
     },
     "1.2.643.5.1.13.13.12.2.16.1179": {
-      "volume": 61719,
-      "registered": 54168,
-      "semd122": 54168,
-      "semd228": 48305,
-      "dogvn": 41396,
-      "pmo": 20323
+      "volume": 63446,
+      "registered": 55379
     },
     "1.2.643.5.1.13.13.12.2.16.1208": {
-      "volume": 40146,
-      "registered": 34543,
-      "semd122": 34543,
-      "semd228": 16392,
-      "dogvn": 33090,
-      "pmo": 7056
+      "volume": 40881,
+      "registered": 34838
     },
     "1.2.643.5.1.13.13.12.2.16.1147": {
-      "volume": 24746,
-      "registered": 22500,
-      "semd122": 22500,
-      "semd228": 13451,
-      "dogvn": 19997,
-      "pmo": 4749
+      "volume": 25165,
+      "registered": 22504
     },
     "1.2.643.5.1.13.13.12.2.16.1051": {
-      "volume": 33839,
-      "registered": 26884,
-      "semd122": 26884,
-      "semd228": 19412,
-      "dogvn": 27612,
-      "pmo": 6227
+      "volume": 34308,
+      "registered": 27248
     },
     "1.2.643.5.1.13.13.12.2.16.1153": {
-      "volume": 21694,
-      "registered": 20271,
-      "semd122": 20271,
-      "semd228": 17204,
-      "dogvn": 19252,
-      "pmo": 2442
+      "volume": 22321,
+      "registered": 21359
     },
     "1.2.643.5.1.13.13.12.2.16.1115": {
-      "volume": 39637,
-      "registered": 36101,
-      "semd122": 36101,
-      "semd228": 11947,
-      "dogvn": 34367,
-      "pmo": 5270
+      "volume": 40340,
+      "registered": 36488
     },
     "1.2.643.5.1.13.13.12.2.16.1082": {
-      "volume": 31011,
-      "registered": 25063,
-      "semd122": 25063,
-      "semd228": 11914,
-      "dogvn": 24779,
-      "pmo": 6232
+      "volume": 31461,
+      "registered": 25121
     },
     "1.2.643.5.1.13.13.12.2.16.1135": {
-      "volume": 11362,
-      "registered": 10651,
-      "semd122": 10651,
-      "semd228": 9690,
-      "dogvn": 9594,
-      "pmo": 1768
+      "volume": 11655,
+      "registered": 10773
     },
     "1.2.643.5.1.13.13.12.2.16.1085": {
-      "volume": 13890,
-      "registered": 13449,
-      "semd122": 4547,
-      "semd228": 13449,
-      "dogvn": 13047,
-      "pmo": 843
+      "volume": 14060,
+      "registered": 13497
     },
     "1.2.643.5.1.13.13.12.2.16.1123": {
-      "volume": 30243,
-      "registered": 27655,
-      "semd122": 27655,
-      "semd228": 7851,
-      "dogvn": null,
-      "pmo": 30243
+      "volume": 30625,
+      "registered": 28842
     },
     "1.2.643.5.1.13.13.12.2.16.1200": {
-      "volume": 25105,
-      "registered": 20159,
-      "semd122": 20159,
-      "semd228": 14979,
-      "dogvn": null,
-      "pmo": 25105
+      "volume": 25783,
+      "registered": 20444
     },
     "1.2.643.5.1.13.13.12.2.16.1199": {
-      "volume": 31842,
-      "registered": 26630,
-      "semd122": 26630,
-      "semd228": 3236,
-      "dogvn": null,
-      "pmo": 31842
+      "volume": 31946,
+      "registered": 26577
     },
     "1.2.643.5.1.13.13.12.2.16.1182": {
-      "volume": 19624,
-      "registered": 19170,
-      "semd122": 19170,
-      "semd228": 17975,
-      "dogvn": null,
-      "pmo": 19624
+      "volume": 19985,
+      "registered": 19481
     },
     "1.2.643.5.1.13.13.12.2.16.1045": {
-      "volume": 21226,
-      "registered": 20170,
-      "semd122": 641,
-      "semd228": 20170,
-      "dogvn": null,
-      "pmo": 21226
+      "volume": 21730,
+      "registered": 20565
     },
     "1.2.643.5.1.13.13.12.2.16.1067": {
-      "volume": 20045,
-      "registered": 17380,
-      "semd122": 8339,
-      "semd228": 17380,
-      "dogvn": null,
-      "pmo": 20045
+      "volume": 20366,
+      "registered": 19020
     },
     "1.2.643.5.1.13.13.12.2.16.1127": {
-      "volume": 25491,
-      "registered": 24290,
-      "semd122": 2081,
-      "semd228": 24290,
-      "dogvn": null,
-      "pmo": 25491
+      "volume": 26101,
+      "registered": 24297
     },
     "1.2.643.5.1.13.13.12.2.16.1122": {
-      "volume": 28763,
-      "registered": 27941,
-      "semd122": 27941,
-      "semd228": 12396,
-      "dogvn": null,
-      "pmo": 28763
+      "volume": 29438,
+      "registered": 28606
     },
     "1.2.643.5.1.13.13.12.2.16.1089": {
-      "volume": 20737,
-      "registered": 20277,
-      "semd122": 20277,
-      "semd228": 100,
-      "dogvn": null,
-      "pmo": 20737
+      "volume": 21081,
+      "registered": 20408
     },
     "1.2.643.5.1.13.13.12.2.16.1066": {
-      "volume": 16840,
-      "registered": 15491,
-      "semd122": 15491,
-      "semd228": 2152,
-      "dogvn": null,
-      "pmo": 16840
+      "volume": 17165,
+      "registered": 15504
     },
     "1.2.643.5.1.13.13.12.2.16.1193": {
-      "volume": 17393,
-      "registered": 15303,
-      "semd122": 7564,
-      "semd228": 15303,
-      "dogvn": null,
-      "pmo": 17393
+      "volume": 17996,
+      "registered": 16100
     },
     "1.2.643.5.1.13.13.12.2.16.1155": {
-      "volume": 34820,
-      "registered": 33636,
-      "semd122": 9912,
-      "semd228": 33636,
-      "dogvn": null,
-      "pmo": 34820
+      "volume": 35801,
+      "registered": 34504
     },
     "1.2.643.5.1.13.13.12.2.16.1105": {
-      "volume": 10850,
-      "registered": 10015,
-      "semd122": 10015,
-      "semd228": 6544,
-      "dogvn": 7693,
-      "pmo": 3157
+      "volume": 11071,
+      "registered": 10033
     },
     "1.2.643.5.1.13.13.12.2.16.1093": {
-      "volume": 59415,
-      "registered": 58204,
-      "semd122": 45526,
-      "semd228": 58204,
-      "dogvn": 33288,
-      "pmo": 26127
+      "volume": 60723,
+      "registered": 59338
     },
     "1.2.643.5.1.13.13.12.2.16.1072": {
-      "volume": 25093,
-      "registered": 24664,
-      "semd122": 24612,
-      "semd228": 24664,
-      "dogvn": 16140,
-      "pmo": 8953
+      "volume": 25426,
+      "registered": 24994
     },
     "1.2.643.5.1.13.13.12.2.16.1139": {
-      "volume": 93704,
-      "registered": 84053,
-      "semd122": 84053,
-      "semd228": 54659,
-      "dogvn": 58084,
-      "pmo": 35620
+      "volume": 95897,
+      "registered": 85590
     },
     "1.2.643.5.1.13.13.12.2.16.1131": {
-      "volume": 6632,
-      "registered": 6425,
-      "semd122": 5578,
-      "semd228": 6425,
-      "dogvn": 4885,
-      "pmo": 1747
+      "volume": 6784,
+      "registered": 6580
     },
     "1.2.643.5.1.13.13.12.2.16.1165": {
-      "volume": 14555,
-      "registered": 9987,
-      "semd122": 9987,
-      "semd228": 6929,
-      "dogvn": 9950,
-      "pmo": 4605
+      "volume": 14694,
+      "registered": 10044
     },
     "1.2.643.5.1.13.13.12.2.16.1044": {
-      "volume": 10156,
-      "registered": 9924,
-      "semd122": 9924,
-      "semd228": 5117,
-      "dogvn": 7760,
-      "pmo": 2396
+      "volume": 10326,
+      "registered": 9925
     },
     "1.2.643.5.1.13.13.12.2.16.1065": {
-      "volume": 19175,
-      "registered": 15648,
-      "semd122": 15648,
-      "semd228": 7463,
-      "dogvn": null,
-      "pmo": 19175
+      "volume": 19807,
+      "registered": 15982
     },
     "1.2.643.5.1.13.13.12.2.16.1125": {
-      "volume": 16776,
-      "registered": 14166,
-      "semd122": 14166,
-      "semd228": 4117,
-      "dogvn": 14767,
-      "pmo": 2009
+      "volume": 17013,
+      "registered": 14301
     },
     "1.2.643.5.1.13.13.12.2.16.1185": {
-      "volume": 30147,
-      "registered": 27342,
-      "semd122": 23218,
-      "semd228": 27342,
-      "dogvn": 24225,
-      "pmo": 5922
+      "volume": 30598,
+      "registered": 27502
     },
     "1.2.643.5.1.13.13.12.2.16.1144": {
-      "volume": 27890,
-      "registered": 27053,
-      "semd122": 27053,
-      "semd228": 17864,
-      "dogvn": 15516,
-      "pmo": 12374
+      "volume": 28399,
+      "registered": 27603
     },
     "1.2.643.5.1.13.13.12.2.16.1149": {
-      "volume": 30626,
-      "registered": 23363,
-      "semd122": 23363,
-      "semd228": 19675,
-      "dogvn": 14369,
-      "pmo": 16257
+      "volume": 31280,
+      "registered": 24233
     },
     "1.2.643.5.1.13.13.12.2.16.1073": {
-      "volume": 45008,
-      "registered": 44500,
-      "semd122": 44500,
-      "semd228": 42274,
-      "dogvn": 29627,
-      "pmo": 15381
+      "volume": 45926,
+      "registered": 45231
     },
     "1.2.643.5.1.13.13.12.2.16.1104": {
-      "volume": 23313,
-      "registered": 19621,
-      "semd122": 19621,
-      "semd228": 14346,
-      "dogvn": 16075,
-      "pmo": 7238
+      "volume": 23725,
+      "registered": 22036
     },
     "1.2.643.5.1.13.13.12.2.16.1058": {
-      "volume": 18135,
-      "registered": 16896,
-      "semd122": 16896,
-      "semd228": 4512,
-      "dogvn": 11507,
-      "pmo": 6628
+      "volume": 18512,
+      "registered": 17119
     },
     "1.2.643.5.1.13.13.12.2.16.1101": {
-      "volume": 17075,
-      "registered": 16574,
-      "semd122": 14848,
-      "semd228": 16574,
-      "dogvn": 11478,
-      "pmo": 5597
+      "volume": 17579,
+      "registered": 16618
     },
     "1.2.643.5.1.13.13.12.2.16.1055": {
-      "volume": 11459,
-      "registered": 10382,
-      "semd122": 10382,
-      "semd228": 6273,
-      "dogvn": 7054,
-      "pmo": 4405
+      "volume": 11641,
+      "registered": 10473
     },
     "1.2.643.5.1.13.13.12.2.16.1171": {
-      "volume": 49450,
-      "registered": 48586,
-      "semd122": 48586,
-      "semd228": 48205,
-      "dogvn": null,
-      "pmo": 49450
+      "volume": 51390,
+      "registered": 49753
     },
     "1.2.643.5.1.13.13.12.2.16.1059": {
-      "volume": 7654,
-      "registered": 6833,
-      "semd122": 6833,
-      "semd228": 5927,
-      "dogvn": 4743,
-      "pmo": 2911
+      "volume": 7850,
+      "registered": 6956
     },
     "1.2.643.5.1.13.13.12.2.16.1138": {
-      "volume": 33694,
-      "registered": 33694,
-      "semd122": 33694,
-      "semd228": 33692,
-      "dogvn": 22097,
-      "pmo": 11597
+      "volume": 34328,
+      "registered": 34113
     },
     "1.2.643.5.1.13.13.12.2.16.1192": {
-      "volume": 89847,
-      "registered": 87385,
-      "semd122": 87385,
-      "semd228": 86412,
-      "dogvn": 78326,
-      "pmo": 11521
+      "volume": 91402,
+      "registered": 89178
     },
     "1.2.643.5.1.13.13.12.2.16.1109": {
-      "volume": 32302,
-      "registered": 26929,
-      "semd122": 26929,
-      "semd228": 9188,
-      "dogvn": 13073,
-      "pmo": 19229
+      "volume": 32878,
+      "registered": 27235
     },
     "1.2.643.5.1.13.13.12.2.16.1094": {
-      "volume": 8398,
-      "registered": 6635,
-      "semd122": 6635,
-      "semd228": 6050,
-      "dogvn": 5378,
-      "pmo": 3020
+      "volume": 8621,
+      "registered": 6670
     },
     "1.2.643.5.1.13.13.12.2.16.1133": {
-      "volume": 13230,
-      "registered": 12603,
-      "semd122": 12603,
-      "semd228": 12270,
-      "dogvn": 9566,
-      "pmo": 3664
+      "volume": 13519,
+      "registered": 12671
     },
     "1.2.643.5.1.13.13.12.2.16.1126": {
-      "volume": 19974,
-      "registered": 19166,
-      "semd122": 19166,
-      "semd228": 8078,
-      "dogvn": 10866,
-      "pmo": 9108
+      "volume": 20453,
+      "registered": 19467
     },
     "1.2.643.5.1.13.13.12.2.16.1169": {
-      "volume": 20065,
-      "registered": 19300,
-      "semd122": 17476,
-      "semd228": 19300,
-      "dogvn": 13565,
-      "pmo": 6500
+      "volume": 20549,
+      "registered": 19535
     },
     "1.2.643.5.1.13.13.12.2.16.1130": {
-      "volume": 10373,
-      "registered": 9969,
-      "semd122": 9969,
-      "semd228": 7304,
-      "dogvn": 7315,
-      "pmo": 3058
+      "volume": 10533,
+      "registered": 10166
     },
     "1.2.643.5.1.13.13.12.2.16.1140": {
-      "volume": 23094,
-      "registered": 22295,
-      "semd122": 22295,
-      "semd228": 14565,
-      "dogvn": 14392,
-      "pmo": 8702
+      "volume": 23505,
+      "registered": 22613
     },
     "1.2.643.5.1.13.13.12.2.16.1039": {
-      "volume": 7159,
-      "registered": 6900,
-      "semd122": 6900,
-      "semd228": 6315,
-      "dogvn": 4807,
-      "pmo": 2352
+      "volume": 7346,
+      "registered": 7113
     },
     "1.2.643.5.1.13.13.12.2.16.1097": {
-      "volume": 13650,
-      "registered": 12685,
-      "semd122": 10119,
-      "semd228": 12685,
-      "dogvn": 9173,
-      "pmo": 4477
+      "volume": 14284,
+      "registered": 13134
     },
     "1.2.643.5.1.13.13.12.2.16.1151": {
-      "volume": 36932,
-      "registered": 33798,
-      "semd122": 33798,
-      "semd228": 19113,
-      "dogvn": 31414,
-      "pmo": 5518
+      "volume": 37673,
+      "registered": 34451
     },
     "1.2.643.5.1.13.13.12.2.16.1162": {
-      "volume": 9794,
-      "registered": 9169,
-      "semd122": 9169,
-      "semd228": 4097,
-      "dogvn": 6958,
-      "pmo": 2836
+      "volume": 10153,
+      "registered": 9350
     },
     "1.2.643.5.1.13.13.12.2.16.1038": {
-      "volume": 41176,
-      "registered": 38296,
-      "semd122": 38296,
-      "semd228": 24347,
-      "dogvn": 25793,
-      "pmo": 15383
+      "volume": 42061,
+      "registered": 38856
+    },
+    "1.2.643.5.1.13.13.12.2.16.1188": {
+      "volume": 17106,
+      "registered": 2539
+    },
+    "1.2.643.5.1.13.13.12.2.16.10323": {
+      "volume": 919,
+      "registered": 0
+    },
+    "1.2.643.5.1.13.13.12.2.16.1228": {
+      "volume": 5851,
+      "registered": 3512
+    },
+    "1.2.643.5.1.13.13.12.2.16.1083": {
+      "volume": 1593,
+      "registered": 168
+    },
+    "1.2.643.5.1.13.13.12.2.16.1224": {
+      "volume": 7827,
+      "registered": 4850
+    },
+    "1.2.643.5.1.13.13.12.2.16.12459": {
+      "volume": 12658,
+      "registered": 406
+    },
+    "1.2.643.5.1.13.13.12.2.16.1229": {
+      "volume": 5588,
+      "registered": 0
+    },
+    "1.2.643.5.1.13.13.12.2.16.1190": {
+      "volume": 11711,
+      "registered": 11019
     },
     "1.2.643.5.1.13.13.12.2.16.1231": {
-      "volume": 20237,
-      "registered": 18332,
-      "semd122": 18332,
-      "semd228": 18216,
-      "dogvn": 17670,
-      "pmo": 2567
+      "volume": 21007,
+      "registered": 18472
+    },
+    "1.2.643.5.1.13.13.12.2.18.1384": {
+      "volume": 1,
+      "registered": 0
+    },
+    "1.2.643.5.1.13.13.12.2.16.1197": {
+      "volume": 14960,
+      "registered": 11642
     }
   },
   "hospital": {
     "1.2.643.5.1.13.13.12.2.16.1088": {
-      "volume": 5444,
-      "registered": 3812
-    },
-    "1.2.643.5.1.13.13.12.2.16.1146": {
-      "volume": 4300,
-      "registered": 4037
+      "volume": 5521,
+      "registered": 4305,
+      "inpatient": 4305,
+      "maternity": 0
     },
     "1.2.643.5.1.13.13.12.2.16.1084": {
-      "volume": 10270,
-      "registered": 9932
+      "volume": 10441,
+      "registered": 10089,
+      "inpatient": 9975,
+      "maternity": 114
     },
     "1.2.643.5.1.13.13.12.2.16.1156": {
-      "volume": 4576,
-      "registered": 4347
+      "volume": 4646,
+      "registered": 4405,
+      "inpatient": 4405,
+      "maternity": 0
     },
     "1.2.643.5.1.13.13.12.2.16.1092": {
-      "volume": 4078,
-      "registered": 4056
+      "volume": 4176,
+      "registered": 4091,
+      "inpatient": 4046,
+      "maternity": 45
     },
     "1.2.643.5.1.13.13.12.2.16.1087": {
-      "volume": 4085,
-      "registered": 3788
-    },
-    "1.2.643.5.1.13.13.12.2.16.1107": {
-      "volume": 1482,
-      "registered": 982
+      "volume": 4182,
+      "registered": 3897,
+      "inpatient": 3897,
+      "maternity": 0
     },
     "1.2.643.5.1.13.13.12.2.16.44921": {
-      "volume": 16666,
-      "registered": 12517
+      "volume": 16929,
+      "registered": 13755,
+      "inpatient": 12233,
+      "maternity": 1522
     },
     "1.2.643.5.1.13.13.12.2.16.1108": {
-      "volume": 15734,
-      "registered": 13950
+      "volume": 21918,
+      "registered": 19512,
+      "inpatient": 19512,
+      "maternity": 0
     },
     "1.2.643.5.1.13.13.12.2.16.1152": {
-      "volume": 2950,
-      "registered": 2915
+      "volume": 3018,
+      "registered": 2971,
+      "inpatient": 2971,
+      "maternity": 0
     },
     "1.2.643.5.1.13.13.12.2.16.1164": {
-      "volume": 7947,
-      "registered": 7589
+      "volume": 8071,
+      "registered": 7763,
+      "inpatient": 7729,
+      "maternity": 34
     },
     "1.2.643.5.1.13.13.12.2.16.1078": {
-      "volume": 3343,
-      "registered": 2641
+      "volume": 3399,
+      "registered": 3069,
+      "inpatient": 3069,
+      "maternity": 0
     },
     "1.2.643.5.1.13.13.12.2.16.1129": {
-      "volume": 5981,
-      "registered": 5850
+      "volume": 6089,
+      "registered": 5932,
+      "inpatient": 5931,
+      "maternity": 1
     },
     "1.2.643.5.1.13.13.12.2.16.1161": {
-      "volume": 4174,
-      "registered": 3970
+      "volume": 4245,
+      "registered": 4019,
+      "inpatient": 4019,
+      "maternity": 0
     },
     "1.2.643.5.1.13.13.12.2.16.1081": {
-      "volume": 4066,
-      "registered": 3794
+      "volume": 4133,
+      "registered": 3860,
+      "inpatient": 3860,
+      "maternity": 0
     },
     "1.2.643.5.1.13.13.12.2.16.1042": {
-      "volume": 19878,
-      "registered": 20197
+      "volume": 20279,
+      "registered": 20561,
+      "inpatient": 20201,
+      "maternity": 360
     },
     "1.2.643.5.1.13.13.12.2.16.1120": {
-      "volume": 7228,
-      "registered": 6134
+      "volume": 7381,
+      "registered": 6161,
+      "inpatient": 6131,
+      "maternity": 30
     },
     "1.2.643.5.1.13.13.12.2.16.1052": {
-      "volume": 3328,
-      "registered": 2868
+      "volume": 3374,
+      "registered": 2907,
+      "inpatient": 2907,
+      "maternity": 0
     },
     "1.2.643.5.1.13.13.12.2.16.1050": {
-      "volume": 4257,
-      "registered": 3895
+      "volume": 4325,
+      "registered": 4031,
+      "inpatient": 4031,
+      "maternity": 0
     },
     "1.2.643.5.1.13.13.12.2.16.1113": {
-      "volume": 1199,
-      "registered": 940
+      "volume": 1206,
+      "registered": 955,
+      "inpatient": 955,
+      "maternity": 0
     },
     "1.2.643.5.1.13.13.12.2.16.28030": {
-      "volume": 9949,
-      "registered": 9623
+      "volume": 10126,
+      "registered": 9685,
+      "inpatient": 9685,
+      "maternity": 0
     },
     "1.2.643.5.1.13.13.12.2.16.1136": {
-      "volume": 13675,
-      "registered": 13264
+      "volume": 13914,
+      "registered": 13518,
+      "inpatient": 13518,
+      "maternity": 0
     },
     "1.2.643.5.1.13.13.12.2.16.1163": {
-      "volume": 58343,
-      "registered": 57393
+      "volume": 59292,
+      "registered": 58192,
+      "inpatient": 50715,
+      "maternity": 7477
     },
     "1.2.643.5.1.13.13.12.2.16.1070": {
-      "volume": 6606,
-      "registered": 5382
+      "volume": 6749,
+      "registered": 5568,
+      "inpatient": 5568,
+      "maternity": 0
     },
     "1.2.643.5.1.13.13.12.2.16.1116": {
-      "volume": 10879,
-      "registered": 10381
+      "volume": 11081,
+      "registered": 10559,
+      "inpatient": 10559,
+      "maternity": 0
     },
     "1.2.643.5.1.13.13.12.2.16.1112": {
-      "volume": 25836,
-      "registered": 24293
+      "volume": 26224,
+      "registered": 24712,
+      "inpatient": 24712,
+      "maternity": 0
     },
     "1.2.643.5.1.13.13.12.2.16.1148": {
-      "volume": 4866,
-      "registered": 4683
+      "volume": 4956,
+      "registered": 4692,
+      "inpatient": 4692,
+      "maternity": 0
     },
     "1.2.643.5.1.13.13.12.2.16.1090": {
-      "volume": 297,
-      "registered": 270
+      "volume": 301,
+      "registered": 273,
+      "inpatient": 273,
+      "maternity": 0
     },
     "1.2.643.5.1.13.13.12.2.16.1074": {
-      "volume": 1453,
-      "registered": 694
+      "volume": 1465,
+      "registered": 710,
+      "inpatient": 710,
+      "maternity": 0
     },
     "1.2.643.5.1.13.13.12.2.16.1080": {
-      "volume": 1264,
-      "registered": 1243
+      "volume": 1265,
+      "registered": 1246,
+      "inpatient": 1246,
+      "maternity": 0
     },
     "1.2.643.5.1.13.13.12.2.16.1178": {
-      "volume": 2186,
-      "registered": 1210
+      "volume": 2213,
+      "registered": 1336,
+      "inpatient": 1336,
+      "maternity": 0
     },
     "1.2.643.5.1.13.13.12.2.16.1179": {
-      "volume": 2187,
-      "registered": 1829
+      "volume": 2233,
+      "registered": 1854,
+      "inpatient": 1854,
+      "maternity": 0
     },
     "1.2.643.5.1.13.13.12.2.16.1208": {
-      "volume": 2073,
-      "registered": 2055
+      "volume": 2079,
+      "registered": 2073,
+      "inpatient": 2073,
+      "maternity": 0
     },
     "1.2.643.5.1.13.13.12.2.16.1147": {
       "volume": 1478,
-      "registered": 1083
+      "registered": 1083,
+      "inpatient": 1083,
+      "maternity": 0
     },
     "1.2.643.5.1.13.13.12.2.16.1051": {
-      "volume": 1784,
-      "registered": 1710
+      "volume": 1801,
+      "registered": 1727,
+      "inpatient": 1727,
+      "maternity": 0
     },
     "1.2.643.5.1.13.13.12.2.16.1153": {
-      "volume": 1513,
-      "registered": 1461
+      "volume": 1531,
+      "registered": 1479,
+      "inpatient": 1479,
+      "maternity": 0
     },
     "1.2.643.5.1.13.13.12.2.16.1115": {
-      "volume": 900,
-      "registered": 793
+      "volume": 904,
+      "registered": 797,
+      "inpatient": 797,
+      "maternity": 0
     },
     "1.2.643.5.1.13.13.12.2.16.1082": {
-      "volume": 2489,
-      "registered": 1880
+      "volume": 2510,
+      "registered": 1889,
+      "inpatient": 1889,
+      "maternity": 0
     },
     "1.2.643.5.1.13.13.12.2.16.1135": {
-      "volume": 9003,
-      "registered": 7405
+      "volume": 9185,
+      "registered": 7650,
+      "inpatient": 7650,
+      "maternity": 0
     },
     "1.2.643.5.1.13.13.12.2.16.1085": {
-      "volume": 6073,
-      "registered": 5823
+      "volume": 6171,
+      "registered": 5845,
+      "inpatient": 5845,
+      "maternity": 0
     },
     "1.2.643.5.1.13.13.12.2.16.1202": {
-      "volume": 4249,
-      "registered": 4128
+      "volume": 4321,
+      "registered": 4227,
+      "inpatient": 4227,
+      "maternity": 0
     },
     "1.2.643.5.1.13.13.12.2.16.1123": {
-      "volume": 4974,
-      "registered": 4582
+      "volume": 5058,
+      "registered": 4678,
+      "inpatient": 4678,
+      "maternity": 0
     },
     "1.2.643.5.1.13.13.12.2.16.1182": {
-      "volume": 301,
-      "registered": 274
+      "volume": 312,
+      "registered": 285,
+      "inpatient": 285,
+      "maternity": 0
     },
     "1.2.643.5.1.13.13.12.2.16.1045": {
-      "volume": 899,
-      "registered": 868
+      "volume": 920,
+      "registered": 897,
+      "inpatient": 897,
+      "maternity": 0
     },
     "1.2.643.5.1.13.13.12.2.16.1067": {
-      "volume": 1260,
-      "registered": 1228
+      "volume": 1277,
+      "registered": 1248,
+      "inpatient": 1248,
+      "maternity": 0
     },
     "1.2.643.5.1.13.13.12.2.16.1127": {
-      "volume": 482,
-      "registered": 475
+      "volume": 492,
+      "registered": 486,
+      "inpatient": 486,
+      "maternity": 0
     },
     "1.2.643.5.1.13.13.12.2.16.1122": {
-      "volume": 514,
-      "registered": 505
+      "volume": 521,
+      "registered": 511,
+      "inpatient": 511,
+      "maternity": 0
     },
     "1.2.643.5.1.13.13.12.2.16.1089": {
-      "volume": 364,
-      "registered": 358
+      "volume": 383,
+      "registered": 362,
+      "inpatient": 362,
+      "maternity": 0
     },
     "1.2.643.5.1.13.13.12.2.16.1066": {
-      "volume": 466,
-      "registered": 450
+      "volume": 469,
+      "registered": 450,
+      "inpatient": 450,
+      "maternity": 0
     },
     "1.2.643.5.1.13.13.12.2.16.1193": {
       "volume": 323,
-      "registered": 316
+      "registered": 317,
+      "inpatient": 317,
+      "maternity": 0
     },
     "1.2.643.5.1.13.13.12.2.16.1155": {
-      "volume": 37602,
-      "registered": 36221
+      "volume": 38122,
+      "registered": 37105,
+      "inpatient": 37105,
+      "maternity": 0
     },
     "1.2.643.5.1.13.13.12.2.16.1105": {
-      "volume": 3331,
-      "registered": 2738
+      "volume": 3429,
+      "registered": 2824,
+      "inpatient": 2824,
+      "maternity": 0
     },
     "1.2.643.5.1.13.13.12.2.16.1099": {
-      "volume": 1449,
-      "registered": 1039
+      "volume": 1457,
+      "registered": 1042,
+      "inpatient": 1042,
+      "maternity": 0
     },
     "1.2.643.5.1.13.13.12.2.16.1093": {
-      "volume": 16604,
-      "registered": 16259
+      "volume": 16862,
+      "registered": 16755,
+      "inpatient": 16738,
+      "maternity": 17
     },
     "1.2.643.5.1.13.13.12.2.16.1072": {
-      "volume": 9763,
-      "registered": 9655
+      "volume": 9910,
+      "registered": 9812,
+      "inpatient": 9811,
+      "maternity": 1
     },
     "1.2.643.5.1.13.13.12.2.16.1139": {
-      "volume": 28636,
-      "registered": 27408
+      "volume": 29324,
+      "registered": 27953,
+      "inpatient": 27472,
+      "maternity": 481
     },
     "1.2.643.5.1.13.13.12.2.16.1154": {
-      "volume": 773,
-      "registered": 755
+      "volume": 777,
+      "registered": 770,
+      "inpatient": 770,
+      "maternity": 0
     },
     "1.2.643.5.1.13.13.12.2.16.1131": {
-      "volume": 3481,
-      "registered": 3356
+      "volume": 3578,
+      "registered": 3488,
+      "inpatient": 3488,
+      "maternity": 0
     },
     "1.2.643.5.1.13.13.12.2.16.1165": {
-      "volume": 4703,
-      "registered": 2816
+      "volume": 4805,
+      "registered": 2847,
+      "inpatient": 2847,
+      "maternity": 0
     },
     "1.2.643.5.1.13.13.12.2.16.1044": {
-      "volume": 3736,
-      "registered": 3619
+      "volume": 3798,
+      "registered": 3622,
+      "inpatient": 3622,
+      "maternity": 0
     },
     "1.2.643.5.1.13.13.12.2.16.1065": {
-      "volume": 22337,
-      "registered": 23455
+      "volume": 22702,
+      "registered": 23974,
+      "inpatient": 20452,
+      "maternity": 3522
     },
     "1.2.643.5.1.13.13.12.2.16.1125": {
-      "volume": 13244,
-      "registered": 11778
+      "volume": 13462,
+      "registered": 11948,
+      "inpatient": 10641,
+      "maternity": 1307
     },
     "1.2.643.5.1.13.13.12.2.16.1185": {
-      "volume": 5827,
-      "registered": 5296
+      "volume": 5942,
+      "registered": 5397,
+      "inpatient": 5397,
+      "maternity": 0
     },
     "1.2.643.5.1.13.13.12.2.16.1144": {
-      "volume": 7619,
-      "registered": 7483
+      "volume": 7752,
+      "registered": 7602,
+      "inpatient": 7515,
+      "maternity": 87
     },
     "1.2.643.5.1.13.13.12.2.16.1149": {
-      "volume": 4795,
-      "registered": 4389
+      "volume": 4883,
+      "registered": 4469,
+      "inpatient": 4469,
+      "maternity": 0
     },
     "1.2.643.5.1.13.13.12.2.16.1073": {
-      "volume": 13839,
-      "registered": 13512
+      "volume": 14103,
+      "registered": 13915,
+      "inpatient": 13915,
+      "maternity": 0
     },
     "1.2.643.5.1.13.13.12.2.16.1104": {
-      "volume": 8164,
-      "registered": 7889
+      "volume": 8327,
+      "registered": 7940,
+      "inpatient": 7940,
+      "maternity": 0
     },
     "1.2.643.5.1.13.13.12.2.16.1058": {
-      "volume": 4699,
-      "registered": 3352
+      "volume": 4791,
+      "registered": 3558,
+      "inpatient": 3558,
+      "maternity": 0
     },
     "1.2.643.5.1.13.13.12.2.16.1101": {
-      "volume": 3544,
-      "registered": 3442
+      "volume": 3625,
+      "registered": 3505,
+      "inpatient": 3505,
+      "maternity": 0
     },
     "1.2.643.5.1.13.13.12.2.16.1055": {
-      "volume": 3783,
-      "registered": 2630
+      "volume": 3829,
+      "registered": 2686,
+      "inpatient": 2686,
+      "maternity": 0
     },
     "1.2.643.5.1.13.13.12.2.16.1064": {
-      "volume": 11351,
-      "registered": 9796
+      "volume": 11653,
+      "registered": 10019,
+      "inpatient": 10019,
+      "maternity": 0
     },
     "1.2.643.5.1.13.13.12.2.16.1171": {
-      "volume": 11123,
-      "registered": 11628
+      "volume": 11299,
+      "registered": 11936,
+      "inpatient": 10435,
+      "maternity": 1501
     },
     "1.2.643.5.1.13.13.12.2.16.1059": {
-      "volume": 3194,
-      "registered": 1315
+      "volume": 3248,
+      "registered": 1337,
+      "inpatient": 1337,
+      "maternity": 0
     },
     "1.2.643.5.1.13.13.12.2.16.1138": {
-      "volume": 7244,
-      "registered": 7060
+      "volume": 7443,
+      "registered": 7231,
+      "inpatient": 7176,
+      "maternity": 55
     },
     "1.2.643.5.1.13.13.12.2.16.1192": {
-      "volume": 26245,
-      "registered": 25297
+      "volume": 26724,
+      "registered": 25981,
+      "inpatient": 25981,
+      "maternity": 0
     },
     "1.2.643.5.1.13.13.12.2.16.1109": {
-      "volume": 4235,
-      "registered": 3905
+      "volume": 4306,
+      "registered": 3951,
+      "inpatient": 3951,
+      "maternity": 0
     },
     "1.2.643.5.1.13.13.12.2.16.1168": {
-      "volume": 4579,
-      "registered": 4503
+      "volume": 4677,
+      "registered": 4598,
+      "inpatient": 4598,
+      "maternity": 0
     },
     "1.2.643.5.1.13.13.12.2.16.1094": {
-      "volume": 3673,
-      "registered": 2335
+      "volume": 3748,
+      "registered": 2351,
+      "inpatient": 2351,
+      "maternity": 0
     },
     "1.2.643.5.1.13.13.12.2.16.1041": {
-      "volume": 21174,
-      "registered": 19202
+      "volume": 21563,
+      "registered": 19663,
+      "inpatient": 19663,
+      "maternity": 0
     },
     "1.2.643.5.1.13.13.12.2.16.1046": {
-      "volume": 12694,
-      "registered": 11789
+      "volume": 12831,
+      "registered": 12206,
+      "inpatient": 12206,
+      "maternity": 0
     },
     "1.2.643.5.1.13.13.12.2.16.1063": {
-      "volume": 75480,
-      "registered": 73436
+      "volume": 76709,
+      "registered": 74528,
+      "inpatient": 74528,
+      "maternity": 0
     },
     "1.2.643.5.1.13.13.12.2.16.1049": {
-      "volume": 918,
-      "registered": 912
+      "volume": 937,
+      "registered": 927,
+      "inpatient": 927,
+      "maternity": 0
     },
     "1.2.643.5.1.13.13.12.2.16.9261": {
-      "volume": 311,
-      "registered": 306
+      "volume": 312,
+      "registered": 312,
+      "inpatient": 312,
+      "maternity": 0
     },
     "1.2.643.5.1.13.13.12.2.16.1133": {
-      "volume": 4234,
-      "registered": 3933
+      "volume": 4296,
+      "registered": 3996,
+      "inpatient": 3996,
+      "maternity": 0
     },
     "1.2.643.5.1.13.13.12.2.16.1126": {
-      "volume": 5858,
-      "registered": 5818
+      "volume": 5976,
+      "registered": 5921,
+      "inpatient": 5891,
+      "maternity": 30
     },
     "1.2.643.5.1.13.13.12.2.16.1169": {
-      "volume": 5768,
-      "registered": 5454
+      "volume": 5855,
+      "registered": 5575,
+      "inpatient": 5550,
+      "maternity": 25
     },
     "1.2.643.5.1.13.13.12.2.16.1130": {
-      "volume": 4414,
-      "registered": 4318
+      "volume": 4470,
+      "registered": 4393,
+      "inpatient": 4393,
+      "maternity": 0
     },
     "1.2.643.5.1.13.13.12.2.16.1140": {
-      "volume": 3582,
-      "registered": 3450
+      "volume": 3626,
+      "registered": 3487,
+      "inpatient": 3487,
+      "maternity": 0
     },
     "1.2.643.5.1.13.13.12.2.16.1039": {
-      "volume": 2496,
-      "registered": 2171
+      "volume": 2546,
+      "registered": 2418,
+      "inpatient": 2418,
+      "maternity": 0
     },
     "1.2.643.5.1.13.13.12.2.16.1097": {
-      "volume": 3613,
-      "registered": 3071
+      "volume": 3661,
+      "registered": 3107,
+      "inpatient": 3106,
+      "maternity": 1
     },
     "1.2.643.5.1.13.13.12.2.16.1151": {
-      "volume": 13260,
-      "registered": 12195
+      "volume": 13483,
+      "registered": 12444,
+      "inpatient": 12444,
+      "maternity": 0
     },
     "1.2.643.5.1.13.13.12.2.16.1162": {
-      "volume": 2863,
-      "registered": 2147
+      "volume": 2914,
+      "registered": 2180,
+      "inpatient": 2180,
+      "maternity": 0
     },
     "1.2.643.5.1.13.13.12.2.16.1038": {
-      "volume": 16189,
-      "registered": 15442
+      "volume": 16479,
+      "registered": 15759,
+      "inpatient": 15556,
+      "maternity": 203
     },
     "1.2.643.5.1.13.13.12.2.16.1040": {
-      "volume": 19768,
-      "registered": 18979
+      "volume": 20120,
+      "registered": 19258,
+      "inpatient": 19258,
+      "maternity": 0
     },
     "1.2.643.5.1.13.13.12.2.16.1061": {
-      "volume": 245,
-      "registered": 228
-    },
-    "1.2.643.5.1.13.13.12.4.16.1135": {
-      "volume": 395,
-      "registered": null
-    },
-    "1.2.643.5.1.13.13.12.2.16.112487": {
-      "volume": 44,
-      "registered": null
-    },
-    "1.2.643.5.1.13.13.12.2.16.30686": {
-      "volume": 104,
-      "registered": null
-    },
-    "1.2.643.5.1.13.13.12.2.16.62692": {
-      "volume": 100,
-      "registered": null
-    },
-    "1.2.643.5.1.13.13.12.2.16.1188": {
-      "volume": 755,
-      "registered": null
-    },
-    "1.2.643.5.1.13.13.12.2.16.1228": {
-      "volume": 224,
-      "registered": null
-    },
-    "1.2.643.5.1.13.13.12.2.16.21634": {
-      "volume": 81,
-      "registered": null
-    },
-    "1.2.643.5.1.13.13.12.2.16.1083": {
-      "volume": 40,
-      "registered": null
-    },
-    "1.2.643.5.1.13.13.12.2.16.15164": {
-      "volume": 35,
-      "registered": 7
-    },
-    "1.2.643.5.1.13.13.12.2.16.22878": {
-      "volume": 48,
-      "registered": null
-    },
-    "1.2.643.5.1.13.13.12.2.16.1224": {
-      "volume": 553,
-      "registered": null
-    },
-    "1.2.643.5.1.13.13.12.2.16.20953": {
-      "volume": 234,
-      "registered": null
-    },
-    "1.2.643.5.1.13.13.12.2.16.14339": {
-      "volume": 1051,
-      "registered": null
-    },
-    "1.2.643.5.1.13.13.12.2.16.12459": {
-      "volume": 630,
-      "registered": null
-    },
-    "1.2.643.5.1.13.13.12.2.16.21874": {
-      "volume": 72,
-      "registered": null
-    },
-    "1.2.643.5.1.13.13.12.2.16.15115": {
-      "volume": 698,
-      "registered": null
-    },
-    "1.2.643.5.1.13.13.12.2.16.21823": {
-      "volume": 225,
-      "registered": null
-    },
-    "1.2.643.5.1.13.13.12.2.2.20318": {
-      "volume": 95,
-      "registered": null
-    },
-    "1.2.643.5.1.13.13.12.2.16.22116": {
-      "volume": 421,
-      "registered": null
-    },
-    "1.2.643.5.1.13.13.12.2.16.21977": {
-      "volume": 86,
-      "registered": null
-    },
-    "1.2.643.5.1.13.13.12.2.16.1190": {
-      "volume": 666,
-      "registered": null
-    },
-    "1.2.643.5.1.13.13.12.2.16.21788": {
-      "volume": 205,
-      "registered": null
+      "volume": 252,
+      "registered": 228,
+      "inpatient": 228,
+      "maternity": 0
     },
     "1.2.643.5.1.13.13.12.2.16.1056": {
-      "volume": 13133,
-      "registered": 12354
+      "volume": 13395,
+      "registered": 12582,
+      "inpatient": 12582,
+      "maternity": 0
     },
     "1.2.643.5.1.13.13.12.2.16.1231": {
-      "volume": 18952,
-      "registered": 19644
+      "volume": 19176,
+      "registered": 19733,
+      "inpatient": 18549,
+      "maternity": 1184
     },
     "1.2.643.5.1.13.13.12.2.16.9665": {
-      "volume": 1297,
-      "registered": 1239
+      "volume": 1320,
+      "registered": 1241,
+      "inpatient": 1241,
+      "maternity": 0
     },
     "1.2.643.5.1.13.13.12.2.16.9622": {
-      "volume": 1061,
-      "registered": 1044
+      "volume": 1078,
+      "registered": 1066,
+      "inpatient": 1066,
+      "maternity": 0
     },
     "1.2.643.5.1.13.13.12.2.16.9641": {
-      "volume": 1614,
-      "registered": 1533
+      "volume": 1647,
+      "registered": 1576,
+      "inpatient": 1576,
+      "maternity": 0
     },
     "1.2.643.5.1.13.13.12.2.16.9255": {
-      "volume": 892,
-      "registered": 786
+      "volume": 897,
+      "registered": 786,
+      "inpatient": 786,
+      "maternity": 0
     },
     "1.2.643.5.1.13.13.12.2.16.9256": {
-      "volume": 102,
-      "registered": 101
+      "volume": 103,
+      "registered": 101,
+      "inpatient": 101,
+      "maternity": 0
     },
     "1.2.643.5.1.13.13.12.2.16.9258": {
-      "volume": 126,
-      "registered": 123
+      "volume": 130,
+      "registered": 127,
+      "inpatient": 127,
+      "maternity": 0
     },
     "1.2.643.5.1.13.13.12.2.16.9259": {
-      "volume": 96,
-      "registered": 89
+      "volume": 99,
+      "registered": 89,
+      "inpatient": 89,
+      "maternity": 0
     },
     "1.2.643.5.1.13.13.12.2.16.9667": {
       "volume": 233,
-      "registered": 211
+      "registered": 218,
+      "inpatient": 218,
+      "maternity": 0
     },
     "1.2.643.5.1.13.13.12.2.16.9257": {
-      "volume": 126,
-      "registered": 125
+      "volume": 129,
+      "registered": 128,
+      "inpatient": 128,
+      "maternity": 0
     },
     "1.2.643.5.1.13.13.12.2.16.1197": {
-      "volume": 4187,
-      "registered": null
+      "volume": 4254,
+      "registered": 0,
+      "inpatient": 0,
+      "maternity": 0
     }
   },
   "ambulatoryCase": {
     "1.2.643.5.1.13.13.12.2.16.1088": {
-      "volume": 138965,
-      "registered": 127263
-    },
-    "1.2.643.5.1.13.13.12.2.16.1146": {
-      "volume": 117798,
-      "registered": 112666
+      "volume": 141404,
+      "registered": 131254
     },
     "1.2.643.5.1.13.13.12.2.16.1084": {
-      "volume": 264026,
-      "registered": 253022
+      "volume": 270494,
+      "registered": 258874
     },
     "1.2.643.5.1.13.13.12.2.16.1156": {
-      "volume": 125079,
-      "registered": 116788
+      "volume": 125922,
+      "registered": 117506
     },
     "1.2.643.5.1.13.13.12.2.16.1092": {
-      "volume": 135574,
-      "registered": 133642
+      "volume": 135863,
+      "registered": 133983
     },
     "1.2.643.5.1.13.13.12.2.16.1087": {
-      "volume": 80428,
-      "registered": 73819
-    },
-    "1.2.643.5.1.13.13.12.2.16.1107": {
-      "volume": 94623,
-      "registered": 89100
+      "volume": 82167,
+      "registered": 74828
     },
     "1.2.643.5.1.13.13.12.2.16.44921": {
-      "volume": 89206,
-      "registered": 79830
-    },
-    "1.2.643.5.1.13.13.12.2.16.1100": {
-      "volume": 64825,
-      "registered": 53761
+      "volume": 91004,
+      "registered": 80325
     },
     "1.2.643.5.1.13.13.12.2.16.1108": {
-      "volume": 280162,
-      "registered": 252526
+      "volume": 564979,
+      "registered": 516378
     },
     "1.2.643.5.1.13.13.12.2.16.1152": {
-      "volume": 91146,
-      "registered": 89557
+      "volume": 92194,
+      "registered": 90575
     },
     "1.2.643.5.1.13.13.12.2.16.1164": {
-      "volume": 125508,
-      "registered": 119134
+      "volume": 125947,
+      "registered": 119961
     },
     "1.2.643.5.1.13.13.12.2.16.1078": {
-      "volume": 74894,
-      "registered": 68278
-    },
-    "1.2.643.5.1.13.13.12.2.16.1128": {
-      "volume": 3640,
-      "registered": 2656
+      "volume": 76279,
+      "registered": 69440
     },
     "1.2.643.5.1.13.13.12.2.16.1129": {
-      "volume": 132818,
-      "registered": 128137
+      "volume": 135091,
+      "registered": 131109
     },
     "1.2.643.5.1.13.13.12.2.16.1161": {
-      "volume": 86952,
-      "registered": 72167
+      "volume": 88227,
+      "registered": 72838
     },
     "1.2.643.5.1.13.13.12.2.16.1081": {
-      "volume": 126697,
-      "registered": 124177
+      "volume": 128725,
+      "registered": 125948
     },
     "1.2.643.5.1.13.13.12.2.16.1042": {
-      "volume": 276000,
-      "registered": 274010
+      "volume": 280302,
+      "registered": 278100
     },
     "1.2.643.5.1.13.13.12.2.16.1120": {
-      "volume": 160793,
-      "registered": 156375
+      "volume": 162158,
+      "registered": 157397
     },
     "1.2.643.5.1.13.13.12.2.16.1052": {
-      "volume": 59859,
-      "registered": 54957
+      "volume": 60519,
+      "registered": 55608
     },
     "1.2.643.5.1.13.13.12.2.16.1050": {
-      "volume": 165678,
-      "registered": 155189
+      "volume": 167374,
+      "registered": 156362
     },
     "1.2.643.5.1.13.13.12.2.16.1113": {
-      "volume": 195920,
-      "registered": 185488
+      "volume": 200210,
+      "registered": 189008
     },
     "1.2.643.5.1.13.13.12.2.16.28030": {
-      "volume": 160940,
-      "registered": 144564
+      "volume": 165561,
+      "registered": 147834
     },
     "1.2.643.5.1.13.13.12.2.16.1136": {
-      "volume": 202085,
-      "registered": 197533
+      "volume": 206463,
+      "registered": 201896
     },
     "1.2.643.5.1.13.13.12.2.16.1163": {
-      "volume": 389773,
-      "registered": 363823
+      "volume": 395777,
+      "registered": 368147
     },
     "1.2.643.5.1.13.13.12.2.16.1070": {
-      "volume": 101494,
-      "registered": 80582
+      "volume": 103044,
+      "registered": 82108
     },
     "1.2.643.5.1.13.13.12.2.16.1116": {
-      "volume": 75286,
-      "registered": 69782
+      "volume": 75401,
+      "registered": 69924
     },
     "1.2.643.5.1.13.13.12.2.16.1112": {
-      "volume": 182184,
-      "registered": 171752
+      "volume": 185129,
+      "registered": 174233
     },
     "1.2.643.5.1.13.13.12.2.16.1148": {
-      "volume": 126649,
-      "registered": 125291
+      "volume": 126594,
+      "registered": 125231
     },
     "1.2.643.5.1.13.13.12.2.16.1090": {
-      "volume": 68433,
-      "registered": 64790
+      "volume": 69977,
+      "registered": 66372
     },
     "1.2.643.5.1.13.13.12.2.16.1074": {
-      "volume": 247248,
-      "registered": 239347
+      "volume": 253307,
+      "registered": 245513
     },
     "1.2.643.5.1.13.13.12.2.16.1080": {
-      "volume": 204858,
-      "registered": 180485
+      "volume": 209232,
+      "registered": 183088
     },
     "1.2.643.5.1.13.13.12.2.16.1178": {
-      "volume": 249684,
-      "registered": 217901
+      "volume": 253650,
+      "registered": 224135
     },
     "1.2.643.5.1.13.13.12.2.16.1179": {
-      "volume": 164986,
-      "registered": 158042
+      "volume": 167156,
+      "registered": 160732
     },
     "1.2.643.5.1.13.13.12.2.16.1208": {
-      "volume": 143840,
-      "registered": 127269
+      "volume": 143909,
+      "registered": 127379
     },
     "1.2.643.5.1.13.13.12.2.16.1147": {
-      "volume": 113350,
-      "registered": 102589
+      "volume": 113564,
+      "registered": 102599
     },
     "1.2.643.5.1.13.13.12.2.16.1051": {
-      "volume": 175405,
-      "registered": 138967
+      "volume": 178515,
+      "registered": 140809
     },
     "1.2.643.5.1.13.13.12.2.16.1153": {
-      "volume": 100719,
-      "registered": 97758
+      "volume": 102276,
+      "registered": 100211
     },
     "1.2.643.5.1.13.13.12.2.16.1115": {
-      "volume": 168976,
-      "registered": 140831
+      "volume": 170166,
+      "registered": 141267
     },
     "1.2.643.5.1.13.13.12.2.16.1082": {
-      "volume": 161089,
-      "registered": 148101
+      "volume": 161833,
+      "registered": 148757
     },
     "1.2.643.5.1.13.13.12.2.16.1135": {
-      "volume": 108811,
-      "registered": 95540
+      "volume": 111131,
+      "registered": 97823
     },
     "1.2.643.5.1.13.13.12.2.16.1085": {
-      "volume": 73547,
-      "registered": 71772
+      "volume": 75880,
+      "registered": 74281
     },
     "1.2.643.5.1.13.13.12.2.16.1202": {
-      "volume": 165,
-      "registered": 165
+      "volume": 157,
+      "registered": 152
     },
     "1.2.643.5.1.13.13.12.2.16.1123": {
-      "volume": 116019,
-      "registered": 106998
+      "volume": 119060,
+      "registered": 109875
     },
     "1.2.643.5.1.13.13.12.2.16.1200": {
-      "volume": 128250,
-      "registered": 126280
+      "volume": 135425,
+      "registered": 133373
     },
     "1.2.643.5.1.13.13.12.2.16.1199": {
-      "volume": 151091,
-      "registered": 140163
+      "volume": 157720,
+      "registered": 143652
     },
     "1.2.643.5.1.13.13.12.2.16.1182": {
-      "volume": 105821,
-      "registered": 104336
+      "volume": 108253,
+      "registered": 106697
     },
     "1.2.643.5.1.13.13.12.2.16.1045": {
-      "volume": 125861,
-      "registered": 123827
+      "volume": 128361,
+      "registered": 126091
     },
     "1.2.643.5.1.13.13.12.2.16.1067": {
-      "volume": 110368,
-      "registered": 97448
+      "volume": 113274,
+      "registered": 100591
     },
     "1.2.643.5.1.13.13.12.2.16.1127": {
-      "volume": 147348,
-      "registered": 137506
+      "volume": 147316,
+      "registered": 137530
     },
     "1.2.643.5.1.13.13.12.2.16.1122": {
-      "volume": 151122,
-      "registered": 150444
+      "volume": 153725,
+      "registered": 153240
     },
     "1.2.643.5.1.13.13.12.2.16.1089": {
-      "volume": 127165,
-      "registered": 122635
+      "volume": 135229,
+      "registered": 128312
     },
     "1.2.643.5.1.13.13.12.2.16.1066": {
-      "volume": 88111,
-      "registered": 81020
+      "volume": 98610,
+      "registered": 89030
     },
     "1.2.643.5.1.13.13.12.2.16.1193": {
-      "volume": 116343,
-      "registered": 112577
+      "volume": 115180,
+      "registered": 111411
     },
     "1.2.643.5.1.13.13.12.2.16.1060": {
-      "volume": 23126,
-      "registered": 22910
+      "volume": 23121,
+      "registered": 22906
     },
     "1.2.643.5.1.13.13.12.2.16.1167": {
-      "volume": 108234,
-      "registered": 106945
+      "volume": 110503,
+      "registered": 109329
     },
     "1.2.643.5.1.13.13.12.2.16.1150": {
-      "volume": 35364,
-      "registered": 34763
+      "volume": 35973,
+      "registered": 35379
     },
     "1.2.643.5.1.13.13.12.2.16.1155": {
-      "volume": 243866,
-      "registered": 234331
+      "volume": 249408,
+      "registered": 239331
     },
     "1.2.643.5.1.13.13.12.2.16.1105": {
-      "volume": 90454,
-      "registered": 78149
+      "volume": 90617,
+      "registered": 79630
     },
     "1.2.643.5.1.13.13.12.2.16.1093": {
-      "volume": 328980,
-      "registered": 325498
+      "volume": 334262,
+      "registered": 330672
     },
     "1.2.643.5.1.13.13.12.2.16.1072": {
-      "volume": 172662,
-      "registered": 170056
+      "volume": 174803,
+      "registered": 172268
     },
     "1.2.643.5.1.13.13.12.2.16.1139": {
-      "volume": 582737,
-      "registered": 559374
+      "volume": 592049,
+      "registered": 568818
     },
     "1.2.643.5.1.13.13.12.2.16.1154": {
-      "volume": 22435,
-      "registered": 19820
+      "volume": 22433,
+      "registered": 19837
     },
     "1.2.643.5.1.13.13.12.2.16.1131": {
-      "volume": 78054,
-      "registered": 77120
+      "volume": 78686,
+      "registered": 77907
     },
     "1.2.643.5.1.13.13.12.2.16.1165": {
-      "volume": 93557,
-      "registered": 91135
+      "volume": 95685,
+      "registered": 93136
     },
     "1.2.643.5.1.13.13.12.2.16.1044": {
-      "volume": 74695,
-      "registered": 74351
+      "volume": 76307,
+      "registered": 74797
     },
     "1.2.643.5.1.13.13.12.2.16.1065": {
-      "volume": 128429,
-      "registered": 125417
+      "volume": 131165,
+      "registered": 128721
     },
     "1.2.643.5.1.13.13.12.2.16.1125": {
-      "volume": 86028,
-      "registered": 76425
+      "volume": 87834,
+      "registered": 78300
     },
     "1.2.643.5.1.13.13.12.2.16.1185": {
-      "volume": 188869,
-      "registered": 181362
+      "volume": 191785,
+      "registered": 184423
     },
     "1.2.643.5.1.13.13.12.2.16.1144": {
-      "volume": 212907,
-      "registered": 210252
+      "volume": 217671,
+      "registered": 215648
     },
     "1.2.643.5.1.13.13.12.2.16.1149": {
-      "volume": 196463,
-      "registered": 175674
+      "volume": 196956,
+      "registered": 177505
     },
     "1.2.643.5.1.13.13.12.2.16.1073": {
-      "volume": 250628,
-      "registered": 240888
+      "volume": 257345,
+      "registered": 247942
     },
     "1.2.643.5.1.13.13.12.2.16.1104": {
-      "volume": 179318,
-      "registered": 172069
+      "volume": 179032,
+      "registered": 171801
     },
     "1.2.643.5.1.13.13.12.2.16.1079": {
       "volume": 62,
       "registered": 18
     },
     "1.2.643.5.1.13.13.12.2.16.1058": {
-      "volume": 127814,
-      "registered": 117967
+      "volume": 131488,
+      "registered": 123496
     },
     "1.2.643.5.1.13.13.12.2.16.1101": {
-      "volume": 122354,
-      "registered": 119666
+      "volume": 124345,
+      "registered": 121223
     },
     "1.2.643.5.1.13.13.12.2.16.1055": {
-      "volume": 74296,
-      "registered": 67886
+      "volume": 74406,
+      "registered": 71751
     },
     "1.2.643.5.1.13.13.12.2.16.1064": {
       "volume": 240,
       "registered": 238
     },
     "1.2.643.5.1.13.13.12.2.16.1171": {
-      "volume": 269957,
-      "registered": 267161
+      "volume": 270003,
+      "registered": 268011
     },
     "1.2.643.5.1.13.13.12.2.16.1059": {
-      "volume": 67547,
-      "registered": 58169
+      "volume": 69160,
+      "registered": 60161
     },
     "1.2.643.5.1.13.13.12.2.16.1138": {
-      "volume": 186400,
-      "registered": 185483
+      "volume": 190221,
+      "registered": 189286
     },
     "1.2.643.5.1.13.13.12.2.16.1192": {
-      "volume": 366975,
-      "registered": 354139
+      "volume": 377587,
+      "registered": 363327
     },
     "1.2.643.5.1.13.13.12.2.16.1109": {
-      "volume": 197380,
-      "registered": 186694
+      "volume": 201402,
+      "registered": 189880
     },
     "1.2.643.5.1.13.13.12.2.16.1168": {
-      "volume": 56645,
-      "registered": 49125
+      "volume": 56812,
+      "registered": 49785
     },
     "1.2.643.5.1.13.13.12.2.16.1094": {
-      "volume": 100657,
-      "registered": 92875
+      "volume": 103794,
+      "registered": 94633
     },
     "1.2.643.5.1.13.13.12.2.16.1041": {
-      "volume": 11332,
-      "registered": 11002
+      "volume": 11607,
+      "registered": 11267
     },
     "1.2.643.5.1.13.13.12.2.16.1046": {
-      "volume": 56950,
-      "registered": 54136
+      "volume": 56940,
+      "registered": 54210
     },
     "1.2.643.5.1.13.13.12.2.16.1063": {
-      "volume": 218844,
-      "registered": 209648
+      "volume": 219020,
+      "registered": 210941
     },
     "1.2.643.5.1.13.13.12.2.16.1049": {
-      "volume": 47022,
-      "registered": 45930
+      "volume": 47218,
+      "registered": 46391
     },
     "1.2.643.5.1.13.13.12.2.16.1121": {
-      "volume": 52771,
-      "registered": 51992
+      "volume": 53578,
+      "registered": 52847
     },
     "1.2.643.5.1.13.13.12.2.16.1096": {
-      "volume": 6227,
-      "registered": 3127
+      "volume": 6435,
+      "registered": 3242
     },
     "1.2.643.5.1.13.13.12.2.16.1133": {
-      "volume": 138332,
-      "registered": 133499
+      "volume": 139243,
+      "registered": 134897
     },
     "1.2.643.5.1.13.13.12.2.16.1126": {
-      "volume": 117781,
-      "registered": 115158
+      "volume": 118048,
+      "registered": 115506
     },
     "1.2.643.5.1.13.13.12.2.16.1169": {
-      "volume": 140293,
-      "registered": 136563
+      "volume": 140628,
+      "registered": 137442
     },
     "1.2.643.5.1.13.13.12.2.16.1110": {
-      "volume": 21162,
-      "registered": 20305
+      "volume": 21851,
+      "registered": 20992
     },
     "1.2.643.5.1.13.13.12.2.16.1048": {
-      "volume": 58794,
+      "volume": 58785,
       "registered": 54232
     },
     "1.2.643.5.1.13.13.12.2.16.1062": {
-      "volume": 56002,
-      "registered": 54299
+      "volume": 55990,
+      "registered": 54290
     },
     "1.2.643.5.1.13.13.12.2.16.1130": {
-      "volume": 104457,
-      "registered": 101657
+      "volume": 107383,
+      "registered": 104497
     },
     "1.2.643.5.1.13.13.12.2.16.1140": {
-      "volume": 167362,
-      "registered": 157834
+      "volume": 167815,
+      "registered": 158838
     },
     "1.2.643.5.1.13.13.12.2.16.1039": {
-      "volume": 72421,
-      "registered": 69629
+      "volume": 74211,
+      "registered": 71596
     },
     "1.2.643.5.1.13.13.12.2.16.1097": {
-      "volume": 89817,
-      "registered": 86774
+      "volume": 91620,
+      "registered": 88195
     },
     "1.2.643.5.1.13.13.12.2.16.1151": {
-      "volume": 214663,
-      "registered": 192929
+      "volume": 219703,
+      "registered": 197959
     },
     "1.2.643.5.1.13.13.12.2.16.1162": {
-      "volume": 72712,
-      "registered": 69942
+      "volume": 74464,
+      "registered": 71406
     },
     "1.2.643.5.1.13.13.12.2.16.1038": {
-      "volume": 244806,
-      "registered": 234379
+      "volume": 248276,
+      "registered": 237710
     },
     "1.2.643.5.1.13.13.12.2.16.1040": {
-      "volume": 1183,
-      "registered": 1172
+      "volume": 1182,
+      "registered": 1171
     },
     "1.2.643.5.1.13.13.12.2.16.1061": {
-      "volume": 11683,
-      "registered": 10943
+      "volume": 11681,
+      "registered": 10941
     },
     "1.2.643.5.1.13.13.12.4.16.1135": {
-      "volume": 4642,
+      "volume": 4640,
       "registered": 0
     },
     "1.2.643.5.1.13.13.12.2.16.30686": {
@@ -1645,19 +1431,19 @@
       "registered": 0
     },
     "1.2.643.5.1.13.13.12.2.16.62692": {
-      "volume": 662,
+      "volume": 695,
       "registered": 0
     },
     "1.2.643.5.1.13.13.12.2.16.1188": {
-      "volume": 70442,
-      "registered": 6177
+      "volume": 70482,
+      "registered": 6178
     },
     "1.2.643.5.1.13.13.12.2.16.10323": {
-      "volume": 5350,
+      "volume": 5399,
       "registered": 0
     },
     "1.2.643.5.1.13.13.12.2.16.1228": {
-      "volume": 18318,
+      "volume": 18492,
       "registered": 0
     },
     "1.2.643.5.1.13.13.12.2.16.21634": {
@@ -1669,23 +1455,23 @@
       "registered": 0
     },
     "1.2.643.5.1.13.13.12.2.16.1227": {
-      "volume": 13087,
+      "volume": 13086,
       "registered": 0
     },
     "1.2.643.5.1.13.13.12.2.16.1083": {
-      "volume": 3127,
-      "registered": 388
+      "volume": 3152,
+      "registered": 389
     },
     "1.2.643.5.1.13.13.12.2.16.1224": {
-      "volume": 23530,
-      "registered": 5277
+      "volume": 23852,
+      "registered": 5447
     },
     "1.2.643.5.1.13.13.12.2.16.20953": {
       "volume": 656,
       "registered": 0
     },
     "1.2.643.5.1.13.13.12.2.16.23256": {
-      "volume": 86575,
+      "volume": 86571,
       "registered": 0
     },
     "1.2.643.5.1.13.13.12.2.16.13098": {
@@ -1693,11 +1479,11 @@
       "registered": 36
     },
     "1.2.643.5.1.13.13.12.2.16.14339": {
-      "volume": 1038,
+      "volume": 1060,
       "registered": 0
     },
     "1.2.643.5.1.13.13.12.2.16.12459": {
-      "volume": 42836,
+      "volume": 43431,
       "registered": 1479
     },
     "1.2.643.5.1.13.13.12.2.16.21874": {
@@ -1705,11 +1491,11 @@
       "registered": 0
     },
     "1.2.643.5.1.13.13.12.2.16.21122": {
-      "volume": 4885,
+      "volume": 4884,
       "registered": 0
     },
     "1.2.643.5.1.13.13.12.2.16.15115": {
-      "volume": 1121,
+      "volume": 1120,
       "registered": 0
     },
     "1.2.643.5.1.13.13.12.2.16.22116": {
@@ -1721,102 +1507,102 @@
       "registered": 0
     },
     "1.2.643.5.1.13.13.12.2.16.1229": {
-      "volume": 3943,
+      "volume": 3938,
       "registered": 0
     },
     "1.2.643.5.1.13.13.12.2.16.1190": {
-      "volume": 38017,
-      "registered": 27612
+      "volume": 38555,
+      "registered": 27886
     },
     "1.2.643.5.1.13.13.12.2.16.1056": {
-      "volume": 189694,
-      "registered": 187183
+      "volume": 189648,
+      "registered": 187557
     },
     "1.2.643.5.1.13.13.12.2.16.1231": {
-      "volume": 133151,
-      "registered": 128311
+      "volume": 133906,
+      "registered": 128596
     },
     "1.2.643.5.1.13.13.12.2.16.9665": {
       "volume": 16720,
-      "registered": 14435
+      "registered": 14432
     },
     "1.2.643.5.1.13.13.12.2.16.9622": {
       "volume": 20715,
-      "registered": 20563
+      "registered": 20653
     },
     "1.2.643.5.1.13.13.12.2.16.9641": {
-      "volume": 22835,
-      "registered": 22117
+      "volume": 23937,
+      "registered": 23215
     },
     "1.2.643.5.1.13.13.12.2.16.9255": {
-      "volume": 8720,
-      "registered": 8552
+      "volume": 8721,
+      "registered": 8551
     },
     "1.2.643.5.1.13.13.12.2.16.9256": {
-      "volume": 3492,
-      "registered": 3459
+      "volume": 3494,
+      "registered": 3460
     },
     "1.2.643.5.1.13.13.12.2.16.9258": {
-      "volume": 556,
-      "registered": 550
+      "volume": 1112,
+      "registered": 1100
     },
     "1.2.643.5.1.13.13.12.2.16.9259": {
       "volume": 2881,
       "registered": 2802
     },
     "1.2.643.5.1.13.13.12.2.16.9667": {
-      "volume": 16679,
-      "registered": 16253
+      "volume": 16673,
+      "registered": 16255
     },
     "1.2.643.5.1.13.13.12.2.16.9257": {
-      "volume": 9260,
-      "registered": 9167
+      "volume": 9258,
+      "registered": 9165
     },
     "1.2.643.5.1.13.13.12.2.16.1197": {
-      "volume": 53893,
-      "registered": 48727
+      "volume": 54441,
+      "registered": 49386
     }
   },
   "egpu": {
     "1.2.643.5.1.13.13.12.2.16.28030": {
-      "volume": 1592,
-      "registered": 1588
+      "volume": 1638,
+      "registered": 1637
     },
     "1.2.643.5.1.13.13.12.2.16.44921": {
       "volume": 18,
       "registered": 18
     },
     "1.2.643.5.1.13.13.12.2.16.1116": {
-      "volume": 515,
-      "registered": 515
+      "volume": 530,
+      "registered": 530
     },
     "1.2.643.5.1.13.13.12.2.16.1208": {
-      "volume": 700,
-      "registered": 695
+      "volume": 715,
+      "registered": 715
     },
     "1.2.643.5.1.13.13.12.2.16.1112": {
-      "volume": 728,
-      "registered": 720
+      "volume": 744,
+      "registered": 742
     },
     "1.2.643.5.1.13.13.12.2.16.1085": {
       "volume": 121,
       "registered": 121
     },
     "1.2.643.5.1.13.13.12.2.16.1067": {
-      "volume": 260,
-      "registered": 258
+      "volume": 265,
+      "registered": 265
     },
     "1.2.643.5.1.13.13.12.2.16.1147": {
-      "volume": 896,
-      "registered": 889
+      "volume": 929,
+      "registered": 927
     },
     "1.2.643.5.1.13.13.12.2.16.1045": {
-      "volume": 151,
-      "registered": 151
+      "volume": 155,
+      "registered": 155
     },
     "1.2.643.5.1.13.13.12.2.16.1127": {
-      "volume": 257,
-      "registered": 252
+      "volume": 265,
+      "registered": 265
     },
     "1.2.643.5.1.13.13.12.2.16.1089": {
       "volume": 10,
@@ -1827,12 +1613,12 @@
       "registered": 7
     },
     "1.2.643.5.1.13.13.12.2.16.1051": {
-      "volume": 1321,
-      "registered": 1315
+      "volume": 1339,
+      "registered": 1331
     },
     "1.2.643.5.1.13.13.12.2.16.1115": {
-      "volume": 988,
-      "registered": 984
+      "volume": 1001,
+      "registered": 1001
     },
     "1.2.643.5.1.13.13.12.2.16.1065": {
       "volume": 114,
@@ -1840,74 +1626,66 @@
     },
     "1.2.643.5.1.13.13.12.2.16.1165": {
       "volume": 71,
-      "registered": 70
+      "registered": 71
     },
     "1.2.643.5.1.13.13.12.2.16.1192": {
-      "volume": 1465,
-      "registered": 1460
+      "volume": 1506,
+      "registered": 1502
     },
     "1.2.643.5.1.13.13.12.2.16.1171": {
-      "volume": 358,
-      "registered": 358
+      "volume": 365,
+      "registered": 361
     },
     "1.2.643.5.1.13.13.12.2.16.1108": {
-      "volume": 800,
-      "registered": 793
-    },
-    "1.2.643.5.1.13.13.12.2.16.1146": {
-      "volume": 254,
-      "registered": 187
-    },
-    "1.2.643.5.1.13.13.12.2.16.1107": {
-      "volume": 644,
-      "registered": 327
+      "volume": 1760,
+      "registered": 1341
     },
     "1.2.643.5.1.13.13.12.2.16.1042": {
-      "volume": 300,
-      "registered": 299
+      "volume": 307,
+      "registered": 307
     },
     "1.2.643.5.1.13.13.12.2.16.1093": {
-      "volume": 796,
-      "registered": 793
+      "volume": 814,
+      "registered": 814
     },
     "1.2.643.5.1.13.13.12.2.16.1139": {
-      "volume": 745,
-      "registered": 743
+      "volume": 783,
+      "registered": 779
     },
     "1.2.643.5.1.13.13.12.2.16.1073": {
-      "volume": 225,
-      "registered": 220
+      "volume": 233,
+      "registered": 233
     },
     "1.2.643.5.1.13.13.12.2.16.1038": {
-      "volume": 328,
-      "registered": 328
+      "volume": 332,
+      "registered": 331
     },
     "1.2.643.5.1.13.13.12.2.16.1084": {
       "volume": 127,
       "registered": 127
     },
     "1.2.643.5.1.13.13.12.2.16.1072": {
-      "volume": 58,
-      "registered": 58
+      "volume": 62,
+      "registered": 62
     },
     "1.2.643.5.1.13.13.12.2.16.1088": {
-      "volume": 41,
+      "volume": 44,
       "registered": 40
     },
     "1.2.643.5.1.13.13.12.2.16.1156": {
-      "volume": 41,
-      "registered": 41
+      "volume": 42,
+      "registered": 42
     },
     "1.2.643.5.1.13.13.12.2.16.1092": {
       "volume": 19,
       "registered": 19
     },
     "1.2.643.5.1.13.13.12.2.16.1087": {
-      "volume": 134,
-      "registered": 133
+      "volume": 135,
+      "registered": 135
     },
     "1.2.643.5.1.13.13.12.2.16.1161": {
-      "volume": 21,
+      "volume": 22,
       "registered": 21
     },
     "1.2.643.5.1.13.13.12.2.16.1152": {
@@ -1915,52 +1693,52 @@
       "registered": 20
     },
     "1.2.643.5.1.13.13.12.2.16.1164": {
-      "volume": 75,
-      "registered": 74
+      "volume": 77,
+      "registered": 77
     },
     "1.2.643.5.1.13.13.12.2.16.1078": {
       "volume": 28,
       "registered": 28
     },
     "1.2.643.5.1.13.13.12.2.16.1120": {
-      "volume": 90,
-      "registered": 89
+      "volume": 92,
+      "registered": 92
     },
     "1.2.643.5.1.13.13.12.2.16.1129": {
-      "volume": 23,
-      "registered": 21
+      "volume": 25,
+      "registered": 25
     },
     "1.2.643.5.1.13.13.12.2.16.1081": {
-      "volume": 56,
-      "registered": 56
+      "volume": 59,
+      "registered": 59
     },
     "1.2.643.5.1.13.13.12.2.16.1052": {
-      "volume": 88,
-      "registered": 88
+      "volume": 89,
+      "registered": 89
     },
     "1.2.643.5.1.13.13.12.2.16.1050": {
-      "volume": 722,
-      "registered": 710
+      "volume": 743,
+      "registered": 735
     },
     "1.2.643.5.1.13.13.12.2.16.1105": {
       "volume": 18,
-      "registered": 17
+      "registered": 18
     },
     "1.2.643.5.1.13.13.12.2.16.1131": {
       "volume": 11,
       "registered": 11
     },
     "1.2.643.5.1.13.13.12.2.16.1044": {
-      "volume": 41,
-      "registered": 39
+      "volume": 42,
+      "registered": 42
     },
     "1.2.643.5.1.13.13.12.2.16.1144": {
-      "volume": 119,
-      "registered": 117
+      "volume": 125,
+      "registered": 125
     },
     "1.2.643.5.1.13.13.12.2.16.1149": {
-      "volume": 932,
-      "registered": 930
+      "volume": 948,
+      "registered": 942
     },
     "1.2.643.5.1.13.13.12.2.16.1104": {
       "volume": 209,
@@ -1968,7 +1746,7 @@
     },
     "1.2.643.5.1.13.13.12.2.16.1058": {
       "volume": 79,
-      "registered": 77
+      "registered": 79
     },
     "1.2.643.5.1.13.13.12.2.16.1101": {
       "volume": 30,
@@ -1979,24 +1757,24 @@
       "registered": 24
     },
     "1.2.643.5.1.13.13.12.2.16.1059": {
-      "volume": 16,
-      "registered": 16
+      "volume": 17,
+      "registered": 17
     },
     "1.2.643.5.1.13.13.12.2.16.1138": {
-      "volume": 252,
-      "registered": 252
+      "volume": 255,
+      "registered": 255
     },
     "1.2.643.5.1.13.13.12.2.16.1109": {
-      "volume": 830,
-      "registered": 826
+      "volume": 849,
+      "registered": 848
     },
     "1.2.643.5.1.13.13.12.2.16.1133": {
       "volume": 33,
       "registered": 33
     },
     "1.2.643.5.1.13.13.12.2.16.1126": {
-      "volume": 89,
-      "registered": 89
+      "volume": 93,
+      "registered": 92
     },
     "1.2.643.5.1.13.13.12.2.16.1169": {
       "volume": 59,
@@ -2007,154 +1785,154 @@
       "registered": 30
     },
     "1.2.643.5.1.13.13.12.2.16.1140": {
-      "volume": 172,
-      "registered": 171
+      "volume": 177,
+      "registered": 175
     },
     "1.2.643.5.1.13.13.12.2.16.1162": {
-      "volume": 11,
-      "registered": 11
+      "volume": 12,
+      "registered": 12
     },
     "1.2.643.5.1.13.13.12.2.16.1039": {
-      "volume": 55,
-      "registered": 55
+      "volume": 60,
+      "registered": 59
     },
     "1.2.643.5.1.13.13.12.2.16.1097": {
-      "volume": 45,
-      "registered": 44
+      "volume": 47,
+      "registered": 47
     },
     "1.2.643.5.1.13.13.12.2.16.1070": {
-      "volume": 1094,
-      "registered": 1092
+      "volume": 1136,
+      "registered": 1129
     },
     "1.2.643.5.1.13.13.12.2.16.1123": {
-      "volume": 223,
-      "registered": 220
+      "volume": 228,
+      "registered": 226
     },
     "1.2.643.5.1.13.13.12.2.16.1227": {
       "volume": 15,
-      "registered": null
+      "registered": 0
     },
     "1.2.643.5.1.13.13.12.2.16.1153": {
-      "volume": 57,
-      "registered": 56
+      "volume": 59,
+      "registered": 59
     },
     "1.2.643.5.1.13.13.12.2.16.1182": {
-      "volume": 391,
-      "registered": 388
+      "volume": 402,
+      "registered": 402
     },
     "1.2.643.5.1.13.13.12.2.16.1185": {
-      "volume": 277,
-      "registered": 275
+      "volume": 278,
+      "registered": 278
     },
     "1.2.643.5.1.13.13.12.2.16.1122": {
-      "volume": 342,
-      "registered": 341
+      "volume": 355,
+      "registered": 355
     },
     "1.2.643.5.1.13.13.12.2.16.1135": {
       "volume": 10,
       "registered": 10
     },
     "1.2.643.5.1.13.13.12.2.16.1136": {
-      "volume": 1780,
-      "registered": 1780
+      "volume": 1830,
+      "registered": 1825
     },
     "1.2.643.5.1.13.13.12.2.16.1148": {
-      "volume": 146,
-      "registered": 145
+      "volume": 148,
+      "registered": 148
     },
     "1.2.643.5.1.13.13.12.2.16.1163": {
-      "volume": 3749,
-      "registered": 3739
+      "volume": 3869,
+      "registered": 3860
     },
     "1.2.643.5.1.13.13.12.2.16.1074": {
-      "volume": 2425,
-      "registered": 2425
+      "volume": 2502,
+      "registered": 2497
     },
     "1.2.643.5.1.13.13.12.2.16.1113": {
-      "volume": 270,
-      "registered": 268
+      "volume": 279,
+      "registered": 277
     },
     "1.2.643.5.1.13.13.12.2.16.1193": {
-      "volume": 194,
-      "registered": 191
+      "volume": 202,
+      "registered": 201
     },
     "1.2.643.5.1.13.13.12.2.16.1155": {
-      "volume": 595,
-      "registered": 595
+      "volume": 607,
+      "registered": 605
     },
     "1.2.643.5.1.13.13.12.2.16.1151": {
-      "volume": 2727,
-      "registered": 2726
+      "volume": 2810,
+      "registered": 2805
     },
     "1.2.643.5.1.13.13.12.2.16.1080": {
-      "volume": 2508,
-      "registered": 2483
+      "volume": 2573,
+      "registered": 2568
     },
     "1.2.643.5.1.13.13.12.2.16.1178": {
-      "volume": 2548,
-      "registered": 2515
+      "volume": 2607,
+      "registered": 2605
     },
     "1.2.643.5.1.13.13.12.2.16.1179": {
-      "volume": 4247,
-      "registered": 4234
+      "volume": 4430,
+      "registered": 4422
     },
     "1.2.643.5.1.13.13.12.2.16.1199": {
-      "volume": 377,
-      "registered": 377
+      "volume": 385,
+      "registered": 385
     },
     "1.2.643.5.1.13.13.12.2.16.1200": {
-      "volume": 1030,
-      "registered": 1026
+      "volume": 1052,
+      "registered": 1050
     },
     "1.2.643.5.1.13.13.12.2.16.1090": {
-      "volume": 489,
-      "registered": 477
+      "volume": 524,
+      "registered": 522
     },
     "1.2.643.5.1.13.13.12.2.16.1082": {
-      "volume": 1930,
-      "registered": 1926
+      "volume": 1981,
+      "registered": 1977
     }
   },
   "egpu2days": {
     "1.2.643.5.1.13.13.12.2.16.28030": {
-      "volume": 1592,
-      "registered": 1582
+      "volume": 1638,
+      "registered": 1628
     },
     "1.2.643.5.1.13.13.12.2.16.44921": {
       "volume": 18,
       "registered": 5
     },
     "1.2.643.5.1.13.13.12.2.16.1116": {
-      "volume": 515,
-      "registered": 459
+      "volume": 530,
+      "registered": 474
     },
     "1.2.643.5.1.13.13.12.2.16.1208": {
-      "volume": 700,
-      "registered": 602
+      "volume": 715,
+      "registered": 606
     },
     "1.2.643.5.1.13.13.12.2.16.1112": {
-      "volume": 728,
-      "registered": 475
+      "volume": 744,
+      "registered": 489
     },
     "1.2.643.5.1.13.13.12.2.16.1085": {
       "volume": 121,
       "registered": 49
     },
     "1.2.643.5.1.13.13.12.2.16.1067": {
-      "volume": 260,
-      "registered": 233
+      "volume": 265,
+      "registered": 238
     },
     "1.2.643.5.1.13.13.12.2.16.1147": {
-      "volume": 896,
-      "registered": 867
+      "volume": 929,
+      "registered": 900
     },
     "1.2.643.5.1.13.13.12.2.16.1045": {
-      "volume": 151,
-      "registered": 149
+      "volume": 155,
+      "registered": 153
     },
     "1.2.643.5.1.13.13.12.2.16.1127": {
-      "volume": 257,
-      "registered": 240
+      "volume": 265,
+      "registered": 248
     },
     "1.2.643.5.1.13.13.12.2.16.1089": {
       "volume": 10,
@@ -2165,12 +1943,12 @@
       "registered": 3
     },
     "1.2.643.5.1.13.13.12.2.16.1051": {
-      "volume": 1321,
-      "registered": 1182
+      "volume": 1339,
+      "registered": 1197
     },
     "1.2.643.5.1.13.13.12.2.16.1115": {
-      "volume": 988,
-      "registered": 963
+      "volume": 1001,
+      "registered": 976
     },
     "1.2.643.5.1.13.13.12.2.16.1065": {
       "volume": 114,
@@ -2178,107 +1956,99 @@
     },
     "1.2.643.5.1.13.13.12.2.16.1165": {
       "volume": 71,
-      "registered": 20
+      "registered": 19
     },
     "1.2.643.5.1.13.13.12.2.16.1192": {
-      "volume": 1465,
-      "registered": 1417
+      "volume": 1506,
+      "registered": 1458
     },
     "1.2.643.5.1.13.13.12.2.16.1171": {
-      "volume": 358,
-      "registered": 270
+      "volume": 365,
+      "registered": 273
     },
     "1.2.643.5.1.13.13.12.2.16.1108": {
-      "volume": 800,
-      "registered": 770
-    },
-    "1.2.643.5.1.13.13.12.2.16.1146": {
-      "volume": 254,
-      "registered": 69
-    },
-    "1.2.643.5.1.13.13.12.2.16.1107": {
-      "volume": 644,
-      "registered": 174
+      "volume": 1760,
+      "registered": 1041
     },
     "1.2.643.5.1.13.13.12.2.16.1042": {
-      "volume": 300,
-      "registered": 270
+      "volume": 307,
+      "registered": 277
     },
     "1.2.643.5.1.13.13.12.2.16.1093": {
-      "volume": 796,
-      "registered": 737
+      "volume": 814,
+      "registered": 755
     },
     "1.2.643.5.1.13.13.12.2.16.1139": {
-      "volume": 745,
-      "registered": 707
+      "volume": 783,
+      "registered": 745
     },
     "1.2.643.5.1.13.13.12.2.16.1073": {
-      "volume": 225,
-      "registered": 192
+      "volume": 233,
+      "registered": 198
     },
     "1.2.643.5.1.13.13.12.2.16.1038": {
-      "volume": 328,
-      "registered": 215
+      "volume": 332,
+      "registered": 219
     },
     "1.2.643.5.1.13.13.12.2.16.1084": {
       "volume": 127,
       "registered": 111
     },
     "1.2.643.5.1.13.13.12.2.16.1072": {
-      "volume": 58,
-      "registered": 46
+      "volume": 62,
+      "registered": 50
     },
     "1.2.643.5.1.13.13.12.2.16.1088": {
-      "volume": 41,
-      "registered": 3
+      "volume": 44,
+      "registered": 4
     },
     "1.2.643.5.1.13.13.12.2.16.1156": {
-      "volume": 41,
-      "registered": 39
+      "volume": 42,
+      "registered": 40
     },
     "1.2.643.5.1.13.13.12.2.16.1092": {
       "volume": 19,
       "registered": 16
     },
     "1.2.643.5.1.13.13.12.2.16.1087": {
-      "volume": 134,
-      "registered": 94
+      "volume": 135,
+      "registered": 95
     },
     "1.2.643.5.1.13.13.12.2.16.1161": {
-      "volume": 21,
-      "registered": 3
+      "volume": 22,
+      "registered": 4
     },
     "1.2.643.5.1.13.13.12.2.16.1152": {
       "volume": 20,
       "registered": 9
     },
     "1.2.643.5.1.13.13.12.2.16.1164": {
-      "volume": 75,
-      "registered": 23
+      "volume": 77,
+      "registered": 25
     },
     "1.2.643.5.1.13.13.12.2.16.1078": {
       "volume": 28,
       "registered": 11
     },
     "1.2.643.5.1.13.13.12.2.16.1120": {
-      "volume": 90,
-      "registered": 69
+      "volume": 92,
+      "registered": 71
     },
     "1.2.643.5.1.13.13.12.2.16.1129": {
-      "volume": 23,
-      "registered": 7
+      "volume": 25,
+      "registered": 8
     },
     "1.2.643.5.1.13.13.12.2.16.1081": {
-      "volume": 56,
-      "registered": 29
+      "volume": 59,
+      "registered": 32
     },
     "1.2.643.5.1.13.13.12.2.16.1052": {
-      "volume": 88,
-      "registered": 78
+      "volume": 89,
+      "registered": 79
     },
     "1.2.643.5.1.13.13.12.2.16.1050": {
-      "volume": 722,
-      "registered": 376
+      "volume": 743,
+      "registered": 394
     },
     "1.2.643.5.1.13.13.12.2.16.1105": {
       "volume": 18,
@@ -2289,16 +2059,16 @@
       "registered": 1
     },
     "1.2.643.5.1.13.13.12.2.16.1044": {
-      "volume": 41,
-      "registered": 37
+      "volume": 42,
+      "registered": 38
     },
     "1.2.643.5.1.13.13.12.2.16.1144": {
-      "volume": 119,
-      "registered": 79
+      "volume": 125,
+      "registered": 85
     },
     "1.2.643.5.1.13.13.12.2.16.1149": {
-      "volume": 932,
-      "registered": 647
+      "volume": 948,
+      "registered": 661
     },
     "1.2.643.5.1.13.13.12.2.16.1104": {
       "volume": 209,
@@ -2317,24 +2087,24 @@
       "registered": 19
     },
     "1.2.643.5.1.13.13.12.2.16.1059": {
-      "volume": 16,
-      "registered": 7
+      "volume": 17,
+      "registered": 8
     },
     "1.2.643.5.1.13.13.12.2.16.1138": {
-      "volume": 252,
-      "registered": 230
+      "volume": 255,
+      "registered": 233
     },
     "1.2.643.5.1.13.13.12.2.16.1109": {
-      "volume": 830,
-      "registered": 379
+      "volume": 849,
+      "registered": 397
     },
     "1.2.643.5.1.13.13.12.2.16.1133": {
       "volume": 33,
       "registered": 12
     },
     "1.2.643.5.1.13.13.12.2.16.1126": {
-      "volume": 89,
-      "registered": 50
+      "volume": 93,
+      "registered": 54
     },
     "1.2.643.5.1.13.13.12.2.16.1169": {
       "volume": 59,
@@ -2345,112 +2115,112 @@
       "registered": 11
     },
     "1.2.643.5.1.13.13.12.2.16.1140": {
-      "volume": 172,
-      "registered": 169
+      "volume": 177,
+      "registered": 174
     },
     "1.2.643.5.1.13.13.12.2.16.1162": {
-      "volume": 11,
-      "registered": 7
+      "volume": 12,
+      "registered": 8
     },
     "1.2.643.5.1.13.13.12.2.16.1039": {
-      "volume": 55,
-      "registered": 40
+      "volume": 60,
+      "registered": 45
     },
     "1.2.643.5.1.13.13.12.2.16.1097": {
-      "volume": 45,
-      "registered": 33
+      "volume": 47,
+      "registered": 35
     },
     "1.2.643.5.1.13.13.12.2.16.1070": {
-      "volume": 1094,
-      "registered": 613
+      "volume": 1136,
+      "registered": 655
     },
     "1.2.643.5.1.13.13.12.2.16.1123": {
-      "volume": 223,
-      "registered": 39
+      "volume": 228,
+      "registered": 44
     },
     "1.2.643.5.1.13.13.12.2.16.1227": {
       "volume": 15,
       "registered": 0
     },
     "1.2.643.5.1.13.13.12.2.16.1153": {
-      "volume": 57,
+      "volume": 59,
       "registered": 21
     },
     "1.2.643.5.1.13.13.12.2.16.1182": {
-      "volume": 391,
-      "registered": 362
+      "volume": 402,
+      "registered": 373
     },
     "1.2.643.5.1.13.13.12.2.16.1185": {
-      "volume": 277,
-      "registered": 10
+      "volume": 278,
+      "registered": 11
     },
     "1.2.643.5.1.13.13.12.2.16.1122": {
-      "volume": 342,
-      "registered": 314
+      "volume": 355,
+      "registered": 327
     },
     "1.2.643.5.1.13.13.12.2.16.1135": {
       "volume": 10,
       "registered": 0
     },
     "1.2.643.5.1.13.13.12.2.16.1136": {
-      "volume": 1780,
-      "registered": 1746
+      "volume": 1830,
+      "registered": 1796
     },
     "1.2.643.5.1.13.13.12.2.16.1148": {
-      "volume": 146,
-      "registered": 124
+      "volume": 148,
+      "registered": 126
     },
     "1.2.643.5.1.13.13.12.2.16.1163": {
-      "volume": 3749,
-      "registered": 3695
+      "volume": 3869,
+      "registered": 3815
     },
     "1.2.643.5.1.13.13.12.2.16.1074": {
-      "volume": 2425,
-      "registered": 2357
+      "volume": 2502,
+      "registered": 2434
     },
     "1.2.643.5.1.13.13.12.2.16.1113": {
-      "volume": 270,
-      "registered": 260
+      "volume": 279,
+      "registered": 269
     },
     "1.2.643.5.1.13.13.12.2.16.1193": {
-      "volume": 194,
-      "registered": 160
+      "volume": 202,
+      "registered": 168
     },
     "1.2.643.5.1.13.13.12.2.16.1155": {
-      "volume": 595,
-      "registered": 551
+      "volume": 607,
+      "registered": 563
     },
     "1.2.643.5.1.13.13.12.2.16.1151": {
-      "volume": 2727,
-      "registered": 2423
+      "volume": 2810,
+      "registered": 2506
     },
     "1.2.643.5.1.13.13.12.2.16.1080": {
-      "volume": 2508,
-      "registered": 2311
+      "volume": 2573,
+      "registered": 2376
     },
     "1.2.643.5.1.13.13.12.2.16.1178": {
-      "volume": 2548,
-      "registered": 2306
+      "volume": 2607,
+      "registered": 2359
     },
     "1.2.643.5.1.13.13.12.2.16.1179": {
-      "volume": 4247,
-      "registered": 3997
+      "volume": 4430,
+      "registered": 4180
     },
     "1.2.643.5.1.13.13.12.2.16.1199": {
-      "volume": 377,
-      "registered": 288
+      "volume": 385,
+      "registered": 296
     },
     "1.2.643.5.1.13.13.12.2.16.1200": {
-      "volume": 1030,
-      "registered": 938
+      "volume": 1052,
+      "registered": 960
     },
     "1.2.643.5.1.13.13.12.2.16.1090": {
-      "volume": 489,
-      "registered": 254
+      "volume": 524,
+      "registered": 289
     },
     "1.2.643.5.1.13.13.12.2.16.1082": {
-      "volume": 1930,
-      "registered": 1480
+      "volume": 1981,
+      "registered": 1531
     }
   },
   "tvspStationary": {
@@ -2719,8 +2489,8 @@
       "registered": 22
     },
     "1.2.643.5.1.13.13.12.2.16.1056": {
-      "volume": 61,
-      "registered": 60
+      "volume": 59,
+      "registered": 58
     },
     "1.2.643.5.1.13.13.12.2.16.1049": {
       "volume": 7,
@@ -2870,7 +2640,7 @@
     },
     "1.2.643.5.1.13.13.12.2.16.1108": {
       "volume": 36,
-      "registered": 22
+      "registered": 24
     },
     "1.2.643.5.1.13.13.12.2.16.1152": {
       "volume": 8,
@@ -3058,7 +2828,7 @@
     },
     "1.2.643.5.1.13.13.12.2.16.1093": {
       "volume": 13,
-      "registered": 11
+      "registered": 13
     },
     "1.2.643.5.1.13.13.12.2.16.1072": {
       "volume": 11,
@@ -3126,7 +2896,7 @@
     },
     "1.2.643.5.1.13.13.12.2.16.1192": {
       "volume": 17,
-      "registered": 16
+      "registered": 17
     },
     "1.2.643.5.1.13.13.12.2.16.1109": {
       "volume": 10,
@@ -3154,7 +2924,7 @@
     },
     "1.2.643.5.1.13.13.12.2.16.1056": {
       "volume": 27,
-      "registered": 19
+      "registered": 21
     },
     "1.2.643.5.1.13.13.12.2.16.1049": {
       "volume": 5,
@@ -3226,7 +2996,7 @@
     },
     "1.2.643.5.1.13.13.12.2.16.1171": {
       "volume": 15,
-      "registered": 8
+      "registered": 9
     },
     "1.2.643.5.1.13.13.12.2.16.1061": {
       "volume": 1,
@@ -3246,7 +3016,7 @@
     },
     "1.2.643.5.1.13.13.12.2.16.9641": {
       "volume": 1,
-      "registered": 0
+      "registered": 1
     },
     "1.2.643.5.1.13.13.12.2.16.9256": {
       "volume": 1,
@@ -3629,7 +3399,7 @@
       "registered": 4
     },
     "1.2.643.5.1.13.13.12.2.16.1108": {
-      "volume": 3,
+      "volume": 4,
       "registered": 3
     },
     "1.2.643.5.1.13.13.12.2.16.1152": {

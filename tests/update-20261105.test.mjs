@@ -4,11 +4,11 @@ import test from 'node:test';
 
 const read = path => JSON.parse(fs.readFileSync(path,'utf8'));
 const audit=read('docs/update-20261105-source-audit.json');
-const mo=read('app/mo-data.json');
-const operational=read('app/operational-mo.json');
-const preventive=read('app/preventive-semd-audit.json');
-const monthly=read('app/monthly-mo.json');
-const validation=read('validation/validation-report.json');
+const mo=read('baseline/archive/pre-20261113/app/mo-data.json');
+const operational=read('baseline/archive/pre-20261113/app/operational-mo.json');
+const preventive=read('baseline/archive/pre-20261113/app/preventive-semd-audit.json');
+const monthly=read('baseline/archive/pre-20261113/app/monthly-mo.json');
+const validation=read('baseline/archive/pre-20261113/validation/validation-report.json');
 const oid='1.2.643.5.1.13.13.12.2.16.1094';
 
 test('November intake prepares 34 indicators and retains invalid or missing sources explicitly',()=>{
@@ -29,7 +29,7 @@ test('hospital legal entity and Spassk preventive branch use their own source co
  const source=preventive.rows.find(x=>x.oid===oid);
  assert.equal(rkb.name,'ГАУЗ "РКБ МЗ РТ"');
  assert.equal(rkb.count,2335);
- assert.equal(read('app/mo-detail-oids.json').hospital[oid].volume,3673);
+ assert.equal(read('baseline/archive/pre-20261113/app/mo-detail-oids.json').hospital[oid].volume,3673);
  assert.equal(rkb.fact,2335/3673*100);
  assert.equal(spassk.name,'Спасская ЦРБ');
  assert.equal(spassk.reportingEntityId,'context:spassk-crb');

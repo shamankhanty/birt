@@ -1,0 +1,429 @@
+{
+  "schemaVersion": 1,
+  "baselineVersion": "5.4.5",
+  "dataDate": "05.11.2026",
+  "reportingPeriod": {
+    "latestFullMonth": "октябрь 2026",
+    "previousFullMonth": "сентябрь 2026",
+    "hasPartialNewerMonth": true,
+    "latestObservedDate": "05.11.2026"
+  },
+  "overallStatus": "WARNING",
+  "summary": {
+    "checks": 16,
+    "PASS": 14,
+    "WARNING": 2,
+    "FAIL": 0,
+    "blocking": 0,
+    "aiReviewItems": 6
+  },
+  "acknowledgedBaseline": {
+    "unresolvedOrganizations": 127,
+    "percentageAnomalies": 40,
+    "missingCurrentValues": 0
+  },
+  "checks": [
+    {
+      "id": "registry.indicator_metadata",
+      "category": "schema",
+      "title": "Полнота единого реестра показателей",
+      "status": "PASS",
+      "blocking": false,
+      "requiresAiReview": false,
+      "message": "38 indicators have required metadata",
+      "details": {
+        "indicatorCount": 38
+      },
+      "issues": []
+    },
+    {
+      "id": "registry.mo_oid_uniqueness",
+      "category": "duplicates",
+      "title": "Уникальность OID в справочнике МО",
+      "status": "PASS",
+      "blocking": false,
+      "requiresAiReview": false,
+      "message": "127 registry OIDs are unique",
+      "details": {
+        "organizationCount": 127
+      },
+      "issues": []
+    },
+    {
+      "id": "registry.numbered_alias_safety",
+      "category": "duplicates",
+      "title": "Безопасность алиасов номерных МО",
+      "status": "PASS",
+      "blocking": false,
+      "requiresAiReview": false,
+      "message": "No numbered facility alias crosses organization numbers",
+      "details": {},
+      "issues": []
+    },
+    {
+      "id": "registry.runtime_coverage",
+      "category": "schema",
+      "title": "Покрытие runtime-наборов реестром показателей",
+      "status": "PASS",
+      "blocking": false,
+      "requiresAiReview": false,
+      "message": "33 runtime datasets are covered by the indicator registry",
+      "details": {
+        "runtimeDatasetCount": 33,
+        "registryIndicatorCount": 38
+      },
+      "issues": []
+    },
+    {
+      "id": "registry.metadata_source_alignment",
+      "category": "schema",
+      "title": "Соответствие metadata источников каноническому реестру",
+      "status": "PASS",
+      "blocking": false,
+      "requiresAiReview": false,
+      "message": "33 source datasets match canonical plan/direction metadata",
+      "details": {
+        "inspectedDatasets": 33
+      },
+      "issues": []
+    },
+    {
+      "id": "data.duplicate_organizations",
+      "category": "duplicates",
+      "title": "Дубли МО внутри одного показателя",
+      "status": "PASS",
+      "blocking": false,
+      "requiresAiReview": false,
+      "message": "5131 rows contain no duplicate organization within a dataset",
+      "details": {
+        "inspectedRows": 5131
+      },
+      "issues": []
+    },
+    {
+      "id": "calculation.ratio_components",
+      "category": "calculation",
+      "title": "Арифметическая сверка числителя, знаменателя и доли",
+      "status": "PASS",
+      "blocking": false,
+      "requiresAiReview": false,
+      "message": "989 ratio rows reconcile to numerator/denominator components",
+      "details": {
+        "inspectedRows": 989,
+        "tolerancePercentagePoints": 0.015
+      },
+      "issues": []
+    },
+    {
+      "id": "calculation.trend",
+      "category": "calculation",
+      "title": "Арифметическая сверка динамики",
+      "status": "PASS",
+      "blocking": false,
+      "requiresAiReview": false,
+      "message": "1956 trend rows reconcile to fact minus previous",
+      "details": {
+        "inspectedRows": 1956
+      },
+      "issues": []
+    },
+    {
+      "id": "period.kind_compatibility",
+      "category": "period",
+      "title": "Соответствие типа периода реестру показателей",
+      "status": "PASS",
+      "blocking": false,
+      "requiresAiReview": false,
+      "message": "22 source periods match their registry period kind",
+      "details": {
+        "inspectedDatasets": 22
+      },
+      "issues": []
+    },
+    {
+      "id": "period.rating_month",
+      "category": "period",
+      "title": "Сопоставимость периода рейтинга",
+      "status": "WARNING",
+      "blocking": false,
+      "requiresAiReview": false,
+      "message": "2 issue(s) detected",
+      "details": {
+        "activeRatingIndicators": 16,
+        "latestFullMonth": "октябрь 2026",
+        "previousFullMonth": "сентябрь 2026",
+        "latestObservedDate": "05.11.2026",
+        "hasPartialNewerMonth": true
+      },
+      "issues": [
+        {
+          "kind": "rating_period_retained_incomplete",
+          "metric": "death",
+          "field": "period",
+          "expected": "октябрь 2026",
+          "actual": "На 31.08",
+          "status": "WARNING",
+          "requiresAiReview": false,
+          "reviewReason": "methodology",
+          "acknowledged": false,
+          "fingerprint": "rating_period_retained_incomplete||death|||period"
+        },
+        {
+          "kind": "rating_period_retained_incomplete",
+          "metric": "semd228",
+          "field": "period",
+          "expected": "октябрь 2026",
+          "actual": "На 30.09",
+          "status": "WARNING",
+          "requiresAiReview": false,
+          "reviewReason": "methodology",
+          "acknowledged": false,
+          "fingerprint": "rating_period_retained_incomplete||semd228|||period"
+        }
+      ]
+    },
+    {
+      "id": "data.new_unresolved_organizations",
+      "category": "completeness",
+      "title": "Новые несопоставленные названия МО",
+      "status": "PASS",
+      "blocking": false,
+      "requiresAiReview": false,
+      "message": "No new unresolved organizations beyond 127 acknowledged baseline rows",
+      "details": {
+        "currentUnresolvedRows": 127,
+        "acknowledgedBaselineRows": 127
+      },
+      "issues": []
+    },
+    {
+      "id": "data.spassk_legacy_context_review",
+      "category": "completeness",
+      "title": "Историческое условное сопоставление Спасской ЦРБ требует проверки ФРМО",
+      "status": "PASS",
+      "blocking": false,
+      "requiresAiReview": false,
+      "message": "No unresolved historical contextual Spassk ownership",
+      "details": {
+        "sourceRowsUnchanged": true,
+        "reviewRequired": true
+      },
+      "issues": []
+    },
+    {
+      "id": "data.dropped_organizations",
+      "category": "completeness",
+      "title": "МО, пропавшие из сопоставимого набора",
+      "status": "PASS",
+      "blocking": false,
+      "requiresAiReview": false,
+      "message": "No organization present in the accepted reference disappeared from a comparable dataset",
+      "details": {},
+      "issues": []
+    },
+    {
+      "id": "data.row_count_drop",
+      "category": "completeness",
+      "title": "Снижение количества строк в наборе",
+      "status": "PASS",
+      "blocking": false,
+      "requiresAiReview": false,
+      "message": "No dataset has fewer rows than the accepted reference",
+      "details": {},
+      "issues": []
+    },
+    {
+      "id": "data.missing_current_values",
+      "category": "completeness",
+      "title": "Пропуски текущего значения при наличии предыдущего",
+      "status": "PASS",
+      "blocking": false,
+      "requiresAiReview": false,
+      "message": "No new missing current values beyond 0 acknowledged baseline cases",
+      "details": {
+        "currentMissingValues": 0,
+        "acknowledgedBaselineCases": 0
+      },
+      "issues": []
+    },
+    {
+      "id": "data.percentage_anomalies",
+      "category": "anomaly",
+      "title": "Новые аномальные процентные значения",
+      "status": "WARNING",
+      "blocking": false,
+      "requiresAiReview": true,
+      "message": "6 issue(s) detected",
+      "details": {
+        "currentAnomalyRows": 45,
+        "acknowledgedBaselineCases": 40
+      },
+      "issues": [
+        {
+          "kind": "percentage_above_100",
+          "scope": "mo-data",
+          "metric": "semd228",
+          "organizationOid": "1.2.643.5.1.13.13.12.2.16.1084",
+          "organizationName": "АЗНАКАЕВСКАЯ ЦРБ",
+          "field": "fact",
+          "value": 100.34140285536934,
+          "fingerprint": "percentage_above_100|mo-data|semd228|1.2.643.5.1.13.13.12.2.16.1084|АЗНАКАЕВСКАЯ ЦРБ|fact",
+          "acknowledged": false,
+          "status": "WARNING",
+          "requiresAiReview": true,
+          "reviewReason": "anomaly"
+        },
+        {
+          "kind": "percentage_above_100",
+          "scope": "mo-data",
+          "metric": "semd228",
+          "organizationOid": "1.2.643.5.1.13.13.12.2.16.1042",
+          "organizationName": "БУГУЛЬМИНСКАЯ ЦРБ",
+          "field": "fact",
+          "value": 100.02205558006176,
+          "fingerprint": "percentage_above_100|mo-data|semd228|1.2.643.5.1.13.13.12.2.16.1042|БУГУЛЬМИНСКАЯ ЦРБ|fact",
+          "acknowledged": false,
+          "status": "WARNING",
+          "requiresAiReview": true,
+          "reviewReason": "anomaly"
+        },
+        {
+          "kind": "percentage_above_100",
+          "scope": "mo-data",
+          "metric": "semd228",
+          "organizationOid": "1.2.643.5.1.13.13.12.2.16.1192",
+          "organizationName": "НЦРМБ г.Нижнекамск",
+          "field": "previous",
+          "value": 101.13743755906575,
+          "fingerprint": "percentage_above_100|mo-data|semd228|1.2.643.5.1.13.13.12.2.16.1192|НЦРМБ г.Нижнекамск|previous",
+          "acknowledged": false,
+          "status": "WARNING",
+          "requiresAiReview": true,
+          "reviewReason": "anomaly"
+        },
+        {
+          "kind": "percentage_above_100",
+          "scope": "mo-data",
+          "metric": "semd228",
+          "organizationOid": "1.2.643.5.1.13.13.12.2.16.1133",
+          "organizationName": "РЫБНО-СЛОБОДСКАЯ ЦРБ",
+          "field": "previous",
+          "value": 101.64784864205065,
+          "fingerprint": "percentage_above_100|mo-data|semd228|1.2.643.5.1.13.13.12.2.16.1133|РЫБНО-СЛОБОДСКАЯ ЦРБ|previous",
+          "acknowledged": false,
+          "status": "WARNING",
+          "requiresAiReview": true,
+          "reviewReason": "anomaly"
+        },
+        {
+          "kind": "percentage_above_100",
+          "scope": "mo-data",
+          "metric": "semd228",
+          "organizationOid": "1.2.643.5.1.13.13.12.2.16.1126",
+          "organizationName": "САБИНСКАЯ ЦРБ",
+          "field": "fact",
+          "value": 100.23955681988322,
+          "fingerprint": "percentage_above_100|mo-data|semd228|1.2.643.5.1.13.13.12.2.16.1126|САБИНСКАЯ ЦРБ|fact",
+          "acknowledged": false,
+          "status": "WARNING",
+          "requiresAiReview": true,
+          "reviewReason": "anomaly"
+        },
+        {
+          "kind": "percentage_above_100",
+          "scope": "mo-data",
+          "metric": "hospital",
+          "organizationOid": "1.2.643.5.1.13.13.12.2.16.1042",
+          "organizationName": "БУГУЛЬМИНСКАЯ ЦРБ",
+          "field": "previous",
+          "value": 101.69915297479335,
+          "fingerprint": "percentage_above_100|mo-data|hospital|1.2.643.5.1.13.13.12.2.16.1042|БУГУЛЬМИНСКАЯ ЦРБ|previous",
+          "acknowledged": false,
+          "status": "WARNING",
+          "requiresAiReview": true,
+          "reviewReason": "anomaly"
+        }
+      ]
+    }
+  ],
+  "aiReviewItems": [
+    {
+      "checkId": "data.percentage_anomalies",
+      "category": "anomaly",
+      "status": "WARNING",
+      "reviewReason": "anomaly",
+      "fingerprint": "percentage_above_100|mo-data|semd228|1.2.643.5.1.13.13.12.2.16.1084|АЗНАКАЕВСКАЯ ЦРБ|fact",
+      "metric": "semd228",
+      "organizationOid": "1.2.643.5.1.13.13.12.2.16.1084",
+      "organizationName": "АЗНАКАЕВСКАЯ ЦРБ",
+      "field": "fact",
+      "expected": null,
+      "actual": 100.34140285536934
+    },
+    {
+      "checkId": "data.percentage_anomalies",
+      "category": "anomaly",
+      "status": "WARNING",
+      "reviewReason": "anomaly",
+      "fingerprint": "percentage_above_100|mo-data|semd228|1.2.643.5.1.13.13.12.2.16.1042|БУГУЛЬМИНСКАЯ ЦРБ|fact",
+      "metric": "semd228",
+      "organizationOid": "1.2.643.5.1.13.13.12.2.16.1042",
+      "organizationName": "БУГУЛЬМИНСКАЯ ЦРБ",
+      "field": "fact",
+      "expected": null,
+      "actual": 100.02205558006176
+    },
+    {
+      "checkId": "data.percentage_anomalies",
+      "category": "anomaly",
+      "status": "WARNING",
+      "reviewReason": "anomaly",
+      "fingerprint": "percentage_above_100|mo-data|semd228|1.2.643.5.1.13.13.12.2.16.1192|НЦРМБ г.Нижнекамск|previous",
+      "metric": "semd228",
+      "organizationOid": "1.2.643.5.1.13.13.12.2.16.1192",
+      "organizationName": "НЦРМБ г.Нижнекамск",
+      "field": "previous",
+      "expected": null,
+      "actual": 101.13743755906575
+    },
+    {
+      "checkId": "data.percentage_anomalies",
+      "category": "anomaly",
+      "status": "WARNING",
+      "reviewReason": "anomaly",
+      "fingerprint": "percentage_above_100|mo-data|semd228|1.2.643.5.1.13.13.12.2.16.1133|РЫБНО-СЛОБОДСКАЯ ЦРБ|previous",
+      "metric": "semd228",
+      "organizationOid": "1.2.643.5.1.13.13.12.2.16.1133",
+      "organizationName": "РЫБНО-СЛОБОДСКАЯ ЦРБ",
+      "field": "previous",
+      "expected": null,
+      "actual": 101.64784864205065
+    },
+    {
+      "checkId": "data.percentage_anomalies",
+      "category": "anomaly",
+      "status": "WARNING",
+      "reviewReason": "anomaly",
+      "fingerprint": "percentage_above_100|mo-data|semd228|1.2.643.5.1.13.13.12.2.16.1126|САБИНСКАЯ ЦРБ|fact",
+      "metric": "semd228",
+      "organizationOid": "1.2.643.5.1.13.13.12.2.16.1126",
+      "organizationName": "САБИНСКАЯ ЦРБ",
+      "field": "fact",
+      "expected": null,
+      "actual": 100.23955681988322
+    },
+    {
+      "checkId": "data.percentage_anomalies",
+      "category": "anomaly",
+      "status": "WARNING",
+      "reviewReason": "anomaly",
+      "fingerprint": "percentage_above_100|mo-data|hospital|1.2.643.5.1.13.13.12.2.16.1042|БУГУЛЬМИНСКАЯ ЦРБ|previous",
+      "metric": "hospital",
+      "organizationOid": "1.2.643.5.1.13.13.12.2.16.1042",
+      "organizationName": "БУГУЛЬМИНСКАЯ ЦРБ",
+      "field": "previous",
+      "expected": null,
+      "actual": 101.69915297479335
+    }
+  ]
+}

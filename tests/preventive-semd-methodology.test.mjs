@@ -3,7 +3,7 @@ import test from "node:test";
 import { readFile } from "node:fs/promises";
 
 const source=await readFile(new URL("../app/page.tsx",import.meta.url),"utf8");
-const audit=JSON.parse(await readFile(new URL("../app/preventive-semd-audit.json",import.meta.url),"utf8"));
+const audit=JSON.parse(await readFile(new URL("../baseline/archive/pre-20261113/app/preventive-semd-audit.json",import.meta.url),"utf8"));
 const updater=await readFile(new URL("../scripts/refresh_preventive_semd.py",import.meta.url),"utf8");
 
 test("federal 2026 calculation uses per-organization MAX from REMD and FOMS",async()=>{
@@ -18,7 +18,7 @@ test("federal 2026 calculation uses per-organization MAX from REMD and FOMS",asy
     name:'ЧУЗ "Больница "РЖД-Медицина" города Ижевск"',
     denominator:1,
   }]);
-  const dataset=JSON.parse(await readFile(new URL('../app/mo-data.json',import.meta.url),'utf8')).semd228;
+  const dataset=JSON.parse(await readFile(new URL('../baseline/archive/pre-20261113/app/mo-data.json',import.meta.url),'utf8')).semd228;
   assert.equal(dataset.rows.filter(r=>r.fact===null || r.count===null).length,0);
   assert.ok(audit.summary.numerator > 0);
   assert.ok(audit.summary.denominator > 0);

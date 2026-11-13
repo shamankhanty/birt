@@ -30,7 +30,7 @@ test('accepted October values have an independent primary-source audit and exact
  const currentHashes=read('baseline/current-production-manifest.json').files;
  // The November 09 promotion explicitly replaces these October MAX snapshots.
  // Historic evidence hashes stay fixed; promoted hashes are verified against the production manifest.
- const refreshedPaths=new Set(['app/mo-data.json','app/mo-detail-oids.json','app/mo-details.json','app/operational-mo.json','app/organization-status.json','app/unit-data.json','app/unit-mo-snapshots.json','app/max-period-views.json','app/monthly-mo.json','app/month-closure-2026-10.json','app/electronic-waybill.json','app/electronic-waybill-weekly.json']);
+ const refreshedPaths=new Set(['app/mo-data.json','app/mo-detail-oids.json','app/mo-details.json','app/operational-mo.json','app/organization-status.json','app/unit-data.json','app/unit-mo-snapshots.json','app/max-period-views.json','app/monthly-mo.json','app/month-closure-2026-10.json','app/electronic-waybill.json','app/electronic-waybill-weekly.json','app/error-categories.json','app/error-cumulative.json','app/error-organizations.json','app/preventive-semd-audit.json','app/physician-weekly-snapshot.json','app/physician500-audit.json']);
  const frmrPaths=new Set(['app/frmr-all-specialties.json','app/frmr-previous-control.json','app/frmr-sp-types.json']);
  for(const [path,hash] of Object.entries({...audit.acceptedAppSha256,...preventive.acceptedAppSha256,...unchangedDataFiles})) {
   if(frmrPaths.has(path)) continue;
@@ -64,7 +64,7 @@ test('09 November MAX promotion keeps historic audit immutable and reconciles ne
 });
 
 test('partial November physician slice retains the closed October comparison',()=>{
- const current=app('physician-weekly-snapshot'), old=previous('physician-weekly-snapshot'), monthly=app('physician-metrics');
+ const current=read('baseline/archive/pre-20261113/app/physician-weekly-snapshot.json'), old=previous('physician-weekly-snapshot'), monthly=app('physician-metrics');
  assert.equal(current.period,'01.11.2026–04.11.2026');
  assert.equal(current.previousSummary.doctorsAll.numerator,monthly.datasets.doctorsAll.summary.numerator);
  for(const [id,ds] of Object.entries(monthly.datasets)) {
@@ -80,7 +80,7 @@ test('partial November physician slice retains the closed October comparison',()
 });
 
 test('the first ambulance organization is present and the grand total reconciles',()=>{
- const d=app('mo-data').smp;
+ const d=read('baseline/archive/pre-20261113/app/mo-data.json').smp;
  assert.equal(d.rows.length,43);
  assert.equal(d.numerator,768923);
  assert.equal(d.denominator,814120);

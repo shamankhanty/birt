@@ -2,8 +2,8 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 const read = name => JSON.parse(readFileSync(new URL('../' + name, import.meta.url)));
-const count = read('app/operational-mo.json').hospitalCount;
-const ratio = read('app/mo-data.json').hospital;
+const count = read('baseline/archive/pre-20261113/app/operational-mo.json').hospitalCount;
+const ratio = read('baseline/archive/pre-20261113/app/mo-data.json').hospital;
 
 test('hospital count reconciles with case denominator from the 08 November source', () => {
   assert.equal(count.date, ratio.date);
@@ -21,7 +21,7 @@ test('hospital count reconciles with case denominator from the 08 November sourc
 
 
 test('source total and management perimeter reconcile with present KGMA case row', () => {
-  const runtime = read('baseline/calculation-runtime-snapshot.json').allIndicators.hospitalCount;
+  const runtime = read('baseline/archive/pre-20261113/baseline/calculation-runtime-snapshot.json').allIndicators.hospitalCount;
   assert.equal(runtime.fact, 818693);
   assert.equal(count.total - runtime.fact, 0);
   const excluded = count.rows.filter(row => /КГМА.*РМАНПО/u.test(row.name));

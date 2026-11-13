@@ -84,7 +84,8 @@ function legacyRuntime() {
       }
     }
     if (sourceBackedIds.has(indicator.id)) {
-      const details = Object.values(moDetails[indicator.id] ?? {});
+      const oidDetails = Object.values(moDetailOids[indicator.id] ?? {});
+      const details = oidDetails.length ? oidDetails : Object.values(moDetails[indicator.id] ?? {});
       const dataset = moData[indicator.id];
       if (details.length && dataset) {
         const quantity = details.reduce((sum, row) => sum + row.registered, 0);

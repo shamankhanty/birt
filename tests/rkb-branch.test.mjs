@@ -94,11 +94,11 @@ test("hospital report has no branch attribution without a branch identifier", ()
   assert.equal(runtime.organizationForMetric('semd228',{
     ...source,sourceReport:'gis-preventive-encounters',
   })?.oid,'context:spassk-crb');
-  const dataset=read('app/mo-data.json').hospital;
+  const dataset=read('baseline/archive/pre-20261113/app/mo-data.json').hospital;
   const row=dataset.rows.find(item=>item.oid===rootOid);
   assert.equal(row.name,'ГАУЗ "РКБ МЗ РТ"');
   assert.equal(row.count,2335);
-  assert.equal(read('app/mo-detail-oids.json').hospital[rootOid].volume,3673);
+  assert.equal(read('baseline/archive/pre-20261113/app/mo-detail-oids.json').hospital[rootOid].volume,3673);
 });
 
 test("conflicting structural identifiers stop attribution and unrelated MO still resolves", () => {

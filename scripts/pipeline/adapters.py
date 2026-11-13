@@ -617,6 +617,8 @@ def adapt_ambulatory_cases(app: Path, source: Path, end: date) -> AdapterResult:
     mo["ambulatoryCase"] = {**base, "date": date_ru(end), "period": period_cumulative(end),
                             **previous_cut_metadata(base, end), **previous_summary_metadata(base, end),
                             "numerator": current_numerator, "denominator": current_denominator,
+                            "fact": current_numerator / current_denominator * 100 if current_denominator else None,
+                            "source": f"ГИС ЭЗ РТ: эпикризы по законченному амбулаторному случаю на {date_ru(end)}",
                             "rows": retain_no_source_rows(previous, rows)}
     details["ambulatoryCase"], oids["ambulatoryCase"] = details_by_name, details_by_oid
     if is_full_month(end):

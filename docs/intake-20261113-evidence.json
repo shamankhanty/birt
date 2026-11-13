@@ -1,0 +1,276 @@
+{
+  "sourceArchive": "Исходники(4).rar",
+  "sourceArchiveSha256": "9ce07e3f1602ddd141e067005090de5dbfe3e05686b32f5fac4e30596b59ae6e",
+  "sources": [
+    {
+      "name": "1.Отчет СЭМД_РЭМД 01.01.-13.11.(Выгрузка из BI 13.11.).xlsx",
+      "family": "elmk",
+      "periodKind": "cumulative",
+      "endDate": "2026-11-13",
+      "status": "PASS",
+      "sha256": "96927d95659cd2329aad20f64bca5e94964b76e6e1acbb2c851916681fbccd9e"
+    },
+    {
+      "name": "I_Свид-ва о смерти по РТ (РМИАЦ) 01.01.-12.11.(Выгрузка из ГИС 13.11.).xlsx",
+      "family": "death_certificates",
+      "periodKind": "cumulative",
+      "endDate": "2026-11-12",
+      "status": "PASS",
+      "sha256": "8a489fdfedf7d4864b4b1283ff2adc01c28aa13ba66c6faba1deb26b88e371e2"
+    },
+    {
+      "name": "Доля_ТВСП,_обеспечивающих_передачу_СЭМД_«Протокол_диагностических_01.01.-13.11.(Выгрузка из BI 13.11.).xlsx",
+      "family": "tvsp_diagnostic",
+      "periodKind": "cumulative",
+      "endDate": "2026-11-13",
+      "status": "PASS",
+      "sha256": "914fd2a7233b7071e8f97c63cc6ef82647283b867686424bcdc748b72651fbba"
+    },
+    {
+      "name": "Закрытые случаи ДОГВН ПМО и зарегистрированные СЭМД 122 и 228_01.01.-12.11.(Выгрузка из ГИС 13.11.).xlsx",
+      "family": "preventive_remd",
+      "periodKind": "cumulative",
+      "endDate": "2026-11-12",
+      "status": "PASS",
+      "sha256": "254b3df6e9298c48ce3da9dd218e1f4ce7dd8831cf88c60b2e9461cd687cd716"
+    },
+    {
+      "name": "Количество_СЭМД_Результаты_профилактического_медицинского_осмотрадиспансеризации -01.01.-12.11.(Выгрузка из ГИС 13.11.).xlsx",
+      "family": "preventive_foms",
+      "periodKind": "cumulative",
+      "endDate": "2026-11-12",
+      "status": "PASS",
+      "sha256": "07f04b8542a8b6de88af87dfa97074dbf8293cab45ea29d8325eec91c37f3896"
+    },
+    {
+      "name": "Отправка сведений в федеральные сервисы_01.01.-12.11. (Выгрузка из АСУ ССМП 13.11.).xlsx",
+      "family": "asu_smp",
+      "periodKind": "cumulative",
+      "endDate": "2026-11-12",
+      "status": "PASS",
+      "sha256": "91788e75fdf97d3b341c3087d425750e2e8c58cab230e3a9375d2267370742ee"
+    },
+    {
+      "name": "Отчет по госпитализациям_v2_01.01.-12.11.(Выгрузка из ГИС 13.11.).xlsx",
+      "family": "hospital_cases",
+      "periodKind": "cumulative",
+      "endDate": "2026-11-12",
+      "status": "PASS",
+      "sha256": "129741a76232b846e0ff531e821993987afcb8675b6d1c00ac0595080a2e90e3"
+    },
+    {
+      "name": "Отчет_Доля_ТВСП_СЭМД_Протокол лабораторного исследования_Январь-Ноябрь(Выгрузка из BI 13.11.).xlsx",
+      "family": "tvsp_laboratory",
+      "periodKind": "cumulative",
+      "endDate": "2026-11-13",
+      "status": "PASS",
+      "sha256": "fc0202c6884720894275d270b4b32645ec3c9faacbb2a8c61848becda4e833b7"
+    },
+    {
+      "name": "Отчет_Доля_ТВСП_СЭМД_Эпикр по законч случаю амбулат_Талон амбулат пациента и Протокол консульт_Январь-Ноябрь(Выгрузка из BI 13.11.).xlsx",
+      "family": "tvsp_ambulatory",
+      "periodKind": "cumulative",
+      "endDate": "2026-11-13",
+      "status": "PASS",
+      "sha256": "4061830c61476346bcea331d37a9eb7814a6c48967dddbea742d017791d5cb69"
+    },
+    {
+      "name": "Отчет_Доля_ТВСП_СЭМД_Эпикриз_в_стац_выпис_или_Выписной_Январь-Ноябрь(Выгрузка из BI 13.11.).xlsx",
+      "family": "tvsp_stationary",
+      "periodKind": "cumulative",
+      "endDate": "2026-11-13",
+      "status": "PASS",
+      "sha256": "83b912d645df73d374b9f1c449122514dc7da01a547565f905030bed709328ed"
+    },
+    {
+      "name": "Отчет_СМП_ТВСП_01.01.-13.11. (Выгрузка из BI 13.11.).xlsx",
+      "family": "smp_tvsp",
+      "periodKind": "cumulative",
+      "endDate": "2026-11-13",
+      "status": "PASS",
+      "sha256": "aa08108a8b973bc14688788494ce3218cdf2f8d484be8d1dd0243d992258cd1e"
+    },
+    {
+      "name": "Отчет_ТМК_РЭМД_01.01.-13.11.(Выгрузка из BI 13.11.).xlsx",
+      "family": "tmk_remd",
+      "periodKind": "cumulative",
+      "endDate": "2026-11-13",
+      "status": "PASS",
+      "sha256": "72a184afff2c358d315502045bf0a4274fec3356d361adfc965453902be5e37b"
+    },
+    {
+      "name": "Отчет_по_ФАП_и_ФП_(кол-во_зарегистрированных_СЭМД)_01.01.-11.11.(Выгрузка стп ГИС 12.11.).xlsx",
+      "family": "fap_fp",
+      "periodKind": "cumulative",
+      "endDate": "2026-11-11",
+      "status": "PASS",
+      "sha256": "02f13029c64e7d5384ba1772242526472af4d347041bf0e924414b1970084e2d"
+    },
+    {
+      "name": "Отчет_по_законченному_случаю_амбулаторный__01.01.-11.11.(Выгрузка из ГИС 12.11.).xlsx",
+      "family": "ambulatory_cases",
+      "periodKind": "cumulative",
+      "endDate": "2026-11-11",
+      "status": "PASS",
+      "sha256": "d927a016cb36be5162da43f97bfb2fa081e40bb034378a5bb25d7f3481a9f239"
+    },
+    {
+      "name": "Отчёт - Отказы по регистрации ЭМД в РЭМД_01.01.-13.11.(Выгрузка из BI 13.11.).xlsx",
+      "family": "remd_errors",
+      "periodKind": "weekly",
+      "endDate": "2026-11-13",
+      "status": "PASS",
+      "sha256": "37ebccb17eb51c5bbd965df8609a11c0b2ff15fda4f87023b160f2f1c98c72c7"
+    },
+    {
+      "name": "Отчёт - Отказы по регистрации ЭМД в РЭМД_08.11.-13.11.(Выгрузка из BI 13.11.).xlsx",
+      "family": "remd_errors",
+      "periodKind": "weekly",
+      "endDate": "2026-11-13",
+      "status": "PASS",
+      "sha256": "66e43f4eef594fe6d97832ab83b73263f03bddfa036d86d7d46ee95103874b5e"
+    },
+    {
+      "name": "Отчёт_по_врачам_сформировавших_СЭМД - Ноябрь(Выгрузка из BI 13.11.).xlsx",
+      "family": "physicians",
+      "periodKind": "monthly",
+      "endDate": "2026-11-12",
+      "status": "PASS",
+      "sha256": "b555728c8f559e7018c441bd28b1b19f2e435f7cc73548b82ab8a7a0b9d54fce"
+    },
+    {
+      "name": "ПР_2_Кол-во заявл на прикр. от ЕГПУ за период. ИП ООГУЗ. Обраб. 2 раб.дн. 01.01.-12.11.(Выгрузка из ГИС 13.11.).xlsx",
+      "family": "egpu_attachment",
+      "periodKind": "cumulative",
+      "endDate": "2026-11-12",
+      "status": "PASS",
+      "sha256": "e7b0f1d9ae5adef15833406eceb6b11fa130208dbfc3ec9e17e5f807fc07a247"
+    },
+    {
+      "name": "Свидетельства_о_рождении_по_РТ_(РМИАЦ) 01.01.-12.11.(Выгрузка из ГИС 13.11.).xlsx",
+      "family": "birth_certificates",
+      "periodKind": "cumulative",
+      "endDate": "2026-11-12",
+      "status": "PASS",
+      "sha256": "24bda958d6e94601d5563e767b18b543857d8d2913cec9371c34b2c59b33287f"
+    },
+    {
+      "name": "ТМК_МАХ _01.01.-13.11.(Выгрузка из ГИС 13.11.).xlsx",
+      "family": "max_tmk_eln",
+      "periodKind": "cumulative",
+      "endDate": "2026-11-13",
+      "status": "PASS",
+      "sha256": "1a1661de8e99114f5180d5090138ade708b49063a552373422419edac5286da3"
+    },
+    {
+      "name": "ТМК_МАХ_01.11.-13.11.(Выгрузка из ГИС 13.11.).xlsx",
+      "family": "max_tmk_eln",
+      "periodKind": "cumulative",
+      "endDate": "2026-11-13",
+      "status": "WARNING",
+      "sha256": "5d141bc9bc41daddf705e116497032284d4c854bf33a7c7477e584947b4103da"
+    }
+  ],
+  "staging": {
+    "state": "PARTIAL",
+    "prepared": 32,
+    "retained": [
+      "electronicWaybill",
+      "shortInput",
+      "shortInputAmb",
+      "shortInputHosp"
+    ],
+    "formalValidation": {
+      "status": "WARNING",
+      "summary": {
+        "checks": 16,
+        "PASS": 12,
+        "WARNING": 4,
+        "FAIL": 0,
+        "blocking": 0,
+        "aiReviewItems": 1
+      }
+    },
+    "historicalReplay": "UNAVAILABLE"
+  },
+  "checks": [
+    {
+      "metric": "ambulatoryCase",
+      "date": "11.11.2026",
+      "numerator": 13987103,
+      "denominator": 15090914,
+      "fact": 92.68559213842184,
+      "rows": 142
+    },
+    {
+      "metric": "semd228",
+      "date": "12.11.2026",
+      "numerator": 2228284,
+      "denominator": 2494783,
+      "fact": 89.31774827710466,
+      "rows": 96
+    },
+    {
+      "metric": "hospital",
+      "date": "12.11.2026",
+      "numerator": 773297,
+      "denominator": 825954,
+      "fact": 93.62470549207342,
+      "rows": 129
+    },
+    {
+      "metric": "egpu",
+      "date": "12.11.2026",
+      "numerator": 46461,
+      "denominator": 47006,
+      "fact": null,
+      "rows": 84
+    },
+    {
+      "metric": "egpu2days",
+      "date": "12.11.2026",
+      "numerator": 40091,
+      "denominator": 47006,
+      "fact": null,
+      "rows": 84
+    }
+  ],
+  "remd": {
+    "period": "01.01.2026–13.11.2026",
+    "formed": "13.11.2026 08:37",
+    "total": 88213772,
+    "registeredTypes": 97
+  },
+  "contractSemd": {
+    "11": {
+      "previous": 3299,
+      "current": 3522
+    },
+    "12": {
+      "previous": 6,
+      "current": 6
+    },
+    "13": {
+      "previous": 0,
+      "current": 0
+    },
+    "14": {
+      "previous": 1,
+      "current": 1
+    },
+    "15": {
+      "previous": 3587,
+      "current": 3659
+    }
+  },
+  "independentChecks": {
+    "preventive122228SourceRows": 94,
+    "preventiveFomsSourceRows": 94,
+    "preventivePerOidColumnsMatch": true,
+    "preventiveFomsPerOidMatch": true,
+    "ambulatorySourceRows": 139,
+    "ambulatoryMergedLegalOids": 138,
+    "ambulatoryAliasDenominatorNotDoubleCounted": true,
+    "monthlyRating": "октябрь 2026 сохранён; ноябрь неполный"
+  }
+}
