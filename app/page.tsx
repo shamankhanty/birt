@@ -5320,7 +5320,10 @@ export default function Home() {
     ? `Ноябрь 2026 · накопительно на ${maxPeriodViews.cumulative.date}`
     : maxControlMonth === "2026-10" ? "Октябрь 2026 · закрыт" : "Ноябрь 2026 · открыт";
   const maxIndicatorServiceKey = matrixMetric === "visitMax" ? "visit" : matrixMetric === "tmkMaxCount" ? "tmk" : "eln";
-  const maxIndicatorSlice = maxPeriodView === "operational" ? maxOperationalSlice : maxPeriodViews.cumulative;
+  const maxIndicatorSlice = matrixMetric === "visitMax"
+    ? { date: null, previousDate: null, period: maxPeriodView === "cumulative"
+      ? "Накопительный план" : maxControlMonth === "2026-10" ? "Октябрь 2026" : "Ноябрь 2026" }
+    : maxPeriodView === "operational" ? maxOperationalSlice : maxPeriodViews.cumulative;
   const maxIndicatorMetricData = maxIndicatorServiceKey === "visit"
     ? (maxPeriodView === "cumulative" ? maxAppointmentPlanRaw.cumulative : maxControlMonth === "2026-10" ? maxAppointmentPlanRaw.october : maxAppointmentPlanRaw.november)
     : maxIndicatorSlice.metrics[maxIndicatorServiceKey];
@@ -5537,7 +5540,7 @@ export default function Home() {
     const daysRemaining = maxPeriodView === "operational" && slice.date ? daysRemainingInCutMonth(slice.date) : null;
     const recentPace = fact !== null && metric.previousPlannedMoFact !== null && intervalDays && intervalDays > 0 ? (fact - metric.previousPlannedMoFact) / intervalDays : null;
     const forecast = fact !== null && recentPace !== null && daysRemaining !== null ? fact + Math.max(0, recentPace) * daysRemaining : null;
-    return { achievement, fact, forecast, label: maxPeriodView === "operational" ? (slice.date ? `Оперативно ${slice.date.slice(0, 5)}` : "Ноябрь · нет данных") : `Накопительно ${slice.date.slice(0, 5)}`, plan };
+    return { achievement, fact, forecast, label: service === "visit" ? "Факт ожидается" : maxPeriodView === "operational" ? (slice.date ? `Оперативно ${slice.date.slice(0, 5)}` : "Ноябрь · нет данных") : `Накопительно ${slice.date.slice(0, 5)}`, plan };
   };
   const sidebarMetricValue = (id: string) => {
     const dataset = moData[id];
@@ -9054,8 +9057,8 @@ export default function Home() {
                   <p>{matrixMetric === "visitMax" ? "План по приказу задан накопительным итогом. План месяца — разность соседних контрольных точек. Фактическая выгрузка ещё не поступила; выполнение, динамика и прогноз не рассчитываются." : maxPeriodView === "operational"
                     ? maxControlMonth === "2026-10"
                       ? "Факт взят напрямую из октябрьского отчёта; накопительный факт сентября из него не вычитается. Прогноз рассчитан по темпу между двумя октябрьскими выгрузками. Октябрь закрыт и сохранён."
-                      : maxIndicatorSlice.date ? "Оперативный факт получен напрямую из месячной выгрузки 01–08.11.2026. Выполнение плана считается только по МО, включённым в утверждённый план; весь объём отчёта показан отдельно в источнике. У двух плановых МО отсутствуют строки; это не ноль. Прогноз появится после следующего сопоставимого среза ноября." : "Ноябрь открыт по отдельному утверждённому плану; до поступления прямой месячной выгрузки не подставлять октябрьские факты."
-                    : "Накопительный факт подтверждён на 08.11.2026 (отчёт 01.01–08.11), план на ноябрь — ТМК 177 000, ЛВН 90 000. Динамика накопительного показателя сравнивает полные накопительные срезы, месячный факт берётся из отдельного отчёта 01–08.11, а не разностью накопительных файлов."}</p>
+                      : maxIndicatorSlice.date ? `Оперативный факт получен напрямую из месячной выгрузки за ${maxIndicatorSlice.period}. Выполнение плана рассчитано по плановым МО. Весь объём отчёта указан в источнике. ${maxIndicatorSlice.previousDate ? "Прогноз рассчитан по темпу между двумя ноябрьскими срезами." : "Для прогноза нужен второй ноябрьский срез."}` : "Ожидается прямая месячная выгрузка за ноябрь."
+                    : `Накопительный факт подтверждён по отчёту за ${maxIndicatorSlice.period}. Динамика рассчитана по накопительным срезам. Оперативный факт берётся из отдельной месячной выгрузки.`}</p>
                 </section>
               )}
               {isMaxMetric && (
