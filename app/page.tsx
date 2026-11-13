@@ -3548,6 +3548,7 @@ export default function Home() {
     | "errors"
     | "methods"
     | "history"
+    | "gisOms"
   >("unified");
   const [maxMonth, setMaxMonth] = useState<"2026-08" | "2026-09">("2026-09");
   const [maxService, setMaxService] = useState<"visit" | "tmk" | "eln">("tmk");
@@ -5938,6 +5939,7 @@ export default function Home() {
               ["history", "История обновлений", "09"],
               ["semd", "Все виды СЭМД", "10"],
               ["errors", "Ошибки методик", "11"],
+              ["gisOms", "ГИС ОМС", "12"],
             ].map(([id, label, number]) =>
               id === "extraDivider" || id === "devDivider" ? (
                 <div className="mobileSectionDivider" key={id}>
@@ -6088,6 +6090,12 @@ export default function Home() {
               >
                 <span>11</span> Ошибки методик <b>{calcErrors.length}</b>
               </button>
+              <button
+                className={tab === "gisOms" ? "developmentSection active" : "developmentSection"}
+                onClick={() => { setTab("gisOms"); setShowMatrixSections(false); }}
+              >
+                <span>12</span> ГИС ОМС
+              </button>
               <div className="sideFoot">
                 <p>Версия {DASHBOARD_VERSION}</p>
                 <small>
@@ -6100,6 +6108,15 @@ export default function Home() {
         </aside>
 
         <section className="content">
+          {tab === "gisOms" && (
+            <section aria-label="ГИС ОМС — федеральный мониторинг">
+              <iframe
+                title="ГИС ОМС — федеральный мониторинг за III квартал 2026"
+                src="./gis-oms-2026-q3.html"
+                style={{ display: "block", width: "100%", height: "min(1200px, 85vh)", minHeight: 720, border: 0, borderRadius: 12, background: "#f5f7fa" }}
+              />
+            </section>
+          )}
           {tab === "frmr" && <FrmrReconciliation />}
           {tab === "summary" && (
             <>
