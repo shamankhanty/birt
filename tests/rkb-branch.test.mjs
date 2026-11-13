@@ -160,3 +160,25 @@ for rows in cases:
   const result = spawnSync('python3',['-c',code],{input:JSON.stringify(cases),encoding:'utf8'});
   assert.equal(result.status,0,result.stderr);
 });
+
+test("FRMO subdivision OIDs extend drilldown while disputed rows remain unassigned", () => {
+  const { spassk, rkb, divisionConflicts } = catalog.frmoSubdivisionRegister;
+  assert.equal(spassk.length, 41);
+  assert.equal(rkb.length, 156);
+  const oids = [...spassk, ...rkb].map((unit) => unit.spOid);
+  assert.equal(new Set(oids).size, 197);
+  assert.ok(oids.every((oid) => oid.startsWith(rootOid + ".0.")));
+
+  for (const [units, expected] of [[spassk, "context:spassk-crb"], [rkb, rootOid]]) {
+    for (const unit of units) {
+      const row = { oid: rootOid, spOid: unit.spOid };
+      const disputed = divisionConflicts.some((conflict) => conflict.spOid === unit.spOid);
+      assert.equal(runtime.organizationForMetric("semd228", row)?.oid, disputed ? undefined : expected);
+      assert.equal(classifyRkbSourceRow(row, catalog).aggregationApproved, false);
+    }
+  }
+
+  const newUnit = { oid: rootOid, spOid: rootOid + ".0.412013", buildingId: "unlisted-building" };
+  assert.equal(classifyRkbSourceRow(newUnit, catalog).buildingId, null);
+  assert.equal(runtime.organizationForMetric("semd228", newUnit)?.oid, "context:spassk-crb");
+});

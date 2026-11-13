@@ -4,6 +4,11 @@ import registry from "../../config/mo-reorganizations.json";
 const statusLabel = (value: string) =>
   value === "verified" ? "Подтверждено" : "Проверяется";
 
+const frmo = rkbBranch.frmoSubdivisionRegister;
+const disputedOids = new Set(frmo.divisionConflicts.map((unit) => unit.spOid));
+const branchBuildings = new Map(rkbBranch.subunits.map((unit) => [unit.spOid, unit.buildingId]));
+const parentBuildings = new Map(rkbBranch.parentSubunits.map((unit) => [unit.spOid, unit.buildingIds.join(", ")]));
+
 export default function ReorganizationsPage() {
   return (
     <main style={{ maxWidth: 1180, margin: "0 auto", padding: "32px 20px 64px", color: "#17352f", fontFamily: "Arial, sans-serif" }}>
@@ -68,11 +73,13 @@ export default function ReorganizationsPage() {
           Дата реорганизации по письму: 14.09.2020.
         </p>
         <p style={{ lineHeight: 1.6 }}>
-          Принадлежность подразделений подтверждена файлом «РКБ.xlsx»: Спасская ЦРБ —
-          {" "}<strong>{rkbBranch.provenance.uniqueSpOids} подразделений и {rkbBranch.provenance.uniqueBuildingIds} зданий</strong>,
-          {" "}РКБ — <strong>{rkbBranch.parentProvenance.uniqueSpOids} подразделений и {rkbBranch.parentProvenance.uniqueBuildingIds} зданий</strong>.
-          OID подразделений и ID зданий между двумя списками не пересекаются. Разделение применяется по этим идентификаторам.
-          Период выгрузки не указан; для расчёта показателей нужны сопоставимые числитель и знаменатель.
+          Выгрузка «{frmo.file}» содержит <strong>{frmo.spassk.length} подразделение Спасской ЦРБ</strong> и
+          {" "}<strong>{frmo.rkb.length} подразделений в группе «РКБ»</strong>.
+          Дата среза в файле отсутствует. ID зданий взяты из прежнего справочника «РКБ.xlsx» там, где совпал OID СП.
+        </p>
+        <p style={{ lineHeight: 1.6 }}>
+          Кабинет медико-психологического консультирования (Спасск), OID СП …641153, указан в группе «РКБ».
+          Принадлежность кабинета требует подтверждения.
         </p>
         <p style={{ padding: 14, background: "#fff5df", color: "#6d5727", borderRadius: 10, lineHeight: 1.6 }}>
           Проверка ФРМО на 30.10.2026: по коду 4001 в {rkbBranch.frmoAudit.rows} строках выявлено {rkbBranch.frmoAudit.issues} замечание(й),
@@ -92,7 +99,7 @@ export default function ReorganizationsPage() {
           Отдельное место филиалу в месячном рейтинге не присваивается.
         </p>
         <details style={{ marginTop: 18 }}>
-          <summary style={{ cursor: "pointer", fontWeight: 700, color: "#167e68" }}>Показать 39 структурных подразделений и идентификаторы</summary>
+          <summary style={{ cursor: "pointer", fontWeight: 700, color: "#167e68" }}>Показать подразделения Спасской ЦРБ ({frmo.spassk.length})</summary>
           <div style={{ overflowX: "auto", marginTop: 14 }}>
             <table style={{ width: "100%", minWidth: 800, borderCollapse: "collapse", fontSize: 13 }}>
               <thead>
@@ -101,11 +108,11 @@ export default function ReorganizationsPage() {
                 </tr>
               </thead>
               <tbody>
-                {rkbBranch.subunits.map((unit) => (
+                {frmo.spassk.map((unit) => (
                   <tr key={unit.spOid}>
                     <td style={{ padding: 9, borderBottom: "1px solid #e8efec" }}>{unit.name}</td>
                     <td style={{ padding: 9, borderBottom: "1px solid #e8efec", fontFamily: "monospace" }}>{unit.spOid}</td>
-                    <td style={{ padding: 9, borderBottom: "1px solid #e8efec" }}>{unit.buildingId}</td>
+                    <td style={{ padding: 9, borderBottom: "1px solid #e8efec" }}>{branchBuildings.get(unit.spOid) ?? "—"}</td>
                   </tr>
                 ))}
               </tbody>
@@ -113,14 +120,14 @@ export default function ReorganizationsPage() {
           </div>
         </details>
         <details style={{ marginTop: 18 }}>
-          <summary style={{ cursor: "pointer", fontWeight: 700, color: "#167e68" }}>Показать 98 структурных подразделений РКБ</summary>
+          <summary style={{ cursor: "pointer", fontWeight: 700, color: "#167e68" }}>Показать подразделения из группы «РКБ» ({frmo.rkb.length})</summary>
           <div style={{ overflowX: "auto", marginTop: 14 }}>
             <table style={{ width: "100%", minWidth: 800, borderCollapse: "collapse", fontSize: 13 }}>
               <thead><tr>{["Подразделение", "OID СП МО", "ID зданий"].map((h) => <th key={h} style={{ padding: 10, textAlign: "left" }}>{h}</th>)}</tr></thead>
-              <tbody>{rkbBranch.parentSubunits.map((unit) => <tr key={unit.spOid}>
-                <td style={{ padding: 9 }}>{unit.name}</td>
+              <tbody>{frmo.rkb.map((unit) => <tr key={unit.spOid}>
+                <td style={{ padding: 9 }}>{unit.name}{disputedOids.has(unit.spOid) ? " (уточняется)" : ""}</td>
                 <td style={{ padding: 9, fontFamily: "monospace" }}>{unit.spOid}</td>
-                <td style={{ padding: 9 }}>{unit.buildingIds.join(", ")}</td>
+                <td style={{ padding: 9 }}>{parentBuildings.get(unit.spOid) ?? "—"}</td>
               </tr>)}</tbody>
             </table>
           </div>
