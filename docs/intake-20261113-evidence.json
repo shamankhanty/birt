@@ -165,7 +165,7 @@
     {
       "name": "ТМК_МАХ_01.11.-13.11.(Выгрузка из ГИС 13.11.).xlsx",
       "family": "max_tmk_eln",
-      "periodKind": "cumulative",
+      "periodKind": "monthly",
       "endDate": "2026-11-13",
       "status": "WARNING",
       "sha256": "5d141bc9bc41daddf705e116497032284d4c854bf33a7c7477e584947b4103da"

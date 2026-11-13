@@ -5321,6 +5321,7 @@ export default function Home() {
     : maxControlMonth === "2026-10" ? "Октябрь 2026 · закрыт" : "Ноябрь 2026 · открыт";
   const maxIndicatorServiceKey = matrixMetric === "visitMax" ? "visit" : matrixMetric === "tmkMaxCount" ? "tmk" : "eln";
   const maxIndicatorSlice = maxPeriodView === "operational" ? maxOperationalSlice : maxPeriodViews.cumulative;
+  const maxIndicatorDate = matrixMetric === "visitMax" ? null : maxIndicatorSlice.date;
   const maxIndicatorMetricData = maxIndicatorServiceKey === "visit"
     ? (maxPeriodView === "cumulative" ? maxAppointmentPlanRaw.cumulative : maxControlMonth === "2026-10" ? maxAppointmentPlanRaw.october : maxAppointmentPlanRaw.november)
     : maxIndicatorSlice.metrics[maxIndicatorServiceKey];
@@ -5333,11 +5334,11 @@ export default function Home() {
   const maxIndicatorRemaining = maxIndicatorPlan === null || maxIndicatorFact === null
     ? null
     : Math.max(maxIndicatorPlan - maxIndicatorFact, 0);
-  const maxIndicatorDaysRemaining = maxPeriodView === "operational" && maxIndicatorSlice.date
-    ? daysRemainingInCutMonth(maxIndicatorSlice.date)
+  const maxIndicatorDaysRemaining = maxPeriodView === "operational" && maxIndicatorDate
+    ? daysRemainingInCutMonth(maxIndicatorDate)
     : null;
-  const maxIndicatorIntervalDays = maxIndicatorSlice.previousDate && maxIndicatorSlice.date
-    ? snapshotDistanceDays(maxIndicatorSlice.previousDate, maxIndicatorSlice.date)
+  const maxIndicatorIntervalDays = maxIndicatorSlice.previousDate && maxIndicatorDate
+    ? snapshotDistanceDays(maxIndicatorSlice.previousDate, maxIndicatorDate)
     : null;
   const maxIndicatorGrowth = maxIndicatorPreviousFact === null || maxIndicatorFact === null
     ? null
@@ -5537,7 +5538,7 @@ export default function Home() {
     const daysRemaining = maxPeriodView === "operational" && slice.date ? daysRemainingInCutMonth(slice.date) : null;
     const recentPace = fact !== null && metric.previousPlannedMoFact !== null && intervalDays && intervalDays > 0 ? (fact - metric.previousPlannedMoFact) / intervalDays : null;
     const forecast = fact !== null && recentPace !== null && daysRemaining !== null ? fact + Math.max(0, recentPace) * daysRemaining : null;
-    return { achievement, fact, forecast, label: maxPeriodView === "operational" ? (slice.date ? `Оперативно ${slice.date.slice(0, 5)}` : "Ноябрь · нет данных") : `Накопительно ${slice.date.slice(0, 5)}`, plan };
+    return { achievement, fact, forecast, label: service === "visit" ? "Факт ожидается" : maxPeriodView === "operational" ? (slice.date ? `Оперативно ${slice.date.slice(0, 5)}` : "Ноябрь · нет данных") : `Накопительно ${slice.date.slice(0, 5)}`, plan };
   };
   const sidebarMetricValue = (id: string) => {
     const dataset = moData[id];
@@ -8986,7 +8987,7 @@ export default function Home() {
                   </strong>
                   <span>
                     {isMaxMetric
-                      ? `${maxIndicatorAchievement === null ? "—" : `${format(maxIndicatorAchievement, 1)}%`} · факт ${maxIndicatorFact === null ? "Нет данных" : format(maxIndicatorFact, 0)} ${maxIndicatorSlice.date ? `на ${maxIndicatorSlice.date}` : "(ожидается выгрузка)"}`
+                      ? `${maxIndicatorAchievement === null ? "—" : `${format(maxIndicatorAchievement, 1)}%`} · факт ${maxIndicatorFact === null ? "Нет данных" : format(maxIndicatorFact, 0)} ${maxIndicatorDate ? `на ${maxIndicatorDate}` : "(ожидается выгрузка)"}`
                       : matrixMetric === "doctorsAll" ? "накопительный итог с 01.01 по 31.10.2026 · уникальные врачи в составе ФРМР на 31.10" : dynamicsMode === "month" ? (monthlyDataset ? "срез на 31.10.2026" : "месячный срез отсутствует") : `актуальность ${displayDatasetDate}`}
                   </span>
                 </div>
@@ -9001,7 +9002,7 @@ export default function Home() {
                     <button className={maxPeriodView === "operational" ? "active" : ""} onClick={() => setMaxPeriodView("operational")}>Оперативно</button>
                     <button className={maxPeriodView === "cumulative" ? "active" : ""} onClick={() => setMaxPeriodView("cumulative")}>Накопительно</button>
                   </div>
-                  <span>{matrixMetric === "visitMax" ? `${maxIndicatorSlice.period} · утверждённый план; факт ожидается` : maxPeriodView === "operational" ? `${maxIndicatorSlice.period} · ${maxIndicatorSlice.date ? "подтверждено" : "ожидается первый ноябрьский отчёт"}` : `${maxIndicatorSlice.period} · последний подтверждённый накопительный срез`}</span>
+                  <span>{matrixMetric === "visitMax" ? `Утверждённый план · факт ожидается` : maxPeriodView === "operational" ? `${maxIndicatorSlice.period} · ${maxIndicatorSlice.date ? "подтверждено" : "ожидается первый ноябрьский отчёт"}` : `${maxIndicatorSlice.period} · последний подтверждённый накопительный срез`}</span>
                 </div>
               )}
               {isMaxMetric ? (
@@ -9036,7 +9037,7 @@ export default function Home() {
                     </span>
                   </header>
                   <div className="planControlCards">
-                    <article><small>{maxPeriodView === "operational" ? (maxIndicatorSlice.date ? `Факт за месяц на ${maxIndicatorSlice.date}` : "Факт за месяц — ожидаем") : `Факт накопительно на ${maxIndicatorSlice.date}`}</small><strong>{maxIndicatorFact === null ? "Нет данных" : format(maxIndicatorFact, 0)}</strong></article>
+                    <article><small>{maxPeriodView === "operational" ? (maxIndicatorDate ? `Факт за месяц на ${maxIndicatorDate}` : "Факт за месяц — ожидаем") : maxIndicatorDate ? `Факт накопительно на ${maxIndicatorDate}` : "Накопительный факт — ожидаем"}</small><strong>{maxIndicatorFact === null ? "Нет данных" : format(maxIndicatorFact, 0)}</strong></article>
                     <article><small>{maxPeriodView === "operational" ? "План на месяц" : "Накопительный план"}</small><strong>{format(maxIndicatorPlan, 0)}</strong></article>
                     <article><small>Выполнение плана</small><strong>{maxIndicatorAchievement === null ? "—" : `${format(maxIndicatorAchievement, 2)}%`}</strong></article>
                     <article><small>Осталось до плана</small><strong>{maxIndicatorRemaining === null ? "—" : format(maxIndicatorRemaining, 0)}</strong></article>
@@ -9047,15 +9048,15 @@ export default function Home() {
                     )}
                   </div>
                   <div className="planTempoLine">
-                    <span>{maxIndicatorSlice.previousDate && maxIndicatorSlice.date ? `Изменение ${maxIndicatorSlice.previousDate} → ${maxIndicatorSlice.date}` : "Динамика появится после следующей выгрузки"}</span><b className={(maxIndicatorGrowth ?? 0) > 0 ? "deltaUp" : ""}>{maxIndicatorGrowth === null ? "—" : `${maxIndicatorGrowth > 0 ? "+" : ""}${format(maxIndicatorGrowth, 0)}`}</b>
+                    <span>{maxIndicatorSlice.previousDate && maxIndicatorDate ? `Изменение ${maxIndicatorSlice.previousDate} → ${maxIndicatorDate}` : "Динамика появится после следующей выгрузки"}</span><b className={(maxIndicatorGrowth ?? 0) > 0 ? "deltaUp" : ""}>{maxIndicatorGrowth === null ? "—" : `${maxIndicatorGrowth > 0 ? "+" : ""}${format(maxIndicatorGrowth, 0)}`}</b>
                     <span>{maxPeriodView === "operational" ? "Текущий темп" : "Средний прирост"}</span><b>{maxIndicatorRecentPace === null ? "—" : `${format(maxIndicatorRecentPace, 1)} в день`}</b>
                     {maxPeriodView === "operational" && <><span>Нужно до конца месяца</span><b>{maxIndicatorRequiredPace === null ? "—" : `${format(maxIndicatorRequiredPace, 1)} в день`}</b></>}
                   </div>
                   <p>{matrixMetric === "visitMax" ? "План по приказу задан накопительным итогом. План месяца — разность соседних контрольных точек. Фактическая выгрузка ещё не поступила; выполнение, динамика и прогноз не рассчитываются." : maxPeriodView === "operational"
                     ? maxControlMonth === "2026-10"
                       ? "Факт взят напрямую из октябрьского отчёта; накопительный факт сентября из него не вычитается. Прогноз рассчитан по темпу между двумя октябрьскими выгрузками. Октябрь закрыт и сохранён."
-                      : maxIndicatorSlice.date ? "Оперативный факт получен напрямую из месячной выгрузки 01–08.11.2026. Выполнение плана считается только по МО, включённым в утверждённый план; весь объём отчёта показан отдельно в источнике. У двух плановых МО отсутствуют строки; это не ноль. Прогноз появится после следующего сопоставимого среза ноября." : "Ноябрь открыт по отдельному утверждённому плану; до поступления прямой месячной выгрузки не подставлять октябрьские факты."
-                    : "Накопительный факт подтверждён на 08.11.2026 (отчёт 01.01–08.11), план на ноябрь — ТМК 177 000, ЛВН 90 000. Динамика накопительного показателя сравнивает полные накопительные срезы, месячный факт берётся из отдельного отчёта 01–08.11, а не разностью накопительных файлов."}</p>
+                      : maxIndicatorSlice.date ? `Оперативный факт получен напрямую из месячной выгрузки за ${maxIndicatorSlice.period}. Выполнение плана рассчитано по плановым МО. Весь объём отчёта указан в источнике. ${maxIndicatorSlice.previousDate ? "Прогноз рассчитан по темпу между двумя ноябрьскими срезами." : "Для прогноза нужен второй ноябрьский срез."}` : "Ожидается прямая месячная выгрузка за ноябрь."
+                    : `Накопительный факт подтверждён по отчёту за ${maxIndicatorSlice.period}. Динамика рассчитана по накопительным срезам. Оперативный факт берётся из отдельной месячной выгрузки.`}</p>
                 </section>
               )}
               {isMaxMetric && (

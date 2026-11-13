@@ -3,6 +3,7 @@ import fs from 'node:fs';
 import test from 'node:test';
 const read=(path)=>JSON.parse(fs.readFileSync(path,'utf8'));
 const views=read('app/max-period-views.json');
+const previousViews=read('baseline/archive/pre-20261113/app/max-period-views.json');
 const targets=read('config/max-targets-2026.json');
 const report=read('app/month-closure-2026-10.json');
 const page=fs.readFileSync('app/page.tsx','utf8');
@@ -29,7 +30,7 @@ test('MAX October is closed with original source facts and no changes to October
 
 test('MAX November plan uses November-minus-October approved targets, not old 2026 year-end plan',()=>{
  assert.equal(views.monthLabel,'Ноябрь 2026');
- assert.equal(views.operational.period,'01.11–08.11.2026');
+ assert.equal(views.operational.period,'01.11–13.11.2026');
  for(const [id,monthlyPlan,cumulative] of [['tmk',16000,177000],['eln',8000,90000]]){
   const metric=views.operational.metrics[id];
   assert.equal(metric.republicPlan,monthlyPlan);
@@ -45,46 +46,43 @@ test('MAX November plan uses November-minus-October approved targets, not old 20
  }
 });
 
-test('MAX November uses 94 direct monthly source rows for 01–08.11 without subtracting cumulative',()=>{
- const source=read('docs/update-20261109-max-november-direct.json');
- assert.equal(views.operational.status,'partial_month_source');
- assert.equal(views.operational.date,'08.11.2026');
- assert.equal(views.operational.previousDate,null);
- assert.ok(views.operational.source.includes('01.11-08.11.xlsx'));
- assert.equal(source.sourceRows,94);
- assert.equal(source.alignedSourceRows,97);
- const pairs=source.rows.split(';').map(item=>item==='-'?[null,null]:item.split('/').map(Number));
- assert.equal(pairs.length,97);
- assert.deepEqual(source.noSourceRowIndexes,[1,94,96]);
- for(const [id,idx,region,inPlan,missingCount] of [['tmk',0,2006,1988,2],['eln',1,1939,1925,2]]){
-   const metric=views.operational.metrics[id];
-   assert.equal(pairs.reduce((sum,p)=>sum+(p[idx]??0),0),region);
-   assert.equal(metric.sourceTotal,region);
-   assert.equal(metric.plannedMoFact,inPlan);
-   assert.equal(metric.factStatus,'partial_november_source');
-   assert.equal(metric.previousSourceTotal,null);
-   assert.equal(metric.previousPlannedMoFact,null);
-   assert.equal(metric.rows.length,85);
-   assert.equal(metric.rows.filter(row=>row.fact===null).length,missingCount);
-   assert.equal(metric.rows.reduce((sum,row)=>sum+(row.fact??0),0),inPlan);
-   assert.ok(metric.rows.every(row=>row.previous===null));
-   assert.equal(metric.rows.find(row=>row.oid.endsWith('.1146')).fact,null);
-   assert.equal(metric.rows.find(row=>row.oid.endsWith('.1148')).fact,pairs[26][idx]);
-   assert.ok(metric.rows.find(row=>row.oid==='1.2.643.5.1.13.13.12.2.16.18650').fact===null);
+test('MAX November uses the direct 13 November report and compares it with the 8 November cut',()=>{
+ const previousSource=read('docs/update-20261109-max-november-direct.json');
+ const evidence=read('docs/intake-20261113-evidence.json');
+ const operational=views.operational;
+ assert.equal(operational.status,'partial_month_source');
+ assert.equal(operational.date,'13.11.2026');
+ assert.equal(operational.previousDate,previousViews.operational.date);
+ assert.equal(operational.previousPeriod,previousViews.operational.period);
+ assert.equal(operational.previousSource,previousViews.operational.source);
+ assert.ok(evidence.sources.some(source=>source.name===operational.source && source.periodKind==='monthly' && source.endDate==='2026-11-13'));
+ assert.deepEqual(views.cumulative,previousViews.cumulative);
+ assert.deepEqual(views.closedMonths,previousViews.closedMonths);
+ for(const [id,region,inPlan,previousInPlan,dgbFact] of [['tmk',4832,4769,1988,0],['eln',3578,3546,1925,3]]){
+  const metric=operational.metrics[id];
+  const previousByOid=new Map(previousViews.operational.metrics[id].rows.map(row=>[row.oid,row.fact]));
+  assert.equal(metric.sourceTotal,region);
+  assert.equal(metric.plannedMoFact,inPlan);
+  assert.equal(metric.factStatus,'partial_november_source');
+  assert.equal(metric.previousSourceTotal,previousSource.totals[id]);
+  assert.equal(metric.previousPlannedMoFact,previousInPlan);
+  assert.equal(metric.rows.reduce((sum,row)=>sum+(row.fact??0),0),inPlan);
+  assert.ok(metric.rows.every(row=>row.previous===previousByOid.get(row.oid)));
+  assert.equal(metric.rows.filter(row=>row.fact===null).length,3);
+  assert.equal(metric.rows.find(row=>row.oid.endsWith('.1146')).fact,null);
+  assert.equal(metric.rows.find(row=>row.oid.endsWith('.18650')).fact,null);
+  assert.equal(metric.rows.find(row=>row.oid.endsWith('.1148')).fact,dgbFact);
+  assert.equal(metric.rows.filter(row=>row.fact!==null).reduce((sum,row)=>sum+(row.previous??0),0),previousInPlan);
  }
- assert.equal(views.cumulative.metrics.tmk.sourceTotal,76211);
- assert.equal(views.cumulative.metrics.eln.sourceTotal,56941);
- assert.equal(views.cumulative.metrics.tmk.previousSourceTotal,74208);
- assert.equal(views.cumulative.metrics.eln.previousSourceTotal,55268);
  assert.equal(views.nextCumulativeTarget.fact,null);
 });
 
-test('UI shows confirmed November direct and cumulative facts; monthly forecast waits for a second cut',()=>{
+test('UI derives the MAX source dates and enables November forecasts from comparable cuts',()=>{
  assert.match(page,/maxControlMonth/);
  assert.match(page,/Октябрь · закрыт/);
  assert.match(page,/Ноябрь · план/);
- assert.match(page,/Оперативный факт получен напрямую из месячной выгрузки 01–08.11.2026/u);
- assert.match(page,/Накопительный факт подтверждён на 08.11.2026/u);
+ assert.match(page,/Оперативный факт получен напрямую из месячной выгрузки за \$\{maxIndicatorSlice.period\}/u);
+ assert.match(page,/Накопительный факт подтверждён по отчёту за \$\{maxIndicatorSlice.period\}/u);
  assert.match(page,/maxIndicatorAchievement === null \? "Нет данных"/u);
  assert.match(page,/maxIndicatorFact !== null/u);
  assert.match(page,/maxIndicatorForecast/u);
