@@ -806,16 +806,6 @@
         "trend": null,
         "sourceStatus": "no_source_row",
         "sourceWarning": "Нет строки в актуальной выгрузке; значение не заменено нулём."
-      },
-      {
-        "name": "Спасская ЦРБ",
-        "oid": "context:spassk-crb",
-        "fact": null,
-        "count": null,
-        "previous": null,
-        "trend": null,
-        "sourceStatus": "no_source_row",
-        "sourceWarning": "Нет строки в актуальной выгрузке; значение не заменено нулём."
       }
     ],
     "previousDate": "08.11.2026",
@@ -4711,16 +4701,6 @@
       {
         "name": "ДГБ № 1 г.Казань",
         "oid": "1.2.643.5.1.13.13.12.2.16.1148",
-        "fact": null,
-        "count": null,
-        "previous": null,
-        "trend": null,
-        "sourceStatus": "no_source_row",
-        "sourceWarning": "Нет строки в актуальной выгрузке; значение не заменено нулём."
-      },
-      {
-        "name": "Спасская ЦРБ",
-        "oid": "context:spassk-crb",
         "fact": null,
         "count": null,
         "previous": null,
