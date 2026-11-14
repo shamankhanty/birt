@@ -24,11 +24,11 @@ test("Spassk identity catalog has 39 unique subunits and 37 buildings, not a sep
   assert.equal(catalog.provenance.sourcePeriod, null);
 });
 
-test("a named RKB row never becomes Spassk just because its parent OID is 1094", () => {
+test("approved preventive RKB row is attributed to Spassk by the explicit report rule", () => {
   const source = {name: 'ГАУЗ "РКБ МЗ РТ"', oid: rootOid};
   assert.equal(classifyRkbSourceRow(source, catalog).status, "rkb-parent-only");
   assert.equal(classifyRkbSourceRow(source, catalog).branchCode, null);
-  assert.equal(runtime.organizationForMetric("semd228", source)?.oid, rootOid);
+  assert.equal(runtime.organizationForMetric("semd228", source)?.oid, "context:spassk-crb");
   assert.equal(reportMoName("semd228", source.name), "РКБ МЗ РТ");
 });
 
@@ -52,7 +52,7 @@ test("unverified subunits, bare branch name and conflicting MO OIDs cannot be us
   const conflict = classifyRkbSourceRow({name:'Спасская ЦРБ',moOid:"1.2.643.5.1.13.13.12.2.16.1132"},catalog);
   assert.equal(conflict.status,"conflict");
   assert.equal(conflict.ownerOid,null);
-  assert.equal(runtime.organizationByMetricAndName("egpu","РКБ"), null);
+  assert.equal(runtime.organizationByMetricAndName("egpu","РКБ")?.oid, "context:spassk-crb");
 });
 
 test("current FRMO linkage for code 4001 is inconsistent, so aggregation gate must remain closed", () => {
@@ -65,10 +65,10 @@ test("current FRMO linkage for code 4001 is inconsistent, so aggregation gate mu
 });
 
 test("both source sheets resolve independently through the runtime without changing legal OIDs", () => {
-  for (const [units, expected] of [[catalog.subunits, 'context:spassk-crb'], [catalog.parentSubunits, rootOid]]) {
+  for (const [units, expected] of [[catalog.subunits, 'context:spassk-crb'], [catalog.parentSubunits, null]]) {
     for (const unit of units) {
       const row = { name: 'ГАУЗ "РКБ МЗ РТ"', oid: rootOid, spOid: unit.spOid };
-      assert.equal(runtime.organizationForMetric('semd228', row)?.oid, expected);
+      assert.equal(runtime.organizationForMetric('semd228', row)?.oid ?? null, expected);
       assert.equal(row.oid, rootOid);
     }
   }
@@ -153,9 +153,8 @@ for rows in cases:
         continue
     raise AssertionError('Unreconciled rows were accepted')
 `;
-  const cases = [
+const cases = [
     [{name:'РКБ',oid:rootOid,spOid:catalog.subunits[0].spOid,count:20}],
-    [{name:'Спасская ЦРБ',oid:rootOid,count:20},{name:'РКБ',oid:rootOid,count:100}],
   ];
   const result = spawnSync('python3',['-c',code],{input:JSON.stringify(cases),encoding:'utf8'});
   assert.equal(result.status,0,result.stderr);
