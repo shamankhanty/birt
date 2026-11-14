@@ -9,8 +9,8 @@
       "tmk": {
         "sourceTotal": 76211,
         "previousSourceTotal": 74208,
-        "plannedMoFact": 74536,
-        "previousPlannedMoFact": 72550,
+        "plannedMoFact": 75838,
+        "previousPlannedMoFact": 73845,
         "republicPlan": 177000,
         "rows": [
           {
@@ -457,8 +457,8 @@
           {
             "name": "Филиал ГАУЗ «Республиканская клиническая больница Министерства здравоохранения Республики Татарстан» - «Спасская ЦРБ»",
             "oid": "1.2.643.5.1.13.13.12.2.16.18650",
-            "fact": null,
-            "previous": null,
+            "fact": 1302,
+            "previous": 1295,
             "plan": 659
           },
           {
@@ -613,8 +613,8 @@
       "eln": {
         "sourceTotal": 56941,
         "previousSourceTotal": 55268,
-        "plannedMoFact": 56411,
-        "previousPlannedMoFact": 54745,
+        "plannedMoFact": 56448,
+        "previousPlannedMoFact": 54781,
         "republicPlan": 90000,
         "rows": [
           {
@@ -1061,8 +1061,8 @@
           {
             "name": "Филиал ГАУЗ «Республиканская клиническая больница Министерства здравоохранения Республики Татарстан» - «Спасская ЦРБ»",
             "oid": "1.2.643.5.1.13.13.12.2.16.18650",
-            "fact": null,
-            "previous": null,
+            "fact": 37,
+            "previous": 36,
             "plan": 336
           },
           {
@@ -1231,8 +1231,8 @@
       "tmk": {
         "sourceTotal": 4832,
         "previousSourceTotal": 2006,
-        "plannedMoFact": 4769,
-        "previousPlannedMoFact": 1988,
+        "plannedMoFact": 4805,
+        "previousPlannedMoFact": 1995,
         "republicPlan": 16000,
         "rows": [
           {
@@ -1679,8 +1679,8 @@
           {
             "name": "Филиал ГАУЗ «Республиканская клиническая больница Министерства здравоохранения Республики Татарстан» - «Спасская ЦРБ»",
             "oid": "1.2.643.5.1.13.13.12.2.16.18650",
-            "fact": null,
-            "previous": null,
+            "fact": 36,
+            "previous": 7,
             "plan": 66
           },
           {
@@ -1837,8 +1837,8 @@
       "eln": {
         "sourceTotal": 3578,
         "previousSourceTotal": 1939,
-        "plannedMoFact": 3546,
-        "previousPlannedMoFact": 1925,
+        "plannedMoFact": 3548,
+        "previousPlannedMoFact": 1926,
         "republicPlan": 8000,
         "rows": [
           {
@@ -2285,8 +2285,8 @@
           {
             "name": "Филиал ГАУЗ «Республиканская клиническая больница Министерства здравоохранения Республики Татарстан» - «Спасская ЦРБ»",
             "oid": "1.2.643.5.1.13.13.12.2.16.18650",
-            "fact": null,
-            "previous": null,
+            "fact": 2,
+            "previous": 1,
             "plan": 32
           },
           {
@@ -2468,7 +2468,7 @@
           "tmk": {
             "sourceTotal": 16224,
             "previousSourceTotal": 13932,
-            "plannedMoFact": 16031,
+            "plannedMoFact": 16097,
             "previousPlannedMoFact": 13789,
             "republicPlan": 16000,
             "rows": [
@@ -2916,7 +2916,7 @@
               {
                 "name": "Филиал ГАУЗ «Республиканская клиническая больница Министерства здравоохранения Республики Татарстан» - «Спасская ЦРБ»",
                 "oid": "1.2.643.5.1.13.13.12.2.16.18650",
-                "fact": null,
+                "fact": 66,
                 "previous": null,
                 "plan": 65
               },
@@ -3072,7 +3072,7 @@
           "eln": {
             "sourceTotal": 12590,
             "previousSourceTotal": 11184,
-            "plannedMoFact": 12470,
+            "plannedMoFact": 12474,
             "previousPlannedMoFact": 11077,
             "republicPlan": 8000,
             "rows": [
@@ -3520,7 +3520,7 @@
               {
                 "name": "Филиал ГАУЗ «Республиканская клиническая больница Министерства здравоохранения Республики Татарстан» - «Спасская ЦРБ»",
                 "oid": "1.2.643.5.1.13.13.12.2.16.18650",
-                "fact": null,
+                "fact": 4,
                 "previous": null,
                 "plan": 33
               },
@@ -3684,7 +3684,7 @@
           "tmk": {
             "sourceTotal": 73479,
             "previousSourceTotal": 71745,
-            "plannedMoFact": 71842,
+            "plannedMoFact": 73137,
             "previousPlannedMoFact": 70140,
             "republicPlan": 161000,
             "rows": [
@@ -4132,7 +4132,7 @@
               {
                 "name": "Филиал ГАУЗ «Республиканская клиническая больница Министерства здравоохранения Республики Татарстан» - «Спасская ЦРБ»",
                 "oid": "1.2.643.5.1.13.13.12.2.16.18650",
-                "fact": null,
+                "fact": 1295,
                 "previous": null,
                 "plan": 659
               },
@@ -4288,7 +4288,7 @@
           "eln": {
             "sourceTotal": 55268,
             "previousSourceTotal": 54134,
-            "plannedMoFact": 54745,
+            "plannedMoFact": 54781,
             "previousPlannedMoFact": 53621,
             "republicPlan": 82000,
             "rows": [
@@ -4736,7 +4736,7 @@
               {
                 "name": "Филиал ГАУЗ «Республиканская клиническая больница Министерства здравоохранения Республики Татарстан» - «Спасская ЦРБ»",
                 "oid": "1.2.643.5.1.13.13.12.2.16.18650",
-                "fact": null,
+                "fact": 36,
                 "previous": null,
                 "plan": 336
               },

@@ -35,6 +35,10 @@ const groups = registry.groups.map((group) => `
   </div>
 </section>`).join("");
 
+const frmo = rkbBranch.frmoSubdivisionRegister;
+const disputedOids = new Set(frmo.divisionConflicts.map((unit) => unit.spOid));
+const branchBuildings = new Map(rkbBranch.subunits.map((unit) => [unit.spOid, unit.buildingId]));
+const parentBuildings = new Map(rkbBranch.parentSubunits.map((unit) => [unit.spOid, unit.buildingIds.join(", ")]));
 const branchSection = `
 <section class="card">
   <div class="head"><p>РКБ · ФИЛИАЛЬНАЯ СТРУКТУРА</p><h2>Спасская ЦРБ — филиал РКБ</h2><span class="badge">Принадлежность подразделений подтверждена</span></div>
@@ -42,11 +46,11 @@ const branchSection = `
     <p><b>Код филиала (исторический):</b> ${escapeHtml(rkbBranch.branch.historicCode)};
     <b>код юридического лица:</b> ${escapeHtml(rkbBranch.parent.currentCode)};
     <b>OID РКБ:</b> <span class="oid">${escapeHtml(rkbBranch.parent.oid)}</span>.</p>
-    <p>Реорганизация с 14.09.2020 по письму МО. По файлу «РКБ.xlsx» подтверждены два непересекающихся списка:
-    <b>Спасская ЦРБ — ${rkbBranch.provenance.uniqueSpOids} подразделений и ${rkbBranch.provenance.uniqueBuildingIds} зданий</b>;
-    <b>РКБ — ${rkbBranch.parentProvenance.uniqueSpOids} подразделений и ${rkbBranch.parentProvenance.uniqueBuildingIds} зданий</b>.
-    Разделение применяется по OID подразделения или ID здания. Дата среза и идентификаторы отдельных ЭМД отсутствуют;
-    для расчёта показателей нужны сопоставимые числитель и знаменатель.</p>
+    <p>Реорганизация с 14.09.2020 по письму МО. Выгрузка «${escapeHtml(frmo.file)}» содержит
+    <b>${frmo.spassk.length} подразделение Спасской ЦРБ</b> и <b>${frmo.rkb.length} подразделений в группе «РКБ»</b>.
+    Дата среза в файле отсутствует. ID зданий взяты из прежнего справочника «РКБ.xlsx» там, где совпал OID СП.</p>
+    <p class="notice">Кабинет медико-психологического консультирования (Спасск), OID СП …641153, указан в группе «РКБ».
+    Принадлежность кабинета требует подтверждения.</p>
     <p class="notice">По сверке ФРМО на 30.10.2026: ${rkbBranch.frmoAudit.rows} записей кода 4001 и ${rkbBranch.frmoAudit.issues} замечаний.
     В ${rkbBranch.frmoAudit.linkComparison.mismatchedRows} строках различаются привязки филиала и отделения;
     ${rkbBranch.frmoAudit.linkComparison.departmentRowsMatchingSpasskCatalog} строки отделений совпадают с подтверждённым списком Спасска.
@@ -57,14 +61,14 @@ const branchSection = `
     СЭМД 122/228 и обращения профилактики по общему OID РКБ относятся к Спасской ЦРБ: сама РКБ профилактические осмотры не проводит (уточнение 04.11.2026).
     Свидетельства о рождении и смерти и остальные документы общего РЭМД сохраняются за РКБ. Отдельное место филиалу в месячном рейтинге не присваивается.</p>
     <details>
-      <summary><b>Раскрыть ${rkbBranch.subunits.length} структурных подразделений филиала</b></summary>
+      <summary><b>Раскрыть ${frmo.spassk.length} структурных подразделений филиала</b></summary>
       <div class="table-wrap"><table><thead><tr><th>Подразделение</th><th>OID СП МО</th><th>ID здания</th></tr></thead>
-      <tbody>${rkbBranch.subunits.map(unit => `<tr><td>${escapeHtml(unit.name)}</td><td class="oid">${escapeHtml(unit.spOid)}</td><td>${escapeHtml(unit.buildingId)}</td></tr>`).join("")}</tbody></table></div>
+      <tbody>${frmo.spassk.map(unit => `<tr><td>${escapeHtml(unit.name)}</td><td class="oid">${escapeHtml(unit.spOid)}</td><td>${escapeHtml(branchBuildings.get(unit.spOid) ?? "—")}</td></tr>`).join("")}</tbody></table></div>
     </details>
     <details>
-      <summary><b>Раскрыть ${rkbBranch.parentSubunits.length} структурных подразделений РКБ</b></summary>
+      <summary><b>Раскрыть ${frmo.rkb.length} структурных подразделений РКБ</b></summary>
       <div class="table-wrap"><table><thead><tr><th>Подразделение</th><th>OID СП МО</th><th>ID зданий</th></tr></thead>
-      <tbody>${rkbBranch.parentSubunits.map(unit => `<tr><td>${escapeHtml(unit.name)}</td><td class="oid">${escapeHtml(unit.spOid)}</td><td>${escapeHtml(unit.buildingIds.join(", "))}</td></tr>`).join("")}</tbody></table></div>
+      <tbody>${frmo.rkb.map(unit => `<tr><td>${escapeHtml(unit.name)}${disputedOids.has(unit.spOid) ? " (уточняется)" : ""}</td><td class="oid">${escapeHtml(unit.spOid)}</td><td>${escapeHtml(parentBuildings.get(unit.spOid) ?? "—")}</td></tr>`).join("")}</tbody></table></div>
     </details>
   </div>
 </section>`;
@@ -83,4 +87,4 @@ ${branchSection}
 
 await mkdir(path.dirname(output), { recursive: true });
 await writeFile(output, html, "utf8");
-console.log(JSON.stringify({ output, groups: registry.groups.length, spasskSubunits: rkbBranch.subunits.length }, null, 2));
+console.log(JSON.stringify({ output, groups: registry.groups.length, spasskSubunits: frmo.spassk.length }, null, 2));

@@ -2215,13 +2215,15 @@
         "julyQuantity": "23 973 / 28 967"
       },
       {
-        "name": "ГАУЗ \"РКБ МЗ РТ\"",
+        "name": "Спасская ЦРБ",
         "oid": "1.2.643.5.1.13.13.12.2.16.1094",
         "june": 55.46564257303525,
         "july": 78.62933873828224,
         "change": 23.163696165246996,
         "juneQuantity": "4 044 / 7 291",
-        "julyQuantity": "6 207 / 7 894"
+        "julyQuantity": "6 207 / 7 894",
+        "reportingEntityId": "context:spassk-crb",
+        "sourceReport": "gis-preventive-encounters"
       },
       {
         "name": "ГАУЗ \"Рыбно-Слободская ЦРБ\"",
@@ -4171,13 +4173,15 @@
         "julyQuantity": "35 911 / 46 392"
       },
       {
-        "name": "ГАУЗ \"РКБ МЗ РТ\"",
+        "name": "Спасская ЦРБ",
         "oid": "1.2.643.5.1.13.13.12.2.16.1094",
         "june": 19.774967639151647,
         "july": 93.04729699060414,
         "change": 73.2723293514525,
         "juneQuantity": "1986 / 10043",
-        "julyQuantity": "81 997 / 88 124"
+        "julyQuantity": "81 997 / 88 124",
+        "reportingEntityId": "context:spassk-crb",
+        "sourceReport": "gis-ambulatory-cases"
       },
       {
         "name": "ГАУЗ \"РКИБ им. проф. А.Ф. Агафонова\"",
@@ -6397,13 +6401,15 @@
         "julyQuantity": "44"
       },
       {
-        "name": "РКБ МЗ РТ",
+        "name": "Спасская ЦРБ",
         "oid": "1.2.643.5.1.13.13.12.2.16.1094",
         "june": null,
         "july": 66,
         "change": null,
         "juneQuantity": null,
-        "julyQuantity": "66"
+        "julyQuantity": "66",
+        "reportingEntityId": "context:spassk-crb",
+        "sourceReport": "gis-max-tmk"
       },
       {
         "name": "РКОД МЗ РТ ИМ. ПРОФ. М.З.СИГАЛА г.Казань",
@@ -6609,16 +6615,6 @@
         "juneQuantity": null,
         "julyQuantity": "0",
         "sourceStatus": "external_source"
-      },
-      {
-        "name": "Спасская ЦРБ",
-        "oid": "context:spassk-crb",
-        "june": null,
-        "july": null,
-        "change": null,
-        "juneQuantity": null,
-        "julyQuantity": null,
-        "sourceStatus": "no_source_row"
       },
       {
         "name": "СП №1 г.Наб.Челны",
@@ -7311,13 +7307,15 @@
         "julyQuantity": "261"
       },
       {
-        "name": "РКБ МЗ РТ",
+        "name": "Спасская ЦРБ",
         "oid": "1.2.643.5.1.13.13.12.2.16.1094",
         "june": null,
         "july": 4,
         "change": null,
         "juneQuantity": null,
-        "julyQuantity": "4"
+        "julyQuantity": "4",
+        "reportingEntityId": "context:spassk-crb",
+        "sourceReport": "gis-max-eln"
       },
       {
         "name": "РКОД МЗ РТ ИМ. ПРОФ. М.З.СИГАЛА г.Казань",
@@ -7523,16 +7521,6 @@
         "juneQuantity": null,
         "julyQuantity": "0",
         "sourceStatus": "external_source"
-      },
-      {
-        "name": "Спасская ЦРБ",
-        "oid": "context:spassk-crb",
-        "june": null,
-        "july": null,
-        "change": null,
-        "juneQuantity": null,
-        "julyQuantity": null,
-        "sourceStatus": "no_source_row"
       },
       {
         "name": "СП №1 г.Наб.Челны",

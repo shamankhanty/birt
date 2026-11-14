@@ -46,7 +46,7 @@ test('MAX November plan uses November-minus-October approved targets, not old 20
  }
 });
 
-test('MAX November uses the direct 13 November report and compares it with the 8 November cut',()=>{
+test('MAX November uses the direct report and attributes the parent row to the planned Spassk branch',()=>{
  const previousSource=read('docs/update-20261109-max-november-direct.json');
  const evidence=read('docs/intake-20261113-evidence.json');
  const operational=views.operational;
@@ -56,9 +56,12 @@ test('MAX November uses the direct 13 November report and compares it with the 8
  assert.equal(operational.previousPeriod,previousViews.operational.period);
  assert.equal(operational.previousSource,previousViews.operational.source);
  assert.ok(evidence.sources.some(source=>source.name===operational.source && source.periodKind==='monthly' && source.endDate==='2026-11-13'));
- assert.deepEqual(views.cumulative,previousViews.cumulative);
- assert.deepEqual(views.closedMonths,previousViews.closedMonths);
- for(const [id,region,inPlan,previousInPlan,dgbFact] of [['tmk',4832,4769,1988,0],['eln',3578,3546,1925,3]]){
+ for(const id of ['tmk','eln']){
+  assert.equal(views.cumulative.metrics[id].sourceTotal,previousViews.cumulative.metrics[id].sourceTotal);
+  assert.equal(views.closedMonths['2026-10'].cumulative.metrics[id].sourceTotal,previousViews.closedMonths['2026-10'].cumulative.metrics[id].sourceTotal);
+  assert.equal(views.closedMonths['2026-10'].operational.metrics[id].sourceTotal,previousViews.closedMonths['2026-10'].operational.metrics[id].sourceTotal);
+ }
+ for(const [id,region,inPlan,previousInPlan,dgbFact,spasskFact,spasskPrevious] of [['tmk',4832,4805,1995,0,36,7],['eln',3578,1927,1926,3,2,1]]){
   const metric=operational.metrics[id];
   const previousByOid=new Map(previousViews.operational.metrics[id].rows.map(row=>[row.oid,row.fact]));
   assert.equal(metric.sourceTotal,region);
@@ -67,13 +70,23 @@ test('MAX November uses the direct 13 November report and compares it with the 8
   assert.equal(metric.previousSourceTotal,previousSource.totals[id]);
   assert.equal(metric.previousPlannedMoFact,previousInPlan);
   assert.equal(metric.rows.reduce((sum,row)=>sum+(row.fact??0),0),inPlan);
-  assert.ok(metric.rows.every(row=>row.previous===previousByOid.get(row.oid)));
-  assert.equal(metric.rows.filter(row=>row.fact===null).length,3);
+  assert.ok(metric.rows.filter(row=>!row.oid.endsWith('.18650')).every(row=>row.previous===previousByOid.get(row.oid)));
+  assert.equal(metric.rows.filter(row=>row.fact===null).length,2);
   assert.equal(metric.rows.find(row=>row.oid.endsWith('.1146')).fact,null);
-  assert.equal(metric.rows.find(row=>row.oid.endsWith('.18650')).fact,null);
+  const spassk=metric.rows.find(row=>row.oid.endsWith('.18650'));
+  assert.equal(spassk.fact,spasskFact);
+  assert.equal(spassk.previous,spasskPrevious);
   assert.equal(metric.rows.find(row=>row.oid.endsWith('.1148')).fact,dgbFact);
   assert.equal(metric.rows.filter(row=>row.fact!==null).reduce((sum,row)=>sum+(row.previous??0),0),previousInPlan);
  }
+ assert.deepEqual(
+  ['tmk','eln'].map(id=>views.cumulative.metrics[id].rows.find(row=>row.oid.endsWith('.18650')).fact),
+  [1302,37],
+ );
+ assert.deepEqual(
+  ['tmk','eln'].map(id=>views.closedMonths['2026-10'].cumulative.metrics[id].rows.find(row=>row.oid.endsWith('.18650')).fact),
+  [1295,36],
+ );
  assert.equal(views.nextCumulativeTarget.fact,null);
 });
 
