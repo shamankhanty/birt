@@ -75,7 +75,7 @@ test("all three monthly rating editions apply scope before ranking and displayin
   assert.match(page, /buildUnionRating\(ratingRows\)/);
   assert.match(rating, /organizations: excludeMonthlyRatingBranches\(inputs\.organizations/);
   assert.match(rating, /rows: excludeMonthlyRatingBranches\(legacy\.rows/);
-  assert.match(rating, /buildOctoberRating\((eligibleInputs|inputs)/);
+ assert.match(rating, /buildOctoberRating\((inputs|eligibleInputs)/);
   assert.match(rating, /buildSeptemberRating\(eligibleInputs,eligibleLegacy/);
   assert.match(page, /филиалы не представлены отдельными МО/);
 });
