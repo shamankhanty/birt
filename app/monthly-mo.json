@@ -6617,16 +6617,6 @@
         "sourceStatus": "external_source"
       },
       {
-        "name": "Спасская ЦРБ",
-        "oid": "context:spassk-crb",
-        "june": null,
-        "july": null,
-        "change": null,
-        "juneQuantity": null,
-        "julyQuantity": null,
-        "sourceStatus": "no_source_row"
-      },
-      {
         "name": "СП №1 г.Наб.Челны",
         "oid": "1.2.643.5.1.13.13.12.2.16.1110",
         "june": null,
@@ -7531,16 +7521,6 @@
         "juneQuantity": null,
         "julyQuantity": "0",
         "sourceStatus": "external_source"
-      },
-      {
-        "name": "Спасская ЦРБ",
-        "oid": "context:spassk-crb",
-        "june": null,
-        "july": null,
-        "change": null,
-        "juneQuantity": null,
-        "julyQuantity": null,
-        "sourceStatus": "no_source_row"
       },
       {
         "name": "СП №1 г.Наб.Челны",
