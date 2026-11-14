@@ -88,8 +88,8 @@ test("operational GP No. 7 rows show the correct city from their OID", () => {
   assert.equal(JSON.stringify([kazan, chelny]), before);
 });
 
-test("RKB report naming is no longer reassigned to Spassk; city-free ambiguity stays explicit", () => {
-  assert.equal(displayReport("egpu", {name: "РКБ", oid: "1.2.643.5.1.13.13.12.2.16.1094"}), "РКБ МЗ РТ");
+test("RKB report naming uses the approved Spassk attribution for branch metrics", () => {
+  assert.equal(displayReport("egpu", {name: "РКБ", oid: "1.2.643.5.1.13.13.12.2.16.1094"}), "Спасская ЦРБ");
   assert.equal(displayReport("doctor500_dentist", {name: "ГП №7"}), "ГП №7");
   assert.equal(displayReport("doctorsAll", {name: org(ids.kazan).name, oid: ids.kazan}), "ДГП №6, Казань");
   assert.equal(displayReport("doctorsAll", {name: org(ids.nabDgp).name, oid: ids.nabDgp}), "ДГП №6, Наб. Челны");
