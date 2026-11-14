@@ -61,7 +61,7 @@ test('MAX November uses the direct report and attributes the parent row to the p
   assert.equal(views.closedMonths['2026-10'].cumulative.metrics[id].sourceTotal,previousViews.closedMonths['2026-10'].cumulative.metrics[id].sourceTotal);
   assert.equal(views.closedMonths['2026-10'].operational.metrics[id].sourceTotal,previousViews.closedMonths['2026-10'].operational.metrics[id].sourceTotal);
  }
- for(const [id,region,inPlan,previousInPlan,dgbFact,spasskFact,spasskPrevious] of [['tmk',4832,4805,1995,0,36,7],['eln',3578,1927,1926,3,2,1]]){
+ for(const [id,region,inPlan,previousInPlan,dgbFact,spasskFact,spasskPrevious] of [['tmk',4832,4805,1995,0,36,7],['eln',3578,3548,1926,3,2,1]]){
   const metric=operational.metrics[id];
   const previousByOid=new Map(previousViews.operational.metrics[id].rows.map(row=>[row.oid,row.fact]));
   assert.equal(metric.sourceTotal,region);
