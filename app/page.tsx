@@ -34,6 +34,7 @@ import moRegistryRaw from "./mo-registry.json";
 import electronicWaybillRaw from "./electronic-waybill.json";
 import electronicWaybillWeeklyRaw from "./electronic-waybill-weekly.json";
 import federalControlRaw from "./federal-control.json";
+import gisOmsOrganizationsRaw from "./gis-oms-organizations.json";
 import hearingSnapshotsRaw from "./hearing-snapshots.json";
 import hearingPriorityPolicyRaw from "./hearing-priority-policy.json";
 import FrmrReconciliation from "./frmr-reconciliation";
@@ -160,6 +161,25 @@ type FederalControlData = {
   agreement: FederalControlRow[];
   collegium: FederalControlRow[];
 };
+type GisOmsOrganization = {
+  oid: string;
+  name: string;
+  fullName: string;
+  achieved: boolean;
+  volume: number | null;
+};
+type GisOmsIndicator = {
+  name: string;
+  numerator: number;
+  denominator: number;
+  rows: GisOmsOrganization[];
+};
+type GisOmsData = {
+  source: string;
+  period: string;
+  subject: string;
+  indicators: Record<string, GisOmsIndicator>;
+};
 const DASHBOARD_VERSION = RELEASE_VERSION;
 const indicatorRegistry = createIndicatorRegistryRuntime(
   indicatorRegistryRaw as IndicatorRegistryDocument,
@@ -206,6 +226,7 @@ const federalControl = {
       : row;
   }),
 } as FederalControlData;
+const gisOmsOrganizations = gisOmsOrganizationsRaw as GisOmsData;
 type PreventiveAuditRow = {
   name: string;
   oid: string;
@@ -6595,6 +6616,10 @@ export default function Home() {
                         target !== null && regional?.quantity !== undefined
                           ? Math.max(0, target - regional.quantity)
                           : null;
+                      const gisOmsIndicator =
+                        federalSet === "agreement"
+                          ? gisOmsOrganizations.indicators[row.id]
+                          : undefined;
                       return (
                         <tr key={`${federalSet}-${row.id}`}>
                           <td>
@@ -6616,6 +6641,63 @@ export default function Home() {
                                 Сопоставлена методика; периоды и объёмы указаны
                                 отдельно
                               </small>
+                            )}
+                            {gisOmsIndicator && (
+                              <details className="gisOmsDetails">
+                                <summary>
+                                  <span>
+                                    Список МО: {gisOmsIndicator.denominator}
+                                  </span>
+                                  <small>
+                                    Не исполнено: {gisOmsIndicator.denominator - gisOmsIndicator.numerator}
+                                    {gisOmsIndicator.numerator > 0
+                                      ? ` · исполнено: ${gisOmsIndicator.numerator}`
+                                      : ""}
+                                  </small>
+                                </summary>
+                                <div className="gisOmsListWrap">
+                                  <table className="gisOmsList">
+                                    <thead>
+                                      <tr>
+                                        <th>Медицинская организация</th>
+                                        <th>OID</th>
+                                        <th>Фактический объём</th>
+                                        <th>Статус</th>
+                                      </tr>
+                                    </thead>
+                                    <tbody>
+                                      {gisOmsIndicator.rows.map((organization) => (
+                                        <tr key={`${row.id}-${organization.oid}`}>
+                                          <td title={organization.fullName}>
+                                            {organization.name}
+                                          </td>
+                                          <td>
+                                            <code>{organization.oid}</code>
+                                          </td>
+                                          <td>
+                                            {organization.volume === null
+                                              ? "—"
+                                              : format(organization.volume, 0)}
+                                          </td>
+                                          <td>
+                                            <span
+                                              className={`gisOmsStatus ${organization.achieved ? "good" : "bad"}`}
+                                            >
+                                              {organization.achieved
+                                                ? "Исполнено"
+                                                : "Не исполнено"}
+                                            </span>
+                                          </td>
+                                        </tr>
+                                      ))}
+                                    </tbody>
+                                  </table>
+                                </div>
+                                <small className="gisOmsSource">
+                                  {gisOmsOrganizations.period} · федеральная
+                                  детализация по МО
+                                </small>
+                              </details>
                             )}
                           </td>
                           <td>
