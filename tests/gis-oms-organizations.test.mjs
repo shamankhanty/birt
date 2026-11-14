@@ -9,6 +9,13 @@ const federal = JSON.parse(
   fs.readFileSync(new URL("../app/federal-control.json", import.meta.url), "utf8"),
 );
 const page = fs.readFileSync(new URL("../app/page.tsx", import.meta.url), "utf8");
+const gisOmsPage = fs.readFileSync(
+  new URL("../public/gis-oms-2026-q3.html", import.meta.url),
+  "utf8",
+);
+const publicData = JSON.parse(
+  fs.readFileSync(new URL("../public/gis-oms-organizations.json", import.meta.url), "utf8"),
+);
 
 test("GIS OMS drilldowns preserve federal Татарстан denominators and facts", () => {
   assert.deepEqual(
@@ -56,4 +63,12 @@ test("federal rows and UI expose the organization lists", () => {
   assert.match(page, /gisOmsOrganizations\.indicators\[row\.id\]/);
   assert.match(page, /Не исполнено:/);
   assert.match(page, /Исполнено/);
+});
+
+test("dedicated GIS OMS page loads the verified organization drilldown", () => {
+  assert.deepEqual(publicData, data);
+  assert.doesNotMatch(gisOmsPage, /Детализация ожидает верифицированной загрузки/);
+  assert.match(gisOmsPage, /fetch\('\.\/gis-oms-organizations\.json'\)/);
+  assert.match(gisOmsPage, /Не исполнено прикрепление/);
+  assert.match(gisOmsPage, /Показано/);
 });

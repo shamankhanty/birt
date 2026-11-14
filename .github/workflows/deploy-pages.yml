@@ -151,6 +151,7 @@ jobs:
           OFFLINE_OUTPUT_DIR=_site OFFLINE_BASENAME=index node scripts/build-offline.mjs
           node scripts/build-reorganizations.mjs _site/reorganizations/index.html
           cp public/gis-oms-2026-q3.html _site/gis-oms-2026-q3.html
+          cp public/gis-oms-organizations.json _site/gis-oms-organizations.json
           rm -f _site/index.zip
           touch _site/.nojekyll
 
@@ -159,6 +160,8 @@ jobs:
           test -s _site/index.html
           test -s _site/reorganizations/index.html
           test -s _site/gis-oms-2026-q3.html
+          test -s _site/gis-oms-organizations.json
+          grep -Fq 'Не исполнен ФПУМП' _site/gis-oms-2026-q3.html
           grep -Fq 'Реестр реорганизаций МО' _site/reorganizations/index.html
           VERSION="$(python3 -c 'import json; print(json.load(open("baseline/manifest.json", encoding="utf-8"))["baselineVersion"])')"
           grep -Fq "$VERSION" _site/index.html
