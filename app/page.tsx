@@ -8,7 +8,12 @@ import SeptemberRating from "./september-rating";
 import septemberRatingArchive from "./rating/september-v1.json";
 import spasskIdentity from "../config/rkb-spassk-branch.json";
 import { monthlyRatingBranchKeys, excludeMonthlyRatingBranches } from "../lib/monthly-rating-scope.js";
-import { excludeWaybillGroupsWithoutTransport } from "../lib/electronic-waybill-scope.js";
+import {
+  excludeWaybillGroupsWithoutTransport,
+  rankWaybillByRegionalImpact,
+  waybillRegionalNonMovementImpact,
+  waybillUnrecordedMovement,
+} from "../lib/electronic-waybill-scope.js";
 import { maxHearingPlan, maxHearingDeficit } from "../lib/max-hearing-plan.js";
 import { planTransition } from "../lib/plan-transitions.js";
 import { buildFederalDetailCatalog, federalMetricTarget } from "../lib/federal-navigation.js";
@@ -4707,32 +4712,14 @@ export default function Home() {
         .slice(0, 10),
     [waybillComparable],
   );
+  // Regional impact is measured by share of ALL regional vehicles without
+  // recorded movement; a persistent zero is supplementary information only.
+  const waybillRegionalVehicles = waybillMode === "week"
+    ? electronicWaybillWeekly.current.systemSummary.vehicles
+    : electronicWaybill.summary.vehicles;
   const waybillAttention = useMemo(
-    () =>
-      [...waybillComparable]
-        .sort((a, b) => {
-          if (waybillMode === "week") {
-            const ap =
-                a.moved === 0 &&
-                previousWaybillByNumber.get(a.sourceNumber)?.moved === 0
-                  ? 1
-                  : 0,
-              bp =
-                b.moved === 0 &&
-                previousWaybillByNumber.get(b.sourceNumber)?.moved === 0
-                  ? 1
-                  : 0;
-            if (ap !== bp) return bp - ap;
-          }
-          return (
-            b.vehicles - b.moved - (a.vehicles - a.moved) ||
-            (a.movementShare ?? Infinity) - (b.movementShare ?? Infinity) ||
-            b.vehicles - a.vehicles ||
-            cleanMoName(a.name).localeCompare(cleanMoName(b.name), "ru")
-          );
-        })
-        .slice(0, 10),
-    [waybillComparable, waybillMode, previousWaybillByNumber],
+    () => rankWaybillByRegionalImpact(waybillComparable, waybillRegionalVehicles),
+    [waybillComparable, waybillRegionalVehicles],
   );
   const waybillZones = useMemo(
     () => ({
@@ -8389,13 +8376,14 @@ export default function Home() {
                   <div className="rankingTitle">
                     <span>
                       <h3>Требуют внимания</h3>
-                      <small>масштаб простоя и устойчивость проблемы</small>
+                      <small>наибольший вклад в региональную долю ТС без движения</small>
                     </span>
                     <b>10</b>
                   </div>
                   <div className="rankingRows">
                     {waybillAttention.map((row, index) => {
-                      const idle = row.vehicles - row.moved,
+                      const idle = waybillUnrecordedMovement(row),
+                        influence = waybillRegionalNonMovementImpact(row, waybillRegionalVehicles),
                         previous =
                           waybillMode === "week"
                             ? previousWaybillByNumber.get(row.sourceNumber)
@@ -8410,14 +8398,19 @@ export default function Home() {
                           {displayWaybillMoName(row.name)}
                             {persistent && <small>0% вторую неделю</small>}
                           </p>
-                          <b>{idle} без движ.</b>
+                          <b>{influence === null ? "Нет данных" : `${format(influence, 2)} п.п.`}</b>
                           <strong>
-                            {row.vehicles} ТС · {format(row.movementShare, 2)}%
+                            {idle === null ? "Нет данных" : `${idle} из ${row.vehicles} ТС`}
                           </strong>
                         </div>
                       );
                     })}
                   </div>
+                  <p className="waybillInfluenceMethod">
+                    Влияние, п.п. = ТС МО без зафиксированного движения / все ТС РТ × 100.
+                    Региональный знаменатель: {format(waybillRegionalVehicles, 0)} ТС.
+                    Это не норматив простоя; устойчивость проблемы отмечена отдельно.
+                  </p>
                 </section>
               </div>
               <section className="waybillSignals">
