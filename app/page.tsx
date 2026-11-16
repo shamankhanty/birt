@@ -12,6 +12,7 @@ import {
   excludeWaybillGroupsWithoutTransport,
   rankWaybillByRegionalImpact,
   waybillRegionalNonMovementImpact,
+  waybillOrganizationNoMovementPercent,
   waybillUnrecordedMovement,
 } from "../lib/electronic-waybill-scope.js";
 import { maxHearingPlan, maxHearingDeficit } from "../lib/max-hearing-plan.js";
@@ -8383,6 +8384,7 @@ export default function Home() {
                   <div className="rankingRows">
                     {waybillAttention.map((row, index) => {
                       const idle = waybillUnrecordedMovement(row),
+                        localPercent = waybillOrganizationNoMovementPercent(row),
                         influence = waybillRegionalNonMovementImpact(row, waybillRegionalVehicles),
                         previous =
                           waybillMode === "week"
@@ -8399,8 +8401,9 @@ export default function Home() {
                             {persistent && <small>0% вторую неделю</small>}
                           </p>
                           <b>{influence === null ? "Нет данных" : `${format(influence, 2)} п.п.`}</b>
-                          <strong>
-                            {idle === null ? "Нет данных" : `${idle} из ${row.vehicles} ТС`}
+                          <strong className="waybillAttentionVolume">
+                            {idle === null ? "Нет данных" : `${format(idle, 0)} из ${format(row.vehicles, 0)} ТС`}
+                            <small>{localPercent === null ? "Нет данных" : `${format(localPercent, 1)}% без движения`}</small>
                           </strong>
                         </div>
                       );
@@ -8409,6 +8412,7 @@ export default function Home() {
                   <p className="waybillInfluenceMethod">
                     Влияние, п.п. = ТС МО без зафиксированного движения / все ТС РТ × 100.
                     Региональный знаменатель: {format(waybillRegionalVehicles, 0)} ТС.
+                    Процент МО = ТС МО без движения / все ТС этой МО × 100.
                     Это не норматив простоя; устойчивость проблемы отмечена отдельно.
                   </p>
                 </section>
