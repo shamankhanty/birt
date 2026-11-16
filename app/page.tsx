@@ -834,6 +834,18 @@ function displayReportMoName(metric: string, row: MoRow) {
   return displayMoName(reportMoName(metric, row.name), organization?.oid);
 }
 
+function displayWaybillMoName(name: string) {
+  const organization = registryOrganizationByMetricAndName("electronicWaybill", name);
+  if (organization) return compactMoDisplayName(organization.shortName);
+  const education = String(name ?? "")
+    .replace(/^(?:государственное автономное (?:профессиональное )?образовательное учреждение среднего профессионального образования(?: рт)?|гапоу)\s*/iu, "")
+    .replace(/^[«"]|[»"]$/gu, "")
+    .trim();
+  if (/медицинск(?:ое)?\s+(?:училище|колледж)/iu.test(education))
+    return `СПО ${education}`;
+  return cleanMoName(name);
+}
+
 const monthlyMoData = { ...monthlyMoRaw, doctorsAll: doctorsAllCumulative.monthly } as Record<string, MonthlyMoDataset>;
 const maxAppointmentsMunicipal = maxAppointmentsMunicipalRaw as MaxAppointmentMunicipalData;
 const maxTargets = maxTargetsRaw as {
@@ -8314,8 +8326,8 @@ export default function Home() {
                     {waybillLeaders.map((row, index) => (
                       <div key={row.name}>
                         <span className="miniRank">{index + 1}</span>
-                        <p title={cleanMoName(row.name)}>
-                          {displayMoName(row.name, row.oid)}
+                        <p title={displayWaybillMoName(row.name)}>
+                          {displayWaybillMoName(row.name)}
                         </p>
                         <b>{row.moved} движ.</b>
                         <strong>
@@ -8346,8 +8358,8 @@ export default function Home() {
                       return (
                         <div key={row.sourceNumber}>
                           <span className="miniRank">{index + 1}</span>
-                          <p title={cleanMoName(row.name)}>
-                          {displayMoName(row.name, row.oid)}
+                          <p title={displayWaybillMoName(row.name)}>
+                          {displayWaybillMoName(row.name)}
                             {persistent && <small>0% вторую неделю</small>}
                           </p>
                           <b>{idle} без движ.</b>
@@ -8579,7 +8591,7 @@ export default function Home() {
                             <b className="rank">{index + 1}</b>
                           </td>
                           <td>
-                            <strong>{displayMoName(row.name, row.oid)}</strong>
+                            <strong>{displayWaybillMoName(row.name)}</strong>
                             <small>
                               {row.ambulanceVehicles} автомобилей СМП ·{" "}
                               {row.otherVehicles} остальных ТС
@@ -8593,7 +8605,7 @@ export default function Home() {
                                 <div>
                                   {row.components.map((component) => (
                                     <span key={component.name}>
-                                      <b>{cleanMoName(component.name)}</b>
+                                      <b>{displayWaybillMoName(component.name)}</b>
                                       <i>
                                         {component.moved} из{" "}
                                         {component.vehicles} ТС ·{" "}
