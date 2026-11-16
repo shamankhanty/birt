@@ -67,7 +67,7 @@ const displaySource = page.slice(
   page.indexOf("const monthlyMoData ="),
 ).replace("name: string, oid?: string | null", "name, oid")
  .replace("metric: string, row: MoRow", "metric, row")
- .replace("name: string", "name")
+ .replaceAll("name: string", "name")
  .replace("new Map<string, number>()", "new Map()");
 const displayReport = new Function(
   "cleanMoName", "reportMoName", "moRegistry", "registryByOid", "registryOrganizationForMetric",
