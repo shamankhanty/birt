@@ -5,6 +5,7 @@ import {
   excludeWaybillGroupsWithoutTransport,
   rankWaybillByRegionalImpact,
   waybillRegionalNonMovementImpact,
+  waybillOrganizationNoMovementPercent,
   waybillUnrecordedMovement,
 } from '../lib/electronic-waybill-scope.js';
 
@@ -26,6 +27,8 @@ for (const [period, slice, regionalTotal] of [
       'the largest number of vehicles without registered movement must rank first');
     assert.ok(Math.abs(waybillRegionalNonMovementImpact(ranked[0],regionalTotal)-
       ((ranked[0].vehicles-ranked[0].moved)/regionalTotal*100))<1e-12);
+    assert.ok(Math.abs(waybillOrganizationNoMovementPercent(ranked[0]) -
+      ((ranked[0].vehicles-ranked[0].moved)/ranked[0].vehicles*100))<1e-12);
     const regionalIdle = regionalTotal - (slice.systemSummary?.vehiclesWithMovement ?? slice.summary?.vehiclesWithMovement);
     assert.equal(rows.reduce((sum,row)=>sum+(row.vehicles-row.moved),0),regionalIdle);
     const allPp = rows.reduce((sum,row)=>sum+waybillRegionalNonMovementImpact(row,regionalTotal),0);
@@ -46,6 +49,7 @@ test('ЭПЛ: отсутствующие компоненты и знамена�
   for(const row of [{vehicles:null,moved:0},{vehicles:10,moved:null},{vehicles:5,moved:6}]) {
     assert.equal(waybillUnrecordedMovement(row),null);
     assert.equal(waybillRegionalNonMovementImpact(row,100),null);
+    assert.equal(waybillOrganizationNoMovementPercent(row),null);
   }
   assert.equal(waybillRegionalNonMovementImpact({vehicles:10,moved:0},null),null);
   assert.deepEqual(rankWaybillByRegionalImpact([{vehicles:10,moved:0}],null),[]);
@@ -57,4 +61,22 @@ test('ЭПЛ: UI показывает влияние по обоим перио�
   assert.match(page,/Влияние, п\.п\. = ТС МО без зафиксированного движения/);
   assert.match(page,/influence === null \? "Нет данных"/);
   assert.doesNotMatch(page,/if \(ap !== bp\) return bp - ap/);
+});
+
+test('ЭПЛ: процент отсутствия движения рассчитывается внутри МО', () => {
+  assert.equal(waybillOrganizationNoMovementPercent({vehicles:50,moved:35}),30);
+  assert.equal(waybillOrganizationNoMovementPercent({vehicles:7,moved:0}),100);
+  assert.equal(waybillOrganizationNoMovementPercent({vehicles:7,moved:7}),0);
+  assert.equal(waybillOrganizationNoMovementPercent({vehicles:0,moved:0}),null);
+  const row={vehicles:20,moved:5};
+  assert.equal(waybillOrganizationNoMovementPercent(row),75);
+  assert.equal(waybillRegionalNonMovementImpact(row,200),7.5);
+});
+
+test('ЭПЛ: UI показывает долю МО и вклад в РТ в разных единицах', () => {
+  const page=fs.readFileSync(new URL('../app/page.tsx',import.meta.url),'utf8');
+  assert.match(page,/waybillOrganizationNoMovementPercent\(row\)/);
+  assert.match(page,/\$\{format\(localPercent, 1\)\}% без движения/);
+  assert.match(page,/\$\{format\(influence, 2\)\} п\.п\./);
+  assert.match(page,/Процент МО = ТС МО без движения \/ все ТС этой МО/);
 });
