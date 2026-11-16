@@ -69,10 +69,11 @@ const displaySource = page.slice(
  .replace("metric: string, row: MoRow", "metric, row")
  .replaceAll("name: string", "name")
  .replace("new Map<string, number>()", "new Map()");
-const displayReport = new Function(
-  "cleanMoName", "reportMoName", "moRegistry", "registryByOid", "registryOrganizationForMetric",
-  displaySource + "\nreturn displayReportMoName;",
-)(cleanMoName, reportMoName, registry, runtime.byOid, runtime.organizationForMetric);
+const displayFunctions = new Function(
+  "cleanMoName", "reportMoName", "moRegistry", "registryByOid", "registryOrganizationForMetric", "registryOrganizationByMetricAndName",
+  displaySource + "\nreturn { displayReportMoName, displayWaybillMoName };",
+)(cleanMoName, reportMoName, registry, runtime.byOid, runtime.organizationForMetric, runtime.organizationByMetricAndName);
+const { displayReportMoName: displayReport, displayWaybillMoName: displayWaybill } = displayFunctions;
 
 test("operational GP No. 7 rows show the correct city from their OID", () => {
   const rows = weekly.datasets.doctor500_dentist;
@@ -108,4 +109,12 @@ test("source-confirmed Spassk identity is displayed in indicator tables", () => 
   assert.equal(displayReport('semd228',row),'Спасская ЦРБ');
   assert.equal(displayReport('egpu',{name:'РКБ',oid:catalog.parent.oid,sourceReport:'gis-epgu-attachments'}),'Спасская ЦРБ');
   assert.equal(displayReport('death',{name:'РКБ',oid:catalog.parent.oid,sourceReport:'gis-epgu-attachments'}),'РКБ МЗ РТ');
+});
+
+test("electronic waybill names are compact and retain city for duplicate organizations", () => {
+  assert.equal(displayWaybill('ГАУЗ "Госпиталь для ветеранов войн" г.Казань'), "ГВВ, Казань");
+  assert.equal(displayWaybill('ГАУЗ "Госпиталь для ветеранов войн" г.Наб.Челны'), "ГВВ, Наб. Челны");
+  assert.equal(displayWaybill('Государственное автономное образовательное учреждение среднего профессионального образования РТ "Буинское медицинское училище"'), "СПО Буинское медицинское училище");
+  assert.equal(displayWaybill('Государственное автономное профессиональное образовательное учреждение «Бугульминский медицинский колледж им. А.Б. Вязьмина»'), "СПО Бугульминский медицинский колледж");
+  assert.equal(displayWaybill('ГАУЗ Республики Татарстан "Больница скорой медицинской помощи имени Р.С. Акчурина "г.Наб.Челны'), "БСМП, Наб. Челны");
 });
