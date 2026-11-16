@@ -43,7 +43,7 @@
     "OPEN_ISSUES.md": "4c5a91f72cd6011ff2297fcb8644e39dec751e99e99a06a538ecb2ed6c90a3ee"
   },
   "keyCode": {
-    "app/page.tsx": "48ca55757caf589fda2a9436d99b155b33196b0e8913a98c5ce7c62380ae7175",
+    "app/page.tsx": "804b76482b2a6cef589f07520be4b210f2bc2660f3e734cc80e979dd3838d2ed",
     "app/globals.css": "e825cdf793f6b03058b5e082789c74806076d3b0599f984dca357c86bfabffc9",
     "lib/calculation-engine.js": "2addca9323803eb45f66fca94fe78a72c4d77eed53c7bd05c224dd9aa9f2f0e7",
     "lib/indicator-registry.js": "484857b41858c082fad05172793ff24f422008a6178257006d4512b0c12d1996",
