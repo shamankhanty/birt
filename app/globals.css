@@ -734,3 +734,5 @@ body{font-size:14px}
 @media(max-width:700px){.septTopLists{grid-template-columns:1fr;gap:10px}.septTopList h2{font-size:15px;padding:13px 14px}.septTopList li{padding:9px 12px}.septCardHead{grid-template-columns:36px minmax(0,1fr);gap:9px 12px;padding:14px}.septCardScore,.septCard .septStatus{grid-column:2;justify-self:start;text-align:left}.septCardScore strong{font-size:22px;white-space:normal}.septCardSignals{grid-template-columns:repeat(2,minmax(0,1fr))}.septCardSignals p:nth-child(3){border-right:1px solid #e3ece8}.septCardSignals p:nth-child(even){border-right:0}.septCardSignals p:nth-child(-n+4){border-bottom:1px solid #e3ece8}.septCardSignals p{padding:10px 12px}.septCardSignals b{font-size:13px}.septMetric{grid-template-columns:1fr;gap:8px}.septMetric>strong{width:100%}.septCardDetails>div{padding:0 14px 14px}}
 /* Keep long organization names inside EPL signal cards on narrow screens. */
 .waybillSignals article{min-width:0}.waybillSignals article p{overflow-wrap:anywhere}
+
+.waybillInfluenceMethod{margin:0 12px 12px;padding:8px 10px;border-top:1px solid #edf2ef;color:var(--muted);font-size:10px;line-height:1.4}
