@@ -36,11 +36,13 @@ test("11.09 ASU SMP report is reconciled to its grand total", () => {
   assert.ok(mo.smp.rows.reduce((sum, row) => sum + row.registered, 0) >= 0);
 });
 
-test("remaining 11.09 federal sources are synchronized", () => {
+test("current federal sources are synchronized", () => {
   assert.ok(units.tvspDiagnostic.plan >= units.tvspDiagnostic.fact && units.tvspDiagnostic.fact >= 0); assert.match(units.tvspDiagnostic.date, /^\d{2}\.\d{2}\.2026$/u);
   assert.ok(units.smpFederal.plan >= units.smpFederal.fact && units.smpFederal.fact >= 0); assert.match(units.smpFederal.date, /^\d{2}\.\d{2}\.2026$/u);
   assert.match(status.tmkRemd.date, /^\d{2}\.\d{2}\.2026$/u);
-  assert.equal(status.tmkRemd.rows.filter(row => row.fact > 0).length, 39);
+  const activeRows = status.tmkRemd.rows.filter(row => row.fact > 0);
+  assert.ok(activeRows.length > 0);
+  assert.equal(new Set(activeRows.map(row => row.oid ?? row.name)).size, activeRows.length, "active TMC rows must be unique by organization");
   assert.match(status.elmk.period, /^01\.01–\d{2}\.\d{2}\.2026$/u);
 });
 

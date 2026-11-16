@@ -1,11 +1,11 @@
 {
   "schemaVersion": 1,
-  "sourceFile": "Отчёт_по_врачам_сформировавших_СЭМД - Ноябрь(Выгрузка из BI 13.11.).xlsx",
-  "date": "12.11.2026",
-  "period": "01.11.2026–12.11.2026",
+  "sourceFile": "Отчёт_по_врачам_сформировавших_СЭМД НОЯБРЬ.xlsx",
+  "date": "14.11.2026",
+  "period": "01.11.2026–14.11.2026",
   "statusSummary": {
-    "PASS": 23,
-    "WARN": 65,
+    "PASS": 21,
+    "WARN": 66,
     "FAIL": 0
   },
   "skippedDetailRows": 0,
@@ -25,8 +25,8 @@
       "basis": "Детализация не подтверждает состав свода без дополнительных правил ФРМР или идентификаторов СЭМД",
       "numeratorDeltaNoSum": 0,
       "denominatorDelta": 8,
-      "period": "01.11.2026–12.11.2026",
-      "sourceFile": "Отчёт_по_врачам_сформировавших_СЭМД - Ноябрь(Выгрузка из BI 13.11.).xlsx"
+      "period": "01.11.2026–14.11.2026",
+      "sourceFile": "Отчёт_по_врачам_сформировавших_СЭМД НОЯБРЬ.xlsx"
     },
     {
       "medicalOrganization": "ГАУЗ \"ТЮЛЯЧИНСКАЯ ЦРБ\"",
@@ -43,8 +43,8 @@
       "basis": "Детализация не подтверждает состав свода без дополнительных правил ФРМР или идентификаторов СЭМД",
       "numeratorDeltaNoSum": 0,
       "denominatorDelta": 1,
-      "period": "01.11.2026–12.11.2026",
-      "sourceFile": "Отчёт_по_врачам_сформировавших_СЭМД - Ноябрь(Выгрузка из BI 13.11.).xlsx"
+      "period": "01.11.2026–14.11.2026",
+      "sourceFile": "Отчёт_по_врачам_сформировавших_СЭМД НОЯБРЬ.xlsx"
     },
     {
       "medicalOrganization": "ГАУЗ \"БУГУЛЬМИНСКАЯ ЦРБ\"",
@@ -56,13 +56,13 @@
       "sourceVolume": 9,
       "detailCountNoSum": 2,
       "detailCountSummed": 2,
-      "detailVolume": 10,
+      "detailVolume": 9,
       "thresholdAmbiguousWorkers": 0,
       "basis": "Детализация не подтверждает состав свода без дополнительных правил ФРМР или идентификаторов СЭМД",
       "numeratorDeltaNoSum": 1,
-      "denominatorDelta": 1,
-      "period": "01.11.2026–12.11.2026",
-      "sourceFile": "Отчёт_по_врачам_сформировавших_СЭМД - Ноябрь(Выгрузка из BI 13.11.).xlsx"
+      "denominatorDelta": 0,
+      "period": "01.11.2026–14.11.2026",
+      "sourceFile": "Отчёт_по_врачам_сформировавших_СЭМД НОЯБРЬ.xlsx"
     },
     {
       "medicalOrganization": "ГАУЗ \"ДЕТСКАЯ ГОРОДСКАЯ ПОЛИКЛИНИКА №2\"",
@@ -79,8 +79,8 @@
       "basis": "Нет строк детализации; отсутствие не заменено нулём",
       "numeratorDeltaNoSum": null,
       "denominatorDelta": null,
-      "period": "01.11.2026–12.11.2026",
-      "sourceFile": "Отчёт_по_врачам_сформировавших_СЭМД - Ноябрь(Выгрузка из BI 13.11.).xlsx"
+      "period": "01.11.2026–14.11.2026",
+      "sourceFile": "Отчёт_по_врачам_сформировавших_СЭМД НОЯБРЬ.xlsx"
     },
     {
       "medicalOrganization": "ГАУЗ \"РКПД\"",
@@ -97,8 +97,8 @@
       "basis": "Детализация не подтверждает состав свода без дополнительных правил ФРМР или идентификаторов СЭМД",
       "numeratorDeltaNoSum": 0,
       "denominatorDelta": 1,
-      "period": "01.11.2026–12.11.2026",
-      "sourceFile": "Отчёт_по_врачам_сформировавших_СЭМД - Ноябрь(Выгрузка из BI 13.11.).xlsx"
+      "period": "01.11.2026–14.11.2026",
+      "sourceFile": "Отчёт_по_врачам_сформировавших_СЭМД НОЯБРЬ.xlsx"
     },
     {
       "medicalOrganization": "ГАУЗ \"ВЫСОКОГОРСКАЯ ЦРБ\"",
@@ -106,17 +106,17 @@
       "specialty": "doctor500_surgeon",
       "status": "WARN",
       "reasonCode": "DETAIL_SCOPE_OR_SUM_AMBIGUOUS",
-      "sourceCount": 0,
+      "sourceCount": 1,
       "sourceVolume": 1,
-      "detailCountNoSum": 0,
-      "detailCountSummed": 0,
+      "detailCountNoSum": 1,
+      "detailCountSummed": 1,
       "detailVolume": 5,
       "thresholdAmbiguousWorkers": 0,
       "basis": "Детализация не подтверждает состав свода без дополнительных правил ФРМР или идентификаторов СЭМД",
       "numeratorDeltaNoSum": 0,
       "denominatorDelta": 4,
-      "period": "01.11.2026–12.11.2026",
-      "sourceFile": "Отчёт_по_врачам_сформировавших_СЭМД - Ноябрь(Выгрузка из BI 13.11.).xlsx"
+      "period": "01.11.2026–14.11.2026",
+      "sourceFile": "Отчёт_по_врачам_сформировавших_СЭМД НОЯБРЬ.xlsx"
     },
     {
       "medicalOrganization": "ВЕРХНЕУСЛОНСКАЯ ЦРБ",
@@ -133,8 +133,8 @@
       "basis": "Детализация не подтверждает состав свода без дополнительных правил ФРМР или идентификаторов СЭМД",
       "numeratorDeltaNoSum": 0,
       "denominatorDelta": 2,
-      "period": "01.11.2026–12.11.2026",
-      "sourceFile": "Отчёт_по_врачам_сформировавших_СЭМД - Ноябрь(Выгрузка из BI 13.11.).xlsx"
+      "period": "01.11.2026–14.11.2026",
+      "sourceFile": "Отчёт_по_врачам_сформировавших_СЭМД НОЯБРЬ.xlsx"
     },
     {
       "medicalOrganization": "МУСЛЮМОВСКАЯ ЦРБ",
@@ -151,8 +151,8 @@
       "basis": "Детализация не подтверждает состав свода без дополнительных правил ФРМР или идентификаторов СЭМД",
       "numeratorDeltaNoSum": -1,
       "denominatorDelta": 1,
-      "period": "01.11.2026–12.11.2026",
-      "sourceFile": "Отчёт_по_врачам_сформировавших_СЭМД - Ноябрь(Выгрузка из BI 13.11.).xlsx"
+      "period": "01.11.2026–14.11.2026",
+      "sourceFile": "Отчёт_по_врачам_сформировавших_СЭМД НОЯБРЬ.xlsx"
     },
     {
       "medicalOrganization": "ГАУЗ \"МЕНДЕЛЕЕВСКАЯ ЦРБ\"",
@@ -160,17 +160,17 @@
       "specialty": "doctor500_surgeon",
       "status": "WARN",
       "reasonCode": "DETAIL_SCOPE_OR_SUM_AMBIGUOUS",
-      "sourceCount": 0,
+      "sourceCount": 1,
       "sourceVolume": 3,
       "detailCountNoSum": 0,
       "detailCountSummed": 0,
       "detailVolume": 6,
       "thresholdAmbiguousWorkers": 0,
       "basis": "Детализация не подтверждает состав свода без дополнительных правил ФРМР или идентификаторов СЭМД",
-      "numeratorDeltaNoSum": 0,
+      "numeratorDeltaNoSum": -1,
       "denominatorDelta": 3,
-      "period": "01.11.2026–12.11.2026",
-      "sourceFile": "Отчёт_по_врачам_сформировавших_СЭМД - Ноябрь(Выгрузка из BI 13.11.).xlsx"
+      "period": "01.11.2026–14.11.2026",
+      "sourceFile": "Отчёт_по_врачам_сформировавших_СЭМД НОЯБРЬ.xlsx"
     },
     {
       "medicalOrganization": "ГАУЗ \"КДМЦ\"",
@@ -187,8 +187,8 @@
       "basis": "Нет строк детализации; отсутствие не заменено нулём",
       "numeratorDeltaNoSum": null,
       "denominatorDelta": null,
-      "period": "01.11.2026–12.11.2026",
-      "sourceFile": "Отчёт_по_врачам_сформировавших_СЭМД - Ноябрь(Выгрузка из BI 13.11.).xlsx"
+      "period": "01.11.2026–14.11.2026",
+      "sourceFile": "Отчёт_по_врачам_сформировавших_СЭМД НОЯБРЬ.xlsx"
     },
     {
       "medicalOrganization": "ГАУЗ \"ДЕТСКАЯ ГОРОДСКАЯ ПОЛИКЛИНИКА №6\"",
@@ -196,7 +196,7 @@
       "specialty": "doctor500_surgeon",
       "status": "WARN",
       "reasonCode": "DETAIL_UNAVAILABLE",
-      "sourceCount": 0,
+      "sourceCount": 1,
       "sourceVolume": 1,
       "detailCountNoSum": null,
       "detailCountSummed": null,
@@ -205,8 +205,8 @@
       "basis": "Нет строк детализации; отсутствие не заменено нулём",
       "numeratorDeltaNoSum": null,
       "denominatorDelta": null,
-      "period": "01.11.2026–12.11.2026",
-      "sourceFile": "Отчёт_по_врачам_сформировавших_СЭМД - Ноябрь(Выгрузка из BI 13.11.).xlsx"
+      "period": "01.11.2026–14.11.2026",
+      "sourceFile": "Отчёт_по_врачам_сформировавших_СЭМД НОЯБРЬ.xlsx"
     },
     {
       "medicalOrganization": "ГАУЗ \"ДЕТСКАЯ ГОРОДСКАЯ ПОЛИКЛИНИКА №3\"",
@@ -223,8 +223,8 @@
       "basis": "Нет строк детализации; отсутствие не заменено нулём",
       "numeratorDeltaNoSum": null,
       "denominatorDelta": null,
-      "period": "01.11.2026–12.11.2026",
-      "sourceFile": "Отчёт_по_врачам_сформировавших_СЭМД - Ноябрь(Выгрузка из BI 13.11.).xlsx"
+      "period": "01.11.2026–14.11.2026",
+      "sourceFile": "Отчёт_по_врачам_сформировавших_СЭМД НОЯБРЬ.xlsx"
     },
     {
       "medicalOrganization": "ГАУЗ \"ГОРОДСКАЯ БОЛЬНИЦА № 11\"",
@@ -241,8 +241,8 @@
       "basis": "Детализация не подтверждает состав свода без дополнительных правил ФРМР или идентификаторов СЭМД",
       "numeratorDeltaNoSum": 0,
       "denominatorDelta": 10,
-      "period": "01.11.2026–12.11.2026",
-      "sourceFile": "Отчёт_по_врачам_сформировавших_СЭМД - Ноябрь(Выгрузка из BI 13.11.).xlsx"
+      "period": "01.11.2026–14.11.2026",
+      "sourceFile": "Отчёт_по_врачам_сформировавших_СЭМД НОЯБРЬ.xlsx"
     },
     {
       "medicalOrganization": "ГАУЗ \"ЗАИНСКАЯ ЦРБ\"",
@@ -259,8 +259,8 @@
       "basis": "Детализация не подтверждает состав свода без дополнительных правил ФРМР или идентификаторов СЭМД",
       "numeratorDeltaNoSum": -1,
       "denominatorDelta": 2,
-      "period": "01.11.2026–12.11.2026",
-      "sourceFile": "Отчёт_по_врачам_сформировавших_СЭМД - Ноябрь(Выгрузка из BI 13.11.).xlsx"
+      "period": "01.11.2026–14.11.2026",
+      "sourceFile": "Отчёт_по_врачам_сформировавших_СЭМД НОЯБРЬ.xlsx"
     },
     {
       "medicalOrganization": "ГАУЗ \"ЛЕНИНОГОРСКАЯ ЦРБ\"",
@@ -268,17 +268,17 @@
       "specialty": "doctor500_surgeon",
       "status": "WARN",
       "reasonCode": "DETAIL_SCOPE_OR_SUM_AMBIGUOUS",
-      "sourceCount": 0,
+      "sourceCount": 1,
       "sourceVolume": 7,
       "detailCountNoSum": 0,
       "detailCountSummed": 0,
       "detailVolume": 8,
       "thresholdAmbiguousWorkers": 0,
       "basis": "Детализация не подтверждает состав свода без дополнительных правил ФРМР или идентификаторов СЭМД",
-      "numeratorDeltaNoSum": 0,
+      "numeratorDeltaNoSum": -1,
       "denominatorDelta": 1,
-      "period": "01.11.2026–12.11.2026",
-      "sourceFile": "Отчёт_по_врачам_сформировавших_СЭМД - Ноябрь(Выгрузка из BI 13.11.).xlsx"
+      "period": "01.11.2026–14.11.2026",
+      "sourceFile": "Отчёт_по_врачам_сформировавших_СЭМД НОЯБРЬ.xlsx"
     },
     {
       "medicalOrganization": "ГАУЗ \"АТНИНСКАЯ ЦРБ\"",
@@ -295,8 +295,8 @@
       "basis": "Детализация не подтверждает состав свода без дополнительных правил ФРМР или идентификаторов СЭМД",
       "numeratorDeltaNoSum": 0,
       "denominatorDelta": 1,
-      "period": "01.11.2026–12.11.2026",
-      "sourceFile": "Отчёт_по_врачам_сформировавших_СЭМД - Ноябрь(Выгрузка из BI 13.11.).xlsx"
+      "period": "01.11.2026–14.11.2026",
+      "sourceFile": "Отчёт_по_врачам_сформировавших_СЭМД НОЯБРЬ.xlsx"
     },
     {
       "medicalOrganization": "ГАУЗ \"МКДЦ\"",
@@ -313,8 +313,8 @@
       "basis": "Детализация не подтверждает состав свода без дополнительных правил ФРМР или идентификаторов СЭМД",
       "numeratorDeltaNoSum": 0,
       "denominatorDelta": 14,
-      "period": "01.11.2026–12.11.2026",
-      "sourceFile": "Отчёт_по_врачам_сформировавших_СЭМД - Ноябрь(Выгрузка из BI 13.11.).xlsx"
+      "period": "01.11.2026–14.11.2026",
+      "sourceFile": "Отчёт_по_врачам_сформировавших_СЭМД НОЯБРЬ.xlsx"
     },
     {
       "medicalOrganization": "ГАУЗ \"ГОРОДСКАЯ ПОЛИКЛИНИКА №18\"",
@@ -331,8 +331,8 @@
       "basis": "Детализация не подтверждает состав свода без дополнительных правил ФРМР или идентификаторов СЭМД",
       "numeratorDeltaNoSum": 0,
       "denominatorDelta": 1,
-      "period": "01.11.2026–12.11.2026",
-      "sourceFile": "Отчёт_по_врачам_сформировавших_СЭМД - Ноябрь(Выгрузка из BI 13.11.).xlsx"
+      "period": "01.11.2026–14.11.2026",
+      "sourceFile": "Отчёт_по_врачам_сформировавших_СЭМД НОЯБРЬ.xlsx"
     },
     {
       "medicalOrganization": "ГАУЗ \"БАЛТАСИНСКАЯ ЦРБ\"",
@@ -349,8 +349,8 @@
       "basis": "Детализация не подтверждает состав свода без дополнительных правил ФРМР или идентификаторов СЭМД",
       "numeratorDeltaNoSum": 0,
       "denominatorDelta": 2,
-      "period": "01.11.2026–12.11.2026",
-      "sourceFile": "Отчёт_по_врачам_сформировавших_СЭМД - Ноябрь(Выгрузка из BI 13.11.).xlsx"
+      "period": "01.11.2026–14.11.2026",
+      "sourceFile": "Отчёт_по_врачам_сформировавших_СЭМД НОЯБРЬ.xlsx"
     },
     {
       "medicalOrganization": "АЗНАКАЕВСКАЯ ЦРБ",
@@ -367,8 +367,8 @@
       "basis": "Детализация не подтверждает состав свода без дополнительных правил ФРМР или идентификаторов СЭМД",
       "numeratorDeltaNoSum": 0,
       "denominatorDelta": 2,
-      "period": "01.11.2026–12.11.2026",
-      "sourceFile": "Отчёт_по_врачам_сформировавших_СЭМД - Ноябрь(Выгрузка из BI 13.11.).xlsx"
+      "period": "01.11.2026–14.11.2026",
+      "sourceFile": "Отчёт_по_врачам_сформировавших_СЭМД НОЯБРЬ.xlsx"
     },
     {
       "medicalOrganization": "ГАУЗ \"АЛЕКСЕЕВСКАЯ ЦРБ\"",
@@ -385,8 +385,8 @@
       "basis": "Детализация не подтверждает состав свода без дополнительных правил ФРМР или идентификаторов СЭМД",
       "numeratorDeltaNoSum": 0,
       "denominatorDelta": 1,
-      "period": "01.11.2026–12.11.2026",
-      "sourceFile": "Отчёт_по_врачам_сформировавших_СЭМД - Ноябрь(Выгрузка из BI 13.11.).xlsx"
+      "period": "01.11.2026–14.11.2026",
+      "sourceFile": "Отчёт_по_врачам_сформировавших_СЭМД НОЯБРЬ.xlsx"
     },
     {
       "medicalOrganization": "ГАУЗ \"АГРЫЗСКАЯ ЦРБ\"",
@@ -403,8 +403,8 @@
       "basis": "Детализация не подтверждает состав свода без дополнительных правил ФРМР или идентификаторов СЭМД",
       "numeratorDeltaNoSum": 0,
       "denominatorDelta": 3,
-      "period": "01.11.2026–12.11.2026",
-      "sourceFile": "Отчёт_по_врачам_сформировавших_СЭМД - Ноябрь(Выгрузка из BI 13.11.).xlsx"
+      "period": "01.11.2026–14.11.2026",
+      "sourceFile": "Отчёт_по_врачам_сформировавших_СЭМД НОЯБРЬ.xlsx"
     },
     {
       "medicalOrganization": "ГАУЗ \"ДЕТСКАЯ ГОРОДСКАЯ ПОЛИКЛИНИКА №5\"",
@@ -421,8 +421,8 @@
       "basis": "Нет строк детализации; отсутствие не заменено нулём",
       "numeratorDeltaNoSum": null,
       "denominatorDelta": null,
-      "period": "01.11.2026–12.11.2026",
-      "sourceFile": "Отчёт_по_врачам_сформировавших_СЭМД - Ноябрь(Выгрузка из BI 13.11.).xlsx"
+      "period": "01.11.2026–14.11.2026",
+      "sourceFile": "Отчёт_по_врачам_сформировавших_СЭМД НОЯБРЬ.xlsx"
     },
     {
       "medicalOrganization": "ГАУЗ \"ГОРОДСКАЯ ДЕТСКАЯ ПОЛИКЛИНИКА № 6\"",
@@ -439,8 +439,8 @@
       "basis": "Нет строк детализации; отсутствие не заменено нулём",
       "numeratorDeltaNoSum": null,
       "denominatorDelta": null,
-      "period": "01.11.2026–12.11.2026",
-      "sourceFile": "Отчёт_по_врачам_сформировавших_СЭМД - Ноябрь(Выгрузка из BI 13.11.).xlsx"
+      "period": "01.11.2026–14.11.2026",
+      "sourceFile": "Отчёт_по_врачам_сформировавших_СЭМД НОЯБРЬ.xlsx"
     },
     {
       "medicalOrganization": "ГАУЗ \"ЕЦРБ\"",
@@ -457,8 +457,8 @@
       "basis": "Детализация не подтверждает состав свода без дополнительных правил ФРМР или идентификаторов СЭМД",
       "numeratorDeltaNoSum": 0,
       "denominatorDelta": 2,
-      "period": "01.11.2026–12.11.2026",
-      "sourceFile": "Отчёт_по_врачам_сформировавших_СЭМД - Ноябрь(Выгрузка из BI 13.11.).xlsx"
+      "period": "01.11.2026–14.11.2026",
+      "sourceFile": "Отчёт_по_врачам_сформировавших_СЭМД НОЯБРЬ.xlsx"
     },
     {
       "medicalOrganization": "ГАУЗ \"РКБ МЗ РТ\"",
@@ -470,13 +470,13 @@
       "sourceVolume": 5,
       "detailCountNoSum": 1,
       "detailCountSummed": 1,
-      "detailVolume": 36,
+      "detailVolume": 37,
       "thresholdAmbiguousWorkers": 0,
       "basis": "Детализация не подтверждает состав свода без дополнительных правил ФРМР или идентификаторов СЭМД",
       "numeratorDeltaNoSum": -1,
-      "denominatorDelta": 31,
-      "period": "01.11.2026–12.11.2026",
-      "sourceFile": "Отчёт_по_врачам_сформировавших_СЭМД - Ноябрь(Выгрузка из BI 13.11.).xlsx"
+      "denominatorDelta": 32,
+      "period": "01.11.2026–14.11.2026",
+      "sourceFile": "Отчёт_по_врачам_сформировавших_СЭМД НОЯБРЬ.xlsx"
     },
     {
       "medicalOrganization": "ГАУЗ \"УРУССИНСКАЯ ЦРБ\"",
@@ -493,8 +493,8 @@
       "basis": "Детализация не подтверждает состав свода без дополнительных правил ФРМР или идентификаторов СЭМД",
       "numeratorDeltaNoSum": 0,
       "denominatorDelta": -1,
-      "period": "01.11.2026–12.11.2026",
-      "sourceFile": "Отчёт_по_врачам_сформировавших_СЭМД - Ноябрь(Выгрузка из BI 13.11.).xlsx"
+      "period": "01.11.2026–14.11.2026",
+      "sourceFile": "Отчёт_по_врачам_сформировавших_СЭМД НОЯБРЬ.xlsx"
     },
     {
       "medicalOrganization": "ГАУЗ \"МЕНЗЕЛИНСКАЯ ЦРБ\"",
@@ -511,8 +511,8 @@
       "basis": "Детализация не подтверждает состав свода без дополнительных правил ФРМР или идентификаторов СЭМД",
       "numeratorDeltaNoSum": -1,
       "denominatorDelta": -1,
-      "period": "01.11.2026–12.11.2026",
-      "sourceFile": "Отчёт_по_врачам_сформировавших_СЭМД - Ноябрь(Выгрузка из BI 13.11.).xlsx"
+      "period": "01.11.2026–14.11.2026",
+      "sourceFile": "Отчёт_по_врачам_сформировавших_СЭМД НОЯБРЬ.xlsx"
     },
     {
       "medicalOrganization": "ГАУЗ \"МАМАДЫШСКАЯ ЦРБ\"",
@@ -529,8 +529,8 @@
       "basis": "Детализация не подтверждает состав свода без дополнительных правил ФРМР или идентификаторов СЭМД",
       "numeratorDeltaNoSum": 1,
       "denominatorDelta": 4,
-      "period": "01.11.2026–12.11.2026",
-      "sourceFile": "Отчёт_по_врачам_сформировавших_СЭМД - Ноябрь(Выгрузка из BI 13.11.).xlsx"
+      "period": "01.11.2026–14.11.2026",
+      "sourceFile": "Отчёт_по_врачам_сформировавших_СЭМД НОЯБРЬ.xlsx"
     },
     {
       "medicalOrganization": "ГАУЗ \"ДРОЖЖАНОВСКАЯ ЦРБ\"",
@@ -547,8 +547,8 @@
       "basis": "Детализация не подтверждает состав свода без дополнительных правил ФРМР или идентификаторов СЭМД",
       "numeratorDeltaNoSum": 0,
       "denominatorDelta": 1,
-      "period": "01.11.2026–12.11.2026",
-      "sourceFile": "Отчёт_по_врачам_сформировавших_СЭМД - Ноябрь(Выгрузка из BI 13.11.).xlsx"
+      "period": "01.11.2026–14.11.2026",
+      "sourceFile": "Отчёт_по_врачам_сформировавших_СЭМД НОЯБРЬ.xlsx"
     },
     {
       "medicalOrganization": "ГАУЗ \"АЛЬМЕТЬЕВСКАЯ ЦРБ\"",
@@ -558,15 +558,15 @@
       "reasonCode": "DETAIL_SCOPE_OR_SUM_AMBIGUOUS",
       "sourceCount": 1,
       "sourceVolume": 8,
-      "detailCountNoSum": 0,
-      "detailCountSummed": 0,
+      "detailCountNoSum": 1,
+      "detailCountSummed": 1,
       "detailVolume": 18,
       "thresholdAmbiguousWorkers": 0,
       "basis": "Детализация не подтверждает состав свода без дополнительных правил ФРМР или идентификаторов СЭМД",
-      "numeratorDeltaNoSum": -1,
+      "numeratorDeltaNoSum": 0,
       "denominatorDelta": 10,
-      "period": "01.11.2026–12.11.2026",
-      "sourceFile": "Отчёт_по_врачам_сформировавших_СЭМД - Ноябрь(Выгрузка из BI 13.11.).xlsx"
+      "period": "01.11.2026–14.11.2026",
+      "sourceFile": "Отчёт_по_врачам_сформировавших_СЭМД НОЯБРЬ.xlsx"
     },
     {
       "medicalOrganization": "ГАУЗ \"ПЕСТРЕЧИНСКАЯ ЦРБ\"",
@@ -583,8 +583,8 @@
       "basis": "Детализация не подтверждает состав свода без дополнительных правил ФРМР или идентификаторов СЭМД",
       "numeratorDeltaNoSum": 0,
       "denominatorDelta": 2,
-      "period": "01.11.2026–12.11.2026",
-      "sourceFile": "Отчёт_по_врачам_сформировавших_СЭМД - Ноябрь(Выгрузка из BI 13.11.).xlsx"
+      "period": "01.11.2026–14.11.2026",
+      "sourceFile": "Отчёт_по_врачам_сформировавших_СЭМД НОЯБРЬ.xlsx"
     },
     {
       "medicalOrganization": "ГАУЗ \"ГОРОДСКАЯ БОЛЬНИЦА №5\"",
@@ -592,17 +592,17 @@
       "specialty": "doctor500_surgeon",
       "status": "WARN",
       "reasonCode": "DETAIL_SCOPE_OR_SUM_AMBIGUOUS",
-      "sourceCount": 2,
+      "sourceCount": 3,
       "sourceVolume": 6,
-      "detailCountNoSum": 1,
-      "detailCountSummed": 1,
+      "detailCountNoSum": 3,
+      "detailCountSummed": 3,
       "detailVolume": 16,
       "thresholdAmbiguousWorkers": 0,
       "basis": "Детализация не подтверждает состав свода без дополнительных правил ФРМР или идентификаторов СЭМД",
-      "numeratorDeltaNoSum": -1,
+      "numeratorDeltaNoSum": 0,
       "denominatorDelta": 10,
-      "period": "01.11.2026–12.11.2026",
-      "sourceFile": "Отчёт_по_врачам_сформировавших_СЭМД - Ноябрь(Выгрузка из BI 13.11.).xlsx"
+      "period": "01.11.2026–14.11.2026",
+      "sourceFile": "Отчёт_по_врачам_сформировавших_СЭМД НОЯБРЬ.xlsx"
     },
     {
       "medicalOrganization": "ГАУЗ \"ГДП №7\"",
@@ -610,7 +610,7 @@
       "specialty": "doctor500_surgeon",
       "status": "WARN",
       "reasonCode": "DETAIL_UNAVAILABLE",
-      "sourceCount": 1,
+      "sourceCount": 2,
       "sourceVolume": 3,
       "detailCountNoSum": null,
       "detailCountSummed": null,
@@ -619,8 +619,8 @@
       "basis": "Нет строк детализации; отсутствие не заменено нулём",
       "numeratorDeltaNoSum": null,
       "denominatorDelta": null,
-      "period": "01.11.2026–12.11.2026",
-      "sourceFile": "Отчёт_по_врачам_сформировавших_СЭМД - Ноябрь(Выгрузка из BI 13.11.).xlsx"
+      "period": "01.11.2026–14.11.2026",
+      "sourceFile": "Отчёт_по_врачам_сформировавших_СЭМД НОЯБРЬ.xlsx"
     },
     {
       "medicalOrganization": "ГАУЗ \"ГОРОДСКАЯ БОЛЬНИЦА №2\"",
@@ -637,8 +637,8 @@
       "basis": "Детализация не подтверждает состав свода без дополнительных правил ФРМР или идентификаторов СЭМД",
       "numeratorDeltaNoSum": 0,
       "denominatorDelta": 7,
-      "period": "01.11.2026–12.11.2026",
-      "sourceFile": "Отчёт_по_врачам_сформировавших_СЭМД - Ноябрь(Выгрузка из BI 13.11.).xlsx"
+      "period": "01.11.2026–14.11.2026",
+      "sourceFile": "Отчёт_по_врачам_сформировавших_СЭМД НОЯБРЬ.xlsx"
     },
     {
       "medicalOrganization": "ГАУЗ \"БУИНСКАЯ ЦРБ\"",
@@ -655,8 +655,8 @@
       "basis": "Детализация не подтверждает состав свода без дополнительных правил ФРМР или идентификаторов СЭМД",
       "numeratorDeltaNoSum": 0,
       "denominatorDelta": 2,
-      "period": "01.11.2026–12.11.2026",
-      "sourceFile": "Отчёт_по_врачам_сформировавших_СЭМД - Ноябрь(Выгрузка из BI 13.11.).xlsx"
+      "period": "01.11.2026–14.11.2026",
+      "sourceFile": "Отчёт_по_врачам_сформировавших_СЭМД НОЯБРЬ.xlsx"
     },
     {
       "medicalOrganization": "ГАУЗ \"ДЕТСКАЯ ГОРОДСКАЯ ПОЛИКЛИНИКА № 4\"",
@@ -673,8 +673,8 @@
       "basis": "Нет строк детализации; отсутствие не заменено нулём",
       "numeratorDeltaNoSum": null,
       "denominatorDelta": null,
-      "period": "01.11.2026–12.11.2026",
-      "sourceFile": "Отчёт_по_врачам_сформировавших_СЭМД - Ноябрь(Выгрузка из BI 13.11.).xlsx"
+      "period": "01.11.2026–14.11.2026",
+      "sourceFile": "Отчёт_по_врачам_сформировавших_СЭМД НОЯБРЬ.xlsx"
     },
     {
       "medicalOrganization": "ГАУЗ \"ДГКБ № 7\"",
@@ -691,8 +691,8 @@
       "basis": "Нет строк детализации; отсутствие не заменено нулём",
       "numeratorDeltaNoSum": null,
       "denominatorDelta": null,
-      "period": "01.11.2026–12.11.2026",
-      "sourceFile": "Отчёт_по_врачам_сформировавших_СЭМД - Ноябрь(Выгрузка из BI 13.11.).xlsx"
+      "period": "01.11.2026–14.11.2026",
+      "sourceFile": "Отчёт_по_врачам_сформировавших_СЭМД НОЯБРЬ.xlsx"
     },
     {
       "medicalOrganization": "ГАУЗ \"КЛИНИКА МЕДИЦИНСКОГО УНИВЕРСИТЕТА\"",
@@ -709,8 +709,8 @@
       "basis": "Детализация не подтверждает состав свода без дополнительных правил ФРМР или идентификаторов СЭМД",
       "numeratorDeltaNoSum": 0,
       "denominatorDelta": 17,
-      "period": "01.11.2026–12.11.2026",
-      "sourceFile": "Отчёт_по_врачам_сформировавших_СЭМД - Ноябрь(Выгрузка из BI 13.11.).xlsx"
+      "period": "01.11.2026–14.11.2026",
+      "sourceFile": "Отчёт_по_врачам_сформировавших_СЭМД НОЯБРЬ.xlsx"
     },
     {
       "medicalOrganization": "ГАУЗ \"САБИНСКАЯ ЦРБ\"",
@@ -718,17 +718,17 @@
       "specialty": "doctor500_surgeon",
       "status": "WARN",
       "reasonCode": "DETAIL_SCOPE_OR_SUM_AMBIGUOUS",
-      "sourceCount": 0,
+      "sourceCount": 1,
       "sourceVolume": 1,
       "detailCountNoSum": 0,
       "detailCountSummed": 0,
       "detailVolume": 3,
       "thresholdAmbiguousWorkers": 0,
       "basis": "Детализация не подтверждает состав свода без дополнительных правил ФРМР или идентификаторов СЭМД",
-      "numeratorDeltaNoSum": 0,
+      "numeratorDeltaNoSum": -1,
       "denominatorDelta": 2,
-      "period": "01.11.2026–12.11.2026",
-      "sourceFile": "Отчёт_по_врачам_сформировавших_СЭМД - Ноябрь(Выгрузка из BI 13.11.).xlsx"
+      "period": "01.11.2026–14.11.2026",
+      "sourceFile": "Отчёт_по_врачам_сформировавших_СЭМД НОЯБРЬ.xlsx"
     },
     {
       "medicalOrganization": "ГАУЗ \"ДЕТСКАЯ ГОРОДСКАЯ ПОЛИКЛИНИКА №4 ИМ. Ф.Г. АХМЕРОВОЙ\"",
@@ -745,8 +745,8 @@
       "basis": "Нет строк детализации; отсутствие не заменено нулём",
       "numeratorDeltaNoSum": null,
       "denominatorDelta": null,
-      "period": "01.11.2026–12.11.2026",
-      "sourceFile": "Отчёт_по_врачам_сформировавших_СЭМД - Ноябрь(Выгрузка из BI 13.11.).xlsx"
+      "period": "01.11.2026–14.11.2026",
+      "sourceFile": "Отчёт_по_врачам_сформировавших_СЭМД НОЯБРЬ.xlsx"
     },
     {
       "medicalOrganization": "ГАУЗ \"БАВЛИНСКАЯ ЦРБ\"",
@@ -763,8 +763,8 @@
       "basis": "Детализация не подтверждает состав свода без дополнительных правил ФРМР или идентификаторов СЭМД",
       "numeratorDeltaNoSum": -1,
       "denominatorDelta": -1,
-      "period": "01.11.2026–12.11.2026",
-      "sourceFile": "Отчёт_по_врачам_сформировавших_СЭМД - Ноябрь(Выгрузка из BI 13.11.).xlsx"
+      "period": "01.11.2026–14.11.2026",
+      "sourceFile": "Отчёт_по_врачам_сформировавших_СЭМД НОЯБРЬ.xlsx"
     },
     {
       "medicalOrganization": "ГАУЗ \"РЫБНО-СЛОБОДСКАЯ ЦРБ\"",
@@ -781,8 +781,8 @@
       "basis": "Детализация не подтверждает состав свода без дополнительных правил ФРМР или идентификаторов СЭМД",
       "numeratorDeltaNoSum": 1,
       "denominatorDelta": 2,
-      "period": "01.11.2026–12.11.2026",
-      "sourceFile": "Отчёт_по_врачам_сформировавших_СЭМД - Ноябрь(Выгрузка из BI 13.11.).xlsx"
+      "period": "01.11.2026–14.11.2026",
+      "sourceFile": "Отчёт_по_врачам_сформировавших_СЭМД НОЯБРЬ.xlsx"
     },
     {
       "medicalOrganization": "ГАУЗ \"ГОСПИТАЛЬ ДЛЯ ВЕТЕРАНОВ ВОЙН\" Г. КАЗАНИ",
@@ -799,8 +799,8 @@
       "basis": "Детализация не подтверждает состав свода без дополнительных правил ФРМР или идентификаторов СЭМД",
       "numeratorDeltaNoSum": 0,
       "denominatorDelta": 10,
-      "period": "01.11.2026–12.11.2026",
-      "sourceFile": "Отчёт_по_врачам_сформировавших_СЭМД - Ноябрь(Выгрузка из BI 13.11.).xlsx"
+      "period": "01.11.2026–14.11.2026",
+      "sourceFile": "Отчёт_по_врачам_сформировавших_СЭМД НОЯБРЬ.xlsx"
     },
     {
       "medicalOrganization": "ГАУЗ \"НУРЛАТСКАЯ ЦРБ\"",
@@ -817,8 +817,8 @@
       "basis": "Детализация не подтверждает состав свода без дополнительных правил ФРМР или идентификаторов СЭМД",
       "numeratorDeltaNoSum": 0,
       "denominatorDelta": 5,
-      "period": "01.11.2026–12.11.2026",
-      "sourceFile": "Отчёт_по_врачам_сформировавших_СЭМД - Ноябрь(Выгрузка из BI 13.11.).xlsx"
+      "period": "01.11.2026–14.11.2026",
+      "sourceFile": "Отчёт_по_врачам_сформировавших_СЭМД НОЯБРЬ.xlsx"
     },
     {
       "medicalOrganization": "ГАУЗ \"ЗЕЛЕНОДОЛЬСКАЯ ЦРБ\"",
@@ -826,17 +826,17 @@
       "specialty": "doctor500_surgeon",
       "status": "WARN",
       "reasonCode": "DETAIL_SCOPE_OR_SUM_AMBIGUOUS",
-      "sourceCount": 0,
+      "sourceCount": 2,
       "sourceVolume": 12,
-      "detailCountNoSum": 0,
-      "detailCountSummed": 0,
+      "detailCountNoSum": 1,
+      "detailCountSummed": 1,
       "detailVolume": 28,
       "thresholdAmbiguousWorkers": 0,
       "basis": "Детализация не подтверждает состав свода без дополнительных правил ФРМР или идентификаторов СЭМД",
-      "numeratorDeltaNoSum": 0,
+      "numeratorDeltaNoSum": -1,
       "denominatorDelta": 16,
-      "period": "01.11.2026–12.11.2026",
-      "sourceFile": "Отчёт_по_врачам_сформировавших_СЭМД - Ноябрь(Выгрузка из BI 13.11.).xlsx"
+      "period": "01.11.2026–14.11.2026",
+      "sourceFile": "Отчёт_по_врачам_сформировавших_СЭМД НОЯБРЬ.xlsx"
     },
     {
       "medicalOrganization": "ГАУЗ \"ТУКАЕВСКАЯ ЦРБ\"",
@@ -853,8 +853,26 @@
       "basis": "Детализация не подтверждает состав свода без дополнительных правил ФРМР или идентификаторов СЭМД",
       "numeratorDeltaNoSum": 0,
       "denominatorDelta": -1,
-      "period": "01.11.2026–12.11.2026",
-      "sourceFile": "Отчёт_по_врачам_сформировавших_СЭМД - Ноябрь(Выгрузка из BI 13.11.).xlsx"
+      "period": "01.11.2026–14.11.2026",
+      "sourceFile": "Отчёт_по_врачам_сформировавших_СЭМД НОЯБРЬ.xlsx"
+    },
+    {
+      "medicalOrganization": "ГАУЗ \"КУКМОРСКАЯ ЦРБ\"",
+      "moOid": "1.2.643.5.1.13.13.12.2.16.1144",
+      "specialty": "doctor500_surgeon",
+      "status": "WARN",
+      "reasonCode": "DETAIL_SCOPE_OR_SUM_AMBIGUOUS",
+      "sourceCount": 1,
+      "sourceVolume": 4,
+      "detailCountNoSum": 0,
+      "detailCountSummed": 0,
+      "detailVolume": 4,
+      "thresholdAmbiguousWorkers": 0,
+      "basis": "Детализация не подтверждает состав свода без дополнительных правил ФРМР или идентификаторов СЭМД",
+      "numeratorDeltaNoSum": -1,
+      "denominatorDelta": 0,
+      "period": "01.11.2026–14.11.2026",
+      "sourceFile": "Отчёт_по_врачам_сформировавших_СЭМД НОЯБРЬ.xlsx"
     },
     {
       "medicalOrganization": "ГАУЗ \"ГДБ № 1 ИМ. М.Ш.УРАЗАЕВОЙ\"",
@@ -871,8 +889,8 @@
       "basis": "Нет строк детализации; отсутствие не заменено нулём",
       "numeratorDeltaNoSum": null,
       "denominatorDelta": null,
-      "period": "01.11.2026–12.11.2026",
-      "sourceFile": "Отчёт_по_врачам_сформировавших_СЭМД - Ноябрь(Выгрузка из BI 13.11.).xlsx"
+      "period": "01.11.2026–14.11.2026",
+      "sourceFile": "Отчёт_по_врачам_сформировавших_СЭМД НОЯБРЬ.xlsx"
     },
     {
       "medicalOrganization": "ЛАИШЕВСКАЯ ЦРБ",
@@ -889,8 +907,8 @@
       "basis": "Детализация не подтверждает состав свода без дополнительных правил ФРМР или идентификаторов СЭМД",
       "numeratorDeltaNoSum": 0,
       "denominatorDelta": 2,
-      "period": "01.11.2026–12.11.2026",
-      "sourceFile": "Отчёт_по_врачам_сформировавших_СЭМД - Ноябрь(Выгрузка из BI 13.11.).xlsx"
+      "period": "01.11.2026–14.11.2026",
+      "sourceFile": "Отчёт_по_врачам_сформировавших_СЭМД НОЯБРЬ.xlsx"
     },
     {
       "medicalOrganization": "ГАУЗ \"ЦГКБ № 18 ИМ. ПРОФ. К.Ш. ЗЫЯТДИНОВА\"",
@@ -898,17 +916,17 @@
       "specialty": "doctor500_surgeon",
       "status": "WARN",
       "reasonCode": "DETAIL_SCOPE_OR_SUM_AMBIGUOUS",
-      "sourceCount": 0,
+      "sourceCount": 2,
       "sourceVolume": 3,
-      "detailCountNoSum": 0,
-      "detailCountSummed": 0,
+      "detailCountNoSum": 1,
+      "detailCountSummed": 1,
       "detailVolume": 20,
       "thresholdAmbiguousWorkers": 0,
       "basis": "Детализация не подтверждает состав свода без дополнительных правил ФРМР или идентификаторов СЭМД",
-      "numeratorDeltaNoSum": 0,
+      "numeratorDeltaNoSum": -1,
       "denominatorDelta": 17,
-      "period": "01.11.2026–12.11.2026",
-      "sourceFile": "Отчёт_по_врачам_сформировавших_СЭМД - Ноябрь(Выгрузка из BI 13.11.).xlsx"
+      "period": "01.11.2026–14.11.2026",
+      "sourceFile": "Отчёт_по_врачам_сформировавших_СЭМД НОЯБРЬ.xlsx"
     },
     {
       "medicalOrganization": "ГАУЗ \"АПАСТОВСКАЯ ЦРБ\"",
@@ -925,8 +943,8 @@
       "basis": "Детализация не подтверждает состав свода без дополнительных правил ФРМР или идентификаторов СЭМД",
       "numeratorDeltaNoSum": 0,
       "denominatorDelta": 1,
-      "period": "01.11.2026–12.11.2026",
-      "sourceFile": "Отчёт_по_врачам_сформировавших_СЭМД - Ноябрь(Выгрузка из BI 13.11.).xlsx"
+      "period": "01.11.2026–14.11.2026",
+      "sourceFile": "Отчёт_по_врачам_сформировавших_СЭМД НОЯБРЬ.xlsx"
     },
     {
       "medicalOrganization": "ГАУЗ \"ДРКБ МЗ РТ\"",
@@ -943,8 +961,8 @@
       "basis": "Нет строк детализации; отсутствие не заменено нулём",
       "numeratorDeltaNoSum": null,
       "denominatorDelta": null,
-      "period": "01.11.2026–12.11.2026",
-      "sourceFile": "Отчёт_по_врачам_сформировавших_СЭМД - Ноябрь(Выгрузка из BI 13.11.).xlsx"
+      "period": "01.11.2026–14.11.2026",
+      "sourceFile": "Отчёт_по_врачам_сформировавших_СЭМД НОЯБРЬ.xlsx"
     },
     {
       "medicalOrganization": "ГАУЗ \"БАЗАРНО-МАТАКСКАЯ ЦРБ\"",
@@ -961,8 +979,8 @@
       "basis": "Детализация не подтверждает состав свода без дополнительных правил ФРМР или идентификаторов СЭМД",
       "numeratorDeltaNoSum": 0,
       "denominatorDelta": 3,
-      "period": "01.11.2026–12.11.2026",
-      "sourceFile": "Отчёт_по_врачам_сформировавших_СЭМД - Ноябрь(Выгрузка из BI 13.11.).xlsx"
+      "period": "01.11.2026–14.11.2026",
+      "sourceFile": "Отчёт_по_врачам_сформировавших_СЭМД НОЯБРЬ.xlsx"
     },
     {
       "medicalOrganization": "ГАУЗ \"ГКБ№7 ИМ. М.Н.САДЫКОВА\"",
@@ -970,17 +988,17 @@
       "specialty": "doctor500_surgeon",
       "status": "WARN",
       "reasonCode": "DETAIL_SCOPE_OR_SUM_AMBIGUOUS",
-      "sourceCount": 0,
+      "sourceCount": 1,
       "sourceVolume": 9,
-      "detailCountNoSum": 1,
-      "detailCountSummed": 1,
+      "detailCountNoSum": 2,
+      "detailCountSummed": 2,
       "detailVolume": 72,
       "thresholdAmbiguousWorkers": 0,
       "basis": "Детализация не подтверждает состав свода без дополнительных правил ФРМР или идентификаторов СЭМД",
       "numeratorDeltaNoSum": 1,
       "denominatorDelta": 63,
-      "period": "01.11.2026–12.11.2026",
-      "sourceFile": "Отчёт_по_врачам_сформировавших_СЭМД - Ноябрь(Выгрузка из BI 13.11.).xlsx"
+      "period": "01.11.2026–14.11.2026",
+      "sourceFile": "Отчёт_по_врачам_сформировавших_СЭМД НОЯБРЬ.xlsx"
     },
     {
       "medicalOrganization": "ГАУЗ \"АРСКАЯ ЦРБ\"",
@@ -997,8 +1015,8 @@
       "basis": "Детализация не подтверждает состав свода без дополнительных правил ФРМР или идентификаторов СЭМД",
       "numeratorDeltaNoSum": 0,
       "denominatorDelta": 2,
-      "period": "01.11.2026–12.11.2026",
-      "sourceFile": "Отчёт_по_врачам_сформировавших_СЭМД - Ноябрь(Выгрузка из BI 13.11.).xlsx"
+      "period": "01.11.2026–14.11.2026",
+      "sourceFile": "Отчёт_по_врачам_сформировавших_СЭМД НОЯБРЬ.xlsx"
     },
     {
       "medicalOrganization": "ГАУЗ \"САРМАНОВСКАЯ ЦРБ\"",
@@ -1007,16 +1025,16 @@
       "status": "WARN",
       "reasonCode": "DETAIL_SCOPE_OR_SUM_AMBIGUOUS",
       "sourceCount": 0,
-      "sourceVolume": 5,
+      "sourceVolume": 4,
       "detailCountNoSum": 0,
       "detailCountSummed": 0,
-      "detailVolume": 6,
+      "detailVolume": 5,
       "thresholdAmbiguousWorkers": 0,
       "basis": "Детализация не подтверждает состав свода без дополнительных правил ФРМР или идентификаторов СЭМД",
       "numeratorDeltaNoSum": 0,
       "denominatorDelta": 1,
-      "period": "01.11.2026–12.11.2026",
-      "sourceFile": "Отчёт_по_врачам_сформировавших_СЭМД - Ноябрь(Выгрузка из BI 13.11.).xlsx"
+      "period": "01.11.2026–14.11.2026",
+      "sourceFile": "Отчёт_по_врачам_сформировавших_СЭМД НОЯБРЬ.xlsx"
     },
     {
       "medicalOrganization": "ГАУЗ НДРБ С ПЦ",
@@ -1033,8 +1051,8 @@
       "basis": "Нет строк детализации; отсутствие не заменено нулём",
       "numeratorDeltaNoSum": null,
       "denominatorDelta": null,
-      "period": "01.11.2026–12.11.2026",
-      "sourceFile": "Отчёт_по_врачам_сформировавших_СЭМД - Ноябрь(Выгрузка из BI 13.11.).xlsx"
+      "period": "01.11.2026–14.11.2026",
+      "sourceFile": "Отчёт_по_врачам_сформировавших_СЭМД НОЯБРЬ.xlsx"
     },
     {
       "medicalOrganization": "ГАУЗ \"ГОРОДСКАЯ ПОЛИКЛИНИКА № 20\"",
@@ -1042,17 +1060,17 @@
       "specialty": "doctor500_surgeon",
       "status": "WARN",
       "reasonCode": "DETAIL_SCOPE_OR_SUM_AMBIGUOUS",
-      "sourceCount": 1,
+      "sourceCount": 2,
       "sourceVolume": 8,
       "detailCountNoSum": 0,
       "detailCountSummed": 0,
       "detailVolume": 8,
       "thresholdAmbiguousWorkers": 0,
       "basis": "Детализация не подтверждает состав свода без дополнительных правил ФРМР или идентификаторов СЭМД",
-      "numeratorDeltaNoSum": -1,
+      "numeratorDeltaNoSum": -2,
       "denominatorDelta": 0,
-      "period": "01.11.2026–12.11.2026",
-      "sourceFile": "Отчёт_по_врачам_сформировавших_СЭМД - Ноябрь(Выгрузка из BI 13.11.).xlsx"
+      "period": "01.11.2026–14.11.2026",
+      "sourceFile": "Отчёт_по_врачам_сформировавших_СЭМД НОЯБРЬ.xlsx"
     },
     {
       "medicalOrganization": "ГАУЗ \"ДГП № 2\"",
@@ -1069,8 +1087,8 @@
       "basis": "Нет строк детализации; отсутствие не заменено нулём",
       "numeratorDeltaNoSum": null,
       "denominatorDelta": null,
-      "period": "01.11.2026–12.11.2026",
-      "sourceFile": "Отчёт_по_врачам_сформировавших_СЭМД - Ноябрь(Выгрузка из BI 13.11.).xlsx"
+      "period": "01.11.2026–14.11.2026",
+      "sourceFile": "Отчёт_по_врачам_сформировавших_СЭМД НОЯБРЬ.xlsx"
     },
     {
       "medicalOrganization": "ГАУЗ \"НЦРМБ\"",
@@ -1087,8 +1105,8 @@
       "basis": "Детализация не подтверждает состав свода без дополнительных правил ФРМР или идентификаторов СЭМД",
       "numeratorDeltaNoSum": -1,
       "denominatorDelta": 17,
-      "period": "01.11.2026–12.11.2026",
-      "sourceFile": "Отчёт_по_врачам_сформировавших_СЭМД - Ноябрь(Выгрузка из BI 13.11.).xlsx"
+      "period": "01.11.2026–14.11.2026",
+      "sourceFile": "Отчёт_по_врачам_сформировавших_СЭМД НОЯБРЬ.xlsx"
     },
     {
       "medicalOrganization": "ГАУЗ \"ДГП № 9\"",
@@ -1105,8 +1123,8 @@
       "basis": "Нет строк детализации; отсутствие не заменено нулём",
       "numeratorDeltaNoSum": null,
       "denominatorDelta": null,
-      "period": "01.11.2026–12.11.2026",
-      "sourceFile": "Отчёт_по_врачам_сформировавших_СЭМД - Ноябрь(Выгрузка из BI 13.11.).xlsx"
+      "period": "01.11.2026–14.11.2026",
+      "sourceFile": "Отчёт_по_врачам_сформировавших_СЭМД НОЯБРЬ.xlsx"
     },
     {
       "medicalOrganization": "ГАУЗ \"ДЕТСКАЯ ГОРОДСКАЯ ПОЛИКЛИНИКА № 10\"",
@@ -1123,8 +1141,8 @@
       "basis": "Нет строк детализации; отсутствие не заменено нулём",
       "numeratorDeltaNoSum": null,
       "denominatorDelta": null,
-      "period": "01.11.2026–12.11.2026",
-      "sourceFile": "Отчёт_по_врачам_сформировавших_СЭМД - Ноябрь(Выгрузка из BI 13.11.).xlsx"
+      "period": "01.11.2026–14.11.2026",
+      "sourceFile": "Отчёт_по_врачам_сформировавших_СЭМД НОЯБРЬ.xlsx"
     },
     {
       "medicalOrganization": "ГАУЗ \"ДЕТСКАЯ ГОРОДСКАЯ ПОЛИКЛИНИКА № 11\"",
@@ -1141,8 +1159,8 @@
       "basis": "Нет строк детализации; отсутствие не заменено нулём",
       "numeratorDeltaNoSum": null,
       "denominatorDelta": null,
-      "period": "01.11.2026–12.11.2026",
-      "sourceFile": "Отчёт_по_врачам_сформировавших_СЭМД - Ноябрь(Выгрузка из BI 13.11.).xlsx"
+      "period": "01.11.2026–14.11.2026",
+      "sourceFile": "Отчёт_по_врачам_сформировавших_СЭМД НОЯБРЬ.xlsx"
     },
     {
       "medicalOrganization": "ГАУЗ \"ГКБ № 12\"",
@@ -1150,17 +1168,17 @@
       "specialty": "doctor500_surgeon",
       "status": "WARN",
       "reasonCode": "DETAIL_SCOPE_OR_SUM_AMBIGUOUS",
-      "sourceCount": 0,
+      "sourceCount": 1,
       "sourceVolume": 3,
-      "detailCountNoSum": 0,
-      "detailCountSummed": 0,
+      "detailCountNoSum": 1,
+      "detailCountSummed": 1,
       "detailVolume": 14,
       "thresholdAmbiguousWorkers": 0,
       "basis": "Детализация не подтверждает состав свода без дополнительных правил ФРМР или идентификаторов СЭМД",
       "numeratorDeltaNoSum": 0,
       "denominatorDelta": 11,
-      "period": "01.11.2026–12.11.2026",
-      "sourceFile": "Отчёт_по_врачам_сформировавших_СЭМД - Ноябрь(Выгрузка из BI 13.11.).xlsx"
+      "period": "01.11.2026–14.11.2026",
+      "sourceFile": "Отчёт_по_врачам_сформировавших_СЭМД НОЯБРЬ.xlsx"
     },
     {
       "medicalOrganization": "ГАУЗ \"АЛЬМЕТЬЕВСКАЯ РМБ\"",
@@ -1177,8 +1195,8 @@
       "basis": "Детализация не подтверждает состав свода без дополнительных правил ФРМР или идентификаторов СЭМД",
       "numeratorDeltaNoSum": 1,
       "denominatorDelta": 6,
-      "period": "01.11.2026–12.11.2026",
-      "sourceFile": "Отчёт_по_врачам_сформировавших_СЭМД - Ноябрь(Выгрузка из BI 13.11.).xlsx"
+      "period": "01.11.2026–14.11.2026",
+      "sourceFile": "Отчёт_по_врачам_сформировавших_СЭМД НОЯБРЬ.xlsx"
     }
   ]
 }
