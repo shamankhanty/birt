@@ -3,31 +3,14 @@
   "baselineVersion": "5.4.5",
   "acknowledgedFingerprints": [
     "percentage_above_100|mo-data|hospital|1.2.643.5.1.13.13.12.2.16.1042|БУГУЛЬМИНСКАЯ ЦРБ|fact",
+    "percentage_above_100|mo-data|hospital|1.2.643.5.1.13.13.12.2.16.1042|БУГУЛЬМИНСКАЯ ЦРБ|previous",
     "percentage_above_100|mo-data|hospital|1.2.643.5.1.13.13.12.2.16.1065|КДМЦ г.Наб.Челны|fact",
     "percentage_above_100|mo-data|hospital|1.2.643.5.1.13.13.12.2.16.1065|КДМЦ г.Наб.Челны|previous",
-    "percentage_above_100|mo-data|hospital|1.2.643.5.1.13.13.12.2.16.1092|АКТАНЫШСКАЯ ЦРБ|previous",
+    "percentage_above_100|mo-data|hospital|1.2.643.5.1.13.13.12.2.16.1092|АКТАНЫШСКАЯ ЦРБ|fact",
     "percentage_above_100|mo-data|hospital|1.2.643.5.1.13.13.12.2.16.1171|НДРБ С ПЦ г.Нижнекамск|fact",
     "percentage_above_100|mo-data|hospital|1.2.643.5.1.13.13.12.2.16.1171|НДРБ С ПЦ г.Нижнекамск|previous",
     "percentage_above_100|mo-data|hospital|1.2.643.5.1.13.13.12.2.16.1231|ФГАОУВО КФУ|fact",
     "percentage_above_100|mo-data|hospital|1.2.643.5.1.13.13.12.2.16.1231|ФГАОУВО КФУ|previous",
-    "percentage_above_100|mo-data|semd228|1.2.643.5.1.13.13.12.2.16.1039|ТЮЛЯЧИНСКАЯ ЦРБ|fact",
-    "percentage_above_100|mo-data|semd228|1.2.643.5.1.13.13.12.2.16.1039|ТЮЛЯЧИНСКАЯ ЦРБ|previous",
-    "percentage_above_100|mo-data|semd228|1.2.643.5.1.13.13.12.2.16.1044|КАМСКО-УСТЬИНСКАЯ ЦРБ|fact",
-    "percentage_above_100|mo-data|semd228|1.2.643.5.1.13.13.12.2.16.1044|КАМСКО-УСТЬИНСКАЯ ЦРБ|previous",
-    "percentage_above_100|mo-data|semd228|1.2.643.5.1.13.13.12.2.16.1072|ЗАИНСКАЯ ЦРБ|fact",
-    "percentage_above_100|mo-data|semd228|1.2.643.5.1.13.13.12.2.16.1072|ЗАИНСКАЯ ЦРБ|previous",
-    "percentage_above_100|mo-data|semd228|1.2.643.5.1.13.13.12.2.16.1073|ЛЕНИНОГОРСКАЯ ЦРБ|fact",
-    "percentage_above_100|mo-data|semd228|1.2.643.5.1.13.13.12.2.16.1073|ЛЕНИНОГОРСКАЯ ЦРБ|previous",
-    "percentage_above_100|mo-data|semd228|1.2.643.5.1.13.13.12.2.16.1105|ДРОЖЖАНОВСКАЯ ЦРБ|fact",
-    "percentage_above_100|mo-data|semd228|1.2.643.5.1.13.13.12.2.16.1105|ДРОЖЖАНОВСКАЯ ЦРБ|previous",
-    "percentage_above_100|mo-data|semd228|1.2.643.5.1.13.13.12.2.16.1122|ДГП № 4 г.Казань|fact",
-    "percentage_above_100|mo-data|semd228|1.2.643.5.1.13.13.12.2.16.1122|ДГП № 4 г.Казань|previous",
-    "percentage_above_100|mo-data|semd228|1.2.643.5.1.13.13.12.2.16.1133|РЫБНО-СЛОБОДСКАЯ ЦРБ|fact",
-    "percentage_above_100|mo-data|semd228|1.2.643.5.1.13.13.12.2.16.1138|НУРЛАТСКАЯ ЦРБ|fact",
-    "percentage_above_100|mo-data|semd228|1.2.643.5.1.13.13.12.2.16.1138|НУРЛАТСКАЯ ЦРБ|previous",
-    "percentage_above_100|mo-data|semd228|1.2.643.5.1.13.13.12.2.16.1171|НДРБ С ПЦ г.Нижнекамск|fact",
-    "percentage_above_100|mo-data|semd228|1.2.643.5.1.13.13.12.2.16.1171|НДРБ С ПЦ г.Нижнекамск|previous",
-    "percentage_above_100|mo-data|semd228|1.2.643.5.1.13.13.12.2.16.1192|НЦРМБ г.Нижнекамск|fact",
     "percentage_above_100|monthly-mo|hospital|1.2.643.5.1.13.13.12.2.16.1042|БУГУЛЬМИНСКАЯ ЦРБ|july",
     "percentage_above_100|monthly-mo|hospital|1.2.643.5.1.13.13.12.2.16.1061|ЦЕНТР РЕАБИЛИТАЦИИ СЛУХА г.Наб.Челны|july",
     "percentage_above_100|monthly-mo|hospital|1.2.643.5.1.13.13.12.2.16.1061|ЦЕНТР РЕАБИЛИТАЦИИ СЛУХА г.Наб.Челны|june",
@@ -43,8 +26,9 @@
     "percentage_above_100|monthly-mo|hospital|1.2.643.5.1.13.13.12.2.16.28030|ГКБ № 12 г.Казань|july",
     "percentage_above_100|monthly-mo|hospital|1.2.643.5.1.13.13.12.2.16.28030|ГКБ № 12 г.Казань|june",
     "unresolved_organization|mo-data|ambulatoryCase||Общество с ограниченной ответственностью \"Клиника диализа Закамье\"|name",
-    "unresolved_organization|mo-data|ambulatoryCase||ООО \"Межрайонный центр глазной хирургии\"|name",
     "unresolved_organization|mo-data|birth||АО \"АВА-КАЗАНЬ\"|name",
+    "unresolved_organization|mo-data|birth||ГАУЗ \"Городская детская больница №1 им. М.Ш.Уразаевой\" г. Казани|name",
+    "unresolved_organization|mo-data|birth||ГАУЗ \"Городская детская больница №1 имени М.Ш.Уразаевой\" г. Казани|name",
     "unresolved_organization|mo-data|birth||Неизвестная МО|name",
     "unresolved_organization|mo-data|death||ГАУЗ \"Республиканское бюро судебно-медицинской экспертизы\"|name",
     "unresolved_organization|mo-data|death||МАНО «Казанский хоспис «Наташа»|name",
@@ -117,6 +101,8 @@
     "unresolved_organization|monthly-mo|hospital||ООО \"КСМ\"|name",
     "unresolved_organization|monthly-mo|semd228||ЧУЗ «КБ «РЖД – Медицина» г. Казань»|name",
     "unresolved_organization|monthly-mo|tmkMaxCount||Неизвестная МО|name",
+    "unresolved_organization|operational-mo|elnMaxCount||ГАУЗ \"Городская детская больница №1 им. М.Ш.Уразаевой\" г. Казани|name",
+    "unresolved_organization|operational-mo|elnMaxCount||ГАУЗ \"Городская детская больница №1 имени М.Ш.Уразаевой\" г. Казани|name",
     "unresolved_organization|operational-mo|elnMaxCount||Неизвестная МО|name",
     "unresolved_organization|operational-mo|hospitalCount||КГМА - Филиал ФГАОУ ДПО РМАНПО МЗ РФ|name",
     "unresolved_organization|operational-mo|hospitalCount||МАНО «Казанский хоспис «Наташа»|name",
@@ -145,6 +131,7 @@
     "unresolved_organization|operational-mo|shortInput||АО \"АлСтом\"|name",
     "unresolved_organization|operational-mo|shortInput||ВМС УФСБ РФ по РТ|name",
     "unresolved_organization|operational-mo|shortInput||ГАУЗ \"Врачебно-физкультурный диспансер\"|name",
+    "unresolved_organization|operational-mo|shortInput||ГАУЗ \"Республиканский центр крови МЗ РТ\"|name",
     "unresolved_organization|operational-mo|shortInput||ГКУЗ «РПДР МЗ РТ»|name",
     "unresolved_organization|operational-mo|shortInput||МАНО «Казанский хоспис «Наташа»|name",
     "unresolved_organization|operational-mo|shortInput||Нефросовет ОП г.Набережные Челны|name",
@@ -154,6 +141,7 @@
     "unresolved_organization|operational-mo|shortInputAmb||АО \"АлСтом\"|name",
     "unresolved_organization|operational-mo|shortInputAmb||ВМС УФСБ РФ по РТ|name",
     "unresolved_organization|operational-mo|shortInputAmb||ГАУЗ \"Врачебно-физкультурный диспансер\"|name",
+    "unresolved_organization|operational-mo|shortInputAmb||ГАУЗ \"Республиканский центр крови МЗ РТ\"|name",
     "unresolved_organization|operational-mo|shortInputAmb||ГКУЗ «РПДР МЗ РТ»|name",
     "unresolved_organization|operational-mo|shortInputAmb||МАНО «Казанский хоспис «Наташа»|name",
     "unresolved_organization|operational-mo|shortInputAmb||Нефросовет ОП г.Набережные Челны|name",
@@ -163,11 +151,14 @@
     "unresolved_organization|operational-mo|shortInputHosp||АО \"АлСтом\"|name",
     "unresolved_organization|operational-mo|shortInputHosp||ВМС УФСБ РФ по РТ|name",
     "unresolved_organization|operational-mo|shortInputHosp||ГАУЗ \"Врачебно-физкультурный диспансер\"|name",
+    "unresolved_organization|operational-mo|shortInputHosp||ГАУЗ \"Республиканский центр крови МЗ РТ\"|name",
     "unresolved_organization|operational-mo|shortInputHosp||ГКУЗ «РПДР МЗ РТ»|name",
     "unresolved_organization|operational-mo|shortInputHosp||МАНО «Казанский хоспис «Наташа»|name",
     "unresolved_organization|operational-mo|shortInputHosp||Нефросовет ОП г.Набережные Челны|name",
     "unresolved_organization|operational-mo|shortInputHosp||Общество с ограниченной ответственностью \"Клиника диализа Закамье\"|name",
     "unresolved_organization|operational-mo|shortInputHosp||ПАО «Татнефть» им. В.Д. Шашина|name",
+    "unresolved_organization|operational-mo|tmkMaxCount||ГАУЗ \"Городская детская больница №1 им. М.Ш.Уразаевой\" г. Казани|name",
+    "unresolved_organization|operational-mo|tmkMaxCount||ГАУЗ \"Городская детская больница №1 имени М.Ш.Уразаевой\" г. Казани|name",
     "unresolved_organization|operational-mo|tmkMaxCount||Неизвестная МО|name"
   ],
   "resolvedOidsByDataset": {
@@ -273,6 +264,7 @@
       "1.2.643.5.1.13.13.12.2.16.1097",
       "1.2.643.5.1.13.13.12.2.16.1104",
       "1.2.643.5.1.13.13.12.2.16.1105",
+      "1.2.643.5.1.13.13.12.2.16.1108",
       "1.2.643.5.1.13.13.12.2.16.1109",
       "1.2.643.5.1.13.13.12.2.16.1113",
       "1.2.643.5.1.13.13.12.2.16.1120",
@@ -736,7 +728,8 @@
       "1.2.643.5.1.13.13.12.2.16.9622",
       "1.2.643.5.1.13.13.12.2.16.9641",
       "1.2.643.5.1.13.13.12.2.16.9665",
-      "1.2.643.5.1.13.13.12.2.16.9667"
+      "1.2.643.5.1.13.13.12.2.16.9667",
+      "context:spassk-crb"
     ],
     "mo-data:tvspStationary": [
       "1.2.643.5.1.13.13.12.2.16.1038",
@@ -1529,7 +1522,8 @@
       "1.2.643.5.1.13.13.12.2.16.1208",
       "1.2.643.5.1.13.13.12.2.16.1231",
       "1.2.643.5.1.13.13.12.2.16.28030",
-      "1.2.643.5.1.13.13.12.2.16.44921"
+      "1.2.643.5.1.13.13.12.2.16.44921",
+      "context:spassk-crb"
     ],
     "monthly-mo:hospital": [
       "1.2.643.5.1.13.13.12.2.16.1038",
@@ -1756,7 +1750,8 @@
       "1.2.643.5.1.13.13.12.2.16.9622",
       "1.2.643.5.1.13.13.12.2.16.9641",
       "1.2.643.5.1.13.13.12.2.16.9665",
-      "1.2.643.5.1.13.13.12.2.16.9667"
+      "1.2.643.5.1.13.13.12.2.16.9667",
+      "context:spassk-crb"
     ],
     "monthly-mo:birth": [
       "1.2.643.5.1.13.13.12.2.16.1038",
@@ -3396,7 +3391,6 @@
       "1.2.643.5.1.13.13.12.2.16.1090",
       "1.2.643.5.1.13.13.12.2.16.1092",
       "1.2.643.5.1.13.13.12.2.16.1093",
-      "1.2.643.5.1.13.13.12.2.16.1094",
       "1.2.643.5.1.13.13.12.2.16.1097",
       "1.2.643.5.1.13.13.12.2.16.1101",
       "1.2.643.5.1.13.13.12.2.16.1104",
@@ -3499,7 +3493,6 @@
       "1.2.643.5.1.13.13.12.2.16.1090",
       "1.2.643.5.1.13.13.12.2.16.1092",
       "1.2.643.5.1.13.13.12.2.16.1093",
-      "1.2.643.5.1.13.13.12.2.16.1094",
       "1.2.643.5.1.13.13.12.2.16.1096",
       "1.2.643.5.1.13.13.12.2.16.1097",
       "1.2.643.5.1.13.13.12.2.16.1099",
@@ -3579,7 +3572,8 @@
       "1.2.643.5.1.13.13.12.2.16.9622",
       "1.2.643.5.1.13.13.12.2.16.9641",
       "1.2.643.5.1.13.13.12.2.16.9665",
-      "1.2.643.5.1.13.13.12.2.16.9667"
+      "1.2.643.5.1.13.13.12.2.16.9667",
+      "context:spassk-crb"
     ],
     "operational-mo:hospitalCount": [
       "1.2.643.5.1.13.13.12.2.16.1038",
@@ -3774,7 +3768,6 @@
       "1.2.643.5.1.13.13.12.2.16.1090",
       "1.2.643.5.1.13.13.12.2.16.1092",
       "1.2.643.5.1.13.13.12.2.16.1093",
-      "1.2.643.5.1.13.13.12.2.16.1094",
       "1.2.643.5.1.13.13.12.2.16.1097",
       "1.2.643.5.1.13.13.12.2.16.1101",
       "1.2.643.5.1.13.13.12.2.16.1104",
@@ -3877,7 +3870,6 @@
       "1.2.643.5.1.13.13.12.2.16.1090",
       "1.2.643.5.1.13.13.12.2.16.1092",
       "1.2.643.5.1.13.13.12.2.16.1093",
-      "1.2.643.5.1.13.13.12.2.16.1094",
       "1.2.643.5.1.13.13.12.2.16.1096",
       "1.2.643.5.1.13.13.12.2.16.1097",
       "1.2.643.5.1.13.13.12.2.16.1099",
@@ -3957,7 +3949,8 @@
       "1.2.643.5.1.13.13.12.2.16.9622",
       "1.2.643.5.1.13.13.12.2.16.9641",
       "1.2.643.5.1.13.13.12.2.16.9665",
-      "1.2.643.5.1.13.13.12.2.16.9667"
+      "1.2.643.5.1.13.13.12.2.16.9667",
+      "context:spassk-crb"
     ],
     "operational-mo:shortInputHosp": [
       "1.2.643.5.1.13.13.12.2.16.1038",
@@ -4003,7 +3996,6 @@
       "1.2.643.5.1.13.13.12.2.16.1090",
       "1.2.643.5.1.13.13.12.2.16.1092",
       "1.2.643.5.1.13.13.12.2.16.1093",
-      "1.2.643.5.1.13.13.12.2.16.1094",
       "1.2.643.5.1.13.13.12.2.16.1096",
       "1.2.643.5.1.13.13.12.2.16.1097",
       "1.2.643.5.1.13.13.12.2.16.1099",
@@ -4083,7 +4075,8 @@
       "1.2.643.5.1.13.13.12.2.16.9622",
       "1.2.643.5.1.13.13.12.2.16.9641",
       "1.2.643.5.1.13.13.12.2.16.9665",
-      "1.2.643.5.1.13.13.12.2.16.9667"
+      "1.2.643.5.1.13.13.12.2.16.9667",
+      "context:spassk-crb"
     ],
     "organization-status:elmk": [
       "1.2.643.5.1.13.13.12.2.16.1038",
@@ -5102,9 +5095,9 @@
   },
   "rowCounts": {
     "mo-data:egpu": 84,
-    "mo-data:birth": 41,
+    "mo-data:birth": 44,
     "mo-data:death": 89,
-    "mo-data:semd228": 86,
+    "mo-data:semd228": 96,
     "mo-data:hospital": 129,
     "mo-data:smp": 43,
     "mo-data:ambulatoryCase": 142,
@@ -5121,8 +5114,8 @@
     "monthly-mo:ambulatoryCase": 143,
     "monthly-mo:birth": 37,
     "monthly-mo:death": 87,
-    "monthly-mo:tmkMaxCount": 99,
-    "monthly-mo:elnMaxCount": 99,
+    "monthly-mo:tmkMaxCount": 98,
+    "monthly-mo:elnMaxCount": 98,
     "monthly-mo:doctorsAll": 126,
     "monthly-mo:doctorsLevel3": 15,
     "monthly-mo:doctor500_obgyn": 93,
@@ -5138,13 +5131,13 @@
     "monthly-mo:tvspAmbulatory": 112,
     "monthly-mo:tvspDiagnostic": 108,
     "monthly-mo:tvspLaboratory": 84,
-    "operational-mo:tmkMaxCount": 98,
-    "operational-mo:shortInput": 169,
+    "operational-mo:tmkMaxCount": 99,
+    "operational-mo:shortInput": 170,
     "operational-mo:hospitalCount": 129,
     "operational-mo:fapSemdCount": 50,
-    "operational-mo:elnMaxCount": 98,
-    "operational-mo:shortInputAmb": 169,
-    "operational-mo:shortInputHosp": 169,
+    "operational-mo:elnMaxCount": 99,
+    "operational-mo:shortInputAmb": 170,
+    "operational-mo:shortInputHosp": 170,
     "organization-status:elmk": 73,
     "organization-status:tmkRemd": 40,
     "physician-metrics:doctorsAll": 126,
@@ -5160,24 +5153,8 @@
     "physician-metrics:doctor500_surgeon": 89
   },
   "acknowledgedCounts": {
-    "unresolvedOrganizations": 127,
-    "percentageAnomalies": 40,
+    "unresolvedOrganizations": 135,
+    "percentageAnomalies": 23,
     "missingCurrentValues": 0
-  },
-  "acceptedPerimeterAdjustments": {
-    "2026-11-09": [
-      {
-        "dataset": "mo-data:ambulatoryCase",
-        "previousRows": 146,
-        "currentRows": 142,
-        "reason": "Две строки частной клиники с общим OID объединены по числителю и знаменателю; другие изменения состава OID за период сохраняются в исходном аудите."
-      },
-      {
-        "dataset": "mo-data:semd228",
-        "previousRows": 96,
-        "currentRows": 86,
-        "reason": "Оперативная карточка закрытых случаев использует согласованный периметр 86 МО. Исходные 96 строк доступны в docs/update-20261109-source-components.json."
-      }
-    ]
   }
 }

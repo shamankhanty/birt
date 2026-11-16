@@ -4,7 +4,7 @@
     "entity": "объект контроля с ТВСП",
     "plan": 275,
     "fact": 275,
-    "date": "13.11.2026",
+    "date": "15.11.2026",
     "rows": [
       {
         "mo": "АЗНАКАЕВСКАЯ ЦРБ",
@@ -2178,10 +2178,9 @@
         "partial": true,
         "count": 0,
         "plannedSubunits": 4,
-        "registeredSubunits": 2,
+        "registeredSubunits": 3,
         "missingUnitOids": [
-          "1.2.643.5.1.13.13.12.2.16.1064.0.107836",
-          "1.2.643.5.1.13.13.12.2.16.1064.0.63991"
+          "1.2.643.5.1.13.13.12.2.16.1064.0.107836"
         ]
       },
       {
@@ -3732,8 +3731,8 @@
     "name": "Амбулаторные ТВСП, передающие эпикриз/талон и/или протокол консультации",
     "entity": "объект контроля с ТВСП",
     "plan": 466,
-    "fact": 461,
-    "date": "13.11.2026",
+    "fact": 464,
+    "date": "15.11.2026",
     "rows": [
       {
         "mo": "АЗНАКАЕВСКАЯ ЦРБ",
@@ -4522,14 +4521,12 @@
         "unit": "Здание 501228",
         "unitOid": "1.2.643.5.1.13.13.12.2.16.1108.0.984323",
         "buildingIds": "501228",
-        "registered": false,
+        "registered": true,
         "partial": false,
         "count": 0,
         "plannedSubunits": 1,
-        "registeredSubunits": 0,
-        "missingUnitOids": [
-          "1.2.643.5.1.13.13.12.2.16.1108.0.984323"
-        ]
+        "registeredSubunits": 1,
+        "missingUnitOids": []
       },
       {
         "mo": "ГАУЗ \"АЛЬМЕТЬЕВСКАЯ ЦРБ\"",
@@ -4553,14 +4550,12 @@
         "unit": "Здание 501242",
         "unitOid": "1.2.643.5.1.13.13.12.2.16.1108.0.984297",
         "buildingIds": "501242",
-        "registered": false,
+        "registered": true,
         "partial": false,
         "count": 0,
         "plannedSubunits": 1,
-        "registeredSubunits": 0,
-        "missingUnitOids": [
-          "1.2.643.5.1.13.13.12.2.16.1108.0.984297"
-        ]
+        "registeredSubunits": 1,
+        "missingUnitOids": []
       },
       {
         "mo": "ГАУЗ \"АЛЬМЕТЬЕВСКАЯ ЦРБ\"",
@@ -4581,14 +4576,12 @@
         "unit": "Здание 501256",
         "unitOid": "1.2.643.5.1.13.13.12.2.16.1108.0.984322",
         "buildingIds": "501256",
-        "registered": false,
+        "registered": true,
         "partial": false,
         "count": 0,
         "plannedSubunits": 1,
-        "registeredSubunits": 0,
-        "missingUnitOids": [
-          "1.2.643.5.1.13.13.12.2.16.1108.0.984322"
-        ]
+        "registeredSubunits": 1,
+        "missingUnitOids": []
       },
       {
         "mo": "ГАУЗ \"АПАСТОВСКАЯ ЦРБ\"",
@@ -6475,9 +6468,8 @@
         "partial": true,
         "count": 0,
         "plannedSubunits": 5,
-        "registeredSubunits": 3,
+        "registeredSubunits": 4,
         "missingUnitOids": [
-          "1.2.643.5.1.13.13.12.2.16.1067.0.640953",
           "1.2.643.5.1.13.13.12.2.16.1067.0.836814"
         ]
       },
@@ -9908,7 +9900,7 @@
     "entity": "КДЛ / лаборатория",
     "plan": 124,
     "fact": 124,
-    "date": "13.11.2026",
+    "date": "15.11.2026",
     "rows": [
       {
         "mo": "АЗНАКАЕВСКАЯ ЦРБ",
@@ -11527,9 +11519,9 @@
   "tvspDiagnostic": {
     "name": "ТВСП, передающие протоколы диагностических исследований",
     "entity": "объект контроля",
-    "plan": 310,
+    "plan": 309,
     "fact": 307,
-    "date": "13.11.2026",
+    "date": "14.11.2026",
     "rows": [
       {
         "mo": "АЗНАКАЕВСКАЯ ЦРБ",
@@ -11667,15 +11659,6 @@
         "count": 0
       },
       {
-        "mo": "ГАУЗ \"АЛЬМЕТЬЕВСКАЯ ГП № 3\"",
-        "moOid": "1.2.643.5.1.13.13.12.2.16.1107",
-        "unit": "Главное здание",
-        "unitOid": "36312",
-        "buildingIds": "36312",
-        "registered": true,
-        "count": 0
-      },
-      {
         "mo": "ГАУЗ \"АЛЬМЕТЬЕВСКАЯ РМБ\"",
         "moOid": "1.2.643.5.1.13.13.12.2.16.44921",
         "unit": "Поликлиника",
@@ -11744,7 +11727,7 @@
         "unit": "Здание поликлиники №3",
         "unitOid": "501222",
         "buildingIds": "501222",
-        "registered": false,
+        "registered": true,
         "count": 0
       },
       {
@@ -14328,7 +14311,7 @@
     "entity": "станция / подстанция СМП",
     "plan": 68,
     "fact": 67,
-    "date": "13.11.2026",
+    "date": "14.11.2026",
     "rows": [
       {
         "mo": "АЗНАКАЕВСКАЯ ЦРБ",
