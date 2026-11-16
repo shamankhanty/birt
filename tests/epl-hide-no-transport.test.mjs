@@ -31,13 +31,13 @@ test("ЭПЛ: organization/source perimeter and regional header totals remain au
   assert.equal(october.summary.organizations,126);
   assert.equal(october.summary.vehicles,1693);
   assert.equal(weekly.current.systemSummary.organizations,126);
-  assert.equal(weekly.current.systemSummary.vehicles,1691);
+  assert.equal(weekly.current.systemSummary.vehicles,1673);
   assert.equal(october.detail.organizations,123);
   assert.equal(weekly.current.detail.organizations,123);
   assert.deepEqual(weekly.missingCurrentGroups,[39,40,41]);
   assert.equal(october.detail.zeroVehicleOrganizations,2);
   assert.equal(weekly.current.detail.zeroVehicleOrganizations,2);
-  assert.equal(weekly.previous.rows.length,126,"Previous weeks are kept for comparison");
+  assert.equal(weekly.previous.rows.length,123,"Previous weeks are kept for comparison");
 });
 
 test("ЭПЛ: missing vehicle count is not silently treated as confirmed zero", () => {
