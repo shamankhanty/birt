@@ -19,9 +19,9 @@ test("updated collegium facts and periods are preserved",()=>{
   assert.equal(byId.get("1.14").regionalFact,"99,78%");
   assert.equal(byId.get("1.20").federal,"120 · 93%");
   assert.equal(byId.get("1.20").regionalFact,"97%");
-  assert.equal(byId.get("1.24").federal,"35 · 87%");
-  assert.equal(byId.get("1.24").regionalFact,"98%");
-  assert.equal(byId.get("1.24").regionalPeriod,"январь–август 2026");
+  assert.equal(byId.get("1.24").federal,"97% · федеральный срез январь–октябрь 2026");
+  assert.equal(byId.get("1.24").regionalFact,"97%");
+  assert.equal(byId.get("1.24").regionalPeriod,"январь–октябрь 2026");
 });
 
 test("invalid regional 200 percent plan does not replace the federal plan",()=>{
