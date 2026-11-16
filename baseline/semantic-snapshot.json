@@ -38,13 +38,13 @@
       "date": "07.09.2026"
     },
     "elnMax": {
-      "fact": 35948.0,
+      "fact": 35948,
       "plan": 99000,
       "direction": "higher",
       "date": "07.09.2026"
     },
     "errors": {
-      "fact": 2046140.0,
+      "fact": 2046140,
       "plan": null,
       "direction": "lower",
       "date": "13.09.2026"
@@ -56,7 +56,7 @@
       "date": "07.09.2026"
     },
     "oncologyCouncil": {
-      "fact": 50.0,
+      "fact": 50,
       "plan": 100,
       "direction": "higher",
       "date": "30.06.2026"
@@ -74,13 +74,13 @@
       "date": "11.09.2026"
     },
     "smpFederal": {
-      "fact": 100.0,
+      "fact": 100,
       "plan": 100,
       "direction": "higher",
       "date": "07.09.2026"
     },
     "tmkMax": {
-      "fact": 20942.0,
+      "fact": 20942,
       "plan": 193000,
       "direction": "higher",
       "date": "07.09.2026"
@@ -89,10 +89,10 @@
       "fact": 97.5,
       "plan": 100,
       "direction": "higher",
-      "date": "07.09.2026"
+      "date": "31.10.2026"
     },
     "tvspAmbulatory": {
-      "fact": 100.0,
+      "fact": 100,
       "plan": 100,
       "direction": "higher",
       "date": "07.09.2026"
@@ -116,7 +116,7 @@
       "date": "07.09.2026"
     },
     "visitMax": {
-      "fact": 253169.0,
+      "fact": 253169,
       "plan": 654000,
       "direction": "higher",
       "date": "07.09.2026"
