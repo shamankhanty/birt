@@ -16,8 +16,8 @@ test('approved appointment plans keep 85 identities and all facts missing', () =
   for (const month of targets.months) assert.ok(Object.values(targets.organizationPlans).every(row => Number.isInteger(row.visit[month]) && row.visit[month]>0));
   for (const [slice,month,previous,plan] of [
     [views.cumulative,'2026-10',null,561000],
-    [views.october,'2026-10','2026-09',47000],
-    [views.november,'2026-11','2026-10',47000],
+    [views.october,'2026-10','2026-09',54500],
+    [views.november,'2026-11','2026-10',54500],
   ]) {
     const metric=slice;
     assert.equal(metric.republicPlan,plan);
