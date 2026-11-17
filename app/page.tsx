@@ -232,6 +232,12 @@ const federalControl = {
       : row;
   }),
 } as FederalControlData;
+const mvdAgreementMetrics = federalControl.agreement
+  .filter((row) => ["11", "12", "13", "14", "15"].includes(row.id))
+  .map((row) => ({
+    row,
+    evidence: contractSemd.items.find((item) => item.agreementId === row.id),
+  }));
 const gisOmsOrganizations = gisOmsOrganizationsRaw as GisOmsData;
 type PreventiveAuditRow = {
   name: string;
@@ -6383,6 +6389,26 @@ export default function Home() {
                   <span>показатели МАХ исключены</span>
                 </div>
               </div>
+
+              <section className="mvdAgreementPanel" aria-labelledby="mvd-agreement-title">
+                <div className="mvdAgreementHead">
+                  <div>
+                    <p className="eyebrow">СОГЛАШЕНИЕ МБТ · МЕЖВЕДОМСТВЕННЫЕ СВЕДЕНИЯ</p>
+                    <h2 id="mvd-agreement-title">МВД: медицинские заключения и сообщения об аннулировании</h2>
+                  </div>
+                  <p>Регистрация СЭМД подтверждает формирование документа в ЕГИСЗ. Получение сведений МВД требует отдельного подтверждения интеграции.</p>
+                </div>
+                <div className="mvdAgreementGrid">
+                  {mvdAgreementMetrics.map(({ row, evidence }) => (
+                    <button type="button" key={row.id} className="mvdAgreementCard" onClick={() => openExtendedMetric(row, "agreement")}>
+                      <span>С № {row.id}</span>
+                      <strong>{evidence ? format(evidence.current, 0) : "Нет данных"}</strong>
+                      <small>{evidence ? "зарегистрировано СЭМД" : "регистрации не выявлены"}</small>
+                      <b>{row.id === "15" ? "Водители" : row.id === "11" || row.id === "14" ? "Частные охранники" : "Частные детективы"}</b>
+                    </button>
+                  ))}
+                </div>
+              </section>
 
               <div className="federalPlanSummary" aria-label="Исполнение плана по группам">
                 {([
