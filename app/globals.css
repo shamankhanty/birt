@@ -586,6 +586,7 @@ body{font-size:14px}
 .federalPlanTile.achieved,.federalPlanCard.achieved{--federal-band:#259665}
 .federalPlanTile.other,.federalPlanCard.other{--federal-band:#87958f}
 .federalPlanTile.reference,.federalPlanCard.reference{--federal-band:#70869a}
+.mvdAgreementPanel{margin:12px 0 16px;padding:16px;border:1px solid #b9dcd1;border-radius:17px;background:linear-gradient(135deg,#f1faf7,#fff);box-shadow:0 5px 18px rgba(24,88,65,.05)}.mvdAgreementHead{display:flex;align-items:flex-start;justify-content:space-between;gap:20px;margin-bottom:12px}.mvdAgreementHead h2{margin:3px 0 0;font-size:18px;color:#123d32}.mvdAgreementHead p:last-child{max-width:490px;margin:0;color:#59746a;font-size:10px;line-height:1.45}.mvdAgreementGrid{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:9px}.mvdAgreementCard{display:flex;min-width:0;flex-direction:column;align-items:flex-start;gap:3px;padding:11px 12px;border:1px solid #d1e3dd;border-radius:13px;background:#fff;color:#244b3f;font:inherit;text-align:left;cursor:pointer}.mvdAgreementCard:hover{border-color:#20906c;box-shadow:0 5px 14px rgba(24,111,83,.1)}.mvdAgreementCard>span{font-size:10px;font-weight:800;color:#168064}.mvdAgreementCard>strong{font-size:23px;line-height:1.15;color:#124c3b;font-variant-numeric:tabular-nums}.mvdAgreementCard>small{font-size:9px;color:#70877f}.mvdAgreementCard>b{margin-top:4px;font-size:10px;line-height:1.25}.mvdAgreementCard:focus-visible{outline:2px solid #087357;outline-offset:2px}
 .federalPlanCardsIntro{display:flex;justify-content:space-between;align-items:center;gap:12px;margin:17px 0 11px}
 .federalPlanCardsIntro h2{margin:0 0 4px;font-size:18px;line-height:1.2;color:#144b3b}
 .federalPlanCardsIntro p{margin:0;font-size:11px;line-height:1.45;color:#617a70}
@@ -629,7 +630,10 @@ body{font-size:14px}
 .federalPlanOriginal[open]>summary{border-bottom:1px solid #e1eae6}
 .federalPlanOriginal .tableWrap{margin:0 10px 12px}
 @media(max-width:1100px){.federalPlanSummary{grid-template-columns:repeat(3,minmax(0,1fr))}}
+@media(max-width:1100px){.mvdAgreementGrid{grid-template-columns:repeat(3,minmax(0,1fr))}}
 @media(max-width:850px){.federalPlanCardGrid{grid-template-columns:1fr}.federalPlanSummary{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:700px){.mvdAgreementHead{flex-direction:column;gap:8px}.mvdAgreementHead p:last-child{max-width:none}}
+@media(max-width:560px){.mvdAgreementPanel{padding:13px}.mvdAgreementGrid{grid-template-columns:repeat(2,minmax(0,1fr))}.mvdAgreementCard>strong{font-size:20px}}
 @media(max-width:560px){.federalPlanCard{padding:14px}.federalPlanCard h3{font-size:14px;min-height:0}.federalPlanFacts strong{font-size:26px}.federalPlanFacts>div:last-child strong{font-size:20px}.federalPlanCardsIntro{align-items:flex-start;flex-direction:column}.federalPlanTile{padding:10px}.federalPlanTile strong{font-size:24px}.federalPlanTile span{font-size:10px}}
 
 
