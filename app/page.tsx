@@ -3647,6 +3647,8 @@ export default function Home() {
     | "gisOms"
   >("unified");
   const [remdView, setRemdView] = useState<"semd" | "errors" | "time">("semd");
+  const [remdTimeQuery, setRemdTimeQuery] = useState("");
+  const [remdTimeFilter, setRemdTimeFilter] = useState<"all" | "overDay" | "withinDay">("all");
   const [maxMonth, setMaxMonth] = useState<"2026-08" | "2026-09">("2026-09");
   const [maxService, setMaxService] = useState<"visit" | "tmk" | "eln">("tmk");
   const [maxPeriodView, setMaxPeriodView] = useState<"cumulative" | "operational">("operational");
@@ -5966,6 +5968,17 @@ export default function Home() {
       </span>
     );
   };
+
+  const remdTimeRows = remdRegistrationTime.rows.filter((row) => {
+    const minutes = row.hours * 60 + row.minutes;
+    if (remdTimeFilter === "overDay" && minutes <= 1440) return false;
+    if (remdTimeFilter === "withinDay" && minutes > 1440) return false;
+    return row.name.toLocaleLowerCase("ru").includes(remdTimeQuery.trim().toLocaleLowerCase("ru"));
+  });
+  const displayRemdTime = (hours: number, minutes: number) =>
+    hours >= 24
+      ? `${Math.floor(hours / 24)} д ${hours % 24} ч ${minutes} мин`
+      : `${hours} ч ${minutes} мин`;
 
   return (
     <main>
@@ -10257,12 +10270,27 @@ export default function Home() {
                 <div className="asofPanel"><small>Организаций в записи</small><strong>{remdRegistrationTime.rows.length}</strong></div>
               </div>
               <p className="prototypeNote">{remdRegistrationTime.methodNote} Источник: {remdRegistrationTime.source}.</p>
+              <div className="remdTimeControls">
+                <label>
+                  <span>Поиск медицинской организации</span>
+                  <input type="search" value={remdTimeQuery} onChange={(event) => setRemdTimeQuery(event.target.value)} placeholder="Название МО" />
+                </label>
+                <label>
+                  <span>Срок регистрации</span>
+                  <select value={remdTimeFilter} onChange={(event) => setRemdTimeFilter(event.target.value as typeof remdTimeFilter)}>
+                    <option value="all">Все сроки</option>
+                    <option value="overDay">Больше суток</option>
+                    <option value="withinDay">До суток включительно</option>
+                  </select>
+                </label>
+                <span className="remdTimeCount">Показано: {remdTimeRows.length} из {remdRegistrationTime.rows.length}</span>
+              </div>
               <div className="remdTimeTableWrap">
                 <table className="remdTimeTable">
                   <thead><tr><th>№</th><th>Медицинская организация</th><th>Время регистрации</th></tr></thead>
-                  <tbody>{remdRegistrationTime.rows.map((row) => (
-                    <tr key={row.rank}><td>{row.rank}</td><td>{row.name}{row.note && <small>Название в источнике обрезано</small>}</td><td>{format(row.hours, 0)} ч {row.minutes} мин</td></tr>
-                  ))}</tbody>
+                  <tbody>{remdTimeRows.length ? remdTimeRows.map((row) => (
+                    <tr key={row.rank}><td>{row.rank}</td><td>{row.name}{row.note && <small>Название в источнике обрезано</small>}</td><td>{displayRemdTime(row.hours, row.minutes)}</td></tr>
+                  )) : <tr><td colSpan={3} className="remdTimeEmpty">По заданным условиям МО не найдены</td></tr>}</tbody>
                 </table>
               </div>
             </section>
