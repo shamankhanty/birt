@@ -24,6 +24,7 @@ import moDataRaw from "./mo-data.json";
 import moDetailsRaw from "./mo-details.json";
 import moDetailOidsRaw from "./mo-detail-oids.json";
 import semdSummaryRaw from "./semd-summary.json";
+import remdRegistrationTime from "./remd-registration-time.json";
 import contractSemdRaw from "./contract-semd-monitoring.json";
 import methodologyAudit from "./methodology-audit.json";
 import operationalMoRaw from "./operational-mo.json";
@@ -3645,6 +3646,7 @@ export default function Home() {
     | "history"
     | "gisOms"
   >("unified");
+  const [remdView, setRemdView] = useState<"semd" | "errors" | "time">("semd");
   const [maxMonth, setMaxMonth] = useState<"2026-08" | "2026-09">("2026-09");
   const [maxService, setMaxService] = useState<"visit" | "tmk" | "eln">("tmk");
   const [maxPeriodView, setMaxPeriodView] = useState<"cumulative" | "operational">("operational");
@@ -6009,13 +6011,12 @@ export default function Home() {
               ["ranking", "Месячный рейтинг МО", "04"],
               ["methods", "Методика расчёта", "05"],
               ["frmr", "ФРМР ↔ ГИС", "06"],
-              ["remdErrors", "Ошибки РЭМД", "07"],
+              ["remdErrors", "РЭМД", "07"],
               ["incident38", "И38 — запись к врачу", "08"],
               ["extraDivider", "Другие разделы", ""],
               ["waybill", "Электронный путевой лист", "09"],
               ["devDivider", "В разработке", ""],
               ["history", "История обновлений", "10"],
-              ["semd", "Все виды СЭМД", "11"],
               ["errors", "Ошибки методик", "12"],
               ["gisOms", "ГИС ОМС", "13"],
             ].map(([id, label, number]) =>
@@ -6136,7 +6137,7 @@ export default function Home() {
                 className={tab === "remdErrors" ? "active" : ""}
                 onClick={() => { setTab("remdErrors"); setShowMatrixSections(false); }}
               >
-                <span>07</span> Ошибки РЭМД
+                <span>07</span> РЭМД
               </button>
               <button
                 className={tab === "incident38" ? "active" : ""}
@@ -6161,12 +6162,6 @@ export default function Home() {
                 onClick={() => { setTab("history"); setShowMatrixSections(false); }}
               >
                 <span>10</span> История обновлений
-              </button>
-              <button
-                className={tab === "semd" ? "developmentSection active" : "developmentSection"}
-                onClick={() => { setTab("semd"); setShowMatrixSections(false); }}
-              >
-                <span>11</span> Все виды СЭМД
               </button>
               <button
                 className={tab === "errors" ? "developmentSection active" : "developmentSection"}
@@ -8848,7 +8843,22 @@ export default function Home() {
             </>
           )}
 
-          {tab === "semd" && (
+          {tab === "remdErrors" && (
+            <div className="remdSectionTabs" role="tablist" aria-label="Разделы РЭМД">
+              {([
+                ["semd", "Все виды СЭМД"],
+                ["errors", "Ошибки регистрации"],
+                ["time", "Сроки регистрации"],
+              ] as const).map(([view, label]) => (
+                <button key={view} type="button" role="tab" aria-selected={remdView === view}
+                  className={remdView === view ? "active" : ""} onClick={() => setRemdView(view)}>
+                  {label}
+                </button>
+              ))}
+            </div>
+          )}
+
+          {(tab === "semd" || (tab === "remdErrors" && remdView === "semd")) && (
             <>
               <div className="pageHead semdHead">
                 <div>
@@ -10236,7 +10246,29 @@ export default function Home() {
             </>
           )}
 
-          {(tab === "errors" || tab === "remdErrors") && (
+          {tab === "remdErrors" && remdView === "time" && (
+            <section className="remdTimeSection">
+              <div className="pageHead">
+                <div>
+                  <p className="eyebrow">РЭМД · ФЕДЕРАЛЬНАЯ BI</p>
+                  <h1>Сроки регистрации</h1>
+                  <p>Рейтинг медицинских организаций за {remdRegistrationTime.period}</p>
+                </div>
+                <div className="asofPanel"><small>Организаций в записи</small><strong>{remdRegistrationTime.rows.length}</strong></div>
+              </div>
+              <p className="prototypeNote">{remdRegistrationTime.methodNote} Источник: {remdRegistrationTime.source}.</p>
+              <div className="remdTimeTableWrap">
+                <table className="remdTimeTable">
+                  <thead><tr><th>№</th><th>Медицинская организация</th><th>Время регистрации</th></tr></thead>
+                  <tbody>{remdRegistrationTime.rows.map((row) => (
+                    <tr key={row.rank}><td>{row.rank}</td><td>{row.name}{row.note && <small>Название в источнике обрезано</small>}</td><td>{format(row.hours, 0)} ч {row.minutes} мин</td></tr>
+                  ))}</tbody>
+                </table>
+              </div>
+            </section>
+          )}
+
+          {(tab === "errors" || (tab === "remdErrors" && remdView === "errors")) && (
             <>
               {tab === "errors" && <div className="pageHead errorHead">
                 <div>

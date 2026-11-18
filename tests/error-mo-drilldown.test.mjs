@@ -25,9 +25,10 @@ test('error UI exposes category and MO drilldowns without quality-rating wording
   assert.ok(page.includes('activeErrorOrganization'));
 });
 
-test('REMD errors are a primary section and methodology errors stay separate', () => {
+test('REMD is a primary section with errors inside and methodology errors stay separate', () => {
   for (const text of [
-    '["remdErrors", "Ошибки РЭМД", "07"]',
+    '["remdErrors", "РЭМД", "07"]',
+    '["errors", "Ошибки регистрации"]',
     '["errors", "Ошибки методик", "12"]',
     'МО для заслушивания',
   ]) assert.ok(page.includes(text), `missing navigation contract: ${text}`);
