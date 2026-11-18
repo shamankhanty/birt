@@ -28,6 +28,7 @@ import remdRegistrationTime from "./remd-registration-time.json";
 import contractSemdRaw from "./contract-semd-monitoring.json";
 import methodologyAudit from "./methodology-audit.json";
 import operationalMoRaw from "./operational-mo.json";
+import operationalHistoryRaw from "./operational-history.json";
 import errorCategoriesRaw from "./error-categories.json";
 import errorOrganizationsRaw from "./error-organizations.json";
 import errorCumulativeRaw from "./error-cumulative.json";
@@ -65,6 +66,7 @@ import type { MoRegistry, RegistryOrganization } from "../lib/mo-registry.js";
 import { createIndicatorRegistryRuntime } from "../lib/indicator-registry.js";
 import { createDoctorsAllCumulativeDatasets } from "../lib/physician-doctors-all-cumulative.js";
 import { createCurrentOperationalRuntime } from "../lib/current-operational-runtime.js";
+import { selectOperationalComparison } from "../lib/operational-comparison.js";
 import { createReleaseRuntimeMetadata, RELEASE_VERSION } from "../lib/release-runtime-metadata.js";
 import type { IndicatorRegistryDocument } from "../lib/indicator-registry.js";
 import {
@@ -594,7 +596,11 @@ const currentOperationalRuntime = createCurrentOperationalRuntime({
   errorCategories: errorCategoriesRaw,
 });
 const runtimeIndicator = (item: Indicator): Indicator => {
-  const source = operationalDatasets[item.id];
+  const rawSource = operationalDatasets[item.id];
+  const source = rawSource?.rows && rawSource?.date && !isPhysicianMetric(item.id)
+    ? selectOperationalComparison(rawSource,
+        (operationalHistoryRaw as Record<string, MoDataset[]>)[item.id] ?? [])
+    : rawSource;
   const metadata = currentOperationalRuntime[item.id];
   if (!source) return item;
   const rows = source.rows ?? [];
@@ -603,9 +609,9 @@ const runtimeIndicator = (item: Indicator): Indicator => {
   return {
     ...item,
     fact: Number(source.fact ?? source.value ?? item.fact),
-    trend: source.trend ?? item.trend,
+    trend: source.previousDate ? source.trend ?? item.trend : null,
     date: metadata?.date ?? source.date ?? item.date,
-    compareTo: metadata?.previousDate ?? previous ?? item.compareTo,
+    compareTo: source.previousDate ? previous ?? metadata?.previousDate : undefined,
     quantity: source.quantity ?? quantity,
     quantityLabel: source.quantityLabel ?? item.quantityLabel,
     comparisonReset: source.comparisonReset ?? item.comparisonReset,
@@ -681,6 +687,8 @@ type MoDataset = {
   denominator?: number | null;
   previousNumerator?: number | null;
   previousDenominator?: number | null;
+  comparisonFact?: number | null;
+  comparisonFromHistory?: boolean;
   comparisonReset?: boolean;
   periodKind?: "monthly" | "cumulative" | "operational" | "snapshot";
   note?: string;
@@ -3157,7 +3165,7 @@ const versionHistoryEntries = [
     "История обновлений автоматически объединяет все технические версии одной даты в одну пользовательскую карточку с накоплением изменений.",
     "Для накопительных долевых показателей в оперативной динамике добавлены числитель и знаменатель текущего и предыдущего срезов, а также их изменение.",
     "Уменьшение накопительного числителя или знаменателя автоматически помечается как аномалия качества данных; отсутствующие компоненты предыдущего среза не восстанавливаются из процента.",
-    "В разделе показателей оперативная динамика теперь сравнивает текущую выгрузку с непосредственно предыдущей с указанием дат, абсолютной разницы и относительного изменения для количественных показателей.",
+    "В разделе показателей оперативная динамика сравнивает текущую выгрузку с ближайшим сопоставимым срезом не менее чем за 5 дней до неё; даты и фактический интервал показаны явно.",
     "Переключатель «Неделя» заменён на «Оперативно»; месячная динамика по-прежнему рассчитывается только по сопоставимым полным месяцам.",
   ],
 },
@@ -4842,7 +4850,12 @@ export default function Home() {
   const achieved = planned.filter(
     (i) => statusFor(i.fact, i.plan, Boolean(i.reverse)) === "good",
   ).length;
-  const selectedDataset = moData[matrixMetric];
+  const selectedDataset = dynamicsMode === "operational" && !isPhysicianMetric(matrixMetric)
+    ? selectOperationalComparison(
+        moData[matrixMetric],
+        (operationalHistoryRaw as Record<string, MoDataset[]>)[matrixMetric] ?? [],
+      ) as MoDataset
+    : moData[matrixMetric];
   const preventiveTransition = matrixMetric === "semd228";
   const selectedGuidance = guidance[matrixMetric];
   const selectedMethodology = methodologies.find(
@@ -4863,14 +4876,37 @@ export default function Home() {
     isPhysicianMetric(matrixMetric) &&
     matrixMetric !== "doctorsAll" &&
     Boolean(physicianWeeklySnapshot.summary[matrixMetric]);
+  const physicianPeriod = physicianWeeklySnapshot.periods?.[matrixMetric];
+  const physicianPreviousPeriod = physicianWeeklySnapshot.previousPeriods?.[matrixMetric];
+  const physicianCurrentSummary = physicianWeeklySnapshot.summary[matrixMetric];
+  const physicianPreviousSummary = physicianWeeklySnapshot.previousSummary?.[matrixMetric];
+  const physicianComparison = isOperationalPhysicianSnapshot
+    ? selectOperationalComparison({
+        date: physicianPeriod?.date ?? physicianWeeklySnapshot.date,
+        period: physicianPeriod?.period ?? physicianWeeklySnapshot.period,
+        previousDate: physicianPreviousPeriod?.date ?? physicianWeeklySnapshot.previousDate,
+        previousPeriod: physicianPreviousPeriod?.period ?? physicianWeeklySnapshot.previousPeriod,
+        previousNumerator: physicianPreviousSummary?.numerator,
+        previousDenominator: physicianPreviousSummary?.denominator,
+        rows: (physicianWeeklySnapshot.datasets[matrixMetric] ?? []).map((row) => ({
+          ...row,
+          previous: physicianWeeklySnapshot.previousDatasets?.[matrixMetric]?.find((old) => old.oid === row.oid)?.fact ?? null,
+        })),
+      }, (operationalHistoryRaw as Record<string, MoDataset[]>)[matrixMetric] ?? [])
+    : null;
   const physicianOperationalSummary = isOperationalPhysicianSnapshot
-    ? physicianWeeklySnapshot.summary[matrixMetric]
+    ? physicianCurrentSummary
     : null;
   const physicianOperationalPreviousSummary = isOperationalPhysicianSnapshot
-    ? (physicianWeeklySnapshot.previousSummary?.[matrixMetric] ?? null)
+    ? physicianComparison?.previousDenominator && physicianComparison.previousNumerator != null
+      ? { numerator: physicianComparison.previousNumerator,
+          denominator: physicianComparison.previousDenominator,
+          fact: physicianComparison.previousNumerator / physicianComparison.previousDenominator * 100 }
+      : null
     : null;
   const previousPhysicianOperationalRows = isOperationalPhysicianSnapshot
-    ? (physicianWeeklySnapshot.previousDatasets?.[matrixMetric] ?? [])
+    ? (physicianComparison?.rows ?? []).filter((row) => row.previous != null)
+        .map((row) => ({ ...row, fact: row.previous as number }))
     : [];
   const previousPhysicianOperationalByOid = new Map(
     previousPhysicianOperationalRows.map((row) => [row.oid, row]),
@@ -4894,8 +4930,8 @@ export default function Home() {
   const datasetOperationalPeriods =
     isOperationalPhysicianSnapshot
       ? {
-          previous: (physicianWeeklySnapshot.previousPeriods?.[matrixMetric]?.date ?? physicianWeeklySnapshot.previousDate)
-            ? `на ${physicianWeeklySnapshot.previousPeriods?.[matrixMetric]?.date ?? physicianWeeklySnapshot.previousDate}`
+          previous: physicianComparison?.previousDate
+            ? `на ${physicianComparison.previousDate}`
             : "предыдущая выгрузка",
           current: `на ${physicianWeeklySnapshot.periods?.[matrixMetric]?.date ?? physicianWeeklySnapshot.date}`,
         }
@@ -4911,7 +4947,9 @@ export default function Home() {
             }
           : null;
   const periods =
-    datasetOperationalPeriods ??
+    (!isOperationalPhysicianSnapshot && dynamicsMode === "operational" && !selectedDataset.previousDate
+      ? { previous: "нет сопоставимого среза", current: `на ${selectedDataset.date}` }
+      : datasetOperationalPeriods) ??
     comparisonPeriods[matrixMetric] ?? {
       previous: "предыдущая выгрузка",
       current: `на ${selectedDataset.date}`,
@@ -5170,9 +5208,11 @@ export default function Home() {
         : null;
   const regionalPrevious = isOperationalPhysicianSnapshot
     ? (physicianOperationalPreviousSummary?.fact ?? null)
-    : selectedDataset.comparisonReset
+    : selectedDataset.comparisonReset || (!isOperationalPhysicianSnapshot && !selectedDataset.previousDate)
       ? null
-      : currentOperationalRuntime[matrixMetric]?.derivedFact ??
+      : selectedDataset.comparisonFromHistory
+        ? selectedDataset.comparisonFact ?? null
+        : currentOperationalRuntime[matrixMetric]?.derivedFact ??
         operationalRegionalPrevious[matrixMetric] ??
         (isCountMetric
           ? rtIndicator?.previous ?? null
@@ -5203,7 +5243,7 @@ export default function Home() {
       ? {
           numerator: physicianOperationalPreviousSummary.numerator,
           denominator: physicianOperationalPreviousSummary.denominator,
-          date: physicianWeeklySnapshot.previousPeriods?.[matrixMetric]?.date ?? physicianWeeklySnapshot.previousDate ?? previousSnapshot,
+          date: physicianComparison?.previousDate ?? previousSnapshot,
           source: physicianWeeklySnapshot.previousPeriods?.[matrixMetric]?.source ?? physicianWeeklySnapshot.previousSource ?? "предыдущий оперативный срез 500+",
         }
       : isCumulativeShareMetric && !selectedDataset.comparisonReset
@@ -9317,7 +9357,7 @@ export default function Home() {
                   <div>
                     <b>Динамика показателя</b>
                     <span>
-                      Оперативно — текущая выгрузка к предыдущей · месяцы —
+                      Оперативно — текущая выгрузка к срезу от 5 дней назад · месяцы —
                       закрытые срезы сентября и октября
                     </span>
                   </div>
@@ -9346,7 +9386,7 @@ export default function Home() {
                           : `${format(effectiveRegionalPrevious, isCountMetric ? 0 : 2)}${isCountMetric ? "" : "%"}`}
                       </strong>
                       <span>
-                        {previousSnapshot}
+                        {regionalPrevious === null ? "нет сопоставимого среза" : previousSnapshot}
                         {isCumulativeShareMetric || isOperationalPhysicianSnapshot
                           ? previousRegionalComponents
                             ? ` · ${format(previousRegionalComponents.numerator, 0)} / ${format(previousRegionalComponents.denominator, 0)}`
@@ -9420,7 +9460,9 @@ export default function Home() {
                                 ? "предыдущего сопоставимого оперативного среза нет; сравнение не выполняется"
                               : isCumulativeShareMetric && !previousRegionalComponents
                                 ? "доля сопоставима, но компоненты предыдущего среза не сохранены; после следующей выгрузки будут показаны изменения числителя и знаменателя"
-                                : "текущая выгрузка сравнивается с непосредственно предыдущей"}
+                                : !selectedDataset.previousDate
+                                  ? "Подходящего подтверждённого среза с интервалом не менее 5 дней пока нет"
+                                  : "Текущая выгрузка сравнивается с ближайшим подтверждённым срезом не менее чем за 5 дней до неё"}
                       </span>
                     </article>
                   </div>

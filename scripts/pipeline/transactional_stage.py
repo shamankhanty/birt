@@ -208,6 +208,40 @@ def project_metric(current, generated, metric, item):
             write(path,merged)
 
 
+def retain_operational_cut(base, generated, metric):
+    """Keep accepted MO values so a later export can use a five-day baseline."""
+    history_path = generated/'operational-history.json'
+    history = read(history_path) if history_path.exists() else {}
+    old_weekly = read(base/'physician-weekly-snapshot.json')
+    new_weekly = read(generated/'physician-weekly-snapshot.json')
+    if metric in old_weekly.get('datasets', {}) and metric in new_weekly.get('datasets', {}):
+        old_period = old_weekly.get('periods', {}).get(metric, {})
+        new_period = new_weekly.get('periods', {}).get(metric, {})
+        if old_period.get('date') and old_period.get('date') != new_period.get('date'):
+            summary = old_weekly.get('summary', {}).get(metric, {})
+            cut = {'date': old_period['date'], 'period': old_period.get('period'),
+                   'rows': old_weekly['datasets'][metric], **summary}
+            cuts = history.setdefault(metric, [])
+            if not any(item.get('date') == cut['date'] for item in cuts):
+                cuts.append(cut)
+                cuts.sort(key=lambda item: tuple(reversed(item['date'].split('.'))))
+                write(history_path, history)
+        return
+    for filename in MAPS[:3]:
+        old = read(base/filename).get(metric)
+        new = read(generated/filename).get(metric)
+        if not old or not new or not old.get('date') or old.get('date') == new.get('date'):
+            continue
+        cuts = history.setdefault(metric, [])
+        if not any(cut.get('date') == old['date'] for cut in cuts):
+            cuts.append({key: old[key] for key in
+                         ('date', 'period', 'fact', 'numerator', 'denominator', 'rows', 'comparisonReset')
+                         if key in old})
+            cuts.sort(key=lambda cut: tuple(reversed(cut['date'].split('.'))))
+            write(history_path, history)
+        return
+
+
 def historical_replay(output, manifest_path=None):
     """Only independent, source-backed expected artifacts can establish historical PASS."""
     if not manifest_path or not Path(manifest_path).is_file():
@@ -333,6 +367,7 @@ def stage(input_dir, output_dir, replay_manifest=None):
                 compact_error_payload(raw)
                 preserve_same_slice_dynamics(base,raw,metric)
                 project_metric(base,raw,metric,item)
+                retain_operational_cut(base,raw,metric)
                 validation=validate(raw,tx/'validation')
                 if validation['overallStatus']=='FAIL': raise ValueError('; '.join(gate_errors(validation)))
                 # Deterministic repeat from exactly the same accepted baseline.
@@ -340,6 +375,7 @@ def stage(input_dir, output_dir, replay_manifest=None):
                 invoke(replay,family,metric,item,partner)
                 compact_error_payload(replay); preserve_same_slice_dynamics(base,replay,metric)
                 project_metric(base,replay,metric,item)
+                retain_operational_cut(base,replay,metric)
                 accepted_hashes=hashes(base)
                 changed=[name for name,value in hashes(raw).items() if accepted_hashes.get(name)!=value]
                 replay_result=compare_trees(raw,replay,[n for n in changed if n.endswith('.json')])

@@ -57,7 +57,7 @@ test("indicator UI shows component dynamics only where the regional ratio is sou
   assert.match(page, /числитель уменьшился/u);
   assert.match(page, /знаменатель уменьшился/u);
   assert.match(page, /компоненты предыдущего среза не сохранены/u);
-  assert.match(page, /selectedDataset\.comparisonReset\s*\?\s*null/u);
+  assert.match(page, /selectedDataset\.comparisonReset \|\| \(!isOperationalPhysicianSnapshot && !selectedDataset\.previousDate\)/u);
 });
 
 test("pipeline carries component baselines forward without reconstructing missing values", () => {

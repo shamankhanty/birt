@@ -9,9 +9,9 @@ const mo = JSON.parse(fs.readFileSync(new URL("../baseline/archive/before-202611
 const operational = JSON.parse(fs.readFileSync(new URL("../baseline/archive/before-20261102/app/operational-mo.json", import.meta.url), "utf8"));
 const status = JSON.parse(fs.readFileSync(new URL("../baseline/archive/before-20261102/app/organization-status.json", import.meta.url), "utf8"));
 
-test("indicator operational mode means current export versus previous export", () => {
+test("indicator operational mode shows a dated comparison window", () => {
   assert.match(page, /useState<"operational" \| "month">\("operational"\)/u);
-  assert.match(page, /Оперативно — текущая выгрузка к предыдущей/u);
+  assert.match(page, /Оперативно — текущая выгрузка к срезу от 5 дней назад/u);
   assert.match(page, /Предыдущая выгрузка/u);
   assert.match(page, /Текущая выгрузка/u);
   assert.match(page, /<small>Разница<\/small>/u);
