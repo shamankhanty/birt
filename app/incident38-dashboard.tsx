@@ -33,15 +33,24 @@ function metrics(rows: Specialty[]) {
   const coverage = ratio(epguSlots, norm);
   const allValuesPresent = applicable.every((row) => row.norm !== null && (row.norm <= 0 || row.epguSlots !== null));
   const deficit = allValuesPresent ? sumKnown(applicable.map((row) => shortfall(row.epguSlots, row.norm))) : null;
+  const quotaRows = applicable.filter((row) => row.epguNorm === null || row.epguNorm > 0);
+  const quotaNorm = sumKnown(quotaRows.map((row) => row.epguNorm));
+  const quotaSlots = sumKnown(quotaRows.map((row) => row.epguSlots));
+  const quotaCoverage = ratio(quotaSlots, quotaNorm);
+  const quotaCompleteData = quotaRows.every((row) => row.epguNorm !== null && (row.epguNorm <= 0 || row.epguSlots !== null));
   return {
     norm,
     epguSlots,
     coverage,
+    quotaNorm,
+    quotaSlots,
+    quotaCoverage,
     deficit,
-    below: applicable.filter((row) => row.norm !== null && row.norm > 0 && row.epguSlots !== null && row.epguSlots < row.norm).length,
-    complete: coverage !== null && coverage >= 100,
-    missing: applicable.filter((row) => row.norm === null || (row.norm > 0 && row.epguSlots === null)).length,
-    applicable: applicable.filter((row) => row.norm !== null && row.norm > 0).length,
+    below: quotaRows.filter((row) => row.epguNorm !== null && row.epguNorm > 0 && row.epguSlots !== null && row.epguSlots < row.epguNorm).length,
+    complete: quotaCoverage !== null && quotaCoverage >= 100,
+    quotaCompleteData,
+    missing: quotaRows.filter((row) => row.epguNorm === null || (row.epguNorm > 0 && row.epguSlots === null)).length,
+    applicable: quotaRows.filter((row) => row.epguNorm !== null && row.epguNorm > 0).length,
   };
 }
 
@@ -94,6 +103,10 @@ export default function Incident38Dashboard() {
     const norm = sumKnown(applicable.map((row) => row.norm));
     const slots = sumKnown(applicable.map((row) => row.epguSlots));
     const coverage = ratio(slots, norm);
+    const quotaRows = applicable.filter((row) => row.epguNorm === null || row.epguNorm > 0);
+    const quotaNorm = sumKnown(quotaRows.map((row) => row.epguNorm));
+    const quotaSlots = sumKnown(quotaRows.map((row) => row.epguSlots));
+    const quotaCoverage = ratio(quotaSlots, quotaNorm);
     const complete = applicable.every((row) => row.norm !== null && (row.norm <= 0 || row.epguSlots !== null));
     const deficit = complete ? sumKnown(applicable.map((row) => shortfall(row.epguSlots, row.norm))) : null;
     return {
@@ -101,6 +114,9 @@ export default function Incident38Dashboard() {
       norm,
       slots,
       coverage,
+      quotaNorm,
+      quotaSlots,
+      quotaCoverage,
       deficit,
       organizations: applicable.filter((row) => row.norm !== null && row.norm > 0).length,
       below: applicable.filter((row) => row.norm !== null && row.norm > 0 && row.epguSlots !== null && row.epguSlots < row.norm).length,
@@ -126,8 +142,8 @@ export default function Incident38Dashboard() {
       .sort((a, b) => (a.coverage ?? Number.POSITIVE_INFINITY) - (b.coverage ?? Number.POSITIVE_INFINITY))
     : [];
   const completeCount = organizationRows.filter((row) => row.complete).length;
-  const belowCount = organizationRows.filter((row) => row.coverage !== null && row.coverage < 100).length;
-  const missingCount = organizationRows.filter((row) => row.coverage === null || row.missing > 0).length;
+  const belowCount = organizationRows.filter((row) => row.quotaCoverage !== null && row.quotaCoverage < 100).length;
+  const missingCount = organizationRows.filter((row) => !row.quotaCompleteData || row.quotaCoverage === null || row.missing > 0).length;
   const currentIndex = selectedOrg ? organizationRows.findIndex((row) => row.org.oid === selectedOrg.oid) : -1;
 
   function openOrg(oid: string) {
@@ -151,7 +167,7 @@ export default function Incident38Dashboard() {
         <p className={styles.subtitle}>Свободные слоты на ближайшие 14 дней · {ownership === "state" ? "государственные" : "частные"} медицинские организации</p>
         <p className={styles.sourceDates}>Даты выгрузок: {DATA.map((dataset) => dataset.reportDate).join(" · ")} · актуальность ФРМР: {DATA.map((dataset) => dataset.frmoDate).join(" · ")}</p>
       </div>
-      <div className={styles.heroResult}><span>Общее выполнение норматива</span><strong className={tone(regional.coverage)}>{percent(regional.coverage)}</strong><small>{format(regional.epguSlots)} слотов ЕПГУ из {format(regional.norm)} по общему нормативу</small></div>
+      <div className={styles.heroResult}><span>И‑38.9 · слоты ЕПГУ от общего норматива</span><strong className={tone(regional.coverage)}>{percent(regional.coverage)}</strong><small>Для плановой оценки смотрите выполнение квоты ЕПГУ ниже</small></div>
     </header>
 
     <nav className={styles.tabs} aria-label="Разделы И38">
@@ -161,16 +177,17 @@ export default function Incident38Dashboard() {
 
     {tab === "overview" && <main className={styles.page}>
       <div className={styles.kpis}>
-        <article className={styles.kpi}><strong className={tone(regional.coverage)}>{percent(regional.coverage)}</strong><span>Слоты ЕПГУ от общего норматива</span><small>{format(regional.epguSlots)} свободных слотов ÷ {format(regional.norm)} требуемых</small></article>
+        <article className={styles.kpi}><strong className={tone(regional.coverage)}>{percent(regional.coverage)}</strong><span>И‑38.9: слоты ЕПГУ от общего норматива</span><small>{format(regional.epguSlots)} слотов ЕПГУ ÷ {format(regional.norm)} слотов по общему нормативу</small></article>
+        <article className={styles.kpi}><strong className={tone(regional.quotaCoverage)}>{percent(regional.quotaCoverage)}</strong><span>Выполнение квоты ЕПГУ</span><small>{format(regional.quotaSlots)} слотов ЕПГУ ÷ {format(regional.quotaNorm)} по норме ЕПГУ · план 100%</small></article>
         <article className={styles.kpi}><strong>{format(regional.deficit)}</strong><span>Суммарно не хватает слотов ЕПГУ</span><small>Сумма нехватки по каждой МО и специальности</small></article>
-        <article className={styles.kpi}><strong className={styles.good}>{completeCount}</strong><span>МО выполнили норматив</span><small>Доступные слоты равны нормативу или превышают его</small></article>
-        <article className={styles.kpi}><strong className={styles.belowNorm}>{belowCount}</strong><span>МО ниже норматива</span><small>Доступных слотов меньше, чем требуется</small></article>
+        <article className={styles.kpi}><strong className={styles.good}>{completeCount}</strong><span>МО выполнили квоту ЕПГУ</span><small>Слотов ЕПГУ не меньше нормы для ЕПГУ</small></article>
+        <article className={styles.kpi}><strong className={styles.belowNorm}>{belowCount}</strong><span>МО ниже квоты ЕПГУ</span><small>Слотов ЕПГУ меньше нормы для ЕПГУ</small></article>
         <article className={styles.kpi}><strong className={styles.neutral}>{missingCount}</strong><span>МО с неполными данными</span><small>Расчёт может быть неполным</small></article>
       </div>
-      <div className={styles.note}><b>Как читать:</b> <span>100% и выше — норматив выполнен;</span> <span>ниже 100% — есть нехватка;</span> <span>нет данных — исходные значения неполные.</span> Выполнение рассчитывается как слоты ЕПГУ ÷ общий норматив.</div>
+      <div className={styles.note}><b>Почему два процента:</b> И‑38.9 = слоты ЕПГУ ÷ «Норматив ВСЕГО» — показывает долю общего норматива, открытую на Госуслугах; его планового процента в выгрузке нет. Выполнение квоты ЕПГУ = слоты ЕПГУ ÷ «Норма для ЕПГУ»; план — 100% своей квоты. Обе нормы на 14 дней рассчитываются в исходной форме по нормативам приложения № 4 с учётом нерабочих дней. Выше 100% означает превышение соответствующей нормы; «—» — данных недостаточно или норма не задана.</div>
       <div className={styles.grid2}>
-        <section className={styles.card}><h2>Выполнение по специальностям <small>% от общего норматива</small></h2>
-          <div className={styles.barList}>{specRows.map((row) => <div className={styles.barRow} key={row.code}><span title={row.name}>{row.name}</span><div className={styles.track}><i style={{ width: `${Math.min(100, Math.max(0, row.coverage ?? 0))}%`, background: heatColor(row.coverage) }} /></div><b className={tone(row.coverage)}>{percent(row.coverage)}</b></div>)}</div>
+        <section className={styles.card}><h2>Два показателя по специальностям</h2><p className={styles.chartNote}><span><i className={styles.legendGeneral} />И‑38.9: от общего норматива</span><span><i className={styles.legendQuota} />Квота ЕПГУ: от нормы ЕПГУ (план 100%)</span></p>
+          <div className={styles.barList}>{specRows.map((row) => <div className={styles.dualBarRow} key={row.code}><span title={row.name}>{row.name}</span><div className={styles.dualBars}><div className={styles.track}><i style={{ width: `${Math.min(100, Math.max(0, row.coverage ?? 0))}%`, background: heatColor(row.coverage) }} /></div><div className={styles.track}><i className={styles.quotaFill} style={{ width: `${Math.min(100, Math.max(0, row.quotaCoverage ?? 0))}%` }} /></div></div><b className={tone(row.coverage)}>{percent(row.coverage)}<small>{percent(row.quotaCoverage)}</small></b></div>)}</div>
         </section>
         <section className={styles.card}><h2>Нехватка слотов по специальностям <small>слотов до общего норматива</small></h2>
           <div className={styles.barList}>{[...specRows].sort((a, b) => (b.deficit ?? -1) - (a.deficit ?? -1)).map((row) => <div className={styles.barRow} key={row.code}><span title={row.name}>{row.name}</span><div className={styles.track}><i className={styles.deficitFill} style={{ width: `${Math.min(100, Math.max(0, (row.deficit ?? 0) / Math.max(1, ...specRows.map((item) => item.deficit ?? 0)) * 100))}%` }} /></div><b>{format(row.deficit)}</b></div>)}</div>
@@ -221,20 +238,21 @@ export default function Incident38Dashboard() {
         </div>
       </section>
       {selectedOrg && <section className={styles.card}>
-        <div className={styles.sectionHead}><div><h2>{selectedOrg.name}</h2><p>Свободные слоты для записи на 14 дней · ЕПГУ — запись через Госуслуги</p></div><span className={`${styles.status} ${orgMetrics(selectedOrg).complete ? styles.statusComplete : orgMetrics(selectedOrg).coverage === null ? styles.statusMissing : styles.statusBelow}`}>{status(orgMetrics(selectedOrg).coverage)}</span></div>
+        <div className={styles.sectionHead}><div><h2>{selectedOrg.name}</h2><p>Свободные слоты на 14 дней. И‑38.9 сравнивает слоты ЕПГУ с общим нормативом; статус показывает выполнение квоты ЕПГУ.</p></div><span className={`${styles.status} ${orgMetrics(selectedOrg).complete ? styles.statusComplete : !orgMetrics(selectedOrg).quotaCompleteData ? styles.statusMissing : styles.statusBelow}`}>{status(orgMetrics(selectedOrg).quotaCoverage)}</span></div>
         <div className={styles.orgKpis}>
-          <article><strong className={tone(orgMetrics(selectedOrg).coverage)}>{percent(orgMetrics(selectedOrg).coverage)}</strong><span>Слоты ЕПГУ от общего норматива</span><small>{format(orgMetrics(selectedOrg).epguSlots)} из {format(orgMetrics(selectedOrg).norm)}</small></article>
+          <article><strong className={tone(orgMetrics(selectedOrg).coverage)}>{percent(orgMetrics(selectedOrg).coverage)}</strong><span>И‑38.9: слоты ЕПГУ от общего норматива</span><small>{format(orgMetrics(selectedOrg).epguSlots)} из {format(orgMetrics(selectedOrg).norm)}</small></article>
+          <article><strong className={tone(orgMetrics(selectedOrg).quotaCoverage)}>{percent(orgMetrics(selectedOrg).quotaCoverage)}</strong><span>Выполнение квоты ЕПГУ · план 100%</span><small>{format(orgMetrics(selectedOrg).quotaSlots)} из {format(orgMetrics(selectedOrg).quotaNorm)}</small></article>
           <article><strong>{format(orgMetrics(selectedOrg).deficit)}</strong><span>Не хватает слотов до норматива</span><small>сумма по специальностям МО</small></article>
-          <article><strong className={riskClass(orgMetrics(selectedOrg).below)}>{orgMetrics(selectedOrg).below} из {orgMetrics(selectedOrg).applicable}</strong><span>Специальностей ниже нормы</span><small>норматив больше нуля</small></article>
+          <article><strong className={riskClass(orgMetrics(selectedOrg).below)}>{orgMetrics(selectedOrg).below} из {orgMetrics(selectedOrg).applicable}</strong><span>Специальностей ниже квоты ЕПГУ</span><small>норма для ЕПГУ больше нуля</small></article>
           <article><strong className={styles.neutral}>{orgMetrics(selectedOrg).missing}</strong><span>Специальностей без полных данных</span><small>нет всех значений для расчёта</small></article>
         </div>
-        <div className={styles.sectionHead}><div><h2>Показатели по специальностям</h2><p>Процент И38.9 = «Слотов для ЕПГУ» ÷ «Норматив ВСЕГО». «Норма для ЕПГУ» и «Всего слотов» также показаны отдельно из исходной формы.</p></div><select className={styles.inlineSelect} value={selectedSpecialty} onChange={(event) => setSelectedSpecialty(event.target.value)}><option value="">Все специальности</option>{SPECIALTIES.map((specialty) => <option key={specialty.code} value={specialty.code}>{specialty.name}</option>)}</select></div>
-        <div className={styles.tableScroll}><table className={styles.table}><thead><tr><th>Специальность</th><th>Норматив ВСЕГО</th><th>Всего слотов</th><th>Норма для ЕПГУ</th><th>Слотов для ЕПГУ</th><th>Выполнение И38.9, %</th><th>Не хватает до общего норматива</th></tr></thead><tbody>
-          {selectedSpecialties.filter((row) => !selectedSpecialty || row.code === selectedSpecialty).map((row) => <tr key={row.code}><td className={styles.orgName}>{row.name}</td><td>{format(row.norm)}</td><td>{format(row.slots)}</td><td>{format(row.epguNorm)}</td><td>{format(row.epguSlots)}</td><td className={`${styles.metricCell} ${tone(row.coverage)}`}>{percent(row.coverage)}</td><td>{format(row.deficit)}</td></tr>)}
+        <div className={styles.sectionHead}><div><h2>Показатели по специальностям</h2><p>И‑38.9 = «Слотов для ЕПГУ» ÷ «Норматив ВСЕГО». Выполнение квоты = «Слотов для ЕПГУ» ÷ «Норма для ЕПГУ»; ориентир — 100%. «Всего слотов» — фактически открытые слоты всех каналов.</p></div><select className={styles.inlineSelect} value={selectedSpecialty} onChange={(event) => setSelectedSpecialty(event.target.value)}><option value="">Все специальности</option>{SPECIALTIES.map((specialty) => <option key={specialty.code} value={specialty.code}>{specialty.name}</option>)}</select></div>
+        <div className={styles.tableScroll}><table className={styles.table}><thead><tr><th>Специальность</th><th>Норматив ВСЕГО</th><th>Всего слотов</th><th>Норма для ЕПГУ</th><th>Слотов для ЕПГУ</th><th>И‑38.9, % общего норматива</th><th>Квота ЕПГУ выполнена, %</th><th>Не хватает до общего норматива</th></tr></thead><tbody>
+          {selectedSpecialties.filter((row) => !selectedSpecialty || row.code === selectedSpecialty).map((row) => <tr key={row.code}><td className={styles.orgName}>{row.name}</td><td>{format(row.norm)}</td><td>{format(row.slots)}</td><td>{format(row.epguNorm)}</td><td>{format(row.epguSlots)}</td><td className={`${styles.metricCell} ${tone(row.coverage)}`}>{percent(row.coverage)}</td><td className={`${styles.metricCell} ${tone(ratio(row.epguSlots, row.epguNorm))}`}>{percent(ratio(row.epguSlots, row.epguNorm))}</td><td>{format(row.deficit)}</td></tr>)}
         </tbody></table></div>
       </section>}
     </main>}
 
-    <footer className={styles.footer}>Источник: форма И-38.9, лист «И_38.9». Процент соответствует исходному полю «Реальный процент для ЕПГУ»: доступные слоты ЕПГУ ÷ «Норматив ВСЕГО» × 100%. Выгрузки объединены в один перечень МО; даты срезов указаны в шапке. Отсутствие данных не заменяется нулём. Фильтр «Государственные» включает организации с подтверждённым участием Республики Татарстан; распределение по типу МО основано на организационно-правовой форме.</footer>
+    <footer className={styles.footer}>Источник: форма И‑38.9 и её лист «нормативы». «Норматив ВСЕГО» — рассчитанный по приложению № 4 общий норматив слотов на 14 дней; «Норма для ЕПГУ» — его конкурентная часть для записи через Госуслуги. Исходный процент формы: слоты ЕПГУ ÷ общий норматив. Дополнительный контроль квоты: слоты ЕПГУ ÷ норма ЕПГУ; план — 100%. Выгрузки объединены в один перечень МО; даты срезов указаны в шапке. Отсутствие данных не заменяется нулём. Фильтр «Государственные» включает организации с подтверждённым участием Республики Татарстан; распределение по типу МО основано на организационно-правовой форме.</footer>
   </div>;
 }
