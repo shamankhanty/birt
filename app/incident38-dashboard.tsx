@@ -9,149 +9,149 @@ type SlotValue = number | null;
 type Specialty = { code: string; name: string; norm: SlotValue; slots: SlotValue; epguNorm: SlotValue; epguSlots: SlotValue };
 type Organization = { oid: string; code: string; name: string; fullName: string; city: string; specialties: Specialty[] };
 type Dataset = { source: string; reportDate: string; asOf: string; frmoDate: string; forwardDays: number; orgCount: number; specialties: Array<{ code: string; name: string }>; orgs: Organization[] };
-type Metrics = { norm: number | null; slots: number | null; deficit: number | null; coverage: number | null; epguNorm: number | null; epguSlots: number | null; epguDeficit: number | null; epguCoverage: number | null; below: number; noSlots: number; missing: number; applicable: number };
-type StatusFilter = "all" | "deficit" | "epgu" | "zero" | "missing" | "met";
+type Tab = "overview" | "organization" | "matrix";
 
 const DATA: Dataset[] = [cityRaw as Dataset, districtRaw as Dataset];
 const ORGANIZATIONS = DATA.flatMap((dataset) => dataset.orgs);
-const SPECIALTIES = DATA[0].specialties;
+const SPECIALTIES = [...new Map(DATA.flatMap((dataset) => dataset.specialties).map((s) => [s.code, s])).values()];
 const numberFormat = new Intl.NumberFormat("ru-RU", { maximumFractionDigits: 1 });
 const format = (value: SlotValue) => value === null || value === undefined ? "—" : numberFormat.format(value);
 const percent = (value: number | null) => value === null || !Number.isFinite(value) ? "—" : `${numberFormat.format(value)}%`;
-const ratio = (slots: SlotValue, norm: SlotValue) => slots === null || norm === null || norm <= 0 ? null : slots / norm * 100;
-const shortage = (slots: SlotValue, norm: SlotValue) => slots === null || norm === null || norm <= 0 ? null : Math.max(0, norm - slots);
 const sumKnown = (values: SlotValue[]) => values.some((value) => value === null || value === undefined) ? null : values.reduce<number>((sum, value) => sum + (value ?? 0), 0);
-const tone = (value: number | null) => value === null ? styles.neutral : value >= 100 ? styles.good : styles.warn;
-
-function calculateMetrics(rows: Specialty[]): Metrics {
-  const applicable = rows.filter((row) => row.norm === null || row.norm > 0);
+const ratio = (slots: SlotValue, norm: SlotValue) => slots === null || norm === null || norm <= 0 ? null : slots / norm * 100;
+const shortfall = (slots: SlotValue, norm: SlotValue) => slots === null || norm === null || norm <= 0 ? null : Math.max(0, norm - slots);
+const rowsFor = (org: Organization) => org.specialties.filter((row) => row.norm === null || row.norm > 0);
+function metrics(rows: Specialty[]) {
+  const applicable = rowsFor({ specialties: rows } as Organization);
   const norm = sumKnown(applicable.map((row) => row.norm));
-  const slots = sumKnown(applicable.map((row) => row.slots));
-  const missing = applicable.filter((row) => row.norm === null || (row.norm > 0 && row.slots === null)).length;
-  const below = applicable.filter((row) => row.norm !== null && row.norm > 0 && row.slots !== null && row.slots < row.norm).length;
-  const noSlots = applicable.filter((row) => row.norm !== null && row.norm > 0 && row.slots === 0).length;
-  const epguRows = applicable.filter((row) => row.epguNorm !== null && row.epguNorm > 0);
-  const epguNorm = sumKnown(epguRows.map((row) => row.epguNorm));
-  const epguSlots = sumKnown(epguRows.map((row) => row.epguSlots));
-  const missingEpgu = applicable.some((row) => row.epguNorm === null || (row.epguNorm > 0 && row.epguSlots === null));
-  const complete = missing === 0;
-  return {
-    norm,
-    slots,
-    deficit: complete ? sumKnown(applicable.map((row) => shortage(row.slots, row.norm))) : null,
-    coverage: complete ? ratio(slots, norm) : null,
-    epguNorm,
-    epguSlots,
-    epguDeficit: missingEpgu ? null : sumKnown(epguRows.map((row) => shortage(row.epguSlots, row.epguNorm))),
-    epguCoverage: missingEpgu ? null : ratio(epguSlots, epguNorm),
-    below,
-    noSlots,
-    missing,
-    applicable: applicable.filter((row) => row.norm !== null && row.norm > 0).length,
-  };
+  const epguSlots = sumKnown(applicable.map((row) => row.epguSlots));
+  const coverage = ratio(epguSlots, norm);
+  const allValuesPresent = applicable.every((row) => row.norm !== null && (row.norm <= 0 || row.epguSlots !== null));
+  const deficit = allValuesPresent ? sumKnown(applicable.map((row) => shortfall(row.epguSlots, row.norm))) : null;
+  return { norm, epguSlots, coverage, deficit, below: applicable.filter((row) => row.norm !== null && row.norm > 0 && row.epguSlots !== null && row.epguSlots < row.norm).length, zero: applicable.filter((row) => row.norm !== null && row.norm > 0 && row.epguSlots === 0).length, missing: applicable.filter((row) => row.norm === null || (row.norm > 0 && row.epguSlots === null)).length, applicable: applicable.filter((row) => row.norm !== null && row.norm > 0).length };
 }
-
-function organizationMetrics(org: Organization, selectedCode = "") {
-  return calculateMetrics(org.specialties.filter((row) => !selectedCode || row.code === selectedCode));
-}
-
-function specialtyTotals(orgs: Organization[]) {
-  return SPECIALTIES.map((specialty) => {
-    const cells = orgs.flatMap((org) => org.specialties.filter((row) => row.code === specialty.code));
-    const metrics = calculateMetrics(cells);
-    const applicableCells = cells.filter((row) => row.norm !== null && row.norm > 0);
-    return {
-      ...metrics,
-      code: specialty.code,
-      name: specialty.name,
-      organizations: applicableCells.length,
-      organizationsBelow: applicableCells.filter((row) => row.slots !== null && row.slots < (row.norm ?? 0)).length,
-      organizationsZero: applicableCells.filter((row) => row.slots === 0).length,
-    };
-  });
-}
+const orgMetrics = (org: Organization) => metrics(org.specialties);
+const tone = (p: number | null) => p === null ? styles.neutral : p < 50 ? styles.critical : p < 75 ? styles.attention : styles.good;
+const status = (p: number | null) => p === null ? "Нет данных" : p < 50 ? "Критично" : p < 75 ? "Требует внимания" : "Близко к норме";
+const shade = (p: number | null) => p === null ? "#e8eef3" : p < 25 ? "#c53e45" : p < 50 ? "#df8420" : p < 75 ? "#d8b51d" : "#27865f";
+const shownOrgName = (org: Organization) => org.name;
 
 export default function Incident38Dashboard() {
+  const [tab, setTab] = useState<Tab>("overview");
   const [selectedOid, setSelectedOid] = useState("");
-  const [specialtyCode, setSpecialtyCode] = useState("");
-  const [statusFilter, setStatusFilter] = useState<StatusFilter>("all");
   const [search, setSearch] = useState("");
-  const [sort, setSort] = useState("coverage");
+  const [matrixSearch, setMatrixSearch] = useState("");
+  const [matrixSort, setMatrixSort] = useState("risk");
+  const [selectedSpecialty, setSelectedSpecialty] = useState("");
+  const [matrixOrder, setMatrixOrder] = useState(true);
 
-  const allMetrics = useMemo(() => calculateMetrics(ORGANIZATIONS.flatMap((org) => org.specialties)), []);
-  const specialtyRows = useMemo(() => specialtyTotals(ORGANIZATIONS).sort((a, b) => (a.coverage ?? Number.POSITIVE_INFINITY) - (b.coverage ?? Number.POSITIVE_INFINITY)), []);
-  const organizationsBelow = useMemo(() => ORGANIZATIONS.filter((org) => organizationMetrics(org).coverage !== null && organizationMetrics(org).coverage! < 100).length, []);
-  const criticalOrganizations = useMemo(() => ORGANIZATIONS.filter((org) => organizationMetrics(org).noSlots > 0).length, []);
-  const incompleteOrganizations = useMemo(() => ORGANIZATIONS.filter((org) => organizationMetrics(org).missing > 0).length, []);
-  const totalProblemCells = specialtyRows.reduce((sum, row) => sum + row.organizationsBelow, 0);
-  const displayedOrganizations = useMemo(() => ORGANIZATIONS
-    .map((org) => ({ ...org, metrics: organizationMetrics(org, specialtyCode) }))
-    .filter((org) => `${org.name} ${org.fullName}`.toLocaleLowerCase("ru").includes(search.toLocaleLowerCase("ru")))
-    .filter((org) => statusFilter === "all" || (statusFilter === "deficit" && org.metrics.coverage !== null && org.metrics.coverage < 100) || (statusFilter === "epgu" && org.metrics.epguCoverage !== null && org.metrics.epguCoverage < 100) || (statusFilter === "zero" && org.metrics.noSlots > 0) || (statusFilter === "missing" && org.metrics.missing > 0) || (statusFilter === "met" && org.metrics.coverage !== null && org.metrics.coverage >= 100))
-    .sort((a, b) => sort === "name" ? a.name.localeCompare(b.name, "ru") : sort === "deficit" ? (b.metrics.deficit ?? -1) - (a.metrics.deficit ?? -1) : sort === "below" ? b.metrics.below - a.metrics.below : (a.metrics.coverage ?? Number.POSITIVE_INFINITY) - (b.metrics.coverage ?? Number.POSITIVE_INFINITY)), [specialtyCode, statusFilter, search, sort]);
-  const selectedOrg = ORGANIZATIONS.find((org) => org.oid === selectedOid) ?? null;
-  const selectedMetrics = selectedOrg ? organizationMetrics(selectedOrg) : null;
-  const selectedSpecialties = selectedOrg?.specialties
-    .filter((row) => !specialtyCode || row.code === specialtyCode)
-    .map((row) => ({ ...row, coverage: ratio(row.slots, row.norm), epguCoverage: ratio(row.epguSlots, row.epguNorm), deficit: shortage(row.slots, row.norm), epguShortage: shortage(row.epguSlots, row.epguNorm) }))
-    .sort((a, b) => (a.coverage ?? Number.POSITIVE_INFINITY) - (b.coverage ?? Number.POSITIVE_INFINITY)) ?? [];
-  const statusLabels: Record<StatusFilter, string> = { all: "Все МО", deficit: "По сумме слотов меньше нормы", epgu: "Слотов для Госуслуг меньше нормы", zero: "Нет слотов хотя бы по одной специальности", missing: "Есть специальности без полных данных", met: "По сумме слотов норма выполнена" };
-  const coverageTitle = specialtyCode ? "Выполнение нормы по выбранной специальности, %" : "Выполнение общей нормы, %";
-  const selectedSpecialty = SPECIALTIES.find((row) => row.code === specialtyCode);
+  const regional = useMemo(() => metrics(ORGANIZATIONS.flatMap((org) => org.specialties)), []);
+  const organizationRows = useMemo(() => ORGANIZATIONS.map((org) => ({ org, ...orgMetrics(org) })).sort((a, b) => (a.coverage ?? Number.POSITIVE_INFINITY) - (b.coverage ?? Number.POSITIVE_INFINITY)), []);
+  const selectedOrg = ORGANIZATIONS.find((org) => org.oid === selectedOid) ?? ORGANIZATIONS[0] ?? null;
+  const specRows = useMemo(() => SPECIALTIES.map((spec) => {
+    const cells = ORGANIZATIONS.flatMap((org) => org.specialties.filter((row) => row.code === spec.code));
+    const applicable = cells.filter((row) => row.norm === null || row.norm > 0);
+    const norm = sumKnown(applicable.map((row) => row.norm));
+    const slots = sumKnown(applicable.map((row) => row.epguSlots));
+    const coverage = ratio(slots, norm);
+    const complete = applicable.every((row) => row.norm !== null && (row.norm <= 0 || row.epguSlots !== null));
+    const deficit = complete ? sumKnown(applicable.map((row) => shortfall(row.epguSlots, row.norm))) : null;
+    return { ...spec, norm, slots, coverage, deficit, organizations: applicable.filter((row) => row.norm !== null && row.norm > 0).length,
+      below: applicable.filter((row) => row.norm !== null && row.norm > 0 && row.epguSlots !== null && row.epguSlots < row.norm).length,
+      missing: applicable.filter((row) => row.norm === null || (row.norm > 0 && row.epguSlots === null)).length };
+  }).sort((a, b) => (a.coverage ?? Number.POSITIVE_INFINITY) - (b.coverage ?? Number.POSITIVE_INFINITY)), []);
+
+  const filteredRanking = organizationRows.filter((row) => shownOrgName(row.org).toLocaleLowerCase("ru").includes(search.toLocaleLowerCase("ru")));
+  const matrixRows = organizationRows
+    .filter(({ org }) => shownOrgName(org).toLocaleLowerCase("ru").includes(matrixSearch.toLocaleLowerCase("ru")))
+    .sort((a, b) => matrixSort === "name" ? shownOrgName(a.org).localeCompare(shownOrgName(b.org), "ru") : matrixSort === "best" ? (b.coverage ?? -1) - (a.coverage ?? -1) : (a.coverage ?? Number.POSITIVE_INFINITY) - (b.coverage ?? Number.POSITIVE_INFINITY));
+  const selectedSpecialties = selectedOrg ? selectedOrg.specialties.map((row) => ({ ...row, coverage: ratio(row.epguSlots, row.norm), deficit: shortfall(row.epguSlots, row.norm) })).sort((a, b) => (a.coverage ?? Number.POSITIVE_INFINITY) - (b.coverage ?? Number.POSITIVE_INFINITY)) : [];
+  const criticalCount = organizationRows.filter((row) => row.coverage !== null && row.coverage < 50).length;
+  const attentionCount = organizationRows.filter((row) => row.coverage !== null && row.coverage >= 50 && row.coverage < 75).length;
+  const nearCount = organizationRows.filter((row) => row.coverage !== null && row.coverage >= 75).length;
+  const riskCount = (org: Organization) => org.specialties.filter((row) => row.norm !== null && row.norm > 0 && row.epguSlots !== null && row.epguSlots / row.norm < .5).length;
+  const currentIndex = selectedOrg ? organizationRows.findIndex((row) => row.org.oid === selectedOrg.oid) : -1;
+
+  function openOrg(oid: string) { setSelectedOid(oid); setTab("organization"); }
+  function selectNeighbor(direction: -1 | 1) {
+    const next = organizationRows[Math.min(organizationRows.length - 1, Math.max(0, currentIndex + direction))];
+    if (next) setSelectedOid(next.org.oid);
+  }
 
   return <div className={styles.root}>
-    <header className={styles.header}>
-      <div><p className={styles.kicker}>ОТДЕЛЬНЫЙ РАЗДЕЛ ДАШБОРДА · И38</p><h1>Запись к врачу: норматив и свободные слоты</h1><p className={styles.subtitle}>Единый список медицинских организаций · доступность записи на ближайшие 14 дней</p></div>
-      <div className={styles.dateBox}><span>Даты исходных выгрузок</span><strong>{DATA.map((dataset) => dataset.reportDate).join(" · ")}</strong><small>ФРМР: {DATA.map((dataset) => dataset.frmoDate).join(" · ")}</small></div>
+    <header className={styles.hero}>
+      <div><p className={styles.kicker}>РАЗДЕЛ И38 · ФОРМА И-38.9</p><h1>Слоты ЕПГУ по нормативам</h1>
+        <p className={styles.subtitle}>Свободные слоты на ближайшие 14 дней · объединены все МО из двух выгрузок</p>
+        <p className={styles.sourceDates}>Даты выгрузок: {DATA.map((dataset) => dataset.reportDate).join(" · ")} · актуальность ФРМР: {DATA.map((dataset) => dataset.frmoDate).join(" · ")}</p>
+      </div>
+      <div className={styles.heroResult}><span>Общее выполнение норматива</span><strong className={tone(regional.coverage)}>{percent(regional.coverage)}</strong><small>{format(regional.epguSlots)} слотов ЕПГУ из {format(regional.norm)} по общему нормативу</small></div>
     </header>
 
-    <nav className={styles.breadcrumb} aria-label="Уровень детализации">
-      <button type="button" className={!selectedOrg ? styles.crumbActive : ""} onClick={() => setSelectedOid("")}>МЗ РТ · все МО</button>
-      {selectedOrg && <><span>›</span><strong>{selectedOrg.name}</strong></>}
+    <nav className={styles.tabs} aria-label="Разделы И38">
+      <button className={tab === "overview" ? styles.tabActive : ""} onClick={() => setTab("overview")}>Обзор МЗ РТ</button>
+      <button className={tab === "organization" ? styles.tabActive : ""} onClick={() => setTab("organization")}>Медорганизация</button>
+      <button className={tab === "matrix" ? styles.tabActive : ""} onClick={() => setTab("matrix")}>Матрица МО × специальности</button>
     </nav>
 
-    {!selectedOrg ? <>
-      <section className={styles.cards} aria-label="Сводка Министерства здравоохранения">
-        <article className={styles.card}><span>МО в расчёте</span><strong>{numberFormat.format(ORGANIZATIONS.length)}</strong><small>организации из двух исходных выгрузок</small></article>
-        <article className={styles.card}><span>МО ниже норматива</span><strong className={organizationsBelow ? styles.warn : styles.good}>{organizationsBelow} из {ORGANIZATIONS.length}</strong><small>свободных слотов меньше, чем требуется</small></article>
-        <article className={styles.card}><span>Выполнение общей нормы</span><strong className={tone(allMetrics.coverage)}>{percent(allMetrics.coverage)}</strong><small>{format(allMetrics.slots)} свободно из {format(allMetrics.norm)} требуемых слотов</small><div className={styles.meter}><i style={{width:`${Math.min(100,allMetrics.coverage ?? 0)}%`}} /></div></article>
-        <article className={styles.card}><span>Не хватает слотов до общей нормы</span><strong>{format(allMetrics.deficit)}</strong><small>нехватка сложена отдельно по каждой МО и специальности</small></article>
-        <article className={styles.card}><span>Норма записи через Госуслуги (ЕПГУ)</span><strong className={tone(allMetrics.epguCoverage)}>{percent(allMetrics.epguCoverage)}</strong><small>{format(allMetrics.epguSlots)} доступно из {format(allMetrics.epguNorm)} требуемых · не хватает {format(allMetrics.epguDeficit)}</small><div className={styles.meter}><i style={{width:`${Math.min(100,allMetrics.epguCoverage ?? 0)}%`}} /></div></article>
-        <article className={styles.card}><span>МО, где по специальности нет слотов</span><strong className={criticalOrganizations ? styles.bad : styles.good}>{criticalOrganizations}</strong><small>по одной или нескольким специальностям доступно 0 слотов</small></article>
-      </section>
-      <div className={styles.signalStrip}><span><b>{totalProblemCells}</b> случаев, когда по МО доступно меньше слотов, чем требуется по специальности</span><span><b>{incompleteOrganizations}</b> МО без полных данных</span><span><b>{specialtyRows.filter((row) => row.coverage !== null && row.coverage < 100).length}</b> специальностей, где суммарно доступно меньше слотов, чем требуется</span></div>
-      <p className={styles.cutNotice}>Данные взяты из двух исходных выгрузок: {DATA.map((dataset) => dataset.reportDate).join(" и ")}. Даты показаны здесь один раз; по МО список общий. Если значение отсутствует, оно не считается нулём.</p>\n      <div className={styles.readGuide}><b>Как читать:</b><span><strong>Норма</strong> — сколько слотов требуется</span><span><strong>Доступно</strong> — сколько свободных слотов открыто для записи</span><span><strong>Выполнение</strong> = доступно ÷ норма</span><span><strong>Нехватка</strong> = сколько слотов не хватает до нормы</span><span><strong>ЕПГУ</strong> — запись через Госуслуги, считается отдельно</span></div>
-
-      <section className={styles.panel}>
-        <div className={styles.sectionHead}><div><h2>Сводка по специальностям</h2><p>Для каждой специальности сравниваем требуемое и фактически доступное число свободных слотов на 14 дней. Нехватка считается отдельно в каждой МО: избыток в одной организации не закрывает дефицит другой.</p></div><button type="button" className={styles.clearButton} onClick={() => setSpecialtyCode("")}>Все специальности</button></div>
-        <div className={styles.tableWrap}><table className={styles.table}><thead><tr><th>Специальность</th><th title="Число МО, где для специальности установлено требование">МО с нормативом</th><th title="Сколько свободных слотов требуется">Требуется слотов</th><th title="Сколько свободных слотов доступно для записи">Свободно слотов</th><th title="Сумма нехватки по МО">Не хватает слотов</th><th title="Свободно слотов ÷ требуется слотов">Норма обеспечена, %</th><th>МО ниже нормы</th><th>МО без слотов</th><th title="В исходных данных не хватает значений для расчёта">МО без данных</th></tr></thead><tbody>
-          {specialtyRows.map((row) => <tr key={row.code} className={specialtyCode === row.code ? styles.selectedRow : ""}><td className={styles.name}><button type="button" className={styles.rowLink} onClick={() => setSpecialtyCode(row.code)}>{row.name} <span>→</span></button></td><td>{row.organizations}</td><td>{format(row.norm)}</td><td>{format(row.slots)}</td><td>{format(row.deficit)}</td><td className={tone(row.coverage)}>{percent(row.coverage)}</td><td>{row.organizationsBelow}</td><td>{row.organizationsZero}</td><td>{row.missing}</td></tr>)}
+    {tab === "overview" && <main className={styles.page}>
+      <div className={styles.kpis}>
+        <article className={styles.kpi}><strong className={tone(regional.coverage)}>{percent(regional.coverage)}</strong><span>Слоты ЕПГУ от общего норматива</span><small>{format(regional.epguSlots)} свободных слотов ÷ {format(regional.norm)} требуемых</small></article>
+        <article className={styles.kpi}><strong>{format(regional.deficit)}</strong><span>Суммарно не хватает слотов ЕПГУ</span><small>Сумма нехватки по каждой МО и специальности</small></article>
+        <article className={styles.kpi}><strong className={styles.critical}>{criticalCount}</strong><span>МО с критическим уровнем (&lt;50%)</span><small>Из {organizationRows.length} медицинских организаций</small></article>
+        <article className={styles.kpi}><strong className={styles.attention}>{attentionCount}</strong><span>МО требуют внимания (50–&lt;75%)</span><small>Доступно от половины до трёх четвертей норматива</small></article>
+        <article className={styles.kpi}><strong className={styles.good}>{nearCount}</strong><span>МО близки к нормативу (≥75%)</span><small>Шкала статусов повторяет предоставленный образец</small></article>
+      </div>
+      <div className={styles.note}><b>Как читать:</b> <span>норматив — сколько слотов требуется;</span> <span>слоты ЕПГУ — сколько свободных мест открыто для записи через Госуслуги;</span> <span>выполнение = слоты ЕПГУ ÷ общий норматив;</span> <span>полное выполнение — 100%.</span><br/><span>Цветовые границы 50% и 75% перенесены из образца и служат визуальными ориентирами, это не отдельный норматив оценки.</span></div>
+      <div className={styles.grid2}>
+        <section className={styles.card}><h2>Выполнение по специальностям <small>% от общего норматива</small></h2>
+          <div className={styles.barList}>{specRows.map((row) => <div className={styles.barRow} key={row.code}><span title={row.name}>{row.name}</span><div className={styles.track}><i style={{width:`${Math.min(100,Math.max(0,row.coverage ?? 0))}%`,background:shade(row.coverage)}} /></div><b className={tone(row.coverage)}>{percent(row.coverage)}</b></div>)}</div>
+        </section>
+        <section className={styles.card}><h2>Нехватка слотов по специальностям <small>слотов до общего норматива</small></h2>
+          <div className={styles.barList}>{[...specRows].sort((a,b)=>(b.deficit ?? -1)-(a.deficit ?? -1)).map((row) => <div className={styles.barRow} key={row.code}><span title={row.name}>{row.name}</span><div className={styles.track}><i className={styles.deficitFill} style={{width:`${Math.min(100,Math.max(0,(row.deficit ?? 0)/(Math.max(1,...specRows.map((x)=>x.deficit ?? 0)))*100))}%`}} /></div><b>{format(row.deficit)}</b></div>)}</div>
+        </section>
+      </div>
+      <section className={styles.card}>
+        <div className={styles.sectionHead}><div><h2>Рейтинг медицинских организаций</h2><p>Список единый для всех МО, сортировка от наименьшего выполнения. Нажмите на строку для карточки организации.</p></div><label className={styles.search}>Поиск МО<input value={search} onChange={(e)=>setSearch(e.target.value)} placeholder="Введите название" /></label></div>
+        <div className={styles.tableScroll}><table className={styles.table}><thead><tr><th>№</th><th>Медицинская организация</th><th>% выполнения</th><th>Статус</th><th>Общий норматив, слотов</th><th>Свободно на ЕПГУ, слотов</th><th>Не хватает, слотов</th><th>Профиль риска, специальностей &lt;50%</th></tr></thead><tbody>
+          {filteredRanking.map((row,i)=><tr key={row.org.oid} onClick={()=>openOrg(row.org.oid)}><td>{i+1}</td><td className={styles.orgName}>{row.org.name}</td><td className={tone(row.coverage)}>{percent(row.coverage)}</td><td><span className={`${styles.status} ${tone(row.coverage)}`}>{status(row.coverage)}</span></td><td>{format(row.norm)}</td><td>{format(row.epguSlots)}</td><td>{format(row.deficit)}</td><td>{riskCount(row.org)}</td></tr>)}
         </tbody></table></div>
+        {filteredRanking.length===0&&<p className={styles.empty}>МО по такому названию не найдены.</p>}
+        <div className={styles.legend}><span><i style={{background:"#c53e45"}} />&lt;50% — критично</span><span><i style={{background:"#df8420"}} />50–&lt;75% — требует внимания</span><span><i style={{background:"#27865f"}} />≥75% — близко к норме</span></div>
       </section>
+    </main>}
 
-      <section className={styles.panel}>
-        <div className={styles.sectionHead}><div><h2>Рейтинг медицинских организаций</h2><p>{specialtyCode ? `Показатели по специальности «${selectedSpecialty?.name}»` : "Сначала МО, где свободных слотов меньше, чем требуется. Нажмите на название, чтобы открыть детализацию."} Список общий — без разделения на города и районы.</p></div><span className={styles.countBadge}>{displayedOrganizations.length} МО</span></div>
-        <div className={styles.filters}>
-          <label>Специальность<select value={specialtyCode} onChange={(event) => setSpecialtyCode(event.target.value)}><option value="">Все специальности</option>{SPECIALTIES.map((item) => <option key={item.code} value={item.code}>{item.name}</option>)}</select></label>
-          <label>Показывать<select value={statusFilter} onChange={(event) => setStatusFilter(event.target.value as StatusFilter)}>{Object.entries(statusLabels).map(([key, label]) => <option key={key} value={key}>{label}</option>)}</select></label>
-          <label>Поиск МО<input value={search} onChange={(event) => setSearch(event.target.value)} placeholder="Название медицинской организации" /></label>
-          <label>Сортировка<select value={sort} onChange={(event) => setSort(event.target.value)}><option value="coverage">Сначала меньшее выполнение нормы</option><option value="deficit">Сначала большая нехватка слотов</option><option value="below">Сначала больше специальностей с нехваткой</option><option value="name">По названию</option></select></label>
+    {tab === "organization" && <main className={styles.page}>
+      <section className={styles.card}>
+        <div className={styles.orgPicker}><label>Медицинская организация<select value={selectedOrg?.oid ?? ""} onChange={(e)=>setSelectedOid(e.target.value)}>{organizationRows.map(({org},i)=><option key={org.oid} value={org.oid}>{i+1}. {org.name}</option>)}</select></label>
+          <button onClick={()=>selectNeighbor(-1)} disabled={currentIndex>=organizationRows.length-1}>← Хуже</button><button onClick={()=>selectNeighbor(1)} disabled={currentIndex<=0}>Лучше →</button><span className={styles.position}>{currentIndex+1} из {organizationRows.length} · по уровню выполнения</span></div>
+      </section>
+      {selectedOrg && <section className={styles.card}>
+        <div className={styles.sectionHead}><div><h2>{selectedOrg.name}</h2><p>Карточка МО · свободные слоты для записи на 14 дней · ЕПГУ означает запись через Госуслуги</p></div><span className={`${styles.status} ${tone(orgMetrics(selectedOrg).coverage)}`}>{status(orgMetrics(selectedOrg).coverage)}</span></div>
+        <div className={styles.orgKpis}>
+          <article><strong className={tone(orgMetrics(selectedOrg).coverage)}>{percent(orgMetrics(selectedOrg).coverage)}</strong><span>Слоты ЕПГУ от общего норматива</span><small>{format(orgMetrics(selectedOrg).epguSlots)} из {format(orgMetrics(selectedOrg).norm)}</small></article>
+          <article><strong>{format(orgMetrics(selectedOrg).deficit)}</strong><span>Не хватает слотов до норматива</span><small>сумма по специальностям МО</small></article>
+          <article><strong>{orgMetrics(selectedOrg).below} из {orgMetrics(selectedOrg).applicable}</strong><span>Специальностей ниже нормы</span><small>норматив больше нуля</small></article>
+          <article><strong>{orgMetrics(selectedOrg).missing}</strong><span>Специальностей без полных данных</span><small>нет всех значений для расчёта</small></article>
         </div>
-        <div className={styles.tableWrap}><table className={styles.table}><thead><tr><th>Медицинская организация</th><th title="Свободные слоты ÷ требуемые слоты">{coverageTitle}</th><th>Специальностей ниже нормы</th><th>Специальностей без слотов</th><th>Не хватает слотов</th><th title="Доступность слотов для записи через Госуслуги">Норма ЕПГУ обеспечена, %</th><th>Не хватает слотов для ЕПГУ</th><th>Специальностей без данных</th></tr></thead><tbody>
-          {displayedOrganizations.map((org) => <tr key={org.oid}><td className={styles.name}><button type="button" className={styles.rowLink} onClick={() => setSelectedOid(org.oid)}>{org.name} <span>→</span></button></td><td className={tone(org.metrics.coverage)}>{percent(org.metrics.coverage)}</td><td>{org.metrics.below} из {org.metrics.applicable}</td><td>{org.metrics.noSlots}</td><td>{format(org.metrics.deficit)}</td><td className={tone(org.metrics.epguCoverage)}>{percent(org.metrics.epguCoverage)}</td><td>{format(org.metrics.epguDeficit)}</td><td>{org.metrics.missing}</td></tr>)}
+        <div className={styles.sectionHead}><div><h2>Показатели по специальностям</h2><p>Процент И38.9 = «Слотов для ЕПГУ» ÷ «Норматив ВСЕГО». «Норма для ЕПГУ» и «Всего слотов» также показаны отдельно из исходной формы.</p></div><select className={styles.inlineSelect} value={selectedSpecialty} onChange={(e)=>setSelectedSpecialty(e.target.value)}><option value="">Все специальности</option>{SPECIALTIES.map((spec)=><option key={spec.code} value={spec.code}>{spec.name}</option>)}</select></div>
+        <div className={styles.tableScroll}><table className={styles.table}><thead><tr><th>Специальность</th><th>Норматив ВСЕГО</th><th>Всего слотов</th><th>Норма для ЕПГУ</th><th>Слотов для ЕПГУ</th><th>Выполнение И38.9, %</th><th>Не хватает до общего норматива</th></tr></thead><tbody>
+          {selectedSpecialties.filter((row)=>!selectedSpecialty||row.code===selectedSpecialty).map((row)=><tr key={row.code}><td className={styles.orgName}>{row.name}</td><td>{format(row.norm)}</td><td>{format(row.slots)}</td><td>{format(row.epguNorm)}</td><td>{format(row.epguSlots)}</td><td className={tone(row.coverage)}>{percent(row.coverage)}</td><td>{format(row.deficit)}</td></tr>)}
         </tbody></table></div>
-        {displayedOrganizations.length === 0 && <p className={styles.empty}>По выбранным фильтрам МО не найдены.</p>}
-      </section>
-    </> : <>
-      <section className={styles.orgOverview}><div className={styles.sectionHead}><div><h2>{selectedOrg.name}</h2><p>По каждой специальности указано, сколько слотов требуется и сколько свободно для записи на ближайшие 14 дней. ЕПГУ — отдельная часть норматива для записи через Госуслуги.</p></div><button type="button" className={styles.backButton} onClick={() => setSelectedOid("")}>← К списку МО</button></div>
-        <div className={styles.orgCards}><article><span>Доступные слоты от общей нормы</span><strong className={tone(selectedMetrics?.coverage ?? null)}>{percent(selectedMetrics?.coverage ?? null)}</strong></article><article><span>Сколько слотов не хватает до нормы</span><strong>{format(selectedMetrics?.deficit ?? null)}</strong></article><article><span>Специальностей с нехваткой</span><strong>{selectedMetrics?.below ?? 0} из {selectedMetrics?.applicable ?? 0}</strong></article><article><span>Доступные слоты ЕПГУ от нормы</span><strong className={tone(selectedMetrics?.epguCoverage ?? null)}>{percent(selectedMetrics?.epguCoverage ?? null)}</strong></article></div>
-        <div className={styles.filters}><label>Специальность<select value={specialtyCode} onChange={(event) => setSpecialtyCode(event.target.value)}><option value="">Все специальности</option>{SPECIALTIES.map((item) => <option key={item.code} value={item.code}>{item.name}</option>)}</select></label></div>
-        <div className={styles.tableWrap}><table className={styles.table}><thead><tr><th>Специальность</th><th title="Сколько слотов требуется">Требуется слотов</th><th title="Свободно для записи">Свободно слотов</th><th>Не хватает слотов</th><th>Норма обеспечена, %</th><th>Требуется для записи через Госуслуги</th><th>Свободно для записи через Госуслуги</th><th>Не хватает слотов ЕПГУ</th><th>Норма ЕПГУ обеспечена, %</th></tr></thead><tbody>
-          {selectedSpecialties.map((row) => <tr key={row.code}><td className={styles.name}>{row.name}</td><td>{format(row.norm)}</td><td>{format(row.slots)}</td><td>{format(row.deficit)}</td><td className={tone(row.coverage)}>{percent(row.coverage)}</td><td>{format(row.epguNorm)}</td><td>{format(row.epguSlots)}</td><td>{format(row.epguShortage)}</td><td className={tone(row.epguCoverage)}>{percent(row.epguCoverage)}</td></tr>)}
-        </tbody></table></div>
-      </section>
-    </>}
+      </section>}
+    </main>}
 
-    <footer className={styles.footer}>Формулы: выполнение = свободные слоты ÷ требуемые слоты × 100%; нехватка = max(0, требуемые − свободные). Общий дефицит складывается по каждой МО и специальности отдельно. Норматив 0 означает, что специальность к МО не применяется. Свободные слоты — это возможность записаться, а не число состоявшихся приёмов. ЕПГУ (Госуслуги) учитывается отдельным нормативом. «—» означает, что исходных данных недостаточно для расчёта; это не ноль.</footer>
+    {tab === "matrix" && <main className={styles.page}>
+      <section className={styles.card}>
+        <div className={styles.sectionHead}><div><h2>Тепловая карта: все МО × специальности</h2><p>В ячейке — выполнение И38.9: слоты ЕПГУ ÷ общий норматив. «Н» — норматив не задан; «—» — нет данных. Нажмите ячейку или МО, чтобы открыть карточку.</p></div>
+          <div className={styles.matrixControls}><label>Поиск МО<input value={matrixSearch} onChange={(e)=>setMatrixSearch(e.target.value)} placeholder="Введите название" /></label><label>Сортировка<select value={matrixSort} onChange={(e)=>setMatrixSort(e.target.value)}><option value="risk">Сначала ниже выполнение</option><option value="best">Сначала выше выполнение</option><option value="name">По названию МО</option></select></label></div></div>
+        <div className={styles.matrixScroll}><table className={styles.heat}><thead><tr><th className={styles.stickyName}>Медицинская организация</th>{SPECIALTIES.map((spec)=><th className={styles.rot} key={spec.code} title={spec.name}>{spec.name}</th>)}<th className={styles.rot}>Итого</th></tr></thead><tbody>
+          {matrixRows.map(({org,...m})=><tr key={org.oid}><th className={styles.stickyName} onClick={()=>openOrg(org.oid)}>{org.name}</th>{SPECIALTIES.map((spec)=>{const cell=org.specialties.find((x)=>x.code===spec.code);const p=cell?ratio(cell.epguSlots,cell.norm):null;const text=!cell||cell.norm===null?"—":cell.norm<=0?"Н":p===null?"—":`${Math.round(p)}`;const title=!cell?"Нет строки по специальности":cell.norm===null?"Нет норматива в данных":cell.norm<=0?"Норматив не задан":`${spec.name}: ${percent(p)} · ЕПГУ ${format(cell.epguSlots)} из общего норматива ${format(cell.norm)}`;return <td key={spec.code} title={title} onClick={()=>{setSelectedOid(org.oid);setSelectedSpecialty(spec.code);setTab("organization")}} style={{background:text==="Н"?"#e8eef3":shade(p),color:text==="Н"?"#8398ad":"#fff"}}>{text}</td>})}
+            <td title={`Итого: ${percent(m.coverage)} · ${format(m.epguSlots)} из ${format(m.norm)}`} onClick={()=>openOrg(org.oid)} style={{background:shade(m.coverage),color:"#fff",fontWeight:800}}>{m.coverage===null?"—":Math.round(m.coverage)}</td></tr>)}
+        </tbody></table></div>
+        <div className={styles.legend}><span><i style={{background:"#c53e45"}} />&lt;25%</span><span><i style={{background:"#df8420"}} />25–&lt;50%</span><span><i style={{background:"#d8b51d"}} />50–&lt;75%</span><span><i style={{background:"#27865f"}} />≥75%</span><span><i style={{background:"#e8eef3"}} />Н — норматив не задан</span></div>
+      </section>
+    </main>}
+
+    <footer className={styles.footer}>Источник: форма И-38.9, лист «И_38.9». Процент соответствует исходному полю «Реальный процент для ЕПГУ»: доступные слоты ЕПГУ ÷ «Норматив ВСЕГО» × 100%. Выгрузки объединены в один перечень МО; срезы получены в разные даты, указанные в шапке. Отсутствие данных не заменяется нулём.</footer>
   </div>;
 }
