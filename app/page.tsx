@@ -6010,13 +6010,14 @@ export default function Home() {
               ["methods", "Методика расчёта", "05"],
               ["frmr", "ФРМР ↔ ГИС", "06"],
               ["remdErrors", "Ошибки РЭМД", "07"],
+              ["incident38", "И38 — запись к врачу", "08"],
               ["extraDivider", "Другие разделы", ""],
-              ["waybill", "Электронный путевой лист", "08"],
+              ["waybill", "Электронный путевой лист", "09"],
               ["devDivider", "В разработке", ""],
-              ["history", "История обновлений", "09"],
-              ["semd", "Все виды СЭМД", "10"],
-              ["errors", "Ошибки методик", "11"],
-              ["gisOms", "ГИС ОМС", "12"],
+              ["history", "История обновлений", "10"],
+              ["semd", "Все виды СЭМД", "11"],
+              ["errors", "Ошибки методик", "12"],
+              ["gisOms", "ГИС ОМС", "13"],
             ].map(([id, label, number]) =>
               id === "extraDivider" || id === "devDivider" ? (
                 <div className="mobileSectionDivider" key={id}>
@@ -6137,6 +6138,12 @@ export default function Home() {
               >
                 <span>07</span> Ошибки РЭМД
               </button>
+              <button
+                className={tab === "incident38" ? "active" : ""}
+                onClick={() => { setTab("incident38"); setShowMatrixSections(false); }}
+              >
+                <span>08</span> И38 — запись к врачу
+              </button>
               <div className="sideDevelopment">
                 <span>Другие разделы</span>
               </div>
@@ -6144,7 +6151,7 @@ export default function Home() {
                 className={tab === "waybill" ? "active" : ""}
                 onClick={() => { setTab("waybill"); setShowMatrixSections(false); }}
               >
-                <span>08</span> Электронный путевой лист
+                <span>09</span> Электронный путевой лист
               </button>
               <div className="sideDevelopment">
                 <span>В разработке</span>
@@ -6153,25 +6160,25 @@ export default function Home() {
                 className={tab === "history" ? "developmentSection active" : "developmentSection"}
                 onClick={() => { setTab("history"); setShowMatrixSections(false); }}
               >
-                <span>09</span> История обновлений
+                <span>10</span> История обновлений
               </button>
               <button
                 className={tab === "semd" ? "developmentSection active" : "developmentSection"}
                 onClick={() => { setTab("semd"); setShowMatrixSections(false); }}
               >
-                <span>10</span> Все виды СЭМД
+                <span>11</span> Все виды СЭМД
               </button>
               <button
                 className={tab === "errors" ? "developmentSection active" : "developmentSection"}
                 onClick={() => { setTab("errors"); setShowMatrixSections(false); }}
               >
-                <span>11</span> Ошибки методик <b>{calcErrors.length}</b>
+                <span>12</span> Ошибки методик <b>{calcErrors.length}</b>
               </button>
               <button
                 className={tab === "gisOms" ? "developmentSection active" : "developmentSection"}
                 onClick={() => { setTab("gisOms"); setShowMatrixSections(false); }}
               >
-                <span>12</span> ГИС ОМС
+                <span>13</span> ГИС ОМС
               </button>
               <div className="sideFoot">
                 <p>Версия {DASHBOARD_VERSION}</p>
