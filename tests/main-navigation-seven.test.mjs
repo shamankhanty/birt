@@ -12,7 +12,7 @@ const expected = [
   ["ranking","Месячный рейтинг МО","04"],
   ["methods","Методика расчёта","05"],
   ["frmr","ФРМР ↔ ГИС","06"],
-  ["remdErrors","Ошибки РЭМД","07"],
+  ["remdErrors","РЭМД","07"],
 ];
 test("mobile primary menu has seven items in the requested sequence", () => {
   const actual = [...mobile.matchAll(/\["(unified|matrix|hearings|ranking|methods|frmr|remdErrors)", "([^"]+)", "(\d{2})"\]/g)]
@@ -22,16 +22,17 @@ test("mobile primary menu has seven items in the requested sequence", () => {
   assert.match(mobile, /\["devDivider", "В разработке", ""\]/);
 });
 test("desktop primary menu mirrors mobile and brings methodology/FRMR out of development", () => {
-  const groups=[...sidebar.matchAll(/<span>(\d{2})<\/span>\s*(Расширенная сводка|Показатели|МО для заслушивания|Месячный рейтинг МО|Методика расчёта|ФРМР ↔ ГИС|Ошибки РЭМД)/g)]
+  const groups=[...sidebar.matchAll(/<span>(\d{2})<\/span>\s*(Расширенная сводка|Показатели|МО для заслушивания|Месячный рейтинг МО|Методика расчёта|ФРМР ↔ ГИС|РЭМД)/g)]
     .map(x=>[x[2],x[1]]);
   assert.deepEqual(groups, expected.map(x=>[x[1],x[2]]));
   assert.doesNotMatch(sidebar,/developmentSection\s+\$\{tab === "(methods|frmr)"/u);
-  assert.ok(sidebar.indexOf('> ФРМР ↔ ГИС') < sidebar.indexOf('>Ошибки РЭМД') || sidebar.includes('<span>06</span> ФРМР ↔ ГИС'));
+  assert.ok(sidebar.indexOf('> ФРМР ↔ ГИС') < sidebar.indexOf('> РЭМД') || sidebar.includes('<span>06</span> ФРМР ↔ ГИС'));
   assert.match(sidebar,/Другие разделы/);
   assert.match(sidebar,/Электронный путевой лист/);
   assert.match(sidebar,/В разработке/);
   assert.match(sidebar,/История обновлений/);
-  assert.match(sidebar,/Все виды СЭМД/);
+  assert.doesNotMatch(sidebar,/<span>11<\/span>\s*Все виды СЭМД/);
+  assert.match(source, /\["semd", "Все виды СЭМД"\]/);
   assert.match(sidebar,/Ошибки методик/);
   assert.doesNotMatch(sidebar,/<span>12<\/span>\s*МАХ/u);
   assert.doesNotMatch(mobile,/\["max", "МАХ", "12"\]/u);
