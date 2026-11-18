@@ -19,7 +19,7 @@ test('MAX compares the current export with the previous export without calling i
     assert.match(op[id].previousDate, /^\d{2}\.\d{2}\.2026$/u);
     assert.match(op[id].previousPeriod, /^01\.01[–-]\d{2}\.\d{2}\.2026$/u);
   }
-  assert.ok(page.includes('Оперативно — текущая выгрузка к предыдущей'));
+  assert.ok(page.includes('Оперативно — текущая выгрузка к срезу от 5 дней назад'));
   assert.ok(page.includes('Предыдущая выгрузка'));
   assert.ok(page.includes('Текущая выгрузка'));
   assert.ok(page.includes('Интервал и сопоставимость'));
