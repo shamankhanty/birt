@@ -3,6 +3,7 @@
 import { useMemo, useState } from "react";
 import cityRaw from "./incident38-cities.json";
 import districtRaw from "./incident38-districts.json";
+import reorganizationRaw from "../config/mo-reorganizations.json";
 import styles from "./incident38-dashboard.module.css";
 
 type SlotValue = number | null;
@@ -13,7 +14,18 @@ type Tab = "overview" | "organization";
 type Ownership = "state" | "private";
 
 const DATA: Dataset[] = [cityRaw as Dataset, districtRaw as Dataset];
-const ORGANIZATIONS = DATA.flatMap((dataset) => dataset.orgs);
+const reorganizationGroups = (reorganizationRaw as { groups?: Array<{ effectiveDate: string; predecessors?: Array<{ oldOid?: string }> }> }).groups ?? [];
+const dateKey = (date: string) => {
+  const [day, month, year] = date.split(".");
+  return `${year}-${month}-${day}`;
+};
+const ORGANIZATIONS = DATA.flatMap((dataset) => {
+  const reportDate = dateKey(dataset.reportDate);
+  const predecessorOids = new Set(reorganizationGroups
+    .filter((group) => reportDate >= group.effectiveDate)
+    .flatMap((group) => (group.predecessors ?? []).map((predecessor) => predecessor.oldOid).filter((oid): oid is string => Boolean(oid))));
+  return dataset.orgs.filter((org) => !predecessorOids.has(org.oid));
+});
 const SPECIALTIES = [...new Map(DATA.flatMap((dataset) => dataset.specialties).map((specialty) => [specialty.code, specialty])).values()];
 const numberFormat = new Intl.NumberFormat("ru-RU", { maximumFractionDigits: 1 });
 const format = (value: SlotValue) => value === null || value === undefined ? "—" : numberFormat.format(value);
@@ -223,7 +235,7 @@ export default function Incident38Dashboard() {
             <td className={styles.totalCell} title={`Итого: ${percent(row.coverage)} · ${format(row.epguSlots)} из ${format(row.norm)}`} onClick={() => openOrg(row.org.oid)} style={{ background: heatColor(row.coverage), color: "#fff" }}>{row.coverage === null ? "—" : Math.round(row.coverage)}</td>
           </tr>)}
         </tbody></table></div>
-        {matrixRows.length === 0 && <p className={styles.empty}>МО по такому названию не найдены.</p>}
+        {matrixRows.length === 0 && <p className={styles.empty}>МО по так��му названию не найдены.</p>}
       </section>
     </main>}
 
@@ -253,6 +265,6 @@ export default function Incident38Dashboard() {
       </section>}
     </main>}
 
-    <footer className={styles.footer}>Источник: форма И‑38.9 и её лист «нормативы». «Норматив ВСЕГО» — рассчитанный по приложению № 4 общий норматив слотов на 14 дней; «Норма для ЕПГУ» — его конкурентная часть для записи через Госуслуги. Исходный процент формы: слоты ЕПГУ ÷ общий норматив. Дополнительный контроль квоты: слоты ЕПГУ ÷ норма ЕПГУ; план — 100%. Выгрузки объединены в один перечень МО; даты срезов указаны в шапке. Отсутствие данных не заменяется нулём. Фильтр «Государственные» включает организации с подтверждённым участием Республики Татарстан; распределение по типу МО основано на организационно-правовой форме.</footer>
+    <footer className={styles.footer}>Источник: форма И‑38.9 и её лист «нормативы». «Норматив ВСЕГО» — рассчитанный по приложению № 4 общий норматив слотов на 14 дней; «Норма для ЕПГУ» — его конкурентная часть для записи через Госуслуги. Исходный процент формы: слоты ЕПГУ ÷ общий норматив. Дополнительный контроль квоты: слоты ЕПГУ ÷ норма ЕПГУ; план — 100%. Выгрузки объединены в один перечень МО; даты срезов указаны в шапке. По правилу реорганизации Альметьевска с 01.10.2026 из текущего отчёта исключены строки прежних МО; головная Альметьевская ЦРБ сохранена. Отсутствие данных не заменяется нулём. Фильтр «Государственные» включает организации с подтверждённым участием Республики Татарстан; распределение по типу МО основано на организационно-правовой форме.</footer>
   </div>;
 }
