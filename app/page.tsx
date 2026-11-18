@@ -3646,7 +3646,7 @@ export default function Home() {
     | "history"
     | "gisOms"
   >("unified");
-  const [remdView, setRemdView] = useState<"semd" | "errors" | "time">("semd");
+  const [remdView, setRemdView] = useState<"semd" | "errors" | "time">("errors");
   const [remdTimeQuery, setRemdTimeQuery] = useState("");
   const [remdTimeFilter, setRemdTimeFilter] = useState<"all" | "overDay" | "withinDay">("all");
   const [maxMonth, setMaxMonth] = useState<"2026-08" | "2026-09">("2026-09");
@@ -8859,9 +8859,9 @@ export default function Home() {
           {tab === "remdErrors" && (
             <div className="remdSectionTabs" role="tablist" aria-label="Разделы РЭМД">
               {([
-                ["semd", "Все виды СЭМД"],
                 ["errors", "Ошибки регистрации"],
                 ["time", "Сроки регистрации"],
+                ["semd", "Все виды СЭМД"],
               ] as const).map(([view, label]) => (
                 <button key={view} type="button" role="tab" aria-selected={remdView === view}
                   className={remdView === view ? "active" : ""} onClick={() => setRemdView(view)}>
@@ -10265,11 +10265,15 @@ export default function Home() {
                 <div>
                   <p className="eyebrow">РЭМД · ФЕДЕРАЛЬНАЯ BI</p>
                   <h1>Сроки регистрации</h1>
-                  <p>Рейтинг медицинских организаций за {remdRegistrationTime.period}</p>
+                  <p>Время из графика «Рейтинг Регистрации ЭМД» по медицинским организациям за {remdRegistrationTime.period}</p>
                 </div>
                 <div className="asofPanel"><small>Организаций в записи</small><strong>{remdRegistrationTime.rows.length}</strong></div>
               </div>
               <p className="prototypeNote">{remdRegistrationTime.methodNote} Источник: {remdRegistrationTime.source}.</p>
+              <div className="remdTimeExplanation">
+                <strong>Что означает время</strong>
+                <p>В федеральном графике полоса состоит из трёх последовательных интервалов: создание ЭМД → подпись; подпись → запрос на регистрацию; запрос → регистрация в РЭМД. В таблицу перенесено итоговое число справа от полосы. Отдельные значения трёх интервалов в записи не подписаны. Способ агрегирования документов внутри МО на экране не указан.</p>
+              </div>
               <div className="remdTimeControls">
                 <label>
                   <span>Поиск медицинской организации</span>
