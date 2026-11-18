@@ -38,7 +38,6 @@ SPECIALTIES = [
 ]
 OID_RE = re.compile(r"^1\.2\.643\.5\.1\.13\.")
 DATE_RE = re.compile(r"\b(\d{2}\.\d{2}\.\d{4})\b")
-REORGANIZATION_CONFIG = Path(__file__).resolve().parents[1] / "config" / "mo-reorganizations.json"
 
 
 def fail(message: str) -> None:
@@ -102,20 +101,6 @@ def parse_dates(rows: list[tuple[Any, ...]], path: Path) -> tuple[str, str, str]
     dt = datetime.strptime(report_date, "%d.%m.%Y")
     months = ["января", "февраля", "марта", "апреля", "мая", "июня", "июля", "августа", "сентября", "октября", "ноября", "декабря"]
     return report_date, frmo_date, f"{dt.day} {months[dt.month - 1]} {dt.year}"
-
-
-def active_predecessor_oids(report_date: str) -> set[str]:
-    """Return predecessor OIDs omitted from current reports after a reorganization."""
-    if not REORGANIZATION_CONFIG.exists():
-        return set()
-    report_dt = datetime.strptime(report_date, "%d.%m.%Y").date()
-    config = json.loads(REORGANIZATION_CONFIG.read_text(encoding="utf-8"))
-    excluded: set[str] = set()
-    for group in config.get("groups", []):
-        effective = datetime.strptime(group["effectiveDate"], "%Y-%m-%d").date()
-        if report_dt >= effective:
-            excluded.update(item["oldOid"] for item in group.get("predecessors", []) if item.get("oldOid"))
-    return excluded
 
 
 def parse_workbook(path: Path, scope: str) -> dict[str, Any]:
@@ -185,20 +170,15 @@ def parse_workbook(path: Path, scope: str) -> dict[str, Any]:
             expected = number(summary[col + offset], f"{path.name} summary {spec['name']} {field}")
             if expected is None or abs(total - expected) > 0.02:
                 fail(f"{path.name}: {spec['name']} {field} total mismatch: МО={total}, source summary={expected}")
-    excluded_oids = active_predecessor_oids(report_date)
-    excluded_orgs = [org for org in orgs if org["oid"] in excluded_oids]
-    published_orgs = [org for org in orgs if org["oid"] not in excluded_oids]
     return {
         "source": path.name,
         "reportDate": report_date,
         "asOf": as_of,
         "frmoDate": frmo_date,
         "forwardDays": 14,
-        "sourceOrgCount": expected_count,
-        "orgCount": len(published_orgs),
-        "excludedOrganizations": [{"oid": org["oid"], "name": org["name"]} for org in excluded_orgs],
+        "orgCount": expected_count,
         "specialties": SPECIALTIES,
-        "orgs": published_orgs,
+        "orgs": orgs,
     }
 
 
