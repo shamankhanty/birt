@@ -9,7 +9,7 @@ type SlotValue = number | null;
 type Specialty = { code: string; name: string; norm: SlotValue; slots: SlotValue; epguNorm: SlotValue; epguSlots: SlotValue };
 type Organization = { oid: string; code: string; name: string; fullName: string; city: string; specialties: Specialty[] };
 type Dataset = { source: string; reportDate: string; asOf: string; frmoDate: string; forwardDays: number; orgCount: number; specialties: Array<{ code: string; name: string }>; orgs: Organization[] };
-type Tab = "overview" | "organization" | "matrix";
+type Tab = "overview" | "organization";
 type Ownership = "state" | "private";
 
 const DATA: Dataset[] = [cityRaw as Dataset, districtRaw as Dataset];
@@ -58,6 +58,10 @@ const heatColor = (value: number | null) => {
 };
 const riskClass = (count: number) => count === 0 ? styles.riskNone : count === 1 ? styles.riskOne : count === 2 ? styles.riskTwo : styles.riskThree;
 const shownOrgName = (org: Organization) => org.name;
+const matrixOrgName = (org: Organization) => org.name
+  .replace(/^(?:(?:РЕСПУБЛИКИ\s+ТАТАРСТАН|ФГАОУ|ФГБОУ|ФГБУ|ФГКУ|ГАУЗ|ГБУЗ|ГКУЗ|ГАУ|ГБУ|ГКУ|МБУЗ|МУЗ|ГУЗ|ООО|АО|ЧУЗ|АНО|ЗАО|ОАО|НЧОУ|ФКУ|ВО|РТ|РФ)\s+)+/i, "")
+  .replace(/^\s*[«"]|[»"]\s*$/g, "")
+  .trim();
 
 function OwnershipSwitch({ value, onChange }: { value: Ownership; onChange: (value: Ownership) => void }) {
   return <div className={styles.ownership} role="group" aria-label="Тип медицинской организации">
@@ -70,12 +74,9 @@ export default function Incident38Dashboard() {
   const [tab, setTab] = useState<Tab>("overview");
   const [ownership, setOwnership] = useState<Ownership>("state");
   const [selectedOid, setSelectedOid] = useState("");
-  const [search, setSearch] = useState("");
   const [organizationSearch, setOrganizationSearch] = useState("");
   const [matrixSearch, setMatrixSearch] = useState("");
-  const [matrixSort, setMatrixSort] = useState("risk");
-  const [matrixSortSpecialty, setMatrixSortSpecialty] = useState("");
-  const [matrixSortDirection, setMatrixSortDirection] = useState<"asc" | "desc">("asc");
+  const [matrixTotalDirection, setMatrixTotalDirection] = useState<"asc" | "desc">("asc");
   const [selectedSpecialty, setSelectedSpecialty] = useState("");
 
   const visibleOrganizations = useMemo(() => ORGANIZATIONS
@@ -107,10 +108,6 @@ export default function Incident38Dashboard() {
     };
   }).sort((a, b) => (a.coverage ?? Number.POSITIVE_INFINITY) - (b.coverage ?? Number.POSITIVE_INFINITY)), [visibleOrganizations]);
 
-  const filteredRanking = organizationRows.filter((row) => shownOrgName(row.org).toLocaleLowerCase("ru").includes(search.toLocaleLowerCase("ru")));
-  const overviewSuggestions = search.trim().length > 0
-    ? visibleOrganizations.filter((org) => org.name.toLocaleLowerCase("ru").includes(search.toLocaleLowerCase("ru"))).slice(0, 6)
-    : [];
   const organizationSuggestions = organizationSearch.trim().length > 0
     ? visibleOrganizations.filter((org) => org.name.toLocaleLowerCase("ru").includes(organizationSearch.toLocaleLowerCase("ru"))).slice(0, 8)
     : [];
@@ -120,18 +117,9 @@ export default function Incident38Dashboard() {
   const matrixRows = organizationRows
     .filter(({ org }) => shownOrgName(org).toLocaleLowerCase("ru").includes(matrixSearch.toLocaleLowerCase("ru")))
     .sort((a, b) => {
-      if (matrixSortSpecialty) {
-        const aValue = ratio(a.org.specialties.find((row) => row.code === matrixSortSpecialty)?.epguSlots ?? null, a.org.specialties.find((row) => row.code === matrixSortSpecialty)?.norm ?? null);
-        const bValue = ratio(b.org.specialties.find((row) => row.code === matrixSortSpecialty)?.epguSlots ?? null, b.org.specialties.find((row) => row.code === matrixSortSpecialty)?.norm ?? null);
-        if (aValue === null) return bValue === null ? 0 : 1;
-        if (bValue === null) return -1;
-        return matrixSortDirection === "asc" ? aValue - bValue : bValue - aValue;
-      }
-      return matrixSort === "name"
-        ? shownOrgName(a.org).localeCompare(shownOrgName(b.org), "ru")
-        : matrixSort === "best"
-          ? (b.coverage ?? -1) - (a.coverage ?? -1)
-          : (a.coverage ?? Number.POSITIVE_INFINITY) - (b.coverage ?? Number.POSITIVE_INFINITY);
+      if (a.coverage === null) return b.coverage === null ? 0 : 1;
+      if (b.coverage === null) return -1;
+      return matrixTotalDirection === "asc" ? a.coverage - b.coverage : b.coverage - a.coverage;
     });
   const selectedSpecialties = selectedOrg
     ? selectedOrg.specialties.map((row) => ({ ...row, coverage: ratio(row.epguSlots, row.norm), deficit: shortfall(row.epguSlots, row.norm) }))
@@ -140,7 +128,6 @@ export default function Incident38Dashboard() {
   const completeCount = organizationRows.filter((row) => row.complete).length;
   const belowCount = organizationRows.filter((row) => row.coverage !== null && row.coverage < 100).length;
   const missingCount = organizationRows.filter((row) => row.coverage === null || row.missing > 0).length;
-  const riskCount = (org: Organization) => org.specialties.filter((row) => row.norm !== null && row.norm > 0 && row.epguSlots !== null && row.epguSlots < row.norm).length;
   const currentIndex = selectedOrg ? organizationRows.findIndex((row) => row.org.oid === selectedOrg.oid) : -1;
 
   function openOrg(oid: string) {
@@ -152,16 +139,11 @@ export default function Incident38Dashboard() {
   function changeOwnership(value: Ownership) {
     setOwnership(value);
     setSelectedOid("");
-    setSearch("");
     setOrganizationSearch("");
     setMatrixSearch("");
-    setMatrixSortSpecialty("");
   }
 
-  function toggleSpecialtySort(code: string) {
-    setMatrixSortDirection(matrixSortSpecialty === code && matrixSortDirection === "asc" ? "desc" : "asc");
-    setMatrixSortSpecialty(code);
-  }
+  function toggleTotalSort() { setMatrixTotalDirection((direction) => direction === "asc" ? "desc" : "asc"); }
 
   return <div className={styles.root}>
     <header className={styles.hero}>
@@ -175,7 +157,6 @@ export default function Incident38Dashboard() {
     <nav className={styles.tabs} aria-label="Разделы И38">
       <button type="button" className={tab === "overview" ? styles.tabActive : ""} onClick={() => setTab("overview")}>Обзор МЗ РТ</button>
       <button type="button" className={tab === "organization" ? styles.tabActive : ""} onClick={() => setTab("organization")}>Медорганизация</button>
-      <button type="button" className={tab === "matrix" ? styles.tabActive : ""} onClick={() => setTab("matrix")}>Матрица МО × специальности</button>
     </nav>
 
     {tab === "overview" && <main className={styles.page}>
@@ -196,17 +177,36 @@ export default function Incident38Dashboard() {
         </section>
       </div>
       <section className={styles.card}>
-        <div className={styles.sectionHead}><div><h2>Рейтинг медицинских организаций</h2></div>
-          <div className={styles.rankingTools}><OwnershipSwitch value={ownership} onChange={changeOwnership} />
-            <label className={styles.search}>Поиск по МО<div className={styles.suggestionBox}><input value={search} onChange={(event) => setSearch(event.target.value)} placeholder="Начните вводить название" autoComplete="off" />
-              {overviewSuggestions.length > 0 && <div className={styles.suggestions}>{overviewSuggestions.map((org) => <button type="button" key={org.oid} onClick={() => openOrg(org.oid)}><strong>{org.name}</strong><span>{org.city}</span></button>)}</div>}
+        <div className={styles.sectionHead}><div><h2>Рейтинг медицинских организаций</h2><p>Матрица показывает выполнение нормы по каждой специальности. «Не хватает» — сумма нехватки по специальностям, избыток в одной не уменьшает нехватку в другой. Нажмите «Итого», чтобы изменить порядок сортировки.</p></div>
+          <div className={styles.matrixControls}>
+            <OwnershipSwitch value={ownership} onChange={changeOwnership} />
+            <label className={styles.matrixSearch}>Поиск по МО<div className={styles.suggestionBox}><input value={matrixSearch} onChange={(event) => setMatrixSearch(event.target.value)} placeholder="Начните вводить название" autoComplete="off" />
+              {matrixSuggestions.length > 0 && <div className={styles.suggestions}>{matrixSuggestions.map((org) => <button type="button" key={org.oid} onClick={() => openOrg(org.oid)}><strong>{matrixOrgName(org)}</strong><span>{org.city}</span></button>)}</div>}
             </div></label>
           </div>
         </div>
-        <div className={styles.tableScroll}><table className={styles.table}><thead><tr><th>№</th><th>Медицинская организация</th><th>Выполнение нормы</th><th>Результат</th><th>Общий норматив, слотов</th><th>Свободно на ЕПГУ, слотов</th><th>Не хватает, слотов</th><th>Специальностей ниже нормы</th></tr></thead><tbody>
-          {filteredRanking.map((row, index) => <tr key={row.org.oid} onClick={() => openOrg(row.org.oid)}><td>{index + 1}</td><td className={styles.orgName}>{row.org.name}</td><td className={tone(row.coverage)}>{percent(row.coverage)}</td><td><span className={`${styles.status} ${row.complete ? styles.statusComplete : row.coverage === null ? styles.statusMissing : styles.statusBelow}`}>{status(row.coverage)}</span></td><td>{format(row.norm)}</td><td>{format(row.epguSlots)}</td><td>{format(row.deficit)}</td><td><span className={`${styles.riskBadge} ${riskClass(riskCount(row.org))}`} aria-label={`${riskCount(row.org)} специальностей ниже нормы`}>{riskCount(row.org)}</span></td></tr>)}
+        <div className={styles.matrixScroll}><table className={styles.heat}><thead><tr>
+          <th className={styles.stickyName}>Медицинская организация</th>
+          <th className={styles.shortfallHead}>Не хватает,<br />слотов</th>
+          {SPECIALTIES.map((specialty) => <th className={styles.rot} key={specialty.code} title={specialty.name}><span>{specialty.name}</span></th>)}
+          <th className={`${styles.rot} ${styles.totalHead}`}><button type="button" onClick={toggleTotalSort} aria-label={`Сортировать по итогу ${matrixTotalDirection === "asc" ? "по убыванию" : "по возрастанию"}`} title="Нажмите, чтобы изменить порядок сортировки">Итого {matrixTotalDirection === "asc" ? "↑" : "↓"}</button></th>
+        </tr></thead><tbody>
+          {matrixRows.map((row) => <tr key={row.org.oid}>
+            <th className={styles.stickyName} onClick={() => openOrg(row.org.oid)} title={`${matrixOrgName(row.org)} · ${row.org.city}`}>
+              <span className={styles.matrixName}>{matrixOrgName(row.org)}</span><small className={styles.matrixCity}>{row.org.city}</small>
+            </th>
+            <td className={styles.shortfallCell} title="Сумма нехватки по каждой специальности; избыток в другой специальности её не уменьшает" onClick={() => openOrg(row.org.oid)}>{format(row.deficit)}</td>
+            {SPECIALTIES.map((specialty) => {
+              const cell = row.org.specialties.find((item) => item.code === specialty.code);
+              const value = cell ? ratio(cell.epguSlots, cell.norm) : null;
+              const text = !cell || cell.norm === null ? "—" : cell.norm <= 0 ? "Н" : value === null ? "—" : `${Math.round(value)}`;
+              const title = !cell ? "Нет строки по специальности" : cell.norm === null ? "Нет норматива в данных" : cell.norm <= 0 ? "Норматив не задан" : `${specialty.name}: ${percent(value)} · ЕПГУ ${format(cell.epguSlots)} из общего норматива ${format(cell.norm)}`;
+              return <td key={specialty.code} title={title} onClick={() => { setSelectedOid(row.org.oid); setSelectedSpecialty(specialty.code); setTab("organization"); }} style={{ background: text === "Н" ? "#e8eef3" : heatColor(value), color: text === "Н" ? "#657d8f" : "#fff" }}>{text}</td>;
+            })}
+            <td className={styles.totalCell} title={`Итого: ${percent(row.coverage)} · ${format(row.epguSlots)} из ${format(row.norm)}`} onClick={() => openOrg(row.org.oid)} style={{ background: heatColor(row.coverage), color: "#fff" }}>{row.coverage === null ? "—" : Math.round(row.coverage)}</td>
+          </tr>)}
         </tbody></table></div>
-        {filteredRanking.length === 0 && <p className={styles.empty}>МО по такому названию не найдены.</p>}
+        {matrixRows.length === 0 && <p className={styles.empty}>МО по такому названию не найдены.</p>}
       </section>
     </main>}
 
@@ -233,30 +233,6 @@ export default function Incident38Dashboard() {
           {selectedSpecialties.filter((row) => !selectedSpecialty || row.code === selectedSpecialty).map((row) => <tr key={row.code}><td className={styles.orgName}>{row.name}</td><td>{format(row.norm)}</td><td>{format(row.slots)}</td><td>{format(row.epguNorm)}</td><td>{format(row.epguSlots)}</td><td className={`${styles.metricCell} ${tone(row.coverage)}`}>{percent(row.coverage)}</td><td>{format(row.deficit)}</td></tr>)}
         </tbody></table></div>
       </section>}
-    </main>}
-
-    {tab === "matrix" && <main className={styles.page}>
-      <section className={styles.card}>
-        <div className={styles.sectionHead}><div><h2>Тепловая карта: все МО × специальности</h2><p>В ячейке — выполнение И38.9: слоты ЕПГУ ÷ общий норматив. «Н» — норматив не задан; «—» — нет данных. Выберите специальность в заголовке, чтобы отсортировать МО.</p></div>
-          <div className={styles.matrixControls}>
-            <OwnershipSwitch value={ownership} onChange={changeOwnership} />
-            <label className={styles.matrixSearch}>Поиск МО<div className={styles.suggestionBox}><input value={matrixSearch} onChange={(event) => setMatrixSearch(event.target.value)} placeholder="Название организации" autoComplete="off" />
-              {matrixSuggestions.length > 0 && <div className={styles.suggestions}>{matrixSuggestions.map((org) => <button type="button" key={org.oid} onClick={() => { setMatrixSearch(org.name); setSelectedOid(org.oid); }}><strong>{org.name}</strong><span>{org.city}</span></button>)}</div>}
-            </div></label>
-            <label className={styles.sortLabel}>Сортировка<select value={matrixSort} onChange={(event) => { setMatrixSort(event.target.value); setMatrixSortSpecialty(""); }}><option value="risk">Ниже выполнение</option><option value="best">Выше выполнение</option><option value="name">По названию</option></select></label>
-          </div>
-        </div>
-        <div className={styles.matrixScroll}><table className={styles.heat}><thead><tr><th className={styles.stickyName}>Медицинская организация</th>{SPECIALTIES.map((specialty) => <th className={styles.rot} key={specialty.code} title={specialty.name}><button type="button" onClick={() => toggleSpecialtySort(specialty.code)} aria-label={`Сортировать по специальности ${specialty.name}`} title={`${specialty.name} · нажмите для сортировки`}>{specialty.name}{matrixSortSpecialty === specialty.code ? (matrixSortDirection === "asc" ? " ↑" : " ↓") : ""}</button></th>)}<th className={styles.rot}>Итого</th></tr></thead><tbody>
-          {matrixRows.map(({ org, ...orgSummary }) => <tr key={org.oid}><th className={styles.stickyName} onClick={() => openOrg(org.oid)}>{org.name}</th>{SPECIALTIES.map((specialty) => {
-            const cell = org.specialties.find((item) => item.code === specialty.code);
-            const value = cell ? ratio(cell.epguSlots, cell.norm) : null;
-            const text = !cell || cell.norm === null ? "—" : cell.norm <= 0 ? "Н" : value === null ? "—" : `${Math.round(value)}`;
-            const title = !cell ? "Нет строки по специальности" : cell.norm === null ? "Нет норматива в данных" : cell.norm <= 0 ? "Норматив не задан" : `${specialty.name}: ${percent(value)} · ЕПГУ ${format(cell.epguSlots)} из общего норматива ${format(cell.norm)}`;
-            return <td key={specialty.code} title={title} onClick={() => { setSelectedOid(org.oid); setSelectedSpecialty(specialty.code); setTab("organization"); }} style={{ background: text === "Н" ? "#e8eef3" : heatColor(value), color: text === "Н" ? "#657d8f" : "#fff" }}>{text}</td>;
-          })}<td title={`Итого: ${percent(orgSummary.coverage)} · ${format(orgSummary.epguSlots)} из ${format(orgSummary.norm)}`} onClick={() => openOrg(org.oid)} style={{ background: heatColor(orgSummary.coverage), color: "#fff", fontWeight: 800 }}>{orgSummary.coverage === null ? "—" : Math.round(orgSummary.coverage)}</td></tr>)}
-        </tbody></table></div>
-        <div className={styles.legend}><span><i style={{ background: heatColor(0) }} />Нет доступных слотов</span><span><i style={{ background: heatColor(100) }} />Норматив выполнен</span><span><i style={{ background: "#e8eef3" }} />Н — норматив не задан</span></div>
-      </section>
     </main>}
 
     <footer className={styles.footer}>Источник: форма И-38.9, лист «И_38.9». Процент соответствует исходному полю «Реальный процент для ЕПГУ»: доступные слоты ЕПГУ ÷ «Норматив ВСЕГО» × 100%. Выгрузки объединены в один перечень МО; даты срезов указаны в шапке. Отсутствие данных не заменяется нулём. Фильтр «Государственные» включает организации с подтверждённым участием Республики Татарстан; распределение по типу МО основано на организационно-правовой форме.</footer>
