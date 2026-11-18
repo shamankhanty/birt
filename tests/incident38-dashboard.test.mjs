@@ -12,7 +12,11 @@ test("Incident 38 keeps city and district exports as separate dated datasets", (
   assert.equal(cities.orgCount, 57);
   assert.equal(districts.reportDate, "12.11.2026");
   assert.equal(districts.frmoDate, "12.11.2026");
-  assert.equal(districts.orgCount, 46);
+  assert.equal(districts.sourceOrgCount, 46);
+  assert.equal(districts.orgCount, 45);
+  assert.deepEqual(districts.excludedOrganizations.map((org) => org.oid), ["1.2.643.5.1.13.13.12.2.16.1107"]);
+  assert.equal(districts.orgs.some((org) => org.oid === "1.2.643.5.1.13.13.12.2.16.1107"), false);
+  assert.equal(districts.orgs.some((org) => org.oid === "1.2.643.5.1.13.13.12.2.16.1108"), true);
   assert.notEqual(cities.reportDate, districts.reportDate);
 });
 

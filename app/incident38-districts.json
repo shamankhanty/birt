@@ -4,7 +4,7 @@
   "asOf": "12 ноября 2026",
   "frmoDate": "12.11.2026",
   "forwardDays": 14,
-  "orgCount": 46,
+  "orgCount": 45,
   "specialties": [
     {
       "code": "11",
@@ -664,127 +664,6 @@
           "name": "детский хирург",
           "norm": 0,
           "slots": 430,
-          "epguNorm": 0,
-          "epguSlots": 0
-        }
-      ]
-    },
-    {
-      "oid": "1.2.643.5.1.13.13.12.2.16.1107",
-      "code": "0419",
-      "name": "ГАУЗ \"АЛЬМЕТЬЕВСКАЯ ГП № 3\"",
-      "fullName": "ГАУЗ \"АЛЬМЕТЬЕВСКАЯ ГП № 3\" (Альметьевск)",
-      "city": "Альметьевск",
-      "specialties": [
-        {
-          "code": "11",
-          "name": "терапевт",
-          "norm": 378,
-          "slots": 0,
-          "epguNorm": 243.00000000000003,
-          "epguSlots": 0
-        },
-        {
-          "code": "13",
-          "name": "акушер-гинеколог",
-          "norm": 0,
-          "slots": 165,
-          "epguNorm": 0,
-          "epguSlots": 165
-        },
-        {
-          "code": "25",
-          "name": "ВОП — семейный врач (семейный врач)",
-          "norm": 520,
-          "slots": 0,
-          "epguNorm": 320,
-          "epguSlots": 0
-        },
-        {
-          "code": "14",
-          "name": "оториноларинголог",
-          "norm": 0,
-          "slots": 0,
-          "epguNorm": 0,
-          "epguSlots": 0
-        },
-        {
-          "code": "15",
-          "name": "офтальмолог",
-          "norm": 0,
-          "slots": 0,
-          "epguNorm": 0,
-          "epguSlots": 0
-        },
-        {
-          "code": "16",
-          "name": "педиатр",
-          "norm": 0,
-          "slots": 0,
-          "epguNorm": 0,
-          "epguSlots": 0
-        },
-        {
-          "code": "17",
-          "name": "психиатр детский",
-          "norm": 0,
-          "slots": 0,
-          "epguNorm": 0,
-          "epguSlots": 0
-        },
-        {
-          "code": "18",
-          "name": "психиатр-нарколог",
-          "norm": 0,
-          "slots": 0,
-          "epguNorm": 0,
-          "epguSlots": 0
-        },
-        {
-          "code": "19",
-          "name": "стоматолог",
-          "norm": 0,
-          "slots": 0,
-          "epguNorm": 0,
-          "epguSlots": 0
-        },
-        {
-          "code": "20",
-          "name": "стоматолог детский",
-          "norm": 0,
-          "slots": 0,
-          "epguNorm": 0,
-          "epguSlots": 0
-        },
-        {
-          "code": "21",
-          "name": "стоматолог-терапевт",
-          "norm": 0,
-          "slots": 0,
-          "epguNorm": 0,
-          "epguSlots": 0
-        },
-        {
-          "code": "22",
-          "name": "фтизиатр",
-          "norm": 0,
-          "slots": 0,
-          "epguNorm": 0,
-          "epguSlots": 0
-        },
-        {
-          "code": "23",
-          "name": "хирург",
-          "norm": 42.5,
-          "slots": 0,
-          "epguNorm": 27.5,
-          "epguSlots": 0
-        },
-        {
-          "code": "26",
-          "name": "детский хирург",
-          "norm": 0,
-          "slots": 0,
           "epguNorm": 0,
           "epguSlots": 0
         }
@@ -5629,6 +5508,13 @@
           "epguSlots": 0
         }
       ]
+    }
+  ],
+  "sourceOrgCount": 46,
+  "excludedOrganizations": [
+    {
+      "oid": "1.2.643.5.1.13.13.12.2.16.1107",
+      "name": "ГАУЗ \"АЛЬМЕТЬЕВСКАЯ ГП № 3\""
     }
   ]
 }
