@@ -117,7 +117,7 @@
 .heat .shortfallCell{position:sticky;left:18%;z-index:1;min-width:0;background:#fff;color:#3c5349;font-weight:750;font-variant-numeric:tabular-nums;white-space:normal;cursor:pointer}
 .heat .shortfallCell:hover,.heat .attainmentCell:hover{background:#f5faf7}
 .heat .attainmentHead{position:sticky;left:24%;z-index:4;min-width:0;background:#f1f6f3;color:#60746a}.heat .attainmentCell{position:sticky;left:24%;z-index:1;min-width:0;background:#fff;color:#3c5349;font-weight:850;font-size:10px;font-variant-numeric:tabular-nums;white-space:normal}.heat .totalHead{min-width:0;background:#f1f6f3}.sortButton,.specialtySort{display:block;width:100%;border:0;background:transparent;color:inherit;font:inherit;font-weight:800;line-height:1.12;white-space:normal;cursor:pointer;padding:2px 0}.sortButton:hover,.specialtySort:hover{color:#117456}.specialtySort{min-height:0;font-size:9px;overflow-wrap:anywhere}
-.heat .totalCell{min-width:0;border:1px solid #fff;font-weight:900;font-size:10px;font-variant-numeric:tabular-nums;cursor:pointer}
+.heat .totalCell{min-width:0;border:1px solid #fff;font-weight:900;font-size:10px;font-variant-numeric:tabular-nums;cursor:default}
 .heat td:not(.shortfallCell):not(.attainmentCell){border:1px solid #fff;font-weight:850;font-variant-numeric:tabular-nums;cursor:pointer}
 .heat td:hover{outline:2px solid #173f31;outline-offset:-2px}
 .matrixControls .ownership{align-self:flex-end}
