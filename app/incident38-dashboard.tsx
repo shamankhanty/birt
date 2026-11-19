@@ -177,10 +177,25 @@ export default function Incident38Dashboard() {
   const completeCount = organizationRows.filter((row) => row.complete && row.meetsPlan).length;
   const belowCount = organizationRows.filter((row) => row.complete && !row.meetsPlan).length;
   const missingCount = organizationRows.filter((row) => !row.complete || row.coverage === null).length;
+  const completeOrganizations = organizationRows.filter((row) => row.complete && row.coverage !== null);
+  const planDistribution = [
+    { key: "lt50", label: "Менее 50% плана", min: 0, max: 50, color: "#b83d47" },
+    { key: "50to100", label: "50–<100% плана", min: 50, max: 100, color: "#ca7b37" },
+    { key: "100to120", label: "100–<120% плана", min: 100, max: 120, color: "#387a5b" },
+    { key: "gte120", label: "120% плана и выше", min: 120, max: Number.POSITIVE_INFINITY, color: "#16875c" },
+  ].map((band) => {
+    const count = completeOrganizations.filter((row) => {
+      const achievement = row.coverage! / PLAN_PERCENT * 100;
+      return achievement >= band.min && achievement < band.max;
+    }).length;
+    return { ...band, count, share: completeOrganizations.length ? count / completeOrganizations.length * 100 : 0 };
+  });
+  const maxPlanDistribution = Math.max(1, ...planDistribution.map((band) => band.count));
   const currentIndex = selectedOrg ? organizationRows.findIndex((row) => row.org.oid === selectedOrg.oid) : -1;
 
   function openOrg(oid: string) {
     setSelectedOid(oid);
+    setSelectedSpecialty("");
     setOrganizationSearch("");
     setTab("organization");
   }
@@ -221,11 +236,12 @@ export default function Incident38Dashboard() {
       </div>
       <div className={styles.note}><b>Как читать показатель:</b> Реальный процент = «Слотов для ЕПГУ» ÷ «Норматив ВСЕГО» × 100%. План для каждой МО — 70%. Нехватка = max(0, округление вверх(«Норматив ВСЕГО» × 70%) − «Слотов для ЕПГУ»), считается отдельно по каждой МО. Общий процент — сумма слотов ЕПГУ, делённая на сумму общего норматива. В расчёте учитываются все слоты ЕПГУ, в том числе по специальностям с нулевым нормативом. Выгрузки имеют разные даты: {DATA.map((dataset) => dataset.reportDate).join(" и ")}. «Норма для ЕПГУ» и «Всего слотов» не влияют на этот показатель.</div>
       <div className={styles.grid2}>
-        <section className={styles.card}><h2>Процент слотов ЕПГУ по специальностям</h2><p className={styles.chartNote}>Слоты ЕПГУ ÷ «Норматив ВСЕГО». План 70% применяется к каждой МО в целом, поэтому значения по отдельным специальностям здесь справочные.</p>
-          <div className={styles.barList}>{specRows.map((row) => <div className={styles.barRow} key={row.code}><span title={row.name}>{row.name}</span><div className={styles.track}><i style={{ width: `${Math.min(100, Math.max(0, row.coverage ?? 0))}%`, background: heatColor(row.coverage) }} /></div><b className={tone(row.coverage)}>{percent(row.coverage)}</b></div>)}</div>
+        <section className={styles.card}><h2>Распределение МО по достижению плана</h2><p className={styles.chartNote}>Сколько организаций достигло разных уровней от индивидуального плана 70%. Достижение плана = И‑38.9 МО ÷ 70%. В расчёт включены МО с полными данными: {completeOrganizations.length}.</p>
+          <div className={styles.planDistribution}>{planDistribution.map((band) => <div className={styles.planDistributionRow} key={band.key}><span>{band.label}</span><div className={styles.track}><i style={{ width: `${band.count / maxPlanDistribution * 100}%`, background: band.color }} /></div><strong>{band.count}</strong><small>{percent(band.share)}</small></div>)}</div>
+          <p className={styles.chartNote}>МО без полных данных: {missingCount}. «100–&lt;120%» означает выполнение плана с превышением до 20%.</p>
         </section>
         <section className={styles.card}><h2>Специальности с наибольшим дефицитом слотов</h2><p className={styles.chartNote}>Показаны специальности с наименьшим общим процентом И‑38.9. «МО без слотов» — организации, где норматив есть, а слотов ЕПГУ нет. План 70% применяется к МО в целом; ранжирование специальностей — диагностическое.</p>
-          <div className={styles.deficitSpecialties}>{[...specRows].filter((row) => row.norm !== null && row.norm > 0).slice(0, 5).map((row, index) => <div className={styles.deficitSpecialty} key={row.code}><b>{index + 1}</b><span title={row.name}>{row.name}</span><div className={styles.track}><i style={{ width: `${Math.min(100, Math.max(0, row.coverage ?? 0))}%`, background: heatColor(row.coverage) }} /></div><strong className={tone(row.coverage)}>{percent(row.coverage)}</strong><small>{row.zeroSlotsOrganizations} МО без слотов</small></div>)}</div>
+          <div className={styles.deficitSpecialties}>{[...specRows].filter((row) => row.norm !== null && row.norm > 0).slice(0, 5).map((row, index) => <div className={styles.deficitSpecialty} key={row.code}><b>{index + 1}</b><span title={row.name}>{row.name}</span><div className={styles.track}><i style={{ width: `${Math.min(100, Math.max(0, row.coverage ?? 0))}%`, background: heatColor(row.coverage) }} /></div><strong className={styles.neutral}>{percent(row.coverage)}</strong><small>{row.zeroSlotsOrganizations} МО без слотов</small></div>)}</div>
         </section>
       </div>
       <section className={styles.card}>
@@ -286,7 +302,7 @@ export default function Incident38Dashboard() {
           {selectedSpecialties.filter((row) => !selectedSpecialty || row.code === selectedSpecialty).map((row) => {
             const benchmark = benchmarkBySpecialty.get(row.code);
             const difference = row.coverage !== null && benchmark?.median !== null && benchmark?.median !== undefined ? row.coverage - benchmark.median : null;
-            return <tr key={row.code}><td className={styles.orgName}>{row.name}</td><td>{format(row.norm)}</td><td>{format(row.epguSlots)}</td><td className={`${styles.metricCell} ${tone(row.coverage)}`}>{percent(row.coverage)}</td><td>{percent(benchmark?.median ?? null)}</td><td className={difference === null ? styles.neutral : difference >= 0 ? styles.good : styles.belowNorm}>{difference === null ? "—" : <>{difference > 0 ? "+" : ""}{numberFormat.format(difference)}</>}</td><td>{benchmark?.count ?? 0}</td></tr>;
+            return <tr key={row.code}><td className={styles.orgName}>{row.name}</td><td>{format(row.norm)}</td><td>{format(row.epguSlots)}</td><td className={`${styles.metricCell} ${styles.neutral}`}>{percent(row.coverage)}</td><td>{percent(benchmark?.median ?? null)}</td><td className={difference === null ? styles.neutral : difference >= 0 ? styles.good : styles.belowNorm}>{difference === null ? "—" : <>{difference > 0 ? "+" : ""}{numberFormat.format(difference)}</>}</td><td>{benchmark?.count ?? 0}</td></tr>;
           })}
         </tbody></table></div>
         <p className={styles.chartNote}>Медиана рассчитана по МО той же выгрузки: {benchmarkOrganizations.length} организаций · срез {benchmarkDataset?.reportDate ?? "—"}. В выборку по специальности входят МО с положительным общим нормативом; нулевые значения слотов учитываются.</p>
