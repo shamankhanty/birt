@@ -5,7 +5,8 @@ import data from "./test-remd-six-types.json";
 
 type SortKey = "agreement" | "name" | "oid" | "status" | "count";
 const collator = new Intl.Collator("ru", { numeric: true, sensitivity: "base" });
-const rows = data.types.map((type, index) => ({ ...type, agreementNumber: index + 1 }));
+const testReport = data as { source: string | null; period: string | null; formed: string | null; types: Array<{ oid: string; name: string; count: number | null }> };
+const rows = testReport.types.map((type, index) => ({ ...type, agreementNumber: index + 1 }));
 
 export default function TestRemdSixTypesTable() {
   const [sortKey, setSortKey] = useState<SortKey>("agreement");
@@ -31,9 +32,9 @@ export default function TestRemdSixTypesTable() {
   const confirmed = rows.filter((row) => row.count !== null && row.count >= 100).length;
   return (
     <details className="frlozDetails" open>
-      <summary>Шесть видов СЭМД для ВМП, специализированной помощи и СКЛ · подтверждено ≥100: {data.source ? confirmed + " из 6" : "нет данных тестовой среды"}</summary>
+      <summary>Шесть видов СЭМД для ВМП, специализированной помощи и СКЛ · подтверждено ≥100: {testReport.source ? confirmed + " из 6" : "нет данных тестовой среды"}</summary>
       <p>Перечень: соглашение № 056-17-2026-099, приложение № 2, пункт 1.8. Методика: по каждому виду не менее 100 документов, успешно зарегистрированных в тестовой среде РЭМД от ГИСЗ субъекта и прошедших ФЛК; суммарный план — не менее 600. Промышленная среда в этот расчёт не входит.</p>
-      <p>Источник факта: {data.source ?? "подтверждённая выгрузка тестовой среды не представлена"}{data.period ? "; период " + data.period : ""}{data.formed ? "; сформирована " + data.formed : ""}. Федеральный срез за первое полугодие: показатель не рассчитан.</p>
+      <p>Источник факта: {testReport.source ?? "подтверждённая выгрузка тестовой среды не представлена"}{testReport.period ? "; период " + testReport.period : ""}{testReport.formed ? "; сформирована " + testReport.formed : ""}. Федеральный срез за первое полугодие: показатель не рассчитан.</p>
       <div className="frlozScroll"><table><thead><tr>{header("agreement", "№")}{header("name", "Вид СЭМД")}{header("oid", "OID")}{header("status", "Выполнение 100")}{header("count", "Зарегистрировано")}</tr></thead><tbody>
         {sortedRows.map((row) => <tr key={row.oid}><td>{row.agreementNumber}</td><td>{row.name}</td><td>{row.oid}</td><td>{row.count === null ? "Нет данных" : row.count >= 100 ? "Выполнено" : "Менее 100"}</td><td>{row.count === null ? "—" : row.count.toLocaleString("ru-RU")}</td></tr>)}
       </tbody></table></div>
