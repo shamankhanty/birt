@@ -145,6 +145,7 @@ export default function Incident38Dashboard() {
         if (matrixSort.key === "deficit") return row.deficit;
         if (matrixSort.key === "coverage") return row.coverage;
         if (matrixSort.key === "attainment") return row.coverage === null ? null : row.coverage / PLAN_PERCENT * 100;
+        if (matrixSort.key === "zeroSpecialties") return row.org.specialties.filter((item) => item.norm !== null && item.norm > 0 && item.epguSlots === 0).length;
         const code = matrixSort.key.startsWith("specialty:") ? matrixSort.key.slice("specialty:".length) : "";
         const cell = row.org.specialties.find((item) => item.code === code);
         return cell ? ratio(cell.epguSlots, cell.norm) : null;
@@ -238,12 +239,20 @@ export default function Incident38Dashboard() {
     </nav>
 
     {tab === "overview" && <main className={styles.page}>
-      <div className={styles.kpis}>
+      <div className={styles.overviewGrid}>
+        <div className={styles.kpis}>
         <article className={styles.kpi}><strong className={planTone(regional.coverage)}>{percent(regional.coverage)}</strong><span>Общий процент И‑38.9</span><small>{format(regional.epguSlots)} слотов ЕПГУ ÷ {format(regional.norm)} «Норматив ВСЕГО» · взвешенный итог</small></article>
         <article className={styles.kpi}><strong className={styles.good}>{completeCount}</strong><span>МО выполнили план 70%</span><small>Процент каждой МО не ниже 70%</small></article>
         <article className={styles.kpi}><strong className={styles.belowNorm}>{belowCount}</strong><span>МО ниже плана 70%</span><small>Среди МО с полными данными</small></article>
         <article className={styles.kpi}><strong>{format(regional.deficit)}</strong><span>Не хватает слотов до плана</span><small>Сумма минимальной нехватки по каждой МО</small></article>
         <article className={styles.kpi}><strong className={styles.neutral}>{missingCount}</strong><span>МО с неполными данными</span><small>Неполные данные не считаются нулём</small></article>
+      </div>
+        <article className={styles.maxGroupCard}>
+          <div><span className={styles.maxGroupEyebrow}>РАБОЧАЯ ГРУППА</span><h2>Инцидент 38 в MAX</h2><p>Откройте группу по ссылке или покажите QR-код для сканирования.</p>
+            <a className={styles.maxGroupLink} href="https://max.ru/join/_IjdDQBUBT835_Cz_fdY4ELQ8X2u72CuZGndk1cTcq8" target="_blank" rel="noreferrer">Перейти в группу MAX <span aria-hidden="true">↗</span></a>
+            <details className={styles.maxQr}><summary>Показать QR-код</summary><div><img src="/incident38-max-qr.png" alt="QR-код для вступления в группу MAX «Инцидент 38 Татарстан»" /><small>Отсканируйте код камерой телефона</small></div></details>
+          </div>
+        </article>
       </div>
       <div className={styles.note}><b>Как читать показатель:</b> Реальный процент = «Слотов для ЕПГУ» ÷ «Норматив ВСЕГО» × 100%. План для каждой МО — 70%. Нехватка = max(0, округление вверх(«Норматив ВСЕГО» × 70%) − «Слотов для ЕПГУ»), считается отдельно по каждой МО. Общий процент — сумма слотов ЕПГУ, делённая на сумму общего норматива. В расчёте учитываются все слоты ЕПГУ, в том числе по специальностям с нулевым нормативом. Выгрузки имеют разные даты: {DATA.map((dataset) => dataset.reportDate).join(" и ")}. «Норма для ЕПГУ» и «Всего слотов» не влияют на этот показатель.</div>
       <div className={styles.grid2}>
@@ -256,7 +265,7 @@ export default function Incident38Dashboard() {
         </section>
       </div>
       <section className={styles.card}>
-        <div className={styles.sectionHead}><div><h2>Рейтинг медицинских организаций</h2><p>«И‑38.9, %» = слоты ЕПГУ ÷ «Норматив ВСЕГО» × 100%. «% достижения плана» = И‑38.9 ÷ 70% × 100%. Заголовки сортируют таблицу.</p></div>
+        <div className={styles.sectionHead}><div><h2>Рейтинг медицинских организаций</h2><p>План — 70% общего норматива. «Выполнение плана, %»: 100% означает, что МО достигла этого уровня. «Спец. с 0 слотами» — специальности с положительным нормативом, но без слотов ЕПГУ.</p></div>
           <div className={styles.matrixControls}>
             <OwnershipSwitch value={ownership} onChange={changeOwnership} />
             <label className={styles.matrixSearch}>Поиск по МО<div className={styles.suggestionBox}><input value={matrixSearch} onChange={(event) => setMatrixSearch(event.target.value)} placeholder="Начните вводить название" autoComplete="off" />
@@ -267,16 +276,18 @@ export default function Incident38Dashboard() {
         <div className={styles.matrixScroll}><table className={styles.heat}><colgroup><col className={styles.orgCol} /><col className={styles.shortfallCol} /><col className={styles.attainmentCol} />{SPECIALTIES.map((specialty) => <col className={styles.specialtyCol} key={specialty.code} />)}<col className={styles.totalCol} /></colgroup><thead><tr>
           <th className={styles.stickyName}><button type="button" className={styles.sortButton} onClick={() => toggleMatrixSort("name")}>Медицинская организация{sortMark("name")}</button></th>
           <th className={styles.shortfallHead}><button type="button" className={styles.sortButton} onClick={() => toggleMatrixSort("deficit")}>Не хватает<br />до плана{sortMark("deficit")}</button></th>
-          <th className={styles.attainmentHead}><button type="button" className={styles.sortButton} onClick={() => toggleMatrixSort("attainment")}>% достижения<br />плана{sortMark("attainment")}</button></th>
-          {SPECIALTIES.map((specialty) => <th className={styles.rot} key={specialty.code} title={specialty.name}><button type="button" className={styles.specialtySort} onClick={() => toggleMatrixSort(`specialty:${specialty.code}`)}>{specialty.name}{sortMark(`specialty:${specialty.code}`)}</button></th>)}
-          <th className={styles.totalHead}><button type="button" className={styles.sortButton} onClick={() => toggleMatrixSort("coverage")} title="Фактический процент И‑38.9: слоты ЕПГУ ÷ Норматив ВСЕГО × 100%">И‑38.9, %{sortMark("coverage")}</button></th>
+          <th className={styles.attainmentHead}><button type="button" className={styles.sortButton} onClick={() => toggleMatrixSort("attainment")} title="100% означает, что МО достигла плана 70%">Выполнение<br />плана, %{sortMark("attainment")}</button></th>
+          {SPECIALTIES.map((specialty) => <th className={styles.rot} key={specialty.code} title={specialty.name}><button type="button" className={styles.specialtySort} onClick={() => toggleMatrixSort(`specialty:${specialty.code}`)}>{specialty.name.startsWith("ВОП") ? "ВОП" : specialty.name}{sortMark(`specialty:${specialty.code}`)}</button></th>)}
+          <th className={styles.totalHead}><button type="button" className={styles.sortButton} onClick={() => toggleMatrixSort("zeroSpecialties")} title="Количество специальностей с положительным нормативом и нулём слотов ЕПГУ">Спец. с 0<br />слотами{sortMark("zeroSpecialties")}</button></th>
         </tr></thead><tbody>
-          {matrixRows.map((row) => <tr key={row.org.oid}>
+          {matrixRows.map((row) => {
+            const zeroSpecialtyCount = row.org.specialties.filter((item) => item.norm !== null && item.norm > 0 && item.epguSlots === 0).length;
+            return <tr key={row.org.oid}>
             <th className={styles.stickyName} onClick={() => openOrg(row.org.oid)} title={`${matrixOrgName(row.org)} · ${row.org.city}`}>
               <span className={styles.matrixName}>{matrixOrgName(row.org)}</span><small className={styles.matrixCity}>{row.org.city}</small>
             </th>
             <td className={styles.shortfallCell} title={`Минимум слотов до плана 70%: ${format(row.deficit)}`} onClick={() => openOrg(row.org.oid)}>{format(row.deficit)}</td>
-            <td className={styles.attainmentCell} title={`И‑38.9 ${percent(row.coverage)} от плана 70%`}>{row.coverage === null ? "—" : percent(row.coverage / PLAN_PERCENT * 100)}</td>
+            <td className={styles.attainmentCell} title={`При фактическом показателе ${percent(row.coverage)} план 70% составляет 100% выполнения`}>{row.coverage === null ? "—" : percent(row.coverage / PLAN_PERCENT * 100)}</td>
             {SPECIALTIES.map((specialty) => {
               const cell = row.org.specialties.find((item) => item.code === specialty.code);
               const value = cell ? ratio(cell.epguSlots, cell.norm) : null;
@@ -284,10 +295,11 @@ export default function Incident38Dashboard() {
               const title = !cell ? "Нет строки по специальности" : cell.norm === null ? "Нет норматива в данных" : cell.norm <= 0 ? "Норматив не задан" : `${specialty.name}: ${percent(value)} · ЕПГУ ${format(cell.epguSlots)} из общего норматива ${format(cell.norm)}`;
               return <td className={styles.specialtyCell} key={specialty.code} title={title} onClick={() => { setSelectedOid(row.org.oid); setSelectedSpecialty(specialty.code); setTab("organization"); }} style={{ background: text === "Н" ? "#e8eef3" : heatColor(value), color: text === "Н" ? "#657d8f" : "#fff" }}>{text}</td>;
             })}
-            <td className={styles.totalCell} title={`Итого: ${percent(row.coverage)} · ${format(row.epguSlots)} из ${format(row.norm)}`} onClick={() => openOrg(row.org.oid)} style={{ background: heatColor(row.coverage === null ? null : Math.min(100, row.coverage / PLAN_PERCENT * 100)), color: "#fff" }}>{percent(row.coverage)}</td>
-          </tr>)}
+            <td className={styles.totalCell} title="Число специальностей, где норматив больше нуля, а слотов ЕПГУ нет" style={{ background: zeroSpecialtyCount > 0 ? "#b83d47" : "#218257", color: "#fff" }}>{zeroSpecialtyCount}</td>
+          </tr>;
+          })}
         </tbody></table></div>
-        <p className={styles.matrixMethod}>И‑38.9, % = слоты ЕПГУ ÷ «Норматив ВСЕГО» × 100%. «% достижения плана» = И‑38.9 ÷ 70% × 100%.</p><p className={styles.matrixMobileHint}>На узком экране показаны итоговые показатели; все специальности доступны в карточке МО.</p>
+        <p className={styles.matrixMethod}>Расчёт: процент слотов ЕПГУ от общего норматива ÷ 70% × 100%. Например, 70% общего норматива — это 100% выполнения плана. «Спец. с 0 слотами» учитывает только специальности с заданным положительным нормативом.</p><p className={styles.matrixMobileHint}>На узком экране показаны итоговые показатели; все специальности доступны в карточке МО.</p>
         {matrixRows.length === 0 && <p className={styles.empty}>МО по такому названию не найдены.</p>}
       </section>
     </main>}
