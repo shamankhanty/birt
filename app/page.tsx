@@ -1,6 +1,7 @@
 "use client";
 
 import Incident38Dashboard from "./incident38-dashboard";
+import FrlozTypesTable from "./frloz-types-table";
 
 import { useMemo, useState } from "react";
 import PlanTransitionStat from "./plan-transition-stat";
@@ -9094,8 +9095,9 @@ export default function Home() {
                     <article><small>{selectedFederalDetail.row.semdEvidence ? "Регистрации СЭМД" : "Числитель и знаменатель"}</small><strong>{selectedFederalDetail.row.semdEvidence ? format(selectedFederalDetail.row.semdEvidence.current, 0) : selectedFederalAssessment.volume ?? "Не представлены"}</strong><span>{selectedFederalDetail.row.semdEvidence ? "Основание для статуса «Достигнут» · зарегистрированные СЭМД" : "Компоненты не восстанавливаются из процента"}</span></article>
                   </div>
                   <p className="sourceDataNote"><b>Источник регионального факта:</b> {selectedFederalDetail.row.sourceNote ?? "Региональный факт сохранён в перечне федерального контроля. Отдельная первичная выгрузка для этого показателя не подключена."}</p>
+                  {selectedFederalDetail.source === "agreement" && selectedFederalDetail.row.id === "6" && <FrlozTypesTable />}
                   {selectedFederalDetail.row.semdEvidence && (
-                    <div className="federalDetailAvailability">
+                  <div className="federalDetailAvailability">
                       <h2>Регистрация СЭМД по медицинским организациям</h2>
                       <p><b>Вид документа:</b> {selectedFederalDetail.row.semdEvidence.semdName}</p>
                       <p><b>На {contractSemd.previousPeriod.match(/\d{2}\.\d{2}\.\d{4}$/u)?.[0]}:</b> {format(selectedFederalDetail.row.semdEvidence.previous, 0)} · <b>на {contractSemd.currentPeriod.match(/\d{2}\.\d{2}\.\d{4}$/u)?.[0]}:</b> {format(selectedFederalDetail.row.semdEvidence.current, 0)} · <b>прирост между срезами:</b> {format(selectedFederalDetail.row.semdEvidence.current - selectedFederalDetail.row.semdEvidence.previous, 0)}</p>
