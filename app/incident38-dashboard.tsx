@@ -33,6 +33,12 @@ const percent = (value: number | null) => value === null || !Number.isFinite(val
 const sumKnown = (values: SlotValue[]) => values.some((value) => value === null || value === undefined) ? null : values.reduce<number>((sum, value) => sum + (value ?? 0), 0);
 const ratio = (slots: SlotValue, norm: SlotValue) => slots === null || norm === null || norm <= 0 ? null : slots / norm * 100;
 const shortfall = (slots: SlotValue, norm: SlotValue) => slots === null || norm === null || norm <= 0 ? null : Math.max(0, norm - slots);
+const median = (values: number[]) => {
+  if (values.length === 0) return null;
+  const sorted = [...values].sort((a, b) => a - b);
+  const middle = Math.floor(sorted.length / 2);
+  return sorted.length % 2 === 0 ? (sorted[middle - 1] + sorted[middle]) / 2 : sorted[middle];
+};
 // The three AO dental organizations in these exports have documented Republic of Tatarstan participation.
 // Keep them in the public/state-participation view; classify private entities by their legal-form prefixes.
 const isPrivateOrganization = (org: Organization) => /^(ООО|ЧУЗ|ИП|АНО|ЗАО|ОАО|НЧОУ)\s/i.test(org.name.trim());
@@ -153,6 +159,16 @@ export default function Incident38Dashboard() {
     ? selectedOrg.specialties.map((row) => ({ ...row, coverage: ratio(row.epguSlots, row.norm), deficit: shortfall(row.epguSlots, row.norm) }))
       .sort((a, b) => (a.coverage ?? Number.POSITIVE_INFINITY) - (b.coverage ?? Number.POSITIVE_INFINITY))
     : [];
+  const benchmarkDataset = selectedOrg
+    ? DATA.find((dataset) => dataset.orgs.some((org) => org.oid === selectedOrg.oid))
+    : undefined;
+  const benchmarkBySpecialty = new Map(SPECIALTIES.map((specialty) => {
+    const values = (benchmarkDataset?.orgs ?? [])
+      .map((org) => org.specialties.find((row) => row.code === specialty.code))
+      .filter((row): row is Specialty => Boolean(row && row.norm !== null && row.norm > 0 && row.epguSlots !== null))
+      .map((row) => row.epguSlots! / row.norm! * 100);
+    return [specialty.code, { median: median(values), count: values.length }] as const;
+  }));
   const completeCount = organizationRows.filter((row) => row.complete).length;
   const belowCount = organizationRows.filter((row) => row.quotaCoverage !== null && row.quotaCoverage < 100).length;
   const missingCount = organizationRows.filter((row) => !row.quotaCompleteData || row.quotaCoverage === null || row.missing > 0).length;
@@ -262,6 +278,18 @@ export default function Incident38Dashboard() {
         <div className={styles.tableScroll}><table className={styles.table}><thead><tr><th>Специальность</th><th>Норматив ВСЕГО</th><th>Всего слотов</th><th>Норма для ЕПГУ</th><th>Слотов для ЕПГУ</th><th>И‑38.9, % общего норматива</th><th>Квота ЕПГУ выполнена, %</th><th>Не хватает до общего норматива</th></tr></thead><tbody>
           {selectedSpecialties.filter((row) => !selectedSpecialty || row.code === selectedSpecialty).map((row) => <tr key={row.code}><td className={styles.orgName}>{row.name}</td><td>{format(row.norm)}</td><td>{format(row.slots)}</td><td>{format(row.epguNorm)}</td><td>{format(row.epguSlots)}</td><td className={`${styles.metricCell} ${tone(row.coverage)}`}>{percent(row.coverage)}</td><td className={`${styles.metricCell} ${tone(ratio(row.epguSlots, row.epguNorm))}`}>{percent(ratio(row.epguSlots, row.epguNorm))}</td><td>{format(row.deficit)}</td></tr>)}
         </tbody></table></div>
+        <section className={styles.card}>
+          <div className={styles.sectionHead}><div><h2>Организация относительно выборки</h2><p>Медиана доли слотов ЕПГУ от общего норматива среди МО того же набора выгрузки. Выборка: {benchmarkDataset?.orgCount ?? 0} МО · срез {benchmarkDataset?.reportDate ?? "—"}. Отсутствующие значения исключены; нулевые значения учтены.</p></div></div>
+          <div className={styles.tableScroll}><table className={styles.table}><thead><tr><th>Специальность</th><th>МО, %</th><th>Медиана выборки, %</th><th>Отклонение, п.п.</th><th>МО в выборке</th></tr></thead><tbody>
+            {selectedSpecialties.filter((row) => !selectedSpecialty || row.code === selectedSpecialty).map((row) => {
+              const benchmark = benchmarkBySpecialty.get(row.code);
+              const difference = row.coverage !== null && benchmark?.median !== null && benchmark?.median !== undefined
+                ? row.coverage - benchmark.median
+                : null;
+              return <tr key={row.code}><td className={styles.orgName}>{row.name}</td><td className={styles.metricCell}>{percent(row.coverage)}</td><td>{percent(benchmark?.median ?? null)}</td><td className={difference === null ? styles.neutral : difference >= 0 ? styles.good : styles.belowNorm}>{difference === null ? "—" : <>{difference > 0 ? "+" : ""}{numberFormat.format(difference)}</>}</td><td>{benchmark?.count ?? 0}</td></tr>;
+            })}
+          </tbody></table></div>
+        </section>
       </section>}
     </main>}
 
