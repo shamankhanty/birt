@@ -745,3 +745,12 @@ body{font-size:14px}
 .remdSectionTabs{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 18px}.remdSectionTabs button{border:1px solid #dce6e2;background:#f8fbfa;color:#526560;border-radius:10px;padding:10px 14px;font:inherit;font-weight:700;cursor:pointer}.remdSectionTabs button.active{background:#12675a;color:#fff;border-color:#12675a}.remdTimeTableWrap{overflow:auto;border:1px solid #dce6e2;border-radius:12px;background:#fff}.remdTimeTable{width:100%;border-collapse:collapse}.remdTimeTable th,.remdTimeTable td{padding:10px 14px;border-bottom:1px solid #edf1ef;text-align:left}.remdTimeTable th{position:sticky;top:0;background:#f3f8f6;color:#455b54}.remdTimeTable td:last-child{white-space:nowrap;font-weight:700}.remdTimeTable td small{display:block;color:#8a6860;font-size:11px;margin-top:3px}.remdTimeTable tr:last-child td{border-bottom:0}
 .remdTimeControls{display:flex;align-items:end;flex-wrap:wrap;gap:10px;margin:14px 0}.remdTimeControls label{display:flex;flex-direction:column;gap:5px;min-width:220px;flex:1}.remdTimeControls label span{font-size:12px;font-weight:700;color:#526560}.remdTimeControls input,.remdTimeControls select{min-height:40px;border:1px solid #cddbd5;border-radius:9px;padding:8px 11px;background:#fff;color:#203a32;font:inherit}.remdTimeCount{color:#526560;font-size:12px;padding-bottom:10px}.remdTimeEmpty{text-align:center!important;color:#667c73;font-weight:400!important;padding:26px!important}
 .remdTimeExplanation{border:1px solid #dce6e2;border-radius:12px;background:#f7faf8;padding:14px 16px;margin:12px 0 16px;color:#354b43}.remdTimeExplanation strong{display:block;margin-bottom:6px}.remdTimeExplanation p{margin:0;line-height:1.5;font-size:13px}
+
+.frlozDetails { margin: 16px 0; padding: 12px 14px; border: 1px solid #cbd5e1; border-radius: 12px; background: #fff; color: #17243a; }
+.frlozDetails summary { cursor: pointer; font-weight: 700; }
+.frlozDetails p, .frlozDetails small { display: block; margin: 10px 0; font-size: 13px; line-height: 1.5; color: #475569; }
+.frlozScroll { max-height: 460px; overflow: auto; }
+.frlozDetails table { width: 100%; border-collapse: collapse; font-size: 13px; }
+.frlozDetails th, .frlozDetails td { padding: 8px 10px; border-bottom: 1px solid #e2e8f0; text-align: left; vertical-align: top; }
+.frlozDetails th { position: sticky; top: 0; background: #f1f5f9; z-index: 1; }
+.frlozDetails th:last-child, .frlozDetails td:last-child { text-align: right; white-space: nowrap; }
