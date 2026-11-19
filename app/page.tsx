@@ -2,6 +2,7 @@
 
 import Incident38Dashboard from "./incident38-dashboard";
 import FrlozTypesTable from "./frloz-types-table";
+import FrlloOctoberTable from "./frllo-october-table";
 import TestRemdSixTypesTable from "./test-remd-six-types-table";
 
 import { useMemo, useState } from "react";
@@ -134,6 +135,8 @@ type FederalControlRow = {
   name: string;
   plan: string;
   federal: string;
+  federalPeriod?: string;
+  federalSource?: string;
   status: string;
   regionalId?: string;
   regionalFact?: string;
@@ -6622,7 +6625,8 @@ export default function Home() {
                       <summary>Источник и федеральный срез</summary>
                       <div>
                         <p><strong>План:</strong> {row.plan}</p>
-                        <p><strong>Федеральная оценка за 6 месяцев:</strong> {row.federal}</p>
+                        <p><strong>Федеральная оценка · {row.federalPeriod ?? federalControl.federalPeriod}:</strong> {row.federal}</p>
+                        {row.federalSource && <p>{row.federalSource}</p>}
                         <p><strong>Период РТ:</strong> {assessment.period}</p>
                         {assessment.warning && <p className="federalPlanWarning">{assessment.warning}</p>}
                       </div>
@@ -6634,7 +6638,7 @@ export default function Home() {
                 <p className="federalPlanEmpty">Нет показателей для выбранной комбинации фильтров. Измените диапазон, статус или поиск.</p>
               )}
               <details className="federalPlanOriginal">
-                <summary>Исходная таблица и сравнение с федеральной оценкой (6 месяцев)</summary>
+                <summary>Исходная таблица и сравнение с федеральной оценкой</summary>
               <div className="tableWrap federalTableWrap">
                 <table className="matrix federalTable">
                   <thead>
@@ -6645,7 +6649,7 @@ export default function Home() {
                         План<small>2026 год</small>
                       </th>
                       <th>
-                        Федеральная оценка<small>6 месяцев 2026 года</small>
+                        Федеральная оценка<small>Период указан в строке</small>
                       </th>
                       <th>
                         Факт РТ
@@ -6850,7 +6854,7 @@ export default function Home() {
                             {federal.detail && federal.unit !== "text" && (
                               <small>Федеральный объём: {federal.detail}</small>
                             )}
-                            <small>{federalControl.federalPeriod}</small>
+                            <small>{row.federalPeriod ?? federalControl.federalPeriod}</small>
                           </td>
                           <td>
                             {regionalValue !== null ? (
@@ -9097,6 +9101,7 @@ export default function Home() {
                   </div>
                   <p className="sourceDataNote"><b>Источник регионального факта:</b> {selectedFederalDetail.row.sourceNote ?? "Региональный факт сохранён в перечне федерального контроля. Отдельная первичная выгрузка для этого показателя не подключена."}</p>
                   {selectedFederalDetail.source === "agreement" && selectedFederalDetail.row.id === "6" && <FrlozTypesTable />}
+                  {selectedFederalDetail.source === "agreement" && selectedFederalDetail.row.id === "8" && <FrlloOctoberTable />}
                   {selectedFederalDetail.source === "agreement" && selectedFederalDetail.row.id === "7" && <TestRemdSixTypesTable />}
                   {selectedFederalDetail.row.semdEvidence && (
                     <div className="federalDetailAvailability">
@@ -9120,8 +9125,8 @@ export default function Home() {
                   </div>
                   <details className="federalDetailSource">
                     <summary>Основание и федеральная оценка</summary>
-                    <p>{federalControl.source}</p>
-                    <p><b>Федеральная оценка:</b> {selectedFederalDetail.row.federal} · {federalControl.federalPeriod}</p>
+                    <p>{selectedFederalDetail.row.federalSource ?? federalControl.source}</p>
+                    <p><b>Федеральная оценка:</b> {selectedFederalDetail.row.federal} · {selectedFederalDetail.row.federalPeriod ?? federalControl.federalPeriod}</p>
                     <p>Федеральная оценка не подставляется вместо факта РТ и не используется как предыдущий срез.</p>
                   </details>
                 </section>
