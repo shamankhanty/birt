@@ -239,14 +239,25 @@ export default function Incident38Dashboard() {
     </nav>
 
     {tab === "overview" && <main className={styles.page}>
-      <div className={styles.kpis}>
+      <div className={styles.overviewGrid}>
+        <div className={styles.kpis}>
         <article className={styles.kpi}><strong className={planTone(regional.coverage)}>{percent(regional.coverage)}</strong><span>Общий процент И‑38.9</span><small>{format(regional.epguSlots)} слотов ЕПГУ ÷ {format(regional.norm)} «Норматив ВСЕГО» · взвешенный итог</small></article>
         <article className={styles.kpi}><strong className={styles.good}>{completeCount}</strong><span>МО выполнили план 70%</span><small>Процент каждой МО не ниже 70%</small></article>
         <article className={styles.kpi}><strong className={styles.belowNorm}>{belowCount}</strong><span>МО ниже плана 70%</span><small>Среди МО с полными данными</small></article>
         <article className={styles.kpi}><strong>{format(regional.deficit)}</strong><span>Не хватает слотов до плана</span><small>Сумма минимальной нехватки по каждой МО</small></article>
         <article className={styles.kpi}><strong className={styles.neutral}>{missingCount}</strong><span>МО с неполными данными</span><small>Неполные данные не считаются нулём</small></article>
-      </div>
-      <div className={styles.note}><b>Как читать показатель:</b> Реальный процент = «Слотов для ЕПГУ» ÷ «Норматив ВСЕГО» × 100%. План для каждой МО — 70%. Нехватка = max(0, округление вверх(«Норматив ВСЕГО» × 70%) − «Слотов для ЕПГУ»), считается отдельно по каждой МО. Общий процент — сумма слотов ЕПГУ, делённая на сумму общего норматива. В расчёте учитываются все слоты ЕПГУ, в том числе по специальностям с нулевым нормативом. Выгрузки имеют разные даты: {DATA.map((dataset) => dataset.reportDate).join(" и ")}. «Норма для ЕПГУ» и «Всего слотов» не влияют на этот показатель.</div>
+        </div>
+        <article className={styles.maxGroupCard}>
+          <span className={styles.maxGroupEyebrow}>РАБОЧАЯ ГРУППА</span>
+          <h2>Инцидент 38 в MAX</h2>
+          <p>Рабочий чат по вопросам инцидента 38.</p>
+          <a className={styles.maxGroupLink} href="https://max.ru/join/_IjdDQBUBT835_Cz_fdY4ELQ8X2u72CuZGndk1cTcq8" target="_blank" rel="noreferrer">Открыть группу MAX <span aria-hidden="true">↗</span></a>
+          <details className={styles.maxQr}>
+            <summary>Показать QR-код</summary>
+            <div><img src="/incident38-max-qr.png" alt="QR-код для вступления в группу MAX «Инцидент 38 Татарстан»" /><small>Отсканируйте код камерой телефона</small></div>
+          </details>
+        </article>
+      </div>      <div className={styles.note}><b>Как читать показатель:</b> Реальный процент = «Слотов для ЕПГУ» ÷ «Норматив ВСЕГО» × 100%. План для каждой МО — 70%. Нехватка = max(0, округление вверх(«Норматив ВСЕГО» × 70%) − «Слотов для ЕПГУ»), считается отдельно по каждой МО. Общий процент — сумма слотов ЕПГУ, делённая на сумму общего норматива. В расчёте учитываются все слоты ЕПГУ, в том числе по специальностям с нулевым нормативом. Выгрузки имеют разные даты: {DATA.map((dataset) => dataset.reportDate).join(" и ")}. «Норма для ЕПГУ» и «Всего слотов» не влияют на этот показатель.</div>
       <div className={styles.grid2}>
         <section className={styles.card}><h2>Распределение МО по достижению плана</h2><p className={styles.chartNote}>Сколько организаций достигло разных уровней от индивидуального плана 70%. Достижение плана = И‑38.9 МО ÷ 70%. В расчёт включены МО с полными данными: {completeOrganizations.length}.</p>
           <div className={styles.planDistribution}>{planDistribution.map((band) => <div className={styles.planDistributionRow} key={band.key}><span>{band.label}</span><div className={styles.track}><i style={{ width: `${band.count / maxPlanDistribution * 100}%`, background: band.color }} /></div><strong>{band.count}</strong><small>{percent(band.share)}</small></div>)}</div>
