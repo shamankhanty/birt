@@ -96,7 +96,7 @@ export default function Incident38Dashboard() {
   const [selectedOid, setSelectedOid] = useState("");
   const [organizationSearch, setOrganizationSearch] = useState("");
   const [matrixSearch, setMatrixSearch] = useState("");
-  const [matrixTotalDirection, setMatrixTotalDirection] = useState<"asc" | "desc">("asc");
+  const [matrixSort, setMatrixSort] = useState<{ key: string; direction: "asc" | "desc" }>({ key: "coverage", direction: "asc" });
   const [selectedSpecialty, setSelectedSpecialty] = useState("");
 
   const visibleOrganizations = useMemo(() => ORGANIZATIONS
@@ -123,6 +123,10 @@ export default function Incident38Dashboard() {
       coverage,
       organizations: cells.filter((row) => row.norm !== null && row.norm > 0).length,
       missing: cells.filter((row) => row.norm === null || row.epguSlots === null).length,
+      zeroSlotsOrganizations: visibleOrganizations.filter((org) => {
+        const row = org.specialties.find((item) => item.code === specialty.code);
+        return row?.norm !== null && row?.norm !== undefined && row.norm > 0 && row.epguSlots === 0;
+      }).length,
     };
   }).sort((a, b) => (a.coverage ?? Number.POSITIVE_INFINITY) - (b.coverage ?? Number.POSITIVE_INFINITY)), [visibleOrganizations]);
 
@@ -135,9 +139,23 @@ export default function Incident38Dashboard() {
   const matrixRows = organizationRows
     .filter(({ org }) => shownOrgName(org).toLocaleLowerCase("ru").includes(matrixSearch.toLocaleLowerCase("ru")))
     .sort((a, b) => {
-      if (a.coverage === null) return b.coverage === null ? 0 : 1;
-      if (b.coverage === null) return -1;
-      return matrixTotalDirection === "asc" ? a.coverage - b.coverage : b.coverage - a.coverage;
+      const valueFor = (row: typeof a): string | number | null => {
+        if (matrixSort.key === "name") return matrixOrgName(row.org).toLocaleLowerCase("ru");
+        if (matrixSort.key === "deficit") return row.deficit;
+        if (matrixSort.key === "coverage") return row.coverage;
+        if (matrixSort.key === "attainment") return row.coverage === null ? null : row.coverage / PLAN_PERCENT * 100;
+        const code = matrixSort.key.startsWith("specialty:") ? matrixSort.key.slice("specialty:".length) : "";
+        const cell = row.org.specialties.find((item) => item.code === code);
+        return cell ? ratio(cell.epguSlots, cell.norm) : null;
+      };
+      const left = valueFor(a);
+      const right = valueFor(b);
+      if (left === null) return right === null ? 0 : 1;
+      if (right === null) return -1;
+      const comparison = typeof left === "string" && typeof right === "string"
+        ? left.localeCompare(right, "ru")
+        : Number(left) - Number(right);
+      return matrixSort.direction === "asc" ? comparison : -comparison;
     });
   const selectedSpecialties = selectedOrg
     ? selectedOrg.specialties.map((row) => ({ ...row, coverage: ratio(row.epguSlots, row.norm) }))
@@ -174,7 +192,10 @@ export default function Incident38Dashboard() {
     setMatrixSearch("");
   }
 
-  function toggleTotalSort() { setMatrixTotalDirection((direction) => direction === "asc" ? "desc" : "asc"); }
+  function toggleMatrixSort(key: string) {
+    setMatrixSort((current) => ({ key, direction: current.key === key && current.direction === "asc" ? "desc" : "asc" }));
+  }
+  const sortMark = (key: string) => matrixSort.key === key ? (matrixSort.direction === "asc" ? " ↑" : " ↓") : "";
 
   return <div className={styles.root}>
     <header className={styles.hero}>
@@ -203,12 +224,12 @@ export default function Incident38Dashboard() {
         <section className={styles.card}><h2>Процент слотов ЕПГУ по специальностям</h2><p className={styles.chartNote}>Слоты ЕПГУ ÷ «Норматив ВСЕГО». План 70% применяется к каждой МО в целом, поэтому значения по отдельным специальностям здесь справочные.</p>
           <div className={styles.barList}>{specRows.map((row) => <div className={styles.barRow} key={row.code}><span title={row.name}>{row.name}</span><div className={styles.track}><i style={{ width: `${Math.min(100, Math.max(0, row.coverage ?? 0))}%`, background: heatColor(row.coverage) }} /></div><b className={tone(row.coverage)}>{percent(row.coverage)}</b></div>)}</div>
         </section>
-        <section className={styles.card}><h2>План медицинских организаций</h2><p className={styles.chartNote}>Каждая МО оценивается по общему проценту И‑38.9. Перечень ниже сортируется по этому показателю; нажмите «Итого» в матрице, чтобы изменить направление.</p>
-          <div className={styles.planSummary}><strong>{completeCount} из {organizationRows.length}</strong><span>МО выполнили план 70%</span><strong>{format(regional.deficit)}</strong><span>слотов не хватает до плана по всем МО</span></div>
+        <section className={styles.card}><h2>Специальности с наибольшим дефицитом слотов</h2><p className={styles.chartNote}>Показаны специальности с наименьшим общим процентом И‑38.9. «МО без слотов» — организации, где норматив есть, а слотов ЕПГУ нет. План 70% применяется к МО в целом; ранжирование специальностей — диагностическое.</p>
+          <div className={styles.deficitSpecialties}>{[...specRows].filter((row) => row.norm !== null && row.norm > 0).slice(0, 5).map((row, index) => <div className={styles.deficitSpecialty} key={row.code}><b>{index + 1}</b><span title={row.name}>{row.name}</span><div className={styles.track}><i style={{ width: `${Math.min(100, Math.max(0, row.coverage ?? 0))}%`, background: heatColor(row.coverage) }} /></div><strong className={tone(row.coverage)}>{percent(row.coverage)}</strong><small>{row.zeroSlotsOrganizations} МО без слотов</small></div>)}</div>
         </section>
       </div>
       <section className={styles.card}>
-        <div className={styles.sectionHead}><div><h2>Рейтинг медицинских организаций</h2><p>Специальности показаны справочно. «Итого» — слоты ЕПГУ ÷ «Норматив ВСЕГО»; план каждой МО — 70%. «Не хватает» — минимальное целое число слотов до плана этой МО. Нажмите «Итого» для сортировки.</p></div>
+        <div className={styles.sectionHead}><div><h2>Рейтинг медицинских организаций</h2><p>«Итого» — фактический процент И‑38.9; «% достижения» — доля от плана 70%. Любой заголовок столбца сортирует таблицу по возрастанию или убыванию.</p></div>
           <div className={styles.matrixControls}>
             <OwnershipSwitch value={ownership} onChange={changeOwnership} />
             <label className={styles.matrixSearch}>Поиск по МО<div className={styles.suggestionBox}><input value={matrixSearch} onChange={(event) => setMatrixSearch(event.target.value)} placeholder="Начните вводить название" autoComplete="off" />
@@ -217,16 +238,18 @@ export default function Incident38Dashboard() {
           </div>
         </div>
         <div className={styles.matrixScroll}><table className={styles.heat}><thead><tr>
-          <th className={styles.stickyName}>Медицинская организация</th>
-          <th className={styles.shortfallHead}>Не хватает<br />до плана</th>
-          {SPECIALTIES.map((specialty) => <th className={styles.rot} key={specialty.code} title={specialty.name}><span>{specialty.name}</span></th>)}
-          <th className={`${styles.rot} ${styles.totalHead}`}><button type="button" onClick={toggleTotalSort} aria-label={`Сортировать по итогу ${matrixTotalDirection === "asc" ? "по убыванию" : "по возрастанию"}`} title="Нажмите, чтобы изменить порядок сортировки">Итого {matrixTotalDirection === "asc" ? "↑" : "↓"}</button></th>
+          <th className={styles.stickyName}><button type="button" className={styles.sortButton} onClick={() => toggleMatrixSort("name")}>Медицинская организация{sortMark("name")}</button></th>
+          <th className={styles.shortfallHead}><button type="button" className={styles.sortButton} onClick={() => toggleMatrixSort("deficit")}>Не хватает<br />до плана{sortMark("deficit")}</button></th>
+          <th className={styles.attainmentHead}><button type="button" className={styles.sortButton} onClick={() => toggleMatrixSort("attainment")}>% достижения<br />плана{sortMark("attainment")}</button></th>
+          {SPECIALTIES.map((specialty) => <th className={styles.rot} key={specialty.code} title={specialty.name}><button type="button" className={styles.specialtySort} onClick={() => toggleMatrixSort(`specialty:${specialty.code}`)}>{specialty.name}{sortMark(`specialty:${specialty.code}`)}</button></th>)}
+          <th className={styles.totalHead}><button type="button" className={styles.sortButton} onClick={() => toggleMatrixSort("coverage")}>Итого, %{sortMark("coverage")}</button></th>
         </tr></thead><tbody>
           {matrixRows.map((row) => <tr key={row.org.oid}>
             <th className={styles.stickyName} onClick={() => openOrg(row.org.oid)} title={`${matrixOrgName(row.org)} · ${row.org.city}`}>
               <span className={styles.matrixName}>{matrixOrgName(row.org)}</span><small className={styles.matrixCity}>{row.org.city}</small>
             </th>
             <td className={styles.shortfallCell} title={`Минимум слотов до плана 70%: ${format(row.deficit)}`} onClick={() => openOrg(row.org.oid)}>{format(row.deficit)}</td>
+            <td className={styles.attainmentCell} title={`И‑38.9 ${percent(row.coverage)} от плана 70%`}>{row.coverage === null ? "—" : percent(row.coverage / PLAN_PERCENT * 100)}</td>
             {SPECIALTIES.map((specialty) => {
               const cell = row.org.specialties.find((item) => item.code === specialty.code);
               const value = cell ? ratio(cell.epguSlots, cell.norm) : null;
@@ -234,7 +257,7 @@ export default function Incident38Dashboard() {
               const title = !cell ? "Нет строки по специальности" : cell.norm === null ? "Нет норматива в данных" : cell.norm <= 0 ? "Норматив не задан" : `${specialty.name}: ${percent(value)} · ЕПГУ ${format(cell.epguSlots)} из общего норматива ${format(cell.norm)}`;
               return <td key={specialty.code} title={title} onClick={() => { setSelectedOid(row.org.oid); setSelectedSpecialty(specialty.code); setTab("organization"); }} style={{ background: text === "Н" ? "#e8eef3" : heatColor(value), color: text === "Н" ? "#657d8f" : "#fff" }}>{text}</td>;
             })}
-            <td className={styles.totalCell} title={`Итого: ${percent(row.coverage)} · ${format(row.epguSlots)} из ${format(row.norm)}`} onClick={() => openOrg(row.org.oid)} style={{ background: heatColor(row.coverage === null ? null : Math.min(100, row.coverage / PLAN_PERCENT * 100)), color: "#fff" }}>{row.coverage === null ? "—" : Math.round(row.coverage)}</td>
+            <td className={styles.totalCell} title={`Итого: ${percent(row.coverage)} · ${format(row.epguSlots)} из ${format(row.norm)}`} onClick={() => openOrg(row.org.oid)} style={{ background: heatColor(row.coverage === null ? null : Math.min(100, row.coverage / PLAN_PERCENT * 100)), color: "#fff" }}>{percent(row.coverage)}</td>
           </tr>)}
         </tbody></table></div>
         {matrixRows.length === 0 && <p className={styles.empty}>МО по так��му названию не найдены.</p>}
