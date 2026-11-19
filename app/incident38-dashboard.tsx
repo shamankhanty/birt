@@ -67,6 +67,7 @@ function metrics(rows: Specialty[]) {
 const orgMetrics = (org: Organization) => metrics(org.specialties);
 const tone = (value: number | null) => value === null ? styles.neutral : value >= 100 ? styles.good : styles.belowNorm;
 const planTone = (value: number | null) => value === null ? styles.neutral : value >= PLAN_PERCENT ? styles.good : styles.belowNorm;
+const specialtyBand = (value: number | null) => value === null ? styles.neutral : value >= 75 ? styles.specialtyGreen : value >= 50 ? styles.specialtyYellow : value >= 25 ? styles.specialtyOrange : styles.specialtyRed;
 const status = (value: number | null) => value === null ? "Нет данных" : value >= PLAN_PERCENT ? "План 70% выполнен" : "Ниже плана 70%";
 const heatColor = (value: number | null) => {
   if (value === null) return "#e8eef3";
@@ -174,6 +175,16 @@ export default function Incident38Dashboard() {
       .map((row) => row.epguSlots! / row.norm! * 100);
     return [specialty.code, { median: median(values), count: values.length }] as const;
   }));
+  const displaySpecialties = selectedSpecialties.filter((row) => !selectedSpecialty || row.code === selectedSpecialty);
+  const comparisonRows = displaySpecialties.map((row) => {
+    const benchmark = benchmarkBySpecialty.get(row.code);
+    const difference = row.coverage !== null && benchmark?.median !== null && benchmark?.median !== undefined ? row.coverage - benchmark.median : null;
+    return { ...row, difference };
+  });
+  const belowMedianCount = comparisonRows.filter((row) => row.difference !== null && row.difference < 0).length;
+  const aboveMedianCount = comparisonRows.filter((row) => row.difference !== null && row.difference >= 0).length;
+  const criticalCount = displaySpecialties.filter((row) => row.coverage !== null && row.norm !== null && row.norm > 0 && row.coverage < 25).length;
+  const weakestSpecialties = displaySpecialties.filter((row) => row.coverage !== null && row.norm !== null && row.norm > 0).sort((a, b) => (a.coverage ?? 0) - (b.coverage ?? 0)).slice(0, 3);
   const completeCount = organizationRows.filter((row) => row.complete && row.meetsPlan).length;
   const belowCount = organizationRows.filter((row) => row.complete && !row.meetsPlan).length;
   const missingCount = organizationRows.filter((row) => !row.complete || row.coverage === null).length;
@@ -245,7 +256,7 @@ export default function Incident38Dashboard() {
         </section>
       </div>
       <section className={styles.card}>
-        <div className={styles.sectionHead}><div><h2>Рейтинг медицинских организаций</h2><p>«Итого» — фактический процент И‑38.9; «% достижения» — доля от плана 70%. Любой заголовок столбца сортирует таблицу по возрастанию или убыванию.</p></div>
+        <div className={styles.sectionHead}><div><h2>Рейтинг медицинских организаций</h2><p>«И‑38.9, %» = слоты ЕПГУ ÷ «Норматив ВСЕГО» × 100%. «% достижения плана» = И‑38.9 ÷ 70% × 100%. Заголовки сортируют таблицу.</p></div>
           <div className={styles.matrixControls}>
             <OwnershipSwitch value={ownership} onChange={changeOwnership} />
             <label className={styles.matrixSearch}>Поиск по МО<div className={styles.suggestionBox}><input value={matrixSearch} onChange={(event) => setMatrixSearch(event.target.value)} placeholder="Начните вводить название" autoComplete="off" />
@@ -253,12 +264,12 @@ export default function Incident38Dashboard() {
             </div></label>
           </div>
         </div>
-        <div className={styles.matrixScroll}><table className={styles.heat}><thead><tr>
+        <div className={styles.matrixScroll}><table className={styles.heat}><colgroup><col className={styles.orgCol} /><col className={styles.shortfallCol} /><col className={styles.attainmentCol} />{SPECIALTIES.map((specialty) => <col className={styles.specialtyCol} key={specialty.code} />)}<col className={styles.totalCol} /></colgroup><thead><tr>
           <th className={styles.stickyName}><button type="button" className={styles.sortButton} onClick={() => toggleMatrixSort("name")}>Медицинская организация{sortMark("name")}</button></th>
           <th className={styles.shortfallHead}><button type="button" className={styles.sortButton} onClick={() => toggleMatrixSort("deficit")}>Не хватает<br />до плана{sortMark("deficit")}</button></th>
           <th className={styles.attainmentHead}><button type="button" className={styles.sortButton} onClick={() => toggleMatrixSort("attainment")}>% достижения<br />плана{sortMark("attainment")}</button></th>
           {SPECIALTIES.map((specialty) => <th className={styles.rot} key={specialty.code} title={specialty.name}><button type="button" className={styles.specialtySort} onClick={() => toggleMatrixSort(`specialty:${specialty.code}`)}>{specialty.name}{sortMark(`specialty:${specialty.code}`)}</button></th>)}
-          <th className={styles.totalHead}><button type="button" className={styles.sortButton} onClick={() => toggleMatrixSort("coverage")}>Итого, %{sortMark("coverage")}</button></th>
+          <th className={styles.totalHead}><button type="button" className={styles.sortButton} onClick={() => toggleMatrixSort("coverage")} title="Фактический процент И‑38.9: слоты ЕПГУ ÷ Норматив ВСЕГО × 100%">И‑38.9, %{sortMark("coverage")}</button></th>
         </tr></thead><tbody>
           {matrixRows.map((row) => <tr key={row.org.oid}>
             <th className={styles.stickyName} onClick={() => openOrg(row.org.oid)} title={`${matrixOrgName(row.org)} · ${row.org.city}`}>
@@ -271,12 +282,13 @@ export default function Incident38Dashboard() {
               const value = cell ? ratio(cell.epguSlots, cell.norm) : null;
               const text = !cell || cell.norm === null ? "—" : cell.norm <= 0 ? "Н" : value === null ? "—" : `${Math.round(value)}`;
               const title = !cell ? "Нет строки по специальности" : cell.norm === null ? "Нет норматива в данных" : cell.norm <= 0 ? "Норматив не задан" : `${specialty.name}: ${percent(value)} · ЕПГУ ${format(cell.epguSlots)} из общего норматива ${format(cell.norm)}`;
-              return <td key={specialty.code} title={title} onClick={() => { setSelectedOid(row.org.oid); setSelectedSpecialty(specialty.code); setTab("organization"); }} style={{ background: text === "Н" ? "#e8eef3" : heatColor(value), color: text === "Н" ? "#657d8f" : "#fff" }}>{text}</td>;
+              return <td className={styles.specialtyCell} key={specialty.code} title={title} onClick={() => { setSelectedOid(row.org.oid); setSelectedSpecialty(specialty.code); setTab("organization"); }} style={{ background: text === "Н" ? "#e8eef3" : heatColor(value), color: text === "Н" ? "#657d8f" : "#fff" }}>{text}</td>;
             })}
             <td className={styles.totalCell} title={`Итого: ${percent(row.coverage)} · ${format(row.epguSlots)} из ${format(row.norm)}`} onClick={() => openOrg(row.org.oid)} style={{ background: heatColor(row.coverage === null ? null : Math.min(100, row.coverage / PLAN_PERCENT * 100)), color: "#fff" }}>{percent(row.coverage)}</td>
           </tr>)}
         </tbody></table></div>
-        {matrixRows.length === 0 && <p className={styles.empty}>МО по так��му названию не найдены.</p>}
+        <p className={styles.matrixMethod}>И‑38.9, % = слоты ЕПГУ ÷ «Норматив ВСЕГО» × 100%. «% достижения плана» = И‑38.9 ÷ 70% × 100%.</p><p className={styles.matrixMobileHint}>На узком экране показаны итоговые показатели; все специальности доступны в карточке МО.</p>
+        {matrixRows.length === 0 && <p className={styles.empty}>МО по такому названию не найдены.</p>}
       </section>
     </main>}
 
@@ -299,12 +311,17 @@ export default function Incident38Dashboard() {
         </div>
         <div className={styles.sectionHead}><div><h2>Показатели по специальностям</h2><p>Значения по специальностям справочные: план 70% применяется к общему показателю МО. Медиана сравнивает МО с другими организациями того же набора выгрузки.</p></div><select className={styles.inlineSelect} value={selectedSpecialty} onChange={(event) => setSelectedSpecialty(event.target.value)}><option value="">Все специальности</option>{SPECIALTIES.map((specialty) => <option key={specialty.code} value={specialty.code}>{specialty.name}</option>)}</select></div>
         <div className={styles.tableScroll}><table className={styles.table}><thead><tr><th>Специальность</th><th>Норматив ВСЕГО</th><th>Слотов для ЕПГУ</th><th>И‑38.9, %</th><th>Медиана выборки, %</th><th>Отклонение, п.п.</th><th>МО в выборке</th></tr></thead><tbody>
-          {selectedSpecialties.filter((row) => !selectedSpecialty || row.code === selectedSpecialty).map((row) => {
+          {displaySpecialties.map((row) => {
             const benchmark = benchmarkBySpecialty.get(row.code);
             const difference = row.coverage !== null && benchmark?.median !== null && benchmark?.median !== undefined ? row.coverage - benchmark.median : null;
-            return <tr key={row.code}><td className={styles.orgName}>{row.name}</td><td>{format(row.norm)}</td><td>{format(row.epguSlots)}</td><td className={`${styles.metricCell} ${styles.neutral}`}>{percent(row.coverage)}</td><td>{percent(benchmark?.median ?? null)}</td><td className={difference === null ? styles.neutral : difference >= 0 ? styles.good : styles.belowNorm}>{difference === null ? "—" : <>{difference > 0 ? "+" : ""}{numberFormat.format(difference)}</>}</td><td>{benchmark?.count ?? 0}</td></tr>;
+            return <tr key={row.code}><td className={styles.orgName}>{row.name}</td><td>{format(row.norm)}</td><td>{format(row.epguSlots)}</td><td className={`${styles.metricCell} ${specialtyBand(row.coverage)}`}>{percent(row.coverage)}</td><td>{percent(benchmark?.median ?? null)}</td><td className={difference === null ? styles.neutral : difference >= 0 ? styles.good : styles.belowNorm}>{difference === null ? "—" : <>{difference > 0 ? "+" : ""}{numberFormat.format(difference)}</>}</td><td>{benchmark?.count ?? 0}</td></tr>;
           })}
         </tbody></table></div>
+        <section className={styles.orgInsights}>
+          <article><h3>Организация относительно выборки</h3><p>По выбранным специальностям ниже медианы: <b>{belowMedianCount}</b>; на уровне или выше: <b>{aboveMedianCount}</b>.</p></article>
+          <article><h3>Управленческий вывод</h3><p>Специальностей с уровнем ниже 25%: <b>{criticalCount}</b>. Самые низкие значения: {weakestSpecialties.length ? weakestSpecialties.map((row) => `${row.name} — ${percent(row.coverage)}`).join("; ") : "нет данных"}.</p></article>
+        </section>
+        <div className={styles.specialtyLegend}><span><i className={styles.specialtyGreen} />≥75% — высокий уровень</span><span><i className={styles.specialtyYellow} />50–74% — требует внимания</span><span><i className={styles.specialtyOrange} />25–49% — зона риска</span><span><i className={styles.specialtyRed} />&lt;25% — критично</span><span>Цветовой ориентир для специальности; план 70% оценивается по МО в целом.</span></div>
         <p className={styles.chartNote}>Медиана рассчитана по МО той же выгрузки: {benchmarkOrganizations.length} организаций · срез {benchmarkDataset?.reportDate ?? "—"}. В выборку по специальности входят МО с положительным общим нормативом; нулевые значения слотов учитываются.</p>
       </section>}
     </main>}
