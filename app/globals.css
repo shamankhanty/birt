@@ -754,3 +754,7 @@ body{font-size:14px}
 .frlozDetails th, .frlozDetails td { padding: 8px 10px; border-bottom: 1px solid #e2e8f0; text-align: left; vertical-align: top; }
 .frlozDetails th { position: sticky; top: 0; background: #f1f5f9; z-index: 1; }
 .frlozDetails th:last-child, .frlozDetails td:last-child { text-align: right; white-space: nowrap; }
+
+.frlozSort { appearance: none; border: 0; background: transparent; padding: 0; color: inherit; font: inherit; font-weight: 700; text-align: left; cursor: pointer; white-space: nowrap; }
+.frlozSort:hover, .frlozSort:focus-visible { color: #166a50; text-decoration: underline; }
+.frlozSort span { color: #64748b; }
