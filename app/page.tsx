@@ -6638,7 +6638,7 @@ export default function Home() {
                 <p className="federalPlanEmpty">Нет показателей для выбранной комбинации фильтров. Измените диапазон, статус или поиск.</p>
               )}
               <details className="federalPlanOriginal">
-                <summary>Исходная таблица и сравнение с федеральной оценкой (6 месяцев)</summary>
+                <summary>Исходная таблица и сравнение с федеральной оценкой</summary>
               <div className="tableWrap federalTableWrap">
                 <table className="matrix federalTable">
                   <thead>
@@ -6649,7 +6649,7 @@ export default function Home() {
                         План<small>2026 год</small>
                       </th>
                       <th>
-                        Федеральная оценка<small>6 месяцев 2026 года</small>
+                        Федеральная оценка<small>Период указан в строке</small>
                       </th>
                       <th>
                         Факт РТ
