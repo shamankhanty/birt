@@ -121,11 +121,11 @@ def parse_workbook(path: Path, scope: str) -> dict[str, Any]:
     # Specialty labels are grouped in five columns: percentage, total norm, slots, EPGU norm, EPGU slots.
     groups: dict[str, int] = {}
     header = rows[header_i]
-    for col in range(9, len(header), 5):
+    for col in range(5, len(header), 5):
         title = header[col]
         if not title or str(title).startswith("#"):
             continue
-        code = specialty_code(title)
+        code = str(int(title)) if isinstance(title, (int, float)) and float(title).is_integer() else specialty_code(title)
         if code in groups:
             fail(f"{path.name}: duplicate specialty group {title!r}")
         groups[code] = col
@@ -133,14 +133,14 @@ def parse_workbook(path: Path, scope: str) -> dict[str, Any]:
     if set(groups) != expected_codes:
         fail(f"{path.name}: specialty set mismatch; missing={sorted(expected_codes-set(groups))}, extra={sorted(set(groups)-expected_codes)}")
     # Summary row is the closest preceding row with a declared organization count and total values.
-    summary_i = next((i for i in range(first_org_i - 1, header_i, -1) if len(rows[i]) > 8 and isinstance(rows[i][3], (int, float)) and all(isinstance(rows[i][c], (int, float)) for c in (5, 6, 7, 8))), None)
+    summary_i = next((i for i in range(first_org_i - 1, header_i, -1) if len(rows[i]) > 8 and isinstance(rows[i][0], (int, float)) and all(isinstance(rows[i][c], (int, float)) for c in (5, 6, 7, 8))), None)
     if summary_i is None:
         fail(f"{path.name}: regional summary row not found")
     org_rows = [(i, row) for i, row in enumerate(rows[first_org_i:], start=first_org_i) if len(row) > 3 and isinstance(row[1], str) and OID_RE.match(row[1])]
     oids = [row[1] for _, row in org_rows]
     if len(oids) != len(set(oids)):
         fail(f"{path.name}: duplicate OID in organization rows")
-    expected_count = int(rows[summary_i][3])
+    expected_count = int(rows[summary_i][0])
     if len(org_rows) != expected_count:
         fail(f"{path.name}: summary declares {expected_count} МО, parsed {len(org_rows)}")
     report_date, frmo_date, as_of = parse_dates(rows, path)
@@ -154,14 +154,14 @@ def parse_workbook(path: Path, scope: str) -> dict[str, Any]:
         detail = []
         for spec in SPECIALTIES:
             col = groups[spec["code"]]
-            vals = [number(row[col + offset], f"{path.name}, row {row_num+1}, {spec['name']}") for offset in (1, 2, 3, 4)]
+            vals = [number(row[col + offset], f"{path.name}, row {row_num+1}, {spec['name']}") for offset in (0, 1, 2, 3)]
             detail.append({"code": spec["code"], "name": spec["name"], "norm": vals[0], "slots": vals[1], "epguNorm": vals[2], "epguSlots": vals[3]})
         orgs.append({"oid": row[1], "code": str(row[2] or ""), "name": display_name, "fullName": raw_name, "city": place, "specialties": detail})
     # Tie all four regional totals back to the source summary; do not publish a partial parse.
     summary = rows[summary_i]
     for spec in SPECIALTIES:
         col = groups[spec["code"]]
-        fields = [("norm", 1), ("slots", 2), ("epguNorm", 3), ("epguSlots", 4)]
+        fields = [("norm", 0), ("slots", 1), ("epguNorm", 2), ("epguSlots", 3)]
         for field, offset in fields:
             actual = [o["specialties"][next(i for i, s in enumerate(SPECIALTIES) if s["code"] == spec["code"])][field] for o in orgs]
             if any(v is None for v in actual):

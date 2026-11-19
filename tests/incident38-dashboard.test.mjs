@@ -7,13 +7,13 @@ const districts = JSON.parse(fs.readFileSync("app/incident38-districts.json", "u
 const expectedCodes = ["11", "13", "25", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23", "26"];
 
 test("Incident 38 keeps city and district exports as separate dated datasets", () => {
-  assert.equal(cities.reportDate, "10.11.2026");
-  assert.equal(cities.frmoDate, "09.11.2026");
+  assert.equal(cities.reportDate, "19.11.2026");
+  assert.equal(cities.frmoDate, "19.11.2026");
   assert.equal(cities.orgCount, 57);
-  assert.equal(districts.reportDate, "12.11.2026");
-  assert.equal(districts.frmoDate, "12.11.2026");
+  assert.equal(districts.reportDate, "19.11.2026");
+  assert.equal(districts.frmoDate, "19.11.2026");
   assert.equal(districts.orgCount, 46);
-  assert.notEqual(cities.reportDate, districts.reportDate);
+  assert.equal(cities.reportDate, districts.reportDate);
 });
 
 test("Incident 38 organization and specialty rows are complete and unique", () => {
