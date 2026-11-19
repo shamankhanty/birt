@@ -4,6 +4,7 @@ import { useMemo, useState } from "react";
 import allRaw from "./frmr-all-specialties.json";
 import spTypes from "./frmr-sp-types.json";
 import previousControl from "./frmr-previous-control.json";
+import FrmrSpAudit from "./frmr-sp-audit";
 import { compareFrmrControl, frmrControlView } from "../lib/frmr-control";
 import { applyFrmrScope } from "../lib/frmr-scope";
 const { data: scopedAll, excluded: scopeExcluded } = applyFrmrScope(allRaw, spTypes.types);
@@ -72,7 +73,7 @@ export default function FrmrReconciliation() {
   const sortedOrgs = [...orgs].sort((a, b) => a.name.localeCompare(b.name, "ru"));
   const cutShort = allRaw.summary.sourceCut.slice(0,5);
   const dateLabel = allRaw.summary.sourceCut + " · все специальности";
-  const [view, setView] = useState<"minister" | "organization">("minister");
+  const [view, setView] = useState<"minister" | "organization" | "audit">("minister");
   const [filter, setFilter] = useState<"all" | "worse" | "better" | "missing" | "zero">("all");
   const [sort, setSort] = useState<"count" | "worsening" | "improving" | "name">("count");
   const [search, setSearch] = useState("");
@@ -177,22 +178,23 @@ export default function FrmrReconciliation() {
     <div className={styles.root} data-testid="frmr-reconciliation">
       <section className={styles.hero}>
         <span className={styles.tag}>ФРМР · ФРМО · ГИС</span>
-        <h1>ФРМР ↔ ГИС: достоверность должностей</h1>
-        <p>Единый контроль расхождений между федеральным регистром и региональной ГИС. Основной контроль — наличие должности на уровне медицинской организации. Привязки подразделений доступны отдельно, справочно.</p>
+        <h1>{view === "audit" ? "ФРМО ↔ ГИС: привязка подразделений" : "ФРМР ↔ ГИС: достоверность должностей"}</h1>
+        <p>{view === "audit" ? "Справочная сверка филиалов и отделений с ФРМО. Признаки для проверки не влияют на основной показатель должностей." : "Единый контроль расхождений между федеральным регистром и региональной ГИС. Основной контроль — наличие должности на уровне медицинской организации. Привязки подразделений доступны отдельно, справочно."}</p>
         <div className={styles.heroBottom}>
-          <span className={styles.eyebrow}>Срез {dateLabel}</span>
-          <span className={styles.heroNote}>Единица учёта — должностная запись, а не уникальный сотрудник. Влияние на запись пациентов пока не подтверждено.</span>
+          <span className={styles.eyebrow}>Срез {view === "audit" ? "19.11.2026 · все специальности" : dateLabel}</span>
+          <span className={styles.heroNote}>{view === "audit" ? "Единица учёта — строка привязки отделения. Изменения состава СП проверяются по датированным срезам." : "Единица учёта — должностная запись, а не уникальный сотрудник. Влияние на запись пациентов пока не подтверждено."}</span>
         </div>
       </section>
 
       <div className={styles.workspaceControls}>
-      <span className={styles.pill}>Все специальности · {allRaw.summary.sourceCut.slice(0,5)}</span>
+      <span className={styles.pill}>{view === "audit" ? "Привязки СП · 19.11" : `Все специальности · ${allRaw.summary.sourceCut.slice(0,5)}`}</span>
       <div className={styles.tabs} role="group" aria-label="Представление раздела">
         <button className={[styles.tab, view === "minister" ? styles.tabActive : ""].join(" ")} onClick={() => setView("minister")} aria-pressed={view === "minister"}>Обзор</button>
         <button className={[styles.tab, view === "organization" ? styles.tabActive : ""].join(" ")} onClick={() => setView("organization")} aria-pressed={view === "organization"}>Карточка МО и действия</button>
+        <button className={[styles.tab, view === "audit" ? styles.tabActive : ""].join(" ")} onClick={() => setView("audit")} aria-pressed={view === "audit"}>Сверка СП с ФРМО</button>
       </div>
 
-      <div className={styles.filters}>
+      {view !== "audit" && <div className={styles.filters}>
         <div className={styles.tabs} role="group" aria-label="Уровень контроля ФРМР">
           <button className={[styles.tab, controlLevel === "mo" ? styles.tabActive : ""].join(" ")} aria-pressed={controlLevel === "mo"} onClick={() => {setControlLevel("mo");setFilter("all");resetInspection();}}>На уровне МО</button>
           <button className={[styles.tab, controlLevel === "department" ? styles.tabActive : ""].join(" ")} aria-pressed={controlLevel === "department"} onClick={() => {setControlLevel("department");setFilter("all");resetInspection();}}>Привязки СП · справочно</button>
@@ -202,8 +204,9 @@ export default function FrmrReconciliation() {
           {[...new Set(Object.values(spTypes.types))].filter(type => type !== "Скорая медицинская помощь").sort((a,b)=>a.localeCompare(b,"ru")).map(type=><option key={type}>{type}</option>)}
           <option value="Не указан">Тип не указан</option>
         </select>
+      </div>}
       </div>
-      </div>
+      {view === "audit" ? <FrmrSpAudit /> : <>
       <details className={styles.scopeDetails}>
         <summary>Методика и охват сверки</summary>
         <p className={styles.muted} data-testid="frmr-control-note">{controlLevel === "mo" ? "Основной контроль: должность не найдена на уровне МО. Расхождения привязок СП в этот итог не входят." : "Справочно: должность найдена в МО, но не совпадает привязка СП. Эти записи не входят в основной итог проблем МО."} {spType && <>Тип СП: {spType}. </>}Все специальности сохранены с учётом согласованных исключений. Тип СП не определяет работу по ОМС или платно.</p>
@@ -451,6 +454,7 @@ export default function FrmrReconciliation() {
         Сверка выполнена только в направлении ФРМР → ГИС. Обратная сверка и причинная связь с инцидентом № 38 пока не подтверждены.
         Раздел экспериментальный: текущие результаты не следует использовать для санкций или формального рейтинга МО.
       </div>
+      </>}
     </div>
   );
 }
