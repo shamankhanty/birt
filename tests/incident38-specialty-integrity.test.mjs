@@ -50,6 +50,6 @@ test("И38: карточка МО направляет на сверку ФРМ�
   const ui = readFileSync(new URL("../app/incident38-dashboard.tsx", import.meta.url), "utf8");
   assert.match(ui, /row\.norm === 0 && row\.epguSlots !== null && row\.epguSlots > 0/);
   assert.match(ui, /Проверить ФРМР/);
-  assert.match(ui, /«На уровне МО»/);
-  assert.match(ui, /«Привязки СП · справочно»/);
+  assert.match(ui, /onOpenFrmrMo\(selectedOrg\.oid\)/);
+  assert.match(ui, /карточка этой МО в разделе 06/);
 });
