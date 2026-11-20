@@ -188,7 +188,7 @@ export default function FrmrMoWorkspace({ selectedId, selectedName }: { selected
     <div className={styles.heading}>
       <div>
         <h2>Все расхождения выбранной МО</h2>
-        <p>Одна рабочая панель: должность → СП → конкретная запись. Данные ФРМО доступны отдельной вкладкой.</p>
+        <p>Одна рабочая панель: должность → СП → конкретные записи. Данные ФРМО доступны отдельной вкладкой.</p>
       </div>
       <button type="button" className={styles.exportButton} onClick={saveCsv}>Экспорт CSV</button>
     </div>
