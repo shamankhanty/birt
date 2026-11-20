@@ -173,3 +173,11 @@
 /* Compact first screen and keep reconciliation controls close to the work area. */
 .hero{padding:16px 22px;border-radius:16px}.hero h1{font-size:clamp(23px,2vw,31px);margin:7px 0 4px}.hero p{font-size:12px;line-height:1.4}.heroBottom{margin-top:10px}.tag{padding:5px 9px}.workspaceControls{position:sticky;top:60px;z-index:8;display:flex;flex-wrap:wrap;gap:7px;padding:7px 0;background:#edf5f1eF;backdrop-filter:blur(10px);border-bottom:1px solid #d6e5de}.workspaceControls .tabs{margin:0}.filters{margin:0;gap:7px}.scopeDetails{margin:-8px 0 4px;color:#587267;font-size:11px}.scopeDetails summary{cursor:pointer;font-weight:700}.scopeDetails p{margin:7px 0}.frmrCheckCell{display:flex;flex-direction:column;gap:4px;min-width:0}.frmrCheckCell strong{font-size:12px;line-height:1.35;white-space:normal}.frmrCheckCell code{font-size:10px;color:#60796e;overflow-wrap:anywhere;word-break:break-word;line-height:1.35}.frmrLastFour{font-size:12px;letter-spacing:-.2px}
 @media(max-width:760px){.workspaceControls{top:56px}.hero{padding:14px 16px}.workspaceControls .tabs{max-width:100%;overflow:auto}}
+
+
+.ownershipSwitch{display:inline-flex;align-items:center;gap:3px;padding:4px;border-radius:10px;border:1px solid #b9d9c9;background:#e7f3eb;align-self:flex-start}
+.ownershipSwitch button{font:inherit;font-size:12px;font-weight:740;color:#366b52;background:transparent;border:0;border-radius:7px;padding:9px 13px;cursor:pointer;white-space:nowrap}
+.ownershipSwitch button:hover{background:#d5eadd}
+.ownershipSwitch button.ownershipActive{background:#147653;color:#fff;box-shadow:0 2px 6px #164a3521}
+.ownershipSwitch button:focus-visible{outline:3px solid #5dc48d;outline-offset:2px}
+@media(max-width:650px){.ownershipSwitch{order:2;max-width:100%}.ownershipSwitch button{font-size:12px;padding:9px 11px}}
