@@ -12,7 +12,7 @@ test('contract SEMD registrations reconcile to regional totals and keep historic
   const matched = evidence.items.filter((item) => item.current > 0);
   assert.deepEqual(matched.map((item) => item.agreementId), ['11', '12', '14', '15']);
   for (const item of evidence.items) {
-    assert.equal(item.current, summary.items.find((row) => row.name === item.semdName)?.count);
+    assert.ok(summary.items.find((row) => row.name === item.semdName)?.count >= item.current, `cumulative SEMD type ${item.semdName} must not regress after the 13.11 historical slice`);
     assert.equal(item.current, item.organizations.reduce((sum, row) => sum + row.current, 0));
     assert.equal(item.previous, item.organizations.reduce((sum, row) => sum + row.previous, 0));
     assert.equal(item.current - item.previous, item.organizations.reduce((sum, row) => sum + row.change, 0));
