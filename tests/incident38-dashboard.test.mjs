@@ -36,3 +36,30 @@ test("Incident 38 organization and specialty rows are complete and unique", () =
   const cityOids = new Set(cities.orgs.map((org) => org.oid));
   assert.equal(districts.orgs.some((org) => cityOids.has(org.oid)), false);
 });
+
+
+test("Incident 38 specialty columns match source summary controls", () => {
+  const controls = [
+    [cities, { "11": [143696, 128593, 92376, 97854], "16": [112910, 111528, 72585, 81785], "26": [5560, 5021, 3753, 3992] }],
+    [districts, { "11": [94584, 95188, 60804, 61653], "16": [95270, 95544, 61245, 67564], "26": [3038, 2765, 2050.65, 1474] }],
+  ];
+  for (const [dataset, expected] of controls) {
+    for (const [code, totals] of Object.entries(expected)) {
+      ["norm", "slots", "epguNorm", "epguSlots"].forEach((field, index) => {
+        const actual = dataset.orgs.reduce((sum, org) => sum + org.specialties.find((item) => item.code === code)[field], 0);
+        assert.ok(Math.abs(actual - totals[index]) < 0.02, dataset.source + ": " + code + " " + field);
+      });
+    }
+  }
+});
+
+test("adult Naberezhnye Chelny organizations have no pediatric specialty values in the source", () => {
+  for (const suffix of [".1116", ".1208", ".1085"]) {
+    const org = cities.orgs.find((item) => item.oid.endsWith(suffix));
+    assert.ok(org, suffix);
+    for (const code of ["16", "26"]) {
+      const specialty = org.specialties.find((item) => item.code === code);
+      assert.deepEqual([specialty.norm, specialty.slots, specialty.epguNorm, specialty.epguSlots], [0, 0, 0, 0], org.name + ": " + code);
+    }
+  }
+});
