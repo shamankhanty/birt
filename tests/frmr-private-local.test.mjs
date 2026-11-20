@@ -8,7 +8,7 @@ const source = JSON.parse(fs.readFileSync("app/frmr-reconciliation-data.json", "
 
 test("medical organizations inspect all three source categories without external files", () => {
   const workspace=fs.readFileSync("app/frmr-mo-workspace.tsx","utf8");
-  assert.match(component,/FrmrMoWorkspace selectedId=/u);
+  assert.match(component,/FrmrMoWorkspace key=/u);
   assert.match(workspace,/Должности \/ МО/u);
   assert.match(workspace,/Привязки СП/u);
   assert.match(workspace,/СП ↔ ФРМО/u);
