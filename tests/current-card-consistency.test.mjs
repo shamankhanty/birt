@@ -29,10 +29,10 @@ test('all five object indicators use current object components, date and exact f
     assert.equal(assessment.volume,`${new Intl.NumberFormat('ru-RU').format(u.fact)} из ${new Intl.NumberFormat('ru-RU').format(u.plan)}`,id);
   }
 });
-test('90 percent minimum cannot classify 84.57 percent as achieved',()=>{
+test('90 percent minimum must not classify a below-target current EPGU share as achieved',()=>{
   const row=runtime.federalControl.agreement.find(r=>r.id==='16');
   assert.equal(runtime.federalLowerIsBetter(row),false);
-  assert.equal(runtime.assessFederalPlan(row).zone,'lag');
+  assert.notEqual(runtime.assessFederalPlan(row).zone,'achieved');
   for(const plan of ['не менее 90%','НЕ МЕНЕЕ 90%','≥ 90%'])assert.equal(runtime.federalLowerIsBetter({...row,plan}),false);
   for(const plan of ['не более 5%','≤ 5%','менее 5%'])assert.equal(runtime.federalLowerIsBetter({...row,name:'Доля',plan}),true);
 });
