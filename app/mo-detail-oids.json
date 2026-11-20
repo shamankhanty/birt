@@ -387,272 +387,260 @@
   },
   "hospital": {
     "1.2.643.5.1.13.13.12.2.16.1088": {
-      "volume": 5551,
-      "registered": 4469,
+      "volume": 5644,
+      "registered": 4608,
       "inpatient": 4469,
       "maternity": 0
     },
-    "1.2.643.5.1.13.13.12.2.16.1146": {
-      "volume": 4300,
-      "registered": 4037,
-      "inpatient": 4037,
-      "maternity": 0
-    },
     "1.2.643.5.1.13.13.12.2.16.1084": {
-      "volume": 10488,
-      "registered": 10188,
+      "volume": 10669,
+      "registered": 10359,
       "inpatient": 10072,
       "maternity": 116
     },
     "1.2.643.5.1.13.13.12.2.16.1156": {
-      "volume": 4673,
-      "registered": 4429,
+      "volume": 4746,
+      "registered": 4559,
       "inpatient": 4429,
       "maternity": 0
     },
     "1.2.643.5.1.13.13.12.2.16.1092": {
-      "volume": 4195,
-      "registered": 4213,
+      "volume": 4329,
+      "registered": 4280,
       "inpatient": 4168,
       "maternity": 45
     },
     "1.2.643.5.1.13.13.12.2.16.1087": {
-      "volume": 4184,
-      "registered": 3970,
+      "volume": 4269,
+      "registered": 4001,
       "inpatient": 3970,
       "maternity": 0
     },
-    "1.2.643.5.1.13.13.12.2.16.1107": {
-      "volume": 1482,
-      "registered": 982,
-      "inpatient": 982,
-      "maternity": 0
-    },
     "1.2.643.5.1.13.13.12.2.16.44921": {
-      "volume": 17023,
-      "registered": 14103,
+      "volume": 17312,
+      "registered": 16045,
       "inpatient": 12569,
       "maternity": 1534
     },
     "1.2.643.5.1.13.13.12.2.16.1108": {
-      "volume": 16263,
-      "registered": 14582,
+      "volume": 22470,
+      "registered": 19974,
       "inpatient": 14582,
       "maternity": 0
     },
     "1.2.643.5.1.13.13.12.2.16.1152": {
-      "volume": 3036,
-      "registered": 2984,
+      "volume": 3107,
+      "registered": 3053,
       "inpatient": 2984,
       "maternity": 0
     },
     "1.2.643.5.1.13.13.12.2.16.1164": {
-      "volume": 8114,
-      "registered": 7882,
+      "volume": 8233,
+      "registered": 7955,
       "inpatient": 7848,
       "maternity": 34
     },
     "1.2.643.5.1.13.13.12.2.16.1078": {
-      "volume": 3415,
-      "registered": 3210,
+      "volume": 3486,
+      "registered": 3226,
       "inpatient": 3210,
       "maternity": 0
     },
     "1.2.643.5.1.13.13.12.2.16.1129": {
-      "volume": 6101,
-      "registered": 5962,
+      "volume": 6205,
+      "registered": 5997,
       "inpatient": 5961,
       "maternity": 1
     },
     "1.2.643.5.1.13.13.12.2.16.1161": {
-      "volume": 4254,
-      "registered": 4023,
+      "volume": 4324,
+      "registered": 4059,
       "inpatient": 4023,
       "maternity": 0
     },
     "1.2.643.5.1.13.13.12.2.16.1081": {
-      "volume": 4151,
-      "registered": 3872,
+      "volume": 4217,
+      "registered": 3968,
       "inpatient": 3872,
       "maternity": 0
     },
     "1.2.643.5.1.13.13.12.2.16.1042": {
-      "volume": 20333,
-      "registered": 20658,
+      "volume": 20648,
+      "registered": 20813,
       "inpatient": 20295,
       "maternity": 363
     },
     "1.2.643.5.1.13.13.12.2.16.1120": {
-      "volume": 7400,
-      "registered": 6161,
+      "volume": 7520,
+      "registered": 6377,
       "inpatient": 6131,
       "maternity": 30
     },
     "1.2.643.5.1.13.13.12.2.16.1052": {
-      "volume": 3389,
-      "registered": 2951,
+      "volume": 3434,
+      "registered": 3013,
       "inpatient": 2951,
       "maternity": 0
     },
     "1.2.643.5.1.13.13.12.2.16.1050": {
-      "volume": 4349,
-      "registered": 4044,
+      "volume": 4431,
+      "registered": 4093,
       "inpatient": 4044,
       "maternity": 0
     },
     "1.2.643.5.1.13.13.12.2.16.1113": {
-      "volume": 1245,
-      "registered": 981,
+      "volume": 1255,
+      "registered": 995,
       "inpatient": 981,
       "maternity": 0
     },
     "1.2.643.5.1.13.13.12.2.16.28030": {
-      "volume": 10174,
-      "registered": 9709,
+      "volume": 10379,
+      "registered": 9846,
       "inpatient": 9709,
       "maternity": 0
     },
     "1.2.643.5.1.13.13.12.2.16.1136": {
-      "volume": 14025,
-      "registered": 13631,
+      "volume": 14227,
+      "registered": 13792,
       "inpatient": 13631,
       "maternity": 0
     },
     "1.2.643.5.1.13.13.12.2.16.1163": {
-      "volume": 59735,
-      "registered": 58778,
+      "volume": 60662,
+      "registered": 59490,
       "inpatient": 51233,
       "maternity": 7545
     },
     "1.2.643.5.1.13.13.12.2.16.1070": {
-      "volume": 6800,
-      "registered": 5640,
+      "volume": 6927,
+      "registered": 5687,
       "inpatient": 5640,
       "maternity": 0
     },
     "1.2.643.5.1.13.13.12.2.16.1116": {
-      "volume": 11116,
-      "registered": 10580,
+      "volume": 11277,
+      "registered": 10744,
       "inpatient": 10580,
       "maternity": 0
     },
     "1.2.643.5.1.13.13.12.2.16.1112": {
-      "volume": 26364,
-      "registered": 24817,
+      "volume": 26820,
+      "registered": 25287,
       "inpatient": 24817,
       "maternity": 0
     },
     "1.2.643.5.1.13.13.12.2.16.1148": {
-      "volume": 4982,
-      "registered": 4692,
+      "volume": 5064,
+      "registered": 4693,
       "inpatient": 4692,
       "maternity": 0
     },
     "1.2.643.5.1.13.13.12.2.16.1090": {
-      "volume": 303,
-      "registered": 276,
+      "volume": 310,
+      "registered": 306,
       "inpatient": 276,
       "maternity": 0
     },
     "1.2.643.5.1.13.13.12.2.16.1074": {
-      "volume": 1478,
-      "registered": 732,
+      "volume": 1512,
+      "registered": 750,
       "inpatient": 732,
       "maternity": 0
     },
     "1.2.643.5.1.13.13.12.2.16.1080": {
-      "volume": 1265,
-      "registered": 1246,
+      "volume": 1275,
+      "registered": 1248,
       "inpatient": 1246,
       "maternity": 0
     },
     "1.2.643.5.1.13.13.12.2.16.1178": {
-      "volume": 2232,
-      "registered": 1344,
+      "volume": 2258,
+      "registered": 1705,
       "inpatient": 1344,
       "maternity": 0
     },
     "1.2.643.5.1.13.13.12.2.16.1179": {
-      "volume": 2246,
-      "registered": 2072,
+      "volume": 2276,
+      "registered": 2087,
       "inpatient": 2072,
       "maternity": 0
     },
     "1.2.643.5.1.13.13.12.2.16.1208": {
-      "volume": 2095,
-      "registered": 2075,
+      "volume": 2147,
+      "registered": 2119,
       "inpatient": 2075,
       "maternity": 0
     },
     "1.2.643.5.1.13.13.12.2.16.1147": {
-      "volume": 1480,
-      "registered": 1085,
+      "volume": 1499,
+      "registered": 1116,
       "inpatient": 1085,
       "maternity": 0
     },
     "1.2.643.5.1.13.13.12.2.16.1051": {
-      "volume": 1812,
-      "registered": 1733,
+      "volume": 1844,
+      "registered": 1760,
       "inpatient": 1733,
       "maternity": 0
     },
     "1.2.643.5.1.13.13.12.2.16.1153": {
-      "volume": 1536,
-      "registered": 1484,
+      "volume": 1556,
+      "registered": 1497,
       "inpatient": 1484,
       "maternity": 0
     },
     "1.2.643.5.1.13.13.12.2.16.1115": {
-      "volume": 919,
-      "registered": 813,
+      "volume": 756,
+      "registered": 706,
       "inpatient": 813,
       "maternity": 0
     },
     "1.2.643.5.1.13.13.12.2.16.1082": {
-      "volume": 2520,
-      "registered": 1899,
+      "volume": 2557,
+      "registered": 1915,
       "inpatient": 1899,
       "maternity": 0
     },
     "1.2.643.5.1.13.13.12.2.16.1135": {
-      "volume": 9234,
-      "registered": 7683,
+      "volume": 9374,
+      "registered": 7834,
       "inpatient": 7683,
       "maternity": 0
     },
     "1.2.643.5.1.13.13.12.2.16.1085": {
-      "volume": 6194,
-      "registered": 5873,
+      "volume": 6273,
+      "registered": 5889,
       "inpatient": 5873,
       "maternity": 0
     },
     "1.2.643.5.1.13.13.12.2.16.1202": {
-      "volume": 4338,
-      "registered": 4241,
+      "volume": 4420,
+      "registered": 4302,
       "inpatient": 4241,
       "maternity": 0
     },
     "1.2.643.5.1.13.13.12.2.16.1123": {
-      "volume": 5085,
-      "registered": 4729,
+      "volume": 5188,
+      "registered": 4793,
       "inpatient": 4729,
       "maternity": 0
     },
     "1.2.643.5.1.13.13.12.2.16.1182": {
-      "volume": 315,
-      "registered": 310,
+      "volume": 316,
+      "registered": 316,
       "inpatient": 310,
       "maternity": 0
     },
     "1.2.643.5.1.13.13.12.2.16.1045": {
-      "volume": 924,
-      "registered": 900,
+      "volume": 929,
+      "registered": 905,
       "inpatient": 900,
       "maternity": 0
     },
     "1.2.643.5.1.13.13.12.2.16.1067": {
-      "volume": 1281,
-      "registered": 1251,
+      "volume": 1286,
+      "registered": 1255,
       "inpatient": 1251,
       "maternity": 0
     },
@@ -663,301 +651,301 @@
       "maternity": 0
     },
     "1.2.643.5.1.13.13.12.2.16.1122": {
-      "volume": 521,
-      "registered": 515,
+      "volume": 526,
+      "registered": 518,
       "inpatient": 515,
       "maternity": 0
     },
     "1.2.643.5.1.13.13.12.2.16.1089": {
-      "volume": 388,
-      "registered": 378,
+      "volume": 395,
+      "registered": 387,
       "inpatient": 378,
       "maternity": 0
     },
     "1.2.643.5.1.13.13.12.2.16.1066": {
       "volume": 469,
-      "registered": 451,
+      "registered": 453,
       "inpatient": 451,
       "maternity": 0
     },
     "1.2.643.5.1.13.13.12.2.16.1193": {
-      "volume": 323,
-      "registered": 317,
+      "volume": 332,
+      "registered": 326,
       "inpatient": 317,
       "maternity": 0
     },
     "1.2.643.5.1.13.13.12.2.16.1155": {
-      "volume": 38412,
-      "registered": 37735,
+      "volume": 39006,
+      "registered": 37802,
       "inpatient": 37735,
       "maternity": 0
     },
     "1.2.643.5.1.13.13.12.2.16.1105": {
-      "volume": 3444,
-      "registered": 2962,
+      "volume": 3515,
+      "registered": 3263,
       "inpatient": 2962,
       "maternity": 0
     },
     "1.2.643.5.1.13.13.12.2.16.1099": {
-      "volume": 1469,
-      "registered": 1049,
+      "volume": 1504,
+      "registered": 1062,
       "inpatient": 1049,
       "maternity": 0
     },
     "1.2.643.5.1.13.13.12.2.16.1093": {
-      "volume": 17023,
-      "registered": 16767,
+      "volume": 17285,
+      "registered": 16861,
       "inpatient": 16750,
       "maternity": 17
     },
     "1.2.643.5.1.13.13.12.2.16.1072": {
-      "volume": 9964,
-      "registered": 9862,
+      "volume": 10161,
+      "registered": 9975,
       "inpatient": 9861,
       "maternity": 1
     },
     "1.2.643.5.1.13.13.12.2.16.1139": {
-      "volume": 29396,
-      "registered": 28215,
+      "volume": 29949,
+      "registered": 28607,
       "inpatient": 27734,
       "maternity": 481
     },
     "1.2.643.5.1.13.13.12.2.16.1154": {
-      "volume": 788,
-      "registered": 776,
+      "volume": 792,
+      "registered": 783,
       "inpatient": 776,
       "maternity": 0
     },
     "1.2.643.5.1.13.13.12.2.16.1131": {
-      "volume": 3590,
-      "registered": 3530,
+      "volume": 3635,
+      "registered": 3570,
       "inpatient": 3530,
       "maternity": 0
     },
     "1.2.643.5.1.13.13.12.2.16.1165": {
-      "volume": 4827,
-      "registered": 2984,
+      "volume": 4955,
+      "registered": 3479,
       "inpatient": 2984,
       "maternity": 0
     },
     "1.2.643.5.1.13.13.12.2.16.1044": {
-      "volume": 3819,
-      "registered": 3740,
+      "volume": 3887,
+      "registered": 3770,
       "inpatient": 3740,
       "maternity": 0
     },
     "1.2.643.5.1.13.13.12.2.16.1065": {
-      "volume": 22862,
-      "registered": 24072,
+      "volume": 23267,
+      "registered": 24465,
       "inpatient": 20550,
       "maternity": 3522
     },
     "1.2.643.5.1.13.13.12.2.16.1125": {
-      "volume": 13532,
-      "registered": 12004,
+      "volume": 13793,
+      "registered": 12138,
       "inpatient": 10688,
       "maternity": 1316
     },
     "1.2.643.5.1.13.13.12.2.16.1185": {
-      "volume": 5981,
-      "registered": 5416,
+      "volume": 6104,
+      "registered": 5547,
       "inpatient": 5416,
       "maternity": 0
     },
     "1.2.643.5.1.13.13.12.2.16.1144": {
-      "volume": 7795,
-      "registered": 7650,
+      "volume": 7954,
+      "registered": 7838,
       "inpatient": 7563,
       "maternity": 87
     },
     "1.2.643.5.1.13.13.12.2.16.1149": {
-      "volume": 4901,
-      "registered": 4524,
+      "volume": 5007,
+      "registered": 4634,
       "inpatient": 4524,
       "maternity": 0
     },
     "1.2.643.5.1.13.13.12.2.16.1073": {
-      "volume": 14150,
-      "registered": 13971,
+      "volume": 14469,
+      "registered": 14223,
       "inpatient": 13971,
       "maternity": 0
     },
     "1.2.643.5.1.13.13.12.2.16.1104": {
-      "volume": 8353,
-      "registered": 7985,
+      "volume": 8521,
+      "registered": 8058,
       "inpatient": 7985,
       "maternity": 0
     },
     "1.2.643.5.1.13.13.12.2.16.1058": {
-      "volume": 4820,
-      "registered": 3581,
+      "volume": 4916,
+      "registered": 3865,
       "inpatient": 3581,
       "maternity": 0
     },
     "1.2.643.5.1.13.13.12.2.16.1101": {
-      "volume": 3633,
-      "registered": 3512,
+      "volume": 3701,
+      "registered": 3567,
       "inpatient": 3512,
       "maternity": 0
     },
     "1.2.643.5.1.13.13.12.2.16.1055": {
-      "volume": 3851,
-      "registered": 2709,
+      "volume": 3918,
+      "registered": 2751,
       "inpatient": 2709,
       "maternity": 0
     },
     "1.2.643.5.1.13.13.12.2.16.1064": {
-      "volume": 11655,
-      "registered": 10027,
+      "volume": 11990,
+      "registered": 10208,
       "inpatient": 10027,
       "maternity": 0
     },
     "1.2.643.5.1.13.13.12.2.16.1171": {
-      "volume": 11384,
-      "registered": 12002,
+      "volume": 11589,
+      "registered": 12179,
       "inpatient": 10490,
       "maternity": 1512
     },
     "1.2.643.5.1.13.13.12.2.16.1059": {
-      "volume": 3264,
-      "registered": 1382,
+      "volume": 3337,
+      "registered": 2134,
       "inpatient": 1382,
       "maternity": 0
     },
     "1.2.643.5.1.13.13.12.2.16.1138": {
-      "volume": 7453,
-      "registered": 7252,
+      "volume": 7566,
+      "registered": 7333,
       "inpatient": 7197,
       "maternity": 55
     },
     "1.2.643.5.1.13.13.12.2.16.1192": {
-      "volume": 26845,
-      "registered": 26093,
+      "volume": 27292,
+      "registered": 26437,
       "inpatient": 26093,
       "maternity": 0
     },
     "1.2.643.5.1.13.13.12.2.16.1109": {
-      "volume": 4314,
-      "registered": 4054,
+      "volume": 4393,
+      "registered": 4065,
       "inpatient": 4054,
       "maternity": 0
     },
     "1.2.643.5.1.13.13.12.2.16.1168": {
-      "volume": 4704,
-      "registered": 4662,
+      "volume": 4802,
+      "registered": 4724,
       "inpatient": 4662,
       "maternity": 0
     },
     "1.2.643.5.1.13.13.12.2.16.1094": {
-      "volume": 3767,
-      "registered": 2364,
+      "volume": 3854,
+      "registered": 2398,
       "inpatient": 2364,
       "maternity": 0
     },
     "1.2.643.5.1.13.13.12.2.16.1041": {
-      "volume": 21749,
-      "registered": 19831,
+      "volume": 22111,
+      "registered": 20138,
       "inpatient": 19831,
       "maternity": 0
     },
     "1.2.643.5.1.13.13.12.2.16.1046": {
-      "volume": 12909,
-      "registered": 12449,
+      "volume": 13111,
+      "registered": 12692,
       "inpatient": 12449,
       "maternity": 0
     },
     "1.2.643.5.1.13.13.12.2.16.1063": {
-      "volume": 77068,
-      "registered": 74969,
+      "volume": 78237,
+      "registered": 75779,
       "inpatient": 74969,
       "maternity": 0
     },
     "1.2.643.5.1.13.13.12.2.16.1049": {
-      "volume": 943,
-      "registered": 938,
+      "volume": 961,
+      "registered": 949,
       "inpatient": 938,
       "maternity": 0
     },
     "1.2.643.5.1.13.13.12.2.16.9261": {
       "volume": 313,
-      "registered": 312,
+      "registered": 313,
       "inpatient": 312,
       "maternity": 0
     },
     "1.2.643.5.1.13.13.12.2.16.1133": {
-      "volume": 4322,
-      "registered": 4010,
+      "volume": 4414,
+      "registered": 4061,
       "inpatient": 4010,
       "maternity": 0
     },
     "1.2.643.5.1.13.13.12.2.16.1126": {
-      "volume": 6003,
-      "registered": 5954,
+      "volume": 6077,
+      "registered": 6056,
       "inpatient": 5923,
       "maternity": 31
     },
     "1.2.643.5.1.13.13.12.2.16.1169": {
-      "volume": 5873,
-      "registered": 5584,
+      "volume": 5986,
+      "registered": 5653,
       "inpatient": 5559,
       "maternity": 25
     },
     "1.2.643.5.1.13.13.12.2.16.1130": {
-      "volume": 4494,
-      "registered": 4405,
+      "volume": 4558,
+      "registered": 4469,
       "inpatient": 4405,
       "maternity": 0
     },
     "1.2.643.5.1.13.13.12.2.16.1140": {
-      "volume": 3638,
-      "registered": 3509,
+      "volume": 3718,
+      "registered": 3561,
       "inpatient": 3509,
       "maternity": 0
     },
     "1.2.643.5.1.13.13.12.2.16.1039": {
-      "volume": 2559,
-      "registered": 2426,
+      "volume": 2611,
+      "registered": 2466,
       "inpatient": 2426,
       "maternity": 0
     },
     "1.2.643.5.1.13.13.12.2.16.1097": {
-      "volume": 3672,
-      "registered": 3124,
+      "volume": 3717,
+      "registered": 3217,
       "inpatient": 3123,
       "maternity": 1
     },
     "1.2.643.5.1.13.13.12.2.16.1151": {
-      "volume": 13579,
-      "registered": 12575,
+      "volume": 13842,
+      "registered": 12729,
       "inpatient": 12575,
       "maternity": 0
     },
     "1.2.643.5.1.13.13.12.2.16.1162": {
-      "volume": 2925,
-      "registered": 2190,
+      "volume": 2959,
+      "registered": 2196,
       "inpatient": 2190,
       "maternity": 0
     },
     "1.2.643.5.1.13.13.12.2.16.1038": {
-      "volume": 16553,
-      "registered": 15833,
+      "volume": 16805,
+      "registered": 16068,
       "inpatient": 15629,
       "maternity": 204
     },
     "1.2.643.5.1.13.13.12.2.16.1040": {
-      "volume": 20224,
-      "registered": 19304,
+      "volume": 20584,
+      "registered": 19771,
       "inpatient": 19304,
       "maternity": 0
     },
     "1.2.643.5.1.13.13.12.2.16.1061": {
-      "volume": 252,
-      "registered": 235,
+      "volume": 258,
+      "registered": 241,
       "inpatient": 235,
       "maternity": 0
     },
     "1.2.643.5.1.13.13.12.4.16.1135": {
-      "volume": 395,
+      "volume": 396,
       "registered": 0,
       "inpatient": 0,
       "maternity": 0
@@ -969,7 +957,7 @@
       "maternity": 0
     },
     "1.2.643.5.1.13.13.12.2.16.30686": {
-      "volume": 108,
+      "volume": 109,
       "registered": 0,
       "inpatient": 0,
       "maternity": 0
@@ -999,7 +987,7 @@
       "maternity": 0
     },
     "1.2.643.5.1.13.13.12.2.16.1083": {
-      "volume": 41,
+      "volume": 51,
       "registered": 0,
       "inpatient": 0,
       "maternity": 0
@@ -1011,31 +999,31 @@
       "maternity": 0
     },
     "1.2.643.5.1.13.13.12.2.16.22878": {
-      "volume": 48,
+      "volume": 52,
       "registered": 0,
       "inpatient": 0,
       "maternity": 0
     },
     "1.2.643.5.1.13.13.12.2.16.1224": {
-      "volume": 553,
+      "volume": 558,
       "registered": 0,
       "inpatient": 0,
       "maternity": 0
     },
     "1.2.643.5.1.13.13.12.2.16.20953": {
-      "volume": 236,
+      "volume": 246,
       "registered": 0,
       "inpatient": 0,
       "maternity": 0
     },
     "1.2.643.5.1.13.13.12.2.16.14339": {
-      "volume": 1062,
+      "volume": 1084,
       "registered": 0,
       "inpatient": 0,
       "maternity": 0
     },
     "1.2.643.5.1.13.13.12.2.16.12459": {
-      "volume": 631,
+      "volume": 663,
       "registered": 0,
       "inpatient": 0,
       "maternity": 0
@@ -1047,13 +1035,13 @@
       "maternity": 0
     },
     "1.2.643.5.1.13.13.12.2.16.15115": {
-      "volume": 711,
+      "volume": 731,
       "registered": 0,
       "inpatient": 0,
       "maternity": 0
     },
     "1.2.643.5.1.13.13.12.2.16.21823": {
-      "volume": 237,
+      "volume": 261,
       "registered": 0,
       "inpatient": 0,
       "maternity": 0
@@ -1065,7 +1053,7 @@
       "maternity": 0
     },
     "1.2.643.5.1.13.13.12.2.16.22116": {
-      "volume": 427,
+      "volume": 428,
       "registered": 0,
       "inpatient": 0,
       "maternity": 0
@@ -1089,73 +1077,73 @@
       "maternity": 0
     },
     "1.2.643.5.1.13.13.12.2.16.1056": {
-      "volume": 13470,
-      "registered": 12680,
+      "volume": 13707,
+      "registered": 12868,
       "inpatient": 12680,
       "maternity": 0
     },
     "1.2.643.5.1.13.13.12.2.16.1231": {
-      "volume": 19294,
-      "registered": 19983,
+      "volume": 19582,
+      "registered": 20204,
       "inpatient": 18799,
       "maternity": 1184
     },
     "1.2.643.5.1.13.13.12.2.16.9665": {
-      "volume": 1324,
-      "registered": 1247,
+      "volume": 1360,
+      "registered": 1264,
       "inpatient": 1247,
       "maternity": 0
     },
     "1.2.643.5.1.13.13.12.2.16.9622": {
-      "volume": 1084,
-      "registered": 1072,
+      "volume": 1099,
+      "registered": 1088,
       "inpatient": 1072,
       "maternity": 0
     },
     "1.2.643.5.1.13.13.12.2.16.9641": {
-      "volume": 1655,
-      "registered": 1581,
+      "volume": 1683,
+      "registered": 1607,
       "inpatient": 1581,
       "maternity": 0
     },
     "1.2.643.5.1.13.13.12.2.16.9255": {
-      "volume": 902,
-      "registered": 786,
+      "volume": 911,
+      "registered": 825,
       "inpatient": 786,
       "maternity": 0
     },
     "1.2.643.5.1.13.13.12.2.16.9256": {
-      "volume": 105,
+      "volume": 106,
       "registered": 101,
       "inpatient": 101,
       "maternity": 0
     },
     "1.2.643.5.1.13.13.12.2.16.9258": {
-      "volume": 131,
-      "registered": 128,
+      "volume": 132,
+      "registered": 129,
       "inpatient": 128,
       "maternity": 0
     },
     "1.2.643.5.1.13.13.12.2.16.9259": {
-      "volume": 100,
-      "registered": 92,
+      "volume": 104,
+      "registered": 94,
       "inpatient": 92,
       "maternity": 0
     },
     "1.2.643.5.1.13.13.12.2.16.9667": {
-      "volume": 233,
+      "volume": 235,
       "registered": 223,
       "inpatient": 223,
       "maternity": 0
     },
     "1.2.643.5.1.13.13.12.2.16.9257": {
-      "volume": 129,
-      "registered": 128,
+      "volume": 132,
+      "registered": 131,
       "inpatient": 128,
       "maternity": 0
     },
     "1.2.643.5.1.13.13.12.2.16.1197": {
-      "volume": 4268,
+      "volume": 4341,
       "registered": 0,
       "inpatient": 0,
       "maternity": 0
