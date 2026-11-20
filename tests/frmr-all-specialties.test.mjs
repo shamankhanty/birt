@@ -58,7 +58,7 @@ test('UI keeps all specialties and MO controls while removing obsolete archive a
  assert.doesNotMatch(ui,/Прежний перечень · архив/);
  assert.doesNotMatch(ui,/Привязки ФРМО · 30\.10/);
  assert.match(ui,/На уровне МО/);assert.match(ui,/Привязки СП · справочно/);
- assert.match(ui,/Сравнение \{comparison.cut\}/);assert.match(ui,/<th>Δ<\/th>/);
+ assert.match(ui,/Сравнение \{comparisonOverview.cut\}/);assert.match(ui,/<th>Δ<\/th>/);
  assert.doesNotMatch(ui,/\.filter\(.*role.*14/);
 });
 
