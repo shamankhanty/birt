@@ -49,7 +49,7 @@ test("public dataset is aggregated, not a staff registry", () => {
   assert.doesNotMatch(raw,/\b\d{11}\b/u);
   for(const row of detailed.rows)assert.equal(row.length,5);
   const workspace=fs.readFileSync("app/frmr-mo-workspace.tsx","utf8");
-  assert.match(component,/FrmrMoWorkspace selectedId=/u);
+  assert.match(component,/FrmrMoWorkspace key=/u);
   assert.match(workspace,/Подразделения с расхождениями/u);
   assert.match(workspace,/Открыт|Все расхождения выбранной МО/u);
   assert.match(workspace,/noPosition/u);
