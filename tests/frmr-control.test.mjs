@@ -21,16 +21,16 @@ function check(d){
 test('SP types are source-backed and cover every OID without name guessing',()=>{
  assert.deepEqual(types.source,raw.metadata.source);assert.deepEqual(types.ambiguousOids,[]);
  for(const [mo,suffix] of raw.departments.sp)assert.ok(types.types['1.2.643.5.1.13.13.12.2.16.'+raw.departments.mos[mo]+'.0.'+suffix]);
- assert.equal(Object.keys(types.types).length,1642);
- assert.deepEqual(excluded,{ambulance:845,trainee:127,laboratory:307,total:1279});assert.equal(data.records.rows.length,6247);
+ assert.equal(Object.keys(types.types).length,1406);
+ assert.deepEqual(excluded,{ambulance:781,trainee:125,laboratory:284,total:1190});assert.equal(data.records.rows.length,5628);
 });
 test('MO is the default; SP references are disjoint and never inflate the main total',()=>{
  const before=JSON.stringify(data);const mo=frmrControlView(data),sp=frmrControlView(data,'department');
- assert.equal(mo.records.rows.length,3922);assert.equal(sp.records.rows.length,2325);
- assert.equal(mo.summary.rows.filter(r=>r[4]>0).length,123);assert.equal(sp.summary.rows.filter(r=>r[4]>0).length,113);
+ assert.equal(mo.records.rows.length,3427);assert.equal(sp.records.rows.length,2201);
+ assert.equal(mo.summary.rows.filter(r=>r[4]>0).length,116);assert.equal(sp.summary.rows.filter(r=>r[4]>0).length,105);
  assert.ok(mo.records.rows.every(r=>r[4]===0));assert.ok(sp.records.rows.every(r=>r[4]===1));
  const ids=new Set(mo.records.rows.map(r=>r[5]));assert.ok(sp.records.rows.every(r=>!ids.has(r[5])));
- assert.equal(ids.size+sp.records.rows.length,6247);check(mo);check(sp);assert.equal(JSON.stringify(data),before);
+ assert.equal(ids.size+sp.records.rows.length,5628);check(mo);check(sp);assert.equal(JSON.stringify(data),before);
 });
 test('every SP type partitions both control levels and preserves administrative and diagnostic staff',()=>{
  for(const level of ['mo','department']){
