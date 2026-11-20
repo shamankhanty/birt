@@ -81,7 +81,8 @@ def main() -> None:
             source_warning = str(row.get("sourceWarning") or "").lower()
             if is_valid_no_current_source_row(metric, row):
                 continue
-            if row.get("sourceStatus") == "no_source_row" or source_warning.startswith(("нет строки в исходном перечне", "нет строки в выгрузке")):
+            if (row.get("sourceStatus") in ("no_source_row", "absent_current_source")
+                    and row.get("fact") is None and row.get("count") is None) or source_warning.startswith(("нет строки в исходном перечне", "нет строки в выгрузке")):
                 # Управленческий справочник может содержать применимую МО,
                 # которой нет в текущем исходнике. Такая строка должна явно
                 # показываться как «Нет данных», а не подменяться нулём.

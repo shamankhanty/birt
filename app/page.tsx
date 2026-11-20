@@ -42,6 +42,9 @@ import maxPeriodViewsRaw from "./max-period-views.json";
 import maxAppointmentPlanRaw from "./max-appointment-plan.json";
 import unitDataRaw from "./unit-data.json";
 import unitMoSnapshotsRaw from "./unit-mo-snapshots.json";
+import tvspExcludedObjectsRaw from "./tvsp-excluded-objects.json";
+import tvspCompositionChangesRaw from "./tvsp-composition-changes.json";
+import smpStatusesRaw from "./smp-statuses.json";
 import organizationStatusRaw from "./organization-status.json";
 import moRegistryRaw from "./mo-registry.json";
 import electronicWaybillRaw from "./electronic-waybill.json";
@@ -9192,6 +9195,19 @@ export default function Home() {
                     : selectedDataset.note}
                 </p>
               )}
+              {matrixMetric === "doctorsAll" && (
+                <p className="sourceDataNote"><b>Ноябрь — справочно:</b> 10 601 из 13 784 врачей, 76,91% за ноябрь по BI ЕГИСЗ от 19.11.2026. Месячный результат не заменяет накопительный итог января–октября 81,95% и не участвует в закрытом октябрьском рейтинге.</p>
+              )}
+              {matrixMetric === "egpu2days" && (
+                <p className="sourceDataNote"><b>Ноябрь — справочно:</b> 4 022 из 4 185 заявлений, 96,11% за 01–19.11.2026 по ГИС ЭЗ РТ. Основной накопительный показатель: 41 610 из 48 559, 85,69%. Расхождения статусов и периода учёта 21 МО не считаются автоматически нарушением.</p>
+              )}
+              {matrixMetric === "smp" && (
+                <details className="sourceDataNote">
+                  <summary>Карты вызова СМП · статусы АСУ ССМП ({smpStatusesRaw.date})</summary>
+                  <p>Зарегистрировано: {format(smpStatusesRaw.total.registered, 0)} из {format(smpStatusesRaw.total.cards, 0)}. Отправлено, ожидают регистрации: {format(smpStatusesRaw.total.sentAwaitingRegistration, 0)}; отказ: {format(smpStatusesRaw.total.rejected, 0)}; ожидают заполнения: {format(smpStatusesRaw.total.awaitingCompletion, 0)}; ожидают подписания: {format(smpStatusesRaw.total.awaitingSignature, 0)}. Прочие статусы: не отправлено {format(smpStatusesRaw.total.notSent, 0)}, не подлежит передаче {format(smpStatusesRaw.total.notForTransmission, 0)}.</p>
+                  {smpStatusesRaw.rows.map((row) => <p key={row.name}><b>{row.name}:</b> принято {format(row.registered, 0)} / {format(row.cards, 0)}; отправлено {format(row.sentAwaitingRegistration, 0)}; отказ {format(row.rejected, 0)}; ожидают заполнения {format(row.awaitingCompletion, 0)}, подписания {format(row.awaitingSignature, 0)}</p>)}
+                </details>
+              )}
               {matrixMetric === "hospitalCount" && (
                 <p className="sourceDataNote">
                   <b>Контроль полноты:</b> весь исходный файл — {format(operationalMoRaw.hospitalCount.total, 0)} случаев.
@@ -9531,6 +9547,21 @@ export default function Home() {
                   {selectedUnitDataset ? (
                     <>
                       <UnitMoOverview dataset={selectedUnitDataset} previous={unitMoSnapshots[matrixMetric]?.previous} />
+                      {(tvspCompositionChangesRaw as Record<string, { previousDate: string; currentDate: string; organizations: Array<{ mo: string; oid: string; previousBuildings: number | null; currentBuildings: number | null; previousRegistered: number | null; currentRegistered: number | null; excludedBuildings: string[]; excludedSubunitOids: string[]; newBuildings: string[]; newSubunitOids: string[]; status: string }> }>)[matrixMetric]?.organizations.length > 0 && (
+                        <details className="unitDetail">
+                          <summary>Изменения состава ТВСП · МО и OID ({tvspCompositionChangesRaw[matrixMetric as keyof typeof tvspCompositionChangesRaw].organizations.length})</summary>
+                          <p>Отсутствие объекта в новой выгрузке само по себе не означает ошибку МО. Состав зданий и СП требует сверки с ФРМО.</p>
+                          {tvspCompositionChangesRaw[matrixMetric as keyof typeof tvspCompositionChangesRaw].organizations.map((item) => (
+                            <p key={item.oid}><b>{item.mo}</b> · OID {item.oid} · объекты {tvspCompositionChangesRaw[matrixMetric as keyof typeof tvspCompositionChangesRaw].previousDate}: {item.previousBuildings ?? "нет данных"} → {item.currentBuildings ?? "нет данных"}; передают {item.previousRegistered ?? "нет данных"} → {item.currentRegistered ?? "нет данных"} · {item.status}. {item.excludedBuildings.length ? `Исключены здания: ${item.excludedBuildings.join(", ")}. ` : ""}{item.newBuildings.length ? `Новые здания: ${item.newBuildings.join(", ")}. ` : ""}{item.excludedSubunitOids.length ? `Исключены OID СП: ${item.excludedSubunitOids.join(", ")}. ` : ""}{item.newSubunitOids.length ? `Новые OID СП: ${item.newSubunitOids.join(", ")}.` : ""}</p>
+                          ))}
+                          <b>Исключённые из нового перечня объекты</b>
+                          {tvspExcludedObjectsRaw[matrixMetric as keyof typeof tvspExcludedObjectsRaw].map((item) => (
+                            <p key={`${item.moOid}:${item.buildingId}`}>
+                              <b>{item.mo}</b> · OID МО {item.moOid} · здание {item.buildingId} · OID СП {item.subunitOids || "не указан"} · прежний срез {item.previousDate}
+                            </p>
+                          ))}
+                        </details>
+                      )}
                       {selectedGuidance && (
                         <ActionGuide guidance={selectedGuidance} />
                       )}

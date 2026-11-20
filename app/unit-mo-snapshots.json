@@ -1,7 +1,7 @@
 {
   "tvspStationary": {
     "previous": {
-      "date": "13.11.2026",
+      "date": "15.11.2026",
       "total": 93,
       "good": 65,
       "partial": 28,
@@ -10,7 +10,7 @@
   },
   "tvspAmbulatory": {
     "previous": {
-      "date": "13.11.2026",
+      "date": "15.11.2026",
       "total": 111,
       "good": 91,
       "partial": 20,
@@ -19,7 +19,7 @@
   },
   "tvspLaboratory": {
     "previous": {
-      "date": "13.11.2026",
+      "date": "15.11.2026",
       "total": 80,
       "good": 80,
       "partial": 0,

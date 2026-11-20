@@ -1289,8 +1289,15 @@ def _asu_rows(path: Path):
     try:
         import xlrd  # type: ignore
         book=xlrd.open_workbook(str(path),formatting_info=True);sh=book.sheet_by_index(0)
-        for i in range(8,sh.nrows):
-            vals=[sh.cell_value(i,c) for c in range(sh.ncols)];cell=sh.cell(i,0);bold=bool(book.font_list[book.xf_list[cell.xf_index].font_index].bold);yield vals,bold
+        header_seen=False
+        for i in range(sh.nrows):
+            vals=[sh.cell_value(i,c) for c in range(sh.ncols)]
+            if str(vals[0]).strip()=="Станция СМП" and "Количество карт" in str(vals[1]):
+                header_seen=True
+                continue
+            if not header_seen:continue
+            cell=sh.cell(i,0);bold=bool(book.font_list[book.xf_list[cell.xf_index].font_index].bold)
+            yield vals,bold
         return
     except ImportError:
         soffice=shutil.which("soffice") or shutil.which("libreoffice")
@@ -1309,13 +1316,18 @@ def _asu_rows(path: Path):
 
 def adapt_asu_smp(app: Path, source: Path, end: date) -> AdapterResult:
     mo,details=(load(app,x) for x in ["mo-data.json","mo-details.json"]);base=mo.get("smp",{});prev=previous_rows_from_dataset(base);rows=[];same_cut=base.get("date")==date_ru(end)
+    source_totals=None
     for r,bold in _asu_rows(source):
+        if is_total(r[0]) and len(r)>10 and isinstance(r[1],(int,float)):
+            source_totals=(n(r[1]),n(r[10]))
         if len(r)<=10 or not bold or not str(r[0] or "").strip() or is_total(r[0]):continue
         name=str(r[0]).strip();vol=n(r[1]);reg=n(r[10]);fact=reg/vol*100 if vol else 0;old=prev.get(norm(name));pv,trend=previous_fields(old,same_cut,fact)
         rows.append({"name":name,"fact":fact,"count":reg,"volume":vol,"registered":reg,"previous":pv,"trend":trend})
     if not rows:raise ValueError("АСУ СМП: не найдено итоговых строк организаций")
     base=mo.get("smp",{})
     current_numerator=sum(r["registered"] for r in rows); current_denominator=sum(r["volume"] for r in rows)
+    if source_totals is None or (current_denominator,current_numerator)!=source_totals:
+        raise ValueError(f"АСУ СМП: сумма МО {current_denominator}/{current_numerator} не совпадает с итогом источника {source_totals}")
     mo["smp"]={**base,"date":date_ru(end),"period":period_cumulative(end),
                **previous_cut_metadata(base,end),**previous_summary_metadata(base,end),
                "numerator":current_numerator,"denominator":current_denominator,
