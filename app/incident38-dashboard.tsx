@@ -177,6 +177,7 @@ export default function Incident38Dashboard() {
       .map((row) => row.epguSlots! / row.norm! * 100);
     return [specialty.code, { median: median(values), count: values.length }] as const;
   }));
+  const frmrReviewRows = selectedSpecialties.filter((row) => row.norm === 0 && row.epguSlots !== null && row.epguSlots > 0);
   const displaySpecialties = selectedSpecialties.filter((row) => !selectedSpecialty || row.code === selectedSpecialty);
   const comparisonRows = displaySpecialties.map((row) => {
     const benchmark = benchmarkBySpecialty.get(row.code);
@@ -308,7 +309,7 @@ export default function Incident38Dashboard() {
           </div></td></tr>}</Fragment>;
           })}
         </tbody></table></div>
-        <p className={styles.matrixMethod}>Расчёт: процент слотов ЕПГУ от общего норматива ÷ 70% × 100%. Например, 70% общего норматива — это 100% выполнения плана. «Спец. с 0 слотами» учитывает только специальности с заданным положительным нормативом.</p><p className={styles.matrixMobileHint}>Нажмите «Специальности» в строке МО, чтобы увидеть разбивку по 14 специальностям.</p>
+        <p className={styles.matrixMethod}>Расчёт: процент слотов ЕПГУ от общего норматива ÷ 70% × 100%. Например, 70% общего норматива — это 100% выполнения плана. «Спец. с 0 слотами» учитывает только специальности с заданным положительным нормативом. Если норматив равен 0, но слоты ЕПГУ есть, проверьте должность и привязку СП в разделе 06 «ФРМР ↔ ГИС»; это отдельный диагностический случай.</p><p className={styles.matrixMobileHint}>Нажмите «Специальности» в строке МО, чтобы увидеть разбивку по 14 специальностям.</p>
         {matrixRows.length === 0 && <p className={styles.empty}>МО по такому названию не найдены.</p>}
       </section>
     </main>}
@@ -330,12 +331,13 @@ export default function Incident38Dashboard() {
           <article><strong>{format(orgMetrics(selectedOrg).targetSlots)}</strong><span>Слотов нужно для плана</span><small>70% общего норматива, округление вверх</small></article>
           <article><strong>{format(orgMetrics(selectedOrg).deficit)}</strong><span>Не хватает до плана</span><small>минимальное число дополнительных слотов ЕПГУ</small></article>
         </div>
+        {frmrReviewRows.length > 0 && <p className={styles.chartNote}><b>Проверить ФРМР: {frmrReviewRows.length} специальностей.</b> Есть слоты ЕПГУ при нулевом нормативе. Проверьте раздел 06 «ФРМР ↔ ГИС»: свою МО во вкладках «На уровне МО» и «Привязки СП · справочно». Подтверждённые ошибки исправьте в ФРМР. Нулевой норматив сам по себе не доказывает ошибку.</p>}
         <div className={styles.sectionHead}><div><h2>Показатели по специальностям</h2><p>Значения по специальностям справочные: план 70% применяется к общему показателю МО. Медиана сравнивает МО с другими организациями того же набора выгрузки.</p></div><select className={styles.inlineSelect} value={selectedSpecialty} onChange={(event) => setSelectedSpecialty(event.target.value)}><option value="">Все специальности</option>{SPECIALTIES.map((specialty) => <option key={specialty.code} value={specialty.code}>{specialty.name}</option>)}</select></div>
         <div className={styles.tableScroll}><table className={styles.table}><thead><tr><th>Специальность</th><th>Норматив ВСЕГО</th><th>Слотов для ЕПГУ</th><th>И‑38.9, %</th><th>Медиана выборки, %</th><th>Отклонение, п.п.</th><th>МО в выборке</th></tr></thead><tbody>
           {displaySpecialties.map((row) => {
             const benchmark = benchmarkBySpecialty.get(row.code);
             const difference = row.coverage !== null && benchmark?.median !== null && benchmark?.median !== undefined ? row.coverage - benchmark.median : null;
-            return <tr key={row.code}><td className={styles.orgName}>{row.name}</td><td>{format(row.norm)}</td><td>{format(row.epguSlots)}</td><td className={`${styles.metricCell} ${specialtyBand(row.coverage)}`}>{percent(row.coverage)}</td><td>{percent(benchmark?.median ?? null)}</td><td className={difference === null ? styles.neutral : difference >= 0 ? styles.good : styles.belowNorm}>{difference === null ? "—" : <>{difference > 0 ? "+" : ""}{numberFormat.format(difference)}</>}</td><td>{benchmark?.count ?? 0}</td></tr>;
+            return <tr key={row.code}><td className={styles.orgName}>{row.name}{row.norm === 0 && row.epguSlots !== null && row.epguSlots > 0 && <small style={{ display: "block", color: "#986118", fontWeight: 700 }}>Проверить ФРМР</small>}</td><td>{format(row.norm)}</td><td>{format(row.epguSlots)}</td><td className={`${styles.metricCell} ${specialtyBand(row.coverage)}`}>{percent(row.coverage)}</td><td>{percent(benchmark?.median ?? null)}</td><td className={difference === null ? styles.neutral : difference >= 0 ? styles.good : styles.belowNorm}>{difference === null ? "—" : <>{difference > 0 ? "+" : ""}{numberFormat.format(difference)}</>}</td><td>{benchmark?.count ?? 0}</td></tr>;
           })}
         </tbody></table></div>
         <section className={styles.orgInsights}>
