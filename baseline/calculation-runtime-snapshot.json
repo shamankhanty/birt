@@ -172,7 +172,7 @@
       "source": "physician-metrics"
     },
     "egpu": {
-      "fact": 99.6149014600795,
+      "fact": 99.61490146007948,
       "plan": 100,
       "date": "19.11.2026",
       "previous": null,
@@ -492,7 +492,7 @@
       "source": "mo-details"
     },
     "egpu": {
-      "fact": 99.6149014600795,
+      "fact": 99.61490146007948,
       "plan": 100,
       "date": "19.11.2026",
       "quantity": 48372,
@@ -753,5 +753,5 @@
     }
   },
   "approvedStaticVsRuntimeDivergences": [],
-  "sha256": "ff8b709fa659020b89c5ad32c29d086abcd23ae14f05f65c438322777dee76e6"
+  "sha256": "6d2a33a2a32a911b7a95c4738e8ebb97572bf7eda00b094f8a7dafbf4132e12c"
 }
