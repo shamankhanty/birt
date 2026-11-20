@@ -116,11 +116,11 @@ export default function FrmrMoWorkspace({ selectedId, selectedName }: { selected
   const visible = data.rows.filter(row => (filter === "all" || row.category === filter) &&
     (!onlyIssues || row.flagged) &&
     (!query || (row.reason + " " + row.role + " " + row.frmrDepartment + " " + row.gisDepartment + " " + row.oid)
-      .toLocaleLowerCase("ru").includes(query.toLocaleLowerCase("ru")));
+      .toLocaleLowerCase("ru").includes(query.toLocaleLowerCase("ru"))));
   const active = data.rows.find(row => row.key === activeKey) ?? null;
   const groupedDepartments = data.rows.filter(row => row.flagged)
     .reduce((map, row) => {
-      const key = row.frmrDepartment + " · " + row.oid;
+      const key = (row.category === "frmo" ? "ФРМО · " : "ФРМР · ") + row.frmrDepartment + " · " + row.oid;
       map.set(key, (map.get(key) ?? 0) + row.count);
       return map;
     }, new Map<string, number>());
