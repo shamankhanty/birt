@@ -9,7 +9,7 @@ test("Section 06 keeps overview first and routes organization work to unified MO
   assert.match(page, /useState<"minister" \| "organization" \| "audit">\("minister"\)/);
   assert.match(page, /Обзор<\/button>/);
   assert.match(page, /view === "minister" \? \(/);
-  assert.match(page, /FrmrMoWorkspace selectedId=\{selected.id\} selectedName=\{selected.name\}/);
+  assert.match(page, /FrmrMoWorkspace key=\{selected.id\} selectedId=\{selected.id\} selectedName=\{selected.name\}/);
   assert.doesNotMatch(page, /Сверка СП с ФРМО<\/button>/);
   assert.match(card, /Все расхождения выбранной МО/);
   assert.match(card, /Должности \/ МО/);
