@@ -286,7 +286,6 @@ export default function FrmrMoWorkspace({ selectedId, selectedName }: { selected
           {data.auditOrg && <p>Строк в своде СП: {format(data.auditOrg.current)} на {auditRaw.sourceCut}; {format(data.auditOrg.previous)} на {auditRaw.previousCut}; {format(data.auditOrg.old)} на {auditRaw.historicCut}. Это состав строк, а не динамика подтверждённых ошибок.</p>}
           <p>Из подсчётов ФРМР исключены согласованные категории персонала; история не переписывается, снижение числа строк само по себе не доказывает исправление.</p>
         </details>
-      </div>
     </div>
   </div>;
 }
