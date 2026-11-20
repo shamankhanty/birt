@@ -45,3 +45,11 @@ test("И38: Сабинская ЦРБ — детские специалисты 
   assert.deepEqual([byCode.get("15").norm,byCode.get("15").epguSlots], [350,241], "офтальмолог");
   assert.deepEqual([byCode.get("14").norm,byCode.get("14").epguSlots], [300,65], "оториноларинголог");
 });
+
+test("И38: карточка МО направляет на сверку ФРМР при нулевом нормативе и наличии слотов", () => {
+  const ui = readFileSync(new URL("../app/incident38-dashboard.tsx", import.meta.url), "utf8");
+  assert.match(ui, /row\.norm === 0 && row\.epguSlots !== null && row\.epguSlots > 0/);
+  assert.match(ui, /Проверить ФРМР/);
+  assert.match(ui, /«На уровне МО»/);
+  assert.match(ui, /«Привязки СП · справочно»/);
+});
