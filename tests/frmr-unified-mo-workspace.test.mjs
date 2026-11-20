@@ -45,7 +45,7 @@ test("MO workspace uses full-width table without redundant sidebar and restores 
   assert.doesNotMatch(ui, /Что исправлять сначала|Сводка по типам проблем|Как проверить/);
   assert.doesNotMatch(ui, /Подразделения с расхождениями \(/);
   assert.doesNotMatch(ui, /<th>Источник \/ дата<\/th>/);
-  assert.match(ui, /Должность → СП → конкретные записи/);
+  assert.match(ui, /должность → СП → конкретные записи/);
   assert.match(ui, /matchingRoles\.map/);
   assert.match(ui, /departmentGroups\.map/);
   assert.match(ui, /filteredEmployees\.slice\(0,recordsShown\)/);
