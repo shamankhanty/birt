@@ -562,12 +562,12 @@
       "source": "page-baseline"
     },
     "semd228": {
-      "fact": 89.99035093390032,
+      "fact": 90.99438560638706,
       "plan": 95,
-      "date": "15.11.2026",
-      "quantity": 2151548,
-      "numerator": 2151548,
-      "denominator": 2366215,
+      "date": "19.11.2026",
+      "quantity": 2320729,
+      "numerator": 2320729,
+      "denominator": 2550409,
       "method": "ratio_components",
       "source": "mo-details"
     },
@@ -753,5 +753,5 @@
     }
   },
   "approvedStaticVsRuntimeDivergences": [],
-  "sha256": "2602a8ea8b2a8a8a840d9c6018ea587128d3599b8b3a959282d9f9cfa9ce5f3c"
+  "sha256": "6acce690dafe7902e25d3ddb352e5466454796a46b29096095fdfe9cbfdf62d1"
 }
