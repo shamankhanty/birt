@@ -323,7 +323,7 @@ export default function FrmrReconciliation() {
               </>}
             </div>
           </section>
-          {selected && <FrmrMoWorkspace selectedId={selected.id} selectedName={selected.name} />}
+          {selected && <FrmrMoWorkspace key={selected.id} selectedId={selected.id} selectedName={selected.name} />}
         </>
       )}
       <div className={styles.footnote}>
