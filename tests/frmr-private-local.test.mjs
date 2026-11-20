@@ -21,17 +21,18 @@ test("MO details preserve role/SP navigation and only masked identifier suffixes
   const workspace=fs.readFileSync("app/frmr-mo-workspace.tsx","utf8");
   const styling=fs.readFileSync("app/frmr-mo-workspace.module.css","utf8");
   assert.match(workspace,/active\.staffRecords/u);
-  assert.match(workspace,/Строка \{rec\[5\]\}/u);
-  assert.match(workspace,/rec\[3\] \? "•••-•••-•"/u);
+  assert.match(workspace,/№ \{record\[5\]\}/u);
+  assert.match(workspace,/record\[3\]===null \? "Нет данных" : "•••-•••-•"/u);
   assert.match(workspace,/OID для сверки/u);
   assert.match(workspace,/Нажмите на проблему для детализации/u);
-  assert.match(styling,/\.layout/u);
+  assert.match(styling,/\.drillGrid/u);
   assert.match(styling,/\.rowButton/u);
   assert.match(style,/moSearchResults/u);
   assert.match(component,/aria-autocomplete="list"/u);
   assert.match(component,/moMatches/u);
   assert.match(component,/row\.id\.includes\(q\)/u);
-  assert.doesNotMatch(workspace,/полный СНИЛС|ФИО врача/u);
+  assert.match(workspace,/Последние 4 цифры СНИЛС/u);
+  assert.doesNotMatch(workspace,/\b\d{11}\b/u);
 });
 
 test("existing source retains exact source totals without synthesizing unseen names", () => {

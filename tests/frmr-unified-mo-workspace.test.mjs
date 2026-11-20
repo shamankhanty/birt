@@ -38,3 +38,21 @@ test("Saby has one stable MO identity in both sources, without summing different
   assert.equal(data.summary.sourceCut, "19.11.2026");
   assert.equal(audit.sourceCut, "19.11.2026");
 });
+
+test("MO workspace uses full-width table without redundant sidebar and restores employee drilldown", () => {
+  const ui = readFileSync(new URL("../app/frmr-mo-workspace.tsx", import.meta.url), "utf8");
+  const css = readFileSync(new URL("../app/frmr-mo-workspace.module.css", import.meta.url), "utf8");
+  assert.doesNotMatch(ui, /Что исправлять сначала|Сводка по типам проблем|Как проверить/);
+  assert.doesNotMatch(ui, /Подразделения с расхождениями \(/);
+  assert.doesNotMatch(ui, /<th>Источник \/ дата<\/th>/);
+  assert.match(ui, /Должность → СП → конкретные записи/);
+  assert.match(ui, /roleCounts\.map/);
+  assert.match(ui, /departmentGroups\.map/);
+  assert.match(ui, /filteredEmployees\.slice\(0,recordsShown\)/);
+  assert.match(ui, /Последние 4 цифры СНИЛС/);
+  assert.match(ui, /row\.staffRecords/);
+  assert.match(ui, /record\[3\]===null \? "Нет данных" : "•••-•••-•"/);
+  assert.match(ui, /staffSource\.summary\.sourceCut/);
+  assert.match(css, /\.content\{display:flex/);
+  assert.doesNotMatch(ui, /className=\{styles\.sidebar\}/);
+});

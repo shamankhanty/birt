@@ -55,6 +55,12 @@ export default function FrmrMoWorkspace({ selectedId, selectedName }: { selected
   const [onlyIssues, setOnlyIssues] = useState(true);
   const [shown, setShown] = useState(60);
   const [activeKey, setActiveKey] = useState<string | null>(null);
+  const [roleSearch, setRoleSearch] = useState("");
+  const [drillRole, setDrillRole] = useState<string | null>(null);
+  const [drillOid, setDrillOid] = useState<string | null>(null);
+  const [drillIssue, setDrillIssue] = useState<"all" | "mo" | "department">("all");
+  const [last4Query, setLast4Query] = useState("");
+  const [recordsShown, setRecordsShown] = useState(50);
   const data = useMemo(() => {
     const org = staffSource.summary.rows.find(row => row[0] === selectedId);
     const auditOrg = resolveAuditOrganization(selectedId, selectedName);
@@ -118,12 +124,28 @@ export default function FrmrMoWorkspace({ selectedId, selectedName }: { selected
     (!query || (row.reason + " " + row.role + " " + row.frmrDepartment + " " + row.gisDepartment + " " + row.oid)
       .toLocaleLowerCase("ru").includes(query.toLocaleLowerCase("ru"))));
   const active = data.rows.find(row => row.key === activeKey) ?? null;
-  const groupedDepartments = data.rows.filter(row => row.flagged)
-    .reduce((map, row) => {
-      const key = (row.category === "frmo" ? "ФРМО · " : "ФРМР · ") + row.frmrDepartment + " · " + row.oid;
-      map.set(key, (map.get(key) ?? 0) + row.count);
-      return map;
-    }, new Map<string, number>());
+  const staffRows = data.rows.filter(row => row.category !== "frmo");
+  const roleCounts = [...staffRows.reduce((map, row) => {
+    map.set(row.role, (map.get(row.role) ?? 0) + row.count);
+    return map;
+  }, new Map<string, number>()).entries()].filter(([role]) =>
+    role.toLocaleLowerCase("ru").includes(roleSearch.trim().toLocaleLowerCase("ru")))
+    .sort((a, b) => b[1] - a[1] || a[0].localeCompare(b[0], "ru"));
+  const roleRows = staffRows.filter(row => row.role === drillRole);
+  const departmentGroups = [...roleRows.reduce((map, row) => {
+    const existing = map.get(row.oid) ?? { oid: row.oid, name: row.frmrDepartment, mo: 0, department: 0 };
+    existing[row.category as "mo" | "department"] += row.count;
+    map.set(row.oid, existing);
+    return map;
+  }, new Map<string, {oid: string; name: string; mo: number; department: number}>()).values()]
+    .sort((a, b) => (b.mo + b.department) - (a.mo + a.department) || a.name.localeCompare(b.name, "ru"));
+  const chosenRows = roleRows.filter(row => row.oid === drillOid && (drillIssue === "all" || row.category === drillIssue));
+  const employeeRecords = chosenRows.flatMap(row => (row.staffRecords ?? []).map(rec => ({
+    record: rec, category: row.category, issue: row.reason,
+  }))).sort((a, b) => a.record[5] - b.record[5]);
+  const trimmedLast4 = last4Query.replace(/\D/g, "").slice(0, 4);
+  const filteredEmployees = employeeRecords.filter(({record}) => !trimmedLast4 || record[3]?.includes(trimmedLast4));
+
 
   function saveCsv() {
     const header = ["Тип", "Проблема", "Должность", "Подразделение ФРМР", "Подразделение ГИС/ФРМО", "OID", "Количество", "Источник", "Дата"];
@@ -154,8 +176,7 @@ export default function FrmrMoWorkspace({ selectedId, selectedName }: { selected
       <article><span>СП ↔ ФРМО</span><strong>{format(data.flaggedFrmo)}</strong><small>Строк с диагностическими признаками · {auditRaw.sourceCut}</small></article>
     </div>
     {!data.auditOrg && <p className={styles.warning} role="status">В источнике привязок СП не удалось однозначно сопоставить эту МО. Значение ФРМО не рассчитано и не заменено нулём. Проверьте OID и код МО в справочнике.</p>}
-    <div className={styles.layout}>
-      <div className={styles.left}>
+    <div className={styles.content}>
         <section className={styles.tableCard}>
           <nav className={styles.tabs} aria-label="Типы расхождений">
             {([["all", "Все проблемы"], ["mo", "Должности / МО"], ["department", "Привязки СП"], ["frmo", "СП ↔ ФРМО"]] as const).map(([value, label]) =>
@@ -167,12 +188,19 @@ export default function FrmrMoWorkspace({ selectedId, selectedName }: { selected
             <input type="search" value={query} onChange={event => {setQuery(event.target.value);setShown(60)}} placeholder="Найти должность, СП или OID" aria-label="Поиск расхождений МО"/>
           </div>
           <div className={styles.scroll}><table className={styles.table}>
-            <thead><tr><th>Тип / проблема</th><th>Должность</th><th>Подразделение ФРМР / ГИС</th><th>Количество</th><th>Источник / дата</th><th>Статус</th></tr></thead>
+            <thead><tr><th>Тип / проблема</th><th>Должность</th><th>Подразделение ФРМР / ГИС</th><th>Количество</th><th>Статус</th></tr></thead>
             <tbody>{visible.slice(0, shown).map(row => <tr key={row.key} className={activeKey === row.key ? styles.selected : ""}>
-              <td><button className={styles.rowButton} type="button" onClick={() => setActiveKey(activeKey === row.key ? null : row.key)}>
+              <td><button className={styles.rowButton} type="button" onClick={() => {
+                  setActiveKey(activeKey === row.key ? null : row.key);
+                  if (row.staffRecords) {
+                    setDrillRole(row.role); setDrillOid(row.oid);
+                    setDrillIssue(row.category as "mo" | "department");
+                    setLast4Query(""); setRecordsShown(50);
+                  }
+                }}>
                 <b>{row.category === "mo" ? "На уровне МО" : row.category === "department" ? "Привязка СП" : "СП ↔ ФРМО"}</b><span>{row.reason}</span></button></td>
               <td>{row.role}</td><td><b>{row.frmrDepartment}</b><small>{row.gisDepartment}</small><code>{row.oid}</code></td>
-              <td>{format(row.count)}</td><td><b>{row.source}</b><small>{row.cut}</small></td>
+              <td>{format(row.count)}</td>
               <td><span className={row.flagged ? styles.flagged : styles.clean}>{row.flagged ? "Проверить" : "Без признаков"}</span></td>
             </tr>)}</tbody>
           </table></div>
@@ -182,44 +210,82 @@ export default function FrmrMoWorkspace({ selectedId, selectedName }: { selected
           {active && <div className={styles.details} aria-live="polite">
             <h3>{active.reason}</h3><p><b>{active.role}</b> · {active.frmrDepartment} · {active.source} ({active.cut})</p>
             <p>OID для сверки: <code>{active.oid}</code></p>
-            {active.staffRecords && <><p>Должностных записей: {format(active.staffRecords.length)}. Номер строки помогает найти запись в исходном файле. Полные СНИЛС и ФИО не публикуются.</p>
-              <div className={styles.recordList}>{active.staffRecords.slice(0, 100).map((rec, i) =>
-                <span key={rec[5] + "-" + i}>Строка {rec[5]} · СНИЛС {rec[3] ? "•••-•••-•" + rec[3] : "не указан"}</span>)}</div>
-              {active.staffRecords.length > 100 && <p>Показаны первые 100 записей; остальные доступны в исходном файле.</p>}</>}
+            {active.staffRecords && <p>Должностных записей: <b>{format(active.staffRecords.length)}</b>. Ниже открыт маршрут «Должность → СП → сотрудники» со всеми доступными записями и поиском по СНИЛС.</p>}
             {active.auditRecord && <><p>Филиал ГИС: {active.auditRecord.branchGis || "не указан"}. Филиал ФРМО: {active.auditRecord.branchFrmo || "не указан"}.</p>
               <p>OID ФРМО: <code>{active.auditRecord.oidFrmo || "не указан"}</code>. Привязка СП: {active.auditRecord.departmentBranch || "не указана"}.</p>
               <p>Наличие даты исключения и изменение названия требуют проверки актуального состояния ФРМО; автоматически ошибкой МО не считаются.</p></>}
           </div>}
         </section>
-        <details className={styles.accordion}><summary>Детализация записей по сотрудникам</summary>
-          <p>Выберите строку с расхождением ФРМР в таблице выше: откроются последние четыре цифры СНИЛС, номер строки и точное подразделение. Полные персональные данные на сайте не хранятся.</p>
-        </details>
-        <details className={styles.accordion}><summary>Подразделения с расхождениями ({groupedDepartments.size})</summary>
-          {[...groupedDepartments.entries()].sort((a,b)=>b[1]-a[1]).slice(0, 80).map(([name,count]) => <p key={name}>{name} — {format(count)} {data.rows.some(row => row.category === "frmo") ? "записей/строк (разные единицы учёта)" : "записей"}</p>)}
-          {groupedDepartments.size > 80 && <p>Показаны первые 80 подразделений. Все строки доступны в таблице и экспорте.</p>}
-        </details>
+        <section className={styles.drillCard} data-testid="frmr-person-drilldown">
+          <div className={styles.drillHead}>
+            <h3>Должность → СП → конкретные записи</h3>
+            <p>Выберите должность, затем подразделение. Отображаются должностные записи ФРМР по выбранной МО, без раскрытия полного СНИЛС. Срез {staffSource.summary.sourceCut}.</p>
+          </div>
+          <div className={styles.drillGrid}>
+            <div className={styles.drillColumn}>
+              <h4>1. Должность ФРМР</h4>
+              <input type="search" className={styles.drillInput} value={roleSearch}
+                onChange={e => setRoleSearch(e.target.value)}
+                placeholder="Поиск должности" aria-label="Поиск должностей ФРМР"/>
+              <div className={styles.drillOptions}>
+                {roleCounts.map(([role, count]) => <button type="button" key={role}
+                  aria-pressed={drillRole === role} className={drillRole === role ? styles.drillSelected : ""}
+                  onClick={() => {setDrillRole(role);setDrillOid(null);setDrillIssue("all");setLast4Query("");setRecordsShown(50);}}>
+                  <span>{role}</span><b>{format(count)}</b>
+                </button>)}
+                {!roleCounts.length && <p className={styles.drillHint}>Должностей по запросу нет.</p>}
+              </div>
+            </div>
+            <div className={styles.drillColumn}>
+              <h4>2. Структурное подразделение</h4>
+              {drillRole ? <><p className={styles.drillHint}>Выберите СП по должности «{drillRole}».</p>
+                <div className={styles.drillOptions}>
+                  {departmentGroups.map(dep => <button type="button" key={dep.oid}
+                    aria-pressed={drillOid === dep.oid} className={drillOid === dep.oid ? styles.drillSelected : ""}
+                    onClick={() => {setDrillOid(dep.oid);setDrillIssue("all");setLast4Query("");setRecordsShown(50);}}>
+                    <span><strong>{dep.name}</strong><small>OID: {dep.oid}</small>
+                      <small>На уровне МО: {format(dep.mo)} · СП: {format(dep.department)}</small></span>
+                    <b>{format(dep.mo + dep.department)}</b>
+                  </button>)}
+                </div></> : <p className={styles.drillHint}>Сначала выберите должность слева.</p>}
+            </div>
+            <div className={styles.drillColumn}>
+              <h4>3. Записи сотрудников</h4>
+              {drillOid ? <>
+                <p className={styles.drillHint}><b>{drillRole}</b> · {departmentGroups.find(d => d.oid === drillOid)?.name} · OID СП: {drillOid}</p>
+                <div className={styles.drillFilters} role="group" aria-label="Тип расхождения по сотрудникам">
+                  {([["all","Все"],["mo","Нет должности в МО"],["department","Не совпадает СП"]] as const).map(([key,label]) =>
+                    <button type="button" key={key} aria-pressed={drillIssue === key}
+                      className={drillIssue === key ? styles.drillSelected : ""}
+                      onClick={() => {setDrillIssue(key);setRecordsShown(50);}}>{label}</button>)}
+                </div>
+                <input className={styles.drillInput} type="search" inputMode="numeric"
+                  maxLength={4} value={last4Query}
+                  onChange={e => {setLast4Query(e.target.value.replace(/\D/g,"").slice(0,4));setRecordsShown(50);}}
+                  placeholder="Последние 4 цифры СНИЛС" aria-label="Поиск по последним четырём цифрам СНИЛС"/>
+                <p className={styles.drillHint}>Найдено {format(filteredEmployees.length)} записей. Номер строки — для поиска в первичной ведомости.</p>
+                <div className={styles.employeeScroll}>
+                  <table className={styles.employeeTable}>
+                    <thead><tr><th>Строка</th><th>СНИЛС</th><th>Причина</th></tr></thead>
+                    <tbody>{filteredEmployees.slice(0,recordsShown).map(({record,category},i) =>
+                      <tr key={record[5]+"-"+i}><td>№ {record[5]}</td>
+                        <td className={styles.maskedSnils}>{record[3]===null ? "Нет данных" : "•••-•••-•"+record[3]}</td>
+                        <td>{category === "mo" ? "Нет должности в МО" : "Не совпадает СП"}</td>
+                      </tr>)}</tbody>
+                  </table>
+                </div>
+                {!filteredEmployees.length && <p className={styles.drillHint}>Для выбранных условий записей нет.</p>}
+                {recordsShown < filteredEmployees.length &&
+                  <button type="button" className={styles.drillMore} onClick={() => setRecordsShown(n => n + 50)}>Показать ещё 50</button>}
+              </> : <p className={styles.drillHint}>Выберите СП во второй колонке либо нажмите на проблему ФРМР в таблице выше — должность и подразделение будут выбраны автоматически.</p>}
+            </div>
+          </div>
+        </section>
         <details className={styles.accordion}><summary>История и источники</summary>
           <p>ФРМР ↔ ГИС: {staffSource.summary.sourceCut}. СП ↔ ФРМО: {auditRaw.sourceCut}.</p>
           {data.auditOrg && <p>Строк в своде СП: {format(data.auditOrg.current)} на {auditRaw.sourceCut}; {format(data.auditOrg.previous)} на {auditRaw.previousCut}; {format(data.auditOrg.old)} на {auditRaw.historicCut}. Это состав строк, а не динамика подтверждённых ошибок.</p>}
           <p>Из подсчётов ФРМР исключены согласованные категории персонала; история не переписывается, снижение числа строк само по себе не доказывает исправление.</p>
         </details>
-      </div>
-      <aside className={styles.sidebar}>
-        <section><h3>Что исправлять сначала</h3>
-          <ol><li><b>Должности на уровне МО.</b> Сверить кадровую запись, OID МО и должность в ГИС.</li>
-          <li><b>Привязка сотрудника к СП.</b> Проверить OID фактического подразделения; не менять автоматически.</li>
-          <li><b>ФРМО.</b> Проверить филиал, отделение, OID, статус и дату исключения.</li></ol>
-        </section>
-        <section><h3>Сводка по типам проблем</h3>
-          {[["Нет должности в МО", data.stageMo], ["Не совпадает СП", data.stageSp], ["Признаки СП–ФРМО", data.flaggedFrmo]].map(([label,n]) =>
-            <div className={styles.miniBar} key={label as string}><span>{label}</span><b>{format(n as number | null)}</b><div><i style={{width:typeof n==="number" ? (100*n/Math.max(1,data.stageMo ?? 0,data.stageSp ?? 0,data.flaggedFrmo ?? 0))+"%" : "0%"}} /></div></div>)}
-          <p>Последний показатель учитывает строки СП, первые два — должностные записи. Суммировать нельзя.</p>
-        </section>
-        <section><h3>Как проверить</h3>
-          <p>Проверяйте первичный источник и действующие записи. Несовпадение названия или отсутствие OID — основание для сверки, не доказательство ошибки МО.</p>
-          <p>После исправления дождитесь следующей выгрузки и сравните ту же запись по идентификаторам.</p>
-        </section>
-      </aside>
     </div>
   </div>;
 }
