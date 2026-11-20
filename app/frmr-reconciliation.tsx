@@ -242,14 +242,14 @@ export default function FrmrReconciliation() {
             </section>
           </div>
           <section className={styles.panel}>
-            <div className={styles.panelHead}><div><h2>Мониторинг медицинских организаций</h2><span className={styles.muted}>Нажмите на название МО, чтобы открыть её карточку. Сортировка по объёму — не рейтинг качества работы.</span></div><span className={styles.pill}>{number(filtered.length)} МО</span></div>
+            <div className={styles.panelHead}><div><h2>Мониторинг медицинских организаций</h2><span className={styles.muted}>Нажмите на название МО, чтобы открыть её карточку. Сортировка по объёму — не рейтинг качества работы. Сводные показатели выше относятся ко всем 137 МО.</span></div><span className={styles.pill}>{number(filtered.length)} МО</span></div>
             <div className={styles.filters}>
               <input className={styles.input} type="search" value={search} onChange={(e) => setSearch(e.target.value)} placeholder="Поиск МО или OID…" aria-label="Поиск МО"/>
               <select className={styles.select} value={ownership} onChange={(e) => setOwnership(e.target.value as typeof ownership)} aria-label="Фильтр по принадлежности МО">
                 <option value="state">Государственные МО</option><option value="private">Частные МО</option><option value="all">Все МО</option>
               </select>
               <select className={styles.select} value={filter} onChange={(e) => setFilter(e.target.value as typeof filter)} aria-label="Фильтр по изменению">
-                <option value="all">Все МО</option>{!isAll && <><option value="worse">Ухудшение</option><option value="better">Улучшение</option></>}<option value="missing">Есть расхождения</option><option value="zero">Без расхождений</option>
+                <option value="all">Без дополнительного фильтра</option>{!isAll && <><option value="worse">Ухудшение</option><option value="better">Улучшение</option></>}<option value="missing">Есть расхождения</option><option value="zero">Без расхождений</option>
               </select>
               <select className={styles.select} value={sort} onChange={(e) => setSort(e.target.value as typeof sort)} aria-label="Сортировка МО">
                 <option value="count">По числу расхождений ↓</option>{!isAll && <><option value="worsening">По ухудшению ↓</option><option value="improving">По улучшению ↓</option></>}<option value="name">По названию</option>
