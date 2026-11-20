@@ -6,7 +6,7 @@ const read = name => JSON.parse(readFileSync(new URL("../app/" + name, import.me
 test("Section 06 keeps overview first and routes organization work to unified MO card", () => {
   const page = readFileSync(new URL("../app/frmr-reconciliation.tsx", import.meta.url), "utf8");
   const card = readFileSync(new URL("../app/frmr-mo-workspace.tsx", import.meta.url), "utf8");
-  assert.match(page, /useState<"minister" \| "organization" \| "audit">\("minister"\)/);
+  assert.match(page, /useState<"minister" \| "organization" \| "audit">\(matchedInitialMoId \? "organization" : "minister"\)/);
   assert.match(page, /Обзор<\/button>/);
   assert.match(page, /view === "minister" \? \(/);
   assert.match(page, /FrmrMoWorkspace key=\{selected.id\} selectedId=\{selected.id\} selectedName=\{selected.name\}/);

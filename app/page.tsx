@@ -3659,6 +3659,7 @@ export default function Home() {
     | "history"
     | "gisOms"
   >("unified");
+  const [frmrTargetOid, setFrmrTargetOid] = useState<string | null>(null);
   const [remdView, setRemdView] = useState<"semd" | "errors" | "time">("errors");
   const [remdTimeQuery, setRemdTimeQuery] = useState("");
   const [remdTimeFilter, setRemdTimeFilter] = useState<"all" | "overDay" | "withinDay">("all");
@@ -6087,6 +6088,7 @@ export default function Home() {
                   key={id}
                   className={tab === id ? "active" : ""}
                   onClick={() => {
+                    if (id === "frmr") setFrmrTargetOid(null);
                     setTab(id as typeof tab);
                     setShowMatrixSections(false);
                     setMobileMenuOpen(false);
@@ -6187,7 +6189,7 @@ export default function Home() {
               </button>
               <button
                 className={tab === "frmr" ? "active" : ""}
-                onClick={() => { setTab("frmr"); setShowMatrixSections(false); }}
+                onClick={() => { setFrmrTargetOid(null); setTab("frmr"); setShowMatrixSections(false); }}
               >
                 <span>06</span> ФРМР ↔ ГИС
               </button>
@@ -6254,7 +6256,7 @@ export default function Home() {
               />
             </section>
           )}
-          {tab === "frmr" && <FrmrReconciliation />}
+          {tab === "frmr" && <FrmrReconciliation key={frmrTargetOid ?? "overview"} targetOid={frmrTargetOid} />}
           {tab === "summary" && (
             <>
               <div className="pageHead">
@@ -8013,7 +8015,7 @@ export default function Home() {
             </>
           )}
 
-          {tab === "incident38" && <Incident38Dashboard />}
+          {tab === "incident38" && <Incident38Dashboard onOpenFrmrMo={(oid) => { setFrmrTargetOid(oid); setShowMatrixSections(false); setMobileMenuOpen(false); setTab("frmr"); }} />}
 
           {tab === "waybill" && (
             <>

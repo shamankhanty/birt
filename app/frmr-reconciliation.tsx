@@ -37,7 +37,9 @@ const signed = (n: number | null) =>
 const change = (row: Org) =>
   row.previous === null ? null : row.current - row.previous;
 
-export default function FrmrReconciliation() {
+export default function FrmrReconciliation({ targetOid = null }: { targetOid?: string | null }) {
+  const initialMoId = targetOid?.startsWith(officialPrefix) ? targetOid.slice(officialPrefix.length) : null;
+  const matchedInitialMoId = initialMoId && scopedAll.summary.rows.some(row => row[0] === initialMoId) ? initialMoId : null;
   const isAll = true;
   const [controlLevel, setControlLevel] = useState<"mo" | "department">("mo");
   const [spType, setSpType] = useState("");
@@ -74,12 +76,12 @@ export default function FrmrReconciliation() {
   const sortedOrgs = [...orgs].sort((a, b) => a.name.localeCompare(b.name, "ru"));
   const cutShort = allRaw.summary.sourceCut.slice(0,5);
   const dateLabel = allRaw.summary.sourceCut + " · все специальности";
-  const [view, setView] = useState<"minister" | "organization" | "audit">("minister");
+  const [view, setView] = useState<"minister" | "organization" | "audit">(matchedInitialMoId ? "organization" : "minister");
   const [filter, setFilter] = useState<"all" | "worse" | "better" | "missing" | "zero">("all");
   const [sort, setSort] = useState<"count" | "worsening" | "improving" | "name">("count");
   const [search, setSearch] = useState("");
-  const [selectedId, setSelectedId] = useState<string | null>(null);
-  const [moQuery, setMoQuery] = useState("");
+  const [selectedId, setSelectedId] = useState<string | null>(matchedInitialMoId);
+  const [moQuery, setMoQuery] = useState(() => matchedInitialMoId ? (scopedAll.summary.rows.find(row => row[0] === matchedInitialMoId)?.[1] ?? "") : "");
   const [moSearchOpen, setMoSearchOpen] = useState(false);
   const [moHighlight, setMoHighlight] = useState(0);
   const [roleQuery, setRoleQuery] = useState("");
