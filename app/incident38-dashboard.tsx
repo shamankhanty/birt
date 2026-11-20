@@ -3,6 +3,7 @@
 import { Fragment, useMemo, useState } from "react";
 import cityRaw from "./incident38-cities.json";
 import districtRaw from "./incident38-districts.json";
+import frmrRaw from "./frmr-all-specialties.json";
 import reorganizationRaw from "../config/mo-reorganizations.json";
 import styles from "./incident38-dashboard.module.css";
 
@@ -14,6 +15,8 @@ type Tab = "overview" | "organization";
 type Ownership = "state" | "private";
 
 const DATA: Dataset[] = [cityRaw as Dataset, districtRaw as Dataset];
+const FRMR_OID_PREFIX = "1.2.643.5.1.13.13.12.2.16.";
+const FRMR_MO_IDS = new Set(frmrRaw.summary.rows.map(row => row[0]));
 const reorganizationGroups = (reorganizationRaw as { groups?: Array<{ effectiveDate: string; predecessors?: Array<{ oldOid?: string }> }> }).groups ?? [];
 const dateKey = (date: string) => {
   const [day, month, year] = date.split(".");
@@ -91,7 +94,7 @@ function OwnershipSwitch({ value, onChange }: { value: Ownership; onChange: (val
   </div>;
 }
 
-export default function Incident38Dashboard() {
+export default function Incident38Dashboard({ onOpenFrmrMo }: { onOpenFrmrMo: (oid: string) => void }) {
   const [tab, setTab] = useState<Tab>("overview");
   const [ownership, setOwnership] = useState<Ownership>("state");
   const [selectedOid, setSelectedOid] = useState("");
@@ -206,6 +209,8 @@ export default function Incident38Dashboard() {
   });
   const maxPlanDistribution = Math.max(1, ...planDistribution.map((band) => band.count));
   const currentIndex = selectedOrg ? organizationRows.findIndex((row) => row.org.oid === selectedOrg.oid) : -1;
+  const frmrMoId = selectedOrg?.oid.startsWith(FRMR_OID_PREFIX) ? selectedOrg.oid.slice(FRMR_OID_PREFIX.length) : null;
+  const frmrMatched = Boolean(frmrMoId && FRMR_MO_IDS.has(frmrMoId));
 
   function openOrg(oid: string) {
     setSelectedOid(oid);
@@ -325,13 +330,20 @@ export default function Incident38Dashboard() {
         </div>
       </section>
       {selectedOrg && <section className={styles.card}>
-        <div className={styles.sectionHead}><div><h2>{selectedOrg.name}</h2><p>И‑38.9 = слоты ЕПГУ ÷ «Норматив ВСЕГО» × 100%. План для МО — 70%; статус показывает его выполнение.</p></div><span className={`${styles.status} ${!orgMetrics(selectedOrg).complete ? styles.statusMissing : orgMetrics(selectedOrg).meetsPlan ? styles.statusComplete : styles.statusBelow}`}>{status(orgMetrics(selectedOrg).coverage)}</span></div>
+        <div className={styles.sectionHead}><div><h2>{selectedOrg.name}</h2><p>И‑38.9 = слоты ЕПГУ ÷ «Норматив ВСЕГО» × 100%. План для МО — 70%; статус показывает его выполнение.</p></div>
+          <div className={styles.frmrShortcutActions}>
+            <span className={`${styles.status} ${!orgMetrics(selectedOrg).complete ? styles.statusMissing : orgMetrics(selectedOrg).meetsPlan ? styles.statusComplete : styles.statusBelow}`}>{status(orgMetrics(selectedOrg).coverage)}</span>
+            {frmrMatched
+              ? <button type="button" className={styles.frmrShortcut} onClick={() => onOpenFrmrMo(selectedOrg.oid)}>Проверить ошибки в ФРМР <span aria-hidden="true">↗</span></button>
+              : <small className={styles.frmrUnmatched}>МО не сопоставлена с разделом 06 по OID</small>}
+          </div>
+        </div>
         <div className={styles.orgKpis}>
           <article><strong className={planTone(orgMetrics(selectedOrg).coverage)}>{percent(orgMetrics(selectedOrg).coverage)}</strong><span>И‑38.9 · план 70%</span><small>{format(orgMetrics(selectedOrg).epguSlots)} слотов ЕПГУ из {format(orgMetrics(selectedOrg).norm)} по общему нормативу</small></article>
           <article><strong>{format(orgMetrics(selectedOrg).targetSlots)}</strong><span>Слотов нужно для плана</span><small>70% общего норматива, округление вверх</small></article>
           <article><strong>{format(orgMetrics(selectedOrg).deficit)}</strong><span>Не хватает до плана</span><small>минимальное число дополнительных слотов ЕПГУ</small></article>
         </div>
-        {frmrReviewRows.length > 0 && <p className={styles.chartNote}><b>Проверить ФРМР: {frmrReviewRows.length} специальностей.</b> Есть слоты ЕПГУ при нулевом нормативе. Проверьте раздел 06 «ФРМР ↔ ГИС»: свою МО во вкладках «На уровне МО» и «Привязки СП · справочно». Подтверждённые ошибки исправьте в ФРМР. Нулевой норматив сам по себе не доказывает ошибку.</p>}
+        {frmrReviewRows.length > 0 && <p className={styles.chartNote}><b>Проверить ФРМР: {frmrReviewRows.length} специальностей.</b> Есть слоты ЕПГУ при нулевом нормативе. Нажмите «Проверить ошибки в ФРМР» выше: откроется карточка этой МО в разделе 06 с детализацией должностей, СП и записей. Подтверждённые ошибки исправьте в первичном источнике. Нулевой норматив сам по себе не доказывает ошибку.</p>}
         <div className={styles.sectionHead}><div><h2>Показатели по специальностям</h2><p>Значения по специальностям справочные: план 70% применяется к общему показателю МО. Медиана сравнивает МО с другими организациями того же набора выгрузки.</p></div><select className={styles.inlineSelect} value={selectedSpecialty} onChange={(event) => setSelectedSpecialty(event.target.value)}><option value="">Все специальности</option>{SPECIALTIES.map((specialty) => <option key={specialty.code} value={specialty.code}>{specialty.name}</option>)}</select></div>
         <div className={styles.tableScroll}><table className={styles.table}><thead><tr><th>Специальность</th><th>Норматив ВСЕГО</th><th>Слотов для ЕПГУ</th><th>И‑38.9, %</th><th>Медиана выборки, %</th><th>Отклонение, п.п.</th><th>МО в выборке</th></tr></thead><tbody>
           {displaySpecialties.map((row) => {
