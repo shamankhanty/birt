@@ -2,6 +2,7 @@
 
 import { useMemo, useState } from "react";
 import allRaw from "./frmr-all-specialties.json";
+import moRegistry from "./mo-registry.json";
 import spTypes from "./frmr-sp-types.json";
 import previousControl from "./frmr-previous-control.json";
 import FrmrSpAudit from "./frmr-sp-audit";
@@ -14,6 +15,17 @@ import styles from "./frmr-reconciliation.module.css";
 type DepartmentGroup = { mo: string; role: string; name: string; oid: string; moIndex: number; roleIndex: number; spIndex: number; noPosition: number; wrongDepartment: number; count: number };
 type StaffRecord = [number, number, number, string | null, number, number, number?];
 const officialPrefix = "1.2.643.5.1.13.13.12.2.16.";
+type Ownership = "state" | "private" | "unknown";
+const STATE_MO_OIDS = new Set(moRegistry.organizations.map(row => row.oid));
+// The three dental joint-stock organizations in the I38 state-participation view
+// are identified by exact MO OIDs, not by the broad AO legal form.
+const STATE_PARTICIPATION_AO_IDS = new Set(["1191", "14163", "63362"]);
+const frmrOwnership = (id: string, name: string): Ownership => {
+  if (STATE_MO_OIDS.has(officialPrefix + id) || STATE_PARTICIPATION_AO_IDS.has(id)) return "state";
+  if (/^(ООО|ЧУЗ|АО|ИП|АНО|ЗАО|ОАО)(?=\s|["«]|$)/u.test(name.trim())) return "private";
+  // An unrecognized OID cannot silently become private or governmental.
+  return "unknown";
+};
 type SpecialityGroup = [string, number];
 type PositionRecord = [
   string, string, number | null, number | null,
@@ -68,12 +80,27 @@ export default function FrmrReconciliation({ targetOid = null }: { targetOid?: s
       count: noPosition + wrongDepartment,
     };
   });
-  const orgs: Org[] = (raw.rows as unknown as PositionRecord[]).map(
+  const allOrgs: Org[] = (raw.rows as unknown as PositionRecord[]).map(
     ([id, name, feb, previous, current, stage1, stage2, positions, specialties]) =>
       ({ id, name, feb, previous: comparison.byMo[id] ?? null, current, stage1, stage2, positions, specialties }),
   );
-  const topSpecialties = raw.topSpecialties as unknown as SpecialityGroup[];
-  const sortedOrgs = [...orgs].sort((a, b) => a.name.localeCompare(b.name, "ru"));
+  const [ownership, setOwnership] = useState<"state" | "private">(() => {
+    if (!matchedInitialMoId) return "state";
+    return frmrOwnership(matchedInitialMoId, allOrgs.find(row => row.id === matchedInitialMoId)?.name ?? "") === "private" ? "private" : "state";
+  });
+  const orgs = allOrgs.filter(row => frmrOwnership(row.id, row.name) === ownership);
+  const unclassified = allOrgs.filter(row => frmrOwnership(row.id, row.name) === "unknown");
+  const sortedOrgs = [...allOrgs].sort((a, b) => a.name.localeCompare(b.name, "ru"));
+  const roleCounts = new Map<string, number>();
+  for (const row of orgs) for (const [role, count] of row.specialties) {
+    roleCounts.set(role, (roleCounts.get(role) ?? 0) + count);
+  }
+  const topSpecialties: SpecialityGroup[] = [...roleCounts.entries()]
+    .sort((a, b) => b[1] - a[1] || a[0].localeCompare(b[0], "ru"));
+  // Full-scope source records (both stages), restricted by selected organization OIDs.
+  const selectedMoIds = new Set(orgs.map(row => row.id));
+  const selectedSourceCount = scopedAll.records.rows.filter(row =>
+    selectedMoIds.has(scopedAll.departments.mos[row[0]])).length;
   const cutShort = allRaw.summary.sourceCut.slice(0,5);
   const dateLabel = allRaw.summary.sourceCut + " · все специальности";
   const [view, setView] = useState<"minister" | "organization" | "audit">(matchedInitialMoId ? "organization" : "minister");
@@ -90,13 +117,21 @@ export default function FrmrReconciliation({ targetOid = null }: { targetOid?: s
   const [inspectionType, setInspectionType] = useState<"all" | "mo" | "department">("all");
   const [last4Query, setLast4Query] = useState("");
 
-  const selected = orgs.find((row) => row.id === selectedId) ?? null;
+  const selected = allOrgs.find((row) => row.id === selectedId) ?? null;
   const moMatches = sortedOrgs.filter((row) => {
     const q = moQuery.trim().toLocaleLowerCase("ru");
     return Boolean(q) && (row.name.toLocaleLowerCase("ru").includes(q) ||
       row.id.includes(q) || (officialPrefix + row.id).includes(q));
   }).slice(0, 30);
   const previousTotal = orgs.reduce((sum, row) => sum + (row.previous ?? 0), 0);
+  const comparableOrgs = orgs.filter(row => row.previous !== null);
+  const comparisonOverview = {
+    cut: comparison.cut,
+    previousTotal,
+    currentTotal: comparableOrgs.reduce((sum, row) => sum + row.current, 0),
+    comparableOrganizations: comparableOrgs.length,
+    missingBaseline: orgs.length - comparableOrgs.length,
+  };
   const currentTotal = orgs.reduce((sum, row) => sum + row.current, 0);
   const febTotal = orgs.reduce((sum, row) => sum + (row.feb ?? 0), 0);
   const stage1Total = orgs.reduce((sum, row) => sum + row.stage1, 0);
@@ -122,7 +157,7 @@ export default function FrmrReconciliation({ targetOid = null }: { targetOid?: s
         sort === "name" ? a.name.localeCompare(b.name, "ru") :
         b.current - a.current || a.name.localeCompare(b.name, "ru"),
       );
-  }, [controlLevel, spType, filter, search, sort]);
+  }, [controlLevel, spType, filter, search, sort, ownership]);
 
   const allSelectedGroups = departmentRows.filter((row) => row.mo === selected?.id);
   const diagnosticRoles: SpecialityGroup[] = [...allSelectedGroups.reduce((map, row) => {
@@ -196,6 +231,14 @@ export default function FrmrReconciliation({ targetOid = null }: { targetOid?: s
         <button className={[styles.tab, view === "organization" ? styles.tabActive : ""].join(" ")} onClick={() => setView("organization")} aria-pressed={view === "organization"}>Карточка МО · все ошибки</button>
       </div>
 
+      {view === "minister" && <div className={styles.ownershipSwitch} role="group" aria-label="Форма собственности медицинских организаций">
+        <button type="button" className={ownership === "state" ? styles.ownershipActive : ""}
+          aria-pressed={ownership === "state"}
+          onClick={() => { setOwnership("state"); setFilter("all"); setSearch(""); }}>Государственные</button>
+        <button type="button" className={ownership === "private" ? styles.ownershipActive : ""}
+          aria-pressed={ownership === "private"}
+          onClick={() => { setOwnership("private"); setFilter("all"); setSearch(""); }}>Частные</button>
+      </div>}
       {view === "minister" && <div className={styles.filters}>
         <div className={styles.tabs} role="group" aria-label="Уровень контроля ФРМР">
           <button className={[styles.tab, controlLevel === "mo" ? styles.tabActive : ""].join(" ")} aria-pressed={controlLevel === "mo"} onClick={() => {setControlLevel("mo");setFilter("all");resetInspection();}}>На уровне МО</button>
@@ -217,18 +260,21 @@ export default function FrmrReconciliation({ targetOid = null }: { targetOid?: s
 
       {view === "minister" ? (
         <>
+          {unclassified.length > 0 && <p className={styles.warning} role="status">
+            Не определена категория для {number(unclassified.length)} МО. Они исключены из групповых итогов до проверки реестра и могут быть найдены в карточке МО.
+          </p>}
           <div className={styles.stats}>
-            <article className={styles.stat}><span className={styles.statLabel}>{isAll ? (controlLevel === "mo" ? "Не найдены в МО" : "Привязки СП · справочно") : <>Расхождения на {cutShort}</>}</span><strong className={isAll && controlLevel === "department" ? styles.dark : styles.negative}>{number(currentTotal)}</strong><small>{isAll ? <>должностных записей в выбранном перечне{comparison.missingBaseline === 0 && <> · {signed(comparison.currentTotal-comparison.previousTotal)} к {comparison.cut.slice(0,5)}</>}</> : <>снижение на {number(previousTotal - currentTotal)} к 16.10</>}</small></article>
+            <article className={styles.stat}><span className={styles.statLabel}>{isAll ? (controlLevel === "mo" ? "Не найдены в МО" : "Привязки СП · справочно") : <>Расхождения на {cutShort}</>}</span><strong className={isAll && controlLevel === "department" ? styles.dark : styles.negative}>{number(currentTotal)}</strong><small>{isAll ? <>должностных записей в выбранном перечне{comparisonOverview.missingBaseline === 0 && <> · {signed(comparisonOverview.currentTotal-comparisonOverview.previousTotal)} к {comparisonOverview.cut.slice(0,5)}</>}</> : <>снижение на {number(previousTotal - currentTotal)} к 16.10</>}</small></article>
             <article className={styles.stat}><span className={styles.statLabel}>{isAll && controlLevel === "department" ? "МО со справочными записями" : "МО с расхождениями"}</span><strong>{affected} <span className={styles.muted}>/ {orgs.length}</span></strong><small>в проверяемом перечне</small></article>
             <article className={styles.stat}><span className={styles.statLabel}>{isAll ? "Наименований должностей" : "Улучшили / ухудшили"}</span><strong>{isAll ? number(topSpecialties.length) : <><span className={styles.positive}>{improvedCount}</span> / <span className={styles.negative}>{worsenedCount}</span></>}</strong><small>{isAll ? "в выбранном перечне" : "изменение числа записей к 16.10"}</small></article>
-            <article className={styles.stat}><span className={styles.statLabel}>{isAll ? "Всего в исходной сверке" : "Снижение с февраля"}</span><strong>{number(isAll ? scopedAll.records.rows.length : febTotal - currentTotal)}</strong><small>{isAll ? "после согласованных исключений; два уровня отдельно" : <>{number(febTotal)} → {number(currentTotal)}</>}</small></article>
+            <article className={styles.stat}><span className={styles.statLabel}>{isAll ? "Всего в исходной сверке" : "Снижение с февраля"}</span><strong>{number(isAll ? selectedSourceCount : febTotal - currentTotal)}</strong><small>{isAll ? "в выбранной группе МО после исключений; два уровня отдельно" : <>{number(febTotal)} → {number(currentTotal)}</>}</small></article>
           </div>
-          {isAll && <details className={styles.qualityNote}><summary>Качество исходных записей и границы расчёта</summary><p>В исходнике {number(allRaw.metadata.parsedRows)} записей с расхождениями; после исключений в сверке — {number(scopedAll.records.rows.length)}. В выбранном режиме — {number(currentTotal)}. Ниже приведены признаки качества полного исходника. Дополнительные признаки не исключают записи автоматически и могут пересекаться: без корректного идентификатора — {allRaw.metadata.quality.missingIdentifier}; дата окончания работы — {allRaw.metadata.quality.employmentEnded === null ? "не проверялась по этому источнику" : number(allRaw.metadata.quality.employmentEnded)}; избыточных повторов по проверенным реквизитам — {allRaw.metadata.quality.repeatedRecordExtras}; нет служебной связи МО с ФРМО — {allRaw.metadata.quality.missingOrganizationLink}.</p><p>В исходнике {number(allRaw.metadata.sourceIssueCount)} отдельных признаков расхождения; одна должностная запись может содержать несколько. Поэтому они не суммируются как число сотрудников. Ставки не оцениваются. Состав включает государственные и частные МО; ведомственная принадлежность не выводится из названия.</p></details>}
+          {isAll && <details className={styles.qualityNote}><summary>Качество исходных записей и границы расчёта</summary><p>В исходнике {number(allRaw.metadata.parsedRows)} записей с расхождениями; после исключений в сверке — {number(scopedAll.records.rows.length)}. В выбранном режиме — {number(currentTotal)}. Ниже приведены признаки качества полного исходника. Дополнительные признаки не исключают записи автоматически и могут пересекаться: без корректного идентификатора — {allRaw.metadata.quality.missingIdentifier}; дата окончания работы — {allRaw.metadata.quality.employmentEnded === null ? "не проверялась по этому источнику" : number(allRaw.metadata.quality.employmentEnded)}; избыточных повторов по проверенным реквизитам — {allRaw.metadata.quality.repeatedRecordExtras}; нет служебной связи МО с ФРМО — {allRaw.metadata.quality.missingOrganizationLink}.</p><p>В исходнике {number(allRaw.metadata.sourceIssueCount)} отдельных признаков расхождения; одна должностная запись может содержать несколько. Поэтому они не суммируются как число сотрудников. Ставки не оцениваются. Группы разделены по реестровым OID; три АО стоматологического профиля с участием РТ отнесены к государственной группе. Неопределённые МО не включаются автоматически.</p></details>}
           <div className={styles.grid}>
             <section className={styles.panel}>
               <div className={styles.panelHead}><div><h2>{isAll ? (controlLevel === "mo" ? "Контроль на уровне МО" : "Справочная сверка СП") : "Динамика по республике"}</h2><span className={styles.muted}>{isAll ? "Все применимые специальности, включая единичные записи" : "Исторические точки только на датах, присутствующих в файле"}</span></div>{!isAll && <span className={styles.pill}>−{number(previousTotal - currentTotal)} за 6 дней</span>}</div>
-              {trendBars(isAll ? [[comparison.cut.slice(0,5), comparison.previousTotal], [cutShort, comparison.currentTotal]] : [["01.02", febTotal], ["16.10", previousTotal], ["22.10", currentTotal]])}
-              {isAll ? <p className={styles.muted}>Сравнение {comparison.cut} → {raw.sourceCut}: {signed(comparison.currentTotal-comparison.previousTotal)} записей по {comparison.comparableOrganizations} сопоставимым МО. Одинаковые исключения, выбранный уровень и тип СП применены к обоим срезам. Изменение числа записей не доказывает исправление конкретных сотрудников. {comparison.missingBaseline > 0 && <>Без предыдущего среза: {comparison.missingBaseline} МО; они не включены в динамику.</>}</p> : <div className={styles.legend}><span>От 16.10: <b>{signed(currentTotal - previousTotal)}</b></span><span>От 01.02: <b>{signed(currentTotal - febTotal)}</b></span></div>}
+              {trendBars(isAll ? [[comparisonOverview.cut.slice(0,5), comparisonOverview.previousTotal], [cutShort, comparisonOverview.currentTotal]] : [["01.02", febTotal], ["16.10", previousTotal], ["22.10", currentTotal]])}
+              {isAll ? <p className={styles.muted}>Сравнение {comparisonOverview.cut} → {raw.sourceCut}: {signed(comparisonOverview.currentTotal-comparisonOverview.previousTotal)} записей по {comparisonOverview.comparableOrganizations} сопоставимым МО из выбранной группы. Одинаковые исключения, выбранный уровень и тип СП применены к обоим срезам. Изменение числа записей не доказывает исправление конкретных сотрудников. {comparisonOverview.missingBaseline > 0 && <>Без предыдущего среза: {comparisonOverview.missingBaseline} МО; они не включены в динамику.</>}</p> : <div className={styles.legend}><span>От 16.10: <b>{signed(currentTotal - previousTotal)}</b></span><span>От 01.02: <b>{signed(currentTotal - febTotal)}</b></span></div>}
             </section>
             <section className={styles.panel}>
               <h2>{isAll ? "Как читать результат" : "Причины расхождений"}</h2>
