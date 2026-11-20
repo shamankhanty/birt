@@ -16,6 +16,11 @@ ws=wb['Данные из ФРМР'];headers=next(ws.iter_rows(min_row=2,max_row=
 summary={}
 summarySheet=wb['OID МО. СВОД расхождений'];summaryHeaders=next(summarySheet.iter_rows(min_row=1,max_row=1,values_only=True))
 currentColumns=[i for i,v in enumerate(summaryHeaders) if clean(v).startswith('Должностей') and 'Начало' not in clean(v) and re.search(r'\d{2}\.\d{2}\.\d{4}',clean(v)) and re.search(r'\d{2}\.\d{2}\.\d{4}',clean(v))[0]==cutLabel]
+if not currentColumns and len(summaryHeaders)>24:
+ headerDate=summaryHeaders[24]
+ if isinstance(headerDate,(int,float)):headerDate=openpyxl.utils.datetime.from_excel(headerDate).date()
+ if isinstance(headerDate,datetime.datetime):headerDate=headerDate.date()
+ if headerDate==cut:currentColumns=[18] # Column S; date of its cut is in Y1
 assert currentColumns,'No summary count for requested cut';currentColumn=currentColumns[0]
 for r in wb['OID МО. СВОД расхождений'].iter_rows(min_row=2,values_only=True):
  if r[2] and r[13]:
@@ -23,10 +28,10 @@ for r in wb['OID МО. СВОД расхождений'].iter_rows(min_row=2,val
   assert isinstance(r[currentColumn],(int,float));assert all(r[i]==r[currentColumn] for i in currentColumns),'Conflicting duplicate cut columns';summary[oid]={'name':clean(r[2]),'count':int(r[currentColumn]),'state':r[3]==1}
 mos=sorted(summary);mi={oid:i for i,oid in enumerate(mos)};roles=[];sp=[];ri={};si={};records=[];employment=[];group=collections.defaultdict(lambda:[0,0]);by=collections.defaultdict(collections.Counter);specialties=collections.Counter();quality=collections.Counter();boundary=[];sourceIssueSum=0;nonProblemRows=0;spTypes=collections.defaultdict(set)
 for rownum,r in enumerate(ws.iter_rows(min_row=3,values_only=True),3):
- if not r[12] or not r[23]:continue
+ if not r[32] or not r[23]:continue
  if r[38]==0:
-  assert r[37]==0,'Nonproblem row has issue flags';nonProblemRows+=1;continue
- oid=clean(r[12]);role=clean(r[23]);spoid=clean(r[16]);name=clean(r[19]) or 'Наименование СП не указано'
+  assert r[35]==0,'Nonproblem row has issue flags';nonProblemRows+=1;continue
+ spoid=clean(r[16]);sourceOid=clean(r[32]);oid=spoid.split('.0.')[0] if sourceOid=='НЕТ СВЯЗКИ С ФРМО' else sourceOid;role=clean(r[23]);name=clean(r[19]) or 'Наименование СП не указано'
  spTypes[spoid].add(clean(r[17]))
  assert oid in mi and r[38]==1
  assert not spoid or spoid.startswith(oid+'.0.'),f'Unsupported SP OID at row {rownum}'
@@ -34,17 +39,17 @@ for rownum,r in enumerate(ws.iter_rows(min_row=3,values_only=True),3):
  key=(oid,spoid)
  if key not in si:si[key]=len(sp);sp.append([mi[oid],spoid.removeprefix(oid+'.0.') if spoid else '',name])
  m,a,b=mi[oid],ri[role],si[key];stage1=clean(r[34]).startswith('1 этап.');stage2=clean(r[33]).startswith('2 этап.');assert stage1 or stage2
- issue=0 if stage1 else 1;digits=re.sub(r'\D','',clean(r[5]));last4=digits[-4:] if len(digits)==11 else None;flags=0
+ issue=0 if stage1 else 1;digits=re.sub(r'\D','',clean(r[0]).split('_')[0]);last4=digits[-4:] if len(digits)==11 else None;flags=0
  if last4 is None:flags|=1;quality['missingIdentifier']+=1
- if isinstance(r[27],datetime.datetime) and r[27].date()<=cut:flags|=2;quality['employmentEnded']+=1
- if clean(r[32])=='НЕТ СВЯЗКИ С ФРМО':flags|=8;quality['missingOrganizationLink']+=1
- records.append([m,a,b,last4,issue,rownum,flags]);employment.append(tuple(clean(r[k]) for k in [5,12,16,20,22,23,25,26,27]));group[(m,a,b)][issue]+=1
- by[oid]['current']+=1;by[oid]['stage1' if issue==0 else 'stage2']+=1;by[oid]['role:'+role]+=1;specialties[role]+=1;sourceIssueSum+=r[37]
+ if sourceOid=='НЕТ СВЯЗКИ С ФРМО':flags|=8;quality['missingOrganizationLink']+=1
+ records.append([m,a,b,last4,issue,rownum,flags]);employment.append(tuple(clean(r[k]) for k in [0,16,23,25,26]));group[(m,a,b)][issue]+=1
+ by[oid]['current']+=1;by[oid]['stage1' if issue==0 else 'stage2']+=1;by[oid]['role:'+role]+=1;specialties[role]+=1;sourceIssueSum+=r[35]
  boundary.append(rownum)
 counts=collections.Counter(employment)
 for rec,key in zip(records,employment):
  if counts[key]>1:rec[6]|=4;quality['repeatedRecordRows']+=1
 quality['repeatedRecordExtras']=sum(n-1 for n in counts.values() if n>1)
+quality['employmentEnded']=None # AB is not a reliable end date in this workbook
 assert len(records)==sum(r['count'] for r in summary.values())
 for oid,v in summary.items():assert v['count']==by[oid]['current'],oid
 rows=[]
@@ -53,7 +58,7 @@ for oid in mos:
  rows.append([oid.removeprefix(prefix),v['name'],None,None,v['count'],b['stage1'],b['stage2'],None,specs])
 summaryOut={'schemaVersion':2,'source':f.name,'sourceCut':cutLabel,'baselineCut':None,'scope':'all_specialties','unit':'должностная запись, не уникальный сотрудник','trend':[[cutLabel,len(records)]],'topSpecialties':sorted(specialties.items(),key=lambda r:(-r[1],r[0])),'rows':rows}
 mosuffix=[o.removeprefix(prefix) for o in mos]
-out={'summary':summaryOut,'departments':{'cut':cutLabel,'unit':'должностная запись','mos':mosuffix,'roles':roles,'sp':sp,'rows':[[*key,*value] for key,value in sorted(group.items())]},'records':{'cut':cutLabel,'issues':['Должность не найдена на уровне МО в ГИС','Должность есть в МО, но не найдена в указанном СП'],'qualityBits':{'1':'Отсутствует корректный идентификатор в исходнике','2':'Дата окончания работы наступила к дате среза','4':'Совпадают проверенные реквизиты кадровых записей; требуется проверка повтора','8':'В служебном поле источника нет связи МО с ФРМО'},'rows':records},'metadata':{'source':source(f),'sourceRowRange':[boundary[0],boundary[-1]],'parsedRows':len(records),'nonProblemRows':nonProblemRows,'summaryCountColumn':currentColumn+1,'sourceIssueCount':sourceIssueSum,'quality':quality,'scopeNote':'Все должности из представленного списка расхождений. Полнота общего кадрового состава для знаменателя отдельно не подтверждена; доля ошибок не рассчитывается. История 22.10 имеет другой охват.','stateOrganizations':sum(v['state'] for v in summary.values()),'stateProblemRecords':sum(v['count'] for v in summary.values() if v['state'])}}
+out={'summary':summaryOut,'departments':{'cut':cutLabel,'unit':'должностная запись','mos':mosuffix,'roles':roles,'sp':sp,'rows':[[*key,*value] for key,value in sorted(group.items())]},'records':{'cut':cutLabel,'issues':['Должность не найдена на уровне МО в ГИС','Должность есть в МО, но не найдена в указанном СП'],'qualityBits':{'1':'Отсутствует корректный идентификатор в исходнике','4':'Совпадают проверенные реквизиты кадровых записей; требуется проверка повтора','8':'В служебном поле источника нет связи МО с ФРМО'},'rows':records},'metadata':{'source':source(f),'sourceRowRange':[boundary[0],boundary[-1]],'parsedRows':len(records),'nonProblemRows':nonProblemRows,'summaryCountColumn':currentColumn+1,'sourceIssueCount':sourceIssueSum,'quality':quality,'scopeNote':'Все должности из представленного списка расхождений. Полнота общего кадрового состава для знаменателя отдельно не подтверждена; доля ошибок не рассчитывается. В 27 строках ГКБ №12 служебная связь с ФРМО отсутствует; OID МО установлен по OID СП и помечен для проверки.','stateOrganizations':sum(v['state'] for v in summary.values()),'stateProblemRecords':sum(v['count'] for v in summary.values() if v['state'])}}
 write('frmr-all-specialties.json',out)
 write('frmr-sp-types.json',{'source':source(f),'types':{k:next(iter(v)) for k,v in spTypes.items() if k and len(v)==1 and next(iter(v))},'ambiguousOids':[k for k,v in spTypes.items() if len(v)>1]})
 if p is None:
