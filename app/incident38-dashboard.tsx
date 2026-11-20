@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { Fragment, useMemo, useState } from "react";
 import cityRaw from "./incident38-cities.json";
 import districtRaw from "./incident38-districts.json";
 import reorganizationRaw from "../config/mo-reorganizations.json";
@@ -95,6 +95,7 @@ export default function Incident38Dashboard() {
   const [tab, setTab] = useState<Tab>("overview");
   const [ownership, setOwnership] = useState<Ownership>("state");
   const [selectedOid, setSelectedOid] = useState("");
+  const [expandedMatrixOid, setExpandedMatrixOid] = useState("");
   const [organizationSearch, setOrganizationSearch] = useState("");
   const [matrixSearch, setMatrixSearch] = useState("");
   const [matrixSort, setMatrixSort] = useState<{ key: string; direction: "asc" | "desc" }>({ key: "coverage", direction: "asc" });
@@ -281,9 +282,10 @@ export default function Incident38Dashboard() {
         </tr></thead><tbody>
           {matrixRows.map((row) => {
             const zeroSpecialtyCount = row.org.specialties.filter((item) => item.norm !== null && item.norm > 0 && item.epguSlots === 0).length;
-            return <tr key={row.org.oid}>
+            return <Fragment key={row.org.oid}><tr>
             <th className={styles.stickyName} onClick={() => openOrg(row.org.oid)} title={`${matrixOrgName(row.org)} · ${row.org.city}`}>
               <span className={styles.matrixName}>{matrixOrgName(row.org)}</span><small className={styles.matrixCity}>{row.org.city}</small>
+              <button type="button" className={styles.mobileExpand} aria-expanded={expandedMatrixOid === row.org.oid} onClick={(event) => { event.stopPropagation(); setExpandedMatrixOid(expandedMatrixOid === row.org.oid ? "" : row.org.oid); }}>Специальности {expandedMatrixOid === row.org.oid ? "▲" : "▼"}</button>
             </th>
             <td className={styles.shortfallCell} title={`Минимум слотов до плана 70%: ${format(row.deficit)}`} onClick={() => openOrg(row.org.oid)}>{format(row.deficit)}</td>
             <td className={styles.attainmentCell} title={`При фактическом показателе ${percent(row.coverage)} план 70% составляет 100% выполнения`}>{row.coverage === null ? "—" : percent(row.coverage / PLAN_PERCENT * 100)}</td>
@@ -295,10 +297,18 @@ export default function Incident38Dashboard() {
               return <td className={styles.specialtyCell} key={specialty.code} title={title} onClick={() => { setSelectedOid(row.org.oid); setSelectedSpecialty(specialty.code); setTab("organization"); }} style={{ background: text === "Н" ? "#e8eef3" : heatColor(value), color: text === "Н" ? "#657d8f" : "#fff" }}>{text}</td>;
             })}
             <td className={styles.totalCell} title="Число специальностей, где норматив больше нуля, а слотов ЕПГУ нет" style={{ background: zeroSpecialtyCount > 0 ? "#b83d47" : "#218257", color: "#fff" }}>{zeroSpecialtyCount}</td>
-          </tr>;
+          </tr>
+          {expandedMatrixOid === row.org.oid && <tr className={styles.mobileDetailsRow}><td colSpan={18}><div className={styles.mobileSpecialties}>
+            {SPECIALTIES.map((specialty) => {
+              const cell = row.org.specialties.find((item) => item.code === specialty.code);
+              const value = cell ? ratio(cell.epguSlots, cell.norm) : null;
+              const description = !cell || cell.norm === null ? "Нет данных" : cell.norm <= 0 ? "Норматив не задан" : value === null ? "Нет данных по слотам" : `${percent(value)} · ${format(cell.epguSlots)} из ${format(cell.norm)} слотов`;
+              return <div className={styles.mobileSpecialty} key={specialty.code}><span>{specialty.name}</span><strong>{description}</strong></div>;
+            })}
+          </div></td></tr>}</Fragment>;
           })}
         </tbody></table></div>
-        <p className={styles.matrixMethod}>Расчёт: процент слотов ЕПГУ от общего норматива ÷ 70% × 100%. Например, 70% общего норматива — это 100% выполнения плана. «Спец. с 0 слотами» учитывает только специальности с заданным положительным нормативом.</p><p className={styles.matrixMobileHint}>На узком экране показаны итоговые показатели; все специальности доступны в карточке МО.</p>
+        <p className={styles.matrixMethod}>Расчёт: процент слотов ЕПГУ от общего норматива ÷ 70% × 100%. Например, 70% общего норматива — это 100% выполнения плана. «Спец. с 0 слотами» учитывает только специальности с заданным положительным нормативом.</p><p className={styles.matrixMobileHint}>Нажмите «Специальности» в строке МО, чтобы увидеть разбивку по 14 специальностям.</p>
         {matrixRows.length === 0 && <p className={styles.empty}>МО по такому названию не найдены.</p>}
       </section>
     </main>}
