@@ -1,0 +1,338 @@
+{
+  "tvspStationary": {
+    "previousDate": "15.11.2026",
+    "currentDate": "19.11.2026",
+    "organizations": [
+      {
+        "mo": "ГАУЗ \"РКПБ ИМ. АКАД. В.М. БЕХТЕРЕВА\"",
+        "oid": "1.2.643.5.1.13.13.12.2.16.1056",
+        "previousBuildings": 9,
+        "currentBuildings": 9,
+        "previousRegistered": 9,
+        "currentRegistered": 9,
+        "excludedBuildings": [],
+        "newBuildings": [],
+        "excludedSubunitOids": [
+          "1.2.643.5.1.13.13.12.2.16.1056.0.47466",
+          "1.2.643.5.1.13.13.12.2.16.1056.0.48850"
+        ],
+        "newSubunitOids": [],
+        "status": "Проверка состава ФРМО/СП"
+      },
+      {
+        "mo": "ГАУЗ \"РКБ МЗ РТ\"",
+        "oid": "1.2.643.5.1.13.13.12.2.16.1094",
+        "previousBuildings": 7,
+        "currentBuildings": 7,
+        "previousRegistered": 6,
+        "currentRegistered": 6,
+        "excludedBuildings": [],
+        "newBuildings": [],
+        "excludedSubunitOids": [
+          "1.2.643.5.1.13.13.12.2.16.1094.0.294640",
+          "1.2.643.5.1.13.13.12.2.16.1094.0.77684"
+        ],
+        "newSubunitOids": [],
+        "status": "Проверка состава ФРМО/СП"
+      },
+      {
+        "mo": "ГАУЗ \"МАМАДЫШСКАЯ ЦРБ\"",
+        "oid": "1.2.643.5.1.13.13.12.2.16.1104",
+        "previousBuildings": 4,
+        "currentBuildings": 3,
+        "previousRegistered": 3,
+        "currentRegistered": 3,
+        "excludedBuildings": [
+          "35260"
+        ],
+        "newBuildings": [],
+        "excludedSubunitOids": [
+          "1.2.643.5.1.13.13.12.2.16.1104.0.64507",
+          "1.2.643.5.1.13.13.12.2.16.1104.0.971518"
+        ],
+        "newSubunitOids": [],
+        "status": "Проверка состава ФРМО/СП"
+      },
+      {
+        "mo": "ГАУЗ \"ГОРОДСКАЯ БОЛЬНИЦА №2\"",
+        "oid": "1.2.643.5.1.13.13.12.2.16.1116",
+        "previousBuildings": 2,
+        "currentBuildings": 2,
+        "previousRegistered": 2,
+        "currentRegistered": 2,
+        "excludedBuildings": [],
+        "newBuildings": [],
+        "excludedSubunitOids": [
+          "1.2.643.5.1.13.13.12.2.16.1116.0.617596"
+        ],
+        "newSubunitOids": [],
+        "status": "Проверка состава ФРМО/СП"
+      },
+      {
+        "mo": "ГАУЗ \"ЦГКБ № 18 ИМ. ПРОФ. К.Ш. ЗЫЯТДИНОВА\"",
+        "oid": "1.2.643.5.1.13.13.12.2.16.1151",
+        "previousBuildings": 2,
+        "currentBuildings": 2,
+        "previousRegistered": 2,
+        "currentRegistered": 2,
+        "excludedBuildings": [],
+        "newBuildings": [],
+        "excludedSubunitOids": [
+          "1.2.643.5.1.13.13.12.2.16.1151.0.63377",
+          "1.2.643.5.1.13.13.12.2.16.1151.0.63658"
+        ],
+        "newSubunitOids": [],
+        "status": "Проверка состава ФРМО/СП"
+      },
+      {
+        "mo": "ГАУЗ \"НЦРМБ\"",
+        "oid": "1.2.643.5.1.13.13.12.2.16.1192",
+        "previousBuildings": 7,
+        "currentBuildings": 7,
+        "previousRegistered": 7,
+        "currentRegistered": 7,
+        "excludedBuildings": [],
+        "newBuildings": [],
+        "excludedSubunitOids": [
+          "1.2.643.5.1.13.13.12.2.16.1192.0.49449",
+          "1.2.643.5.1.13.13.12.2.16.1192.0.49515",
+          "1.2.643.5.1.13.13.12.2.16.1192.0.534127",
+          "1.2.643.5.1.13.13.12.2.16.1192.0.552886",
+          "1.2.643.5.1.13.13.12.2.16.1192.0.56189",
+          "1.2.643.5.1.13.13.12.2.16.1192.0.732858",
+          "1.2.643.5.1.13.13.12.2.16.1192.0.780269",
+          "1.2.643.5.1.13.13.12.2.16.1192.0.838351"
+        ],
+        "newSubunitOids": [],
+        "status": "Проверка состава ФРМО/СП"
+      }
+    ]
+  },
+  "tvspAmbulatory": {
+    "previousDate": "15.11.2026",
+    "currentDate": "19.11.2026",
+    "organizations": [
+      {
+        "mo": "ГАУЗ \"РКОБ МЗ РТ ИМ. ПРОФ. Е.В.АДАМЮКА\"",
+        "oid": "1.2.643.5.1.13.13.12.2.16.1046",
+        "previousBuildings": 2,
+        "currentBuildings": 1,
+        "previousRegistered": 2,
+        "currentRegistered": 1,
+        "excludedBuildings": [
+          "24495"
+        ],
+        "newBuildings": [],
+        "excludedSubunitOids": [
+          "1.2.643.5.1.13.13.12.2.16.1046.0.298067"
+        ],
+        "newSubunitOids": [],
+        "status": "Проверка состава ФРМО/СП"
+      },
+      {
+        "mo": "ГАУЗ \"МЕНДЕЛЕЕВСКАЯ ЦРБ\"",
+        "oid": "1.2.643.5.1.13.13.12.2.16.1058",
+        "previousBuildings": 3,
+        "currentBuildings": 3,
+        "previousRegistered": 3,
+        "currentRegistered": 3,
+        "excludedBuildings": [],
+        "newBuildings": [],
+        "excludedSubunitOids": [
+          "1.2.643.5.1.13.13.12.2.16.1058.0.631915"
+        ],
+        "newSubunitOids": [],
+        "status": "Проверка состава ФРМО/СП"
+      },
+      {
+        "mo": "ГАУЗ \"РКБ МЗ РТ\"",
+        "oid": "1.2.643.5.1.13.13.12.2.16.1094",
+        "previousBuildings": 6,
+        "currentBuildings": 6,
+        "previousRegistered": 6,
+        "currentRegistered": 6,
+        "excludedBuildings": [],
+        "newBuildings": [],
+        "excludedSubunitOids": [
+          "1.2.643.5.1.13.13.12.2.16.1094.0.231754",
+          "1.2.643.5.1.13.13.12.2.16.1094.0.796722"
+        ],
+        "newSubunitOids": [],
+        "status": "Проверка состава ФРМО/СП"
+      },
+      {
+        "mo": "ГАУЗ \"АЛЬМЕТЬЕВСКАЯ СП\"",
+        "oid": "1.2.643.5.1.13.13.12.2.16.1100",
+        "previousBuildings": 1,
+        "currentBuildings": null,
+        "previousRegistered": 1,
+        "currentRegistered": null,
+        "excludedBuildings": [
+          "29757"
+        ],
+        "newBuildings": [],
+        "excludedSubunitOids": [
+          "1.2.643.5.1.13.13.12.2.16.1100.0.59262",
+          "1.2.643.5.1.13.13.12.2.16.1100.0.62698",
+          "1.2.643.5.1.13.13.12.2.16.1100.0.65065",
+          "1.2.643.5.1.13.13.12.2.16.1100.0.74469"
+        ],
+        "newSubunitOids": [],
+        "status": "Проверка состава ФРМО/СП"
+      },
+      {
+        "mo": "ГАУЗ \"БУИНСКАЯ ЦРБ\"",
+        "oid": "1.2.643.5.1.13.13.12.2.16.1120",
+        "previousBuildings": 4,
+        "currentBuildings": 4,
+        "previousRegistered": 4,
+        "currentRegistered": 4,
+        "excludedBuildings": [],
+        "newBuildings": [],
+        "excludedSubunitOids": [
+          "1.2.643.5.1.13.13.12.2.16.1120.0.640502"
+        ],
+        "newSubunitOids": [],
+        "status": "Проверка состава ФРМО/СП"
+      },
+      {
+        "mo": "ГАУЗ \"ГОРОДСКАЯ ПОЛИКЛИНИКА №4 ИМ.Л.Н.ГАНИЕВОЙ\"",
+        "oid": "1.2.643.5.1.13.13.12.2.16.1147",
+        "previousBuildings": 3,
+        "currentBuildings": 3,
+        "previousRegistered": 3,
+        "currentRegistered": 3,
+        "excludedBuildings": [],
+        "newBuildings": [],
+        "excludedSubunitOids": [
+          "1.2.643.5.1.13.13.12.2.16.1147.0.255175",
+          "1.2.643.5.1.13.13.12.2.16.1147.0.77333"
+        ],
+        "newSubunitOids": [],
+        "status": "Проверка состава ФРМО/СП"
+      },
+      {
+        "mo": "ГАУЗ \"ГОРОДСКАЯ ПОЛИКЛИНИКА № 20\"",
+        "oid": "1.2.643.5.1.13.13.12.2.16.1178",
+        "previousBuildings": 7,
+        "currentBuildings": 7,
+        "previousRegistered": 7,
+        "currentRegistered": 7,
+        "excludedBuildings": [],
+        "newBuildings": [],
+        "excludedSubunitOids": [
+          "1.2.643.5.1.13.13.12.2.16.1178.0.432863",
+          "1.2.643.5.1.13.13.12.2.16.1178.0.520029"
+        ],
+        "newSubunitOids": [
+          "1.2.643.5.1.13.13.12.2.16.1178.0.925526"
+        ],
+        "status": "Проверка состава ФРМО/СП"
+      },
+      {
+        "mo": "ГАУЗ \"НЦРМБ\"",
+        "oid": "1.2.643.5.1.13.13.12.2.16.1192",
+        "previousBuildings": 7,
+        "currentBuildings": 7,
+        "previousRegistered": 7,
+        "currentRegistered": 7,
+        "excludedBuildings": [],
+        "newBuildings": [],
+        "excludedSubunitOids": [
+          "1.2.643.5.1.13.13.12.2.16.1192.0.616642"
+        ],
+        "newSubunitOids": [],
+        "status": "Проверка состава ФРМО/СП"
+      },
+      {
+        "mo": "ГАУЗ \"ДЕТСКАЯ ГОРОДСКАЯ ПОЛИКЛИНИКА № 10\"",
+        "oid": "1.2.643.5.1.13.13.12.2.16.1199",
+        "previousBuildings": 3,
+        "currentBuildings": 3,
+        "previousRegistered": 2,
+        "currentRegistered": 3,
+        "excludedBuildings": [],
+        "newBuildings": [],
+        "excludedSubunitOids": [],
+        "newSubunitOids": [],
+        "status": "Изменение факта передачи"
+      }
+    ]
+  },
+  "tvspLaboratory": {
+    "previousDate": "15.11.2026",
+    "currentDate": "19.11.2026",
+    "organizations": [
+      {
+        "mo": "ГАУЗ \"РКНД МЗ РТ\"",
+        "oid": "1.2.643.5.1.13.13.12.2.16.1168",
+        "previousBuildings": 1,
+        "currentBuildings": 1,
+        "previousRegistered": 1,
+        "currentRegistered": 1,
+        "excludedBuildings": [],
+        "newBuildings": [],
+        "excludedSubunitOids": [
+          "1.2.643.5.1.13.13.12.2.16.1168.0.190288"
+        ],
+        "newSubunitOids": [],
+        "status": "Проверка состава ФРМО/СП"
+      }
+    ]
+  },
+  "tvspDiagnostic": {
+    "previousDate": "14.11.2026",
+    "currentDate": "18.11.2026",
+    "organizations": [
+      {
+        "mo": "ГАУЗ \"МЕНДЕЛЕЕВСКАЯ ЦРБ\"",
+        "oid": "1.2.643.5.1.13.13.12.2.16.1058",
+        "previousBuildings": 2,
+        "currentBuildings": 2,
+        "previousRegistered": 1,
+        "currentRegistered": 2,
+        "excludedBuildings": [],
+        "newBuildings": [],
+        "excludedSubunitOids": [],
+        "newSubunitOids": [],
+        "status": "Изменение факта передачи"
+      },
+      {
+        "mo": "ГАУЗ НДРБ С ПЦ",
+        "oid": "1.2.643.5.1.13.13.12.2.16.1171",
+        "previousBuildings": 6,
+        "currentBuildings": 5,
+        "previousRegistered": 6,
+        "currentRegistered": 5,
+        "excludedBuildings": [
+          "27457"
+        ],
+        "newBuildings": [],
+        "excludedSubunitOids": [],
+        "newSubunitOids": [],
+        "status": "Проверка состава ФРМО/СП"
+      }
+    ]
+  },
+  "smpFederal": {
+    "previousDate": "14.11.2026",
+    "currentDate": "18.11.2026",
+    "organizations": [
+      {
+        "mo": "ГАУЗ \"ЗЕЛЕНОДОЛЬСКАЯ ЦРБ\"",
+        "oid": "1.2.643.5.1.13.13.12.2.16.1139",
+        "previousBuildings": 9,
+        "currentBuildings": 8,
+        "previousRegistered": 9,
+        "currentRegistered": 8,
+        "excludedBuildings": [
+          "129928"
+        ],
+        "newBuildings": [],
+        "excludedSubunitOids": [],
+        "newSubunitOids": [],
+        "status": "Проверка состава ФРМО/СП"
+      }
+    ]
+  }
+}
