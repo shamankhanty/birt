@@ -9,7 +9,7 @@ const source = JSON.parse(fs.readFileSync("app/frmr-reconciliation-data.json", "
 test("medical organizations inspect all three source categories without external files", () => {
   const workspace=fs.readFileSync("app/frmr-mo-workspace.tsx","utf8");
   assert.match(component,/FrmrMoWorkspace key=/u);
-  assert.match(workspace,/Должности \/ МО/u);
+  assert.match(workspace,/Должности ФРМР/u);
   assert.match(workspace,/Привязки СП/u);
   assert.match(workspace,/СП ↔ ФРМО/u);
   assert.match(workspace,/Все расхождения выбранной МО/u);
@@ -20,13 +20,13 @@ test("medical organizations inspect all three source categories without external
 test("MO details preserve role/SP navigation and only masked identifier suffixes", () => {
   const workspace=fs.readFileSync("app/frmr-mo-workspace.tsx","utf8");
   const styling=fs.readFileSync("app/frmr-mo-workspace.module.css","utf8");
-  assert.match(workspace,/active\.staffRecords/u);
+  assert.match(workspace,/row\.staffRecords/u);
   assert.match(workspace,/№ \{record\[5\]\}/u);
   assert.match(workspace,/record\[3\]===null \? "Нет данных" : "•••-•••-•"/u);
-  assert.match(workspace,/OID для сверки/u);
-  assert.match(workspace,/Нажмите на проблему для детализации/u);
+  assert.match(workspace,/OID: \{dep\.oid\}/u);
+  assert.match(workspace,/справа сразу появятся должностные записи/u);
   assert.match(styling,/\.drillGrid/u);
-  assert.match(styling,/\.rowButton/u);
+  assert.match(styling,/\.auditRowButton/u);
   assert.match(style,/moSearchResults/u);
   assert.match(component,/aria-autocomplete="list"/u);
   assert.match(component,/moMatches/u);
