@@ -137,7 +137,7 @@ export default function FrmrMoWorkspace({ selectedId, selectedName }: { selected
 
   // Default to the largest group and its first СП so the staff list is visible on entry.
   // A new MO remounts the workspace with key={selected.id} in the parent.
-  const activeRole = drillRole && roleCounts.some(item => item.role === drillRole) ? drillRole : roleCounts[0]?.role ?? null;
+  const activeRole = drillRole && matchingRoles.some(item => item.role === drillRole) ? drillRole : matchingRoles[0]?.role ?? null;
   const roleRows = staffRows.filter(row => row.role === activeRole);
   const departmentGroups = [...roleRows.reduce((map, row) => {
     const item = map.get(row.oid) ?? { oid: row.oid, name: row.frmrDepartment, mo: 0, department: 0 };
