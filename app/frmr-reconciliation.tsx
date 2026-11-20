@@ -5,6 +5,7 @@ import allRaw from "./frmr-all-specialties.json";
 import spTypes from "./frmr-sp-types.json";
 import previousControl from "./frmr-previous-control.json";
 import FrmrSpAudit from "./frmr-sp-audit";
+import FrmrMoWorkspace from "./frmr-mo-workspace";
 import { compareFrmrControl, frmrControlView } from "../lib/frmr-control";
 import { applyFrmrScope } from "../lib/frmr-scope";
 const { data: scopedAll, excluded: scopeExcluded } = applyFrmrScope(allRaw, spTypes.types);
@@ -190,11 +191,10 @@ export default function FrmrReconciliation() {
       <span className={styles.pill}>{view === "audit" ? "Привязки СП · 19.11" : `Все специальности · ${allRaw.summary.sourceCut.slice(0,5)}`}</span>
       <div className={styles.tabs} role="group" aria-label="Представление раздела">
         <button className={[styles.tab, view === "minister" ? styles.tabActive : ""].join(" ")} onClick={() => setView("minister")} aria-pressed={view === "minister"}>Обзор</button>
-        <button className={[styles.tab, view === "organization" ? styles.tabActive : ""].join(" ")} onClick={() => setView("organization")} aria-pressed={view === "organization"}>Карточка МО и действия</button>
-        <button className={[styles.tab, view === "audit" ? styles.tabActive : ""].join(" ")} onClick={() => setView("audit")} aria-pressed={view === "audit"}>Сверка СП с ФРМО</button>
+        <button className={[styles.tab, view === "organization" ? styles.tabActive : ""].join(" ")} onClick={() => setView("organization")} aria-pressed={view === "organization"}>Карточка МО · все ошибки</button>
       </div>
 
-      {view !== "audit" && <div className={styles.filters}>
+      {view === "minister" && <div className={styles.filters}>
         <div className={styles.tabs} role="group" aria-label="Уровень контроля ФРМР">
           <button className={[styles.tab, controlLevel === "mo" ? styles.tabActive : ""].join(" ")} aria-pressed={controlLevel === "mo"} onClick={() => {setControlLevel("mo");setFilter("all");resetInspection();}}>На уровне МО</button>
           <button className={[styles.tab, controlLevel === "department" ? styles.tabActive : ""].join(" ")} aria-pressed={controlLevel === "department"} onClick={() => {setControlLevel("department");setFilter("all");resetInspection();}}>Привязки СП · справочно</button>
@@ -319,134 +319,11 @@ export default function FrmrReconciliation() {
                   </div>
                 )}
               </div>
-              <p className={styles.moPickerSteps}>МО → должность → СП → проблемы и записи для проверки</p>
+              <p className={styles.moPickerSteps}>МО → все ошибки по должностям, подразделениям и ФРМО в одной карточке</p>
               </>}
             </div>
-            {selected && <div className={[styles.miniStats, isAll ? styles.moStats : ""].join(" ")}>
-              <article><small>{isAll ? (controlLevel === "mo" ? "Не найдены в МО" : "СП · справочно") : <>Расхождения на {cutShort}</>}</small><b className={selected.current ? styles.negative : styles.positive}>{number(selected.current)}</b></article>
-              <article><small>{isAll ? "Наименований должностей" : "Изменение к 16.10"}</small><b>{isAll ? selected.specialties.length : signed(change(selected))}</b></article>
-              {!isAll && <><article><small>Отсутствует на уровне МО</small><b>{number(selected.stage1)}</b></article><article><small>Не совпадает подразделение</small><b>{number(selected.stage2)}</b></article></>}
-            </div>}
           </section>
-
-          {selected && <>
-          <section className={styles.panel} data-testid="frmr-organization-diagnostic">
-            <div className={styles.panelHead}>
-              <div>
-                <h2>Где искать расхождения — маршрут для МО</h2>
-                <p className={styles.muted}>Выберите должность и конкретное структурное подразделение. Ниже появятся проблемы, конкретные записи и рекомендации по исправлению только для выбранного СП.</p>
-              </div>
-              <span className={styles.pill}>Срез · {raw.sourceCut}</span>
-            </div>
-            <div className={styles.diagnosticLayout}>
-              <div>
-                <h3>1. Должность ФРМР</h3>
-                <div className={styles.privateTools}>
-                  <input className={styles.input} type="search" value={roleQuery}
-                    onChange={(e) => setRoleQuery(e.target.value)}
-                    placeholder="Найти должность…" aria-label="Поиск по проблемным должностям"/>
-                </div>
-                <div className={styles.diagnosticRoles}>
-                  {diagnosticRoles.map(([role, count]) => (
-                    <button key={role} className={[styles.diagnosticRole, activeRole === role ? styles.diagnosticRoleActive : ""].join(" ")}
-                      onClick={() => { setActiveRole(role); setActiveDepartment(null); setInspectionType("all"); setLast4Query("");  }}
-                      type="button" aria-pressed={activeRole === role}>
-                      <span>{role}</span><b>{number(count)} <small>зап.</small></b>
-                    </button>
-                  ))}
-                  {!diagnosticRoles.length && <p className={styles.muted}>По запросу должности не найдены. Все должностные группы, включая единичные, доступны в перечне.</p>}
-                </div>
-                <p className={styles.muted}>Всего расхождений по всем должностям МО: <b>{number(allSelectedGroups.reduce((sum,r)=>sum+r.count,0))}</b>. Одна запись — не обязательно отдельный врач.</p>
-              </div>
-              <div className={styles.diagnosticGuide}>
-                <h3>2. Структурное подразделение</h3>
-                {activeRole ? (
-                  <>
-                    <p className={styles.muted}>Должность «{activeRole}»: {number(roleDepartments.reduce((sum,row)=>sum+row.count,0))} записей, {roleDepartments.length} СП. Выберите отделение, чтобы увидеть конкретные причины.</p>
-                    <div className={styles.frmrDepartmentList}>
-                      {roleDepartments.map((dep) => <button type="button" key={dep.oid}
-                        className={[styles.frmrDepartment, selectedDepartment?.oid===dep.oid ? styles.frmrDepartmentActive : ""].join(" ")}
-                        onClick={() => {setActiveDepartment(dep.oid);setInspectionType("all");setLast4Query("");}}>
-                        <span><b>{dep.name}</b><small>OID СП: {dep.oid}</small><small>Нет должности: {number(dep.noPosition)} · не совпадает СП: {number(dep.wrongDepartment)}</small></span>
-                        <strong>{number(dep.count)}</strong>
-                      </button>)}
-                    </div>
-                  </>
-                ) : <p className={styles.muted}>Выберите должность слева. Здесь появятся все её подразделения, включая единичные расхождения.</p>}
-              </div>
-            </div>
-            <div className={styles.frmrDepartmentDetails}>
-              <h3>3. Причина и как исправить</h3>
-              {selectedDepartment ? (
-                <>
-                  <div className={styles.diagnosticRoute}>
-                    <b>Точный адрес проверки</b>
-                    <div><small>МО</small><strong>{selected.name}</strong></div>
-                    <div><small>OID МО</small><code>{officialPrefix}{selected.id}</code></div>
-                    <div><small>Должность ФРМР</small><strong>{activeRole}</strong></div>
-                    <div><small>Структурное подразделение ФРМР</small><strong>{selectedDepartment.name}</strong></div>
-                    <div><small>OID СП</small><code>{selectedDepartment.oid}</code></div>
-                  </div>
-                  <div className={styles.diagnosticIssueButtons} role="group" aria-label="Выбрать тип проблемы подразделения">
-                    <button type="button" className={inspectionType==="all" ? styles.issueSelected : ""} onClick={()=>setInspectionType("all")}>Все записи · {number(selectedDepartment.count)}</button>
-                    <button type="button" className={inspectionType==="mo" ? styles.issueSelected : ""} onClick={()=>setInspectionType("mo")}>Нет должности · {number(selectedDepartment.noPosition)}</button>
-                    <button type="button" className={inspectionType==="department" ? styles.issueSelected : ""} onClick={()=>setInspectionType("department")}>Не совпадает СП · {number(selectedDepartment.wrongDepartment)}</button>
-                  </div>
-                  {(inspectionType==="all" || inspectionType==="mo") && selectedDepartment.noPosition>0 && (
-                    <div className={styles.action}><b className={styles.actionNum}>1</b><div><b>Нет должности на уровне МО в ГИС — {number(selectedDepartment.noPosition)} зап.</b>
-                      <span>ФРМР → трудоустройство → OID МО → должность. В ГИС → сотрудники → должность в МО проверить наличие того же работника. Если ФРМР актуален, исправить ГИС; если кадровая запись устарела — исправить ФРМР. Дубликаты не создавать.</span>
-                    </div></div>
-                  )}
-                  {(inspectionType==="all" || inspectionType==="department") && selectedDepartment.wrongDepartment>0 && (
-                    <div className={styles.action}><b className={styles.actionNum}>2</b><div><b>Должность есть, но не совпадает СП — {number(selectedDepartment.wrongDepartment)} зап.</b>
-                      <span>Сверить OID подразделения сотрудника в ФРМР с привязкой в ГИС. Если OID ФРМР соответствует филиалу, а не рабочему СП, направить на проверку правил сопоставления РМИАЦ прежде, чем требовать от МО исправлений.</span>
-                    </div></div>
-                  )}
-                  {((inspectionType==="mo"&&selectedDepartment.noPosition===0)||(inspectionType==="department"&&selectedDepartment.wrongDepartment===0)) && (
-                    <p className={styles.muted}>Для этого подразделения записей выбранного типа не выявлено.</p>
-                  )}
-                  <section className={styles.frmrEmployeeRecords} data-testid="frmr-snils-last4-records">
-                    <div className={styles.frmrEmployeeHeader}>
-                      <div>
-                        <h4>4. Конкретные записи — СНИЛС (4 цифры)</h4>
-                        <p className={styles.muted}>Первые 7 цифр скрыты и отсутствуют в данных сайта. Номер строки помогает найти запись в исходной ведомости. Срез {raw.sourceCut}.</p>
-                      </div>
-                      <strong>{number(detailRecords.length)} записей</strong>
-                    </div>
-                    <input className={styles.input} type="search"
-                      value={last4Query} onChange={(e)=>setLast4Query(e.target.value)}
-                      placeholder="Найти по последним 4 цифрам…" aria-label="Поиск по последним четырем цифрам СНИЛС"
-                      inputMode="numeric" maxLength={4}/>
-                    <div className={styles.frmrRecordTableWrap}>
-                      <table className={styles.table}>
-                        <thead><tr><th>Строка в выгрузке</th><th>СНИЛС</th><th>Должность</th><th>OID СП</th></tr></thead>
-                        <tbody>{visibleRecords.map((rec,i)=><tr key={rec[5]+"-"+i}>
-                          <td>№ {rec[5]}</td>
-                          <td className={styles.frmrLastFour}>{rec[3]===null ? "Нет СНИЛС" : "•••-•••-•"+rec[3]}</td>
-                          <td>{departmentRaw.roles[rec[1]]}</td>
-                          <td><code className={styles.frmrRecordOid}>{selectedDepartment?.oid ?? "Не указан"}</code></td>
-                        </tr>)}</tbody>
-                      </table>
-                      {visibleRecords.length===0 && <p className={styles.muted}>Записей с такими последними цифрами в выбранном подразделении нет.</p>}
-                    </div>
-                  </section>
-                </>
-              ) : <p className={styles.muted}>Выберите должность и подразделение выше. Будут показаны только подтверждённые для этого СП категории ошибок.</p>}
-            </div>
-          </section>
-          <div className={styles.grid}>
-            <section className={styles.panel}>
-              <h2>{isAll && controlLevel === "department" ? "Справочная проверка СП" : "Что нужно сделать МО"}</h2>
-              {(!isAll || controlLevel === "mo") && <div className={styles.action}><b className={styles.actionNum}>1</b><div><b>Проверить отсутствующие должности ({number(selected.stage1)})</b><span>Сверить кадровый приказ и фактическое трудоустройство, OID МО и запись в ГИС. Не создавать дубли автоматически.</span></div></div>}
-              {(!isAll || controlLevel === "department") && <div className={styles.action}><b className={styles.actionNum}>2</b><div><b>Уточнить подразделения ({number(selected.stage2)})</b><span>Сопоставить подразделение из ФРМО, филиал, должность и фактическое место работы. Эта сверка не входит в основной итог проблем МО.</span></div></div>}
-              <div className={styles.action}><b className={styles.actionNum}>3</b><div><b>Проверить запись пациентов</b><span>Выяснить, относится ли должность к амбулаторному приёму, есть ли расписание и опубликованы ли слоты на ЕПГУ.</span></div></div>
-              <div className={styles.action}><b className={styles.actionNum}>4</b><div><b>Подтвердить исправление</b><span>Указать ответственного, срок, первопричину и результат повторной сверки.</span></div></div>
-              <div className={styles.linkrow}>
-                <button className={[styles.button,styles.ghost].join(" ")} type="button" onClick={()=>setView("minister")}>К общей сводке</button>
-              </div>
-            </section>
-          </div>
-          </>}
+          {selected && <FrmrMoWorkspace selectedId={selected.id} selectedName={selected.name} />}
         </>
       )}
       <div className={styles.footnote}>
