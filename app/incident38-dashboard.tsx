@@ -32,7 +32,8 @@ const format = (value: SlotValue) => value === null || value === undefined ? "�
 const percent = (value: number | null) => value === null || !Number.isFinite(value) ? "—" : `${numberFormat.format(value)}%`;
 const sumKnown = (values: SlotValue[]) => values.some((value) => value === null || value === undefined) ? null : values.reduce<number>((sum, value) => sum + (value ?? 0), 0);
 const ratio = (slots: SlotValue, norm: SlotValue) => slots === null || norm === null || norm <= 0 ? null : slots / norm * 100;
-const PLAN_PERCENT = 70;
+const PLAN_PERCENT = 60;
+const GOAL_PERCENT = 70;
 const PLAN_RATIO = PLAN_PERCENT / 100;
 const planShortfall = (slots: SlotValue, norm: SlotValue) => slots === null || norm === null || norm <= 0 ? null : Math.max(0, Math.ceil(norm * PLAN_RATIO - slots - 1e-9));
 const median = (values: number[]) => {
@@ -68,7 +69,7 @@ const orgMetrics = (org: Organization) => metrics(org.specialties);
 const tone = (value: number | null) => value === null ? styles.neutral : value >= 100 ? styles.good : styles.belowNorm;
 const planTone = (value: number | null) => value === null ? styles.neutral : value >= PLAN_PERCENT ? styles.good : styles.belowNorm;
 const specialtyBand = (value: number | null) => value === null ? styles.neutral : value >= 75 ? styles.specialtyGreen : value >= 50 ? styles.specialtyYellow : value >= 25 ? styles.specialtyOrange : styles.specialtyRed;
-const status = (value: number | null) => value === null ? "Нет данных" : value >= PLAN_PERCENT ? "План 70% выполнен" : "Ниже плана 70%";
+const status = (value: number | null) => value === null ? "Нет данных" : value >= GOAL_PERCENT ? "Цель 70% достигнута" : value >= PLAN_PERCENT ? "План 60% выполнен" : "Ниже плана 60%";
 const heatColor = (value: number | null) => {
   if (value === null) return "#e8eef3";
   const percentDone = Math.min(100, Math.max(0, value));
@@ -231,7 +232,7 @@ export default function Incident38Dashboard() {
         <p className={styles.subtitle}>Свободные слоты на ближайшие 14 дней · {ownership === "state" ? "государственные" : "частные"} медицинские организации</p>
         <p className={styles.sourceDates}>Даты выгрузок: {DATA.map((dataset) => dataset.reportDate).join(" · ")} · актуальность ФРМР: {DATA.map((dataset) => dataset.frmoDate).join(" · ")}</p>
       </div>
-      <div className={styles.heroResult}><span>И‑38.9 · слоты ЕПГУ от общего норматива</span><strong className={planTone(regional.coverage)}>{percent(regional.coverage)}</strong><small>План для каждой МО — 70%</small></div>
+      <div className={styles.heroResult}><span>И‑38.9 · слоты ЕПГУ от общего норматива</span><strong className={planTone(regional.coverage)}>{percent(regional.coverage)}</strong><small>План — 60% · цель — 70%</small></div>
     </header>
 
     <nav className={styles.tabs} aria-label="Разделы И38">
@@ -243,8 +244,8 @@ export default function Incident38Dashboard() {
       <div className={styles.overviewGrid}>
         <div className={styles.kpis}>
           <article className={styles.kpi}><strong className={planTone(regional.coverage)}>{percent(regional.coverage)}</strong><span>Общий процент И‑38.9</span><small>{format(regional.epguSlots)} слотов ЕПГУ ÷ {format(regional.norm)} «Норматив ВСЕГО»</small></article>
-          <article className={styles.kpi}><strong className={styles.good}>{completeCount}</strong><span>МО выполнили план 70%</span><small>И‑38.9 каждой МО не ниже 70%</small></article>
-          <article className={styles.kpi}><strong className={styles.belowNorm}>{belowCount}</strong><span>МО ниже плана 70%</span><small>С полными данными</small></article>
+          <article className={styles.kpi}><strong className={styles.good}>{completeCount}</strong><span>МО выполнили план 60%</span><small>И‑38.9 каждой МО не ниже 60%</small></article>
+          <article className={styles.kpi}><strong className={styles.belowNorm}>{belowCount}</strong><span>МО ниже плана 60%</span><small>С полными данными</small></article>
           <article className={styles.kpi}><strong>{format(regional.deficit)}</strong><span>Не хватает слотов до плана</span><small>Минимальная нехватка по каждой МО</small></article>
           <article className={styles.kpi}><strong className={styles.neutral}>{missingCount}</strong><span>МО с неполными данными</span><small>Не считаются нулём</small></article>
         </div>
@@ -254,18 +255,18 @@ export default function Incident38Dashboard() {
           <a className={styles.maxGroupLink} href="https://max.ru/join/_IjdDQBUBT835_Cz_fdY4ELQ8X2u72CuZGndk1cTcq8" target="_blank" rel="noreferrer">Открыть чат <span aria-hidden="true">↗</span></a>
         </article>
       </div>
-      <div className={styles.note}><b>Как читать показатель:</b> Реальный процент = «Слотов для ЕПГУ» ÷ «Норматив ВСЕГО» × 100%. План для каждой МО — 70%. Нехватка = max(0, округление вверх(«Норматив ВСЕГО» × 70%) − «Слотов для ЕПГУ»), считается отдельно по каждой МО. Общий процент — сумма слотов ЕПГУ, делённая на сумму общего норматива. В расчёте учитываются все слоты ЕПГУ, в том числе по специальностям с нулевым нормативом. {DATA[0].reportDate === DATA[1].reportDate ? `Обе выгрузки на ${DATA[0].reportDate}.` : `Даты выгрузок: ${DATA.map((dataset) => dataset.reportDate).join(" и ")}.`} «Норма для ЕПГУ» и «Всего слотов» не влияют на этот показатель.</div>
+      <div className={styles.note}><b>Как читать показатель:</b> Реальный процент = «Слотов для ЕПГУ» ÷ «Норматив ВСЕГО» × 100%. План каждой МО — 60%, цель — 70%. Нехватка = max(0, округление вверх(«Норматив ВСЕГО» × 60%) − «Слотов для ЕПГУ»), считается отдельно по каждой МО. Общий процент — сумма слотов ЕПГУ, делённая на сумму общего норматива. В расчёте учитываются все слоты ЕПГУ, в том числе по специальностям с нулевым нормативом. {DATA[0].reportDate === DATA[1].reportDate ? `Обе выгрузки на ${DATA[0].reportDate}.` : `Даты выгрузок: ${DATA.map((dataset) => dataset.reportDate).join(" и ")}.`} «Норма для ЕПГУ» и «Всего слотов» не влияют на этот показатель.</div>
       <div className={styles.grid2}>
-        <section className={styles.card}><h2>Распределение МО по достижению плана</h2><p className={styles.chartNote}>Сколько организаций достигло разных уровней от индивидуального плана 70%. Достижение плана = И‑38.9 МО ÷ 70%. В расчёт включены МО с полными данными: {completeOrganizations.length}.</p>
+        <section className={styles.card}><h2>Распределение МО по достижению плана</h2><p className={styles.chartNote}>Сколько организаций достигло разных уровней от индивидуального плана 60%. Достижение плана = И‑38.9 МО ÷ 60%. В расчёт включены МО с полными данными: {completeOrganizations.length}.</p>
           <div className={styles.planDistribution}>{planDistribution.map((band) => <div className={styles.planDistributionRow} key={band.key}><span>{band.label}</span><div className={styles.track}><i style={{ width: `${band.count / maxPlanDistribution * 100}%`, background: band.color }} /></div><strong>{band.count}</strong><small>{percent(band.share)}</small></div>)}</div>
           <p className={styles.chartNote}>МО без полных данных: {missingCount}. «100–&lt;120%» означает выполнение плана с превышением до 20%.</p>
         </section>
-        <section className={styles.card}><h2>Специальности с наибольшим дефицитом слотов</h2><p className={styles.chartNote}>Показаны специальности с наименьшим общим процентом И‑38.9. «МО без слотов» — организации, где норматив есть, а слотов ЕПГУ нет. План 70% применяется к МО в целом; ранжирование специальностей — диагностическое.</p>
+        <section className={styles.card}><h2>Специальности с наибольшим дефицитом слотов</h2><p className={styles.chartNote}>Показаны специальности с наименьшим общим процентом И‑38.9. «МО без слотов» — организации, где норматив есть, а слотов ЕПГУ нет. План 60% применяется к МО в целом; ранжирование специальностей — диагностическое.</p>
           <div className={styles.deficitSpecialties}>{[...specRows].filter((row) => row.norm !== null && row.norm > 0).slice(0, 5).map((row, index) => <div className={styles.deficitSpecialty} key={row.code}><b>{index + 1}</b><span title={row.name}>{row.name}</span><div className={styles.track}><i style={{ width: `${Math.min(100, Math.max(0, row.coverage ?? 0))}%`, background: heatColor(row.coverage) }} /></div><strong className={styles.neutral}>{percent(row.coverage)}</strong><small>{row.zeroSlotsOrganizations} МО без слотов</small></div>)}</div>
         </section>
       </div>
       <section className={styles.card}>
-        <div className={styles.sectionHead}><div><h2>Рейтинг медицинских организаций</h2><p>План — 70% общего норматива. «Выполнение плана, %»: 100% означает, что МО достигла этого уровня. «Спец. с 0 слотами» — специальности с положительным нормативом, но без слотов ЕПГУ.</p></div>
+        <div className={styles.sectionHead}><div><h2>Рейтинг медицинских организаций</h2><p>План — 60%, цель — 70% общего норматива. «Выполнение плана, %»: 100% означает, что МО достигла этого уровня. «Спец. с 0 слотами» — специальности с положительным нормативом, но без слотов ЕПГУ.</p></div>
           <div className={styles.matrixControls}>
             <OwnershipSwitch value={ownership} onChange={changeOwnership} />
             <label className={styles.matrixSearch}>Поиск по МО<div className={styles.suggestionBox}><input value={matrixSearch} onChange={(event) => setMatrixSearch(event.target.value)} placeholder="Начните вводить название" autoComplete="off" />
@@ -276,7 +277,7 @@ export default function Incident38Dashboard() {
         <div className={styles.matrixScroll}><table className={styles.heat}><colgroup><col className={styles.orgCol} /><col className={styles.shortfallCol} /><col className={styles.attainmentCol} />{SPECIALTIES.map((specialty) => <col className={styles.specialtyCol} key={specialty.code} />)}<col className={styles.totalCol} /></colgroup><thead><tr>
           <th className={styles.stickyName}><button type="button" className={styles.sortButton} onClick={() => toggleMatrixSort("name")}>Медицинская организация{sortMark("name")}</button></th>
           <th className={styles.shortfallHead}><button type="button" className={styles.sortButton} onClick={() => toggleMatrixSort("deficit")}>Не хватает<br />до плана{sortMark("deficit")}</button></th>
-          <th className={styles.attainmentHead}><button type="button" className={styles.sortButton} onClick={() => toggleMatrixSort("attainment")} title="100% означает, что МО достигла плана 70%">Выполнение<br />плана, %{sortMark("attainment")}</button></th>
+          <th className={styles.attainmentHead}><button type="button" className={styles.sortButton} onClick={() => toggleMatrixSort("attainment")} title="100% означает, что МО достигла плана 60%">Выполнение<br />плана, %{sortMark("attainment")}</button></th>
           {SPECIALTIES.map((specialty) => <th className={styles.rot} key={specialty.code} title={specialty.name}><button type="button" className={styles.specialtySort} onClick={() => toggleMatrixSort(`specialty:${specialty.code}`)}>{specialty.name.startsWith("ВОП") ? "ВОП" : specialty.name}{sortMark(`specialty:${specialty.code}`)}</button></th>)}
           <th className={styles.totalHead}><button type="button" className={styles.sortButton} onClick={() => toggleMatrixSort("zeroSpecialties")} title="Количество специальностей с положительным нормативом и нулём слотов ЕПГУ">Спец. с 0<br />слотами{sortMark("zeroSpecialties")}</button></th>
         </tr></thead><tbody>
@@ -287,8 +288,8 @@ export default function Incident38Dashboard() {
               <span className={styles.matrixName}>{matrixOrgName(row.org)}</span><small className={styles.matrixCity}>{row.org.city}</small>
               <button type="button" className={styles.mobileExpand} aria-expanded={expandedMatrixOid === row.org.oid} onClick={(event) => { event.stopPropagation(); setExpandedMatrixOid(expandedMatrixOid === row.org.oid ? "" : row.org.oid); }}>Специальности {expandedMatrixOid === row.org.oid ? "▲" : "▼"}</button>
             </th>
-            <td className={styles.shortfallCell} title={`Минимум слотов до плана 70%: ${format(row.deficit)}`} onClick={() => openOrg(row.org.oid)}>{format(row.deficit)}</td>
-            <td className={styles.attainmentCell} title={`При фактическом показателе ${percent(row.coverage)} план 70% составляет 100% выполнения`}>{row.coverage === null ? "—" : percent(row.coverage / PLAN_PERCENT * 100)}</td>
+            <td className={styles.shortfallCell} title={`Минимум слотов до плана 60%: ${format(row.deficit)}`} onClick={() => openOrg(row.org.oid)}>{format(row.deficit)}</td>
+            <td className={styles.attainmentCell} title={`При фактическом показателе ${percent(row.coverage)} план 60% составляет 100% выполнения`}>{row.coverage === null ? "—" : percent(row.coverage / PLAN_PERCENT * 100)}</td>
             {SPECIALTIES.map((specialty) => {
               const cell = row.org.specialties.find((item) => item.code === specialty.code);
               const value = cell ? ratio(cell.epguSlots, cell.norm) : null;
@@ -308,7 +309,7 @@ export default function Incident38Dashboard() {
           </div></td></tr>}</Fragment>;
           })}
         </tbody></table></div>
-        <p className={styles.matrixMethod}>Расчёт: процент слотов ЕПГУ от общего норматива ÷ 70% × 100%. Например, 70% общего норматива — это 100% выполнения плана. «Спец. с 0 слотами» учитывает только специальности с заданным положительным нормативом.</p><p className={styles.matrixMobileHint}>Нажмите «Специальности» в строке МО, чтобы увидеть разбивку по 14 специальностям.</p>
+        <p className={styles.matrixMethod}>Расчёт: процент слотов ЕПГУ от общего норматива ÷ 60% × 100%. Например, 60% общего норматива — это 100% выполнения плана. «Спец. с 0 слотами» учитывает только специальности с заданным положительным нормативом.</p><p className={styles.matrixMobileHint}>Нажмите «Специальности» в строке МО, чтобы увидеть разбивку по 14 специальностям.</p>
         {matrixRows.length === 0 && <p className={styles.empty}>МО по такому названию не найдены.</p>}
       </section>
     </main>}
@@ -324,13 +325,13 @@ export default function Incident38Dashboard() {
         </div>
       </section>
       {selectedOrg && <section className={styles.card}>
-        <div className={styles.sectionHead}><div><h2>{selectedOrg.name}</h2><p>И‑38.9 = слоты ЕПГУ ÷ «Норматив ВСЕГО» × 100%. План для МО — 70%; статус показывает его выполнение.</p></div><span className={`${styles.status} ${!orgMetrics(selectedOrg).complete ? styles.statusMissing : orgMetrics(selectedOrg).meetsPlan ? styles.statusComplete : styles.statusBelow}`}>{status(orgMetrics(selectedOrg).coverage)}</span></div>
+        <div className={styles.sectionHead}><div><h2>{selectedOrg.name}</h2><p>И‑38.9 = слоты ЕПГУ ÷ «Норматив ВСЕГО» × 100%. План для МО — 60%, цель — 70%; статус показывает его выполнение.</p></div><span className={`${styles.status} ${!orgMetrics(selectedOrg).complete ? styles.statusMissing : orgMetrics(selectedOrg).meetsPlan ? styles.statusComplete : styles.statusBelow}`}>{status(orgMetrics(selectedOrg).coverage)}</span></div>
         <div className={styles.orgKpis}>
-          <article><strong className={planTone(orgMetrics(selectedOrg).coverage)}>{percent(orgMetrics(selectedOrg).coverage)}</strong><span>И‑38.9 · план 70%</span><small>{format(orgMetrics(selectedOrg).epguSlots)} слотов ЕПГУ из {format(orgMetrics(selectedOrg).norm)} по общему нормативу</small></article>
-          <article><strong>{format(orgMetrics(selectedOrg).targetSlots)}</strong><span>Слотов нужно для плана</span><small>70% общего норматива, округление вверх</small></article>
+          <article><strong className={planTone(orgMetrics(selectedOrg).coverage)}>{percent(orgMetrics(selectedOrg).coverage)}</strong><span>И‑38.9 · план 60%, цель 70%</span><small>{format(orgMetrics(selectedOrg).epguSlots)} слотов ЕПГУ из {format(orgMetrics(selectedOrg).norm)} по общему нормативу</small></article>
+          <article><strong>{format(orgMetrics(selectedOrg).targetSlots)}</strong><span>Слотов нужно для плана</span><small>60% общего норматива, округление вверх</small></article>
           <article><strong>{format(orgMetrics(selectedOrg).deficit)}</strong><span>Не хватает до плана</span><small>минимальное число дополнительных слотов ЕПГУ</small></article>
         </div>
-        <div className={styles.sectionHead}><div><h2>Показатели по специальностям</h2><p>Значения по специальностям справочные: план 70% применяется к общему показателю МО. Медиана сравнивает МО с другими организациями того же набора выгрузки.</p></div><select className={styles.inlineSelect} value={selectedSpecialty} onChange={(event) => setSelectedSpecialty(event.target.value)}><option value="">Все специальности</option>{SPECIALTIES.map((specialty) => <option key={specialty.code} value={specialty.code}>{specialty.name}</option>)}</select></div>
+        <div className={styles.sectionHead}><div><h2>Показатели по специальностям</h2><p>Значения по специальностям справочные: план 60% применяется к общему показателю МО. Медиана сравнивает МО с другими организациями того же набора выгрузки.</p></div><select className={styles.inlineSelect} value={selectedSpecialty} onChange={(event) => setSelectedSpecialty(event.target.value)}><option value="">Все специальности</option>{SPECIALTIES.map((specialty) => <option key={specialty.code} value={specialty.code}>{specialty.name}</option>)}</select></div>
         <div className={styles.tableScroll}><table className={styles.table}><thead><tr><th>Специальность</th><th>Норматив ВСЕГО</th><th>Слотов для ЕПГУ</th><th>И‑38.9, %</th><th>Медиана выборки, %</th><th>Отклонение, п.п.</th><th>МО в выборке</th></tr></thead><tbody>
           {displaySpecialties.map((row) => {
             const benchmark = benchmarkBySpecialty.get(row.code);
@@ -342,11 +343,11 @@ export default function Incident38Dashboard() {
           <article><h3>Организация относительно выборки</h3><p>По выбранным специальностям ниже медианы: <b>{belowMedianCount}</b>; на уровне или выше: <b>{aboveMedianCount}</b>.</p></article>
           <article><h3>Управленческий вывод</h3><p>Специальностей с уровнем ниже 25%: <b>{criticalCount}</b>. Самые низкие значения: {weakestSpecialties.length ? weakestSpecialties.map((row) => `${row.name} — ${percent(row.coverage)}`).join("; ") : "нет данных"}.</p></article>
         </section>
-        <div className={styles.specialtyLegend}><span><i className={styles.specialtyGreen} />≥75% — высокий уровень</span><span><i className={styles.specialtyYellow} />50–74% — требует внимания</span><span><i className={styles.specialtyOrange} />25–49% — зона риска</span><span><i className={styles.specialtyRed} />&lt;25% — критично</span><span>Цветовой ориентир для специальности; план 70% оценивается по МО в целом.</span></div>
+        <div className={styles.specialtyLegend}><span><i className={styles.specialtyGreen} />≥75% — высокий уровень</span><span><i className={styles.specialtyYellow} />50–74% — требует внимания</span><span><i className={styles.specialtyOrange} />25–49% — зона риска</span><span><i className={styles.specialtyRed} />&lt;25% — критично</span><span>Цветовой ориентир для специальности; план 60% оценивается по МО в целом.</span></div>
         <p className={styles.chartNote}>Медиана рассчитана по МО той же выгрузки: {benchmarkOrganizations.length} организаций · срез {benchmarkDataset?.reportDate ?? "—"}. В выборку по специальности входят МО с положительным общим нормативом; нулевые значения слотов учитываются.</p>
       </section>}
     </main>}
 
-    <footer className={styles.footer}>Источник: форма И‑38.9, лист «нормативы». Реальный процент И‑38.9 = «Слотов для ЕПГУ» ÷ «Норматив ВСЕГО» × 100%; план каждой МО — 70%. Нехватка рассчитывается по каждой МО как минимальное целое число дополнительных слотов до 70% общего норматива. «Норма для ЕПГУ» и «Всего слотов» в оценке не используются. Итог по региону — отношение суммы слотов к сумме общего норматива. Даты срезов: {DATA.map((dataset) => dataset.reportDate).join(" · ")}. По правилу реорганизации Альметьевска из текущего отчёта исключены прежние МО, головная организация сохранена. Отсутствие данных не заменяется нулём; государственные/частные организации разделены по организационно-правовой форме.</footer>
+    <footer className={styles.footer}>Источник: форма И‑38.9, лист «нормативы». Реальный процент И‑38.9 = «Слотов для ЕПГУ» ÷ «Норматив ВСЕГО» × 100%; план каждой МО — 60%, цель — 70%. Нехватка рассчитывается по каждой МО как минимальное целое число дополнительных слотов до 60% общего норматива. «Норма для ЕПГУ» и «Всего слотов» в оценке не используются. Итог по региону — отношение суммы слотов к сумме общего норматива. Даты срезов: {DATA.map((dataset) => dataset.reportDate).join(" · ")}. По правилу реорганизации Альметьевска из текущего отчёта исключены прежние МО, головная организация сохранена. Отсутствие данных не заменяется нулём; государственные/частные организации разделены по организационно-правовой форме.</footer>
   </div>;
 }
