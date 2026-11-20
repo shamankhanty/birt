@@ -1268,9 +1268,12 @@ def adapt_fap(app: Path, source: Path, end: date) -> AdapterResult:
     for name,v in sorted(grouped.items(),key=lambda x:norm(x[0])):
         old=prev.get(norm(name));pv=old.get("fact") if old else None;row={"name":name,"fact":v["count"],"count":v["count"],"previous":pv,"trend":None if pv is None else v["count"]-pv,"units":v["units"],"zeroUnits":v["zero"]}
         if v["zero"]:row["sourceWarning"]=f'{v["zero"]} ФАП/ФП с нулевым результатом из {v["units"]}'
+        if "зеленодольск" in norm(name) and pv is not None and v["count"] < pv:
+            row["sourceWarning"] = (f'Возможный сбой исходного отчёта: {pv:,} → {v["count"]:,} СЭМД; '
+                                    f'{v["zero"]} из {v["units"]} ФАП/ФП с нулём. Сверить по OID; нарушение МО не установлено.').replace(',', ' ')
         rows.append(row)
     base=op.get("fapSemdCount",{})
-    op["fapSemdCount"]={**base,"name":"Количество зарегистрированных СЭМД по ФАП и ФП","date":date_ru(end),"period":period_cumulative(end),**previous_cut_metadata(base,end),"mode":"count","note":"Лист 1 содержит полный перечень ФАП/ФП; нулевые подразделения сохранены и показаны отдельно.","rows":rows};save(app,"operational-mo.json",op)
+    op["fapSemdCount"]={**base,"name":"Количество зарегистрированных СЭМД по ФАП и ФП","date":date_ru(end),"period":period_cumulative(end),**previous_cut_metadata(base,end),"mode":"count","note":"Предварительный источник: резкое снижение по Зеленодольской ЦРБ может быть сбоем отчёта. Нулевые подразделения требуют сверки OID и статуса, не являются доказанным нарушением МО.","rows":rows};save(app,"operational-mo.json",op)
     return AdapterResult("federal",["fap_fp"],"PASS",["operational-mo.json"],[source.name],{"organizations":len(rows),"units":sum(v["units"] for v in grouped.values()),"zeroUnits":sum(v["zero"] for v in grouped.values()),"documents":sum(v["count"] for v in grouped.values())},[],[])
 
 

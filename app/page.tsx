@@ -1356,7 +1356,7 @@ const extendedOperational = [
     title: "ФАП и ФП: регистрация СЭМД",
     value: sumDatasetFacts(moData.fapSemdCount),
     period: moData.fapSemdCount.period ?? "—",
-    note: "Полный перечень ФАП/ФП; нулевые подразделения сохранены и не заменяются отсутствием данных",
+    note: "Предварительно: снижение по Зеленодольской ЦРБ требует сверки исходника по OID; нули не доказывают нарушение МО",
     accent: "green",
   },
   {
