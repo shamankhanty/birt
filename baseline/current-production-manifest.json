@@ -51,7 +51,7 @@
     "validation/indicator-metadata-equivalence.json": "a32e80294600921408b3c94a850a303145adb413ed6e7e780c5386fd8488c5bf",
     "validation/validation-report.json": "1af1470ccb3d784edf78f43d20c6ee492bfd835e0ffabba94b873210c7b0357e",
     "validation/ai-review.json": "ad66107c10d699ba05e7dcb0718583666608b9dfeedfe25074a90d0566b1cbcd",
-    "app/incident38-cities.json": "d1184d56cbdf29254d577d08f47495adbc08006113e0e919195a54d30555fea9",
-    "app/incident38-districts.json": "4bb7b5660d95b78c1700a430eaf65d7c5581c4a83dc1fd97914ad6db5c9a11ef"
+    "app/incident38-cities.json": "02b9195eb6b899f3aaaacf31820b77cb46ef22813d369142732ddc03d509f603",
+    "app/incident38-districts.json": "170e5493480501f75b38d36547ced0d36e6400b830e2d0e49d6165f9e9613270"
   }
 }
