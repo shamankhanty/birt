@@ -35,10 +35,10 @@ test("public manager and MO dashboards do not carry per-person identifiers", () 
   assert.match(component,/>Обзор<\/button>/u);
   assert.doesNotMatch(component,/Обзор для министра|Что должен видеть министр/u);
   assert.match(component,/Должности с наибольшим числом расхождений/u);
-  assert.match(component,/Карточка МО и действия/u);
+  assert.match(component,/Карточка МО · все ошибки/u);
   assert.match(component,/не подтверждено/u);
   assert.match(component,/Поиск медицинской организации/u);
-  assert.match(component,/К общей сводке/u);
+  assert.match(component,/FrmrMoWorkspace selectedId=/u);
   assert.doesNotMatch(component,/Скопировать поручение для МО/u);
 });
 test("FRMR/GIS is promoted to primary desktop and mobile navigation without changing rating calculations", () => {
