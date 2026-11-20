@@ -12,7 +12,7 @@ test("Section 06 keeps overview first and routes organization work to unified MO
   assert.match(page, /FrmrMoWorkspace key=\{selected.id\} selectedId=\{selected.id\} selectedName=\{selected.name\}/);
   assert.doesNotMatch(page, /Сверка СП с ФРМО<\/button>/);
   assert.match(card, /Все расхождения выбранной МО/);
-  assert.match(card, /Должности \/ МО/);
+  assert.match(card, /Должности ФРМР/);
   assert.match(card, /Привязки СП/);
   assert.match(card, /СП ↔ ФРМО/);
   assert.match(card, /Экспорт CSV/);
@@ -45,14 +45,14 @@ test("MO workspace uses full-width table without redundant sidebar and restores 
   assert.doesNotMatch(ui, /Что исправлять сначала|Сводка по типам проблем|Как проверить/);
   assert.doesNotMatch(ui, /Подразделения с расхождениями \(/);
   assert.doesNotMatch(ui, /<th>Источник \/ дата<\/th>/);
-  assert.match(ui, /Должность → СП → конкретные записи/);
-  assert.match(ui, /roleCounts\.map/);
+  assert.match(ui, /должность → СП → конкретные записи/);
+  assert.match(ui, /matchingRoles\.map/);
   assert.match(ui, /departmentGroups\.map/);
   assert.match(ui, /filteredEmployees\.slice\(0,recordsShown\)/);
   assert.match(ui, /Последние 4 цифры СНИЛС/);
   assert.match(ui, /row\.staffRecords/);
   assert.match(ui, /record\[3\]===null \? "Нет данных" : "•••-•••-•"/);
   assert.match(ui, /staffSource\.summary\.sourceCut/);
-  assert.match(css, /\.content\{display:flex/);
+  assert.match(css, /\.drillGrid\{display:grid;grid-template-columns/);
   assert.doesNotMatch(ui, /className=\{styles\.sidebar\}/);
 });
