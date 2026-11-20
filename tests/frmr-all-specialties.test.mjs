@@ -70,3 +70,12 @@ test('27 unresolved FRMO links stay visible under the SP parent OID without beco
  assert.equal(data.summary.rows.find(r=>r[0]==='28030')[4],27);
  assert.equal(data.metadata.sourceIssueCount,11319);
 });
+
+test('source ownership flag partitions organizations by OID without name inference',()=>{
+ const state=new Set(data.metadata.stateOids);
+ assert.equal(state.size,110);assert.equal(data.metadata.stateOrganizations,110);
+ assert.equal(data.summary.rows.length-state.size,27);
+ assert.ok([...state].every(id=>data.summary.rows.some(r=>r[0]===id)));
+ assert.ok(state.has('28030'));assert.ok(!state.has('62692'));
+ assert.equal(data.summary.rows.filter(r=>state.has(r[0])).reduce((n,r)=>n+r[4],0),data.metadata.stateProblemRecords);
+});
