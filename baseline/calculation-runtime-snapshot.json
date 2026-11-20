@@ -220,13 +220,13 @@
       "source": "page-baseline"
     },
     "elnMaxCount": {
-      "fact": 59263,
+      "fact": 61275,
       "plan": 10000,
-      "date": "15.11.2026",
-      "previous": 58725,
-      "trend": 538,
-      "quantity": 59263,
-      "numerator": 59263,
+      "date": "19.11.2026",
+      "previous": 59263,
+      "trend": 2012,
+      "quantity": 61275,
+      "numerator": 61275,
       "denominator": null,
       "method": "count_rows",
       "source": "mo-data"
@@ -376,13 +376,13 @@
       "source": "page-baseline"
     },
     "tmkMaxCount": {
-      "fact": 80428,
+      "fact": 84192,
       "plan": 10000,
-      "date": "15.11.2026",
-      "previous": 79379,
-      "trend": 1049,
-      "quantity": 80428,
-      "numerator": 80428,
+      "date": "19.11.2026",
+      "previous": 80428,
+      "trend": 3764,
+      "quantity": 84192,
+      "numerator": 84192,
       "denominator": null,
       "method": "count_rows",
       "source": "mo-data"
@@ -753,5 +753,5 @@
     }
   },
   "approvedStaticVsRuntimeDivergences": [],
-  "sha256": "6d2a33a2a32a911b7a95c4738e8ebb97572bf7eda00b094f8a7dafbf4132e12c"
+  "sha256": "bef0f369eb75664e4806008455c750640f0b887c2db56a383bfbd22f038c714f"
 }
