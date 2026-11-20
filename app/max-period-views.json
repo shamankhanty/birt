@@ -9,7 +9,7 @@
       "tmk": {
         "sourceTotal": 84192,
         "previousSourceTotal": 76211,
-        "plannedMoFact": 81470,
+        "plannedMoFact": 82860,
         "previousPlannedMoFact": 75838,
         "republicPlan": 177000,
         "rows": [
@@ -457,7 +457,7 @@
           {
             "name": "Филиал ГАУЗ «Республиканская клиническая больница Министерства здравоохранения Республики Татарстан» - «Спасская ЦРБ»",
             "oid": "1.2.643.5.1.13.13.12.2.16.18650",
-            "fact": null,
+            "fact": 1390,
             "previous": 1302,
             "plan": 659
           },
@@ -610,14 +610,15 @@
           }
         ],
         "plannedCoverage": {
-          "matched": 81,
-          "missing": 4
-        }
+          "matched": 82,
+          "missing": 3
+        },
+        "sourcePerimeterNote": "В исходной ГИС МАХ РКБ 1094 соответствует плановой строке Спасской ЦРБ (18650): перенос только в представление плана, без удвоения республиканского итога."
       },
       "eln": {
         "sourceTotal": 61275,
         "previousSourceTotal": 56941,
-        "plannedMoFact": 60144,
+        "plannedMoFact": 60182,
         "previousPlannedMoFact": 56448,
         "republicPlan": 90000,
         "rows": [
@@ -1065,7 +1066,7 @@
           {
             "name": "Филиал ГАУЗ «Республиканская клиническая больница Министерства здравоохранения Республики Татарстан» - «Спасская ЦРБ»",
             "oid": "1.2.643.5.1.13.13.12.2.16.18650",
-            "fact": null,
+            "fact": 38,
             "previous": 37,
             "plan": 336
           },
@@ -1218,9 +1219,10 @@
           }
         ],
         "plannedCoverage": {
-          "matched": 81,
-          "missing": 4
-        }
+          "matched": 82,
+          "missing": 3
+        },
+        "sourcePerimeterNote": "В исходной ГИС МАХ РКБ 1094 соответствует плановой строке Спасской ЦРБ (18650): перенос только в представление плана, без удвоения республиканского итога."
       }
     },
     "previousDate": "08.11.2026",
@@ -1239,7 +1241,7 @@
       "tmk": {
         "sourceTotal": 9450,
         "previousSourceTotal": 4832,
-        "plannedMoFact": 9314,
+        "plannedMoFact": 9393,
         "previousPlannedMoFact": 4805,
         "republicPlan": 16000,
         "rows": [
@@ -1687,7 +1689,7 @@
           {
             "name": "Филиал ГАУЗ «Республиканская клиническая больница Министерства здравоохранения Республики Татарстан» - «Спасская ЦРБ»",
             "oid": "1.2.643.5.1.13.13.12.2.16.18650",
-            "fact": null,
+            "fact": 79,
             "previous": 36,
             "plan": 66
           },
@@ -1842,14 +1844,15 @@
         "factStatus": "partial_november_source",
         "cumulativeTarget": 177000,
         "plannedCoverage": {
-          "matched": 81,
-          "missing": 4
-        }
+          "matched": 82,
+          "missing": 3
+        },
+        "sourcePerimeterNote": "В исходной ГИС МАХ РКБ 1094 соответствует плановой строке Спасской ЦРБ (18650): перенос только в представление плана, без удвоения республиканского итога."
       },
       "eln": {
         "sourceTotal": 6468,
         "previousSourceTotal": 3578,
-        "plannedMoFact": 6402,
+        "plannedMoFact": 6404,
         "previousPlannedMoFact": 3548,
         "republicPlan": 8000,
         "rows": [
@@ -2297,7 +2300,7 @@
           {
             "name": "Филиал ГАУЗ «Республиканская клиническая больница Министерства здравоохранения Республики Татарстан» - «Спасская ЦРБ»",
             "oid": "1.2.643.5.1.13.13.12.2.16.18650",
-            "fact": null,
+            "fact": 2,
             "previous": 2,
             "plan": 32
           },
@@ -2452,9 +2455,10 @@
         "factStatus": "partial_november_source",
         "cumulativeTarget": 90000,
         "plannedCoverage": {
-          "matched": 81,
-          "missing": 4
-        }
+          "matched": 82,
+          "missing": 3
+        },
+        "sourcePerimeterNote": "В исходной ГИС МАХ РКБ 1094 соответствует плановой строке Спасской ЦРБ (18650): перенос только в представление плана, без удвоения республиканского итога."
       }
     }
   },
