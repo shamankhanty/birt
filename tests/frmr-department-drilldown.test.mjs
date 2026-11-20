@@ -48,10 +48,11 @@ test("public dataset is aggregated, not a staff registry", () => {
   assert.doesNotMatch(raw,/СНИЛС|ФИО врача|дата рождения|телефон сотрудника/u);
   assert.doesNotMatch(raw,/\b\d{11}\b/u);
   for(const row of detailed.rows)assert.equal(row.length,5);
-  assert.match(component,/frmrDepartmentList/u);
-  assert.match(component,/selectedDepartment\.oid/u);
-  assert.match(component,/Выберите должность и конкретное структурное подразделение/u);
-  assert.match(component,/noPosition/u);
-  assert.match(component,/wrongDepartment/u);
-  assert.doesNotMatch(component,/type="file"|FileReader|download=/u);
+  const workspace=fs.readFileSync("app/frmr-mo-workspace.tsx","utf8");
+  assert.match(component,/FrmrMoWorkspace key=/u);
+  assert.match(workspace,/Подразделения с расхождениями/u);
+  assert.match(workspace,/Открыт|Все расхождения выбранной МО/u);
+  assert.match(workspace,/noPosition/u);
+  assert.match(workspace,/wrongDepartment/u);
+  assert.doesNotMatch(workspace,/type="file"|FileReader/u);
 });
