@@ -5,6 +5,8 @@ import cityRaw from "./incident38-cities.json";
 import districtRaw from "./incident38-districts.json";
 import historyRaw from "./incident38-history.json";
 import frmrRaw from "./frmr-all-specialties.json";
+import frmoLinkageRaw from "./frmo-linkage-data.json";
+import { getFrmrSpecialtyIssues, getFrmoOrganizationFindings } from "../lib/incident38-frmr-diagnostic.js";
 import reorganizationRaw from "../config/mo-reorganizations.json";
 import styles from "./incident38-dashboard.module.css";
 
@@ -244,6 +246,12 @@ export default function Incident38Dashboard({ onOpenFrmrMo }: { onOpenFrmrMo: (o
   const currentIndex = selectedOrg ? organizationRows.findIndex((row) => row.org.oid === selectedOrg.oid) : -1;
   const frmrMoId = selectedOrg?.oid.startsWith(FRMR_OID_PREFIX) ? selectedOrg.oid.slice(FRMR_OID_PREFIX.length) : null;
   const frmrMatched = Boolean(frmrMoId && FRMR_MO_IDS.has(frmrMoId));
+  const zeroSlotSpecialties = selectedSpecialties.filter((row) => row.norm !== null && row.norm > 0 && row.epguSlots === 0);
+  const frmrZeroSlotIssues = new Map(zeroSlotSpecialties.map((row) => [
+    row.code, getFrmrSpecialtyIssues(selectedOrg!.oid, row.code, frmrRaw.summary.rows),
+  ]));
+  const frmrZeroSlotFlagged = [...frmrZeroSlotIssues.values()].filter((row) => row.count !== null && row.count > 0).length;
+  const frmoOrganizationFindings = selectedOrg ? getFrmoOrganizationFindings(selectedOrg.oid, frmoLinkageRaw.organizations) : null;
 
   function openOrg(oid: string) {
     setSelectedOid(oid);
@@ -387,13 +395,25 @@ export default function Incident38Dashboard({ onOpenFrmrMo }: { onOpenFrmrMo: (o
           <article><strong>{format(orgMetrics(selectedOrg).targetSlots)}</strong><span>Слотов нужно для плана</span><small>60% общего норматива, округление вверх</small></article>
           <article><strong>{format(orgMetrics(selectedOrg).deficit)}</strong><span>Не хватает до плана</span><small>минимальное число дополнительных слотов ЕПГУ</small></article>
         </div>
+        {zeroSlotSpecialties.length > 0 && <div className={styles.frmrDiagnostic} role="note">
+          <strong>Проверка связи ГИС–ФРМР/ФРМО · {zeroSlotSpecialties.length} специальностей с нулевыми слотами</strong>
+          <p>В выгрузке <b>расхождений ФРМР от {frmrRaw.summary.sourceCut}</b> по соответствующим должностям есть проблемные записи у {frmrZeroSlotFlagged} из {zeroSlotSpecialties.length} специальностей. Конкретные профили отмечены ниже.</p>
+          <p>Сверка ФРМО от {frmoLinkageRaw.cut}: {frmoOrganizationFindings?.matched
+            ? frmoOrganizationFindings.issues === null
+              ? "количество отклонений по подразделениям МО не определено"
+              : `${frmoOrganizationFindings.issues} строк с признаками расхождений по МО из ${format(frmoOrganizationFindings.rows)} строк`
+            : frmoOrganizationFindings?.ambiguous
+              ? "несколько совпадающих привязок OID МО — требуется проверка"
+              : "нет однозначного сопоставления МО по OID"}.</p>
+          <p><b>Важно:</b> эти выгрузки не содержат полного списка врачей и не устанавливают причину отсутствия слотов. При отсутствии записей по должности нельзя считать, что врач отсутствует. Проверьте кадровые сведения, привязку СП, расписание МИС и доступность слотов на ЕПГУ.</p>
+        </div>}
         {frmrReviewRows.length > 0 && <p className={styles.chartNote}><b>Проверить ФРМР: {frmrReviewRows.length} специальностей.</b> Есть слоты ЕПГУ при нулевом нормативе. Нажмите «Проверить ошибки в ФРМР» выше: откроется карточка этой МО в разделе 06 с детализацией должностей, СП и записей. Подтверждённые ошибки исправьте в первичном источнике. Нулевой норматив сам по себе не доказывает ошибку.</p>}
         <div className={styles.sectionHead}><div><h2>Показатели по специальностям</h2><p>Значения по специальностям справочные: план 60% применяется к общему показателю МО. Медиана сравнивает МО с другими организациями того же набора выгрузки.</p></div><select className={styles.inlineSelect} value={selectedSpecialty} onChange={(event) => setSelectedSpecialty(event.target.value)}><option value="">Все специальности</option>{SPECIALTIES.map((specialty) => <option key={specialty.code} value={specialty.code}>{specialty.name}</option>)}</select></div>
         <div className={styles.tableScroll}><table className={styles.table}><thead><tr><th>Специальность</th><th>Норматив ВСЕГО</th><th>Слотов для ЕПГУ</th><th>И‑38.9, %</th><th>Медиана выборки, %</th><th>Отклонение, п.п.</th><th>МО в выборке</th></tr></thead><tbody>
           {displaySpecialties.map((row) => {
             const benchmark = benchmarkBySpecialty.get(row.code);
             const difference = row.coverage !== null && benchmark?.median !== null && benchmark?.median !== undefined ? row.coverage - benchmark.median : null;
-            return <tr key={row.code}><td className={styles.orgName}>{row.name}{row.norm === 0 && row.epguSlots !== null && row.epguSlots > 0 && <small style={{ display: "block", color: "#986118", fontWeight: 700 }}>Проверить ФРМР</small>}</td><td>{format(row.norm)}</td><td>{format(row.epguSlots)}</td><td className={`${styles.metricCell} ${specialtyBand(row.coverage)}`}>{percent(row.coverage)}</td><td>{percent(benchmark?.median ?? null)}</td><td className={difference === null ? styles.neutral : difference >= 0 ? styles.good : styles.belowNorm}>{difference === null ? "—" : <>{difference > 0 ? "+" : ""}{numberFormat.format(difference)}</>}</td><td>{benchmark?.count ?? 0}</td></tr>;
+            return <tr key={row.code}><td className={styles.orgName}>{row.name}{row.norm !== null && row.norm > 0 && row.epguSlots === 0 && <small className={styles.frmrInlineDiagnostic} title={frmrZeroSlotIssues.get(row.code)?.roles.map((record) => `${record.name}: ${record.count}`).join("; ") || "Нулевая запись слотов требует проверки МИС, ФРМР и ФРМО"}>{(frmrZeroSlotIssues.get(row.code)?.count ?? 0) > 0 ? `ФРМР: ${format(frmrZeroSlotIssues.get(row.code)!.count)} записей с расхождениями` : "Связку с ФРМР/ФРМО нужно проверить"}</small>}{row.norm === 0 && row.epguSlots !== null && row.epguSlots > 0 && <small style={{ display: "block", color: "#986118", fontWeight: 700 }}>Проверить ФРМР</small>}</td><td>{format(row.norm)}</td><td>{format(row.epguSlots)}</td><td className={`${styles.metricCell} ${specialtyBand(row.coverage)}`}>{percent(row.coverage)}</td><td>{percent(benchmark?.median ?? null)}</td><td className={difference === null ? styles.neutral : difference >= 0 ? styles.good : styles.belowNorm}>{difference === null ? "—" : <>{difference > 0 ? "+" : ""}{numberFormat.format(difference)}</>}</td><td>{benchmark?.count ?? 0}</td></tr>;
           })}
         </tbody></table></div>
         <section className={styles.orgInsights}>
