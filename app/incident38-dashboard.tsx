@@ -135,7 +135,9 @@ export default function Incident38Dashboard({ onOpenFrmrMo }: { onOpenFrmrMo: (o
     const afterSlots = matched.reduce((sum, row) => sum + row.now.epguSlots!, 0);
     const afterNorm = matched.reduce((sum, row) => sum + row.now.norm!, 0);
     const movers = matched.map((row) => ({ oid: row.org.oid, name: matrixOrgName(row.org), before: ratio(row.old!.epguSlots!, row.old!.norm!), after: row.now.coverage, slotsDelta: row.now.epguSlots! - row.old!.epguSlots! })).filter((row) => row.before !== null && row.after !== null).sort((a, b) => Math.abs((b.after! - b.before!)) - Math.abs((a.after! - a.before!)));
-    const bestMovers = movers.filter((row) => row.after! > row.before!).sort((a, b) => (b.after! - b.before!) - (a.after! - a.before!)).slice(0, 5);\n    const worstMovers = movers.filter((row) => row.after! < row.before!).sort((a, b) => (a.after! - a.before!) - (b.after! - b.before!)).slice(0, 5);\n    const beforePlan = movers.filter((row) => row.before! >= PLAN_PERCENT).length;
+    const bestMovers = movers.filter((row) => row.after! > row.before!).sort((a, b) => (b.after! - b.before!) - (a.after! - a.before!)).slice(0, 5);
+    const worstMovers = movers.filter((row) => row.after! < row.before!).sort((a, b) => (a.after! - a.before!) - (b.after! - b.before!)).slice(0, 5);
+    const beforePlan = movers.filter((row) => row.before! >= PLAN_PERCENT).length;
     const afterPlan = movers.filter((row) => row.after! >= PLAN_PERCENT).length;
     const beforeGoal = movers.filter((row) => row.before! >= GOAL_PERCENT).length;
     const afterGoal = movers.filter((row) => row.after! >= GOAL_PERCENT).length;
