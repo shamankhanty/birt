@@ -3,6 +3,7 @@
 import { Fragment, useMemo, useState } from "react";
 import cityRaw from "./incident38-cities.json";
 import districtRaw from "./incident38-districts.json";
+import historyRaw from "./incident38-history.json";
 import frmrRaw from "./frmr-all-specialties.json";
 import reorganizationRaw from "../config/mo-reorganizations.json";
 import styles from "./incident38-dashboard.module.css";
@@ -29,13 +30,17 @@ const ORGANIZATIONS = DATA.flatMap((dataset) => {
     .flatMap((group) => (group.predecessors ?? []).map((predecessor) => predecessor.oldOid).filter((oid): oid is string => Boolean(oid))));
   return dataset.orgs.filter((org) => !predecessorOids.has(org.oid));
 });
+type HistoricalOrg = { oid: string; name: string; norm: number | null; epguSlots: number | null };
+type HistoricalSnapshot = { scope: string; reportDate: string; frmoDate: string; source: string; orgs: HistoricalOrg[] };
+const HISTORY = (historyRaw as { snapshots: HistoricalSnapshot[] }).snapshots;
 const SPECIALTIES = [...new Map(DATA.flatMap((dataset) => dataset.specialties).map((specialty) => [specialty.code, specialty])).values()];
 const numberFormat = new Intl.NumberFormat("ru-RU", { maximumFractionDigits: 1 });
 const format = (value: SlotValue) => value === null || value === undefined ? "—" : numberFormat.format(value);
 const percent = (value: number | null) => value === null || !Number.isFinite(value) ? "—" : `${numberFormat.format(value)}%`;
 const sumKnown = (values: SlotValue[]) => values.some((value) => value === null || value === undefined) ? null : values.reduce<number>((sum, value) => sum + (value ?? 0), 0);
 const ratio = (slots: SlotValue, norm: SlotValue) => slots === null || norm === null || norm <= 0 ? null : slots / norm * 100;
-const PLAN_PERCENT = 70;
+const PLAN_PERCENT = 60;
+const GOAL_PERCENT = 70;
 const PLAN_RATIO = PLAN_PERCENT / 100;
 const planShortfall = (slots: SlotValue, norm: SlotValue) => slots === null || norm === null || norm <= 0 ? null : Math.max(0, Math.ceil(norm * PLAN_RATIO - slots - 1e-9));
 const median = (values: number[]) => {
@@ -71,7 +76,7 @@ const orgMetrics = (org: Organization) => metrics(org.specialties);
 const tone = (value: number | null) => value === null ? styles.neutral : value >= 100 ? styles.good : styles.belowNorm;
 const planTone = (value: number | null) => value === null ? styles.neutral : value >= PLAN_PERCENT ? styles.good : styles.belowNorm;
 const specialtyBand = (value: number | null) => value === null ? styles.neutral : value >= 75 ? styles.specialtyGreen : value >= 50 ? styles.specialtyYellow : value >= 25 ? styles.specialtyOrange : styles.specialtyRed;
-const status = (value: number | null) => value === null ? "Нет данных" : value >= PLAN_PERCENT ? "План 70% выполнен" : "Ниже плана 70%";
+const status = (value: number | null) => value === null ? "Нет данных" : value >= GOAL_PERCENT ? "Цель 70% достигнута" : value >= PLAN_PERCENT ? "План 60% выполнен" : "Ниже плана 60%";
 const heatColor = (value: number | null) => {
   if (value === null) return "#e8eef3";
   const percentDone = Math.min(100, Math.max(0, value));
@@ -116,6 +121,32 @@ export default function Incident38Dashboard({ onOpenFrmrMo }: { onOpenFrmrMo: (o
     const totals = metrics(visibleOrganizations.flatMap((org) => org.specialties));
     return { ...totals, deficit: sumKnown(visibleOrganizations.map((org) => orgMetrics(org).deficit)) };
   }, [visibleOrganizations]);
+  const scopeHistory = useMemo(() => DATA.map((dataset, index) => {
+    const scope = index === 0 ? "cities" : "districts";
+    const prior = HISTORY.filter((snapshot) => snapshot.scope === scope && dateKey(snapshot.reportDate) < dateKey(dataset.reportDate)).sort((a, b) => dateKey(b.reportDate).localeCompare(dateKey(a.reportDate)))[0];
+    if (!prior) return null;
+    const currentIds = new Set(visibleOrganizations.map((org) => org.oid));
+    const current = dataset.orgs.filter((org) => currentIds.has(org.oid));
+    const oldByOid = new Map(prior.orgs.map((org) => [org.oid, org]));
+    const matched = current.map((org) => ({ org, old: oldByOid.get(org.oid), now: orgMetrics(org) })).filter((row) => row.old && row.old.norm !== null && row.old.epguSlots !== null && row.now.complete && row.now.norm !== null && row.now.epguSlots !== null);
+    if (!matched.length) return null;
+    const beforeSlots = matched.reduce((sum, row) => sum + row.old!.epguSlots!, 0);
+    const beforeNorm = matched.reduce((sum, row) => sum + row.old!.norm!, 0);
+    const afterSlots = matched.reduce((sum, row) => sum + row.now.epguSlots!, 0);
+    const afterNorm = matched.reduce((sum, row) => sum + row.now.norm!, 0);
+    const movers = matched.map((row) => ({ oid: row.org.oid, name: matrixOrgName(row.org), before: ratio(row.old!.epguSlots!, row.old!.norm!), after: row.now.coverage, slotsDelta: row.now.epguSlots! - row.old!.epguSlots! })).filter((row) => row.before !== null && row.after !== null).sort((a, b) => Math.abs((b.after! - b.before!)) - Math.abs((a.after! - a.before!)));
+    const beforePlan = movers.filter((row) => row.before! >= PLAN_PERCENT).length;
+    const afterPlan = movers.filter((row) => row.after! >= PLAN_PERCENT).length;
+    const beforeGoal = movers.filter((row) => row.before! >= GOAL_PERCENT).length;
+    const afterGoal = movers.filter((row) => row.after! >= GOAL_PERCENT).length;
+    const planUp = movers.filter((row) => row.before! < PLAN_PERCENT && row.after! >= PLAN_PERCENT).length;
+    const planDown = movers.filter((row) => row.before! >= PLAN_PERCENT && row.after! < PLAN_PERCENT).length;
+    const goalUp = movers.filter((row) => row.before! < GOAL_PERCENT && row.after! >= GOAL_PERCENT).length;
+    const goalDown = movers.filter((row) => row.before! >= GOAL_PERCENT && row.after! < GOAL_PERCENT).length;
+    const oldDeficit = matched.reduce((sum, row) => sum + (planShortfall(row.old!.epguSlots!, row.old!.norm!) ?? 0), 0);
+    const newDeficit = matched.reduce((sum, row) => sum + (row.now.deficit ?? 0), 0);
+    return { scope, label: index === 0 ? "Казань и Набережные Челны" : "Районы", prior, date: dataset.reportDate, coverageBefore: ratio(beforeSlots, beforeNorm), coverageAfter: ratio(afterSlots, afterNorm), beforeSlots, afterSlots, beforeNorm, afterNorm, beforePlan, afterPlan, beforeGoal, afterGoal, planUp, planDown, goalUp, goalDown, oldDeficit, newDeficit, movers, matchedCount: matched.length, currentCount: current.length };
+  }).filter((item): item is NonNullable<typeof item> => item !== null), [visibleOrganizations]);
   const specRows = useMemo(() => SPECIALTIES.map((specialty) => {
     const cells = visibleOrganizations.flatMap((org) => org.specialties.filter((row) => row.code === specialty.code));
     const norm = sumKnown(cells.map((row) => row.norm));
@@ -237,7 +268,7 @@ export default function Incident38Dashboard({ onOpenFrmrMo }: { onOpenFrmrMo: (o
         <p className={styles.subtitle}>Свободные слоты на ближайшие 14 дней · {ownership === "state" ? "государственные" : "частные"} медицинские организации</p>
         <p className={styles.sourceDates}>Даты выгрузок: {DATA.map((dataset) => dataset.reportDate).join(" · ")} · актуальность ФРМР: {DATA.map((dataset) => dataset.frmoDate).join(" · ")}</p>
       </div>
-      <div className={styles.heroResult}><span>И‑38.9 · слоты ЕПГУ от общего норматива</span><strong className={planTone(regional.coverage)}>{percent(regional.coverage)}</strong><small>План для каждой МО — 70%</small></div>
+      <div className={styles.heroResult}><span>И‑38.9 · слоты ЕПГУ от общего норматива</span><strong className={planTone(regional.coverage)}>{percent(regional.coverage)}</strong><small>План — 60% · цель — 70%</small></div>
     </header>
 
     <nav className={styles.tabs} aria-label="Разделы И38">
@@ -249,8 +280,8 @@ export default function Incident38Dashboard({ onOpenFrmrMo }: { onOpenFrmrMo: (o
       <div className={styles.overviewGrid}>
         <div className={styles.kpis}>
           <article className={styles.kpi}><strong className={planTone(regional.coverage)}>{percent(regional.coverage)}</strong><span>Общий процент И‑38.9</span><small>{format(regional.epguSlots)} слотов ЕПГУ ÷ {format(regional.norm)} «Норматив ВСЕГО»</small></article>
-          <article className={styles.kpi}><strong className={styles.good}>{completeCount}</strong><span>МО выполнили план 70%</span><small>И‑38.9 каждой МО не ниже 70%</small></article>
-          <article className={styles.kpi}><strong className={styles.belowNorm}>{belowCount}</strong><span>МО ниже плана 70%</span><small>С полными данными</small></article>
+          <article className={styles.kpi}><strong className={styles.good}>{completeCount}</strong><span>МО выполнили план 60%</span><small>И‑38.9 каждой МО не ниже 60%</small></article>
+          <article className={styles.kpi}><strong className={styles.belowNorm}>{belowCount}</strong><span>МО ниже плана 60%</span><small>С полными данными</small></article>
           <article className={styles.kpi}><strong>{format(regional.deficit)}</strong><span>Не хватает слотов до плана</span><small>Минимальная нехватка по каждой МО</small></article>
           <article className={styles.kpi}><strong className={styles.neutral}>{missingCount}</strong><span>МО с неполными данными</span><small>Не считаются нулём</small></article>
         </div>
@@ -260,18 +291,29 @@ export default function Incident38Dashboard({ onOpenFrmrMo }: { onOpenFrmrMo: (o
           <a className={styles.maxGroupLink} href="https://max.ru/join/_IjdDQBUBT835_Cz_fdY4ELQ8X2u72CuZGndk1cTcq8" target="_blank" rel="noreferrer">Открыть чат <span aria-hidden="true">↗</span></a>
         </article>
       </div>
-      <div className={styles.note}><b>Как читать показатель:</b> Реальный процент = «Слотов для ЕПГУ» ÷ «Норматив ВСЕГО» × 100%. План для каждой МО — 70%. Нехватка = max(0, округление вверх(«Норматив ВСЕГО» × 70%) − «Слотов для ЕПГУ»), считается отдельно по каждой МО. Общий процент — сумма слотов ЕПГУ, делённая на сумму общего норматива. В расчёте учитываются все слоты ЕПГУ, в том числе по специальностям с нулевым нормативом. {DATA[0].reportDate === DATA[1].reportDate ? `Обе выгрузки на ${DATA[0].reportDate}.` : `Даты выгрузок: ${DATA.map((dataset) => dataset.reportDate).join(" и ")}.`} «Норма для ЕПГУ» и «Всего слотов» не влияют на этот показатель.</div>
+      <section className={styles.card} aria-label="Динамика И38 между обновлениями">
+        <div className={styles.sectionHead}><div><h2>Динамика между обновлениями</h2><p>Исторические срезы сравниваются отдельно: даты городской и районной выгрузок различаются. Изменение доли указано в процентных пунктах. «+ / −» у МО — переходы через порог в обе стороны.</p></div></div>
+        <div className={styles.historyGrid}>{scopeHistory.map((item) => <article className={styles.historyPanel} key={item.scope}>
+          <div className={styles.historyHead}><strong>{item.label}</strong><small>{item.prior.reportDate} → {item.date} · {item.matchedCount} сопоставимых МО{item.matchedCount !== item.currentCount ? ` из ${item.currentCount}` : ""}</small></div>
+          <div className={styles.historyMain}><span>{percent(item.coverageBefore)} → <b>{percent(item.coverageAfter)}</b></span><strong className={(item.coverageAfter ?? 0) >= (item.coverageBefore ?? 0) ? styles.good : styles.bad}>{item.coverageAfter === null || item.coverageBefore === null ? "—" : `${item.coverageAfter >= item.coverageBefore ? "+" : ""}${numberFormat.format(item.coverageAfter - item.coverageBefore)} п. п.`}</strong></div>
+          <div className={styles.historyTrack}><i style={{ width: `${Math.min(100, Math.max(0, item.coverageAfter ?? 0))}%` }} /><span className={styles.historyPlan} title="План 60%" /><span className={styles.historyGoal} title="Цель 70%" /></div><div className={styles.historyThresholds}><span>План 60%</span><span>Цель 70%</span></div>
+          <div className={styles.historyFacts}><span>План 60%: <b>{item.afterPlan}</b> <small>(+{item.planUp} / −{item.planDown})</small></span><span>Цель 70%: <b>{item.afterGoal}</b> <small>(+{item.goalUp} / −{item.goalDown})</small></span><span>Слоты ЕПГУ: <b>{format(item.afterSlots)}</b> <small>({item.afterSlots - item.beforeSlots >= 0 ? "+" : ""}{format(item.afterSlots - item.beforeSlots)})</small></span><span>Норматив: <b>{format(item.afterNorm)}</b> <small>({item.afterNorm - item.beforeNorm >= 0 ? "+" : ""}{format(item.afterNorm - item.beforeNorm)})</small></span><span>Дефицит: <b>{format(item.newDeficit)}</b> <small>({item.newDeficit - item.oldDeficit >= 0 ? "+" : ""}{format(item.newDeficit - item.oldDeficit)})</small></span></div>
+          <details className={styles.historyDetails}><summary>Изменения по МО</summary><div className={styles.historyMovers}>{item.movers.map((row) => <button type="button" key={row.oid} onClick={() => openOrg(row.oid)}><span>{row.name}</span><b>{row.before === null || row.after === null ? "—" : `${row.after >= row.before ? "+" : ""}${numberFormat.format(row.after - row.before)} п. п.`}</b><small>слоты {row.slotsDelta >= 0 ? "+" : ""}{format(row.slotsDelta)}</small></button>)}</div></details>
+        </article>)}</div>
+        <p className={styles.matrixMethod}>Сравнение по одинаковым OID и типу МО; новые или отсутствующие строки не считаются нулём. Суммы слотов и нормативов сравниваются отдельно. Разбивка изменений по специальностям для старого среза не показывается до повторной сверки архивного источника.</p>
+      </section>
+      <div className={styles.note}><b>Как читать показатель:</b> Реальный процент = «Слотов для ЕПГУ» ÷ «Норматив ВСЕГО» × 100%. План каждой МО — 60%, цель — 70%. Нехватка = max(0, округление вверх(«Норматив ВСЕГО» × 60%) − «Слотов для ЕПГУ»), считается отдельно по каждой МО. Общий процент — сумма слотов ЕПГУ, делённая на сумму общего норматива. В расчёте учитываются все слоты ЕПГУ, в том числе по специальностям с нулевым нормативом. {DATA[0].reportDate === DATA[1].reportDate ? `Обе выгрузки на ${DATA[0].reportDate}.` : `Даты выгрузок: ${DATA.map((dataset) => dataset.reportDate).join(" и ")}.`} «Норма для ЕПГУ» и «Всего слотов» не влияют на этот показатель.</div>
       <div className={styles.grid2}>
-        <section className={styles.card}><h2>Распределение МО по достижению плана</h2><p className={styles.chartNote}>Сколько организаций достигло разных уровней от индивидуального плана 70%. Достижение плана = И‑38.9 МО ÷ 70%. В расчёт включены МО с полными данными: {completeOrganizations.length}.</p>
+        <section className={styles.card}><h2>Распределение МО по достижению плана</h2><p className={styles.chartNote}>Сколько организаций достигло разных уровней от индивидуального плана 60%. Достижение плана = И‑38.9 МО ÷ 60%. В расчёт включены МО с полными данными: {completeOrganizations.length}.</p>
           <div className={styles.planDistribution}>{planDistribution.map((band) => <div className={styles.planDistributionRow} key={band.key}><span>{band.label}</span><div className={styles.track}><i style={{ width: `${band.count / maxPlanDistribution * 100}%`, background: band.color }} /></div><strong>{band.count}</strong><small>{percent(band.share)}</small></div>)}</div>
           <p className={styles.chartNote}>МО без полных данных: {missingCount}. «100–&lt;120%» означает выполнение плана с превышением до 20%.</p>
         </section>
-        <section className={styles.card}><h2>Специальности с наибольшим дефицитом слотов</h2><p className={styles.chartNote}>Показаны специальности с наименьшим общим процентом И‑38.9. «МО без слотов» — организации, где норматив есть, а слотов ЕПГУ нет. План 70% применяется к МО в целом; ранжирование специальностей — диагностическое.</p>
+        <section className={styles.card}><h2>Специальности с наибольшим дефицитом слотов</h2><p className={styles.chartNote}>Показаны специальности с наименьшим общим процентом И‑38.9. «МО без слотов» — организации, где норматив есть, а слотов ЕПГУ нет. План 60% применяется к МО в целом; ранжирование специальностей — диагностическое.</p>
           <div className={styles.deficitSpecialties}>{[...specRows].filter((row) => row.norm !== null && row.norm > 0).slice(0, 5).map((row, index) => <div className={styles.deficitSpecialty} key={row.code}><b>{index + 1}</b><span title={row.name}>{row.name}</span><div className={styles.track}><i style={{ width: `${Math.min(100, Math.max(0, row.coverage ?? 0))}%`, background: heatColor(row.coverage) }} /></div><strong className={styles.neutral}>{percent(row.coverage)}</strong><small>{row.zeroSlotsOrganizations} МО без слотов</small></div>)}</div>
         </section>
       </div>
       <section className={styles.card}>
-        <div className={styles.sectionHead}><div><h2>Рейтинг медицинских организаций</h2><p>План — 70% общего норматива. «Выполнение плана, %»: 100% означает, что МО достигла этого уровня. «Спец. с 0 слотами» — специальности с положительным нормативом, но без слотов ЕПГУ.</p></div>
+        <div className={styles.sectionHead}><div><h2>Рейтинг медицинских организаций</h2><p>План — 60%, цель — 70% общего норматива. «Выполнение плана, %»: 100% означает, что МО достигла этого уровня. «Спец. с 0 слотами» — специальности с положительным нормативом, но без слотов ЕПГУ.</p></div>
           <div className={styles.matrixControls}>
             <OwnershipSwitch value={ownership} onChange={changeOwnership} />
             <label className={styles.matrixSearch}>Поиск по МО<div className={styles.suggestionBox}><input value={matrixSearch} onChange={(event) => setMatrixSearch(event.target.value)} placeholder="Начните вводить название" autoComplete="off" />
@@ -282,7 +324,7 @@ export default function Incident38Dashboard({ onOpenFrmrMo }: { onOpenFrmrMo: (o
         <div className={styles.matrixScroll}><table className={styles.heat}><colgroup><col className={styles.orgCol} /><col className={styles.shortfallCol} /><col className={styles.attainmentCol} />{SPECIALTIES.map((specialty) => <col className={styles.specialtyCol} key={specialty.code} />)}<col className={styles.totalCol} /></colgroup><thead><tr>
           <th className={styles.stickyName}><button type="button" className={styles.sortButton} onClick={() => toggleMatrixSort("name")}>Медицинская организация{sortMark("name")}</button></th>
           <th className={styles.shortfallHead}><button type="button" className={styles.sortButton} onClick={() => toggleMatrixSort("deficit")}>Не хватает<br />до плана{sortMark("deficit")}</button></th>
-          <th className={styles.attainmentHead}><button type="button" className={styles.sortButton} onClick={() => toggleMatrixSort("attainment")} title="100% означает, что МО достигла плана 70%">Выполнение<br />плана, %{sortMark("attainment")}</button></th>
+          <th className={styles.attainmentHead}><button type="button" className={styles.sortButton} onClick={() => toggleMatrixSort("attainment")} title="100% означает, что МО достигла плана 60%">Выполнение<br />плана, %{sortMark("attainment")}</button></th>
           {SPECIALTIES.map((specialty) => <th className={styles.rot} key={specialty.code} title={specialty.name}><button type="button" className={styles.specialtySort} onClick={() => toggleMatrixSort(`specialty:${specialty.code}`)}>{specialty.name.startsWith("ВОП") ? "ВОП" : specialty.name}{sortMark(`specialty:${specialty.code}`)}</button></th>)}
           <th className={styles.totalHead}><button type="button" className={styles.sortButton} onClick={() => toggleMatrixSort("zeroSpecialties")} title="Количество специальностей с положительным нормативом и нулём слотов ЕПГУ">Спец. с 0<br />слотами{sortMark("zeroSpecialties")}</button></th>
         </tr></thead><tbody>
@@ -293,8 +335,8 @@ export default function Incident38Dashboard({ onOpenFrmrMo }: { onOpenFrmrMo: (o
               <span className={styles.matrixName}>{matrixOrgName(row.org)}</span><small className={styles.matrixCity}>{row.org.city}</small>
               <button type="button" className={styles.mobileExpand} aria-expanded={expandedMatrixOid === row.org.oid} onClick={(event) => { event.stopPropagation(); setExpandedMatrixOid(expandedMatrixOid === row.org.oid ? "" : row.org.oid); }}>Специальности {expandedMatrixOid === row.org.oid ? "▲" : "▼"}</button>
             </th>
-            <td className={styles.shortfallCell} title={`Минимум слотов до плана 70%: ${format(row.deficit)}`} onClick={() => openOrg(row.org.oid)}>{format(row.deficit)}</td>
-            <td className={styles.attainmentCell} title={`При фактическом показателе ${percent(row.coverage)} план 70% составляет 100% выполнения`}>{row.coverage === null ? "—" : percent(row.coverage / PLAN_PERCENT * 100)}</td>
+            <td className={styles.shortfallCell} title={`Минимум слотов до плана 60%: ${format(row.deficit)}`} onClick={() => openOrg(row.org.oid)}>{format(row.deficit)}</td>
+            <td className={styles.attainmentCell} title={`При фактическом показателе ${percent(row.coverage)} план 60% составляет 100% выполнения`}>{row.coverage === null ? "—" : percent(row.coverage / PLAN_PERCENT * 100)}</td>
             {SPECIALTIES.map((specialty) => {
               const cell = row.org.specialties.find((item) => item.code === specialty.code);
               const value = cell ? ratio(cell.epguSlots, cell.norm) : null;
@@ -314,7 +356,7 @@ export default function Incident38Dashboard({ onOpenFrmrMo }: { onOpenFrmrMo: (o
           </div></td></tr>}</Fragment>;
           })}
         </tbody></table></div>
-        <p className={styles.matrixMethod}>Расчёт: процент слотов ЕПГУ от общего норматива ÷ 70% × 100%. Например, 70% общего норматива — это 100% выполнения плана. «Спец. с 0 слотами» учитывает только специальности с заданным положительным нормативом. Если норматив равен 0, но слоты ЕПГУ есть, проверьте должность и привязку СП в разделе 06 «ФРМР ↔ ГИС»; это отдельный диагностический случай.</p><p className={styles.matrixMobileHint}>Нажмите «Специальности» в строке МО, чтобы увидеть разбивку по 14 специальностям.</p>
+        <p className={styles.matrixMethod}>Расчёт: процент слотов ЕПГУ от общего норматива ÷ 60% × 100%. Например, 60% общего норматива — это 100% выполнения плана. «Спец. с 0 слотами» учитывает только специальности с заданным положительным нормативом. Если норматив равен 0, но слоты ЕПГУ есть, проверьте должность и привязку СП в разделе 06 «ФРМР ↔ ГИС»; это отдельный диагностический случай.</p><p className={styles.matrixMobileHint}>Нажмите «Специальности» в строке МО, чтобы увидеть разбивку по 14 специальностям.</p>
         {matrixRows.length === 0 && <p className={styles.empty}>МО по такому названию не найдены.</p>}
       </section>
     </main>}
@@ -330,7 +372,7 @@ export default function Incident38Dashboard({ onOpenFrmrMo }: { onOpenFrmrMo: (o
         </div>
       </section>
       {selectedOrg && <section className={styles.card}>
-        <div className={styles.sectionHead}><div><h2>{selectedOrg.name}</h2><p>И‑38.9 = слоты ЕПГУ ÷ «Норматив ВСЕГО» × 100%. План для МО — 70%; статус показывает его выполнение.</p></div>
+        <div className={styles.sectionHead}><div><h2>{selectedOrg.name}</h2><p>И‑38.9 = слоты ЕПГУ ÷ «Норматив ВСЕГО» × 100%. План для МО — 60%, цель — 70%; статус показывает его выполнение.</p></div>
           <div className={styles.frmrShortcutActions}>
             <span className={`${styles.status} ${!orgMetrics(selectedOrg).complete ? styles.statusMissing : orgMetrics(selectedOrg).meetsPlan ? styles.statusComplete : styles.statusBelow}`}>{status(orgMetrics(selectedOrg).coverage)}</span>
             {frmrMatched
@@ -339,12 +381,12 @@ export default function Incident38Dashboard({ onOpenFrmrMo }: { onOpenFrmrMo: (o
           </div>
         </div>
         <div className={styles.orgKpis}>
-          <article><strong className={planTone(orgMetrics(selectedOrg).coverage)}>{percent(orgMetrics(selectedOrg).coverage)}</strong><span>И‑38.9 · план 70%</span><small>{format(orgMetrics(selectedOrg).epguSlots)} слотов ЕПГУ из {format(orgMetrics(selectedOrg).norm)} по общему нормативу</small></article>
-          <article><strong>{format(orgMetrics(selectedOrg).targetSlots)}</strong><span>Слотов нужно для плана</span><small>70% общего норматива, округление вверх</small></article>
+          <article><strong className={planTone(orgMetrics(selectedOrg).coverage)}>{percent(orgMetrics(selectedOrg).coverage)}</strong><span>И‑38.9 · план 60%, цель 70%</span><small>{format(orgMetrics(selectedOrg).epguSlots)} слотов ЕПГУ из {format(orgMetrics(selectedOrg).norm)} по общему нормативу</small></article>
+          <article><strong>{format(orgMetrics(selectedOrg).targetSlots)}</strong><span>Слотов нужно для плана</span><small>60% общего норматива, округление вверх</small></article>
           <article><strong>{format(orgMetrics(selectedOrg).deficit)}</strong><span>Не хватает до плана</span><small>минимальное число дополнительных слотов ЕПГУ</small></article>
         </div>
         {frmrReviewRows.length > 0 && <p className={styles.chartNote}><b>Проверить ФРМР: {frmrReviewRows.length} специальностей.</b> Есть слоты ЕПГУ при нулевом нормативе. Нажмите «Проверить ошибки в ФРМР» выше: откроется карточка этой МО в разделе 06 с детализацией должностей, СП и записей. Подтверждённые ошибки исправьте в первичном источнике. Нулевой норматив сам по себе не доказывает ошибку.</p>}
-        <div className={styles.sectionHead}><div><h2>Показатели по специальностям</h2><p>Значения по специальностям справочные: план 70% применяется к общему показателю МО. Медиана сравнивает МО с другими организациями того же набора выгрузки.</p></div><select className={styles.inlineSelect} value={selectedSpecialty} onChange={(event) => setSelectedSpecialty(event.target.value)}><option value="">Все специальности</option>{SPECIALTIES.map((specialty) => <option key={specialty.code} value={specialty.code}>{specialty.name}</option>)}</select></div>
+        <div className={styles.sectionHead}><div><h2>Показатели по специальностям</h2><p>Значения по специальностям справочные: план 60% применяется к общему показателю МО. Медиана сравнивает МО с другими организациями того же набора выгрузки.</p></div><select className={styles.inlineSelect} value={selectedSpecialty} onChange={(event) => setSelectedSpecialty(event.target.value)}><option value="">Все специальности</option>{SPECIALTIES.map((specialty) => <option key={specialty.code} value={specialty.code}>{specialty.name}</option>)}</select></div>
         <div className={styles.tableScroll}><table className={styles.table}><thead><tr><th>Специальность</th><th>Норматив ВСЕГО</th><th>Слотов для ЕПГУ</th><th>И‑38.9, %</th><th>Медиана выборки, %</th><th>Отклонение, п.п.</th><th>МО в выборке</th></tr></thead><tbody>
           {displaySpecialties.map((row) => {
             const benchmark = benchmarkBySpecialty.get(row.code);
@@ -356,11 +398,11 @@ export default function Incident38Dashboard({ onOpenFrmrMo }: { onOpenFrmrMo: (o
           <article><h3>Организация относительно выборки</h3><p>По выбранным специальностям ниже медианы: <b>{belowMedianCount}</b>; на уровне или выше: <b>{aboveMedianCount}</b>.</p></article>
           <article><h3>Управленческий вывод</h3><p>Специальностей с уровнем ниже 25%: <b>{criticalCount}</b>. Самые низкие значения: {weakestSpecialties.length ? weakestSpecialties.map((row) => `${row.name} — ${percent(row.coverage)}`).join("; ") : "нет данных"}.</p></article>
         </section>
-        <div className={styles.specialtyLegend}><span><i className={styles.specialtyGreen} />≥75% — высокий уровень</span><span><i className={styles.specialtyYellow} />50–74% — требует внимания</span><span><i className={styles.specialtyOrange} />25–49% — зона риска</span><span><i className={styles.specialtyRed} />&lt;25% — критично</span><span>Цветовой ориентир для специальности; план 70% оценивается по МО в целом.</span></div>
+        <div className={styles.specialtyLegend}><span><i className={styles.specialtyGreen} />≥75% — высокий уровень</span><span><i className={styles.specialtyYellow} />50–74% — требует внимания</span><span><i className={styles.specialtyOrange} />25–49% — зона риска</span><span><i className={styles.specialtyRed} />&lt;25% — критично</span><span>Цветовой ориентир для специальности; план 60% оценивается по МО в целом.</span></div>
         <p className={styles.chartNote}>Медиана рассчитана по МО той же выгрузки: {benchmarkOrganizations.length} организаций · срез {benchmarkDataset?.reportDate ?? "—"}. В выборку по специальности входят МО с положительным общим нормативом; нулевые значения слотов учитываются.</p>
       </section>}
     </main>}
 
-    <footer className={styles.footer}>Источник: форма И‑38.9, лист «нормативы». Реальный процент И‑38.9 = «Слотов для ЕПГУ» ÷ «Норматив ВСЕГО» × 100%; план каждой МО — 70%. Нехватка рассчитывается по каждой МО как минимальное целое число дополнительных слотов до 70% общего норматива. «Норма для ЕПГУ» и «Всего слотов» в оценке не используются. Итог по региону — отношение суммы слотов к сумме общего норматива. Даты срезов: {DATA.map((dataset) => dataset.reportDate).join(" · ")}. По правилу реорганизации Альметьевска из текущего отчёта исключены прежние МО, головная организация сохранена. Отсутствие данных не заменяется нулём; государственные/частные организации разделены по организационно-правовой форме.</footer>
+    <footer className={styles.footer}>Источник: форма И‑38.9, лист «нормативы». Реальный процент И‑38.9 = «Слотов для ЕПГУ» ÷ «Норматив ВСЕГО» × 100%; план каждой МО — 60%, цель — 70%. Нехватка рассчитывается по каждой МО как минимальное целое число дополнительных слотов до 60% общего норматива. «Норма для ЕПГУ» и «Всего слотов» в оценке не используются. Итог по региону — отношение суммы слотов к сумме общего норматива. Даты срезов: {DATA.map((dataset) => dataset.reportDate).join(" · ")}. По правилу реорганизации Альметьевска из текущего отчёта исключены прежние МО, головная организация сохранена. Отсутствие данных не заменяется нулём; государственные/частные организации разделены по организационно-правовой форме.</footer>
   </div>;
 }
