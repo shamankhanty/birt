@@ -45,9 +45,10 @@ test("И38 MO button opens the same MO directly, without redirecting via names",
   assert.match(page, /if \(id === "frmr"\) setFrmrTargetOid\(null\)/);
 });
 
-test("I38 percentage methodology and FRMR source data are untouched", () => {
+test("I38 fact formula, 60% plan, 70% goal, and FRMR source remain consistent", () => {
   const incident = readFileSync(new URL("../app/incident38-dashboard.tsx", import.meta.url), "utf8");
-  assert.match(incident, /const PLAN_PERCENT = 70/);
+  assert.match(incident, /const PLAN_PERCENT = 60/);
+  assert.match(incident, /const GOAL_PERCENT = 70/);
   assert.match(incident, /const ratio = \(slots: SlotValue, norm: SlotValue\)/);
   assert.match(incident, /Нулевой норматив сам по себе не доказывает ошибку/);
 });
