@@ -196,7 +196,30 @@ def main() -> None:
     if not cities["orgs"] or not districts["orgs"]:
         fail("Both input files must contain organizations")
     args.output_dir.mkdir(parents=True, exist_ok=True)
-    outputs = [(args.output_dir / "incident38-cities.json", cities), (args.output_dir / "incident38-districts.json", districts)]
+    history_path = args.output_dir / "incident38-history.json"
+    history = json.loads(history_path.read_text(encoding="utf-8")) if history_path.exists() else {"schemaVersion": 1, "snapshots": []}
+    if history.get("schemaVersion") != 1 or not isinstance(history.get("snapshots"), list):
+        fail("Invalid Incident 38 history file")
+    for scope, filename, next_data in (("cities", "incident38-cities.json", cities), ("districts", "incident38-districts.json", districts)):
+        current_path = args.output_dir / filename
+        if not current_path.exists():
+            continue
+        current = json.loads(current_path.read_text(encoding="utf-8"))
+        current_date = datetime.strptime(current["reportDate"], "%d.%m.%Y")
+        next_date = datetime.strptime(next_data["reportDate"], "%d.%m.%Y")
+        if next_date < current_date:
+            fail(f"{scope}: refusing to replace {current['reportDate']} with older {next_data['reportDate']}")
+        if next_date == current_date:
+            continue
+        if any(snapshot["scope"] == scope and snapshot["reportDate"] == current["reportDate"] for snapshot in history["snapshots"]):
+            continue
+        compact = []
+        for org in current["orgs"]:
+            norm = [row["norm"] for row in org["specialties"]]
+            slots = [row["epguSlots"] for row in org["specialties"]]
+            compact.append({"oid": org["oid"], "name": org["name"], "norm": sum(norm) if all(v is not None for v in norm) else None, "epguSlots": sum(slots) if all(v is not None for v in slots) else None})
+        history["snapshots"].append({"scope": scope, "reportDate": current["reportDate"], "frmoDate": current["frmoDate"], "source": current["source"], "orgs": compact})
+    outputs = [(args.output_dir / "incident38-cities.json", cities), (args.output_dir / "incident38-districts.json", districts), (history_path, history)]
     staged = []
     try:
         for destination, data in outputs:
@@ -211,7 +234,7 @@ def main() -> None:
         for temp, _ in staged:
             if temp.exists():
                 temp.unlink()
-    print(json.dumps({"status": "PASS", "datasets": [{"file": str(path), "date": data["reportDate"], "frmoDate": data["frmoDate"], "organizations": data["orgCount"], "specialties": len(data["specialties"])} for path, data in outputs]}, ensure_ascii=False))
+    print(json.dumps({"status": "PASS", "datasets": [{"file": str(path), "date": data["reportDate"], "frmoDate": data["frmoDate"], "organizations": data["orgCount"], "specialties": len(data["specialties"])} for path, data in outputs[:2]]}, ensure_ascii=False))
 
 
 if __name__ == "__main__":
