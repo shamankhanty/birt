@@ -119,7 +119,7 @@ test('January-October reports cannot replace standalone September EPGU or the ap
 });
 
 test('report period recognition uses an explicit October header, even when exported in November',()=>{
- const result=spawnSync('python3',['-c',`
+ const result=spawnSync(process.platform === 'win32' ? 'python' : 'python3',['-c',`
 import sys,tempfile
 from pathlib import Path
 from datetime import datetime

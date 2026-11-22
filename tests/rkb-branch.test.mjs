@@ -156,7 +156,7 @@ for rows in cases:
 const cases = [
     [{name:'РКБ',oid:rootOid,spOid:catalog.subunits[0].spOid,count:20}],
   ];
-  const result = spawnSync('python3',['-c',code],{input:JSON.stringify(cases),encoding:'utf8'});
+  const result = spawnSync(process.platform === 'win32' ? 'python' : 'python3',['-c',code],{input:JSON.stringify(cases),encoding:'utf8'});
   assert.equal(result.status,0,result.stderr);
 });
 
