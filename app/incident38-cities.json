@@ -1,7 +1,7 @@
 {
-  "source": "И_38.9_КЗН_НЧ  Слоты по нормативам на дату. 19.11.2026.xlsx",
-  "reportDate": "19.11.2026",
-  "asOf": "19 ноября 2026",
+  "source": "И_38.9_КЗН_НЧ  Слоты по нормативам на дату. 20.11.2026.xlsx",
+  "reportDate": "20.11.2026",
+  "asOf": "20 ноября 2026",
   "frmoDate": "19.11.2026",
   "forwardDays": 14,
   "orgCount": 57,
@@ -75,41 +75,41 @@
           "code": "11",
           "name": "терапевт",
           "norm": 4760,
-          "slots": 4637,
+          "slots": 4697,
           "epguNorm": 3060,
-          "epguSlots": 3368
+          "epguSlots": 3408
         },
         {
           "code": "13",
           "name": "акушер-гинеколог",
           "norm": 1150,
-          "slots": 1308,
+          "slots": 1315,
           "epguNorm": 700,
-          "epguSlots": 878
+          "epguSlots": 889
         },
         {
           "code": "25",
           "name": "ВОП — семейный врач (семейный врач)",
           "norm": 520,
-          "slots": 560,
+          "slots": 586,
           "epguNorm": 320,
-          "epguSlots": 528
+          "epguSlots": 546
         },
         {
           "code": "14",
           "name": "оториноларинголог",
           "norm": 450,
-          "slots": 641,
+          "slots": 667,
           "epguNorm": 270,
-          "epguSlots": 536
+          "epguSlots": 554
         },
         {
           "code": "15",
           "name": "офтальмолог",
           "norm": 525,
-          "slots": 471,
+          "slots": 500,
           "epguNorm": 315,
-          "epguSlots": 375
+          "epguSlots": 396
         },
         {
           "code": "16",
@@ -171,9 +171,9 @@
           "code": "23",
           "name": "хирург",
           "norm": 510,
-          "slots": 507,
+          "slots": 557,
           "epguNorm": 330,
-          "epguSlots": 369
+          "epguSlots": 406
         },
         {
           "code": "26",
@@ -260,9 +260,9 @@
           "code": "19",
           "name": "стоматолог",
           "norm": 1620,
-          "slots": 72,
+          "slots": 84,
           "epguNorm": 990,
-          "epguSlots": 30
+          "epguSlots": 35
         },
         {
           "code": "20",
@@ -316,26 +316,26 @@
         {
           "code": "11",
           "name": "терапевт",
-          "norm": 868,
-          "slots": 1122,
-          "epguNorm": 558,
-          "epguSlots": 856
+          "norm": 1148,
+          "slots": 1121,
+          "epguNorm": 737.9999999999999,
+          "epguSlots": 852
         },
         {
           "code": "13",
           "name": "акушер-гинеколог",
           "norm": 1495,
-          "slots": 1629,
+          "slots": 1588,
           "epguNorm": 910,
-          "epguSlots": 1048
+          "epguSlots": 1024
         },
         {
           "code": "25",
           "name": "ВОП — семейный врач (семейный врач)",
           "norm": 650,
-          "slots": 465,
+          "slots": 448,
           "epguNorm": 400,
-          "epguSlots": 317
+          "epguSlots": 298
         },
         {
           "code": "14",
@@ -349,9 +349,9 @@
           "code": "15",
           "name": "офтальмолог",
           "norm": 1575,
-          "slots": 296,
+          "slots": 300,
           "epguNorm": 945,
-          "epguSlots": 280
+          "epguSlots": 287
         },
         {
           "code": "16",
@@ -438,25 +438,25 @@
           "code": "11",
           "name": "терапевт",
           "norm": 5040,
-          "slots": 3683,
+          "slots": 3796,
           "epguNorm": 3240,
-          "epguSlots": 2402
+          "epguSlots": 2463
         },
         {
           "code": "13",
           "name": "акушер-гинеколог",
           "norm": 690,
-          "slots": 882,
+          "slots": 869,
           "epguNorm": 420,
-          "epguSlots": 558
+          "epguSlots": 540
         },
         {
           "code": "25",
           "name": "ВОП — семейный врач (семейный врач)",
           "norm": 520,
-          "slots": 316,
+          "slots": 336,
           "epguNorm": 320,
-          "epguSlots": 229
+          "epguSlots": 243
         },
         {
           "code": "14",
@@ -470,9 +470,9 @@
           "code": "15",
           "name": "офтальмолог",
           "norm": 175,
-          "slots": 315,
+          "slots": 319,
           "epguNorm": 105,
-          "epguSlots": 188
+          "epguSlots": 190
         },
         {
           "code": "16",
@@ -534,9 +534,9 @@
           "code": "23",
           "name": "хирург",
           "norm": 297.5,
-          "slots": 232,
+          "slots": 222,
           "epguNorm": 192.5,
-          "epguSlots": 174
+          "epguSlots": 166
         },
         {
           "code": "26",
@@ -559,25 +559,25 @@
           "code": "11",
           "name": "терапевт",
           "norm": 7700,
-          "slots": 6029,
+          "slots": 6059,
           "epguNorm": 4950,
-          "epguSlots": 4816
+          "epguSlots": 4837
         },
         {
           "code": "13",
           "name": "акушер-гинеколог",
           "norm": 3105,
-          "slots": 1669,
+          "slots": 1676,
           "epguNorm": 1890,
-          "epguSlots": 1531
+          "epguSlots": 1540
         },
         {
           "code": "25",
           "name": "ВОП — семейный врач (семейный врач)",
           "norm": 2600,
-          "slots": 2496,
+          "slots": 2519,
           "epguNorm": 1600,
-          "epguSlots": 2132
+          "epguSlots": 2146
         },
         {
           "code": "14",
@@ -585,15 +585,15 @@
           "norm": 600,
           "slots": 537,
           "epguNorm": 360,
-          "epguSlots": 408
+          "epguSlots": 407
         },
         {
           "code": "15",
           "name": "офтальмолог",
           "norm": 1050,
-          "slots": 548,
+          "slots": 525,
           "epguNorm": 630,
-          "epguSlots": 412
+          "epguSlots": 393
         },
         {
           "code": "16",
@@ -655,9 +655,9 @@
           "code": "23",
           "name": "хирург",
           "norm": 510,
-          "slots": 558,
+          "slots": 538,
           "epguNorm": 330,
-          "epguSlots": 358
+          "epguSlots": 334
         },
         {
           "code": "26",
@@ -680,9 +680,9 @@
           "code": "11",
           "name": "терапевт",
           "norm": 2268,
-          "slots": 1564,
+          "slots": 1620,
           "epguNorm": 1458,
-          "epguSlots": 1182
+          "epguSlots": 1218
         },
         {
           "code": "13",
@@ -704,9 +704,9 @@
           "code": "14",
           "name": "оториноларинголог",
           "norm": 375,
-          "slots": 212,
+          "slots": 190,
           "epguNorm": 225,
-          "epguSlots": 180
+          "epguSlots": 162
         },
         {
           "code": "15",
@@ -776,9 +776,9 @@
           "code": "23",
           "name": "хирург",
           "norm": 170,
-          "slots": 216,
+          "slots": 201,
           "epguNorm": 110,
-          "epguSlots": 154
+          "epguSlots": 143
         },
         {
           "code": "26",
@@ -825,9 +825,9 @@
           "code": "14",
           "name": "оториноларинголог",
           "norm": 450,
-          "slots": 138,
+          "slots": 141,
           "epguNorm": 270,
-          "epguSlots": 111
+          "epguSlots": 113
         },
         {
           "code": "15",
@@ -841,9 +841,9 @@
           "code": "16",
           "name": "педиатр",
           "norm": 4270,
-          "slots": 3800,
+          "slots": 3894,
           "epguNorm": 2745,
-          "epguSlots": 2560
+          "epguSlots": 2604
         },
         {
           "code": "17",
@@ -905,9 +905,9 @@
           "code": "26",
           "name": "детский хирург",
           "norm": 800,
-          "slots": 177,
+          "slots": 144,
           "epguNorm": 540,
-          "epguSlots": 177
+          "epguSlots": 144
         }
       ]
     },
@@ -922,31 +922,31 @@
           "code": "11",
           "name": "терапевт",
           "norm": 2940,
-          "slots": 2384,
+          "slots": 2397,
           "epguNorm": 1890,
-          "epguSlots": 1358
+          "epguSlots": 1362
         },
         {
           "code": "13",
           "name": "акушер-гинеколог",
           "norm": 1725,
-          "slots": 902,
+          "slots": 885,
           "epguNorm": 1050,
-          "epguSlots": 515
+          "epguSlots": 509
         },
         {
           "code": "25",
           "name": "ВОП — семейный врач (семейный врач)",
           "norm": 390,
-          "slots": 442,
+          "slots": 437,
           "epguNorm": 240,
-          "epguSlots": 343
+          "epguSlots": 335
         },
         {
           "code": "14",
           "name": "оториноларинголог",
           "norm": 450,
-          "slots": 138,
+          "slots": 126,
           "epguNorm": 270,
           "epguSlots": 90
         },
@@ -954,9 +954,9 @@
           "code": "15",
           "name": "офтальмолог",
           "norm": 700,
-          "slots": 327,
+          "slots": 291,
           "epguNorm": 420,
-          "epguSlots": 279
+          "epguSlots": 243
         },
         {
           "code": "16",
@@ -1018,9 +1018,9 @@
           "code": "23",
           "name": "хирург",
           "norm": 467.5,
-          "slots": 174,
+          "slots": 168,
           "epguNorm": 302.5,
-          "epguSlots": 174
+          "epguSlots": 168
         },
         {
           "code": "26",
@@ -1051,9 +1051,9 @@
           "code": "13",
           "name": "акушер-гинеколог",
           "norm": 0,
-          "slots": 189,
+          "slots": 194,
           "epguNorm": 0,
-          "epguSlots": 161
+          "epguSlots": 162
         },
         {
           "code": "25",
@@ -1083,9 +1083,9 @@
           "code": "16",
           "name": "педиатр",
           "norm": 5530,
-          "slots": 4384,
+          "slots": 4452,
           "epguNorm": 3555,
-          "epguSlots": 3551
+          "epguSlots": 3598
         },
         {
           "code": "17",
@@ -1172,9 +1172,9 @@
           "code": "13",
           "name": "акушер-гинеколог",
           "norm": 230,
-          "slots": 96,
+          "slots": 110,
           "epguNorm": 140,
-          "epguSlots": 96
+          "epguSlots": 110
         },
         {
           "code": "25",
@@ -1188,25 +1188,25 @@
           "code": "14",
           "name": "оториноларинголог",
           "norm": 600,
-          "slots": 276,
+          "slots": 298,
           "epguNorm": 360,
-          "epguSlots": 276
+          "epguSlots": 298
         },
         {
           "code": "15",
           "name": "офтальмолог",
           "norm": 525,
-          "slots": 92,
+          "slots": 89,
           "epguNorm": 315,
-          "epguSlots": 92
+          "epguSlots": 89
         },
         {
           "code": "16",
           "name": "педиатр",
           "norm": 6230,
-          "slots": 6237,
+          "slots": 6263,
           "epguNorm": 4005,
-          "epguSlots": 4125
+          "epguSlots": 4151
         },
         {
           "code": "17",
@@ -1236,9 +1236,9 @@
           "code": "20",
           "name": "стоматолог детский",
           "norm": 180,
-          "slots": 59,
+          "slots": 86,
           "epguNorm": 110,
-          "epguSlots": 59
+          "epguSlots": 86
         },
         {
           "code": "21",
@@ -1268,9 +1268,9 @@
           "code": "26",
           "name": "детский хирург",
           "norm": 600,
-          "slots": 24,
+          "slots": 36,
           "epguNorm": 405,
-          "epguSlots": 24
+          "epguSlots": 36
         }
       ]
     },
@@ -1325,9 +1325,9 @@
           "code": "16",
           "name": "педиатр",
           "norm": 4900,
-          "slots": 3925,
+          "slots": 5821,
           "epguNorm": 3150,
-          "epguSlots": 3189
+          "epguSlots": 5081
         },
         {
           "code": "17",
@@ -1389,9 +1389,9 @@
           "code": "26",
           "name": "детский хирург",
           "norm": 400,
-          "slots": 249,
+          "slots": 231,
           "epguNorm": 270,
-          "epguSlots": 249
+          "epguSlots": 231
         }
       ]
     },
@@ -1414,9 +1414,9 @@
           "code": "13",
           "name": "акушер-гинеколог",
           "norm": 287.5,
-          "slots": 84,
+          "slots": 98,
           "epguNorm": 175,
-          "epguSlots": 84
+          "epguSlots": 98
         },
         {
           "code": "25",
@@ -1430,25 +1430,25 @@
           "code": "14",
           "name": "оториноларинголог",
           "norm": 300,
-          "slots": 255,
+          "slots": 266,
           "epguNorm": 180,
-          "epguSlots": 255
+          "epguSlots": 266
         },
         {
           "code": "15",
           "name": "офтальмолог",
           "norm": 700,
-          "slots": 286,
+          "slots": 303,
           "epguNorm": 420,
-          "epguSlots": 286
+          "epguSlots": 303
         },
         {
           "code": "16",
           "name": "педиатр",
           "norm": 3640,
-          "slots": 5900,
+          "slots": 5886,
           "epguNorm": 2340,
-          "epguSlots": 4447
+          "epguSlots": 4434
         },
         {
           "code": "17",
@@ -1510,9 +1510,9 @@
           "code": "26",
           "name": "детский хирург",
           "norm": 400,
-          "slots": 157,
+          "slots": 177,
           "epguNorm": 270,
-          "epguSlots": 157
+          "epguSlots": 177
         }
       ]
     },
@@ -1591,17 +1591,17 @@
           "code": "19",
           "name": "стоматолог",
           "norm": 3780,
-          "slots": 1903,
+          "slots": 1908,
           "epguNorm": 2310,
-          "epguSlots": 1341
+          "epguSlots": 1349
         },
         {
           "code": "20",
           "name": "стоматолог детский",
           "norm": 990,
-          "slots": 464,
+          "slots": 460,
           "epguNorm": 605,
-          "epguSlots": 313
+          "epguSlots": 305
         },
         {
           "code": "21",
@@ -1712,9 +1712,9 @@
           "code": "19",
           "name": "стоматолог",
           "norm": 1170,
-          "slots": 643,
+          "slots": 628,
           "epguNorm": 715,
-          "epguSlots": 463
+          "epguSlots": 448
         },
         {
           "code": "20",
@@ -1727,10 +1727,10 @@
         {
           "code": "21",
           "name": "стоматолог-терапевт",
-          "norm": 270,
-          "slots": 512,
-          "epguNorm": 180,
-          "epguSlots": 367
+          "norm": 405,
+          "slots": 677,
+          "epguNorm": 270,
+          "epguSlots": 484
         },
         {
           "code": "22",
@@ -1833,9 +1833,9 @@
           "code": "19",
           "name": "стоматолог",
           "norm": 1260,
-          "slots": 575,
+          "slots": 589,
           "epguNorm": 770,
-          "epguSlots": 173
+          "epguSlots": 176
         },
         {
           "code": "20",
@@ -1849,9 +1849,9 @@
           "code": "21",
           "name": "стоматолог-терапевт",
           "norm": 1800,
-          "slots": 3158,
+          "slots": 3175,
           "epguNorm": 1200,
-          "epguSlots": 1034
+          "epguSlots": 1044
         },
         {
           "code": "22",
@@ -1954,9 +1954,9 @@
           "code": "19",
           "name": "стоматолог",
           "norm": 900.0179999999999,
-          "slots": 1090,
+          "slots": 1084,
           "epguNorm": 550.011,
-          "epguSlots": 890
+          "epguSlots": 884
         },
         {
           "code": "20",
@@ -1970,9 +1970,9 @@
           "code": "21",
           "name": "стоматолог-терапевт",
           "norm": 1890,
-          "slots": 2396,
+          "slots": 2410,
           "epguNorm": 1260,
-          "epguSlots": 1720
+          "epguSlots": 1736
         },
         {
           "code": "22",
@@ -2011,23 +2011,23 @@
           "code": "11",
           "name": "терапевт",
           "norm": 4900,
-          "slots": 3433,
+          "slots": 3555,
           "epguNorm": 3150,
-          "epguSlots": 2662
+          "epguSlots": 2731
         },
         {
           "code": "13",
           "name": "акушер-гинеколог",
           "norm": 1035,
-          "slots": 612,
+          "slots": 611,
           "epguNorm": 630,
-          "epguSlots": 612
+          "epguSlots": 611
         },
         {
           "code": "25",
           "name": "ВОП — семейный врач (семейный врач)",
           "norm": 260,
-          "slots": 240,
+          "slots": 243,
           "epguNorm": 160,
           "epguSlots": 179
         },
@@ -2035,17 +2035,17 @@
           "code": "14",
           "name": "оториноларинголог",
           "norm": 75,
-          "slots": 36,
+          "slots": 24,
           "epguNorm": 45,
-          "epguSlots": 36
+          "epguSlots": 24
         },
         {
           "code": "15",
           "name": "офтальмолог",
           "norm": 700,
-          "slots": 471,
+          "slots": 445,
           "epguNorm": 420,
-          "epguSlots": 293
+          "epguSlots": 281
         },
         {
           "code": "16",
@@ -2107,9 +2107,9 @@
           "code": "23",
           "name": "хирург",
           "norm": 382.5,
-          "slots": 475,
+          "slots": 500,
           "epguNorm": 247.5,
-          "epguSlots": 352
+          "epguSlots": 362
         },
         {
           "code": "26",
@@ -2132,31 +2132,31 @@
           "code": "11",
           "name": "терапевт",
           "norm": 5110,
-          "slots": 4361,
+          "slots": 4404,
           "epguNorm": 3285,
-          "epguSlots": 2834
+          "epguSlots": 2874
         },
         {
           "code": "13",
           "name": "акушер-гинеколог",
           "norm": 690,
-          "slots": 977,
+          "slots": 1012,
           "epguNorm": 420,
-          "epguSlots": 572
+          "epguSlots": 579
         },
         {
           "code": "25",
           "name": "ВОП — семейный врач (семейный врач)",
           "norm": 1235,
-          "slots": 1150,
+          "slots": 1098,
           "epguNorm": 760,
-          "epguSlots": 754
+          "epguSlots": 722
         },
         {
           "code": "14",
           "name": "оториноларинголог",
           "norm": 300,
-          "slots": 739,
+          "slots": 738,
           "epguNorm": 180,
           "epguSlots": 396
         },
@@ -2164,9 +2164,9 @@
           "code": "15",
           "name": "офтальмолог",
           "norm": 787.5,
-          "slots": 201,
+          "slots": 198,
           "epguNorm": 472.5,
-          "epguSlots": 171
+          "epguSlots": 164
         },
         {
           "code": "16",
@@ -2228,9 +2228,9 @@
           "code": "23",
           "name": "хирург",
           "norm": 42.5,
-          "slots": 278,
+          "slots": 265,
           "epguNorm": 27.5,
-          "epguSlots": 213
+          "epguSlots": 207
         },
         {
           "code": "26",
@@ -2277,25 +2277,25 @@
           "code": "14",
           "name": "оториноларинголог",
           "norm": 375,
-          "slots": 219,
+          "slots": 218,
           "epguNorm": 225,
-          "epguSlots": 181
+          "epguSlots": 180
         },
         {
           "code": "15",
           "name": "офтальмолог",
           "norm": 350,
-          "slots": 92,
+          "slots": 110,
           "epguNorm": 210,
-          "epguSlots": 72
+          "epguSlots": 86
         },
         {
           "code": "16",
           "name": "педиатр",
           "norm": 4060,
-          "slots": 2788,
+          "slots": 2746,
           "epguNorm": 2610,
-          "epguSlots": 2544
+          "epguSlots": 2502
         },
         {
           "code": "17",
@@ -2357,9 +2357,9 @@
           "code": "26",
           "name": "детский хирург",
           "norm": 400,
-          "slots": 111,
+          "slots": 132,
           "epguNorm": 270,
-          "epguSlots": 93
+          "epguSlots": 114
         }
       ]
     },
@@ -2446,17 +2446,17 @@
           "code": "20",
           "name": "стоматолог детский",
           "norm": 1620,
-          "slots": 1023,
+          "slots": 998,
           "epguNorm": 990,
-          "epguSlots": 1023
+          "epguSlots": 998
         },
         {
           "code": "21",
           "name": "стоматолог-терапевт",
           "norm": 585,
-          "slots": 1064,
+          "slots": 1029,
           "epguNorm": 390,
-          "epguSlots": 1064
+          "epguSlots": 1029
         },
         {
           "code": "22",
@@ -2495,25 +2495,25 @@
           "code": "11",
           "name": "терапевт",
           "norm": 2520,
-          "slots": 1808,
+          "slots": 1771,
           "epguNorm": 1620,
-          "epguSlots": 1408
+          "epguSlots": 1381
         },
         {
           "code": "13",
           "name": "акушер-гинеколог",
           "norm": 1035,
-          "slots": 1149,
+          "slots": 1171,
           "epguNorm": 630,
-          "epguSlots": 941
+          "epguSlots": 956
         },
         {
           "code": "25",
           "name": "ВОП — семейный врач (семейный врач)",
           "norm": 1365,
-          "slots": 861,
+          "slots": 863,
           "epguNorm": 840,
-          "epguSlots": 668
+          "epguSlots": 667
         },
         {
           "code": "14",
@@ -2527,9 +2527,9 @@
           "code": "15",
           "name": "офтальмолог",
           "norm": 700,
-          "slots": 397,
+          "slots": 383,
           "epguNorm": 420,
-          "epguSlots": 295
+          "epguSlots": 285
         },
         {
           "code": "16",
@@ -2624,9 +2624,9 @@
           "code": "13",
           "name": "акушер-гинеколог",
           "norm": 230,
-          "slots": 1147,
+          "slots": 798,
           "epguNorm": 140,
-          "epguSlots": 1000
+          "epguSlots": 700
         },
         {
           "code": "25",
@@ -2648,17 +2648,17 @@
           "code": "15",
           "name": "офтальмолог",
           "norm": 437.5,
-          "slots": 1246,
+          "slots": 1252,
           "epguNorm": 262.5,
-          "epguSlots": 796
+          "epguSlots": 802
         },
         {
           "code": "16",
           "name": "педиатр",
           "norm": 7840,
-          "slots": 9433,
+          "slots": 8789,
           "epguNorm": 5040,
-          "epguSlots": 6046
+          "epguSlots": 5654
         },
         {
           "code": "17",
@@ -2801,9 +2801,9 @@
           "code": "19",
           "name": "стоматолог",
           "norm": 1620,
-          "slots": 1050,
+          "slots": 1068,
           "epguNorm": 990,
-          "epguSlots": 627
+          "epguSlots": 638
         },
         {
           "code": "20",
@@ -2866,7 +2866,7 @@
           "code": "13",
           "name": "акушер-гинеколог",
           "norm": 115,
-          "slots": 36,
+          "slots": 48,
           "epguNorm": 70,
           "epguSlots": 0
         },
@@ -2979,7 +2979,7 @@
           "code": "11",
           "name": "терапевт",
           "norm": 3360,
-          "slots": 3242,
+          "slots": 3240,
           "epguNorm": 2160,
           "epguSlots": 2552
         },
@@ -2987,7 +2987,7 @@
           "code": "13",
           "name": "акушер-гинеколог",
           "norm": 0,
-          "slots": 160,
+          "slots": 140,
           "epguNorm": 0,
           "epguSlots": 0
         },
@@ -2995,9 +2995,9 @@
           "code": "25",
           "name": "ВОП — семейный врач (семейный врач)",
           "norm": 520,
-          "slots": 460,
+          "slots": 483,
           "epguNorm": 320,
-          "epguSlots": 360
+          "epguSlots": 378
         },
         {
           "code": "14",
@@ -3011,9 +3011,9 @@
           "code": "15",
           "name": "офтальмолог",
           "norm": 700,
-          "slots": 456,
+          "slots": 408,
           "epguNorm": 420,
-          "epguSlots": 399
+          "epguSlots": 357
         },
         {
           "code": "16",
@@ -3075,9 +3075,9 @@
           "code": "23",
           "name": "хирург",
           "norm": 340,
-          "slots": 324,
+          "slots": 282,
           "epguNorm": 220,
-          "epguSlots": 242
+          "epguSlots": 211
         },
         {
           "code": "26",
@@ -3124,9 +3124,9 @@
           "code": "14",
           "name": "оториноларинголог",
           "norm": 600,
-          "slots": 495,
+          "slots": 465,
           "epguNorm": 360,
-          "epguSlots": 396
+          "epguSlots": 369
         },
         {
           "code": "15",
@@ -3140,9 +3140,9 @@
           "code": "16",
           "name": "педиатр",
           "norm": 5810,
-          "slots": 4542,
+          "slots": 4491,
           "epguNorm": 3735,
-          "epguSlots": 3766
+          "epguSlots": 3755
         },
         {
           "code": "17",
@@ -3221,17 +3221,17 @@
           "code": "11",
           "name": "терапевт",
           "norm": 3220,
-          "slots": 5445,
+          "slots": 5511,
           "epguNorm": 2070,
-          "epguSlots": 3516
+          "epguSlots": 3556
         },
         {
           "code": "13",
           "name": "акушер-гинеколог",
           "norm": 1840,
-          "slots": 1854,
+          "slots": 1927,
           "epguNorm": 1120,
-          "epguSlots": 860
+          "epguSlots": 936
         },
         {
           "code": "25",
@@ -3245,9 +3245,9 @@
           "code": "14",
           "name": "оториноларинголог",
           "norm": 300,
-          "slots": 259,
+          "slots": 224,
           "epguNorm": 180,
-          "epguSlots": 148
+          "epguSlots": 128
         },
         {
           "code": "15",
@@ -3317,9 +3317,9 @@
           "code": "23",
           "name": "хирург",
           "norm": 340,
-          "slots": 778,
+          "slots": 765,
           "epguNorm": 220,
-          "epguSlots": 483
+          "epguSlots": 476
         },
         {
           "code": "26",
@@ -3342,41 +3342,41 @@
           "code": "11",
           "name": "терапевт",
           "norm": 5040,
-          "slots": 3650,
+          "slots": 3594,
           "epguNorm": 3240,
-          "epguSlots": 2612
+          "epguSlots": 2587
         },
         {
           "code": "13",
           "name": "акушер-гинеколог",
           "norm": 3220,
-          "slots": 2980,
+          "slots": 2988,
           "epguNorm": 1960,
-          "epguSlots": 373
+          "epguSlots": 367
         },
         {
           "code": "25",
           "name": "ВОП — семейный врач (семейный врач)",
           "norm": 520,
-          "slots": 428,
+          "slots": 432,
           "epguNorm": 320,
-          "epguSlots": 311
+          "epguSlots": 312
         },
         {
           "code": "14",
           "name": "оториноларинголог",
           "norm": 900,
-          "slots": 601,
+          "slots": 604,
           "epguNorm": 540,
-          "epguSlots": 387
+          "epguSlots": 391
         },
         {
           "code": "15",
           "name": "офтальмолог",
           "norm": 875,
-          "slots": 345,
+          "slots": 348,
           "epguNorm": 525,
-          "epguSlots": 266
+          "epguSlots": 272
         },
         {
           "code": "16",
@@ -3438,9 +3438,9 @@
           "code": "23",
           "name": "хирург",
           "norm": 340,
-          "slots": 472,
+          "slots": 488,
           "epguNorm": 220,
-          "epguSlots": 340
+          "epguSlots": 351
         },
         {
           "code": "26",
@@ -3463,17 +3463,17 @@
           "code": "11",
           "name": "терапевт",
           "norm": 7280,
-          "slots": 5880,
+          "slots": 5656,
           "epguNorm": 4680,
-          "epguSlots": 3559
+          "epguSlots": 3447
         },
         {
           "code": "13",
           "name": "акушер-гинеколог",
           "norm": 1955,
-          "slots": 2030,
+          "slots": 2011,
           "epguNorm": 1190,
-          "epguSlots": 1343
+          "epguSlots": 1309
         },
         {
           "code": "25",
@@ -3487,17 +3487,17 @@
           "code": "14",
           "name": "оториноларинголог",
           "norm": 1050,
-          "slots": 530,
+          "slots": 485,
           "epguNorm": 630,
-          "epguSlots": 396
+          "epguSlots": 367
         },
         {
           "code": "15",
           "name": "офтальмолог",
           "norm": 1050,
-          "slots": 871,
+          "slots": 885,
           "epguNorm": 630,
-          "epguSlots": 583
+          "epguSlots": 590
         },
         {
           "code": "16",
@@ -3559,9 +3559,9 @@
           "code": "23",
           "name": "хирург",
           "norm": 722.5,
-          "slots": 642,
+          "slots": 624,
           "epguNorm": 467.5,
-          "epguSlots": 518
+          "epguSlots": 512
         },
         {
           "code": "26",
@@ -3608,25 +3608,25 @@
           "code": "14",
           "name": "оториноларинголог",
           "norm": 375,
-          "slots": 715,
+          "slots": 645,
           "epguNorm": 225,
-          "epguSlots": 453
+          "epguSlots": 401
         },
         {
           "code": "15",
           "name": "офтальмолог",
           "norm": 962.5,
-          "slots": 817,
+          "slots": 777,
           "epguNorm": 577.5,
-          "epguSlots": 658
+          "epguSlots": 624
         },
         {
           "code": "16",
           "name": "педиатр",
           "norm": 8050,
-          "slots": 8603,
+          "slots": 8577,
           "epguNorm": 5175,
-          "epguSlots": 6264
+          "epguSlots": 6255
         },
         {
           "code": "17",
@@ -3688,9 +3688,9 @@
           "code": "26",
           "name": "детский хирург",
           "norm": 600,
-          "slots": 508,
+          "slots": 473,
           "epguNorm": 405,
-          "epguSlots": 375
+          "epguSlots": 350
         }
       ]
     },
@@ -3737,9 +3737,9 @@
           "code": "15",
           "name": "офтальмолог",
           "norm": 87.5,
-          "slots": 20,
+          "slots": 16,
           "epguNorm": 52.5,
-          "epguSlots": 20
+          "epguSlots": 16
         },
         {
           "code": "16",
@@ -3785,9 +3785,9 @@
           "code": "21",
           "name": "стоматолог-терапевт",
           "norm": 112.5,
-          "slots": 118,
+          "slots": 104,
           "epguNorm": 75,
-          "epguSlots": 118
+          "epguSlots": 104
         },
         {
           "code": "22",
@@ -3826,15 +3826,15 @@
           "code": "11",
           "name": "терапевт",
           "norm": 3640,
-          "slots": 3130,
+          "slots": 3021,
           "epguNorm": 2340,
-          "epguSlots": 2109
+          "epguSlots": 2033
         },
         {
           "code": "13",
           "name": "акушер-гинеколог",
           "norm": 345,
-          "slots": 388,
+          "slots": 364,
           "epguNorm": 210,
           "epguSlots": 84
         },
@@ -3858,7 +3858,7 @@
           "code": "15",
           "name": "офтальмолог",
           "norm": 700,
-          "slots": 519,
+          "slots": 520,
           "epguNorm": 420,
           "epguSlots": 498
         },
@@ -3890,9 +3890,9 @@
           "code": "19",
           "name": "стоматолог",
           "norm": 90,
-          "slots": 14,
+          "slots": 0,
           "epguNorm": 55,
-          "epguSlots": 14
+          "epguSlots": 0
         },
         {
           "code": "20",
@@ -3906,9 +3906,9 @@
           "code": "21",
           "name": "стоматолог-терапевт",
           "norm": 270,
-          "slots": 315,
+          "slots": 314,
           "epguNorm": 180,
-          "epguSlots": 215
+          "epguSlots": 214
         },
         {
           "code": "22",
@@ -3922,9 +3922,9 @@
           "code": "23",
           "name": "хирург",
           "norm": 340,
-          "slots": 408,
+          "slots": 417,
           "epguNorm": 220,
-          "epguSlots": 278
+          "epguSlots": 287
         },
         {
           "code": "26",
@@ -3947,41 +3947,41 @@
           "code": "11",
           "name": "терапевт",
           "norm": 5460,
-          "slots": 5550,
+          "slots": 5490,
           "epguNorm": 3510,
-          "epguSlots": 4373
+          "epguSlots": 4325
         },
         {
           "code": "13",
           "name": "акушер-гинеколог",
           "norm": 1955,
-          "slots": 1406,
+          "slots": 1435,
           "epguNorm": 1190,
-          "epguSlots": 1059
+          "epguSlots": 1086
         },
         {
           "code": "25",
           "name": "ВОП — семейный врач (семейный врач)",
           "norm": 1300,
-          "slots": 1057,
+          "slots": 1056,
           "epguNorm": 800,
-          "epguSlots": 826
+          "epguSlots": 825
         },
         {
           "code": "14",
           "name": "оториноларинголог",
           "norm": 1800,
-          "slots": 1380,
+          "slots": 1254,
           "epguNorm": 1080,
-          "epguSlots": 966
+          "epguSlots": 885
         },
         {
           "code": "15",
           "name": "офтальмолог",
           "norm": 875,
-          "slots": 863,
+          "slots": 803,
           "epguNorm": 525,
-          "epguSlots": 489
+          "epguSlots": 446
         },
         {
           "code": "16",
@@ -4027,9 +4027,9 @@
           "code": "21",
           "name": "стоматолог-терапевт",
           "norm": 315,
-          "slots": 496,
+          "slots": 495,
           "epguNorm": 210,
-          "epguSlots": 331
+          "epguSlots": 330
         },
         {
           "code": "22",
@@ -4076,9 +4076,9 @@
           "code": "13",
           "name": "акушер-гинеколог",
           "norm": 230,
-          "slots": 112,
+          "slots": 140,
           "epguNorm": 140,
-          "epguSlots": 68
+          "epguSlots": 86
         },
         {
           "code": "25",
@@ -4092,25 +4092,25 @@
           "code": "14",
           "name": "оториноларинголог",
           "norm": 300,
-          "slots": 333,
+          "slots": 275,
           "epguNorm": 180,
-          "epguSlots": 274
+          "epguSlots": 226
         },
         {
           "code": "15",
           "name": "офтальмолог",
           "norm": 1137.5,
-          "slots": 1024,
+          "slots": 1019,
           "epguNorm": 682.5,
-          "epguSlots": 757
+          "epguSlots": 753
         },
         {
           "code": "16",
           "name": "педиатр",
           "norm": 4760,
-          "slots": 4402,
+          "slots": 4199,
           "epguNorm": 3060,
-          "epguSlots": 2941
+          "epguSlots": 2817
         },
         {
           "code": "17",
@@ -4172,9 +4172,9 @@
           "code": "26",
           "name": "детский хирург",
           "norm": 0,
-          "slots": 770,
+          "slots": 757,
           "epguNorm": 0,
-          "epguSlots": 578
+          "epguSlots": 569
         }
       ]
     },
@@ -4261,9 +4261,9 @@
           "code": "20",
           "name": "стоматолог детский",
           "norm": 900,
-          "slots": 594,
+          "slots": 606,
           "epguNorm": 550,
-          "epguSlots": 400
+          "epguSlots": 408
         },
         {
           "code": "21",
@@ -4310,33 +4310,33 @@
           "code": "11",
           "name": "терапевт",
           "norm": 13720,
-          "slots": 11541,
+          "slots": 11518,
           "epguNorm": 8820,
-          "epguSlots": 8866
+          "epguSlots": 8847
         },
         {
           "code": "13",
           "name": "акушер-гинеколог",
-          "norm": 7555.5,
-          "slots": 4451,
-          "epguNorm": 4599,
-          "epguSlots": 3866
+          "norm": 7785.5,
+          "slots": 4468,
+          "epguNorm": 4739,
+          "epguSlots": 3907
         },
         {
           "code": "25",
           "name": "ВОП — семейный врач (семейный врач)",
           "norm": 650,
-          "slots": 299,
+          "slots": 263,
           "epguNorm": 400,
-          "epguSlots": 246
+          "epguSlots": 219
         },
         {
           "code": "14",
           "name": "оториноларинголог",
           "norm": 1500,
-          "slots": 136,
+          "slots": 68,
           "epguNorm": 900,
-          "epguSlots": 130
+          "epguSlots": 65
         },
         {
           "code": "15",
@@ -4406,9 +4406,9 @@
           "code": "23",
           "name": "хирург",
           "norm": 1105,
-          "slots": 936,
+          "slots": 934,
           "epguNorm": 715,
-          "epguSlots": 780
+          "epguSlots": 779
         },
         {
           "code": "26",
@@ -4431,15 +4431,15 @@
           "code": "11",
           "name": "терапевт",
           "norm": 10430,
-          "slots": 10842,
+          "slots": 10942,
           "epguNorm": 6705,
-          "epguSlots": 8035
+          "epguSlots": 8095
         },
         {
           "code": "13",
           "name": "акушер-гинеколог",
           "norm": 0,
-          "slots": 544,
+          "slots": 532,
           "epguNorm": 0,
           "epguSlots": 0
         },
@@ -4447,9 +4447,9 @@
           "code": "25",
           "name": "ВОП — семейный врач (семейный врач)",
           "norm": 780,
-          "slots": 890,
+          "slots": 897,
           "epguNorm": 480,
-          "epguSlots": 654
+          "epguSlots": 655
         },
         {
           "code": "14",
@@ -4463,9 +4463,9 @@
           "code": "15",
           "name": "офтальмолог",
           "norm": 787.5,
-          "slots": 840,
+          "slots": 895,
           "epguNorm": 472.5,
-          "epguSlots": 684
+          "epguSlots": 731
         },
         {
           "code": "16",
@@ -4560,9 +4560,9 @@
           "code": "13",
           "name": "акушер-гинеколог",
           "norm": 0,
-          "slots": 302,
+          "slots": 300,
           "epguNorm": 0,
-          "epguSlots": 240
+          "epguSlots": 235
         },
         {
           "code": "25",
@@ -4576,25 +4576,25 @@
           "code": "14",
           "name": "оториноларинголог",
           "norm": 825,
-          "slots": 286,
+          "slots": 330,
           "epguNorm": 495,
-          "epguSlots": 227
+          "epguSlots": 265
         },
         {
           "code": "15",
           "name": "офтальмолог",
           "norm": 1050,
-          "slots": 353,
+          "slots": 352,
           "epguNorm": 630,
-          "epguSlots": 302
+          "epguSlots": 301
         },
         {
           "code": "16",
           "name": "педиатр",
           "norm": 9170,
-          "slots": 6044,
+          "slots": 6021,
           "epguNorm": 5895,
-          "epguSlots": 5112
+          "epguSlots": 5090
         },
         {
           "code": "17",
@@ -4656,9 +4656,9 @@
           "code": "26",
           "name": "детский хирург",
           "norm": 0,
-          "slots": 264,
+          "slots": 281,
           "epguNorm": 0,
-          "epguSlots": 226
+          "epguSlots": 238
         }
       ]
     },
@@ -4681,9 +4681,9 @@
           "code": "13",
           "name": "акушер-гинеколог",
           "norm": 230,
-          "slots": 226,
+          "slots": 202,
           "epguNorm": 140,
-          "epguSlots": 160
+          "epguSlots": 140
         },
         {
           "code": "25",
@@ -4697,25 +4697,25 @@
           "code": "14",
           "name": "оториноларинголог",
           "norm": 825,
-          "slots": 522,
+          "slots": 493,
           "epguNorm": 495,
-          "epguSlots": 384
+          "epguSlots": 361
         },
         {
           "code": "15",
           "name": "офтальмолог",
           "norm": 875,
-          "slots": 203,
+          "slots": 243,
           "epguNorm": 525,
-          "epguSlots": 184
+          "epguSlots": 220
         },
         {
           "code": "16",
           "name": "педиатр",
           "norm": 6580,
-          "slots": 8076,
+          "slots": 8062,
           "epguNorm": 4230,
-          "epguSlots": 5243
+          "epguSlots": 5231
         },
         {
           "code": "17",
@@ -4777,9 +4777,9 @@
           "code": "26",
           "name": "детский хирург",
           "norm": 400,
-          "slots": 138,
+          "slots": 167,
           "epguNorm": 270,
-          "epguSlots": 104
+          "epguSlots": 125
         }
       ]
     },
@@ -4858,9 +4858,9 @@
           "code": "19",
           "name": "стоматолог",
           "norm": 3645,
-          "slots": 200,
+          "slots": 195,
           "epguNorm": 2227.5,
-          "epguSlots": 200
+          "epguSlots": 195
         },
         {
           "code": "20",
@@ -4915,49 +4915,49 @@
           "code": "11",
           "name": "терапевт",
           "norm": 1680,
-          "slots": 1025,
+          "slots": 1073,
           "epguNorm": 1080,
-          "epguSlots": 770
+          "epguSlots": 809
         },
         {
           "code": "13",
           "name": "акушер-гинеколог",
           "norm": 345,
-          "slots": 433,
+          "slots": 469,
           "epguNorm": 210,
-          "epguSlots": 352
+          "epguSlots": 382
         },
         {
           "code": "25",
           "name": "ВОП — семейный врач (семейный врач)",
           "norm": 260,
-          "slots": 340,
+          "slots": 367,
           "epguNorm": 160,
-          "epguSlots": 286
+          "epguSlots": 304
         },
         {
           "code": "14",
           "name": "оториноларинголог",
           "norm": 75,
-          "slots": 48,
+          "slots": 54,
           "epguNorm": 45,
-          "epguSlots": 32
+          "epguSlots": 36
         },
         {
           "code": "15",
           "name": "офтальмолог",
           "norm": 87.5,
-          "slots": 306,
+          "slots": 340,
           "epguNorm": 52.5,
-          "epguSlots": 252
+          "epguSlots": 280
         },
         {
           "code": "16",
           "name": "педиатр",
           "norm": 980,
-          "slots": 940,
+          "slots": 937,
           "epguNorm": 630,
-          "epguSlots": 623
+          "epguSlots": 620
         },
         {
           "code": "17",
@@ -4971,9 +4971,9 @@
           "code": "18",
           "name": "психиатр-нарколог",
           "norm": 42.5,
-          "slots": 20,
+          "slots": 40,
           "epguNorm": 27.5,
-          "epguSlots": 20
+          "epguSlots": 40
         },
         {
           "code": "19",
@@ -5011,9 +5011,9 @@
           "code": "23",
           "name": "хирург",
           "norm": 42.5,
-          "slots": 235,
+          "slots": 261,
           "epguNorm": 27.5,
-          "epguSlots": 163
+          "epguSlots": 181
         },
         {
           "code": "26",
@@ -5044,7 +5044,7 @@
           "code": "13",
           "name": "акушер-гинеколог",
           "norm": 230,
-          "slots": 544,
+          "slots": 512,
           "epguNorm": 140,
           "epguSlots": 0
         },
@@ -5060,25 +5060,25 @@
           "code": "14",
           "name": "оториноларинголог",
           "norm": 1200,
-          "slots": 931,
+          "slots": 870,
           "epguNorm": 720,
-          "epguSlots": 462
+          "epguSlots": 415
         },
         {
           "code": "15",
           "name": "офтальмолог",
           "norm": 1137.5,
-          "slots": 822,
+          "slots": 824,
           "epguNorm": 682.5,
-          "epguSlots": 111
+          "epguSlots": 116
         },
         {
           "code": "16",
           "name": "педиатр",
           "norm": 9940,
-          "slots": 18386,
+          "slots": 18346,
           "epguNorm": 6390,
-          "epguSlots": 10216
+          "epguSlots": 10176
         },
         {
           "code": "17",
@@ -5124,7 +5124,7 @@
           "code": "22",
           "name": "фтизиатр",
           "norm": 0,
-          "slots": 193,
+          "slots": 181,
           "epguNorm": 0,
           "epguSlots": 0
         },
@@ -5140,9 +5140,9 @@
           "code": "26",
           "name": "детский хирург",
           "norm": 400,
-          "slots": 838,
+          "slots": 867,
           "epguNorm": 270,
-          "epguSlots": 330
+          "epguSlots": 310
         }
       ]
     },
@@ -5157,41 +5157,41 @@
           "code": "11",
           "name": "терапевт",
           "norm": 8680,
-          "slots": 8546,
+          "slots": 8577,
           "epguNorm": 5580,
-          "epguSlots": 6616
+          "epguSlots": 6630
         },
         {
           "code": "13",
           "name": "акушер-гинеколог",
           "norm": 1610,
-          "slots": 2172,
+          "slots": 2158,
           "epguNorm": 980,
-          "epguSlots": 2064
+          "epguSlots": 2050
         },
         {
           "code": "25",
           "name": "ВОП — семейный врач (семейный врач)",
           "norm": 520,
-          "slots": 486,
+          "slots": 526,
           "epguNorm": 320,
-          "epguSlots": 382
+          "epguSlots": 410
         },
         {
           "code": "14",
           "name": "оториноларинголог",
           "norm": 600,
-          "slots": 697,
+          "slots": 673,
           "epguNorm": 360,
-          "epguSlots": 517
+          "epguSlots": 498
         },
         {
           "code": "15",
           "name": "офтальмолог",
           "norm": 1050,
-          "slots": 717,
+          "slots": 742,
           "epguNorm": 630,
-          "epguSlots": 345
+          "epguSlots": 366
         },
         {
           "code": "16",
@@ -5253,9 +5253,9 @@
           "code": "23",
           "name": "хирург",
           "norm": 510,
-          "slots": 655,
+          "slots": 679,
           "epguNorm": 330,
-          "epguSlots": 490
+          "epguSlots": 509
         },
         {
           "code": "26",
@@ -5278,15 +5278,15 @@
           "code": "11",
           "name": "терапевт",
           "norm": 8750,
-          "slots": 10956,
+          "slots": 10961,
           "epguNorm": 5625,
-          "epguSlots": 8845
+          "epguSlots": 8866
         },
         {
           "code": "13",
           "name": "акушер-гинеколог",
           "norm": 2472.5,
-          "slots": 1851,
+          "slots": 1862,
           "epguNorm": 1505,
           "epguSlots": 1600
         },
@@ -5310,9 +5310,9 @@
           "code": "15",
           "name": "офтальмолог",
           "norm": 1050,
-          "slots": 184,
+          "slots": 196,
           "epguNorm": 630,
-          "epguSlots": 130
+          "epguSlots": 136
         },
         {
           "code": "16",
@@ -5344,7 +5344,7 @@
           "norm": 225,
           "slots": 223,
           "epguNorm": 137.5,
-          "epguSlots": 199
+          "epguSlots": 90
         },
         {
           "code": "20",
@@ -5358,9 +5358,9 @@
           "code": "21",
           "name": "стоматолог-терапевт",
           "norm": 562.5,
-          "slots": 333,
+          "slots": 342,
           "epguNorm": 375,
-          "epguSlots": 327
+          "epguSlots": 324
         },
         {
           "code": "22",
@@ -5374,9 +5374,9 @@
           "code": "23",
           "name": "хирург",
           "norm": 680,
-          "slots": 170,
+          "slots": 173,
           "epguNorm": 440,
-          "epguSlots": 170
+          "epguSlots": 173
         },
         {
           "code": "26",
@@ -5399,41 +5399,41 @@
           "code": "11",
           "name": "терапевт",
           "norm": 9870,
-          "slots": 10680,
+          "slots": 10822,
           "epguNorm": 6345,
-          "epguSlots": 8625
+          "epguSlots": 8705
         },
         {
           "code": "13",
           "name": "акушер-гинеколог",
           "norm": 3105,
-          "slots": 2567,
+          "slots": 2562,
           "epguNorm": 1890,
-          "epguSlots": 1706
+          "epguSlots": 1704
         },
         {
           "code": "25",
           "name": "ВОП — семейный врач (семейный врач)",
           "norm": 1105,
-          "slots": 1071,
+          "slots": 1093,
           "epguNorm": 680,
-          "epguSlots": 915
+          "epguSlots": 931
         },
         {
           "code": "14",
           "name": "оториноларинголог",
           "norm": 1275,
-          "slots": 1249,
+          "slots": 1234,
           "epguNorm": 765,
-          "epguSlots": 881
+          "epguSlots": 869
         },
         {
           "code": "15",
           "name": "офтальмолог",
           "norm": 787.5,
-          "slots": 813,
+          "slots": 812,
           "epguNorm": 472.5,
-          "epguSlots": 603
+          "epguSlots": 601
         },
         {
           "code": "16",
@@ -5495,9 +5495,9 @@
           "code": "23",
           "name": "хирург",
           "norm": 977.5,
-          "slots": 1726,
+          "slots": 1720,
           "epguNorm": 632.5,
-          "epguSlots": 1092
+          "epguSlots": 1113
         },
         {
           "code": "26",
@@ -5520,23 +5520,23 @@
           "code": "11",
           "name": "терапевт",
           "norm": 10640,
-          "slots": 9628,
+          "slots": 9591,
           "epguNorm": 6840,
-          "epguSlots": 9161
+          "epguSlots": 9081
         },
         {
           "code": "13",
           "name": "акушер-гинеколог",
           "norm": 2530,
-          "slots": 3324,
+          "slots": 3306,
           "epguNorm": 1540,
-          "epguSlots": 1908
+          "epguSlots": 1890
         },
         {
           "code": "25",
           "name": "ВОП — семейный врач (семейный врач)",
           "norm": 0,
-          "slots": 100,
+          "slots": 80,
           "epguNorm": 0,
           "epguSlots": 0
         },
@@ -5544,17 +5544,17 @@
           "code": "14",
           "name": "оториноларинголог",
           "norm": 600,
-          "slots": 554,
+          "slots": 526,
           "epguNorm": 360,
-          "epguSlots": 421
+          "epguSlots": 398
         },
         {
           "code": "15",
           "name": "офтальмолог",
           "norm": 700,
-          "slots": 854,
+          "slots": 882,
           "epguNorm": 420,
-          "epguSlots": 685
+          "epguSlots": 700
         },
         {
           "code": "16",
@@ -5584,9 +5584,9 @@
           "code": "19",
           "name": "стоматолог",
           "norm": 0,
-          "slots": 163,
+          "slots": 180,
           "epguNorm": 0,
-          "epguSlots": 100
+          "epguSlots": 110
         },
         {
           "code": "20",
@@ -5616,9 +5616,9 @@
           "code": "23",
           "name": "хирург",
           "norm": 340,
-          "slots": 398,
+          "slots": 400,
           "epguNorm": 220,
-          "epguSlots": 330
+          "epguSlots": 325
         },
         {
           "code": "26",
@@ -5665,17 +5665,17 @@
           "code": "14",
           "name": "оториноларинголог",
           "norm": 750,
-          "slots": 356,
+          "slots": 391,
           "epguNorm": 450,
-          "epguSlots": 301
+          "epguSlots": 330
         },
         {
           "code": "15",
           "name": "офтальмолог",
           "norm": 350,
-          "slots": 122,
+          "slots": 147,
           "epguNorm": 210,
-          "epguSlots": 112
+          "epguSlots": 135
         },
         {
           "code": "16",
@@ -5745,9 +5745,9 @@
           "code": "26",
           "name": "детский хирург",
           "norm": 400,
-          "slots": 388,
+          "slots": 417,
           "epguNorm": 270,
-          "epguSlots": 328
+          "epguSlots": 353
         }
       ]
     },
@@ -5786,25 +5786,25 @@
           "code": "14",
           "name": "оториноларинголог",
           "norm": 450,
-          "slots": 378,
+          "slots": 368,
           "epguNorm": 270,
-          "epguSlots": 343
+          "epguSlots": 333
         },
         {
           "code": "15",
           "name": "офтальмолог",
           "norm": 437.5,
-          "slots": 424,
+          "slots": 400,
           "epguNorm": 262.5,
-          "epguSlots": 377
+          "epguSlots": 354
         },
         {
           "code": "16",
           "name": "педиатр",
           "norm": 7210,
-          "slots": 6110,
+          "slots": 6077,
           "epguNorm": 4635,
-          "epguSlots": 5669
+          "epguSlots": 5584
         },
         {
           "code": "17",
@@ -5866,9 +5866,9 @@
           "code": "26",
           "name": "детский хирург",
           "norm": 160,
-          "slots": 386,
+          "slots": 368,
           "epguNorm": 108,
-          "epguSlots": 378
+          "epguSlots": 360
         }
       ]
     },
@@ -5883,9 +5883,9 @@
           "code": "11",
           "name": "терапевт",
           "norm": 2730,
-          "slots": 1117,
+          "slots": 1130,
           "epguNorm": 1755,
-          "epguSlots": 943
+          "epguSlots": 938
         },
         {
           "code": "13",
@@ -5907,9 +5907,9 @@
           "code": "14",
           "name": "оториноларинголог",
           "norm": 300,
-          "slots": 77,
+          "slots": 92,
           "epguNorm": 180,
-          "epguSlots": 67
+          "epguSlots": 79
         },
         {
           "code": "15",
@@ -5955,17 +5955,17 @@
           "code": "20",
           "name": "стоматолог детский",
           "norm": 0,
-          "slots": 400,
+          "slots": 364,
           "epguNorm": 0,
-          "epguSlots": 273
+          "epguSlots": 247
         },
         {
           "code": "21",
           "name": "стоматолог-терапевт",
           "norm": 112.5,
-          "slots": 550,
+          "slots": 503,
           "epguNorm": 75,
-          "epguSlots": 379
+          "epguSlots": 344
         },
         {
           "code": "22",
@@ -5979,9 +5979,9 @@
           "code": "23",
           "name": "хирург",
           "norm": 187.00000000000003,
-          "slots": 136,
+          "slots": 124,
           "epguNorm": 121.00000000000001,
-          "epguSlots": 117
+          "epguSlots": 107
         },
         {
           "code": "26",
@@ -6004,17 +6004,17 @@
           "code": "11",
           "name": "терапевт",
           "norm": 3500,
-          "slots": 210,
+          "slots": 218,
           "epguNorm": 2250,
-          "epguSlots": 192
+          "epguSlots": 200
         },
         {
           "code": "13",
           "name": "акушер-гинеколог",
           "norm": 575,
-          "slots": 27,
+          "slots": 26,
           "epguNorm": 350,
-          "epguSlots": 27
+          "epguSlots": 26
         },
         {
           "code": "25",
@@ -6100,9 +6100,9 @@
           "code": "23",
           "name": "хирург",
           "norm": 340,
-          "slots": 29,
+          "slots": 28,
           "epguNorm": 220,
-          "epguSlots": 29
+          "epguSlots": 28
         },
         {
           "code": "26",
@@ -6149,25 +6149,25 @@
           "code": "14",
           "name": "оториноларинголог",
           "norm": 1200,
-          "slots": 688,
+          "slots": 712,
           "epguNorm": 720,
-          "epguSlots": 636
+          "epguSlots": 660
         },
         {
           "code": "15",
           "name": "офтальмолог",
           "norm": 1487.5,
-          "slots": 834,
+          "slots": 866,
           "epguNorm": 892.5,
-          "epguSlots": 803
+          "epguSlots": 833
         },
         {
           "code": "16",
           "name": "педиатр",
           "norm": 13440,
-          "slots": 10036,
+          "slots": 10054,
           "epguNorm": 8640,
-          "epguSlots": 8976
+          "epguSlots": 9000
         },
         {
           "code": "17",
@@ -6229,9 +6229,9 @@
           "code": "26",
           "name": "детский хирург",
           "norm": 0,
-          "slots": 693,
+          "slots": 726,
           "epguNorm": 0,
-          "epguSlots": 693
+          "epguSlots": 726
         }
       ]
     },
@@ -6431,25 +6431,25 @@
           "code": "19",
           "name": "стоматолог",
           "norm": 3060,
-          "slots": 45,
+          "slots": 51,
           "epguNorm": 1870,
-          "epguSlots": 45
+          "epguSlots": 51
         },
         {
           "code": "20",
           "name": "стоматолог детский",
           "norm": 270,
-          "slots": 9,
+          "slots": 5,
           "epguNorm": 165,
-          "epguSlots": 9
+          "epguSlots": 5
         },
         {
           "code": "21",
           "name": "стоматолог-терапевт",
           "norm": 1080,
-          "slots": 87,
+          "slots": 85,
           "epguNorm": 720,
-          "epguSlots": 87
+          "epguSlots": 85
         },
         {
           "code": "22",
@@ -6488,25 +6488,25 @@
           "code": "11",
           "name": "терапевт",
           "norm": 7910,
-          "slots": 7447,
+          "slots": 7131,
           "epguNorm": 5085,
-          "epguSlots": 5550
+          "epguSlots": 5381
         },
         {
           "code": "13",
           "name": "акушер-гинеколог",
           "norm": 3220,
-          "slots": 2089,
+          "slots": 2046,
           "epguNorm": 1960,
-          "epguSlots": 1611
+          "epguSlots": 1576
         },
         {
           "code": "25",
           "name": "ВОП — семейный врач (семейный врач)",
           "norm": 1690,
-          "slots": 1362,
+          "slots": 1330,
           "epguNorm": 1040,
-          "epguSlots": 1208
+          "epguSlots": 1176
         },
         {
           "code": "14",
@@ -6520,7 +6520,7 @@
           "code": "15",
           "name": "офтальмолог",
           "norm": 437.5,
-          "slots": 395,
+          "slots": 394,
           "epguNorm": 262.5,
           "epguSlots": 220
         },
@@ -6584,9 +6584,9 @@
           "code": "23",
           "name": "хирург",
           "norm": 765,
-          "slots": 688,
+          "slots": 668,
           "epguNorm": 495,
-          "epguSlots": 540
+          "epguSlots": 524
         },
         {
           "code": "26",
@@ -6673,17 +6673,17 @@
           "code": "19",
           "name": "стоматолог",
           "norm": 3581.9999999999995,
-          "slots": 336,
+          "slots": 373,
           "epguNorm": 2189,
-          "epguSlots": 336
+          "epguSlots": 373
         },
         {
           "code": "20",
           "name": "стоматолог детский",
           "norm": 855,
-          "slots": 97,
+          "slots": 90,
           "epguNorm": 522.5,
-          "epguSlots": 97
+          "epguSlots": 90
         },
         {
           "code": "21",
@@ -6730,9 +6730,9 @@
           "code": "11",
           "name": "терапевт",
           "norm": 1610,
-          "slots": 683,
+          "slots": 702,
           "epguNorm": 1035,
-          "epguSlots": 644
+          "epguSlots": 660
         },
         {
           "code": "13",
@@ -6754,17 +6754,17 @@
           "code": "14",
           "name": "оториноларинголог",
           "norm": 255,
-          "slots": 140,
+          "slots": 128,
           "epguNorm": 153,
-          "epguSlots": 116
+          "epguSlots": 104
         },
         {
           "code": "15",
           "name": "офтальмолог",
           "norm": 612.5,
-          "slots": 210,
+          "slots": 184,
           "epguNorm": 367.5,
-          "epguSlots": 210
+          "epguSlots": 184
         },
         {
           "code": "16",
@@ -6834,9 +6834,9 @@
           "code": "26",
           "name": "детский хирург",
           "norm": 100,
-          "slots": 30,
+          "slots": 39,
           "epguNorm": 67.5,
-          "epguSlots": 18
+          "epguSlots": 27
         }
       ]
     },
@@ -6931,9 +6931,9 @@
           "code": "21",
           "name": "стоматолог-терапевт",
           "norm": 0,
-          "slots": 340,
+          "slots": 329,
           "epguNorm": 0,
-          "epguSlots": 340
+          "epguSlots": 329
         },
         {
           "code": "22",
@@ -6963,3 +6963,4 @@
     }
   ]
 }
+

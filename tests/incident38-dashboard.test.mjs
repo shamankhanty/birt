@@ -7,10 +7,10 @@ const districts = JSON.parse(fs.readFileSync("app/incident38-districts.json", "u
 const expectedCodes = ["11", "13", "25", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23", "26"];
 
 test("Incident 38 keeps city and district exports as separate dated datasets", () => {
-  assert.equal(cities.reportDate, "19.11.2026");
+  assert.equal(cities.reportDate, "20.11.2026");
   assert.equal(cities.frmoDate, "19.11.2026");
   assert.equal(cities.orgCount, 57);
-  assert.equal(districts.reportDate, "19.11.2026");
+  assert.equal(districts.reportDate, "20.11.2026");
   assert.equal(districts.frmoDate, "19.11.2026");
   assert.equal(districts.orgCount, 46);
   assert.equal(cities.reportDate, districts.reportDate);
@@ -40,8 +40,8 @@ test("Incident 38 organization and specialty rows are complete and unique", () =
 
 test("Incident 38 specialty columns match source summary controls", () => {
   const controls = [
-    [cities, { "11": [143696, 128593, 92376, 97854], "16": [112910, 111528, 72585, 81785], "26": [5560, 5021, 3753, 3992] }],
-    [districts, { "11": [94584, 95188, 60804, 61653], "16": [95270, 95544, 61245, 67564], "26": [3038, 2765, 2050.65, 1474] }],
+    [cities, { "11": [143976, 128597, 92556, 97838], "16": [112910, 112537, 72585, 83065], "26": [5560, 5103, 3753, 4022] }],
+    [districts, { "11": [94864, 95687, 60984, 61903], "16": [95270, 95719, 61245, 67677], "26": [3038, 2679, 2050.65, 1508] }],
   ];
   for (const [dataset, expected] of controls) {
     for (const [code, totals] of Object.entries(expected)) {

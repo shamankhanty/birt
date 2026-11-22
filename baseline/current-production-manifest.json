@@ -51,8 +51,8 @@
     "validation/indicator-metadata-equivalence.json": "a32e80294600921408b3c94a850a303145adb413ed6e7e780c5386fd8488c5bf",
     "validation/validation-report.json": "ec2974e6d55058f006ec25466cf5de83805b1884a38d892f2cc65b2c9a78ccee",
     "validation/ai-review.json": "7a64e34efbd3d6440335381d878a5e3642d1a046efee8f663f2d1a54e76d5488",
-    "app/incident38-cities.json": "02b9195eb6b899f3aaaacf31820b77cb46ef22813d369142732ddc03d509f603",
-    "app/incident38-districts.json": "170e5493480501f75b38d36547ced0d36e6400b830e2d0e49d6165f9e9613270",
+    "app/incident38-cities.json": "859fa1d38ba6dbd123f03b3a98a77fefb522ab22e846ea24d377f6c92371ad86",
+    "app/incident38-districts.json": "766009c3aa4bbf69e050de94c2dda3d262facbc14f8b0f64e2a3a461e3f55674",
     "app/smp-statuses.json": "38b4266b54e5483fa9caa73adfc0a5474759f2a3d47df670a354974bc56655fc",
     "app/tvsp-composition-changes.json": "5ef3b5f9dd6e2a7fdee28aa72d53c70f556c65a1adb5bb8f3e46cc365f4c5237",
     "app/tvsp-excluded-objects.json": "b89f904d350e910dc034ba66c797f03a59d6c78f2fd650cc78f658622eeb9fc3"
