@@ -91,6 +91,15 @@ def number(value: Any, label: str) -> float | int | None:
     return int(value) if float(value).is_integer() else float(value)
 
 
+def source_percent(value: Any, label: str) -> float | None:
+    parsed = number(value, label)
+    if parsed is None:
+        return None
+    # This export stores percentage points (e.g. 76.48), including values below 1%.
+    percent = float(parsed)
+    return percent
+
+
 def parse_dates(rows: list[tuple[Any, ...]], path: Path) -> tuple[str, str, str]:
     title = " ".join(str(x) for row in rows[:8] for x in row[:8] if x)
     all_dates = DATE_RE.findall(title)
@@ -156,6 +165,20 @@ def parse_workbook(path: Path, scope: str) -> dict[str, Any]:
             col = groups[spec["code"]]
             vals = [number(row[col + offset], f"{path.name}, row {row_num+1}, {spec['name']}") for offset in (1, 2, 3, 4)]
             detail.append({"code": spec["code"], "name": spec["name"], "norm": vals[0], "slots": vals[1], "epguNorm": vals[2], "epguSlots": vals[3]})
+        total_norm = sum(item["norm"] for item in detail if item["norm"] is not None)
+        total_epgu_slots = sum(item["epguSlots"] for item in detail if item["epguSlots"] is not None)
+        if any(item["norm"] is None or item["epguSlots"] is None for item in detail):
+            fail(f"{path.name}, row {row_num+1}, OID {row[1]}: incomplete percentage components")
+        declared = source_percent(row[4], f"{path.name}, row {row_num+1}, OID {row[1]}")
+        if total_norm == 0:
+            if declared is not None:
+                fail(f"{path.name}, row {row_num+1}, OID {row[1]}: percentage given for zero norm")
+        elif declared is None:
+            fail(f"{path.name}, row {row_num+1}, OID {row[1]}: missing source percentage")
+        else:
+            calculated = total_epgu_slots / total_norm * 100
+            if abs(declared - calculated) > 0.051:
+                fail(f"{path.name}, row {row_num+1}, OID {row[1]}: source percentage {declared:.2f}% differs from {total_epgu_slots}/{total_norm} = {calculated:.2f}%")
         orgs.append({"oid": row[1], "code": str(row[2] or ""), "name": display_name, "fullName": raw_name, "city": place, "specialties": detail})
     # Tie all four regional totals back to the source summary; do not publish a partial parse.
     summary = rows[summary_i]
