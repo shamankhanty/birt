@@ -16,7 +16,10 @@ test("updated collegium facts and periods are preserved",()=>{
   assert.equal(byId.get("1.4").federal,"4 118 · 86%");
   assert.equal(byId.get("1.4").regionalFact,"3 496 из 4 732 · 73,88%");
   assert.equal(byId.get("1.14").federal,"451 · 98%");
-  assert.equal(byId.get("1.14").regionalFact,"99,78%");
+  assert.equal(byId.get("1.14").regionalFact,"100%");
+  assert.equal(byId.get("1.14").regionalPeriod,"январь–ноябрь 2026");
+  assert.equal(byId.get("1.17").regionalFact,"100%");
+  assert.equal(byId.get("1.23").regionalFact,"100%");
   assert.equal(byId.get("1.20").federal,"120 · 93%");
   assert.equal(byId.get("1.20").regionalFact,"97%");
   assert.equal(byId.get("1.24").federal,"97% · федеральный срез январь–октябрь 2026");
