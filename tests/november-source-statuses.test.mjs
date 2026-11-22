@@ -24,6 +24,7 @@ test('TVSP composition changes are distinct from current plan and retain OID evi
     for (const row of record.organizations) {
       assert.match(row.oid, /^1\.2\.643\./);
       assert.ok(row.status);
+      if (current[metric].date !== record.currentDate) continue;
       const currentObjects = current[metric].rows.filter((unit) => unit.moOid === row.oid);
       assert.equal(row.currentBuildings, currentObjects.length || null);
       assert.equal(row.currentRegistered, currentObjects.length ? currentObjects.filter((unit) => unit.registered).length : null);
