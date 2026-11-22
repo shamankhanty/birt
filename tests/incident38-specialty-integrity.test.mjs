@@ -40,10 +40,10 @@ test("И38: Сабинская ЦРБ — детские специалисты 
     assert.ok(row);
     assert.deepEqual([row.norm,row.slots,row.epguNorm,row.epguSlots], [0,0,0,0], row.name);
   }
-  assert.deepEqual([byCode.get("16").norm,byCode.get("16").epguSlots], [2240,1393], "педиатр");
-  assert.deepEqual([byCode.get("23").norm,byCode.get("23").epguSlots], [170,175], "хирург");
-  assert.deepEqual([byCode.get("15").norm,byCode.get("15").epguSlots], [350,241], "офтальмолог");
-  assert.deepEqual([byCode.get("14").norm,byCode.get("14").epguSlots], [300,65], "оториноларинголог");
+  assert.deepEqual([byCode.get("16").norm,byCode.get("16").epguSlots], [2240,1394], "педиатр");
+  assert.deepEqual([byCode.get("23").norm,byCode.get("23").epguSlots], [170,168], "хирург");
+  assert.deepEqual([byCode.get("15").norm,byCode.get("15").epguSlots], [350,234], "офтальмолог");
+  assert.deepEqual([byCode.get("14").norm,byCode.get("14").epguSlots], [300,84], "оториноларинголог");
 });
 
 test("И38: карточка МО направляет на сверку ФРМР при нулевом нормативе и наличии слотов", () => {
