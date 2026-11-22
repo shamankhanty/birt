@@ -7,6 +7,7 @@ import historyRaw from "./incident38-history.json";
 import frmrRaw from "./frmr-all-specialties.json";
 import frmoLinkageRaw from "./frmo-linkage-data.json";
 import { getFrmrSpecialtyIssues, getFrmoOrganizationFindings } from "../lib/incident38-frmr-diagnostic.js";
+import { balancedSpecialties } from "../lib/incident38-balanced-specialties.js";
 import reorganizationRaw from "../config/mo-reorganizations.json";
 import styles from "./incident38-dashboard.module.css";
 
@@ -108,17 +109,18 @@ export default function Incident38Dashboard({ onOpenFrmrMo }: { onOpenFrmrMo: (o
   const [expandedMatrixOid, setExpandedMatrixOid] = useState("");
   const [organizationSearch, setOrganizationSearch] = useState("");
   const [matrixSearch, setMatrixSearch] = useState("");
-  const [matrixSort, setMatrixSort] = useState<{ key: string; direction: "asc" | "desc" }>({ key: "coverage", direction: "asc" });
+  const [matrixSort, setMatrixSort] = useState<{ key: string; direction: "asc" | "desc" }>({ key: "balanced", direction: "asc" });
   const [selectedSpecialty, setSelectedSpecialty] = useState("");
 
   const visibleOrganizations = useMemo(() => ORGANIZATIONS
     .filter((org) => ownership === "private" ? isPrivateOrganization(org) : !isPrivateOrganization(org)), [ownership]);
   const organizationRows = useMemo(() => visibleOrganizations
-    .map((org) => ({ org, ...orgMetrics(org) }))
+    .map((org) => ({ org, ...orgMetrics(org), balanced: balancedSpecialties(org.specialties) }))
     .sort((a, b) => (a.coverage ?? Number.POSITIVE_INFINITY) - (b.coverage ?? Number.POSITIVE_INFINITY)), [visibleOrganizations]);
   const selectedOrg = organizationSearch.trim()
     ? null
     : visibleOrganizations.find((org) => org.oid === selectedOid) ?? visibleOrganizations[0] ?? null;
+  const selectedBalanced = selectedOrg ? balancedSpecialties(selectedOrg.specialties) : null;
   const regional = useMemo(() => {
     const totals = metrics(visibleOrganizations.flatMap((org) => org.specialties));
     return { ...totals, deficit: sumKnown(visibleOrganizations.map((org) => orgMetrics(org).deficit)) };
@@ -183,6 +185,7 @@ export default function Incident38Dashboard({ onOpenFrmrMo }: { onOpenFrmrMo: (o
         if (matrixSort.key === "name") return matrixOrgName(row.org).toLocaleLowerCase("ru");
         if (matrixSort.key === "deficit") return row.deficit;
         if (matrixSort.key === "coverage") return row.coverage;
+        if (matrixSort.key === "balanced") return row.balanced.attainment;
         if (matrixSort.key === "attainment") return row.coverage === null ? null : row.coverage / PLAN_PERCENT * 100;
         if (matrixSort.key === "zeroSpecialties") return row.org.specialties.filter((item) => item.norm !== null && item.norm > 0 && item.epguSlots === 0).length;
         const code = matrixSort.key.startsWith("specialty:") ? matrixSort.key.slice("specialty:".length) : "";
@@ -323,7 +326,7 @@ export default function Incident38Dashboard({ onOpenFrmrMo }: { onOpenFrmrMo: (o
         </section>
       </div>
       <section className={styles.card}>
-        <div className={styles.sectionHead}><div><h2>Рейтинг медицинских организаций</h2><p>План — 60%, цель — 70% общего норматива. «Выполнение плана, %»: 100% означает, что МО достигла этого уровня. «Спец. с 0 слотами» — специальности с положительным нормативом, но без слотов ЕПГУ.</p></div>
+        <div className={styles.sectionHead}><div><h2>Рейтинг медицинских организаций</h2><p>По умолчанию — от худшего по <b>сбалансированному выполнению цели 70%</b>: каждый профиль учитывается не выше 70% своего норматива, и избыток слотов не закрывает дефицит другого профиля. Под ним в том же столбце — <b>официальное выполнение плана И‑38.9 (60%)</b>. «Спец. с 0 слотами» — специальности с положительным нормативом, но без слотов ЕПГУ.</p></div>
           <div className={styles.matrixControls}>
             <OwnershipSwitch value={ownership} onChange={changeOwnership} />
             <label className={styles.matrixSearch}>Поиск по МО<div className={styles.suggestionBox}><input value={matrixSearch} onChange={(event) => setMatrixSearch(event.target.value)} placeholder="Начните вводить название" autoComplete="off" />
@@ -334,7 +337,7 @@ export default function Incident38Dashboard({ onOpenFrmrMo }: { onOpenFrmrMo: (o
         <div className={styles.matrixScroll}><table className={styles.heat}><colgroup><col className={styles.orgCol} /><col className={styles.shortfallCol} /><col className={styles.attainmentCol} />{SPECIALTIES.map((specialty) => <col className={styles.specialtyCol} key={specialty.code} />)}<col className={styles.totalCol} /></colgroup><thead><tr>
           <th className={styles.stickyName}><button type="button" className={styles.sortButton} onClick={() => toggleMatrixSort("name")}>Медицинская организация{sortMark("name")}</button></th>
           <th className={styles.shortfallHead}><button type="button" className={styles.sortButton} onClick={() => toggleMatrixSort("deficit")}>Не хватает<br />до плана{sortMark("deficit")}</button></th>
-          <th className={styles.attainmentHead}><button type="button" className={styles.sortButton} onClick={() => toggleMatrixSort("attainment")} title="100% означает, что МО достигла плана 60%">Выполнение<br />плана, %{sortMark("attainment")}</button></th>
+          <th className={styles.attainmentHead}><button type="button" className={styles.sortButton} onClick={() => toggleMatrixSort("balanced")} title="Управленческий показатель: 100% означает достижение 70% норматива каждой применимой специальности, без взаимной компенсации">Баланс 70%, %{sortMark("balanced")}</button><button type="button" className={styles.secondarySort} onClick={() => toggleMatrixSort("attainment")} title="Официальное выполнение плана И‑38.9: 100% означает достижение плана 60% по МО в целом">План 60%, %{sortMark("attainment")}</button></th>
           {SPECIALTIES.map((specialty) => <th className={styles.rot} key={specialty.code} title={specialty.name}><button type="button" className={styles.specialtySort} onClick={() => toggleMatrixSort(`specialty:${specialty.code}`)}>{specialty.name.startsWith("ВОП") ? "ВОП" : specialty.name}{sortMark(`specialty:${specialty.code}`)}</button></th>)}
           <th className={styles.totalHead}><button type="button" className={styles.sortButton} onClick={() => toggleMatrixSort("zeroSpecialties")} title="Количество специальностей с положительным нормативом и нулём слотов ЕПГУ">Спец. с 0<br />слотами{sortMark("zeroSpecialties")}</button></th>
         </tr></thead><tbody>
@@ -346,7 +349,7 @@ export default function Incident38Dashboard({ onOpenFrmrMo }: { onOpenFrmrMo: (o
               <button type="button" className={styles.mobileExpand} aria-expanded={expandedMatrixOid === row.org.oid} onClick={(event) => { event.stopPropagation(); setExpandedMatrixOid(expandedMatrixOid === row.org.oid ? "" : row.org.oid); }}>Специальности {expandedMatrixOid === row.org.oid ? "▲" : "▼"}</button>
             </th>
             <td className={styles.shortfallCell} title={`Минимум слотов до плана 60%: ${format(row.deficit)}`} onClick={() => openOrg(row.org.oid)}>{format(row.deficit)}</td>
-            <td className={styles.attainmentCell} title={`При фактическом показателе ${percent(row.coverage)} план 60% составляет 100% выполнения`}>{row.coverage === null ? "—" : percent(row.coverage / PLAN_PERCENT * 100)}</td>
+            <td className={styles.attainmentCell} title={`Баланс 70% — ${percent(row.balanced.attainment)}: каждый профиль ограничен уровнем 70% его норматива, избыток не переносится. Официальное выполнение плана 60% — ${row.coverage === null ? "—" : percent(row.coverage / PLAN_PERCENT * 100)}`}><strong className={`${styles.balancedResult} ${row.balanced.attainment === null ? styles.neutral : row.balanced.attainment >= 99.999999 ? styles.good : styles.belowNorm}`}>{percent(row.balanced.attainment)}</strong><small className={styles.officialResult}>{row.coverage === null ? "—" : percent(row.coverage / PLAN_PERCENT * 100)}</small></td>
             {SPECIALTIES.map((specialty) => {
               const cell = row.org.specialties.find((item) => item.code === specialty.code);
               const value = cell ? ratio(cell.epguSlots, cell.norm) : null;
@@ -366,7 +369,7 @@ export default function Incident38Dashboard({ onOpenFrmrMo }: { onOpenFrmrMo: (o
           </div></td></tr>}</Fragment>;
           })}
         </tbody></table></div>
-        <p className={styles.matrixMethod}>Расчёт: процент слотов ЕПГУ от общего норматива ÷ 60% × 100%. Например, 60% общего норматива — это 100% выполнения плана. «Спец. с 0 слотами» учитывает только специальности с заданным положительным нормативом. Если норматив равен 0, но слоты ЕПГУ есть, проверьте должность и привязку СП в разделе 06 «ФРМР ↔ ГИС»; это отдельный диагностический случай.</p><p className={styles.matrixMobileHint}>Нажмите «Специальности» в строке МО, чтобы увидеть разбивку по 14 специальностям.</p>
+        <p className={styles.matrixMethod}><b>Сбалансированный рейтинг (управленческий):</b> сумма min(слоты ЕПГУ, 70% норматива) по каждой специальности с положительным нормативом ÷ сумму 70% этих нормативов × 100%. Среднее арифметическое процентов специальностей не используется. Перевыполнение одной специальности не компенсирует дефицит другой. Специальности без норматива исключены, пропуски данных не считаются нулями. <b>Официальный показатель не изменён:</b> выполнение плана = И‑38.9 ÷ 60% × 100%. Например, 60% общего норматива — это 100% выполнения плана. «Спец. с 0 слотами» учитывает только специальности с заданным положительным нормативом. Если норматив равен 0, но слоты ЕПГУ есть, проверьте должность и привязку СП в разделе 06 «ФРМР ↔ ГИС»; это отдельный диагностический случай.</p><p className={styles.matrixMobileHint}>Нажмите «Специальности» в строке МО, чтобы увидеть разбивку по 14 специальностям.</p>
         {matrixRows.length === 0 && <p className={styles.empty}>МО по такому названию не найдены.</p>}
       </section>
     </main>}
@@ -394,7 +397,9 @@ export default function Incident38Dashboard({ onOpenFrmrMo }: { onOpenFrmrMo: (o
           <article><strong className={planTone(orgMetrics(selectedOrg).coverage)}>{percent(orgMetrics(selectedOrg).coverage)}</strong><span>И‑38.9 · план 60%, цель 70%</span><small>{format(orgMetrics(selectedOrg).epguSlots)} слотов ЕПГУ из {format(orgMetrics(selectedOrg).norm)} по общему нормативу</small></article>
           <article><strong>{format(orgMetrics(selectedOrg).targetSlots)}</strong><span>Слотов нужно для плана</span><small>60% общего норматива, округление вверх</small></article>
           <article><strong>{format(orgMetrics(selectedOrg).deficit)}</strong><span>Не хватает до плана</span><small>минимальное число дополнительных слотов ЕПГУ</small></article>
+          <article><strong className={selectedBalanced?.attainment !== null && selectedBalanced?.attainment !== undefined && selectedBalanced.attainment >= 99.999999 ? styles.good : styles.belowNorm}>{percent(selectedBalanced?.attainment ?? null)}</strong><span>Сбалансированное выполнение цели 70%</span><small>{selectedBalanced?.attainment === null ? "Нет полных данных или применимых специальностей" : `${selectedBalanced?.reachedCount ?? 0} из ${selectedBalanced?.eligibleCount ?? 0} специальностей достигли 70%`}</small></article>
         </div>
+        {selectedBalanced?.attainment !== null && selectedBalanced?.attainment !== undefined && <p className={styles.balancedNote}><b>Контроль баланса:</b> превышение по отдельным специальностям ({format(selectedBalanced.excessSlots)} слотов сверх 70% их норматива) не используется для компенсации дефицита других профилей. Этот показатель — внутренний, официальный И‑38.9 и план 60% не изменены.</p>}
         {zeroSlotSpecialties.length > 0 && <div className={styles.frmrDiagnostic} role="note">
           <strong>Проверка связи ГИС–ФРМР/ФРМО · {zeroSlotSpecialties.length} специальностей с нулевыми слотами</strong>
           <p>В выгрузке <b>расхождений ФРМР от {frmrRaw.summary.sourceCut}</b> по соответствующим должностям есть проблемные записи у {frmrZeroSlotFlagged} из {zeroSlotSpecialties.length} специальностей. Конкретные профили отмечены ниже.</p>
