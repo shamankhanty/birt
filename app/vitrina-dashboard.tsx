@@ -4,6 +4,8 @@ import { useMemo, useState } from "react";
 import snapshots from "./vitrina-snapshots.json";
 import { sortVitrinaRows, type VitrinaSortColumn, type VitrinaSortDirection } from "../lib/vitrina-sort.js";
 import "./vitrina-dashboard.css";
+import VitrinaQualityDashboard, { type VitrinaQualityTab } from "./vitrina-quality-dashboard";
+
 
 type Row = { parent: string; name: string; address: string };
 const oldRows = snapshots.previous.rows as Row[];
@@ -39,7 +41,7 @@ const isTechnical = (name: string) => /ТЕСТОВОЕ ЛПУ|НЕИЗВЕСТ�
 const format = (number: number) => new Intl.NumberFormat("ru-RU").format(number);
 const specialties = ["врач-терапевт участковый", "врач общей практики (семейный врач)", "врач-хирург", "врач-офтальмолог", "врач-оториноларинголог", "врач-акушер-гинеколог", "врач-психиатр-нарколог", "врач-фтизиатр", "врач-стоматолог", "врач-стоматолог-терапевт", "врач-педиатр участковый", "врач-детский хирург", "врач-стоматолог детский", "врач-психиатр детский (подростковый)"];
 
-export default function VitrinaDashboard() {
+function VitrinaPresence() {
   const [includePrivate, setIncludePrivate] = useState(false);
   const [query, setQuery] = useState("");
   const [sort, setSort] = useState<{ column: VitrinaSortColumn; direction: VitrinaSortDirection }>({ column: "delta", direction: "asc" });
@@ -84,5 +86,44 @@ export default function VitrinaDashboard() {
     </tr></thead><tbody>{filtered.map((row) => <tr key={row.id} onClick={() => setSelected(row.id)} className={selected === row.id ? "selected" : ""}><td>{row.name}</td><td>{row.before}</td><td>{row.now}</td><td className={row.delta > 0 ? "positive" : row.delta < 0 ? "negative" : ""}>{row.delta > 0 ? "+" : ""}{row.delta}</td></tr>)}</tbody></table></div>
     {chosen && <section className="vitrinaDetail"><div><h2>{chosen.name}</h2><button onClick={() => setSelected(null)}>Закрыть</button></div><p>Подразделений: {chosen.before} → {chosen.now}. Состав нового среза:</p><ul>{chosen.rows.map((row, index) => <li key={`${row.name}-${row.address}-${index}`}><strong>{row.name}</strong><span>{row.address || "Адрес не указан"}</span></li>)}</ul></section>}
     <small className="vitrinaSource">Источник: «МО_ у которых есть расписание (1).xlsx» и «МО с расписаниями на 23.11.xlsx». Единица учёта — строка подразделения.</small>
+  </section>;
+}
+
+
+/**
+ * Quality is an additional workspace. Keep original presence/delta table untouched:
+ * availability rows are not evidence of available booking slots or quality fixes.
+ */
+export default function VitrinaDashboard() {
+  const [tab, setTab] = useState<VitrinaQualityTab | "Наличие расписаний">("Контроль ошибок");
+  const [includePrivate, setIncludePrivate] = useState(false);
+  const qualityScope = useMemo(
+    () => all.filter((row) => !isTechnical(row.name) && (includePrivate || isState(row.name))),
+    [includePrivate],
+  );
+  const tabs = ["Контроль ошибок", "Динамика", "Инструкция МО", "Исключения", "Наличие расписаний"] as const;
+
+  return <section className="vitrinaQualityShell">
+    <header className="vitrinaQHeader">
+      <div>
+        <h1>Витрина 2.0 — Запись к врачу</h1>
+        <p>Наличие расписаний и качество данных медицинских организаций Республики Татарстан</p>
+      </div>
+      <div className="vitrinaQHeaderRight">
+        <time>Данные на {snapshots.current.date}</time>
+        {tab !== "Наличие расписаний" && <label>
+          <input type="checkbox" checked={includePrivate} onChange={(event) => setIncludePrivate(event.target.checked)}/>
+          Все МО, включая частные
+        </label>}
+      </div>
+    </header>
+    <nav className="vitrinaQTabs" role="tablist" aria-label="Разделы Витрины">
+      {tabs.map((name) => <button key={name} type="button" role="tab"
+        aria-selected={tab === name} onClick={() => setTab(name)}>{name}</button>)}
+    </nav>
+    {tab === "Наличие расписаний"
+      ? <VitrinaPresence />
+      : <VitrinaQualityDashboard organizations={qualityScope} view={tab}
+          currentDate={snapshots.current.date} previousDate={snapshots.previous.date}/>}
   </section>;
 }
