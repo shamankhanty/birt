@@ -13,6 +13,7 @@ from adapters import (SPECIALTIES, adapt_egpu, adapt_max, adapt_short_input,
 from adapters import parse_max, source_rows
 from source_catalog import scan
 from replay_gate import run as compare_trees
+from egpu_movement import refresh_attachment_volume_snapshots
 
 ROOT = Path(__file__).resolve().parents[2]
 METRICS = {
@@ -367,6 +368,8 @@ def stage(input_dir, output_dir, replay_manifest=None):
                 compact_error_payload(raw)
                 preserve_same_slice_dynamics(base,raw,metric)
                 project_metric(base,raw,metric,item)
+                if family == 'egpu_attachment':
+                    refresh_attachment_volume_snapshots(base, raw, metric)
                 retain_operational_cut(base,raw,metric)
                 validation=validate(raw,tx/'validation')
                 if validation['overallStatus']=='FAIL': raise ValueError('; '.join(gate_errors(validation)))
@@ -375,6 +378,8 @@ def stage(input_dir, output_dir, replay_manifest=None):
                 invoke(replay,family,metric,item,partner)
                 compact_error_payload(replay); preserve_same_slice_dynamics(base,replay,metric)
                 project_metric(base,replay,metric,item)
+                if family == 'egpu_attachment':
+                    refresh_attachment_volume_snapshots(base, replay, metric)
                 retain_operational_cut(base,replay,metric)
                 accepted_hashes=hashes(base)
                 changed=[name for name,value in hashes(raw).items() if accepted_hashes.get(name)!=value]

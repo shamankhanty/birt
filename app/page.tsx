@@ -75,6 +75,8 @@ import { createDoctorsAllCumulativeDatasets } from "../lib/physician-doctors-all
 import { createCurrentOperationalRuntime } from "../lib/current-operational-runtime.js";
 import { selectOperationalComparison } from "../lib/operational-comparison.js";
 import { estimateAttachmentInflow } from "../lib/egpu-attachment-inflow.js";
+import { buildAttachmentMoInflow } from "../lib/egpu-attachment-mo-inflow.js";
+import attachmentVolumeSnapshotsRaw from "./egpu-attachment-volume-snapshots.json";
 import { createReleaseRuntimeMetadata, RELEASE_VERSION } from "../lib/release-runtime-metadata.js";
 import type { IndicatorRegistryDocument } from "../lib/indicator-registry.js";
 import {
@@ -680,6 +682,7 @@ type MonthlyMoDataset = {
 type MoSortKey =
   | "name"
   | "quantity"
+  | "inflow"
   | "fact"
   | "deviation"
   | "trend"
@@ -4887,6 +4890,10 @@ export default function Home() {
     matrixMetric === "egpu" || matrixMetric === "egpu2days"
       ? estimateAttachmentInflow(selectedDataset)
       : null;
+  const isAttachmentMetric = matrixMetric === "egpu" || matrixMetric === "egpu2days";
+  const attachmentMoInflow = isAttachmentMetric
+    ? buildAttachmentMoInflow(selectedDataset, attachmentVolumeSnapshotsRaw)
+    : null;
   const preventiveTransition = matrixMetric === "semd228";
   const selectedGuidance = guidance[matrixMetric];
   const selectedMethodology = methodologies.find(
@@ -5022,6 +5029,10 @@ export default function Home() {
         return displayReportMoName(matrixMetric, row).toLocaleLowerCase("ru");
       if (moSortKey === "quantity")
         return row.count ?? detail?.registered ?? -1;
+      if (moSortKey === "inflow")
+        return isAttachmentMetric && row.oid
+          ? attachmentMoInflow?.byOid[row.oid]?.delta ?? -Infinity
+          : row.fact;
       if (moSortKey === "previous") return row.previous ?? -Infinity;
       if (moSortKey === "trend") return row.trend ?? -Infinity;
       if (moSortKey === "status")
@@ -5056,6 +5067,8 @@ export default function Home() {
     moStatus,
     moSortKey,
     moSortDirection,
+    attachmentMoInflow,
+    isAttachmentMetric,
     isCountMetric,
     isPresenceMetric,
     matrixMetric,
@@ -9891,7 +9904,7 @@ export default function Home() {
                       )}
                       <div className="tableWrap">
                         <table
-                          className={`matrix indicatorTable ${isCountMetric || isPresenceMetric ? "countTable" : ""}`}
+                          className={`matrix indicatorTable ${isCountMetric || isPresenceMetric ? "countTable" : ""} ${isAttachmentMetric ? "attachmentInflowTable" : ""}`}
                         >
                           <thead>
                             <tr>
@@ -10052,6 +10065,21 @@ export default function Home() {
                                       <small>результат / объём</small>
                                     </button>
                                   </th>
+                                  {isAttachmentMetric && (
+                                    <th className="attachmentInflowColumn">
+                                      <button
+                                        className={moSortKey === "inflow" ? "sorted" : ""}
+                                        onClick={() => setMoSort("inflow")}
+                                        title="Чистый прирост поданных заявлений по накопительным срезам, не число уникальных заявителей"
+                                      >
+                                        Новые заявления
+                                        <i>{sortMark(moSortKey === "inflow", moSortDirection)}</i>
+                                        <small>{attachmentMoInflow
+                                          ? `${attachmentMoInflow.previousDate} → ${attachmentMoInflow.currentDate}`
+                                          : "нет сопоставимого среза"}</small>
+                                      </button>
+                                    </th>
+                                  )}
                                   <th>
                                     <button
                                       className={
@@ -10147,6 +10175,9 @@ export default function Home() {
                                       ? "warn"
                                       : "bad";
                               const detail = getMoDetail(matrixMetric, o);
+                              const moInflow = isAttachmentMetric && o.oid
+                                ? attachmentMoInflow?.byOid[o.oid] ?? null
+                                : null;
                               const trendGood =
                                 o.trend !== null &&
                                 (lowerIsBetter ? o.trend < 0 : o.trend > 0);
@@ -10250,6 +10281,7 @@ export default function Home() {
                                       <td>
                                         <b className="countValue">—</b>
                                       </td>
+                                      {isAttachmentMetric && <td>—</td>}
                                       <td>
                                         <b>Нет данных</b>
                                         <small>
@@ -10273,6 +10305,19 @@ export default function Home() {
                                             : "—"}
                                         </b>
                                       </td>
+                                      {isAttachmentMetric && (
+                                        <td className="attachmentInflowCell">
+                                          {moInflow
+                                            ? <>
+                                                <strong className={moInflow.delta < 0 ? "attachmentInflowCorrection" : moInflow.delta > 0 ? "attachmentInflowPositive" : ""}>
+                                                  {moInflow.delta > 0 ? "+" : ""}{format(moInflow.delta, 0)}
+                                                </strong>
+                                                <small>{format(moInflow.previous, 0)} → {format(moInflow.current, 0)}</small>
+                                                {moInflow.delta < 0 && <small>корректировка</small>}
+                                              </>
+                                            : <small>Нет сопоставимых данных</small>}
+                                        </td>
+                                      )}
                                       <td>
                                         <b>{format(o.fact)}%</b>
                                         <small>
@@ -10313,6 +10358,14 @@ export default function Home() {
                           </tbody>
                         </table>
                       </div>
+                      {isAttachmentMetric && (
+                        <p className="prototypeNote" data-testid="attachment-mo-inflow-note">
+                          <b>Новые заявления по МО — ориентир:</b> разница накопительных знаменателей на {attachmentMoInflow?.previousDate ?? "предыдущую дату"} и {attachmentMoInflow?.currentDate ?? "текущую дату"}.
+                          {attachmentMoInflow ? ` Сопоставлено ${attachmentMoInflow.organizations} МО, итог РТ +${format(attachmentMoInflow.count, 0)} заявлений.` : " Для текущего периода нет подтверждённой пары срезов по всем МО."}
+                          {" "}Отрицательное изменение означает корректировку в источнике, а не отрицательное количество новых заявлений.
+                          Один поток прикреплений используется в двух показателях и не суммируется.
+                        </p>
+                      )}
                       <p className="prototypeNote">
                         «Объём» — знаменатель показателя в актуальном исходнике;
                         «Результат» — количество событий, переданных или
