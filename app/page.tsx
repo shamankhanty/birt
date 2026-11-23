@@ -5030,7 +5030,9 @@ export default function Home() {
       if (moSortKey === "quantity")
         return row.count ?? detail?.registered ?? -1;
       if (moSortKey === "inflow")
-        return row.oid ? attachmentMoInflow?.byOid[row.oid]?.delta ?? -Infinity : -Infinity;
+        return isAttachmentMetric && row.oid
+          ? attachmentMoInflow?.byOid[row.oid]?.delta ?? -Infinity
+          : row.fact;
       if (moSortKey === "previous") return row.previous ?? -Infinity;
       if (moSortKey === "trend") return row.trend ?? -Infinity;
       if (moSortKey === "status")
@@ -5066,6 +5068,7 @@ export default function Home() {
     moSortKey,
     moSortDirection,
     attachmentMoInflow,
+    isAttachmentMetric,
     isCountMetric,
     isPresenceMetric,
     matrixMetric,
