@@ -33,7 +33,7 @@ const all = [...names].map((id) => ({
   now: current.get(id)?.rows.length ?? 0,
   rows: current.get(id)?.rows ?? [],
 })).map((row) => ({ ...row, delta: row.now - row.before }));
-const isPrivate = (name: string) => /^(?:АКЦИОНЕРНОЕ|ОБЩЕСТВО|ООО|АО|ИП|ИНДИВИДУАЛЬНЫЙ|ЧАСТНОЕ)/i.test(name);
+const isState = (name: string) => /^(?:ГОСУДАРСТВЕННОЕ|ГАУЗ|ГБУЗ|ФЕДЕРАЛЬНОЕ|ФИЛИАЛ ГОСУДАРСТВЕННОГО)/i.test(name);
 const format = (number: number) => new Intl.NumberFormat("ru-RU").format(number);
 const specialties = ["врач-терапевт участковый", "врач общей практики (семейный врач)", "врач-хирург", "врач-офтальмолог", "врач-оториноларинголог", "врач-акушер-гинеколог", "врач-психиатр-нарколог", "врач-фтизиатр", "врач-стоматолог", "врач-стоматолог-терапевт", "врач-педиатр участковый", "врач-детский хирург", "врач-стоматолог детский", "врач-психиатр детский (подростковый)"];
 
@@ -42,7 +42,7 @@ export default function VitrinaDashboard() {
   const [query, setQuery] = useState("");
   const [sort, setSort] = useState<"delta" | "now" | "name">("delta");
   const [selected, setSelected] = useState<string | null>(null);
-  const scope = useMemo(() => all.filter((row) => includePrivate || !isPrivate(row.name)), [includePrivate]);
+  const scope = useMemo(() => all.filter((row) => includePrivate || isState(row.name)), [includePrivate]);
   const filtered = useMemo(() => scope.filter((row) => key(row.name).includes(key(query))).sort((a, b) => sort === "name" ? a.name.localeCompare(b.name, "ru") : sort === "now" ? b.now - a.now : a.delta - b.delta || b.now - a.now), [scope, query, sort]);
   const before = scope.reduce((sum, row) => sum + row.before, 0);
   const now = scope.reduce((sum, row) => sum + row.now, 0);
@@ -50,7 +50,7 @@ export default function VitrinaDashboard() {
   const falling = scope.filter((row) => row.delta < 0).length;
   const chosen = scope.find((row) => row.id === selected);
   return <section className="vitrina">
-    <div className="vitrinaHead"><div><h1>Витрина</h1><p>МО и подразделения с расписанием · срез на {snapshots.current.date}</p></div><label><input type="checkbox" checked={includePrivate} onChange={(event) => setIncludePrivate(event.target.checked)} /> Включить частные МО</label></div>
+    <div className="vitrinaHead"><div><h1>Витрина</h1><p>МО и подразделения с расписанием · срез на {snapshots.current.date}</p></div><label><input type="checkbox" checked={includePrivate} onChange={(event) => setIncludePrivate(event.target.checked)} /> Показать все организации</label></div>
     <div className="vitrinaCards">
       <article><span>МО с расписанием</span><strong>{format(scope.filter((r) => r.now > 0).length)}</strong><small>предыдущий срез: {format(scope.filter((r) => r.before > 0).length)}</small></article>
       <article><span>Подразделения</span><strong>{format(now)}</strong><small>{format(before)} → {format(now)} · {now - before >= 0 ? "+" : ""}{format(now - before)}</small></article>
