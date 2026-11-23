@@ -6,3 +6,5 @@
 .vitrinaSortButton:focus-visible{outline:2px solid #08754e;outline-offset:4px;border-radius:2px}
 .vitrinaSortHint{font-size:12px;color:#647870;white-space:nowrap}
 .vitrina th:not(:first-child) .vitrinaSortButton{justify-content:center}
+
+@media(max-width:900px){.vitrinaSortHint{white-space:normal}}
