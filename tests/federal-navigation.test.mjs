@@ -18,8 +18,8 @@ test('every noncomponent federal card resolves to an existing indicator or its o
   }
   assert.equal(count, 69);
   assert.equal(catalog.length, 43);
-  assert.equal(catalog.filter(x => x.row.regionalFact).length, 28);
-  assert.equal(catalog.filter(x => !x.row.regionalFact).length, 15);
+  assert.equal(catalog.filter(x => x.row.regionalFact).length, 29);
+  assert.equal(catalog.filter(x => !x.row.regionalFact).length, 14);
 });
 
 test('source numbering collisions stay separate and invalid regional ids fall back safely', () => {
@@ -32,8 +32,8 @@ test('source numbering collisions stay separate and invalid regional ids fall ba
 
 test('detail catalog preserves reported facts without creating organization rows', () => {
   const detail = buildFederalDetailCatalog(control, ids).find(x => x.key === 'federal:agreement:34');
-  assert.equal(detail.row.regionalFact, '98%');
-  assert.equal(detail.row.regionalPeriod, 'январь–сентябрь 2026');
+  assert.equal(detail.row.regionalFact, '100%');
+  assert.equal(detail.row.regionalPeriod, 'январь–октябрь 2026');
   assert.equal('rows' in detail, false);
   assert.equal('rows' in detail.row, false);
 });
