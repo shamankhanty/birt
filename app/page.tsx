@@ -74,6 +74,7 @@ import { createIndicatorRegistryRuntime } from "../lib/indicator-registry.js";
 import { createDoctorsAllCumulativeDatasets } from "../lib/physician-doctors-all-cumulative.js";
 import { createCurrentOperationalRuntime } from "../lib/current-operational-runtime.js";
 import { selectOperationalComparison } from "../lib/operational-comparison.js";
+import { estimateAttachmentInflow } from "../lib/egpu-attachment-inflow.js";
 import { createReleaseRuntimeMetadata, RELEASE_VERSION } from "../lib/release-runtime-metadata.js";
 import type { IndicatorRegistryDocument } from "../lib/indicator-registry.js";
 import {
@@ -4879,6 +4880,13 @@ export default function Home() {
         (operationalHistoryRaw as Record<string, MoDataset[]>)[matrixMetric] ?? [],
       ) as MoDataset
     : moData[matrixMetric];
+  // Two attachment indicators share the same pool of incoming EPGU applications.
+  // This is only the increment in submitted cumulative requests, never a sum
+  // of the two indicator numerators.
+  const attachmentInflow =
+    matrixMetric === "egpu" || matrixMetric === "egpu2days"
+      ? estimateAttachmentInflow(selectedDataset)
+      : null;
   const preventiveTransition = matrixMetric === "semd228";
   const selectedGuidance = guidance[matrixMetric];
   const selectedMethodology = methodologies.find(
@@ -9183,6 +9191,22 @@ export default function Home() {
                   </span>
                 </div>
               </div>
+              {(matrixMetric === "egpu" || matrixMetric === "egpu2days") && (
+                <section className="attachmentInflowStrip" data-testid="attachment-inflow" aria-label="Ориентир новых заявлений на прикрепление">
+                  <div className="attachmentInflowValue">
+                    <small>Новые заявления · ориентир</small>
+                    <strong>{attachmentInflow ? `+${format(attachmentInflow.count, 0)}` : "Нет сопоставимых данных"}</strong>
+                  </div>
+                  <div className="attachmentInflowContext">
+                    <b>{attachmentInflow
+                      ? `${attachmentInflow.previousDate} → ${attachmentInflow.currentDate}`
+                      : "Нужны два сопоставимых накопительных среза"}</b>
+                    <span>{attachmentInflow
+                      ? `Прирост поданных: ${format(attachmentInflow.currentTotal, 0)} − ${format(attachmentInflow.previousTotal, 0)}. Не число уникальных новых обращений: возможны корректировки.`
+                      : "Отсутствие сопоставимого среза не означает нулевое количество заявлений."}</span>
+                  </div>
+                </section>
+              )}
               {isMaxMetric && (
                 <div className="indicatorPeriodBar" data-testid="max-indicator-period-switch">
                   <div className="maxPeriodSwitch" role="group" aria-label="Месяц контроля МАХ">
