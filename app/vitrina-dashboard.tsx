@@ -34,6 +34,7 @@ const all = [...names].map((id) => ({
   rows: current.get(id)?.rows ?? [],
 })).map((row) => ({ ...row, delta: row.now - row.before }));
 const isState = (name: string) => /^(?:ГОСУДАРСТВЕННОЕ|ГАУЗ|ГБУЗ|ФЕДЕРАЛЬНОЕ|ФИЛИАЛ ГОСУДАРСТВЕННОГО)/i.test(name);
+const isTechnical = (name: string) => /ТЕСТОВОЕ ЛПУ|НЕИЗВЕСТНАЯ МО/i.test(name);
 const format = (number: number) => new Intl.NumberFormat("ru-RU").format(number);
 const specialties = ["врач-терапевт участковый", "врач общей практики (семейный врач)", "врач-хирург", "врач-офтальмолог", "врач-оториноларинголог", "врач-акушер-гинеколог", "врач-психиатр-нарколог", "врач-фтизиатр", "врач-стоматолог", "врач-стоматолог-терапевт", "врач-педиатр участковый", "врач-детский хирург", "врач-стоматолог детский", "врач-психиатр детский (подростковый)"];
 
@@ -42,7 +43,7 @@ export default function VitrinaDashboard() {
   const [query, setQuery] = useState("");
   const [sort, setSort] = useState<"delta" | "now" | "name">("delta");
   const [selected, setSelected] = useState<string | null>(null);
-  const scope = useMemo(() => all.filter((row) => includePrivate || isState(row.name)), [includePrivate]);
+  const scope = useMemo(() => all.filter((row) => !isTechnical(row.name) && (includePrivate || isState(row.name))), [includePrivate]);
   const filtered = useMemo(() => scope.filter((row) => key(row.name).includes(key(query))).sort((a, b) => sort === "name" ? a.name.localeCompare(b.name, "ru") : sort === "now" ? b.now - a.now : a.delta - b.delta || b.now - a.now), [scope, query, sort]);
   const before = scope.reduce((sum, row) => sum + row.before, 0);
   const now = scope.reduce((sum, row) => sum + row.now, 0);
