@@ -2,6 +2,7 @@
 
 import { useMemo, useState } from "react";
 import snapshots from "./vitrina-snapshots.json";
+import { sortVitrinaRows, type VitrinaSortColumn, type VitrinaSortDirection } from "../lib/vitrina-sort.js";
 import "./vitrina-dashboard.css";
 
 type Row = { parent: string; name: string; address: string };
@@ -41,10 +42,24 @@ const specialties = ["врач-терапевт участковый", "врач
 export default function VitrinaDashboard() {
   const [includePrivate, setIncludePrivate] = useState(false);
   const [query, setQuery] = useState("");
-  const [sort, setSort] = useState<"delta" | "now" | "name">("delta");
+  const [sort, setSort] = useState<{ column: VitrinaSortColumn; direction: VitrinaSortDirection }>({ column: "delta", direction: "asc" });
+  const changeSort = (column: VitrinaSortColumn) => setSort((previous) => ({
+    column,
+    direction: previous.column === column
+      ? (previous.direction === "asc" ? "desc" : "asc")
+      : (column === "name" || column === "delta" ? "asc" : "desc"),
+  }));
+  const sortIndicator = (column: VitrinaSortColumn) =>
+    sort.column === column ? (sort.direction === "asc" ? "↑" : "↓") : "↕";
+  const ariaSort = (column: VitrinaSortColumn): "ascending" | "descending" | "none" =>
+    sort.column === column ? (sort.direction === "asc" ? "ascending" : "descending") : "none";
   const [selected, setSelected] = useState<string | null>(null);
   const scope = useMemo(() => all.filter((row) => !isTechnical(row.name) && (includePrivate || isState(row.name))), [includePrivate]);
-  const filtered = useMemo(() => scope.filter((row) => key(row.name).includes(key(query))).sort((a, b) => sort === "name" ? a.name.localeCompare(b.name, "ru") : sort === "now" ? b.now - a.now : a.delta - b.delta || b.now - a.now), [scope, query, sort]);
+  const filtered = useMemo(() => sortVitrinaRows(
+    scope.filter((row) => key(row.name).includes(key(query))),
+    sort.column,
+    sort.direction,
+  ), [scope, query, sort]);
   const before = scope.reduce((sum, row) => sum + row.before, 0);
   const now = scope.reduce((sum, row) => sum + row.now, 0);
   const growing = scope.filter((row) => row.delta > 0).length;
@@ -60,8 +75,13 @@ export default function VitrinaDashboard() {
     </div>
     <p className="vitrinaNotice">Показано наличие расписаний в выгрузке, а не число свободных слотов. Дата предыдущего среза в файле отсутствует; изменение названий МО и подразделений требует проверки.</p>
     <details className="vitrinaGuide"><summary>Что сделать МО · инструкция по корректировке данных на ЕПГУ</summary><ol><li>Сверить наименование МО с ФРМО и исправить расхождения в расписании Витрины.</li><li>Сверить адрес с ФРМО и заполнить все поля адреса.</li><li>Привести расписание врачей в соответствие с инструкциями разработчика ГИС ЭЗ РТ. Открыть слоты для записи граждан по применимым базовым специальностям; названия специальностей указывать полностью, как в ФРМО, без сокращений.</li></ol><details><summary>Перечень 14 базовых специальностей</summary><ul>{specialties.map((name) => <li key={name}>{name}</li>)}</ul></details><p>Другие специальности допустимы при подтверждении, что помощь без направления предусмотрена территориальной программой государственных гарантий или бюджетом региона. Конкретные замечания МО следует брать из приложенного к инструкции перечня ошибочных наименований; в этих двух выгрузках перечня нет.</p><small>Источник: «Инструкция для МО 19.11.2026.docx». Наличие строки расписания само по себе не подтверждает исполнение этих требований.</small></details>
-    <div className="vitrinaToolbar"><h2>Динамика по МО</h2><input aria-label="Поиск МО" placeholder="Найти МО" value={query} onChange={(event) => setQuery(event.target.value)} /><select aria-label="Сортировка" value={sort} onChange={(event) => setSort(event.target.value as typeof sort)}><option value="delta">Сначала снижение</option><option value="now">По числу подразделений</option><option value="name">По названию</option></select></div>
-    <div className="vitrinaTableWrap"><table><thead><tr><th>МО</th><th>Было</th><th>Стало</th><th>Изменение</th></tr></thead><tbody>{filtered.map((row) => <tr key={row.id} onClick={() => setSelected(row.id)} className={selected === row.id ? "selected" : ""}><td>{row.name}</td><td>{row.before}</td><td>{row.now}</td><td className={row.delta > 0 ? "positive" : row.delta < 0 ? "negative" : ""}>{row.delta > 0 ? "+" : ""}{row.delta}</td></tr>)}</tbody></table></div>
+    <div className="vitrinaToolbar"><h2>Динамика по МО</h2><input aria-label="Поиск МО" placeholder="Найти МО" value={query} onChange={(event) => setQuery(event.target.value)} /><span className="vitrinaSortHint">Сортировка — нажатием на заголовок столбца</span></div>
+    <div className="vitrinaTableWrap"><table><thead><tr>
+      <th aria-sort={ariaSort("name")}><button type="button" className="vitrinaSortButton" onClick={() => changeSort("name")}>МО <span aria-hidden="true">{sortIndicator("name")}</span></button></th>
+      <th aria-sort={ariaSort("before")}><button type="button" className="vitrinaSortButton" onClick={() => changeSort("before")}>Было <span aria-hidden="true">{sortIndicator("before")}</span></button></th>
+      <th aria-sort={ariaSort("now")}><button type="button" className="vitrinaSortButton" onClick={() => changeSort("now")}>Стало <span aria-hidden="true">{sortIndicator("now")}</span></button></th>
+      <th aria-sort={ariaSort("delta")}><button type="button" className="vitrinaSortButton" onClick={() => changeSort("delta")}>Изменение <span aria-hidden="true">{sortIndicator("delta")}</span></button></th>
+    </tr></thead><tbody>{filtered.map((row) => <tr key={row.id} onClick={() => setSelected(row.id)} className={selected === row.id ? "selected" : ""}><td>{row.name}</td><td>{row.before}</td><td>{row.now}</td><td className={row.delta > 0 ? "positive" : row.delta < 0 ? "negative" : ""}>{row.delta > 0 ? "+" : ""}{row.delta}</td></tr>)}</tbody></table></div>
     {chosen && <section className="vitrinaDetail"><div><h2>{chosen.name}</h2><button onClick={() => setSelected(null)}>Закрыть</button></div><p>Подразделений: {chosen.before} → {chosen.now}. Состав нового среза:</p><ul>{chosen.rows.map((row, index) => <li key={`${row.name}-${row.address}-${index}`}><strong>{row.name}</strong><span>{row.address || "Адрес не указан"}</span></li>)}</ul></section>}
     <small className="vitrinaSource">Источник: «МО_ у которых есть расписание (1).xlsx» и «МО с расписаниями на 23.11.xlsx». Единица учёта — строка подразделения.</small>
   </section>;
