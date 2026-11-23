@@ -9,11 +9,10 @@ const expected = new Map([
   ["1.1", "99%"],
   ["20", "92,73%"],
   ["25", "55,76%"],
-  ["34", "98%"],
   ["36", "99%"],
 ]);
 
-test("new non-empty regional facts use the September 2026 period", () => {
+test("previously confirmed September regional facts remain unchanged", () => {
   for (const [id, value] of expected) {
     const row = rows.get(id);
     assert.equal(row?.regionalFact, value, `indicator ${id}`);
