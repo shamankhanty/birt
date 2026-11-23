@@ -38,6 +38,15 @@ test("missing, negative or incomparable data never becomes zero new applications
     { ...base, denominator: base.previousDenominator - 1 },
     { ...base, denominator: "48559" },
     { ...base, period: "01.01–18.11.2026" },
+    { ...base, previousDate: "12.11.2025", previousPeriod: "01.01–12.11.2025" },
   ]) assert.equal(estimateAttachmentInflow(modified), null);
   assert.equal(estimateAttachmentInflow({ ...base, denominator: base.previousDenominator }).count, 0);
+});
+
+test("detail page shows the compact estimate for both EPGU indicators", () => {
+  const page = readFileSync(new URL("../app/page.tsx", import.meta.url), "utf8");
+  assert.match(page, /matrixMetric === "egpu" \|\| matrixMetric === "egpu2days"/u);
+  assert.match(page, /data-testid="attachment-inflow"/u);
+  assert.match(page, /estimateAttachmentInflow\(selectedDataset\)/u);
+  assert.match(page, /Не число уникальных новых обращений: возможны корректировки/u);
 });
