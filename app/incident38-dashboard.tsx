@@ -8,6 +8,7 @@ import frmrRaw from "./frmr-all-specialties.json";
 import frmoLinkageRaw from "./frmo-linkage-data.json";
 import { getFrmrSpecialtyIssues, getFrmoOrganizationFindings } from "../lib/incident38-frmr-diagnostic.js";
 import { balancedSpecialties } from "../lib/incident38-balanced-specialties.js";
+import { matchesMoSearch } from "../lib/incident38-mo-search.js";
 import reorganizationRaw from "../config/mo-reorganizations.json";
 import styles from "./incident38-dashboard.module.css";
 
@@ -173,13 +174,13 @@ export default function Incident38Dashboard({ onOpenFrmrMo }: { onOpenFrmrMo: (o
   }).sort((a, b) => (a.coverage ?? Number.POSITIVE_INFINITY) - (b.coverage ?? Number.POSITIVE_INFINITY)), [visibleOrganizations]);
 
   const organizationSuggestions = organizationSearch.trim().length > 0
-    ? visibleOrganizations.filter((org) => org.name.toLocaleLowerCase("ru").includes(organizationSearch.toLocaleLowerCase("ru"))).slice(0, 8)
+    ? visibleOrganizations.filter((org) => matchesMoSearch(org.name, organizationSearch)).slice(0, 8)
     : [];
   const matrixSuggestions = matrixSearch.trim().length > 0
-    ? visibleOrganizations.filter((org) => org.name.toLocaleLowerCase("ru").includes(matrixSearch.toLocaleLowerCase("ru"))).slice(0, 6)
+    ? visibleOrganizations.filter((org) => matchesMoSearch(org.name, matrixSearch)).slice(0, 6)
     : [];
   const matrixRows = organizationRows
-    .filter(({ org }) => shownOrgName(org).toLocaleLowerCase("ru").includes(matrixSearch.toLocaleLowerCase("ru")))
+    .filter(({ org }) => matchesMoSearch(shownOrgName(org), matrixSearch))
     .sort((a, b) => {
       const valueFor = (row: typeof a): string | number | null => {
         if (matrixSort.key === "name") return matrixOrgName(row.org).toLocaleLowerCase("ru");
