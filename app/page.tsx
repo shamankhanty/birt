@@ -50,6 +50,7 @@ import moRegistryRaw from "./mo-registry.json";
 import electronicWaybillRaw from "./electronic-waybill.json";
 import electronicWaybillWeeklyRaw from "./electronic-waybill-weekly.json";
 import federalControlRaw from "./federal-control.json";
+import oncologyCouncilCurrent from "./oncology-council-current.json";
 import gisOmsOrganizationsRaw from "./gis-oms-organizations.json";
 import hearingSnapshotsRaw from "./hearing-snapshots.json";
 import hearingPriorityPolicyRaw from "./hearing-priority-policy.json";
@@ -604,6 +605,19 @@ const currentOperationalRuntime = createCurrentOperationalRuntime({
   errorCategories: errorCategoriesRaw,
 });
 const runtimeIndicator = (item: Indicator): Indicator => {
+  // Current federal October outcome supersedes the retained 30.06 static fallback.
+  // The historical baseline value is not rewritten.
+  if (item.id === "oncologyCouncil") {
+    return {
+      ...item,
+      fact: oncologyCouncilCurrent.fact,
+      date: oncologyCouncilCurrent.date,
+      trend: null,
+      lag: null,
+      provisional: false,
+      comparisonReset: true,
+    };
+  }
   const rawSource = operationalDatasets[item.id];
   const source = rawSource?.rows && rawSource?.date && !isPhysicianMetric(item.id)
     ? selectOperationalComparison(rawSource,
