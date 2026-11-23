@@ -1,6 +1,7 @@
 "use client";
 
 import Incident38Dashboard from "./incident38-dashboard";
+import VitrinaDashboard from "./vitrina-dashboard";
 import FrlozTypesTable from "./frloz-types-table";
 import FrlloOctoberTable from "./frllo-october-table";
 import TestRemdSixTypesTable from "./test-remd-six-types-table";
@@ -3673,6 +3674,7 @@ export default function Home() {
     | "incident38"
     | "frmr"
     | "waybill"
+    | "vitrina"
     | "semd"
     | "remdErrors"
     | "errors"
@@ -6112,6 +6114,7 @@ export default function Home() {
               ["incident38", "И38 — запись к врачу", "08"],
               ["extraDivider", "Другие разделы", ""],
               ["waybill", "Электронный путевой лист", "09"],
+              ["vitrina", "Витрина", "14"],
               ["devDivider", "В разработке", ""],
               ["history", "История обновлений", "10"],
               ["errors", "Ошибки методик", "12"],
@@ -6251,6 +6254,9 @@ export default function Home() {
                 onClick={() => { setTab("waybill"); setShowMatrixSections(false); }}
               >
                 <span>09</span> Электронный путевой лист
+              </button>
+              <button className={tab === "vitrina" ? "active" : ""} onClick={() => { setTab("vitrina"); setShowMatrixSections(false); }}>
+                <span>14</span> Витрина
               </button>
               <div className="sideDevelopment">
                 <span>В разработке</span>
@@ -8054,6 +8060,7 @@ export default function Home() {
           )}
 
           {tab === "incident38" && <Incident38Dashboard onOpenFrmrMo={(oid) => { setFrmrTargetOid(oid); setShowMatrixSections(false); setMobileMenuOpen(false); setTab("frmr"); }} />}
+          {tab === "vitrina" && <VitrinaDashboard />}
 
           {tab === "waybill" && (
             <>
