@@ -2,18 +2,18 @@
 
 import { useMemo, useState } from "react";
 import snapshots from "./vitrina-snapshots.json";
-import { sortVitrinaRows, type VitrinaSortColumn, type VitrinaSortDirection } from "../lib/vitrina-sort.js";
 import "./vitrina-dashboard.css";
-import VitrinaQualityDashboard, { OrganizationSignal, type VitrinaQualityTab } from "./vitrina-quality-dashboard";
-import { buildVitrinaQuality, findVitrinaQualityIssues } from "../lib/vitrina-quality.js";
+import VitrinaQualityDashboard, { OrganizationSignal } from "./vitrina-quality-dashboard";
+import { findVitrinaQualityIssues } from "../lib/vitrina-quality.js";
 import { getVitrinaIncident38 } from "./incident38-dashboard";
+import { matchVitrinaOrganizations, summarizeVitrinaIssues, scheduleIdentity } from "../lib/vitrina-management.js";
 
 
 type Row = { parent: string; name: string; address: string };
 const oldRows = snapshots.previous.rows as Row[];
 const newRows = snapshots.current.rows as Row[];
 const key = (value: string) => value.toUpperCase().replace(/Ё/g, "Е").replace(/\s+/g, " ").trim();
-const parentKey = (value: string) => key(value)
+const parentKey = (value: string) => scheduleIdentity(key(value))
   .replace(/ ИМЕНИ М\.Ш\.УРАЗАЕВОЙ/, "")
   .replace(/ Г\. НАБЕРЕЖНЫЕ ЧЕЛНЫ$/, "")
   .replace(/ Г\. НАБЕРЕЖНЫЕ ЧЕЛНЫ(?=\")/, "")
@@ -41,128 +41,109 @@ const all = [...names].map((id) => ({
 const isState = (name: string) => /^(?:ГОСУДАРСТВЕННОЕ|ГАУЗ|ГБУЗ|ФЕДЕРАЛЬНОЕ|ФИЛИАЛ ГОСУДАРСТВЕННОГО)/i.test(name);
 const isTechnical = (name: string) => /ТЕСТОВОЕ ЛПУ|НЕИЗВЕСТНАЯ МО/i.test(name);
 const format = (number: number) => new Intl.NumberFormat("ru-RU").format(number);
-const specialties = ["врач-терапевт участковый", "врач общей практики (семейный врач)", "врач-хирург", "врач-офтальмолог", "врач-оториноларинголог", "врач-акушер-гинеколог", "врач-психиатр-нарколог", "врач-фтизиатр", "врач-стоматолог", "врач-стоматолог-терапевт", "врач-педиатр участковый", "врач-детский хирург", "врач-стоматолог детский", "врач-психиатр детский (подростковый)"];
 
-function VitrinaPresence({ includePrivate, dynamics }: { includePrivate: boolean; dynamics: boolean }) {
-  const [query, setQuery] = useState("");
-  const [sort, setSort] = useState<{ column: VitrinaSortColumn; direction: VitrinaSortDirection }>({ column: "delta", direction: "asc" });
-  const changeSort = (column: VitrinaSortColumn) => setSort((previous) => ({
-    column,
-    direction: previous.column === column
-      ? (previous.direction === "asc" ? "desc" : "asc")
-      : (column === "name" || column === "delta" ? "asc" : "desc"),
-  }));
-  const sortIndicator = (column: VitrinaSortColumn) =>
-    sort.column === column ? (sort.direction === "asc" ? "↑" : "↓") : "↕";
-  const ariaSort = (column: VitrinaSortColumn): "ascending" | "descending" | "none" =>
-    sort.column === column ? (sort.direction === "asc" ? "ascending" : "descending") : "none";
-  const [selected, setSelected] = useState<string | null>(null);
-  const scope = useMemo(() => all.filter((row) => !isTechnical(row.name) && (includePrivate || isState(row.name))), [includePrivate]);
-  const filtered = useMemo(() => sortVitrinaRows(
-    scope.filter((row) => key(row.name).includes(key(query))),
-    sort.column,
-    sort.direction,
-  ), [scope, query, sort]);
-  const before = scope.reduce((sum, row) => sum + row.before, 0);
-  const now = scope.reduce((sum, row) => sum + row.now, 0);
-  const growing = scope.filter((row) => row.delta > 0).length;
-  const falling = scope.filter((row) => row.delta < 0).length;
-  const chosen = scope.find((row) => row.id === selected);
-  return <section className="vitrina">
-    <div className="vitrinaCards">
-      <article><span>МО с расписанием</span><strong>{format(scope.filter((r) => r.now > 0).length)}</strong><small>предыдущий срез: {format(scope.filter((r) => r.before > 0).length)}</small></article>
-      <article><span>Подразделения</span><strong>{format(now)}</strong><small>{format(before)} → {format(now)} · {now - before >= 0 ? "+" : ""}{format(now - before)}</small></article>
-      <article><span>МО с приростом</span><strong className="positive">{growing}</strong><small>по числу подразделений</small></article>
-      <article><span>МО со снижением</span><strong className="negative">{falling}</strong><small>требуют сверки состава</small></article>
-    </div>
-    <p className="vitrinaNotice">Показано наличие расписаний в выгрузке, а не число свободных слотов. Дата предыдущего среза в файле отсутствует; изменение названий МО и подразделений требует проверки.</p>
-    <details className="vitrinaGuide"><summary>Что сделать МО · инструкция по корректировке данных на ЕПГУ</summary><ol><li>Сверить наименование МО с ФРМО и исправить расхождения в расписании Витрины.</li><li>Сверить адрес с ФРМО и заполнить все поля адреса.</li><li>Привести расписание врачей в соответствие с инструкциями разработчика ГИС ЭЗ РТ. Открыть слоты для записи граждан по применимым базовым специальностям; названия специальностей указывать полностью, как в ФРМО, без сокращений.</li></ol><details><summary>Перечень 14 базовых специальностей</summary><ul>{specialties.map((name) => <li key={name}>{name}</li>)}</ul></details><p>Другие специальности допустимы при подтверждении, что помощь без направления предусмотрена территориальной программой государственных гарантий или бюджетом региона. Конкретные замечания МО следует брать из приложенного к инструкции перечня ошибочных наименований; в этих двух выгрузках перечня нет.</p><small>Источник: «Инструкция для МО 19.11.2026.docx». Наличие строки расписания само по себе не подтверждает исполнение этих требований.</small></details>
-    {dynamics && <div className="vitrinaQColumns">{[true,false].map(growth => <section className="vitrinaQPanel" key={String(growth)}><h2>{growth ? "5 МО с наибольшим приростом" : "5 МО с наибольшим снижением"}</h2>{[...scope].filter(row => growth ? row.delta > 0 : row.delta < 0).sort((a,b) => growth ? b.delta-a.delta : a.delta-b.delta).slice(0,5).map(row => <div className="vitrinaQExceptionRow" key={row.id}><b>{row.name}</b><strong className={growth ? "vitrinaMPositive" : "vitrinaMNegative"}>{growth ? "+" : ""}{row.delta}</strong></div>)}<small className="vitrinaQMuted">Изменение числа строк подразделений, не числа слотов.</small></section>)}</div>}
-    <div className="vitrinaToolbar"><h2>{dynamics ? "Динамика по МО" : "Наличие расписаний — рейтинг по изменению числа подразделений"}</h2><input aria-label="Поиск МО" placeholder="Найти МО" value={query} onChange={(event) => setQuery(event.target.value)} /><span className="vitrinaSortHint">Сортировка — нажатием на заголовок столбца</span></div>
-    <div className="vitrinaTableWrap"><table><thead><tr>
-      <th aria-sort={ariaSort("name")}><button type="button" className="vitrinaSortButton" onClick={() => changeSort("name")}>МО <span aria-hidden="true">{sortIndicator("name")}</span></button></th>
-      <th aria-sort={ariaSort("before")}><button type="button" className="vitrinaSortButton" onClick={() => changeSort("before")}>Было <span aria-hidden="true">{sortIndicator("before")}</span></button></th>
-      <th aria-sort={ariaSort("now")}><button type="button" className="vitrinaSortButton" onClick={() => changeSort("now")}>Стало <span aria-hidden="true">{sortIndicator("now")}</span></button></th>
-      <th aria-sort={ariaSort("delta")}><button type="button" className="vitrinaSortButton" onClick={() => changeSort("delta")}>Изменение <span aria-hidden="true">{sortIndicator("delta")}</span></button></th>
-    </tr></thead><tbody>{filtered.map((row) => <tr key={row.id} onClick={() => setSelected(row.id)} className={selected === row.id ? "selected" : ""}><td><span className="vitrinaQOrgCell"><OrganizationSignal issues={findVitrinaQualityIssues(row)}/><span>{row.name}</span></span></td><td>{row.before}</td><td>{row.now}</td><td className={row.delta > 0 ? "positive" : row.delta < 0 ? "negative" : ""}>{row.delta > 0 ? "+" : ""}{row.delta}</td></tr>)}</tbody></table></div>
-    {chosen && <section className="vitrinaDetail"><div><h2>{chosen.name}</h2><button onClick={() => setSelected(null)}>Закрыть</button></div><p>Подразделений: {chosen.before} → {chosen.now}. Состав нового среза:</p><ul>{chosen.rows.map((row, index) => <li key={`${row.name}-${row.address}-${index}`}><strong>{row.name}</strong><span>{row.address || "Адрес не указан"}</span></li>)}</ul></section>}
-    <small className="vitrinaSource">Источник: «МО_ у которых есть расписание (1).xlsx» и «МО с расписаниями на 23.11.xlsx». Единица учёта — строка подразделения.</small>
-  </section>;
-}
-
-
-
-type ManagementTab = VitrinaQualityTab | "Сводка МЗ" | "Рейтинг МО" | "Специальности" | "Сопоставление с И-38";
 type ScopeRow = typeof all[number];
-const pct = (n: number | null | undefined) => n == null ? "—" : new Intl.NumberFormat("ru-RU",{maximumFractionDigits:1}).format(n)+"%";
-const val = (n: number | null | undefined) => n == null ? "—" : format(n);
-function ManagementCard({label,value,hint,tone="neutral"}: {label:string;value:string;hint:string;tone?:string}) {
-  return <article className={"vitrinaQCard vitrinaQTone-"+tone}><span>{label}</span><strong>{value}</strong><small>{hint}</small></article>;
+type Incident = ReturnType<typeof getVitrinaIncident38>;
+type IncidentOrg = Incident["organizations"][number];
+type Issue = {id:string;category:string;level:"confirmed"|"review";field:string;original:string;instruction:string;unitName:string;reason:string};
+type Entry = {id:string;name:string;source:ScopeRow|null;i38:IncidentOrg|null;issues:Issue[];matched:boolean};
+type Filter = "all"|"issues"|"comma"|"empty"|"below"|"zero"|"unmatched";
+type SortKey = "name"|"now"|"delta"|"coverage"|"gap"|"issues";
+const pct = (n:number|null|undefined)=>n==null?"—":new Intl.NumberFormat("ru-RU",{maximumFractionDigits:1}).format(n)+"%";
+const val = (n:number|null|undefined)=>n==null?"—":format(n);
+const signed = (n:number|null|undefined)=>n==null?"—":(n>0?"+":"")+format(n);
+const tone = (n:number|null|undefined)=>n==null?"v2Muted":n<60?"v2Bad":n<70?"v2Warn":"v2Good";
+const short = (name:string)=>name.replace(/^(?:ГОСУДАРСТВЕННОЕ\s+АВТОНОМНОЕ\s+УЧРЕЖДЕНИЕ\s+ЗДРАВООХРАНЕНИЯ|ГОСУДАРСТВЕННОЕ\s+БЮДЖЕТНОЕ\s+УЧРЕЖДЕНИЕ\s+ЗДРАВООХРАНЕНИЯ|ГАУЗ|ГБУЗ)\s+/i,"").replace(/["«»]/g,"").replace(/\s+/g," ").trim();
+const filters:{key:Filter;label:string}[]=[{key:"all",label:"Все МО"},{key:"below",label:"И-38 ниже 60%"},{key:"zero",label:"Профиль без слотов ЕПГУ"},{key:"issues",label:"С замечаниями"},{key:"comma",label:"Адрес начинается с запятой"},{key:"empty",label:"Пустые поля"},{key:"unmatched",label:"Без сопоставления"}];
+const checkFilter=(e:Entry,f:Filter)=>f==="all" || (f==="issues"&&e.issues.length>0)||(f==="comma"&&Boolean(e.source?.rows.some(r=>r.address.trim().startsWith(","))))||(f==="empty"&&e.issues.some(i=>i.level==="confirmed"))||(f==="below"&&e.i38?.aggregate.coverage!=null&&e.i38.aggregate.coverage<60)||(f==="zero"&&(e.i38?.zero??0)>0)||(f==="unmatched"&&!e.matched);
+function Metric({label,value,hint,cls="",onClick}:{label:string;value:string;hint:string;cls?:string;onClick?:()=>void}) {
+  const body=<><span>{label}</span><strong className={cls}>{value}</strong><small>{hint}</small></>;
+  return onClick?<button type="button" className="v2Metric v2MetricAction" onClick={onClick}>{body}</button>:<article className="v2Metric">{body}</article>;
 }
-function ManagementOverview({scope,includePrivate,onTab}: {scope:ScopeRow[];includePrivate:boolean;onTab:(tab:ManagementTab)=>void}) {
-  const q=buildVitrinaQuality(scope) as {rows:Array<ScopeRow & {issues:Array<{level:"confirmed"|"review"}>}>; organizations:number; organizationsWithIssues:number; confirmed:unknown[]; review:unknown[]};
-  const now=scope.reduce((s,r)=>s+r.now,0), before=scope.reduce((s,r)=>s+r.before,0);
-  const oldCount=scope.filter(r=>r.before>0).length;
-  const i38=getVitrinaIncident38(includePrivate);
-  const priority=[...q.rows].filter(r=>r.issues.length>0).sort((a,b)=>b.issues.filter(i=>i.level==="confirmed").length-a.issues.filter(i=>i.level==="confirmed").length || b.issues.length-a.issues.length).slice(0,5);
-  return <div className="vitrinaQ vitrinaManagement">
-    <div className="vitrinaMHeadline"><div><h2>Переход с ФЭР на Витрину 2.0</h2><p>Готовность перехода не оценена: наличие расписания не подтверждает доступность записи.</p></div><span className="vitrinaMStatus">Нет данных по слотам</span></div>
-    <div className="vitrinaQCards">
-      <ManagementCard label="МО с расписанием" value={format(q.organizations)} hint={"Предыдущий срез: "+format(oldCount)} />
-      <ManagementCard label="Строки подразделений" value={format(now)} hint={format(before)+" → "+format(now)+" · "+(now-before>=0?"+":"")+format(now-before)}/>
-      <ManagementCard label="МО с замечаниями" value={format(q.organizationsWithIssues)} hint={"Из "+format(q.organizations)+" МО с расписанием"} tone="amber"/>
-      <ManagementCard label="И-38.9 · отдельно" value={pct(i38.total?.coverage)} hint={i38.dates.join(" / ")+" · "+i38.horizons.join(" / ")+" дней · план 60%, цель 70%"}/>
+function IssueGroups({entry}:{entry:Entry}) {
+  const groups=[
+    {label:"Адрес начинается с запятой",description:"Проверить индекс, источник адреса ФРМО/ГАР и формирование строки в ГИС ЭЗ РТ.",rows:entry.issues.filter(i=>i.category==="Адреса"&&i.level==="review"&&i.original.trim().startsWith(","))},
+    {label:"Отсутствующие поля",description:"Заполнить исходные поля по реестру.",rows:entry.issues.filter(i=>i.level==="confirmed")},
+    {label:"Наименования для сверки",description:"Сверить отображаемое наименование подразделения с ФРМО.",rows:entry.issues.filter(i=>i.category==="Наименования"&&i.level==="review")},
+    {label:"Прочие адресные признаки",description:"Сверить адрес по ФРМО/ГАР.",rows:entry.issues.filter(i=>i.category==="Адреса"&&i.level==="review"&&!i.original.trim().startsWith(","))}
+  ];
+  return <section className="v2Panel"><h2>Что исправить / проверить</h2>{entry.source?.now ? groups.filter(g=>g.rows.length).map(g=><details key={g.label} className="v2IssueGroup"><summary><span>{g.label}</span><strong>{g.rows.length}</strong></summary><p>{g.description}</p><div className="v2Sublist">{g.rows.map(i=><div key={i.id}><b>{i.unitName||"Без названия"}</b><span>{i.original}</span></div>)}</div></details>):<p className="v2Muted">Нет строк Витрины для этой МО в текущем срезе.</p>}
+  {entry.source?.now && !entry.issues.length ? <p>По доступным полям замечаний не выявлено; качество слотов не проверено.</p>:null}
+  <div className="v2SourceNote">Технические сигналы по слотам: длительность визита (столбец J) &gt;20 минут; 60+ — приоритет проверки. «Не принимает» (столбец H) — сверять со статусом слота. Количество и доля пока не определяются: исходник слотов не подключён.</div></section>;
+}
+function OrgWorkspace({entry,entries,choose,i38}:{entry:Entry|null;entries:Entry[];choose:(id:string)=>void;i38:Incident}) {
+  const [query,setQuery]=useState("");
+  const opts=entries.filter(e=>key(e.name).includes(key(query))||e.id===entry?.id);
+  if(!entry)return <section className="v2Panel">Нет МО в выбранном периметре.</section>;
+  const org=entry.i38,source=entry.source;
+  const cells=org?.specialties.filter(s=>s.norm==null||s.norm>0||s.epguSlots==null||s.epguSlots>0).map(s=>({...s,p:s.norm!=null&&s.norm>0&&s.epguSlots!=null?s.epguSlots/s.norm*100:null,gap:s.norm!=null&&s.norm>0&&s.epguSlots!=null?Math.max(0,Math.ceil(s.norm*.7-s.epguSlots-1e-9)):null})).sort((a,b)=>(b.gap??-1)-(a.gap??-1))??[];
+  return <div className="v2Workspace">
+    <section className="v2Panel v2OrgPicker"><div><h2 title={entry.name}>{short(entry.name)}{!entry.source&&org?" · "+org.city:""}</h2><small>{entry.matched?"Предварительное сопоставление по названию и городу; OID Витрины отсутствует.":entry.source?"Нет подтверждённой связи с И-38.":"И-38: соответствие с Витриной не установлено."}</small></div><div className="v2Picker"><input aria-label="Поиск МО" placeholder="Поиск МО" value={query} onChange={e=>setQuery(e.target.value)}/><select aria-label="Выбрать МО" value={entry.id} onChange={e=>{choose(e.target.value);setQuery("");}}>{opts.map(e=><option key={e.id} value={e.id}>{short(e.name)}{!e.source&&e.i38?" · "+e.i38.city+" (И-38)":""}</option>)}</select></div></section>
+    <div className="v2Metrics">
+      <Metric label="Подразделения · Витрина" value={source?.now?val(source.now):"—"} hint={source?source.before+" → "+source.now+" строк; изменение "+signed(source.delta):"Нет сопоставления"}/>
+      <Metric label="И-38.9" value={pct(org?.aggregate.coverage)} cls={tone(org?.aggregate.coverage)} hint={i38.dates.join(" / ")+" · "+val(org?.aggregate.epguSlots)+" из "+val(org?.aggregate.norm)}/>
+      <Metric label="Дефицит до цели 70%" value={val(org?.gap)} cls={org?.gap?"v2Bad":""} hint="По профилям, без компенсации"/>
+      <Metric label="Замечания Витрины" value={source?.now?val(entry.issues.length):"—"} hint={source?.now?entry.issues.filter(i=>i.level==="confirmed").length+" пустых полей":"Нет строк для проверки"} cls={entry.issues.length?"v2Warn":""}/>
+      <Metric label="Свободные слоты / >20 мин" value="— / —" hint="Исходник слотов не загружен"/>
     </div>
-    <div className="vitrinaQColumns">
-      <section className="vitrinaQPanel"><div className="vitrinaQPanelTitle"><h2>Приоритет для проверки</h2><button className="vitrinaQOpen" onClick={()=>onTab("Контроль ошибок")}>Все замечания</button></div>
-        <p className="vitrinaQMuted">Сначала МО с отсутствующими полями, затем по количеству замечаний. Не рейтинг доступности записи.</p>
-        {priority.map(r=><div className="vitrinaMOrg" key={r.id}><span className="vitrinaQOrgCell"><OrganizationSignal issues={r.issues}/><span>{r.name}</span></span><strong>{r.issues.length}</strong></div>)}
-        <p className="vitrinaQMuted">{format(q.confirmed.length)} отсутствующих полей · {format(q.review.length)} требуют сверки.</p>
-      </section>
-      <section className="vitrinaQPanel"><h2>Что известно о переходе</h2>
-        <div className="vitrinaMStage"><b>Расписания</b><span className="vitrinaMPositive">Данные есть</span><button className="vitrinaQOpen" onClick={()=>onTab("Рейтинг МО")}>МО</button></div>
-        <div className="vitrinaMStage"><b>Качество названий и адресов</b><span>Частичная проверка</span><button className="vitrinaQOpen" onClick={()=>onTab("Контроль ошибок")}>Проверить</button></div>
-        <div className="vitrinaMStage"><b>Свободные слоты Витрины, врачи, кабинеты</b><span>Нет данных</span></div>
-        <div className="vitrinaMStage"><b>Сопоставление с ФЭР / И-38</b><span>Нет единого среза</span><button className="vitrinaQOpen" onClick={()=>onTab("Сопоставление с И-38")}>Источники</button></div>
-        <div className="vitrinaMStage"><b>Динамика расписаний</b><span>Два среза</span><button className="vitrinaQOpen" onClick={()=>onTab("Динамика")}>Динамика</button></div>
-      </section>
-    </div>
-    <p className="vitrinaQNote">Источник Витрины: {snapshots.current.date}; дата предыдущей выгрузки отсутствует. И-38 — отдельный контур и период. Нулём пропуски не заменяются.</p>
+    <div className="v2Columns"><section className="v2Panel"><h2>Доступность по специальностям <small>И-38 · {i38.dates.join(" / ")}</small></h2>{org?<><table className="v2Table v2Specialty"><thead><tr><th>Специальность</th><th>Норма</th><th>ЕПГУ</th><th>Доля</th><th>Дефицит 70%</th></tr></thead><tbody>{cells.map(s=><tr key={s.code}><td>{s.name}</td><td>{val(s.norm)}</td><td>{val(s.epguSlots)}</td><td className={tone(s.p)}>{pct(s.p)}</td><td className={s.gap?"v2Bad":""}>{val(s.gap)}</td></tr>)}</tbody></table><small className="v2Muted">План 60%, цель 70%. Нулевой норматив — не показатель невыполнения.</small></>:<p className="v2Muted">Нет безопасного сопоставления МО с И-38.</p>}</section><IssueGroups entry={entry}/></div>
+    {source&&<details className="v2Panel"><summary>Подразделения и исходные адреса · {source.rows.length} строк</summary><div className="v2Sublist">{source.rows.map((r,i)=><div key={i}><b>{r.name||"Без названия"}</b><span>{r.address||"Адрес отсутствует"}</span></div>)}</div></details>}
   </div>;
 }
-function IncidentContext({scope,includePrivate,showSpecialties}: {scope:ScopeRow[];includePrivate:boolean;showSpecialties:boolean}) {
-  const i=getVitrinaIncident38(includePrivate);
-  return <div className="vitrinaQ vitrinaManagement">
-    <div className="vitrinaQNote"><b>И-38.9, отдельный источник:</b> {i.dates.join(" / ")} · горизонт {i.horizons.join(" / ")} дней · {i.orgCount} МО. Не является выгрузкой слотов Витрины. Классификация МО соответствует разделу И-38; периметры двух источников могут различаться.</div>
-    {showSpecialties ? <section className="vitrinaQPanel"><h2>Специальности: обеспеченность слотами ЕПГУ по И-38</h2><p className="vitrinaQMuted">От меньшей доли к большей. Слоты ЕПГУ / общий норматив. План 60%, цель 70%. Данные Витрины по специальностям не загружены.</p>
-      <table className="vitrinaMTable"><thead><tr><th>Специальность</th><th>Норматив</th><th>Слоты ЕПГУ</th><th>Доля, %</th></tr></thead><tbody>{i.specialties.map(s=><tr key={s.code}><td>{s.name}</td><td>{val(s.aggregate?.norm)}</td><td>{val(s.aggregate?.epguSlots)}</td><td className={s.aggregate?.coverage==null?"":s.aggregate.coverage<60?"vitrinaMNegative":s.aggregate.coverage>=70?"vitrinaMPositive":""}>{pct(s.aggregate?.coverage)}</td></tr>)}</tbody></table>
-    </section> : <div className="vitrinaQColumns">
-      <section className="vitrinaQPanel"><h2>Витрина 2.0 · {snapshots.current.date}</h2><p>МО с расписаниями: <b>{scope.filter(r=>r.now>0).length}</b></p><p>Строки подразделений: <b>{format(scope.reduce((s,r)=>s+r.now,0))}</b></p><p>Слоты и посещения: <b>нет данных</b></p></section>
-      <section className="vitrinaQPanel"><h2>И-38.9 · {i.dates.join(" / ")}</h2><p>МО в выгрузке: <b>{i.orgCount}</b></p><p>Слоты ЕПГУ: <b>{val(i.total?.epguSlots)}</b> / общий норматив <b>{val(i.total?.norm)}</b></p><p>Доля: <b>{pct(i.total?.coverage)}</b></p></section>
-      <section className="vitrinaQPanel"><h2>Что нужно для сопоставления</h2><p>OID МО и подразделения, единая специальность ФНСИ, дата выгрузки, дата приёма, статус слота, одинаковый горизонт. До сверки периметров расхождение не рассчитывается.</p></section>
-    </div>}
+function MinistryWorkspace({entries,scope,i38,open}:{entries:Entry[];scope:ScopeRow[];i38:Incident;open:(id:string)=>void}) {
+  const [filter,setFilter]=useState<Filter>("all");const [query,setQuery]=useState("");const [sort,setSort]=useState<{key:SortKey;desc:boolean}>({key:"gap",desc:true});
+  const changeSort=(k:SortKey)=>setSort(s=>({key:k,desc:s.key===k?!s.desc:k!=="name"&&k!=="coverage"}));
+  const value=(e:Entry,k:SortKey):number|null=>k==="now"?e.source?.now??null:k==="delta"?e.source?.delta??null:k==="coverage"?e.i38?.aggregate.coverage??null:k==="gap"?e.i38?.gap??null:e.source?.now?e.issues.length:null;
+  const filtered=entries.filter(e=>checkFilter(e,filter)&&key(e.name).includes(key(query))).sort((a,b)=>{if(sort.key==="name")return a.name.localeCompare(b.name,"ru")*(sort.desc?-1:1);const x=value(a,sort.key),y=value(b,sort.key);return x==null?y==null?0:1:y==null?-1:(sort.desc?y-x:x-y)||a.name.localeCompare(b.name,"ru");});
+  const active=entries.filter(e=>e.source?.now);const issues=active.flatMap(e=>e.issues);
+  const q=summarizeVitrinaIssues(scope.flatMap(r=>r.rows),issues);
+  const now=scope.reduce((a,r)=>a+r.now,0),before=scope.reduce((a,r)=>a+r.before,0);
+  const matched=entries.filter(e=>e.matched).length;
+  const below=i38.organizations.filter(o=>o.aggregate.coverage!=null&&o.aggregate.coverage<60).length;
+  const below70=i38.organizations.filter(o=>o.aggregate.coverage!=null&&o.aggregate.coverage<70).length;
+  const zero=i38.organizations.filter(o=>o.zero>0).length;
+  const specs=[...i38.specialties].sort((a,b)=>(b.gap??-1)-(a.gap??-1));
+  const headers:{k:SortKey;label:string}[]=[{k:"name",label:"Медицинская организация"},{k:"now",label:"Подр."},{k:"delta",label:"Δ строк"},{k:"coverage",label:"И-38, %"},{k:"gap",label:"Дефицит 70%"},{k:"issues",label:"Замечания"}];
+  const causeRows=[{name:"Адрес начинается с запятой",n:q.leadingComma,filter:"comma" as Filter,hint:active.filter(e=>checkFilter(e,"comma")).length+" МО · проверить общий механизм формирования"},{name:"Неоднозначные названия",n:q.names,filter:"issues" as Filter,hint:"Сверка с ФРМО"},{name:"Пустые поля",n:q.empty,filter:"empty" as Filter,hint:active.filter(e=>checkFilter(e,"empty")).length+" МО"},{name:"Другие адресные признаки",n:q.other,filter:"issues" as Filter,hint:"Требуют сверки"}];
+  return <div className="v2Workspace">
+    <div className="v2Metrics">
+      <Metric label="МО с расписанием" value={val(active.length)} hint={"Подразделений: "+val(now)+" ("+signed(now-before)+")"}/>
+      <Metric label="МО с замечаниями" value={val(active.filter(e=>e.issues.length).length)} hint={val(issues.length)+" замечаний · "+q.empty+" пустых поля"} cls="v2Warn" onClick={()=>setFilter("issues")}/>
+      <Metric label="И-38.9 · "+i38.dates.join(" / ") value={pct(i38.total?.coverage)} cls={tone(i38.total?.coverage)} hint={val(i38.total?.epguSlots)+" / "+val(i38.total?.norm)+" · "+i38.orgCount+" МО"}/>
+      <Metric label="МО ниже плана / цели" value={i38.comparable?below+" / "+below70:"—"} hint="И-38: 60% / 70%; "+zero+" МО с нулём слотов по профилю" cls="v2Bad" onClick={()=>setFilter("below")}/>
+      <Metric label="Свободные слоты / >20 мин" value="— / —" hint="Витрина: источник слотов не подключён"/>
+    </div>
+    <div className="v2Columns">
+      <section className="v2Panel"><h2>Приоритетные специальности <small>И-38 · дефицит до 70%</small></h2><div className="v2Bars">{specs.slice(0,5).map(s=><div key={s.code}><span>{s.name}</span><div className="v2Track"><i style={{width:Math.min(100,s.aggregate?.coverage??0)+"%",background:s.aggregate?.coverage==null?"#cbd5e1":s.aggregate.coverage<60?"#bc4651":s.aggregate.coverage<70?"#d49a35":"#269065"}}/></div><b className={tone(s.aggregate?.coverage)}>{pct(s.aggregate?.coverage)}</b><strong className="v2Bad">{val(s.gap)}</strong></div>)}</div><details><summary>Все 14 специальностей</summary><table className="v2Table v2Specialty"><thead><tr><th>Профиль</th><th>Норма</th><th>ЕПГУ</th><th>Доля</th><th>Дефицит</th></tr></thead><tbody>{specs.map(s=><tr key={s.code}><td>{s.name}</td><td>{val(s.aggregate?.norm)}</td><td>{val(s.aggregate?.epguSlots)}</td><td className={tone(s.aggregate?.coverage)}>{pct(s.aggregate?.coverage)}</td><td>{val(s.gap)}</td></tr>)}</tbody></table></details><small className="v2Muted">Сумма дефицитов по МО и профилям; избыток другого профиля не компенсирует недостаток.</small></section>
+      <section className="v2Panel"><h2>Системные причины <small>Витрина · {snapshots.current.date}</small></h2>{causeRows.filter(c=>c.n>0).map(c=><button key={c.name} type="button" className="v2Cause" onClick={()=>setFilter(c.filter)}><div><b>{c.name}</b><small>{c.hint}</small></div><strong className={c.filter==="empty"?"v2Bad":"v2Warn"}>{c.n}</strong></button>)}<div className="v2SourceNote">Готовность перехода с ФЭР не оценена: отсутствуют проверенные слоты Витрины и сопоставимый срез. Адресные признаки не являются подтверждёнными нарушениями.</div></section>
+    </div>
+    <section className="v2Panel v2Registry"><div className="v2RegistryHead"><h2>МО · единый реестр <small>{filtered.length} из {entries.length} · {matched} предварительных связей</small></h2><div className="v2Filters"><input aria-label="Поиск МО" placeholder="Найти МО" value={query} onChange={e=>setQuery(e.target.value)}/><select aria-label="Фильтр МО" value={filter} onChange={e=>setFilter(e.target.value as Filter)}>{filters.map(f=><option key={f.key} value={f.key}>{f.label}</option>)}</select></div></div>
+      <div className="v2TableWrap"><table className="v2Table v2RegistryTable"><thead><tr>{headers.map(h=><th key={h.k} aria-sort={sort.key===h.k?(sort.desc?"descending":"ascending"):"none"}><button type="button" onClick={()=>changeSort(h.k)}>{h.label} {sort.key===h.k?(sort.desc?"↓":"↑"):"↕"}</button></th>)}<th>Своб. / &gt;20 мин</th></tr></thead><tbody>{filtered.map(e=><tr key={e.id}><td><button className="v2OrgLink" title={e.name} onClick={()=>open(e.id)}><OrganizationSignal issues={e.issues}/><span>{short(e.name)}{!e.source&&e.i38?" · "+e.i38.city:""}<small>{e.matched?"":e.source?"Без связи с И-38":"Только И-38"}</small></span></button></td><td>{e.source?.now?val(e.source.now):"—"}</td><td className={e.source?.delta==null?"v2Muted":e.source.delta>0?"v2Good":e.source.delta<0?"v2Bad":""}>{signed(e.source?.delta)}</td><td className={tone(e.i38?.aggregate.coverage)}>{pct(e.i38?.aggregate.coverage)}</td><td className={e.i38?.gap?"v2Bad":""}>{val(e.i38?.gap)}</td><td className={e.issues.length?"v2Warn":""}>{e.source?.now?val(e.issues.length):"—"}</td><td className="v2Muted">— / —</td></tr>)}</tbody></table>{!filtered.length&&<p className="v2Muted">Нет записей по выбранному фильтру.</p>}</div>
+      <small className="v2Muted">Нажмите на МО для детализации. Δ — изменение числа строк, не слотов. Несопоставленные записи двух контуров показаны отдельно; число строк реестра не равно числу уникальных МО региона.</small>
+    </section>
+    <details className="v2Panel"><summary>Динамика расписаний · два среза</summary><div className="v2Columns">{[true,false].map(growth=><section key={String(growth)}><h3>{growth?"5 МО с наибольшим приростом":"5 МО с наибольшим снижением"}</h3>{scope.filter(r=>growth?r.delta>0:r.delta<0).sort((a,b)=>growth?b.delta-a.delta:a.delta-b.delta).slice(0,5).map(r=><div className="v2Cause" key={r.id}><button className="v2OrgLink" onClick={()=>open(r.id)}>{short(r.name)}</button><strong className={growth?"v2Good":"v2Bad"}>{signed(r.delta)}</strong></div>)}</section>)}</div><small className="v2Muted">Дата предыдущего среза отсутствует. Состав подразделений не верифицирован по OID.</small></details>
   </div>;
 }
-
-export default function VitrinaDashboard() {
-  const [tab, setTab] = useState<ManagementTab>("Сводка МЗ");
-  const [includePrivate, setIncludePrivate] = useState(false);
-  const qualityScope = useMemo(
-    () => all.filter((row) => !isTechnical(row.name) && (includePrivate || isState(row.name))),
-    [includePrivate],
-  );
-  const tabs: ManagementTab[] = ["Сводка МЗ", "Рейтинг МО", "Специальности", "Контроль ошибок", "Сопоставление с И-38", "Динамика", "Инструкция МО", "Исключения"];
-  return <section className="vitrinaQualityShell">
-    <header className="vitrinaQHeader">
-      <div><h1>Витрина 2.0 — Запись к врачу</h1><p>Управление переходом с ФЭР · расписания, доступность, качество данных</p></div>
-      <div className="vitrinaQHeaderRight"><time>Витрина: {snapshots.current.date}</time><label><input type="checkbox" checked={includePrivate} onChange={(event) => setIncludePrivate(event.target.checked)}/> Все МО, включая частные</label></div>
-    </header>
-    <nav className="vitrinaQTabs vitrinaMTabs" role="tablist" aria-label="Разделы Витрины">
-      {tabs.map((name) => <button key={name} type="button" role="tab" aria-selected={tab === name} onClick={() => setTab(name)}>{name}</button>)}
-    </nav>
-    {tab === "Сводка МЗ" ? <ManagementOverview scope={qualityScope} includePrivate={includePrivate} onTab={setTab}/>
-      : tab === "Рейтинг МО" || tab === "Динамика" ? <><VitrinaPresence includePrivate={includePrivate} dynamics={tab==="Динамика"}/>{tab==="Динамика" && <VitrinaQualityDashboard organizations={qualityScope} view="Динамика" currentDate={snapshots.current.date} previousDate={snapshots.previous.date}/>}</>
-      : tab === "Специальности" || tab === "Сопоставление с И-38" ? <IncidentContext scope={qualityScope} includePrivate={includePrivate} showSpecialties={tab==="Специальности"}/>
-      : <VitrinaQualityDashboard organizations={qualityScope} view={tab} currentDate={snapshots.current.date} previousDate={snapshots.previous.date}/>}
+export default function VitrinaDashboard(){
+  const [mode,setMode]=useState<"ministry"|"organization">("ministry");
+  const [includePrivate,setIncludePrivate]=useState(false);
+  const [selected,setSelected]=useState("");
+  const scope=useMemo(()=>all.filter(r=>!isTechnical(r.name)&&(includePrivate||isState(r.name))),[includePrivate]);
+  const i38=useMemo(()=>getVitrinaIncident38(includePrivate),[includePrivate]);
+  const entries=useMemo(()=>{
+    const links=new Map(matchVitrinaOrganizations(scope,i38.organizations).map(x=>[x.id,x.oid]));
+    const byOid=new Map(i38.organizations.map(o=>[o.oid,o]));
+    const used=new Set<string>();
+    const vit:Entry[]=scope.map(r=>{const oid=links.get(r.id);const org=oid?byOid.get(oid)??null:null;if(org)used.add(org.oid);return {id:r.id,name:r.name,source:r,i38:org,issues:findVitrinaQualityIssues(r) as Issue[],matched:Boolean(org)}});
+    return [...vit,...i38.organizations.filter(o=>!used.has(o.oid)).map(o=>({id:"i38:"+o.oid,name:o.name,source:null,i38:o,issues:[],matched:false} as Entry))];
+  },[scope,i38]);
+  const entry=entries.find(e=>e.id===selected)??entries.find(e=>e.matched)??entries[0]??null;
+  const open=(id:string)=>{setSelected(id);setMode("organization");};
+  return <section className="vitrinaQualityShell v2Shell">
+    <header className="vitrinaQHeader"><div><h1>Витрина 2.0 — Запись к врачу</h1><p>Переход с ФЭР · доступность записи и качество расписаний</p></div><div className="vitrinaQHeaderRight"><time>Витрина: {snapshots.current.date}</time><label><input type="checkbox" checked={includePrivate} onChange={e=>setIncludePrivate(e.target.checked)}/> Все МО, включая частные</label></div></header>
+    <nav className="v2Modes" aria-label="Рабочие режимы"><button type="button" aria-pressed={mode==="ministry"} onClick={()=>setMode("ministry")}>Минздрав РТ</button><button type="button" aria-pressed={mode==="organization"} onClick={()=>setMode("organization")}>Медицинская организация</button><span>И-38 · {i38.dates.join(" / ")} · {i38.horizons.join(" / ")} дней</span></nav>
+    {mode==="ministry"?<MinistryWorkspace entries={entries} scope={scope} i38={i38} open={open}/>:<OrgWorkspace entry={entry} entries={entries} choose={setSelected} i38={i38}/>}
+    <details className="v2Panel"><summary>Инструкция МО и методика</summary><VitrinaQualityDashboard organizations={scope} view="Инструкция МО" currentDate={snapshots.current.date} previousDate={snapshots.previous.date}/><p className="v2Muted">Витрина: строки подразделений, дата текущей выгрузки {snapshots.current.date}. И-38: слоты ЕПГУ / общий норматив. Периметры источников различаются; связь по названию и городу предварительна. Дата выгрузки и дата визита не смешиваются. Значение длительности берётся из столбца J первичного источника; пропуски не считаются нулями.</p></details>
+    <details className="v2Panel"><summary>Исключения и спорные случаи</summary><VitrinaQualityDashboard organizations={scope} view="Исключения" currentDate={snapshots.current.date} previousDate={snapshots.previous.date}/></details>
   </section>;
 }
