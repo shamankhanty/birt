@@ -4,7 +4,6 @@ import {readFileSync} from "node:fs";
 import {matchVitrinaOrganizations,summarizeVitrinaIssues,scheduleIdentity} from "../lib/vitrina-management.js";
 import {findVitrinaQualityIssues} from "../lib/vitrina-quality.js";
 const view=readFileSync("app/vitrina-dashboard.tsx","utf8");
-const incident=readFileSync("app/incident38-dashboard.tsx","utf8");
 test("Vitrina opens two workspaces and routes a selected MO to drill-down",()=>{
   assert.match(view,/useState<"ministry"\|"organization">\("ministry"\)/);
   assert.match(view,/setSelected\(id\);setMode\("organization"\)/);
@@ -15,13 +14,13 @@ test("Vitrina opens two workspaces and routes a selected MO to drill-down",()=>{
   assert.match(view,/5 МО с наибольшим снижением/);
   assert.match(view,/Инструкция МО и методика/);
 });
-test("I-38 context uses existing metrics, separate dates, and unknowns",()=>{
-  assert.match(incident,/dates\.length === 1 && horizons\.length === 1 && unique/);
-  assert.match(incident,/metrics\(orgs\.flatMap/);
+test("Both Vitrina workspaces are independent of Incident 38 and preserve unknown slot data",()=>{
+  assert.doesNotMatch(view,/incident38|И-38|i38|matchVitrinaOrganizations|Дефицит до цели/);
+  assert.match(view,/scope\.map\(r=>\(\{id:r\.id,name:r\.name,source:r/);
   assert.match(view,/Свободные слоты \/ >20 мин/);
   assert.match(view,/value="— \/ —"/);
   assert.match(view,/столбец J/);
-  assert.match(view,/OID Витрины отсутствует/);
+  assert.match(view,/Дата предыдущего среза отсутствует/);
 });
 test("Organization association requires exact normalized name and locality, refuses ambiguity",()=>{
   const row={id:"v",name:'ГАУЗ "Городская поликлиника № 10" г.Казани',now:1,rows:[{address:"г. Казань, ул. Ленина"}]};
