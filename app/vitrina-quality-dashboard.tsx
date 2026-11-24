@@ -263,7 +263,7 @@ export default function VitrinaQualityDashboard({
             {issue && <IssueDetail issue={issue}/>}
           </> : <div className="vitrinaQEmpty">По доступным полям замечаний не найдено. Это не подтверждает корректность расписаний и слотов.</div>}
         </> : <div className="vitrinaQEmpty">Выберите медицинскую организацию для просмотра замечаний.</div>}
-        <details className="vitrinaQCoverage"><summary>Что проверяется по шести категориям</summary>
+        <details open className="vitrinaQCoverage"><summary>Что проверяется по шести категориям</summary>
           {Object.entries(VITRINA_SOURCE_COVERAGE).map(([name, text]) => <p key={name}><b>{name}:</b> {text} — {text.startsWith("Нет") ? "Нет данных для проверки." : "Нужна сверка."}</p>)}
         </details>
       </div>

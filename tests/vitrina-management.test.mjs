@@ -37,3 +37,12 @@ test("Grouping of observed causes preserves absence and distinguishes punctuatio
   assert.deepEqual(summarizeVitrinaIssues(rows,issues),{leadingComma:1,names:1,empty:1,other:0});
   assert.equal(scheduleIdentity('ГАУЗ "РСП"'),scheduleIdentity("ГАУЗ РСП"));
 });
+
+test("All Vitrina collapsible panels start expanded and remain collapsible",()=>{
+  for(const path of ["app/vitrina-dashboard.tsx","app/vitrina-quality-dashboard.tsx"]){
+    const src=readFileSync(path,"utf8");
+    const tags=src.match(/<details\b[^>]*>/g)??[];
+    assert.ok(tags.length>0,path);
+    for(const tag of tags) assert.match(tag,/<details\s+open(?:\s|>)/,path);
+  }
+});
