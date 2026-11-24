@@ -91,7 +91,10 @@ export function getVitrinaIncident38(includePrivate: boolean) {
     const aggregate = complete ? metrics(cells.filter((row): row is Specialty => Boolean(row))) : null;
     return { ...specialty, aggregate };
   }).sort((a,b) => (a.aggregate?.coverage ?? Infinity) - (b.aggregate?.coverage ?? Infinity));
-  return { dates, horizons, comparable, orgCount: orgs.length, total, specialties };
+  const gap = (rows: Specialty[]) => rows.some(row => row.norm == null || row.epguSlots == null) ? null : rows.reduce((sum,row) => sum + (row.norm! > 0 ? Math.max(0,Math.ceil(row.norm! * GOAL_PERCENT / 100 - row.epguSlots! - 1e-9)) : 0),0);
+  const zero = (rows: Specialty[]) => rows.filter(row=>row.norm != null && row.norm > 0 && row.epguSlots === 0).length;
+  const organizations = comparable ? orgs.map(org=>({...org,aggregate:orgMetrics(org),gap:gap(org.specialties),zero:zero(org.specialties)})) : [];
+  return { dates, horizons, comparable, orgCount: orgs.length, total, organizations, specialties: specialties.map(s=>({...s,gap:s.aggregate ? gap(orgs.flatMap(org=>org.specialties.filter(row=>row.code===s.code))) : null,zero:s.aggregate ? zero(orgs.flatMap(org=>org.specialties.filter(row=>row.code===s.code))) : null})) };
 }
 
 const tone = (value: number | null) => value === null ? styles.neutral : value >= 100 ? styles.good : styles.belowNorm;
