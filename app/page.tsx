@@ -4892,13 +4892,15 @@ export default function Home() {
   // Two attachment indicators share the same pool of incoming EPGU applications.
   // This is only the increment in submitted cumulative requests, never a sum
   // of the two indicator numerators.
-  const attachmentInflow =
-    matrixMetric === "egpu" || matrixMetric === "egpu2days"
-      ? estimateAttachmentInflow(selectedDataset)
-      : null;
+  // Incoming applications compare the latest accepted raw source cuts, even
+  // when the general operational trend requires at least five days.
   const isAttachmentMetric = matrixMetric === "egpu" || matrixMetric === "egpu2days";
+  const attachmentSourceDataset = activeMoDataRaw[matrixMetric];
+  const attachmentInflow = isAttachmentMetric
+    ? estimateAttachmentInflow(attachmentSourceDataset)
+    : null;
   const attachmentMoInflow = isAttachmentMetric
-    ? buildAttachmentMoInflow(selectedDataset, attachmentVolumeSnapshotsRaw)
+    ? buildAttachmentMoInflow(attachmentSourceDataset, attachmentVolumeSnapshotsRaw)
     : null;
   const preventiveTransition = matrixMetric === "semd228";
   const selectedGuidance = guidance[matrixMetric];

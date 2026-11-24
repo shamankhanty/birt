@@ -2,6 +2,8 @@ import assert from "node:assert/strict";
 import { readFileSync } from "node:fs";
 import test from "node:test";
 import { buildAttachmentMoInflow } from "../lib/egpu-attachment-mo-inflow.js";
+import { selectOperationalComparison } from "../lib/operational-comparison.js";
+import { filterActiveDatasetMap } from "../lib/mo-reorganization.js";
 
 const read = (name) => JSON.parse(readFileSync(new URL("../" + name, import.meta.url), "utf8"));
 const mo = read("app/mo-data.json");
@@ -53,11 +55,25 @@ test("stale cut, lost organization, null volume or sum mismatch disables estimat
 test("both EPGU organization tables include the sortable arrivals column", () => {
   const page = readFileSync(new URL("../app/page.tsx", import.meta.url), "utf8");
   assert.match(page, /const isAttachmentMetric = matrixMetric === "egpu" \|\| matrixMetric === "egpu2days";/u);
-  assert.match(page, /buildAttachmentMoInflow\(selectedDataset, attachmentVolumeSnapshotsRaw\)/u);
+  assert.match(page, /buildAttachmentMoInflow\(attachmentSourceDataset, attachmentVolumeSnapshotsRaw\)/u);
   assert.match(page, /moSortKey === "inflow"/u);
   assert.match(page, /Новые заявления/u);
   assert.match(page, /className="attachmentInflowCell"/u);
   assert.match(page, /moInflow\.previous/u);
   assert.match(page, /moInflow\.current/u);
   assert.match(page, /attachment-mo-inflow-note/u);
+});
+
+
+test("latest three-day attachment cuts remain usable despite the five-day general trend rule", () => {
+  const active = filterActiveDatasetMap(mo);
+  for (const metric of ["egpu", "egpu2days"]) {
+    const generalTrend = selectOperationalComparison(active[metric], []);
+    assert.equal(buildAttachmentMoInflow(generalTrend, volume), null);
+    const incoming = buildAttachmentMoInflow(active[metric], volume);
+    assert.equal(incoming.count, 610);
+    assert.equal(incoming.organizations, 82);
+    assert.equal(incoming.byOid["1.2.643.5.1.13.13.12.2.16.1084"].delta, 2);
+    assert.equal(incoming.byOid["1.2.643.5.1.13.13.12.2.16.1092"].delta, 0);
+  }
 });
