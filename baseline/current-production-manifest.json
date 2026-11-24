@@ -1,7 +1,7 @@
 {
   "schemaVersion": 1,
   "kind": "current-production",
-  "promotedFrom": "/workspace/scratch/9d0344659a99/repo/validation/pipeline/staging-23nov/app",
+  "promotedFrom": "PR #260: accepted 22.11 operational-mo cumulative MAX synchronization",
   "promotedAt": "2026-11-24T07:12:59.151Z",
   "files": {
     "app/contract-semd-monitoring.json": "0c1880605fb5f27758be179cbc39e237eccdb188f6ff0eb0b0aefb43d0e5097d",
@@ -32,7 +32,7 @@
     "app/max-appointment-plan.json": "40514ca3c6a8276f2fceec31571443a90e4d8f84bf9ec1eb7c0916039cea1625",
     "app/max-appointments-municipal.json": "b951215cc53ca0e9eca54d6d1917dbe625f915b66764ef9d0a830dc57484202d",
     "app/max-monthly-visits.json": "4ccd792fbc854b92ec7b5161e2e6e00ab68c3c5f14a06278e4332f63f522b31a",
-    "app/max-period-views.json": "230fd1e1f1c7338503879eb728a5a6802b9a5198f4bcfacf57f5de75d24b3ede",
+    "app/max-period-views.json": "273eb71237b8468e478f5bd62f113c3bcb7836212aef3b4b9c8a9b01dce0d021",
     "app/methodology-audit.json": "d15739980906b1a697a8f4c80d09c940836c896371eb3cbe268b8d9022fb5774",
     "app/mo-data.json": "3f169fb348abdbb8b6631ace0dc1ecbdd8f1582ea2cc9eff854be48c5ee51875",
     "app/mo-detail-oids.json": "2f8526711d7dcd735cf7cafd807605c0febb5a340f52041bd98dd23cc79b7492",
