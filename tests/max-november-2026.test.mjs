@@ -19,10 +19,10 @@ test('MAX October is closed with original source facts and no changes to October
  assert.equal(oct.operational.metrics.eln.republicPlan,8000);
  assert.equal(oct.cumulative.metrics.tmk.sourceTotal,73479);
  assert.equal(oct.cumulative.metrics.eln.sourceTotal,55268);
- assert.equal(views.cumulative.date,'19.11.2026');
- assert.equal(views.cumulative.previousDate,'08.11.2026');
- assert.equal(views.cumulative.metrics.tmk.sourceTotal,84192);
- assert.equal(views.cumulative.metrics.eln.sourceTotal,61275);
+ assert.equal(views.cumulative.date,'22.11.2026');
+ assert.equal(views.cumulative.previousDate,'19.11.2026');
+ assert.equal(views.cumulative.metrics.tmk.previousSourceTotal,84192);
+ assert.equal(views.cumulative.metrics.eln.previousSourceTotal,61275);
  assert.equal(views.cumulative.metrics.tmk.republicPlan,177000);
  assert.equal(views.cumulative.metrics.eln.republicPlan,90000);
  assert.notDeepEqual(views.cumulative,oct.cumulative);
@@ -51,12 +51,12 @@ test('MAX November uses direct 19 November report with approved Spassk attributi
  assert.equal(operational.status,'partial_month_source');
  assert.equal(operational.date,'19.11.2026');
  assert.equal(operational.previousDate,'13.11.2026');
- assert.equal(views.cumulative.previousDate,'08.11.2026');
+ assert.equal(views.cumulative.previousDate,'19.11.2026');
  for(const id of ['tmk','eln']){
   assert.equal(views.closedMonths['2026-10'].cumulative.metrics[id].sourceTotal,previousViews.closedMonths['2026-10'].cumulative.metrics[id].sourceTotal);
   assert.equal(views.closedMonths['2026-10'].operational.metrics[id].sourceTotal,previousViews.closedMonths['2026-10'].operational.metrics[id].sourceTotal);
  }
- for(const [id,region,inPlan,previousRegion,previousInPlan,spasskCumulative,spasskNovember] of [['tmk',9450,9393,4832,4805,1390,79],['eln',6468,6404,3578,3548,38,2]]){
+ for(const [id,region,inPlan,previousRegion,previousInPlan,spasskCumulative,spasskNovember] of [['tmk',9450,9393,4832,4805,1402,79],['eln',6468,6404,3578,3548,38,2]]){
   const metric=operational.metrics[id];
   assert.equal(metric.sourceTotal,region);
   assert.equal(metric.plannedMoFact,inPlan);
@@ -96,4 +96,22 @@ test('source-routing policy keeps current October closed-month measures and inco
  assert.ok(report.retained.includes('death'));
  assert.ok(report.operationalOnly.includes('shortInput'));
  assert.equal(report.maxNovember.factStatus,'not_provided');
+});
+
+
+test('MAX cumulative section matches accepted operational MO data and preserves unresolved rows',()=>{
+ const operational=read('app/operational-mo.json');
+ for(const [id,key] of [['tmk','tmkMaxCount'],['eln','elnMaxCount']]){
+  const source=operational[key],metric=views.cumulative.metrics[id];
+  assert.equal(views.cumulative.date,source.date);
+  assert.equal(views.cumulative.period,source.period);
+  assert.equal(metric.sourceTotal,source.rows.filter(r=>r.name!=='Неизвестная МО').reduce((s,r)=>s+(r.fact??0),0));
+  const byOid=new Map(source.rows.filter(r=>r.oid).map(r=>[r.oid,r]));
+  for(const row of metric.rows){
+   const oid=row.oid.endsWith('.18650')?row.oid.replace(/18650$/,'1094'):row.oid;
+   assert.equal(row.fact,byOid.get(oid)?.fact??null,row.oid);
+  }
+  assert.equal(metric.plannedMoFact,metric.rows.reduce((s,r)=>s+(r.fact??0),0));
+  assert.equal(metric.plannedCoverage.missing,metric.rows.filter(r=>r.fact===null).length);
+ }
 });
