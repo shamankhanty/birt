@@ -46,7 +46,7 @@ test("Vitrina retains full source names as title and sortable registry headers",
   assert.match(view, /<OrganizationSignal issues=\{e\.issues\}\/>/u);
   assert.match(view, /onClick=\{\(\)=>changeSort\(h\.k\)\}/u);
   assert.match(view, /aria-sort=\{sort\.key===h\.k/);
-  for (const column of ["name","now","delta","coverage","gap","issues"]) assert.ok(view.includes('k:"'+column+'"'));
+  for (const column of ["name","before","now","delta","confirmed","issues"]) assert.ok(view.includes('k:"'+column+'"'));
 });
 
 test("Vitrina source grouping and region totals are unchanged", () => {
