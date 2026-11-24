@@ -8,7 +8,7 @@ test("quality dashboard shows a risk signal before the untouched organization na
   const presence=readFileSync("app/vitrina-dashboard.tsx","utf8");
   assert.match(quality, /<OrganizationSignal issues=\{org\.issues\}\/>\s*<span>\{org\.name\}<\/span>/);
   assert.match(quality, /<OrganizationSignal issues=\{selected\.issues\}\/>/);
-  assert.match(presence, /<OrganizationSignal issues=\{findVitrinaQualityIssues\(row\)\}\/>\s*<span>\{row\.name\}<\/span>/);
+  assert.match(presence, /<OrganizationSignal issues=\{e\.issues\}\/>\s*<span>\{short\(e\.name\)\}/);
   assert.match(quality, /aria-label=\{"Сигнал качества: " \+ message\}/);
   assert.match(readFileSync("app/vitrina-quality-dashboard.css","utf8"),/\.vitrinaQSignalConfirmed/);
   assert.match(readFileSync("app/vitrina-quality-dashboard.css","utf8"),/\.vitrinaQSignalReview/);
