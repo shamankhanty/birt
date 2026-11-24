@@ -48,6 +48,7 @@ import tvspCompositionChangesRaw from "./tvsp-composition-changes.json";
 import smpStatusesRaw from "./smp-statuses.json";
 import organizationStatusRaw from "./organization-status.json";
 import moRegistryRaw from "./mo-registry.json";
+import { filterActiveDatasetMap } from "../lib/mo-reorganization.js";
 import electronicWaybillRaw from "./electronic-waybill.json";
 import electronicWaybillWeeklyRaw from "./electronic-waybill-weekly.json";
 import federalControlRaw from "./federal-control.json";
@@ -594,16 +595,19 @@ const baselineIndicators: Indicator[] = [
 // Operational facts are always read from the accepted production datasets. The
 // table above contains stable presentation fallbacks only; it is never the
 // source of a current date, period, total, numerator or denominator.
+const activeMoDataRaw = filterActiveDatasetMap(moDataRaw as Record<string, any>);
+const activeOperationalMoRaw = filterActiveDatasetMap(operationalMoRaw as Record<string, any>);
+const activeOrganizationStatusRaw = filterActiveDatasetMap(organizationStatusRaw as Record<string, any>);
 const operationalDatasets = {
-  ...(moDataRaw as Record<string, any>),
-  ...(operationalMoRaw as Record<string, any>),
-  ...(organizationStatusRaw as Record<string, any>),
+  ...activeMoDataRaw,
+  ...activeOperationalMoRaw,
+  ...activeOrganizationStatusRaw,
   ...(physicianMetricsRaw.datasets as Record<string, any>),
 };
 const currentOperationalRuntime = createCurrentOperationalRuntime({
-  moData: moDataRaw,
-  operationalMo: operationalMoRaw,
-  organizationStatus: organizationStatusRaw,
+  moData: activeMoDataRaw,
+  operationalMo: activeOperationalMoRaw,
+  organizationStatus: activeOrganizationStatusRaw,
   physicianMetrics: physicianMetricsRaw,
   physicianWeeklySnapshot: physicianWeeklySnapshotRaw,
   errorCategories: errorCategoriesRaw,
@@ -779,9 +783,9 @@ const physicianMetrics = {
   }),
 } as PhysicianMetricsData;
 const moData = indicatorRegistry.applyToDatasetMap({
-  ...(moDataRaw as Record<string, MoDataset>),
-  ...(operationalMoRaw as Record<string, MoDataset>),
-  ...(organizationStatusRaw as Record<string, MoDataset>),
+  ...(activeMoDataRaw as Record<string, MoDataset>),
+  ...(activeOperationalMoRaw as Record<string, MoDataset>),
+  ...(activeOrganizationStatusRaw as Record<string, MoDataset>),
   ...(physicianMetrics.datasets as Record<string, MoDataset>),
   visitMax: {
     name: "Запись на приём к врачу через МАХ",
@@ -944,7 +948,7 @@ function displayWaybillMoName(name: string) {
   return cleanMoName(name);
 }
 
-const monthlyMoData = { ...monthlyMoRaw, doctorsAll: doctorsAllCumulative.monthly } as Record<string, MonthlyMoDataset>;
+const monthlyMoData = { ...filterActiveDatasetMap(monthlyMoRaw as Record<string, any>), doctorsAll: doctorsAllCumulative.monthly } as Record<string, MonthlyMoDataset>;
 const maxAppointmentsMunicipal = maxAppointmentsMunicipalRaw as MaxAppointmentMunicipalData;
 const maxTargets = maxTargetsRaw as {
   months: string[];
@@ -991,7 +995,7 @@ function daysRemainingInCutMonth(date: string) {
 }
 
 function maxOperationalRow(metric: "tmkMaxCount" | "elnMaxCount", name: string) {
-  const rows = ((operationalMoRaw as Record<string, { rows?: Array<{ name: string; oid?: string; fact?: number; count?: number; previous?: number | null }> }>)[metric]?.rows ?? []);
+  const rows = ((activeOperationalMoRaw as Record<string, { rows?: Array<{ name: string; oid?: string; fact?: number; count?: number; previous?: number | null }> }>)[metric]?.rows ?? []);
   const key = moKey(name);
   return rows.find((row) => moKey(row.name) === key);
 }

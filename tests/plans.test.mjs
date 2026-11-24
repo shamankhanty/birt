@@ -30,16 +30,16 @@ test("static UI indicator definitions no longer duplicate numeric plans", () => 
 
 test("ELMK planned organizations have unique OIDs", () => {
   const rows = status.elmk.rows;
-  assert.equal(rows.length, 73);
-  assert.equal(new Set(rows.map(row => row.oid)).size, 73);
+  assert.equal(rows.length, 71);
+  assert.equal(new Set(rows.map(row => row.oid)).size, 71);
   assert.equal(rows.some(row => row.oid === "1.2.643.5.1.13.13.12.2.16.1079"), false);
-  assert.equal(status.elmk.numerator, 73);
-  assert.equal(status.elmk.denominator, 73);
+  assert.equal(status.elmk.numerator, 71);
+  assert.equal(status.elmk.denominator, 71);
   assert.equal(status.elmk.fact, 100);
   assert.equal(status.elmk.comparisonReset, false);
   const gp18 = rows.find(row => row.name === "ГОРОДСКАЯ ПОЛИКЛИНИКА №18 г. Казань");
   assert.equal(gp18?.oid, "1.2.643.5.1.13.13.12.2.16.1080");
-  assert.equal(gp18?.count, 110);
+  assert.equal(gp18?.count, 128);
   assert.equal(gp18?.fact, 100);
 });
 

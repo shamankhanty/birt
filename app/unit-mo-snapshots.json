@@ -1,25 +1,25 @@
 {
   "tvspStationary": {
     "previous": {
-      "date": "15.11.2026",
-      "total": 93,
-      "good": 65,
-      "partial": 28,
+      "date": "ноябрь 2026",
+      "total": 91,
+      "good": 72,
+      "partial": 19,
       "none": 0
     }
   },
   "tvspAmbulatory": {
     "previous": {
-      "date": "15.11.2026",
-      "total": 111,
-      "good": 91,
-      "partial": 20,
+      "date": "ноябрь 2026",
+      "total": 108,
+      "good": 95,
+      "partial": 13,
       "none": 0
     }
   },
   "tvspLaboratory": {
     "previous": {
-      "date": "15.11.2026",
+      "date": "19.11.2026",
       "total": 80,
       "good": 80,
       "partial": 0,
