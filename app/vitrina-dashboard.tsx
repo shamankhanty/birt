@@ -4,7 +4,8 @@ import { useMemo, useState } from "react";
 import snapshots from "./vitrina-snapshots.json";
 import { sortVitrinaRows, type VitrinaSortColumn, type VitrinaSortDirection } from "../lib/vitrina-sort.js";
 import "./vitrina-dashboard.css";
-import VitrinaQualityDashboard, { type VitrinaQualityTab } from "./vitrina-quality-dashboard";
+import VitrinaQualityDashboard, { OrganizationSignal, type VitrinaQualityTab } from "./vitrina-quality-dashboard";
+import { findVitrinaQualityIssues } from "../lib/vitrina-quality.js";
 
 
 type Row = { parent: string; name: string; address: string };
@@ -83,7 +84,7 @@ function VitrinaPresence() {
       <th aria-sort={ariaSort("before")}><button type="button" className="vitrinaSortButton" onClick={() => changeSort("before")}>Было <span aria-hidden="true">{sortIndicator("before")}</span></button></th>
       <th aria-sort={ariaSort("now")}><button type="button" className="vitrinaSortButton" onClick={() => changeSort("now")}>Стало <span aria-hidden="true">{sortIndicator("now")}</span></button></th>
       <th aria-sort={ariaSort("delta")}><button type="button" className="vitrinaSortButton" onClick={() => changeSort("delta")}>Изменение <span aria-hidden="true">{sortIndicator("delta")}</span></button></th>
-    </tr></thead><tbody>{filtered.map((row) => <tr key={row.id} onClick={() => setSelected(row.id)} className={selected === row.id ? "selected" : ""}><td>{row.name}</td><td>{row.before}</td><td>{row.now}</td><td className={row.delta > 0 ? "positive" : row.delta < 0 ? "negative" : ""}>{row.delta > 0 ? "+" : ""}{row.delta}</td></tr>)}</tbody></table></div>
+    </tr></thead><tbody>{filtered.map((row) => <tr key={row.id} onClick={() => setSelected(row.id)} className={selected === row.id ? "selected" : ""}><td><span className="vitrinaQOrgCell"><OrganizationSignal issues={findVitrinaQualityIssues(row)}/><span>{row.name}</span></span></td><td>{row.before}</td><td>{row.now}</td><td className={row.delta > 0 ? "positive" : row.delta < 0 ? "negative" : ""}>{row.delta > 0 ? "+" : ""}{row.delta}</td></tr>)}</tbody></table></div>
     {chosen && <section className="vitrinaDetail"><div><h2>{chosen.name}</h2><button onClick={() => setSelected(null)}>Закрыть</button></div><p>Подразделений: {chosen.before} → {chosen.now}. Состав нового среза:</p><ul>{chosen.rows.map((row, index) => <li key={`${row.name}-${row.address}-${index}`}><strong>{row.name}</strong><span>{row.address || "Адрес не указан"}</span></li>)}</ul></section>}
     <small className="vitrinaSource">Источник: «МО_ у которых есть расписание (1).xlsx» и «МО с расписаниями на 23.11.xlsx». Единица учёта — строка подразделения.</small>
   </section>;
