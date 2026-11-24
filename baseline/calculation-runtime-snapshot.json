@@ -340,14 +340,14 @@
       "source": "mo-data"
     },
     "smp": {
-      "fact": 95.16923434105571,
+      "fact": 94.5202646090636,
       "plan": 95,
-      "date": "19.11.2026",
+      "date": "22.11.2026",
       "previous": null,
       "trend": null,
-      "quantity": 803432,
-      "numerator": 803432,
-      "denominator": 844214,
+      "quantity": 808860,
+      "numerator": 808860,
+      "denominator": 855753,
       "method": "ratio_components",
       "source": "mo-details"
     },
@@ -572,9 +572,9 @@
       "source": "mo-details"
     },
     "smp": {
-      "fact": 95.16923434105571,
+      "fact": 94.5202646090636,
       "plan": 95,
-      "date": "19.11.2026",
+      "date": "22.11.2026",
       "quantity": 652019,
       "numerator": 602974,
       "denominator": 659836,
