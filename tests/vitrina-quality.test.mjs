@@ -44,8 +44,8 @@ test("Vitrina quality preserves source values and ties while sorting", () => {
 
 test("Vitrina quality keeps presence tracking and quality tracking independent", () => {
   const src = readFileSync("app/vitrina-dashboard.tsx", "utf8");
-  assert.match(src, /Наличие расписаний/);
-  assert.match(src, /Контроль ошибок/);
+  assert.match(src, /МО с расписанием/);
+  assert.match(src, /Что исправить \/ проверить/);
   const snapshots = JSON.parse(readFileSync("app/vitrina-snapshots.json", "utf8"));
   assert.equal(snapshots.previous.date, null);
   assert.equal(snapshots.current.date, "23.11.2026");
