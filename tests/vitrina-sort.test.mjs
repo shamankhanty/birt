@@ -41,7 +41,8 @@ test("Vitrina sorting is stable, non-mutating and preserves original MO names", 
 
 test("Vitrina retains unshortened source names and clickable headers", () => {
   const view = readFileSync("app/vitrina-dashboard.tsx", "utf8");
-  assert.match(view, /<td>\{row\.name\}<\/td>/u);
+  assert.match(view, /<span>\{row\.name\}<\/span>/u);
+  assert.match(view, /<OrganizationSignal issues=\{findVitrinaQualityIssues\(row\)\}\/>/u);
   assert.doesNotMatch(view, /cleanMoName|moRegistry|shortName/u);
   assert.match(view, /column: "delta", direction: "asc"/u);
   for (const column of ["name", "before", "now", "delta"]) {

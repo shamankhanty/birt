@@ -44,6 +44,19 @@ type QualityIssue = {
 
 type QualityRow = VitrinaQualityOrganization & { issues: QualityIssue[] };
 
+/** Visible quality warning, not a declaration of federal rejection. */
+export function OrganizationSignal({ issues }: { issues: Array<{level: "confirmed" | "review"}> }) {
+  const confirmed = issues.filter((entry) => entry.level === "confirmed").length;
+  const review = issues.filter((entry) => entry.level === "review").length;
+  if (!confirmed && !review) return null;
+  const message = [confirmed ? confirmed + " пустых полей" : null, review ? review + " требуют сверки" : null]
+    .filter(Boolean).join("; ");
+  return <span className={"vitrinaQSignal " + (confirmed ? "vitrinaQSignalConfirmed" : "vitrinaQSignalReview")}
+    role="img" aria-label={"Сигнал качества: " + message} title={"Сигнал качества: " + message}>
+    {confirmed ? "!" : "?"}
+  </span>;
+}
+
 function Card({ label, value, hint, tone = "neutral" }: {label: string; value: string | number; hint: string; tone?: string}) {
   return <article className={"vitrinaQCard vitrinaQTone-" + tone}>
     <span>{label}</span><strong>{value}</strong><small>{hint}</small>
@@ -210,7 +223,7 @@ export default function VitrinaQualityDashboard({
       <Card label="Найдено замечаний" value={num(summary.issues.length)} hint={num(summary.confirmed.length) + " пустых полей; " + num(summary.review.length) + " требуют сверки"} tone="amber"/>
       <Card label="Подтверждённо исправлено" value="—" hint="Не рассчитывается без истории" tone="green"/>
     </div>
-    <p className="vitrinaQNote"><b>Ограничение источника:</b> доступны только МО, подразделение и отображаемый адрес. Замечания о названии и индексе требуют сверки. Проверка ФРМО/ФРМР, врачей, специальностей, кабинетов и доступных слотов пока невозможна.</p>
+    <p className="vitrinaQNote"><b>Ограничение источника:</b> доступны только МО, подразделение и отображаемый адрес. Замечания о названии и индексе требуют сверки. Проверка ФРМО/ФРМР, врачей, специальностей, кабинетов и доступных слотов пока невозможна. Контрольная длительность приёма свыше 20 минут будет выделяться только после импорта проверенного источника слотов.</p>
     <div className="vitrinaQColumns">
       <div className="vitrinaQPanel">
         <div className="vitrinaQPanelTitle"><h2>Реестр замечаний по МО</h2><span>{filtered.length} МО</span></div>
@@ -230,7 +243,7 @@ export default function VitrinaQualityDashboard({
         <div className="vitrinaQTableWrap"><table className="vitrinaQTable">
           <thead><tr><th>Медицинская организация</th><th>Замечаний</th><th>Пустых полей</th><th>Карточка</th></tr></thead>
           <tbody>{filtered.map((org) => <tr key={org.id} className={selected?.id === org.id ? "vitrinaQRowSelected" : ""}>
-            <td>{org.name}</td>
+            <td><span className="vitrinaQOrgCell"><OrganizationSignal issues={org.issues}/><span>{org.name}</span></span></td>
             <td className="vitrinaQCount">{org.issues.length}</td>
             <td>{org.issues.filter((entry) => entry.level === "confirmed").length}</td>
             <td><button className="vitrinaQOpen" type="button" onClick={() => {setSelectedOrg(org.id);setSelectedIssue(null);}}>Открыть</button></td>
@@ -241,7 +254,7 @@ export default function VitrinaQualityDashboard({
       <div className="vitrinaQPanel">
         {selected ? <>
           <div className="vitrinaQPanelTitle"><h2>Карточка МО</h2><span className="vitrinaQPill">{selected.issues.length} замечаний</span></div>
-          <h3 className="vitrinaQOrgTitle">{selected.name}</h3>
+          <h3 className="vitrinaQOrgTitle"><span className="vitrinaQOrgCell"><OrganizationSignal issues={selected.issues}/><span>{selected.name}</span></span></h3>
           {selected.issues.length > 0 ? <>
             <div className="vitrinaQChips">{selected.issues.map((entry, index) =>
               <button key={entry.id} onClick={() => setSelectedIssue(entry.id)} className={issue?.id === entry.id ? "active" : ""} type="button">
