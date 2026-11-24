@@ -159,6 +159,21 @@ def date_ru(d: date) -> str:
     return d.strftime("%d.%m.%Y")
 
 
+def archived_oids_for_date(value: date) -> set[str]:
+    """Return predecessor OIDs archived by the single approved registry."""
+    try:
+        payload = json.loads((Path(__file__).resolve().parents[2] / "config/mo-reorganizations.json").read_text(encoding="utf-8"))
+    except (OSError, ValueError):
+        return set()
+    out = set()
+    for group in payload.get("groups", []):
+        effective = group.get("effectiveDate")
+        if not effective or value < date.fromisoformat(effective):
+            continue
+        out.update(str(item.get("oldOid")) for item in group.get("predecessors", []) if item.get("oldOid"))
+    return out
+
+
 def period_cumulative(d: date) -> str:
     return f"01.01–{date_ru(d)}"
 
@@ -1212,6 +1227,10 @@ def adapt_presence(app: Path, source: Path, end: date, family: str) -> AdapterRe
     rows=[]
     for old in status[key]["rows"]:
         oid=str(old.get('oid',''))
+        if oid in archived_oids_for_date(end):
+            # The legal entity remains in historical snapshots, but it is no
+            # longer an active target after the approved reorganization date.
+            continue
         if family == "elmk" and oid in elmk_inapplicable_oids:
             continue
         if oid not in counts: raise ValueError(f'{key}: отсутствует строка плановой МО {oid}; отсутствие не заменяется нулем')

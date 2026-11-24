@@ -108,18 +108,14 @@ def indicator_statistics(indicators):
 
 
 def preferred_preventive_source(item, partner, general_remd_sources):
-    """Use the same-period general REMD export when it can be paired with FOMS.
+    """Keep the approved paired 122/228 source authoritative.
 
-    The combined closed-cases workbook is a useful fallback, but its 122/228
-    counters can lag behind the direct REMD export produced for the same cut.
+    The direct general REMD export is retained for cross-checking, but it is
+    not interchangeable with the closed-cases/122/228 report: the two reports
+    use different aggregation scopes.  Switching sources here would silently
+    change the numerator while leaving the FOMS denominator unchanged.
     """
-    if not partner:
-        return item
-    paired = [source for source in general_remd_sources
-              if source.get('status') == 'PASS'
-              and source.get('endDate') == partner.get('endDate')
-              and source.get('startDate') == partner.get('startDate')]
-    return {**paired[0], 'family': 'preventive_remd'} if len(paired) == 1 else item
+    return item
 
 
 def invoke(app, family, metric, item, partner):
@@ -360,7 +356,20 @@ def stage(input_dir, output_dir, replay_manifest=None):
                 prior=entry['previousPeriod'].get('date')
                 if prior:
                     from datetime import datetime
-                    old_date=datetime.strptime(prior,'%d.%m.%Y').date() if '.' in prior else parse_iso(prior)
+                    if '.' in prior:
+                        old_date=datetime.strptime(prior,'%d.%m.%Y').date()
+                    else:
+                        # Some accepted TVSP datasets use a month label in
+                        # their legacy `date` field (e.g. "ноябрь 2026").
+                        # Do not feed a display label to date.fromisoformat.
+                        from source_catalog import month_hint
+                        old_date=month_hint(prior)
+                        if old_date:
+                            # A month label denotes the month, not its end
+                            # date.  Compare at month precision so a 23.11
+                            # source is not rejected as older than "ноябрь
+                            # 2026" (which month_hint represents as 30.11).
+                            old_date=old_date.replace(day=1)
                     if item.get('endDate') and parse_iso(item['endDate'])<old_date:
                         raise ValueError('Источник старше действующего периода; прежний показатель сохранен')
                 result=invoke(raw,family,metric,item,partner)

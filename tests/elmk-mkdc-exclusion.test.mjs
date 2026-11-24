@@ -13,9 +13,9 @@ test("MKDC is not counted in the current ELMK denominator", () => {
   assert.equal(status.elmk.rows.some((row) => row.oid === mkdcOid), false);
   assert.deepEqual(
     { numerator: status.elmk.numerator, denominator: status.elmk.denominator, fact: status.elmk.fact },
-    { numerator: 73, denominator: 73, fact: 100 },
+    { numerator: 71, denominator: 71, fact: 100 },
   );
-  assert.equal(status.elmk.quantity, 73);
+  assert.equal(status.elmk.quantity, 71);
   assert.match(status.elmk.note, /лицензия отозвана/u);
 });
 

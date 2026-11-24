@@ -1,12 +1,12 @@
 {
   "schemaVersion": 1,
-  "updatedAt": "2026-10-09",
+  "updatedAt": "2026-11-24",
   "groups": [
     {
       "id": "almetyevsk-crb-2026-10",
       "name": "Альметьевская ЦРБ (после реорганизации)",
       "effectiveDate": "2026-10-01",
-      "status": "verification_pending",
+      "status": "active_archive_rule",
       "statusLabel": "Реорганизация подтверждена письмом, идентификаторы ФРМО/ФРМР проверяются",
       "historicalPolicy": "Периоды до 01.10.2026 сохраняются за прежними МО и OID; факты, рейтинги и ответственность не переписываются.",
       "analyticsPolicy": "Сумма предшественников допустима только как аналитическая агрегация после подтверждения всех связок. Она не является исходным фактом и не используется для динамики, рейтинга или ответственности.",
@@ -17,11 +17,11 @@
         "status": "confirmed"
       },
       "predecessors": [
-        {"name":"Альметьевская городская поликлиника №3","oldOid":"1.2.643.5.1.13.13.12.2.16.1107","successorOid":null,"frmoStatus":"pending","frmrStatus":"pending","sourceStatus":"pending"},
-        {"name":"Альметьевская детская районная больница с перинатальным центром","oldOid":"1.2.643.5.1.13.13.12.2.16.1146","successorOid":null,"frmoStatus":"pending","frmrStatus":"pending","sourceStatus":"pending"},
-        {"name":"Альметьевская стоматологическая поликлиника","oldOid":"1.2.643.5.1.13.13.12.2.16.1100","successorOid":null,"frmoStatus":"pending","frmrStatus":"pending","sourceStatus":"pending"},
-        {"name":"Альметьевская станция скорой медицинской помощи","oldOid":"1.2.643.5.1.13.13.12.2.16.1057","successorOid":null,"frmoStatus":"pending","frmrStatus":"pending","sourceStatus":"pending"},
-        {"name":"Альметьевский центр общественного здоровья и медицинской профилактики","oldOid":"1.2.643.5.1.13.13.12.2.16.1128","successorOid":null,"frmoStatus":"pending","frmrStatus":"pending","sourceStatus":"pending"}
+        {"name":"Альметьевская городская поликлиника №3","oldOid":"1.2.643.5.1.13.13.12.2.16.1107","successorOid":"1.2.643.5.1.13.13.12.2.16.1108","status":"archived","frmoStatus":"pending","frmrStatus":"pending","sourceStatus":"expected_absent_after_effective_date"},
+        {"name":"Альметьевская детская районная больница с перинатальным центром","oldOid":"1.2.643.5.1.13.13.12.2.16.1146","successorOid":"1.2.643.5.1.13.13.12.2.16.1108","status":"archived","frmoStatus":"pending","frmrStatus":"pending","sourceStatus":"expected_absent_after_effective_date"},
+        {"name":"Альметьевская стоматологическая поликлиника","oldOid":"1.2.643.5.1.13.13.12.2.16.1100","successorOid":"1.2.643.5.1.13.13.12.2.16.1108","status":"archived","frmoStatus":"pending","frmrStatus":"pending","sourceStatus":"expected_absent_after_effective_date"},
+        {"name":"Альметьевская станция скорой медицинской помощи","oldOid":"1.2.643.5.1.13.13.12.2.16.1057","successorOid":"1.2.643.5.1.13.13.12.2.16.1108","status":"archived","frmoStatus":"pending","frmrStatus":"pending","sourceStatus":"expected_absent_after_effective_date"},
+        {"name":"Альметьевский центр общественного здоровья и медицинской профилактики","oldOid":"1.2.643.5.1.13.13.12.2.16.1128","successorOid":"1.2.643.5.1.13.13.12.2.16.1108","status":"archived","frmoStatus":"pending","frmrStatus":"pending","sourceStatus":"expected_absent_after_effective_date"}
       ]
     }
   ]

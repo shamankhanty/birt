@@ -11,20 +11,20 @@ test("both EPGU attachment indicators use the same denominator growth, not the n
   assert.ok(first);
   assert.ok(timely);
   assert.deepEqual(first, timely);
-  assert.equal(first.count, 1553);
-  assert.equal(first.currentTotal, 48559);
-  assert.equal(first.previousTotal, 47006);
-  assert.equal(first.previousDate, "12.11.2026");
-  assert.equal(first.currentDate, "19.11.2026");
+  assert.equal(first.count, 610);
+  assert.equal(first.currentTotal, 49169);
+  assert.equal(first.previousTotal, 48559);
+  assert.equal(first.previousDate, "19.11.2026");
+  assert.equal(first.currentDate, "22.11.2026");
   assert.notEqual(first.count, data.egpu.numerator - data.egpu.previousNumerator);
   assert.notEqual(first.count, data.egpu2days.numerator - data.egpu2days.previousNumerator);
 });
 
 test("subsequent compatible source updates recompute the count without a hardcoded date", () => {
-  const modified = { ...data.egpu, date: "26.11.2026", previousDate: "19.11.2026",
-    period: "01.01–26.11.2026", previousPeriod: "01.01–19.11.2026",
-    previousDenominator: 48559, denominator: 50300 };
-  assert.equal(estimateAttachmentInflow(modified).count, 1741);
+  const modified = { ...data.egpu, date: "26.11.2026", previousDate: "22.11.2026",
+    period: "01.01–26.11.2026", previousPeriod: "01.01–22.11.2026",
+    previousDenominator: 49169, denominator: 50300 };
+  assert.equal(estimateAttachmentInflow(modified).count, 1131);
 });
 
 test("missing, negative or incomparable data never becomes zero new applications", () => {
