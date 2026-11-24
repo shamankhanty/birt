@@ -76,6 +76,24 @@ function metrics(rows: Specialty[]) {
 }
 
 const orgMetrics = (org: Organization) => metrics(org.specialties);
+
+/** Read-only reuse of the same source, ownership rules and formula as И-38.9. */
+export function getVitrinaIncident38(includePrivate: boolean) {
+  const orgs = ORGANIZATIONS.filter(org => includePrivate || !isPrivateOrganization(org));
+  const dates = [...new Set(DATA.map(dataset => dataset.reportDate))];
+  const horizons = [...new Set(DATA.map(dataset => dataset.forwardDays))];
+  const unique = new Set(orgs.map(org => org.oid)).size === orgs.length;
+  const comparable = dates.length === 1 && horizons.length === 1 && unique;
+  const total = comparable ? metrics(orgs.flatMap(org => org.specialties)) : null;
+  const specialties = SPECIALTIES.map(specialty => {
+    const cells = orgs.map(org => org.specialties.find(row => row.code === specialty.code));
+    const complete = comparable && cells.every((row): row is Specialty => Boolean(row));
+    const aggregate = complete ? metrics(cells.filter((row): row is Specialty => Boolean(row))) : null;
+    return { ...specialty, aggregate };
+  }).sort((a,b) => (a.aggregate?.coverage ?? Infinity) - (b.aggregate?.coverage ?? Infinity));
+  return { dates, horizons, comparable, orgCount: orgs.length, total, specialties };
+}
+
 const tone = (value: number | null) => value === null ? styles.neutral : value >= 100 ? styles.good : styles.belowNorm;
 const planTone = (value: number | null) => value === null ? styles.neutral : value >= PLAN_PERCENT ? styles.good : styles.belowNorm;
 const specialtyBand = (value: number | null) => value === null ? styles.neutral : value >= 75 ? styles.specialtyGreen : value >= 50 ? styles.specialtyYellow : value >= 25 ? styles.specialtyOrange : styles.specialtyRed;
