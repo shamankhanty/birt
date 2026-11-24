@@ -47,6 +47,7 @@ test("detail page shows the compact estimate for both EPGU indicators", () => {
   const page = readFileSync(new URL("../app/page.tsx", import.meta.url), "utf8");
   assert.match(page, /matrixMetric === "egpu" \|\| matrixMetric === "egpu2days"/u);
   assert.match(page, /data-testid="attachment-inflow"/u);
-  assert.match(page, /estimateAttachmentInflow\(selectedDataset\)/u);
+  assert.match(page, /const attachmentSourceDataset = activeMoDataRaw\[matrixMetric\];/u);
+  assert.match(page, /estimateAttachmentInflow\(attachmentSourceDataset\)/u);
   assert.match(page, /Не число уникальных новых обращений: возможны корректировки/u);
 });
