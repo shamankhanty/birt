@@ -109,7 +109,7 @@ function MinistryWorkspace({entries,scope,i38,open}:{entries:Entry[];scope:Scope
     <div className="v2Metrics">
       <Metric label="МО с расписанием" value={val(active.length)} hint={"Подразделений: "+val(now)+" ("+signed(now-before)+")"}/>
       <Metric label="МО с замечаниями" value={val(active.filter(e=>e.issues.length).length)} hint={val(issues.length)+" замечаний · "+q.empty+" пустых поля"} cls="v2Warn" onClick={()=>setFilter("issues")}/>
-      <Metric label="И-38.9 · "+i38.dates.join(" / ") value={pct(i38.total?.coverage)} cls={tone(i38.total?.coverage)} hint={val(i38.total?.epguSlots)+" / "+val(i38.total?.norm)+" · "+i38.orgCount+" МО"}/>
+      <Metric label={"И-38.9 · "+i38.dates.join(" / ")} value={pct(i38.total?.coverage)} cls={tone(i38.total?.coverage)} hint={val(i38.total?.epguSlots)+" / "+val(i38.total?.norm)+" · "+i38.orgCount+" МО"}/>
       <Metric label="МО ниже плана / цели" value={i38.comparable?below+" / "+below70:"—"} hint="И-38: 60% / 70%; "+zero+" МО с нулём слотов по профилю" cls="v2Bad" onClick={()=>setFilter("below")}/>
       <Metric label="Свободные слоты / >20 мин" value="— / —" hint="Витрина: источник слотов не подключён"/>
     </div>
