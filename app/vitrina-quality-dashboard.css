@@ -90,3 +90,24 @@
 .vitrinaQSignal{display:inline-flex;align-items:center;justify-content:center;flex:0 0 18px;width:18px;height:18px;border-radius:5px;font-size:12px;font-weight:900;line-height:1}
 .vitrinaQSignalConfirmed{background:#ffe9ed;color:#a91d37;border:1px solid #e7a7b3}
 .vitrinaQSignalReview{background:#fff2de;color:#8b5400;border:1px solid #edc98d}
+
+/* Compact management-first workspace; legacy diagnostics remain intact. */
+.vitrinaMTabs{grid-template-columns:repeat(8,minmax(0,1fr))}
+.vitrinaMTabs button{padding:10px 5px;min-width:0;overflow-wrap:anywhere}
+.vitrinaManagement .vitrinaQCard{min-height:86px;padding:12px 14px}
+.vitrinaMHeadline{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap;padding:12px 15px;border:1px solid #dce3f4;border-radius:12px;background:white}
+.vitrinaMHeadline h2{font-size:17px;margin:0 0 4px;color:#17243b}
+.vitrinaMHeadline p{font-size:12px;color:#65728a;margin:0}
+.vitrinaMStatus{font-size:12px;font-weight:700;color:#876019;background:#fff4df;border-radius:7px;padding:7px 10px}
+.vitrinaMOrg,.vitrinaMStage{display:flex;gap:8px;align-items:center;padding:9px 0;border-bottom:1px solid #e8eaf4;font-size:12px}
+.vitrinaMOrg>span,.vitrinaMStage>b{flex:1;min-width:0;overflow-wrap:anywhere}
+.vitrinaMOrg>strong{color:#9b610e;white-space:nowrap}
+.vitrinaMStage>span{font-size:11px;color:#64748b;text-align:right}
+.vitrinaMPositive{color:#17713f!important;font-weight:700}
+.vitrinaMNegative{color:#bc2538!important;font-weight:700}
+.vitrinaMTable{width:100%;border-collapse:collapse;table-layout:fixed;font-size:12px}
+.vitrinaMTable th,.vitrinaMTable td{padding:9px 5px;text-align:right;border-bottom:1px solid #e8eaf4;overflow-wrap:anywhere}
+.vitrinaMTable th{background:#f0f2fb;color:#36436b}
+.vitrinaMTable th:first-child,.vitrinaMTable td:first-child{width:40%;text-align:left}
+@media(max-width:1120px){.vitrinaMTabs{grid-template-columns:repeat(4,minmax(0,1fr))}}
+@media(max-width:520px){.vitrinaMTabs{grid-template-columns:repeat(2,minmax(0,1fr))}.vitrinaMStage{flex-wrap:wrap}.vitrinaMTable{font-size:11px}}
