@@ -1,6 +1,7 @@
 import test from "node:test";
 import assert from "node:assert/strict";
 import { readFileSync } from "node:fs";
+import { scheduleIdentity } from "../lib/vitrina-management.js";
 import { sortVitrinaRows } from "../lib/vitrina-sort.js";
 
 const rows = [
@@ -39,22 +40,19 @@ test("Vitrina sorting is stable, non-mutating and preserves original MO names", 
   assert.deepEqual(sortVitrinaRows(ties, "delta", "asc").map(row => row.id), ["a", "z"]);
 });
 
-test("Vitrina retains unshortened source names and clickable headers", () => {
+test("Vitrina retains full source names as title and sortable registry headers", () => {
   const view = readFileSync("app/vitrina-dashboard.tsx", "utf8");
-  assert.match(view, /<span>\{row\.name\}<\/span>/u);
-  assert.match(view, /<OrganizationSignal issues=\{findVitrinaQualityIssues\(row\)\}\/>/u);
-  assert.doesNotMatch(view, /cleanMoName|moRegistry|shortName/u);
-  assert.match(view, /column: "delta", direction: "asc"/u);
-  for (const column of ["name", "before", "now", "delta"]) {
-    assert.ok(view.includes('onClick={() => changeSort("' + column + '")}'), column);
-    assert.ok(view.includes('aria-sort={ariaSort("' + column + '")}'), column);
-  }
+  assert.match(view, /title=\{e\.name\}/u);
+  assert.match(view, /<OrganizationSignal issues=\{e\.issues\}\/>/u);
+  assert.match(view, /onClick=\{\(\)=>changeSort\(h\.k\)\}/u);
+  assert.match(view, /aria-sort=\{sort\.key===h\.k/);
+  for (const column of ["name","now","delta","coverage","gap","issues"]) assert.ok(view.includes('k:"'+column+'"'));
 });
 
 test("Vitrina source grouping and region totals are unchanged", () => {
   const snapshots = JSON.parse(readFileSync("app/vitrina-snapshots.json", "utf8"));
   const key = value => value.toUpperCase().replace(/Ё/gu, "Е").replace(/\s+/gu, " ").trim();
-  const parentKey = value => key(value)
+  const parentKey = value => scheduleIdentity(key(value))
     .replace(/ ИМЕНИ М\.Ш\.УРАЗАЕВОЙ/u, "")
     .replace(/ Г\. НАБЕРЕЖНЫЕ ЧЕЛНЫ$/u, "")
     .replace(/ Г\. НАБЕРЕЖНЫЕ ЧЕЛНЫ(?=")/u, "")
