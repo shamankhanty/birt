@@ -57,3 +57,14 @@ test("only repeated slot identifiers within one organization and two dates are f
   ]);
   assert.deepEqual(r.alerts.map(x=>x.code),["duplicate-slot-id"]);
 });
+
+test("blank duration is unknown and source indexes survive date filters", () => {
+  const r=analyzeVitrinaSlotSignals([
+    {...base,exportDate:"23.11.2026",durationMinutes:25},
+    {...base,exportDate:"24.11.2026",durationMinutes:" "},
+    {...base,exportDate:"24.11.2026",durationMinutes:21}
+  ], {exportDate:"24.11.2026"});
+  assert.equal(r.durationUnavailable,1);
+  assert.equal(r.durationChecked,1);
+  assert.equal(r.alerts[0].sourceRowIndex,2);
+});
