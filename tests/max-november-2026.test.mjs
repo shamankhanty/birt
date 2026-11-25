@@ -30,7 +30,7 @@ test('MAX October is closed with original source facts and no changes to October
 
 test('MAX November plan uses November-minus-October approved targets, not old 2026 year-end plan',()=>{
  assert.equal(views.monthLabel,'Ноябрь 2026');
- assert.equal(views.operational.period,'01.11–19.11.2026');
+ assert.equal(views.operational.period,'01.11–23.11.2026');
  for(const [id,monthlyPlan,cumulative] of [['tmk',16000,177000],['eln',8000,90000]]){
   const metric=views.operational.metrics[id];
   assert.equal(metric.republicPlan,monthlyPlan);
@@ -46,17 +46,18 @@ test('MAX November plan uses November-minus-October approved targets, not old 20
  }
 });
 
-test('MAX November uses direct 19 November report with approved Spassk attribution',()=>{
+test('MAX November uses direct 23 November report with approved Spassk attribution',()=>{
  const operational=views.operational;
  assert.equal(operational.status,'partial_month_source');
- assert.equal(operational.date,'19.11.2026');
- assert.equal(operational.previousDate,'13.11.2026');
+ assert.equal(operational.date,'23.11.2026');
+ assert.equal(operational.previousDate,'19.11.2026');
+ assert.match(operational.source,/ТМК_МАХ 01\.11\.-23\.11/);
  assert.equal(views.cumulative.previousDate,'19.11.2026');
  for(const id of ['tmk','eln']){
   assert.equal(views.closedMonths['2026-10'].cumulative.metrics[id].sourceTotal,previousViews.closedMonths['2026-10'].cumulative.metrics[id].sourceTotal);
   assert.equal(views.closedMonths['2026-10'].operational.metrics[id].sourceTotal,previousViews.closedMonths['2026-10'].operational.metrics[id].sourceTotal);
  }
- for(const [id,region,inPlan,previousRegion,previousInPlan,spasskCumulative,spasskNovember] of [['tmk',9450,9393,4832,4805,1402,79],['eln',6468,6404,3578,3548,38,2]]){
+ for(const [id,region,inPlan,previousRegion,previousInPlan,spasskCumulative,spasskNovember] of [['tmk',11023,10787,9450,9393,1402,90],['eln',7687,7439,6468,6404,38,3]]){
   const metric=operational.metrics[id];
   assert.equal(metric.sourceTotal,region);
   assert.equal(metric.plannedMoFact,inPlan);
@@ -64,7 +65,9 @@ test('MAX November uses direct 19 November report with approved Spassk attributi
   assert.equal(metric.previousSourceTotal,previousRegion);
   assert.equal(metric.previousPlannedMoFact,previousInPlan);
   assert.equal(metric.rows.reduce((sum,row)=>sum+(row.fact??0),0),inPlan);
-  assert.equal(metric.rows.filter(row=>row.fact===null).length,3);
+  assert.equal(metric.rows.filter(row=>row.fact===null).length,5);
+  assert.equal(metric.plannedCoverage.matched,80);
+  assert.equal(metric.rows.find(row=>row.oid.endsWith('.1107')).fact,null);
   assert.equal(metric.rows.find(row=>row.oid.endsWith('.1146')).fact,null);
   assert.equal(metric.rows.find(row=>row.oid.endsWith('.1148')).fact,null);
   const spassk=metric.rows.find(row=>row.oid.endsWith('.18650'));
