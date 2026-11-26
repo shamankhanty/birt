@@ -529,256 +529,68 @@
         {
           "oid": "1.2.643.5.1.13.13.12.2.16.1044",
           "name": "ГАУЗ \"КАМСКО-УСТЬИНСКАЯ ЦРБ\"",
-          "norm": 3515.5,
-          "epguSlots": 3037
-        },
-        {
-          "oid": "1.2.643.5.1.13.13.12.2.16.1144",
-          "name": "ГАУЗ \"КУКМОРСКАЯ ЦРБ\"",
-          "norm": 8640,
-          "epguSlots": 5416
-        },
-        {
-          "oid": "1.2.643.5.1.13.13.12.2.16.1149",
-          "name": "ЛАИШЕВСКАЯ ЦРБ",
-          "norm": 5565,
-          "epguSlots": 5755
-        },
-        {
-          "oid": "1.2.643.5.1.13.13.12.2.16.1104",
-          "name": "ГАУЗ \"МАМАДЫШСКАЯ ЦРБ\"",
-          "norm": 5877.5,
-          "epguSlots": 4780
-        },
-        {
-          "oid": "1.2.643.5.1.13.13.12.2.16.1058",
-          "name": "ГАУЗ \"МЕНДЕЛЕЕВСКАЯ ЦРБ\"",
-          "norm": 4460.5,
-          "epguSlots": 2528
-        },
-        {
-          "oid": "1.2.643.5.1.13.13.12.2.16.1101",
-          "name": "ГАУЗ \"МЕНЗЕЛИНСКАЯ ЦРБ\"",
-          "norm": 5605,
-          "epguSlots": 4119
-        },
-        {
-          "oid": "1.2.643.5.1.13.13.12.2.16.1055",
-          "name": "МУСЛЮМОВСКАЯ ЦРБ",
-          "norm": 5167.5,
-          "epguSlots": 3125
-        },
-        {
-          "oid": "1.2.643.5.1.13.13.12.2.16.1059",
-          "name": "ГАУЗ \"НОВОШЕШМИНСКАЯ ЦРБ\"",
-          "norm": 3890,
-          "epguSlots": 2205
-        },
-        {
-          "oid": "1.2.643.5.1.13.13.12.2.16.1138",
-          "name": "ГАУЗ \"НУРЛАТСКАЯ ЦРБ\"",
-          "norm": 8381.25,
-          "epguSlots": 5806
-        },
-        {
-          "oid": "1.2.643.5.1.13.13.12.2.16.1109",
-          "name": "ГАУЗ \"ПЕСТРЕЧИНСКАЯ ЦРБ\"",
-          "norm": 5515,
-          "epguSlots": 5416
-        },
-        {
-          "oid": "1.2.643.5.1.13.13.12.2.16.1133",
-          "name": "ГАУЗ РЫБНО-СЛОБОДСКАЯ ЦРБ",
-          "norm": 4630,
-          "epguSlots": 4483
-        },
-        {
-          "oid": "1.2.643.5.1.13.13.12.2.16.1126",
-          "name": "ГАУЗ \"САБИНСКАЯ ЦРБ\"",
-          "norm": 6852.5,
-          "epguSlots": 4696
-        },
-        {
-          "oid": "1.2.643.5.1.13.13.12.2.16.1169",
-          "name": "ГАУЗ \"САРМАНОВСКАЯ ЦРБ\"",
-          "norm": 8412.5,
-          "epguSlots": 6813
-        },
-        {
-          "oid": "1.2.643.5.1.13.13.12.2.16.1130",
-          "name": "ГАУЗ ТЕТЮШСКАЯ ЦРБ",
-          "norm": 4262.5,
-          "epguSlots": 3090
-        },
-        {
-          "oid": "1.2.643.5.1.13.13.12.2.16.1140",
-          "name": "ГАУЗ \"ТУКАЕВСКАЯ ЦРБ\"",
-          "norm": 3782.5,
-          "epguSlots": 3222
-        },
-        {
-          "oid": "1.2.643.5.1.13.13.12.2.16.1162",
-          "name": "ГАУЗ \"ЧЕРЕМШАНСКАЯ ЦРБ\"",
-          "norm": 4075.5,
-          "epguSlots": 2925
-        },
-        {
-          "oid": "1.2.643.5.1.13.13.12.2.16.1039",
-          "name": "ГАУЗ \"ТЮЛЯЧИНСКАЯ ЦРБ\"",
-          "norm": 3984.5,
-          "epguSlots": 2900
-        },
-        {
-          "oid": "1.2.643.5.1.13.13.12.2.16.1097",
-          "name": "ГАУЗ \"УРУССИНСКАЯ ЦРБ\"",
-          "norm": 4347.5,
-          "epguSlots": 2556
-        }
-      ]
-    },
-    {
-      "scope": "cities",
-      "reportDate": "19.11.2026",
-      "frmoDate": "19.11.2026",
-      "source": "И_38.9_КЗН_НЧ  Слоты по нормативам на дату. 19.11.2026.xlsx",
-      "orgs": [
-        {
-          "oid": "1.2.643.5.1.13.13.12.2.16.28030",
-          "name": "ГАУЗ \"ГКБ № 12\"",
-          "norm": 7915,
-          "epguSlots": 6054
-        },
-        {
-          "oid": "1.2.643.5.1.13.13.12.2.16.63362",
-          "name": "АО ДЕТСКАЯ СТОМАТОЛОГИЧЕСКАЯ ПОЛИКЛИНИКА № 9 НА САБАНЕ",
-          "norm": 2182.5,
-          "epguSlots": 30
-        },
-        {
-          "oid": "1.2.643.5.1.13.13.12.2.16.1116",
-          "name": "ГАУЗ \"ГОРОДСКАЯ БОЛЬНИЦА №2\"",
-          "norm": 5058,
-          "epguSlots": 2817
-        },
-        {
-          "oid": "1.2.643.5.1.13.13.12.2.16.1208",
-          "name": "ГАУЗ \"ГОРОДСКАЯ ПОЛИКЛИНИКА №3\"",
-          "norm": 6722.5,
-          "epguSlots": 3551
-        },
-        {
-          "oid": "1.2.643.5.1.13.13.12.2.16.1112",
-          "name": "ГАУЗ \"ГОРОДСКАЯ БОЛЬНИЦА №5\"",
-          "norm": 15565,
-          "epguSlots": 9657
-        },
-        {
-          "oid": "1.2.643.5.1.13.13.12.2.16.1085",
-          "name": "ГАУЗ \"ГОСПИТАЛЬ ДЛЯ ВЕТЕРАНОВ ВОЙН\" Г. Н. ЧЕЛНЫ",
-          "norm": 3075.5,
-          "epguSlots": 1692
-        },
-        {
-          "oid": "1.2.643.5.1.13.13.12.2.16.1067",
-          "name": "ГАУЗ \"ДЕТСКАЯ ГОРОДСКАЯ ПОЛИКЛИНИКА №3\"",
-          "norm": 6060,
-          "epguSlots": 2848
-        },
-        {
-          "oid": "1.2.643.5.1.13.13.12.2.16.1147",
-          "name": "ГАУЗ \"ГОРОДСКАЯ ПОЛИКЛИНИКА №4 ИМ.Л.Н.ГАНИЕВОЙ\"",
-          "norm": 6672.5,
-          "epguSlots": 2759
-        },
-        {
-          "oid": "1.2.643.5.1.13.13.12.2.16.1045",
-          "name": "ГАУЗ \"ДЕТСКАЯ ГОРОДСКАЯ ПОЛИКЛИНИКА №2\"",
-          "norm": 5530,
-          "epguSlots": 3886
-        },
-        {
-          "oid": "1.2.643.5.1.13.13.12.2.16.1127",
-          "name": "ГАУЗ \"ДЕТСКАЯ ГОРОДСКАЯ ПОЛИКЛИНИКА №4 ИМ. Ф.Г. АХМЕРОВОЙ\"",
-          "norm": 8407.5,
-          "epguSlots": 4672
-        },
-        {
-          "oid": "1.2.643.5.1.13.13.12.2.16.1089",
-          "name": "ГАУЗ \"ДЕТСКАЯ ГОРОДСКАЯ ПОЛИКЛИНИКА №5\"",
-          "norm": 5955,
-          "epguSlots": 3892
-        },
-        {
-          "oid": "1.2.643.5.1.13.13.12.2.16.1066",
-          "name": "ГАУЗ \"ДЕТСКАЯ ГОРОДСКАЯ ПОЛИКЛИНИКА №6\"",
-          "norm": 5457.5,
-          "epguSlots": 5229
-        },
-        {
-          "oid": "1.2.643.5.1.13.13.12.2.16.1167",
-          "name": "ГАУЗ ДЕТСКАЯ СТОМАТОЛОГИЧЕСКАЯ ПОЛИКЛИНИКА №1",
-          "norm": 4770,
+          "norm": 3515�O}����k�w��l
           "epguSlots": 1654
         },
         {
           "oid": "1.2.643.5.1.13.13.12.2.16.1110",
           "name": "ГАУЗ СТОМАТОЛОГИЧЕСКАЯ ПОЛИКЛИНИКА №1",
-          "norm": 1440,
-          "epguSlots": 830
+          "norm": 1575,
+          "epguSlots": 932
         },
         {
           "oid": "1.2.643.5.1.13.13.12.2.16.1048",
           "name": "ГАУЗ СТОМАТОЛОГИЧЕСКАЯ ПОЛИКЛИНИКА №2",
           "norm": 3060,
-          "epguSlots": 1207
+          "epguSlots": 1220
         },
         {
           "oid": "1.2.643.5.1.13.13.12.2.16.1062",
           "name": "ГАУЗ СТОМАТОЛОГИЧЕСКАЯ ПОЛИКЛИНИКА № 3",
           "norm": 2790.018,
-          "epguSlots": 2610
+          "epguSlots": 2620
         },
         {
           "oid": "1.2.643.5.1.13.13.12.2.16.1051",
           "name": "ГАУЗ \"ГОРОДСКАЯ ПОЛИКЛИНИКА №6\"",
           "norm": 7352.5,
-          "epguSlots": 4134
+          "epguSlots": 4188
         },
         {
           "oid": "1.2.643.5.1.13.13.12.2.16.1115",
           "name": "ГАУЗ \"ГОРОДСКАЯ ПОЛИКЛИНИКА №7\"",
-          "norm": 8165,
-          "epguSlots": 4940
+          "norm": 8165.0,
+          "epguSlots": 4942
         },
         {
           "oid": "1.2.643.5.1.13.13.12.2.16.1065",
           "name": "ГАУЗ \"КДМЦ\"",
           "norm": 5242.5,
-          "epguSlots": 2900
+          "epguSlots": 2892
         },
         {
           "oid": "1.2.643.5.1.13.13.12.2.16.23256",
           "name": "ООО \"НИЖНЕКАМСКАЯ СТОМАТОЛОГИЧЕСКАЯ ПОЛИКЛИНИКА\"",
           "norm": 6165,
-          "epguSlots": 2087
+          "epguSlots": 2027
         },
         {
           "oid": "1.2.643.5.1.13.13.12.2.16.1070",
           "name": "ГАУЗ \"ГОРОДСКАЯ БОЛЬНИЦА № 11\"",
           "norm": 6440,
-          "epguSlots": 3973
+          "epguSlots": 3950
         },
         {
           "oid": "1.2.643.5.1.13.13.12.2.16.1123",
           "name": "ГАУЗ \"ДГКБ № 7\"",
           "norm": 8552.5,
-          "epguSlots": 7842
+          "epguSlots": 7156
         },
         {
           "oid": "1.2.643.5.1.13.13.12.2.16.1121",
           "name": "ГАУЗ \"РСП МЗ РТ\"",
           "norm": 3105,
-          "epguSlots": 1550
+          "epguSlots": 1561
         },
         {
           "oid": "1.2.643.5.1.13.13.12.2.16.22116",
@@ -790,163 +602,163 @@
           "oid": "1.2.643.5.1.13.13.12.2.16.1153",
           "name": "ГАУЗ \"ГОРОДСКАЯ ПОЛИКЛИНИКА № 7\"",
           "norm": 5220,
-          "epguSlots": 3751
+          "epguSlots": 3696
         },
         {
           "oid": "1.2.643.5.1.13.13.12.2.16.1182",
           "name": "ГАУЗ \"ДГП № 2\"",
           "norm": 7390,
-          "epguSlots": 4364
+          "epguSlots": 4326
         },
         {
           "oid": "1.2.643.5.1.13.13.12.2.16.1125",
           "name": "ГАУЗ \"КЛИНИКА МЕДИЦИНСКОГО УНИВЕРСИТЕТА\"",
           "norm": 6050,
-          "epguSlots": 5271
+          "epguSlots": 5360
         },
         {
           "oid": "1.2.643.5.1.13.13.12.2.16.1231",
           "name": "ФГАОУ ВО К(П)ФУ",
           "norm": 11637.5,
-          "epguSlots": 4289
+          "epguSlots": 4280
         },
         {
           "oid": "1.2.643.5.1.13.13.12.2.16.1185",
           "name": "ГАУЗ \"КЛИНИЧЕСКАЯ БОЛЬНИЦА №2\"",
           "norm": 12057.5,
-          "epguSlots": 6399
+          "epguSlots": 6225
         },
         {
           "oid": "1.2.643.5.1.13.13.12.2.16.1122",
           "name": "ГАУЗ \"ДЕТСКАЯ ГОРОДСКАЯ ПОЛИКЛИНИКА № 4\"",
           "norm": 10217.5,
-          "epguSlots": 7895
+          "epguSlots": 7775
         },
         {
           "oid": "1.2.643.5.1.13.13.12.2.16.10323",
           "name": "ООО \"КДЦ АРАКЧИНО\"",
           "norm": 662.5,
-          "epguSlots": 294
+          "epguSlots": 276
         },
         {
           "oid": "1.2.643.5.1.13.13.12.2.16.1135",
           "name": "ГАУЗ \"ГОСПИТАЛЬ ДЛЯ ВЕТЕРАНОВ ВОЙН\" Г. КАЗАНИ",
           "norm": 5685,
-          "epguSlots": 3410
+          "epguSlots": 3328
         },
         {
           "oid": "1.2.643.5.1.13.13.12.2.16.1136",
           "name": "ГАУЗ \"ГКБ №16\"",
           "norm": 12215,
-          "epguSlots": 8609
+          "epguSlots": 8462
         },
         {
           "oid": "1.2.643.5.1.13.13.12.2.16.1148",
           "name": "ГАУЗ \"ГДБ № 1 ИМ. М.Ш.УРАЗАЕВОЙ\"",
           "norm": 6607.5,
-          "epguSlots": 4618
+          "epguSlots": 4451
         },
         {
           "oid": "1.2.643.5.1.13.13.12.2.16.1060",
           "name": "ГАУЗ \"ДЕТСКАЯ СТОМАТОЛОГИЧЕСКАЯ ПОЛИКЛИНИКА № 1\"",
           "norm": 900,
-          "epguSlots": 400
+          "epguSlots": 408
         },
         {
           "oid": "1.2.643.5.1.13.13.12.2.16.1163",
           "name": "ГАУЗ \"ГКБ№7 ИМ. М.Н.САДЫКОВА\"",
-          "norm": 26718,
-          "epguSlots": 14707
+          "norm": 26948.0,
+          "epguSlots": 14636
         },
         {
           "oid": "1.2.643.5.1.13.13.12.2.16.1074",
           "name": "ГАУЗ \"ГОРОДСКАЯ ПОЛИКЛИНИКА № 10\"",
           "norm": 14047.5,
-          "epguSlots": 11329
+          "epguSlots": 11437
         },
         {
           "oid": "1.2.643.5.1.13.13.12.2.16.1113",
           "name": "ГАУЗ \"ГДП №7\"",
           "norm": 11045,
-          "epguSlots": 6107
+          "epguSlots": 6129
         },
         {
           "oid": "1.2.643.5.1.13.13.12.2.16.1193",
           "name": "ГАУЗ ДГП № 9",
           "norm": 9000,
-          "epguSlots": 6075
+          "epguSlots": 6077
         },
         {
           "oid": "1.2.643.5.1.13.13.12.2.16.14163",
           "name": "АО ДЕТСКАЯ СТОМАТОЛОГИЧЕСКАЯ ПОЛИКЛИНИКА № 9",
           "norm": 4288.5,
-          "epguSlots": 200
+          "epguSlots": 195
         },
         {
           "oid": "1.2.643.5.1.13.13.12.2.16.1094",
           "name": "ГАУЗ \"РКБ МЗ РТ\"",
           "norm": 4237.5,
-          "epguSlots": 2652
+          "epguSlots": 2806
         },
         {
           "oid": "1.2.643.5.1.13.13.12.2.16.1155",
           "name": "ГАУЗ \"ДРКБ МЗ РТ\"",
           "norm": 12907.5,
-          "epguSlots": 11119
+          "epguSlots": 11017
         },
         {
           "oid": "1.2.643.5.1.13.13.12.2.16.1151",
           "name": "ГАУЗ \"ЦГКБ № 18 ИМ. ПРОФ. К.Ш. ЗЫЯТДИНОВА\"",
           "norm": 12970,
-          "epguSlots": 10414
+          "epguSlots": 10463
         },
         {
           "oid": "1.2.643.5.1.13.13.12.2.16.1080",
           "name": "ГАУЗ \"ГОРОДСКАЯ ПОЛИКЛИНИКА №18\"",
-          "norm": 14190,
-          "epguSlots": 11271
+          "norm": 14190.0,
+          "epguSlots": 11189
         },
         {
           "oid": "1.2.643.5.1.13.13.12.2.16.1178",
           "name": "ГАУЗ \"ГОРОДСКАЯ ПОЛИКЛИНИКА № 20\"",
-          "norm": 17191,
-          "epguSlots": 13822
+          "norm": 17191.0,
+          "epguSlots": 13923
         },
         {
           "oid": "1.2.643.5.1.13.13.12.2.16.1179",
           "name": "ГАУЗ \"ГОРОДСКАЯ ПОЛИКЛИНИКА № 21\"",
           "norm": 15675,
-          "epguSlots": 13178
+          "epguSlots": 13077
         },
         {
           "oid": "1.2.643.5.1.13.13.12.2.16.1199",
           "name": "ГАУЗ \"ДЕТСКАЯ ГОРОДСКАЯ ПОЛИКЛИНИКА № 10\"",
           "norm": 11110,
-          "epguSlots": 6906
+          "epguSlots": 6983
         },
         {
           "oid": "1.2.643.5.1.13.13.12.2.16.1200",
           "name": "ГАУЗ \"ДЕТСКАЯ ГОРОДСКАЯ ПОЛИКЛИНИКА № 11\"",
           "norm": 8280.5,
-          "epguSlots": 6791
+          "epguSlots": 6655
         },
         {
           "oid": "1.2.643.5.1.13.13.12.2.16.1190",
           "name": "ООО \"МО \"СПАСЕНИЕ\"",
-          "norm": 5042,
-          "epguSlots": 1896
+          "norm": 5042.0,
+          "epguSlots": 1832
         },
         {
           "oid": "1.2.643.5.1.13.13.12.2.16.1197",
           "name": "ЧУЗ \"КБ\"РЖД-МЕДИЦИНА\"Г.КАЗАНЬ\"",
-          "norm": 5745,
-          "epguSlots": 262
+          "norm": 5745.0,
+          "epguSlots": 268
         },
         {
           "oid": "1.2.643.5.1.13.13.12.2.16.1090",
           "name": "ГАУЗ \"ГОРОДСКАЯ ДЕТСКАЯ ПОЛИКЛИНИКА № 6\"",
           "norm": 16492.5,
-          "epguSlots": 11302
+          "epguSlots": 11413
         },
         {
           "oid": "1.2.643.5.1.13.13.12.2.16.1150",
@@ -964,63 +776,63 @@
           "oid": "1.2.643.5.1.13.13.12.2.16.1082",
           "name": "ГАУЗ \"ГОРОДСКАЯ ПОЛИКЛИНИКА № 8\" Г.КАЗАНИ",
           "norm": 14622.5,
-          "epguSlots": 9365
+          "epguSlots": 9113
         },
         {
           "oid": "1.2.643.5.1.13.13.12.2.16.9675",
           "name": "ООО \"СТОМАТОЛОГИЧЕСКАЯ ПОЛИКЛИНИКА № 9 АЗИНО\" Г. КАЗАНИ",
-          "norm": 5490,
-          "epguSlots": 521
+          "norm": 5490.0,
+          "epguSlots": 551
         },
         {
           "oid": "1.2.643.5.1.13.13.12.2.16.12459",
           "name": "ООО \"СИТИДОК-ЭКСПЕРТ КАЗАНЬ\"",
-          "norm": 4275,
-          "epguSlots": 1656
+          "norm": 4275.0,
+          "epguSlots": 1643
         },
         {
           "oid": "1.2.643.5.1.13.13.12.2.16.1191",
           "name": "АО ГОРОДСКАЯ СТОМАТОЛОГИЯ",
           "norm": 1755,
-          "epguSlots": 340
+          "epguSlots": 329
         }
       ]
     },
     {
       "scope": "districts",
-      "reportDate": "19.11.2026",
+      "reportDate": "20.11.2026",
       "frmoDate": "19.11.2026",
-      "source": "И_38.9_РАЙОНЫ_Слоты по нормативам на дату. 19.11.2026.xlsx",
+      "source": "И_38.9_РАЙОНЫ_Слоты по нормативам на дату. 20.11.2026.xlsx",
       "orgs": [
         {
           "oid": "1.2.643.5.1.13.13.12.2.16.44921",
           "name": "ГАУЗ \"АЛЬМЕТЬЕВСКАЯ РМБ\"",
           "norm": 4920,
-          "epguSlots": 2468
+          "epguSlots": 2496
         },
         {
           "oid": "1.2.643.5.1.13.13.12.2.16.1165",
           "name": "ГАУЗ \"КПРБ\"",
-          "norm": 4080,
-          "epguSlots": 2222
+          "norm": 4080.0,
+          "epguSlots": 2185
         },
         {
           "oid": "1.2.643.5.1.13.13.12.2.16.1192",
           "name": "ГАУЗ \"НЦРМБ\"",
           "norm": 13207.5,
-          "epguSlots": 4445
+          "epguSlots": 4415
         },
         {
           "oid": "1.2.643.5.1.13.13.12.2.16.1171",
           "name": "ГАУЗ НДРБ С ПЦ",
           "norm": 20000,
-          "epguSlots": 12499
+          "epguSlots": 12301
         },
         {
           "oid": "1.2.643.5.1.13.13.12.2.16.1108",
           "name": "ГАУЗ \"АЛЬМЕТЬЕВСКАЯ ЦРБ\"",
-          "norm": 33551.5,
-          "epguSlots": 19909
+          "norm": 33831.5,
+          "epguSlots": 19867
         },
         {
           "oid": "1.2.643.5.1.13.13.12.2.16.1107",
@@ -1031,212 +843,212 @@
         {
           "oid": "1.2.643.5.1.13.13.12.2.16.1042",
           "name": "ГАУЗ \"БУГУЛЬМИНСКАЯ ЦРБ\"",
-          "norm": 7993,
-          "epguSlots": 4736
+          "norm": 7993.0,
+          "epguSlots": 4647
         },
         {
           "oid": "1.2.643.5.1.13.13.12.2.16.1093",
           "name": "ГАУЗ \"ЕЦРБ\"",
-          "norm": 11493,
-          "epguSlots": 7428
+          "norm": 11493.0,
+          "epguSlots": 7455
         },
         {
           "oid": "1.2.643.5.1.13.13.12.2.16.1139",
           "name": "ГАУЗ \"ЗЕЛЕНОДОЛЬСКАЯ ЦРБ\"",
-          "norm": 34105,
-          "epguSlots": 22325
+          "norm": 34105.0,
+          "epguSlots": 22409
         },
         {
           "oid": "1.2.643.5.1.13.13.12.2.16.1073",
           "name": "ГАУЗ \"ЛЕНИНОГОРСКАЯ ЦРБ\"",
           "norm": 11092.5,
-          "epguSlots": 5585
+          "epguSlots": 5851
         },
         {
           "oid": "1.2.643.5.1.13.13.12.2.16.1038",
           "name": "ГАУЗ \"ЧИСТОПОЛЬСКАЯ ЦРБ\"",
           "norm": 14677.5,
-          "epguSlots": 10760
+          "epguSlots": 10705
         },
         {
           "oid": "1.2.643.5.1.13.13.12.2.16.1084",
           "name": "АЗНАКАЕВСКАЯ ЦРБ",
-          "norm": 11555,
-          "epguSlots": 7011
+          "norm": 11555.0,
+          "epguSlots": 7184
         },
         {
           "oid": "1.2.643.5.1.13.13.12.2.16.1072",
           "name": "ГАУЗ \"ЗАИНСКАЯ ЦРБ\"",
           "norm": 9219.5,
-          "epguSlots": 5636
+          "epguSlots": 5753
         },
         {
           "oid": "1.2.643.5.1.13.13.12.2.16.1088",
           "name": "ГАУЗ \"АГРЫЗСКАЯ ЦРБ\"",
           "norm": 6412.5,
-          "epguSlots": 1568
+          "epguSlots": 1575
         },
         {
           "oid": "1.2.643.5.1.13.13.12.2.16.1156",
           "name": "ГАУЗ \"АКСУБАЕВСКАЯ ЦРБ\"",
           "norm": 4542.5,
-          "epguSlots": 3694
+          "epguSlots": 3722
         },
         {
           "oid": "1.2.643.5.1.13.13.12.2.16.1092",
           "name": "ГАУЗ Актанышская ЦРБ",
           "norm": 6382.5,
-          "epguSlots": 6640
+          "epguSlots": 6646
         },
         {
           "oid": "1.2.643.5.1.13.13.12.2.16.1087",
           "name": "ГАУЗ \"АЛЕКСЕЕВСКАЯ ЦРБ\"",
-          "norm": 5275,
-          "epguSlots": 3679
+          "norm": 5275.0,
+          "epguSlots": 3739
         },
         {
           "oid": "1.2.643.5.1.13.13.12.2.16.1161",
           "name": "ГАУЗ \"БАЗАРНО-МАТАКСКАЯ ЦРБ\"",
           "norm": 4400,
-          "epguSlots": 4188
+          "epguSlots": 4199
         },
         {
           "oid": "1.2.643.5.1.13.13.12.2.16.1152",
           "name": "ГАУЗ \"АПАСТОВСКАЯ ЦРБ\"",
-          "norm": 4170,
-          "epguSlots": 3103
+          "norm": 4170.0,
+          "epguSlots": 3120
         },
         {
           "oid": "1.2.643.5.1.13.13.12.2.16.1164",
           "name": "ГАУЗ \"АРСКАЯ ЦРБ\"",
           "norm": 8937.5,
-          "epguSlots": 5487
+          "epguSlots": 5257
         },
         {
           "oid": "1.2.643.5.1.13.13.12.2.16.1078",
           "name": "ГАУЗ \"АТНИНСКАЯ ЦРБ\"",
           "norm": 3920,
-          "epguSlots": 2979
+          "epguSlots": 3063
         },
         {
           "oid": "1.2.643.5.1.13.13.12.2.16.1120",
           "name": "ГАУЗ БУИНСКАЯ ЦРБ",
           "norm": 9882.5,
-          "epguSlots": 6577
+          "epguSlots": 6696
         },
         {
           "oid": "1.2.643.5.1.13.13.12.2.16.1129",
           "name": "ГАУЗ \"БАВЛИНСКАЯ ЦРБ\"",
           "norm": 5923,
-          "epguSlots": 3641
+          "epguSlots": 3835
         },
         {
           "oid": "1.2.643.5.1.13.13.12.2.16.1081",
           "name": "ГАУЗ \"БАЛТАСИНСКАЯ ЦРБ\"",
           "norm": 7587.5,
-          "epguSlots": 4883
+          "epguSlots": 4854
         },
         {
           "oid": "1.2.643.5.1.13.13.12.2.16.1052",
           "name": "ВЕРХНЕУСЛОНСКАЯ ЦРБ",
           "norm": 2615,
-          "epguSlots": 1921
+          "epguSlots": 1964
         },
         {
           "oid": "1.2.643.5.1.13.13.12.2.16.1050",
           "name": "ГАУЗ \"ВЫСОКОГОРСКАЯ ЦРБ\"",
-          "norm": 5770,
-          "epguSlots": 4853
+          "norm": 5770.0,
+          "epguSlots": 4942
         },
         {
           "oid": "1.2.643.5.1.13.13.12.2.16.1105",
           "name": "ГАУЗ \"ДРОЖЖАНОВСКАЯ ЦРБ\"",
           "norm": 4345,
-          "epguSlots": 3436
+          "epguSlots": 3431
         },
         {
           "oid": "1.2.643.5.1.13.13.12.2.16.1131",
           "name": "ГАУЗ \"КАЙБИЦКАЯ ЦЕНТРАЛЬНАЯ РАЙОННАЯ БОЛЬНИЦА\"",
-          "norm": 2245,
-          "epguSlots": 2247
+          "norm": 2245.0,
+          "epguSlots": 2269
         },
         {
           "oid": "1.2.643.5.1.13.13.12.2.16.1044",
           "name": "ГАУЗ \"КАМСКО-УСТЬИНСКАЯ ЦРБ\"",
           "norm": 3515.5,
-          "epguSlots": 3081
+          "epguSlots": 2985
         },
         {
           "oid": "1.2.643.5.1.13.13.12.2.16.1144",
           "name": "ГАУЗ \"КУКМОРСКАЯ ЦРБ\"",
-          "norm": 8640,
-          "epguSlots": 5686
+          "norm": 8640.0,
+          "epguSlots": 5809
         },
         {
           "oid": "1.2.643.5.1.13.13.12.2.16.1149",
           "name": "ЛАИШЕВСКАЯ ЦРБ",
           "norm": 5610,
-          "epguSlots": 5759
+          "epguSlots": 5869
         },
         {
           "oid": "1.2.643.5.1.13.13.12.2.16.1104",
           "name": "ГАУЗ \"МАМАДЫШСКАЯ ЦРБ\"",
           "norm": 6157.5,
-          "epguSlots": 4526
+          "epguSlots": 4494
         },
         {
           "oid": "1.2.643.5.1.13.13.12.2.16.1058",
           "name": "ГАУЗ \"МЕНДЕЛЕЕВСКАЯ ЦРБ\"",
           "norm": 4580.5,
-          "epguSlots": 2416
+          "epguSlots": 2406
         },
         {
           "oid": "1.2.643.5.1.13.13.12.2.16.1101",
           "name": "ГАУЗ \"МЕНЗЕЛИНСКАЯ ЦРБ\"",
           "norm": 5605,
-          "epguSlots": 4176
+          "epguSlots": 4279
         },
         {
           "oid": "1.2.643.5.1.13.13.12.2.16.1055",
           "name": "МУСЛЮМОВСКАЯ ЦРБ",
           "norm": 5167.5,
-          "epguSlots": 3010
+          "epguSlots": 2934
         },
         {
           "oid": "1.2.643.5.1.13.13.12.2.16.1059",
           "name": "ГАУЗ \"НОВОШЕШМИНСКАЯ ЦРБ\"",
-          "norm": 3890,
-          "epguSlots": 2239
+          "norm": 3890.0,
+          "epguSlots": 2256
         },
         {
           "oid": "1.2.643.5.1.13.13.12.2.16.1138",
           "name": "ГАУЗ \"НУРЛАТСКАЯ ЦРБ\"",
           "norm": 8381.25,
-          "epguSlots": 6049
+          "epguSlots": 5963
         },
         {
           "oid": "1.2.643.5.1.13.13.12.2.16.1109",
           "name": "ГАУЗ \"ПЕСТРЕЧИНСКАЯ ЦРБ\"",
           "norm": 5515,
-          "epguSlots": 5582
+          "epguSlots": 5780
         },
         {
           "oid": "1.2.643.5.1.13.13.12.2.16.1133",
           "name": "ГАУЗ РЫБНО-СЛОБОДСКАЯ ЦРБ",
-          "norm": 4630,
-          "epguSlots": 4662
+          "norm": 4630.0,
+          "epguSlots": 4638
         },
         {
           "oid": "1.2.643.5.1.13.13.12.2.16.1126",
           "name": "ГАУЗ \"САБИНСКАЯ ЦРБ\"",
           "norm": 7022.5,
-          "epguSlots": 5058
+          "epguSlots": 5016
         },
         {
           "oid": "1.2.643.5.1.13.13.12.2.16.1169",
           "name": "ГАУЗ \"САРМАНОВСКАЯ ЦРБ\"",
-          "norm": 8650,
-          "epguSlots": 7267
+          "norm": 8650.0,
+          "epguSlots": 7321
         },
         {
           "oid": "1.2.643.5.1.13.13.12.2.16.1130",
@@ -1248,423 +1060,27 @@
           "oid": "1.2.643.5.1.13.13.12.2.16.1140",
           "name": "ГАУЗ \"ТУКАЕВСКАЯ ЦРБ\"",
           "norm": 3502.5,
-          "epguSlots": 3238
+          "epguSlots": 3325
         },
         {
           "oid": "1.2.643.5.1.13.13.12.2.16.1162",
           "name": "ГАУЗ \"ЧЕРЕМШАНСКАЯ ЦРБ\"",
           "norm": 4118,
-          "epguSlots": 2938
+          "epguSlots": 3032
         },
         {
           "oid": "1.2.643.5.1.13.13.12.2.16.1039",
           "name": "ГАУЗ \"ТЮЛЯЧИНСКАЯ ЦРБ\"",
           "norm": 3724.5,
-          "epguSlots": 2873
+          "epguSlots": 2894
         },
         {
           "oid": "1.2.643.5.1.13.13.12.2.16.1097",
           "name": "ГАУЗ \"УРУССИНСКАЯ ЦРБ\"",
           "norm": 4347.5,
-          "epguSlots": 2513
+          "epguSlots": 2537
         }
       ]
-    },
-    {
-      "scope": "cities",
-      "reportDate": "20.11.2026",
-      "frmoDate": "19.11.2026",
-      "source": "И_38.9_КЗН_НЧ  Слоты по нормативам на дату. 20.11.2026.xlsx",
-      "orgs": [
-        {
-          "oid": "1.2.643.5.1.13.13.12.2.16.28030",
-          "name": "ГАУЗ \"ГКБ № 12\"",
-          "norm": 7915,
-          "epguSlots": 6199
-        },
-        {
-          "oid": "1.2.643.5.1.13.13.12.2.16.63362",
-          "name": "АО ДЕТСКАЯ СТОМАТОЛОГИЧЕСКАЯ ПОЛИКЛИНИКА № 9 НА САБАНЕ",
-          "norm": 2182.5,
-          "epguSlots": 35
-        },
-        {
-          "oid": "1.2.643.5.1.13.13.12.2.16.1116",
-          "name": "ГАУЗ \"ГОРОДСКАЯ БОЛЬНИЦА №2\"",
-          "norm": 5338,
-          "epguSlots": 2777
-        },
-        {
-          "oid": "1.2.643.5.1.13.13.12.2.16.1208",
-          "name": "ГАУЗ \"ГОРОДСКАЯ ПОЛИКЛИНИКА №3\"",
-          "norm": 6722.5,
-          "epguSlots": 3602
-        },
-        {
-          "oid": "1.2.643.5.1.13.13.12.2.16.1112",
-          "name": "ГАУЗ \"ГОРОДСКАЯ БОЛЬНИЦА №5\"",
-          "norm": 15565,
-          "epguSlots": 9657
-        },
-        {
-          "oid": "1.2.643.5.1.13.13.12.2.16.1085",
-          "name": "ГАУЗ \"ГОСПИТАЛЬ ДЛЯ ВЕТЕРАНОВ ВОЙН\" Г. Н. ЧЕЛНЫ",
-          "norm": 3075.5,
-          "epguSlots": 1699
-        },
-        {
-          "oid": "1.2.643.5.1.13.13.12.2.16.1067",
-          "name": "ГАУЗ \"ДЕТСКАЯ ГОРОДСКАЯ ПОЛИКЛИНИКА №3\"",
-          "norm": 6060.0,
-          "epguSlots": 2861
-        },
-        {
-          "oid": "1.2.643.5.1.13.13.12.2.16.1147",
-          "name": "ГАУЗ \"ГОРОДСКАЯ ПОЛИКЛИНИКА №4 ИМ.Л.Н.ГАНИЕВОЙ\"",
-          "norm": 6672.5,
-          "epguSlots": 2707
-        },
-        {
-          "oid": "1.2.643.5.1.13.13.12.2.16.1045",
-          "name": "ГАУЗ \"ДЕТСКАЯ ГОРОДСКАЯ ПОЛИКЛИНИКА №2\"",
-          "norm": 5530,
-          "epguSlots": 3934
-        },
-        {
-          "oid": "1.2.643.5.1.13.13.12.2.16.1127",
-          "name": "ГАУЗ \"ДЕТСКАЯ ГОРОДСКАЯ ПОЛИКЛИНИКА №4 ИМ. Ф.Г. АХМЕРОВОЙ\"",
-          "norm": 8407.5,
-          "epguSlots": 4770
-        },
-        {
-          "oid": "1.2.643.5.1.13.13.12.2.16.1089",
-          "name": "ГАУЗ \"ДЕТСКАЯ ГОРОДСКАЯ ПОЛИКЛИНИКА №5\"",
-          "norm": 5955,
-          "epguSlots": 5766
-        },
-        {
-          "oid": "1.2.643.5.1.13.13.12.2.16.1066",
-          "name": "ГАУЗ \"ДЕТСКАЯ ГОРОД��������k�w��n: "asc" });
-  const [selectedSpecialty, setSelectedSpecialty] = useState("");
-
-  const visibleOrganizations = useMemo(() => ORGANIZATIONS
-    .filter((org) => ownership === "private" ? isPrivateOrganization(org) : !isPrivateOrganization(org)), [ownership]);
-  const organizationRows = useMemo(() => visibleOrganizations
-    .map((org) => ({ org, ...orgMetrics(org), balanced: balancedSpecialties(org.specialties) }))
-    .sort((a, b) => (a.coverage ?? Number.POSITIVE_INFINITY) - (b.coverage ?? Number.POSITIVE_INFINITY)), [visibleOrganizations]);
-  const selectedOrg = organizationSearch.trim()
-    ? null
-    : visibleOrganizations.find((org) => org.oid === selectedOid) ?? visibleOrganizations[0] ?? null;
-  const selectedBalanced = selectedOrg ? balancedSpecialties(selectedOrg.specialties) : null;
-  const regional = useMemo(() => {
-    const totals = aggregateOrganizationTotals(visibleOrganizations);
-    return { ...totals, deficit: sumKnown(visibleOrganizations.map((org) => orgMetrics(org).deficit)) };
-  }, [visibleOrganizations]);
-  const scopeHistory = useMemo(() => DATA.map((dataset, index) => {
-    const scope = index === 0 ? "cities" : "districts";
-    const prior = HISTORY.filter((snapshot) => snapshot.scope === scope && dateKey(snapshot.reportDate) < dateKey(dataset.reportDate)).sort((a, b) => dateKey(b.reportDate).localeCompare(dateKey(a.reportDate)))[0];
-    if (!prior) return null;
-    const currentIds = new Set(visibleOrganizations.map((org) => org.oid));
-    const current = dataset.orgs.filter((org) => currentIds.has(org.oid));
-    const oldByOid = new Map(prior.orgs.map((org) => [org.oid, org]));
-    const matched = current.map((org) => ({ org, old: oldByOid.get(org.oid), now: orgMetrics(org) })).filter((row) => row.old && row.old.norm !== null && row.old.epguSlots !== null && row.now.complete && row.now.norm !== null && row.now.epguSlots !== null);
-    if (!matched.length) return null;
-    const beforeSlots = matched.reduce((sum, row) => sum + row.old!.epguSlots!, 0);
-    const beforeNorm = matched.reduce((sum, row) => sum + row.old!.norm!, 0);
-    const afterSlots = matched.reduce((sum, row) => sum + row.now.epguSlots!, 0);
-    const afterNorm = matched.reduce((sum, row) => sum + row.now.norm!, 0);
-    const movers = matched.map((row) => ({ oid: row.org.oid, name: matrixOrgName(row.org), before: ratio(row.old!.epguSlots!, row.old!.norm!), after: row.now.coverage, slotsDelta: row.now.epguSlots! - row.old!.epguSlots! })).filter((row) => row.before !== null && row.after !== null).sort((a, b) => Math.abs((b.after! - b.before!)) - Math.abs((a.after! - a.before!)));
-    const bestMovers = movers.filter((row) => row.after! > row.before!).sort((a, b) => (b.after! - b.before!) - (a.after! - a.before!)).slice(0, 5);
-    const worstMovers = movers.filter((row) => row.after! < row.before!).sort((a, b) => (a.after! - a.before!) - (b.after! - b.before!)).slice(0, 5);
-    const beforePlan = movers.filter((row) => row.before! >= PLAN_PERCENT).length;
-    const afterPlan = movers.filter((row) => row.after! >= PLAN_PERCENT).length;
-    const beforeGoal = movers.filter((row) => row.before! >= GOAL_PERCENT).length;
-    const afterGoal = movers.filter((row) => row.after! >= GOAL_PERCENT).length;
-    const planUp = movers.filter((row) => row.before! < PLAN_PERCENT && row.after! >= PLAN_PERCENT).length;
-    const planDown = movers.filter((row) => row.before! >= PLAN_PERCENT && row.after! < PLAN_PERCENT).length;
-    const goalUp = movers.filter((row) => row.before! < GOAL_PERCENT && row.after! >= GOAL_PERCENT).length;
-    const goalDown = movers.filter((row) => row.before! >= GOAL_PERCENT && row.after! < GOAL_PERCENT).length;
-    const oldDeficit = matched.reduce((sum, row) => sum + (planShortfall(row.old!.epguSlots!, row.old!.norm!) ?? 0), 0);
-    const newDeficit = matched.reduce((sum, row) => sum + (row.now.deficit ?? 0), 0);
-    return { scope, label: index === 0 ? "Казань и Набережные Челны" : "Районы", prior, date: dataset.reportDate, coverageBefore: ratio(beforeSlots, beforeNorm), coverageAfter: ratio(afterSlots, afterNorm), beforeSlots, afterSlots, beforeNorm, afterNorm, beforePlan, afterPlan, beforeGoal, afterGoal, planUp, planDown, goalUp, goalDown, oldDeficit, newDeficit, movers, bestMovers, worstMovers, matchedCount: matched.length, currentCount: current.length };
-  }).filter((item): item is NonNullable<typeof item> => item !== null), [visibleOrganizations]);
-  const specRows = useMemo(() => SPECIALTIES.map((specialty) => {
-    const cells = visibleOrganizations.flatMap((org) => org.specialties.filter((row) => row.code === specialty.code));
-    const norm = sumKnown(cells.map((row) => row.norm));
-    const slots = sumKnown(cells.map((row) => row.epguSlots));
-    const coverage = ratio(slots, norm);
-    return {
-      ...specialty,
-      norm,
-      slots,
-      coverage,
-      organizations: cells.filter((row) => row.norm !== null && row.norm > 0).length,
-      missing: cells.filter((row) => row.norm === null || row.epguSlots === null).length,
-      zeroSlotsOrganizations: visibleOrganizations.filter((org) => {
-        const row = org.specialties.find((item) => item.code === specialty.code);
-        return row?.norm !== null && row?.norm !== undefined && row.norm > 0 && row.epguSlots === 0;
-      }).length,
-    };
-  }).sort((a, b) => (a.coverage ?? Number.POSITIVE_INFINITY) - (b.coverage ?? Number.POSITIVE_INFINITY)), [visibleOrganizations]);
-
-  const organizationSuggestions = organizationSearch.trim().length > 0
-    ? visibleOrganizations.filter((org) => org.name.toLocaleLowerCase("ru").includes(organizationSearch.toLocaleLowerCase("ru"))).slice(0, 8)
-    : [];
-  const matrixSuggestions = matrixSearch.trim().length > 0
-    ? visibleOrganizations.filter((org) => org.name.toLocaleLowerCase("ru").includes(matrixSearch.toLocaleLowerCase("ru"))).slice(0, 6)
-    : [];
-  const matrixRows = organizationRows
-    .filter(({ org }) => shownOrgName(org).toLocaleLowerCase("ru").includes(matrixSearch.toLocaleLowerCase("ru")))
-    .sort((a, b) => {
-      const valueFor = (row: typeof a): string | number | null => {
-        if (matrixSort.key === "name") return matrixOrgName(row.org).toLocaleLowerCase("ru");
-        if (matrixSort.key === "deficit") return row.deficit;
-        if (matrixSort.key === "coverage") return row.coverage;
-        if (matrixSort.key === "balanced") return row.balanced.attainment;
-        if (matrixSort.key === "attainment") return row.coverage === null ? null : row.coverage / PLAN_PERCENT * 100;
-        if (matrixSort.key === "zeroSpecialties") return row.org.specialties.filter((item) => item.norm !== null && item.norm > 0 && item.epguSlots === 0).length;
-        const code = matrixSort.key.startsWith("specialty:") ? matrixSort.key.slice("specialty:".length) : "";
-        const cell = row.org.specialties.find((item) => item.code === code);
-        return cell ? ratio(cell.epguSlots, cell.norm) : null;
-      };
-      const left = valueFor(a);
-      const right = valueFor(b);
-      if (left === null) return right === null ? 0 : 1;
-      if (right === null) return -1;
-      const comparison = typeof left === "string" && typeof right === "string"
-        ? left.localeCompare(right, "ru")
-        : Number(left) - Number(right);
-      return matrixSort.direction === "asc" ? comparison : -comparison;
-    });
-  const selectedSpecialties = selectedOrg
-    ? selectedOrg.specialties.map((row) => ({ ...row, coverage: ratio(row.epguSlots, row.norm) }))
-      .sort((a, b) => (a.coverage ?? Number.POSITIVE_INFINITY) - (b.coverage ?? Number.POSITIVE_INFINITY))
-    : [];
-  const benchmarkDataset = selectedOrg
-    ? DATA.find((dataset) => dataset.orgs.some((org) => org.oid === selectedOrg.oid))
-    : undefined;
-  const benchmarkOrganizations = benchmarkDataset
-    ? ORGANIZATIONS.filter((org) => benchmarkDataset.orgs.some((candidate) => candidate.oid === org.oid))
-    : [];
-  const benchmarkBySpecialty = new Map(SPECIALTIES.map((specialty) => {
-    const values = benchmarkOrganizations
-      .map((org) => org.specialties.find((row) => row.code === specialty.code))
-      .filter((row): row is Specialty => Boolean(row && row.norm !== null && row.norm > 0 && row.epguSlots !== null))
-      .map((row) => row.epguSlots! / row.norm! * 100);
-    return [specialty.code, { median: median(values), count: values.length }] as const;
-  }));
-  const frmrReviewRows = selectedSpecialties.filter((row) => row.norm === 0 && row.epguSlots !== null && row.epguSlots > 0);
-  const displaySpecialties = selectedSpecialties.filter((row) => !selectedSpecialty || row.code === selectedSpecialty);
-  const comparisonRows = displaySpecialties.map((row) => {
-    const benchmark = benchmarkBySpecialty.get(row.code);
-    const difference = row.coverage !== null && benchmark?.median !== null && benchmark?.median !== undefined ? row.coverage - benchmark.median : null;
-    return { ...row, difference };
-  });
-  const belowMedianCount = comparisonRows.filter((row) => row.difference !== null && row.difference < 0).length;
-  const aboveMedianCount = comparisonRows.filter((row) => row.difference !== null && row.difference >= 0).length;
-  const criticalCount = displaySpecialties.filter((row) => row.coverage !== null && row.norm !== null && row.norm > 0 && row.coverage < 25).length;
-  const weakestSpecialties = displaySpecialties.filter((row) => row.coverage !== null && row.norm !== null && row.norm > 0).sort((a, b) => (a.coverage ?? 0) - (b.coverage ?? 0)).slice(0, 3);
-  const completeCount = organizationRows.filter((row) => row.complete && row.meetsPlan).length;
-  const belowCount = organizationRows.filter((row) => row.complete && !row.meetsPlan).length;
-  const missingCount = organizationRows.filter((row) => !row.complete || row.coverage === null).length;
-  const completeOrganizations = organizationRows.filter((row) => row.complete && row.coverage !== null);
-  const planDistribution = [
-    { key: "lt50", label: "Менее 50% плана", min: 0, max: 50, color: "#b83d47" },
-    { key: "50to100", label: "50–<100% плана", min: 50, max: 100, color: "#ca7b37" },
-    { key: "100to120", label: "100–<120% плана", min: 100, max: 120, color: "#387a5b" },
-    { key: "gte120", label: "120% плана и выше", min: 120, max: Number.POSITIVE_INFINITY, color: "#16875c" },
-  ].map((band) => {
-    const count = completeOrganizations.filter((row) => {
-      const achievement = row.coverage! / PLAN_PERCENT * 100;
-      return achievement >= band.min && achievement < band.max;
-    }).length;
-    return { ...band, count, share: completeOrganizations.length ? count / completeOrganizations.length * 100 : 0 };
-  });
-  const maxPlanDistribution = Math.max(1, ...planDistribution.map((band) => band.count));
-  const currentIndex = selectedOrg ? organizationRows.findIndex((row) => row.org.oid === selectedOrg.oid) : -1;
-  const frmrMoId = selectedOrg?.oid.startsWith(FRMR_OID_PREFIX) ? selectedOrg.oid.slice(FRMR_OID_PREFIX.length) : null;
-  const frmrMatched = Boolean(frmrMoId && FRMR_MO_IDS.has(frmrMoId));
-  const zeroSlotSpecialties = selectedSpecialties.filter((row) => row.norm !== null && row.norm > 0 && row.epguSlots === 0);
-  const frmrZeroSlotIssues = new Map(zeroSlotSpecialties.map((row) => [
-    row.code, getFrmrSpecialtyIssues(selectedOrg!.oid, row.code, frmrRaw.summary.rows),
-  ]));
-  const frmrZeroSlotFlagged = [...frmrZeroSlotIssues.values()].filter((row) => row.count !== null && row.count > 0).length;
-  const frmoOrganizationFindings = selectedOrg ? getFrmoOrganizationFindings(selectedOrg.oid, frmoLinkageRaw.organizations) : null;
-
-  function openOrg(oid: string) {
-    setSelectedOid(oid);
-    setSelectedSpecialty("");
-    setOrganizationSearch("");
-    setTab("organization");
-  }
-
-  function changeOwnership(value: Ownership) {
-    setOwnership(value);
-    setSelectedOid("");
-    setOrganizationSearch("");
-    setMatrixSearch("");
-  }
-
-  function toggleMatrixSort(key: string) {
-    setMatrixSort((current) => ({ key, direction: current.key === key && current.direction === "asc" ? "desc" : "asc" }));
-  }
-  const sortMark = (key: string) => matrixSort.key === key ? (matrixSort.direction === "asc" ? " ↑" : " ↓") : "";
-
-  return <div className={styles.root}>
-    <header className={styles.hero}>
-      <div><p className={styles.kicker}>РАЗДЕЛ И38 · ФОРМА И-38.9</p><h1>Слоты ЕПГУ по нормативам</h1>
-        <p className={styles.subtitle}>Свободные слоты на ближайшие 14 дней · {ownership === "state" ? "государственные" : "частные"} медицинские организации</p>
-        <p className={styles.sourceDates}>Даты выгрузок: {DATA.map((dataset) => dataset.reportDate).join(" · ")} · актуальность ФРМР: {DATA.map((dataset) => dataset.frmoDate).join(" · ")}</p>
-      </div>
-      <div className={styles.heroResult}><span>И‑38.9 · слоты ЕПГУ от общего норматива</span><strong className={planTone(regional.coverage)}>{percent(regional.coverage)}</strong><small>План — 60% · цель — 70%</small></div>
-    </header>
-
-    <nav className={styles.tabs} aria-label="Разделы И38">
-      <button type="button" className={tab === "overview" ? styles.tabActive : ""} onClick={() => setTab("overview")}>Обзор МЗ РТ</button>
-      <button type="button" className={tab === "organization" ? styles.tabActive : ""} onClick={() => setTab("organization")}>Медорганизация</button>
-    </nav>
-
-    {tab === "overview" && <main className={styles.page}>
-      <div className={styles.overviewGrid}>
-        <div className={styles.kpis}>
-          <article className={styles.kpi}><strong className={planTone(regional.coverage)}>{percent(regional.coverage)}</strong><span>Общий процент И‑38.9</span><small>{format(regional.epguSlots)} слотов ЕПГУ ÷ {format(regional.norm)} «Норматив ВСЕГО»</small></article>
-          <article className={styles.kpi}><strong className={styles.good}>{completeCount}</strong><span>МО выполнили план 60%</span><small>И‑38.9 каждой МО не ниже 60%</small></article>
-          <article className={styles.kpi}><strong className={styles.belowNorm}>{belowCount}</strong><span>МО ниже плана 60%</span><small>С полными данными</small></article>
-          <article className={styles.kpi}><strong>{format(regional.deficit)}</strong><span>Не хватает слотов до плана</span><small>Минимальная нехватка по каждой МО</small></article>
-          <article className={styles.kpi}><strong className={styles.neutral}>{missingCount}</strong><span>МО с неполными данными</span><small>Не считаются нулём</small></article>
-        </div>
-        <article className={styles.maxGroupCard}>
-          <span className={styles.maxGroupEyebrow}>РАБОЧАЯ ГРУППА</span>
-          <h2>Инцидент 38 в MAX</h2>
-          <a className={styles.maxGroupLink} href="https://max.ru/join/_IjdDQBUBT835_Cz_fdY4ELQ8X2u72CuZGndk1cTcq8" target="_blank" rel="noreferrer">Открыть чат <span aria-hidden="true">↗</span></a>
-        </article>
-      </div>
-      <section className={styles.card} aria-label="Динамика И38 между обновлениями">
-        <div className={styles.sectionHead}><div><h2>Динамика между обновлениями</h2><p>Исторические срезы сравниваются отдельно: даты городской и районной выгрузок различаются. Изменение доли указано в процентных пунктах. «+ / −» у МО — переходы через порог в обе стороны.</p></div></div>
-        <div className={styles.historyGrid}>{scopeHistory.map((item) => <article className={styles.historyPanel} key={item.scope}>
-          <div className={styles.historyHead}><strong>{item.label}</strong><small>{item.prior.reportDate} → {item.date} · {item.matchedCount} сопоставимых МО{item.matchedCount !== item.currentCount ? ` из ${item.currentCount}` : ""}</small></div>
-          <div className={styles.historyMain}><span>{percent(item.coverageBefore)} → <b>{percent(item.coverageAfter)}</b></span><strong className={(item.coverageAfter ?? 0) >= (item.coverageBefore ?? 0) ? styles.good : styles.bad}>{item.coverageAfter === null || item.coverageBefore === null ? "—" : `${item.coverageAfter >= item.coverageBefore ? "+" : ""}${numberFormat.format(item.coverageAfter - item.coverageBefore)} п. п.`}</strong></div>
-          <div className={styles.historyTrack}><i style={{ width: `${Math.min(100, Math.max(0, item.coverageAfter ?? 0))}%` }} /><span className={styles.historyPlan} title="План 60%" /><span className={styles.historyGoal} title="Цель 70%" /></div><div className={styles.historyThresholds}><span>План 60%</span><span>Цель 70%</span></div>
-          <div className={styles.historyFacts}><span>План 60%: <b>{item.afterPlan}</b> <small>(+{item.planUp} / −{item.planDown})</small></span><span>Цель 70%: <b>{item.afterGoal}</b> <small>(+{item.goalUp} / −{item.goalDown})</small></span><span>Слоты ЕПГУ: <b>{format(item.afterSlots)}</b> <small>({item.afterSlots - item.beforeSlots >= 0 ? "+" : ""}{format(item.afterSlots - item.beforeSlots)})</small></span><span>Норматив: <b>{format(item.afterNorm)}</b> <small>({item.afterNorm - item.beforeNorm >= 0 ? "+" : ""}{format(item.afterNorm - item.beforeNorm)})</small></span><span>Дефицит: <b>{format(item.newDeficit)}</b> <small>({item.newDeficit - item.oldDeficit >= 0 ? "+" : ""}{format(item.newDeficit - item.oldDeficit)})</small></span></div>
-          <details className={styles.historyDetails}><summary>Изменения по МО · 5 лучших / 5 худших</summary>{([{ label: "Лучшие результаты", rows: item.bestMovers }, { label: "Худшие результаты", rows: item.worstMovers }]).map((group) => <div className={styles.historyMoverGroup} key={group.label}><h3>{group.label}</h3><div className={styles.historyMovers}>{group.rows.length ? group.rows.map((row) => <button type="button" key={row.oid} onClick={() => openOrg(row.oid)}><span>{row.name}</span><b className={row.after! > row.before! ? styles.historyPositive : styles.historyNegative}>{row.after! > row.before! ? "+" : ""}{numberFormat.format(row.after! - row.before!)} п. п.</b><small className={row.slotsDelta > 0 ? styles.historyPositive : row.slotsDelta < 0 ? styles.historyNegative : ""}>слоты {row.slotsDelta >= 0 ? "+" : ""}{format(row.slotsDelta)}</small></button>) : <p className={styles.historyNoMovers}>Нет МО с изменением в эту сторону</p>}</div></div>)}</details>
-        </article>)}</div>
-        <p className={styles.matrixMethod}>Сравнение по одинаковым OID и типу МО; новые или отсутствующие строки не считаются нулём. Суммы слотов и нормативов сравниваются отдельно. Разбивка изменений по специальностям для старого среза не показывается до повторной сверки архивного источника.</p>
-      </section>
-      <div className={styles.note}><b>Как читать показатель:</b> Реальный процент = «Слотов для ЕПГУ» ÷ «Норматив ВСЕГО» × 100%. План каждой МО — 60%, цель — 70%. Нехватка = max(0, округление вверх(«Норматив ВСЕГО» × 60%) − «Слотов для ЕПГУ»), считается отдельно по каждой МО. Общий процент — сумма слотов ЕПГУ, делённая на сумму общего норматива. Используется официальный итог формы «Всего». Слоты специальностей с нулевым нормативом остаются в детализации для проверки, но не входят в общий итог. {DATA[0].reportDate === DATA[1].reportDate ? `Обе выгрузки на ${DATA[0].reportDate}.` : `Даты выгрузок: ${DATA.map((dataset) => dataset.reportDate).join(" и ")}.`} «Норма для ЕПГУ» и «Всего слотов» не влияют на этот показатель.</div>
-      <div className={styles.grid2}>
-        <section className={styles.card}><h2>Распределение МО по достижению плана</h2><p className={styles.chartNote}>Сколько организаций достигло разных уровней от индивидуального плана 60%. Достижение плана = И‑38.9 МО ÷ 60%. В расчёт включены МО с полными данными: {completeOrganizations.length}.</p>
-          <div className={styles.planDistribution}>{planDistribution.map((band) => <div className={styles.planDistributionRow} key={band.key}><span>{band.label}</span><div className={styles.track}><i style={{ width: `${band.count / maxPlanDistribution * 100}%`, background: band.color }} /></div><strong>{band.count}</strong><small>{percent(band.share)}</small></div>)}</div>
-          <p className={styles.chartNote}>МО без полных данных: {missingCount}. «100–&lt;120%» означает выполнение плана с превышением до 20%.</p>
-        </section>
-        <section className={styles.card}><h2>Специальности с наибольшим дефицитом слотов</h2><p className={styles.chartNote}>Показаны специальности с наименьшим общим процентом И‑38.9. «МО без слотов» — организации, где норматив есть, а слотов ЕПГУ нет. План 60% применяется к МО в целом; ранжирование специальностей — диагностическое.</p>
-          <div className={styles.deficitSpecialties}>{[...specRows].filter((row) => row.norm !== null && row.norm > 0).slice(0, 5).map((row, index) => <div className={styles.deficitSpecialty} key={row.code}><b>{index + 1}</b><span title={row.name}>{row.name}</span><div className={styles.track}><i style={{ width: `${Math.min(100, Math.max(0, row.coverage ?? 0))}%`, background: heatColor(row.coverage) }} /></div><strong className={styles.neutral}>{percent(row.coverage)}</strong><small>{row.zeroSlotsOrganizations} МО без слотов</small></div>)}</div>
-        </section>
-      </div>
-      <section className={styles.card}>
-        <div className={styles.sectionHead}><div><h2>Рейтинг медицинских организаций</h2><p>По умолчанию — от худшего по <b>сбалансированному выполнению цели 70%</b>: каждый профиль учитывается не выше 70% своего норматива, и избыток слотов не закрывает дефицит другого профиля. Под ним в том же столбце — <b>официальное выполнение плана И‑38.9 (60%)</b>. «Спец. с 0 слотами» — специальности с положительным нормативом, но без слотов ЕПГУ.</p></div>
-          <div className={styles.matrixControls}>
-            <OwnershipSwitch value={ownership} onChange={changeOwnership} />
-            <label className={styles.matrixSearch}>Поиск по МО<div className={styles.suggestionBox}><input value={matrixSearch} onChange={(event) => setMatrixSearch(event.target.value)} placeholder="Начните вводить название" autoComplete="off" />
-              {matrixSuggestions.length > 0 && <div className={styles.suggestions}>{matrixSuggestions.map((org) => <button type="button" key={org.oid} onClick={() => openOrg(org.oid)}><strong>{matrixOrgName(org)}</strong><span>{org.city}</span></button>)}</div>}
-            </div></label>
-          </div>
-        </div>
-        <div className={styles.matrixScroll}><table className={styles.heat}><colgroup><col className={styles.orgCol} /><col className={styles.shortfallCol} /><col className={styles.attainmentCol} />{SPECIALTIES.map((specialty) => <col className={styles.specialtyCol} key={specialty.code} />)}<col className={styles.totalCol} /></colgroup><thead><tr>
-          <th className={styles.stickyName}><button type="button" className={styles.sortButton} onClick={() => toggleMatrixSort("name")}>Медицинская организация{sortMark("name")}</button></th>
-          <th className={styles.shortfallHead}><button type="button" className={styles.sortButton} onClick={() => toggleMatrixSort("deficit")}>Не хватает<br />до плана{sortMark("deficit")}</button></th>
-          <th className={styles.attainmentHead}><button type="button" className={styles.sortButton} onClick={() => toggleMatrixSort("balanced")} title="Управленческий показатель: 100% означает достижение 70% норматива каждой применимой специальности, без взаимной компенсации">Баланс 70%, %{sortMark("balanced")}</button><button type="button" className={styles.secondarySort} onClick={() => toggleMatrixSort("attainment")} title="Официальное выполнение плана И‑38.9: 100% означает достижение плана 60% по МО в целом">План 60%, %{sortMark("attainment")}</button></th>
-          {SPECIALTIES.map((specialty) => <th className={styles.rot} key={specialty.code} title={specialty.name}><button type="button" className={styles.specialtySort} onClick={() => toggleMatrixSort(`specialty:${specialty.code}`)}>{specialty.name.startsWith("ВОП") ? "ВОП" : specialty.name}{sortMark(`specialty:${specialty.code}`)}</button></th>)}
-          <th className={styles.totalHead}><button type="button" className={styles.sortButton} onClick={() => toggleMatrixSort("zeroSpecialties")} title="Количество специальностей с положительным нормативом и нулём слотов ЕПГУ">Спец. с 0<br />слотами{sortMark("zeroSpecialties")}</button></th>
-        </tr></thead><tbody>
-          {matrixRows.map((row) => {
-            const zeroSpecialtyCount = row.org.specialties.filter((item) => item.norm !== null && item.norm > 0 && item.epguSlots === 0).length;
-            return <Fragment key={row.org.oid}><tr>
-            <th className={styles.stickyName} onClick={() => openOrg(row.org.oid)} title={`${matrixOrgName(row.org)} · ${row.org.city}`}>
-              <span className={styles.matrixName}>{matrixOrgName(row.org)}</span><small className={styles.matrixCity}>{row.org.city}</small>
-              <button type="button" className={styles.mobileExpand} aria-expanded={expandedMatrixOid === row.org.oid} onClick={(event) => { event.stopPropagation(); setExpandedMatrixOid(expandedMatrixOid === row.org.oid ? "" : row.org.oid); }}>Специальности {expandedMatrixOid === row.org.oid ? "▲" : "▼"}</button>
-            </th>
-            <td className={styles.shortfallCell} title={`Минимум слотов до плана 60%: ${format(row.deficit)}`} onClick={() => openOrg(row.org.oid)}>{format(row.deficit)}</td>
-            <td className={styles.attainmentCell} title={`Баланс 70% — ${percent(row.balanced.attainment)}: каждый профиль ограничен уровнем 70% его норматива, избыток не переносится. Официальное выполнение плана 60% — ${row.coverage === null ? "—" : percent(row.coverage / PLAN_PERCENT * 100)}`}><strong className={`${styles.balancedResult} ${row.balanced.attainment === null ? styles.neutral : row.balanced.attainment >= 99.999999 ? styles.good : styles.belowNorm}`}>{percent(row.balanced.attainment)}</strong><small className={styles.officialResult}>{row.coverage === null ? "—" : percent(row.coverage / PLAN_PERCENT * 100)}</small></td>
-            {SPECIALTIES.map((specialty) => {
-              const cell = row.org.specialties.find((item) => item.code === specialty.code);
-              const value = cell ? ratio(cell.epguSlots, cell.norm) : null;
-              const text = !cell || cell.norm === null ? "—" : cell.norm <= 0 ? "Н" : value === null ? "—" : `${Math.round(value)}`;
-              const title = !cell ? "Нет строки по специальности" : cell.norm === null ? "Нет норматива в данных" : cell.norm <= 0 ? "Норматив не задан" : `${specialty.name}: ${percent(value)} · ЕПГУ ${format(cell.epguSlots)} из общего норматива ${format(cell.norm)}`;
-              return <td className={styles.specialtyCell} key={specialty.code} title={title} onClick={() => { setSelectedOid(row.org.oid); setSelectedSpecialty(specialty.code); setTab("organization"); }} style={{ background: text === "Н" ? "#e8eef3" : heatColor(value), color: text === "Н" ? "#657d8f" : "#fff" }}>{text}</td>;
-            })}
-            <td className={styles.totalCell} title="Число специальностей, где норматив больше нуля, а слотов ЕПГУ нет" style={{ background: zeroSpecialtyCount > 0 ? "#b83d47" : "#218257", color: "#fff" }}>{zeroSpecialtyCount}</td>
-          </tr>
-          {expandedMatrixOid === row.org.oid && <tr className={styles.mobileDetailsRow}><td colSpan={18}><div className={styles.mobileSpecialties}>
-            {SPECIALTIES.map((specialty) => {
-              const cell = row.org.specialties.find((item) => item.code === specialty.code);
-              const value = cell ? ratio(cell.epguSlots, cell.norm) : null;
-              const description = !cell || cell.norm === null ? "Нет данных" : cell.norm <= 0 ? "Норматив не задан" : value === null ? "Нет данных по слотам" : `${percent(value)} · ${format(cell.epguSlots)} из ${format(cell.norm)} слотов`;
-              return <div className={styles.mobileSpecialty} key={specialty.code}><span>{specialty.name}</span><strong>{description}</strong></div>;
-            })}
-          </div></td></tr>}</Fragment>;
-          })}
-        </tbody></table></div>
-        <p className={styles.matrixMethod}><b>Сбалансированный рейтинг (управленческий):</b> сумма min(слоты ЕПГУ, 70% норматива) по каждой специальности с положительным нормативом ÷ сумму 70% этих нормативов × 100%. Среднее арифметическое процентов специальностей не используется. Перевыполнение одной специальности не компенсирует дефицит другой. Специальности без норматива исключены, пропуски данных не считаются нулями. <b>Официальный показатель не изменён:</b> выполнение плана = И‑38.9 ÷ 60% × 100%. Например, 60% общего норматива — это 100% выполнения плана. «Спец. с 0 слотами» учитывает только специальности с заданным положительным нормативом. Если норматив равен 0, но слоты ЕПГУ есть, проверьте должность и привязку СП в разделе 06 «ФРМР ↔ ГИС»; это отдельный диагностический случай.</p><p className={styles.matrixMobileHint}>Нажмите «Специальности» в строке МО, чтобы увидеть разбивку по 14 специальностям.</p>
-        {matrixRows.length === 0 && <p className={styles.empty}>МО по такому названию не найдены.</p>}
-      </section>
-    </main>}
-
-    {tab === "organization" && <main className={styles.page}>
-      <section className={styles.card}>
-        <div className={styles.orgPicker}>
-          <OwnershipSwitch value={ownership} onChange={changeOwnership} />
-          <label>Поиск медицинской организации<div className={styles.suggestionBox}><input value={organizationSearch || selectedOrg?.name || ""} onChange={(event) => { setOrganizationSearch(event.target.value); setSelectedOid(""); }} placeholder="Начните вводить название" autoComplete="off" />
-            {organizationSuggestions.length > 0 && <div className={styles.suggestions}>{organizationSuggestions.map((org) => <button type="button" key={org.oid} onClick={() => { setSelectedOid(org.oid); setOrganizationSearch(""); }}><strong>{org.name}</strong><span>{org.city}</span></button>)}</div>}
-          </div></label>
-          <span className={styles.position}>{currentIndex + 1} из {organizationRows.length} · сортировка по выполнению</span>
-        </div>
-      </section>
-      {selectedOrg && <section className={styles.card}>
-        <div className={styles.sectionHead}><div><h2>{selectedOrg.name}</h2><p>И‑38.9 = слоты ЕПГУ ÷ «Норматив ВСЕГО» × 100%. План для МО — 60%, цель — 70%; статус показывает его выполнение.</p></div>
-          <div className={styles.frmrShortcutActions}>
-            <span className={`${styles.status} ${!orgMetrics(selectedOrg).complete ? styles.statusMissing : orgMetrics(selectedOrg).meetsPlan ? styles.statusComplete : styles.statusBelow}`}>{status(orgMetrics(selectedOrg).coverage)}</span>
-            {frmrMatched
-              ? <button type="button" className={styles.frmrShortcut} onClick={() => onOpenFrmrMo(selectedOrg.oid)}>Проверить ошибки в ФРМР <span aria-hidden="true">↗</span></button>
-              : <small className={styles.frmrUnmatched}>МО не сопоставлена с разделом 06 по OID</small>}
-          </div>
-        </div>
-        <div className={styles.orgKpis}>
-          <article><strong className={planTone(orgMetrics(selectedOrg).coverage)}>{percent(orgMetrics(selectedOrg).coverage)}</strong><span>И‑38.9 · план 60%, цель 70%</span><small>{format(orgMetrics(selectedOrg).epguSlots)} слотов ЕПГУ из {format(orgMetrics(selectedOrg).norm)} по общему нормативу</small></article>
-          <article><strong>{format(orgMetrics(selectedOrg).targetSlots)}</strong><span>Слотов нужно для плана</span><small>60% общего норматива, округление вверх</small></article>
-          <article><strong>{format(orgMetrics(selectedOrg).deficit)}</strong><span>Не хватает до плана</span><small>минимальное число дополнительных слотов ЕПГУ</small></article>
-          <article><strong className={selectedBalanced?.attainment !== null && selectedBalanced?.attainment !== undefined && selectedBalanced.attainment >= 99.999999 ? styles.good : styles.belowNorm}>{percent(selectedBalanced?.attainment ?? null)}</strong><span>Сбалансированное выполнение цели 70%</span><small>{selectedBalanced?.attainment === null ? "Нет полных данных или применимых специальностей" : `${selectedBalanced?.reachedCount ?? 0} из ${selectedBalanced?.eligibleCount ?? 0} специальностей достигли 70%`}</small></article>
-        </div>
-        {selectedBalanced?.attainment !== null && selectedBalanced?.attainment !== undefined && <p className={styles.balancedNote}><b>Контроль баланса:</b> превышение по отдельным специальностям ({format(selectedBalanced.excessSlots)} слотов сверх 70% их норматива) не используется для компенсации дефицита других профилей. Этот показатель — внутренний, официальный И‑38.9 и план 60% не изменены.</p>}
-        {zeroSlotSpecialties.length > 0 && <div className={styles.frmrDiagnostic} role="note">
-          <strong>Проверка связи ГИС–ФРМР/ФРМО · {zeroSlotSpecialties.length} специальностей с нулевыми слотами</strong>
-          <p>В выгрузке <b>расхождений ФРМР от {frmrRaw.summary.sourceCut}</b> по соответствующим должностям есть проблемные записи у {frmrZeroSlotFlagged} из {zeroSlotSpecialties.length} специальностей. Конкретные профили отмечены ниже.</p>
-          <p>Сверка ФРМО от {frmoLinkageRaw.cut}: {frmoOrganizationFindings?.matched
-            ? frmoOrganizationFindings.issues === null
-              ? "количество отклонений по подразделениям МО не определено"
-              : `${frmoOrganizationFindings.issues} строк с признаками расхождений по МО из ${format(frmoOrganizationFindings.rows)} строк`
-            : frmoOrganizationFindings?.ambiguous
-              ? "несколько совпадающих привязок OID МО — требуется проверка"
-              : "нет однозначного сопоставления МО по OID"}.</p>
-          <p><b>Важно:</b> эти выгрузки не содержат полного списка врачей и не устанавливают причину отсутствия слотов. При отсутствии записей по должности нельзя считать, что врач отсутствует. Проверьте кадровые сведения, привязку СП, расписание МИС и доступность слотов на ЕПГУ.</p>
-        </div>}
-        {frmrReviewRows.length > 0 && <p className={styles.chartNote}><b>Проверить ФРМР: {frmrReviewRows.length} специальностей.</b> Есть слоты ЕПГУ при нулевом нормативе. Нажмите «Проверить ошибки в ФРМР» выше: откроется карточка этой МО в разделе 06 с детализацией должностей, СП и записей. Подтверждённые ошибки исправьте в первичном источнике. Нулевой норматив сам по себе не доказывает ошибку.</p>}
-        <div className={styles.sectionHead}><div><h2>Показатели по специальностям</h2><p>Значения по специальностям справочные: план 60% применяется к общему показателю МО. Медиана сравнивает МО с другими организациями того же набора выгрузки.</p></div><select className={styles.inlineSelect} value={selectedSpecialty} onChange={(event) => setSelectedSpecialty(event.target.value)}><option value="">Все специальности</option>{SPECIALTIES.map((specialty) => <option key={specialty.code} value={specialty.code}>{specialty.name}</option>)}</select></div>
-        <div className={styles.tableScroll}><table className={styles.table}><thead><tr><th>Специальность</th><th>Норматив ВСЕГО</th><th>Слотов для ЕПГУ</th><th>И‑38.9, %</th><th>Медиана выборки, %</th><th>Отклонение, п.п.</th><th>МО в выборке</th></tr></thead><tbody>
-          {displaySpecialties.map((row) => {
-            const benchmark = benchmarkBySpecialty.get(row.code);
-            const difference = row.coverage !== null && benchmark?.median !== null && benchmark?.median !== undefined ? row.coverage - benchmark.median : null;
-            return <tr key={row.code}><td className={styles.orgName}>{row.name}{row.norm !== null && row.norm > 0 && row.epguSlots === 0 && <small className={styles.frmrInlineDiagnostic} title={frmrZeroSlotIssues.get(row.code)?.roles.map((record) => `${record.name}: ${record.count}`).join("; ") || "Нулевая запись слотов требует проверки МИС, ФРМР и ФРМО"}>{(frmrZeroSlotIssues.get(row.code)?.count ?? 0) > 0 ? `ФРМР: ${format(frmrZeroSlotIssues.get(row.code)!.count)} записей с расхождениями` : "Связку с ФРМР/ФРМО нужно проверить"}</small>}{row.norm === 0 && row.epguSlots !== null && row.epguSlots > 0 && <small style={{ display: "block", color: "#986118", fontWeight: 700 }}>Проверить ФРМР</small>}</td><td>{format(row.norm)}</td><td>{format(row.epguSlots)}</td><td className={`${styles.metricCell} ${specialtyBand(row.coverage)}`}>{percent(row.coverage)}</td><td>{percent(benchmark?.median ?? null)}</td><td className={difference === null ? styles.neutral : difference >= 0 ? styles.good : styles.belowNorm}>{difference === null ? "—" : <>{difference > 0 ? "+" : ""}{numberFormat.format(difference)}</>}</td><td>{benchmark?.count ?? 0}</td></tr>;
-          })}
-        </tbody></table></div>
-        <section className={styles.orgInsights}>
-          <article><h3>Организация относительно выборки</h3><p>По выбранным специальностям ниже медианы: <b>{belowMedianCount}</b>; на уровне или выше: <b>{aboveMedianCount}</b>.</p></article>
-          <article><h3>Управленческий вывод</h3><p>Специальностей с уровнем ниже 25%: <b>{criticalCount}</b>. Самые низкие значения: {weakestSpecialties.length ? weakestSpecialties.map((row) => `${row.name} — ${percent(row.coverage)}`).join("; ") : "нет данных"}.</p></article>
-        </section>
-        <div className={styles.specialtyLegend}><span><i className={styles.specialtyGreen} />≥75% — высокий уровень</span><span><i className={styles.specialtyYellow} />50–74% — требует внимания</span><span><i className={styles.specialtyOrange} />25–49% — зона риска</span><span><i className={styles.specialtyRed} />&lt;25% — критично</span><span>Цветовой ориентир для специальности; план 60% оценивается по МО в целом.</span></div>
-        <p className={styles.chartNote}>Медиана рассчитана по МО той же выгрузки: {benchmarkOrganizations.length} организаций · срез {benchmarkDataset?.reportDate ?? "—"}. В выборку по специальности входят МО с положительным общим нормативом; нулевые значения слотов учитываются.</p>
-      </section>}
-    </main>}
-
-    <footer className={styles.footer}>Источник: форма И‑38.9, лист «нормативы». Реальный процент И‑38.9 = «Слотов для ЕПГУ» ÷ «Норматив ВСЕГО» × 100%; план каждой МО — 60%, цель — 70%. Нехватка рассчитывается по каждой МО как минимальное целое число дополнительных слотов до 60% общего норматива. «Норма для ЕПГУ» и «Всего слотов» в оценке не используются; слоты по специальностям с нулевым нормативом не входят в официальный итог формы. Итог по региону — отношение суммы слотов к сумме общего норматива. Даты срезов: {DATA.map((dataset) => dataset.reportDate).join(" · ")}. По правилу реорганизации Альметьевска из текущего отчёта исключены прежние МО, головная организация сохранена. Отсутствие данных не заменяется нулём; государственные/частные организации разделены по организационно-правовой форме.</footer>
-  </div>;
+    }
+  ]
 }
