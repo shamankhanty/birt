@@ -166,20 +166,38 @@ def parse_workbook(path: Path, scope: str) -> dict[str, Any]:
             vals = [number(row[col + offset], f"{path.name}, row {row_num+1}, {spec['name']}") for offset in (1, 2, 3, 4)]
             detail.append({"code": spec["code"], "name": spec["name"], "norm": vals[0], "slots": vals[1], "epguNorm": vals[2], "epguSlots": vals[3]})
         total_norm = sum(item["norm"] for item in detail if item["norm"] is not None)
-        total_epgu_slots = sum(item["epguSlots"] for item in detail if item["epguSlots"] is not None)
         if any(item["norm"] is None or item["epguSlots"] is None for item in detail):
             fail(f"{path.name}, row {row_num+1}, OID {row[1]}: incomplete percentage components")
         declared = source_percent(row[4], f"{path.name}, row {row_num+1}, OID {row[1]}")
-        if total_norm == 0:
+        source_totals = {
+            "norm": number(row[5], f"{path.name}, row {row_num+1}, total norm"),
+            "slots": number(row[6], f"{path.name}, row {row_num+1}, total slots"),
+            "epguNorm": number(row[7], f"{path.name}, row {row_num+1}, EPGU norm"),
+            "epguSlots": number(row[8], f"{path.name}, row {row_num+1}, EPGU slots"),
+            "sourcePercent": declared,
+        }
+        if source_totals["norm"] is None or source_totals["epguSlots"] is None:
+            fail(f"{path.name}, row {row_num+1}, OID {row[1]}: incomplete source total")
+        if abs(source_totals["norm"] - total_norm) > 0.02:
+            fail(f"{path.name}, row {row_num+1}, OID {row[1]}: total norm differs from specialty details")
+        active_slots = sum(item["slots"] for item in detail if item["norm"] and item["slots"] is not None)
+        active_epgu_slots = sum(item["epguSlots"] for item in detail if item["norm"] and item["epguSlots"] is not None)
+        if source_totals["slots"] is None or abs(source_totals["slots"] - active_slots) > 0.02:
+            fail(f"{path.name}, row {row_num+1}, OID {row[1]}: source total slots do not match positive-norm specialties")
+        if abs(source_totals["epguSlots"] - active_epgu_slots) > 0.02:
+            fail(f"{path.name}, row {row_num+1}, OID {row[1]}: source EPGU slots do not match positive-norm specialties")
+        if abs(source_totals["epguNorm"] - sum(item["epguNorm"] for item in detail if item["epguNorm"] is not None)) > 0.02:
+            fail(f"{path.name}, row {row_num+1}, OID {row[1]}: EPGU norm differs from specialty details")
+        if source_totals["norm"] == 0:
             if declared is not None:
                 fail(f"{path.name}, row {row_num+1}, OID {row[1]}: percentage given for zero norm")
         elif declared is None:
             fail(f"{path.name}, row {row_num+1}, OID {row[1]}: missing source percentage")
         else:
-            calculated = total_epgu_slots / total_norm * 100
+            calculated = source_totals["epguSlots"] / source_totals["norm"] * 100
             if abs(declared - calculated) > 0.051:
-                fail(f"{path.name}, row {row_num+1}, OID {row[1]}: source percentage {declared:.2f}% differs from {total_epgu_slots}/{total_norm} = {calculated:.2f}%")
-        orgs.append({"oid": row[1], "code": str(row[2] or ""), "name": display_name, "fullName": raw_name, "city": place, "specialties": detail})
+                fail(f"{path.name}, row {row_num+1}, OID {row[1]}: source percentage {declared:.2f}% differs from {source_totals['epguSlots']}/{source_totals['norm']} = {calculated:.2f}%")
+        orgs.append({"oid": row[1], "code": str(row[2] or ""), "name": display_name, "fullName": raw_name, "city": place, "totals": source_totals, "specialties": detail})
     # Tie all four regional totals back to the source summary; do not publish a partial parse.
     summary = rows[summary_i]
     for spec in SPECIALTIES:
@@ -193,6 +211,11 @@ def parse_workbook(path: Path, scope: str) -> dict[str, Any]:
             expected = number(summary[col + offset], f"{path.name} summary {spec['name']} {field}")
             if expected is None or abs(total - expected) > 0.02:
                 fail(f"{path.name}: {spec['name']} {field} total mismatch: МО={total}, source summary={expected}")
+    for field, column in (("norm", 5), ("slots", 6), ("epguNorm", 7), ("epguSlots", 8)):
+        actual = sum(org["totals"][field] for org in orgs)
+        expected = number(summary[column], f"{path.name} summary total {field}")
+        if expected is None or abs(actual - expected) > 0.02:
+            fail(f"{path.name}: overall {field} mismatch: МО={actual}, source summary={expected}")
     return {
         "source": path.name,
         "reportDate": report_date,
@@ -238,9 +261,14 @@ def main() -> None:
             continue
         compact = []
         for org in current["orgs"]:
-            norm = [row["norm"] for row in org["specialties"]]
-            slots = [row["epguSlots"] for row in org["specialties"]]
-            compact.append({"oid": org["oid"], "name": org["name"], "norm": sum(norm) if all(v is not None for v in norm) else None, "epguSlots": sum(slots) if all(v is not None for v in slots) else None})
+            if "totals" in org:
+                norm, epgu_slots = org["totals"]["norm"], org["totals"]["epguSlots"]
+            else:
+                norm_values = [row["norm"] for row in org["specialties"]]
+                slot_values = [row["epguSlots"] for row in org["specialties"]]
+                norm = sum(norm_values) if all(value is not None for value in norm_values) else None
+                epgu_slots = sum(slot_values) if all(value is not None for value in slot_values) else None
+            compact.append({"oid": org["oid"], "name": org["name"], "norm": norm, "epguSlots": epgu_slots})
         history["snapshots"].append({"scope": scope, "reportDate": current["reportDate"], "frmoDate": current["frmoDate"], "source": current["source"], "orgs": compact})
     outputs = [(args.output_dir / "incident38-cities.json", cities), (args.output_dir / "incident38-districts.json", districts), (history_path, history)]
     staged = []

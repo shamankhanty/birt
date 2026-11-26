@@ -13,7 +13,7 @@ import styles from "./incident38-dashboard.module.css";
 
 type SlotValue = number | null;
 type Specialty = { code: string; name: string; norm: SlotValue; slots: SlotValue; epguNorm: SlotValue; epguSlots: SlotValue };
-type Organization = { oid: string; code: string; name: string; fullName: string; city: string; specialties: Specialty[] };
+type Organization = { oid: string; code: string; name: string; fullName: string; city: string; totals: { norm: SlotValue; slots: SlotValue; epguNorm: SlotValue; epguSlots: SlotValue; sourcePercent: number | null }; specialties: Specialty[] };
 type Dataset = { source: string; reportDate: string; asOf: string; frmoDate: string; forwardDays: number; orgCount: number; specialties: Array<{ code: string; name: string }>; orgs: Organization[] };
 type Tab = "overview" | "organization";
 type Ownership = "state" | "private";
@@ -56,9 +56,8 @@ const median = (values: number[]) => {
 // Keep them in the public/state-participation view; classify private entities by their legal-form prefixes.
 const isPrivateOrganization = (org: Organization) => /^(ООО|ЧУЗ|ИП|АНО|ЗАО|ОАО|НЧОУ)\s/i.test(org.name.trim());
 function metrics(rows: Specialty[]) {
-  // Match the source form: include every EPGU slot, even where the overall norm is zero.
   const norm = sumKnown(rows.map((row) => row.norm));
-  const epguSlots = sumKnown(rows.map((row) => row.epguSlots));
+  const epguSlots = rows.some((row) => row.norm === null || row.epguSlots === null) ? null : rows.filter((row) => row.norm! > 0).reduce((sum, row) => sum + row.epguSlots!, 0);
   const coverage = ratio(epguSlots, norm);
   const complete = rows.every((row) => row.norm !== null && row.epguSlots !== null);
   const deficit = complete ? planShortfall(epguSlots, norm) : null;
@@ -75,7 +74,22 @@ function metrics(rows: Specialty[]) {
   };
 }
 
-const orgMetrics = (org: Organization) => metrics(org.specialties);
+const orgMetrics = (org: Organization) => {
+  const { norm, epguSlots } = org.totals;
+  const coverage = ratio(epguSlots, norm);
+  const complete = norm !== null && epguSlots !== null;
+  const deficit = complete ? planShortfall(epguSlots, norm) : null;
+  return { norm, epguSlots, coverage, deficit, targetSlots: norm === null ? null : Math.ceil(norm * PLAN_RATIO), complete, meetsPlan: coverage !== null && coverage >= PLAN_PERCENT, missing: complete ? 0 : 1 };
+};
+
+function aggregateOrganizationTotals(orgs: Organization[]) {
+  const norm = sumKnown(orgs.map((org) => org.totals.norm));
+  const epguSlots = sumKnown(orgs.map((org) => org.totals.epguSlots));
+  const coverage = ratio(epguSlots, norm);
+  const complete = orgs.every((org) => org.totals.norm !== null && org.totals.epguSlots !== null);
+  const deficit = complete ? sumKnown(orgs.map((org) => orgMetrics(org).deficit)) : null;
+  return { norm, epguSlots, coverage, deficit, targetSlots: norm === null ? null : Math.ceil(norm * PLAN_RATIO), complete, meetsPlan: coverage !== null && coverage >= PLAN_PERCENT, missing: orgs.filter((org) => org.totals.norm === null || org.totals.epguSlots === null).length };
+}
 
 /** Read-only reuse of the same source, ownership rules and formula as И-38.9. */
 export function getVitrinaIncident38(includePrivate: boolean) {
@@ -84,7 +98,7 @@ export function getVitrinaIncident38(includePrivate: boolean) {
   const horizons = [...new Set(DATA.map(dataset => dataset.forwardDays))];
   const unique = new Set(orgs.map(org => org.oid)).size === orgs.length;
   const comparable = dates.length === 1 && horizons.length === 1 && unique;
-  const total = comparable ? metrics(orgs.flatMap(org => org.specialties)) : null;
+  const total = comparable ? aggregateOrganizationTotals(orgs) : null;
   const specialties = SPECIALTIES.map(specialty => {
     const cells = orgs.map(org => org.specialties.find(row => row.code === specialty.code));
     const complete = comparable && cells.every((row): row is Specialty => Boolean(row));
@@ -143,7 +157,7 @@ export default function Incident38Dashboard({ onOpenFrmrMo }: { onOpenFrmrMo: (o
     : visibleOrganizations.find((org) => org.oid === selectedOid) ?? visibleOrganizations[0] ?? null;
   const selectedBalanced = selectedOrg ? balancedSpecialties(selectedOrg.specialties) : null;
   const regional = useMemo(() => {
-    const totals = metrics(visibleOrganizations.flatMap((org) => org.specialties));
+    const totals = aggregateOrganizationTotals(visibleOrganizations);
     return { ...totals, deficit: sumKnown(visibleOrganizations.map((org) => orgMetrics(org).deficit)) };
   }, [visibleOrganizations]);
   const scopeHistory = useMemo(() => DATA.map((dataset, index) => {
@@ -302,155 +316,144 @@ export default function Incident38Dashboard({ onOpenFrmrMo }: { onOpenFrmrMo: (o
         <p className={styles.subtitle}>Свободные слоты на ближайшие 14 дней · {ownership === "state" ? "государственные" : "частные"} медицинские организации</p>
         <p className={styles.sourceDates}>Даты выгрузок: {DATA.map((dataset) => dataset.reportDate).join(" · ")} · актуальность ФРМР: {DATA.map((dataset) => dataset.frmoDate).join(" · ")}</p>
       </div>
-      <div className={styles.heroResult}><span>И‑38.9 · слоты ЕПГУ от общего норматива</span><strong className={planTone(regional.coverage)}>{percent(regional.coverage)}</strong><small>План — 60% · цель — 70%</small></div>
-    </header>
+      <div className={styles.heroResult}><span>И‑38.9 · слоты ЕПГУ от общего норматива</span><strong className={planTone(regional.coverage)}>{percent(regional.coverage)}</strong><smav�mm�G����ƭy��c4/t/�,�/�4/�.�,4/t,�	K�4%4/�`t`�.4-�-t/t.4-H4/�.�,4/t,H4&8�$L��H4'4'�0���	K�4$�4`4,4`ta�dt`�4,�.�.�c�a�-t/tb�4'4'�4`H4/�/�.�/tb�/4.4-4,4/t/tb�/4.����\]Sܙ�[�^�][ۜ˛[��K����]��\�Ә[YO^��[\˜[�\��X�][۟O��[�\��X�][ۋ�X\
 
-    <nav className={styles.tabs} aria-label="Разделы И38">
-      <button type="button" className={tab === "overview" ? styles.tabActive : ""} onClick={() => setTab("overview")}>Обзор МЗ РТ</button>
-      <button type="button" className={tab === "organization" ? styles.tabActive : ""} onClick={() => setTab("organization")}>Медорганизация</button>
-    </nav>
+�[�
+HO�]��\�Ә[YO^��[\˜[�\��X�][۔���H�^O^ؘ[���^_O��[��ؘ[��X�[O��[��]��\�Ә[YO^��[\˝�X��O�H�[O^���Y�	ؘ[����[��X^[�\��X�][ۈ
+�LIX�X��ܛ�[���[����܈_HϏ�]����ۙϞؘ[����[�O���ۙϏ�X[��\��[�
+�[���\�J_O��X[��]��_O�]����\�Ә[YO^��[\˘�\���_O�'4'�4,t-t-�4/�/�.�/tb�aH4-4,4/t/tb�aN��Z\��[����[�K�0��L8�$ɛ�L�	p��4/�-�/t,4a�,4-t`�4,�b�/�/�.�/t-t/t.4-H4/�.�,4/t,4`H4/�`4-t,�b�b4-t/t.4-t/4-4/��	K������X�[ۏ���X�[ۈ�\�Ә[YO^��[\˘�\�O���(t/�-ta�.4,4.�c4/t/�`t`�.4`H4/t,4.4,t/�.�c4b4.4/4-4-ta4.4a�.4`�/�/4`t.�/�`�/�,�����\�Ә[YO^��[\˘�\���_O�'�/�.�,4-�,4/tb�4`t/�-ta�.4,4.�c4/t/�`t`�.4`H4/t,4.4/4-t/tc4b4.4/4/�,tbt.4/4/�`4/�a�-t/t`�/�/4&8�$L��K�0��'4'�4,t-t-�4`t.�/�`�/�,���8�%4/�`4,�,4/t.4-�,4a�.4.4,�-4-H4/t/�`4/4,4`�.4,�4-t`t`�c4,4`t.�/�`�/�,�4%t'�$�(�4/t-t`��4'�.�,4/H�	H4/�`4.4/4-t/tc�-t`�`tc�4.�4'4'�4,�4a�-t.�/�/�4`4,4/t-�.4`4/�,�,4/t.4-H4`t/�-ta�.4,4.�c4/t/�`t`�-t.H8�%4-4.4,4,�/t/�`t`�.4a�-t`t.�/�-K����]��\�Ә[YO^��[\˙Y�X�]�X�X[Y\�O��ˋ���Xԛ���K��[\�
+���HO���˛�ܛHOOH�[	����˛�ܛH�
+K��X�JJK�X\
 
-    {tab === "overview" && <main className={styles.page}>
-      <div className={styles.overviewGrid}>
-        <div className={styles.kpis}>
-          <article className={styles.kpi}><strong className={planTone(regional.coverage)}>{percent(regional.coverage)}</strong><span>Общий процент И‑38.9</span><small>{format(regional.epguSlots)} слотов ЕПГУ ÷ {format(regional.norm)} «Норматив ВСЕГО»</small></article>
-          <article className={styles.kpi}><strong className={styles.good}>{completeCount}</strong><span>МО выполнили план 60%</span><small>И‑38.9 каждой МО не ниже 60%</small></article>
-          <article className={styles.kpi}><strong className={styles.belowNorm}>{belowCount}</strong><span>МО ниже плана 60%</span><small>С полными данными</small></article>
-          <article className={styles.kpi}><strong>{format(regional.deficit)}</strong><span>Не хватает слотов до плана</span><small>Минимальная нехватка по каждой МО</small></article>
-          <article className={styles.kpi}><strong className={styles.neutral}>{missingCount}</strong><span>МО с неполными данными</span><small>Не считаются нулём</small></article>
-        </div>
-        <article className={styles.maxGroupCard}>
-          <span className={styles.maxGroupEyebrow}>РАБОЧАЯ ГРУППА</span>
-          <h2>Инцидент 38 в MAX</h2>
-          <a className={styles.maxGroupLink} href="https://max.ru/join/_IjdDQBUBT835_Cz_fdY4ELQ8X2u72CuZGndk1cTcq8" target="_blank" rel="noreferrer">Открыть чат <span aria-hidden="true">↗</span></a>
-        </article>
-      </div>
-      <section className={styles.card} aria-label="Динамика И38 между обновлениями">
-        <div className={styles.sectionHead}><div><h2>Динамика между обновлениями</h2><p>Исторические срезы сравниваются отдельно: даты городской и районной выгрузок различаются. Изменение доли указано в процентных пунктах. «+ / −» у МО — переходы через порог в обе стороны.</p></div></div>
-        <div className={styles.historyGrid}>{scopeHistory.map((item) => <article className={styles.historyPanel} key={item.scope}>
-          <div className={styles.historyHead}><strong>{item.label}</strong><small>{item.prior.reportDate} → {item.date} · {item.matchedCount} сопоставимых МО{item.matchedCount !== item.currentCount ? ` из ${item.currentCount}` : ""}</small></div>
-          <div className={styles.historyMain}><span>{percent(item.coverageBefore)} → <b>{percent(item.coverageAfter)}</b></span><strong className={(item.coverageAfter ?? 0) >= (item.coverageBefore ?? 0) ? styles.good : styles.bad}>{item.coverageAfter === null || item.coverageBefore === null ? "—" : `${item.coverageAfter >= item.coverageBefore ? "+" : ""}${numberFormat.format(item.coverageAfter - item.coverageBefore)} п. п.`}</strong></div>
-          <div className={styles.historyTrack}><i style={{ width: `${Math.min(100, Math.max(0, item.coverageAfter ?? 0))}%` }} /><span className={styles.historyPlan} title="План 60%" /><span className={styles.historyGoal} title="Цель 70%" /></div><div className={styles.historyThresholds}><span>План 60%</span><span>Цель 70%</span></div>
-          <div className={styles.historyFacts}><span>План 60%: <b>{item.afterPlan}</b> <small>(+{item.planUp} / −{item.planDown})</small></span><span>Цель 70%: <b>{item.afterGoal}</b> <small>(+{item.goalUp} / −{item.goalDown})</small></span><span>Слоты ЕПГУ: <b>{format(item.afterSlots)}</b> <small>({item.afterSlots - item.beforeSlots >= 0 ? "+" : ""}{format(item.afterSlots - item.beforeSlots)})</small></span><span>Норматив: <b>{format(item.afterNorm)}</b> <small>({item.afterNorm - item.beforeNorm >= 0 ? "+" : ""}{format(item.afterNorm - item.beforeNorm)})</small></span><span>Дефицит: <b>{format(item.newDeficit)}</b> <small>({item.newDeficit - item.oldDeficit >= 0 ? "+" : ""}{format(item.newDeficit - item.oldDeficit)})</small></span></div>
-          <details className={styles.historyDetails}><summary>Изменения по МО · 5 лучших / 5 худших</summary>{([{ label: "Лучшие результаты", rows: item.bestMovers }, { label: "Худшие результаты", rows: item.worstMovers }]).map((group) => <div className={styles.historyMoverGroup} key={group.label}><h3>{group.label}</h3><div className={styles.historyMovers}>{group.rows.length ? group.rows.map((row) => <button type="button" key={row.oid} onClick={() => openOrg(row.oid)}><span>{row.name}</span><b className={row.after! > row.before! ? styles.historyPositive : styles.historyNegative}>{row.after! > row.before! ? "+" : ""}{numberFormat.format(row.after! - row.before!)} п. п.</b><small className={row.slotsDelta > 0 ? styles.historyPositive : row.slotsDelta < 0 ? styles.historyNegative : ""}>слоты {row.slotsDelta >= 0 ? "+" : ""}{format(row.slotsDelta)}</small></button>) : <p className={styles.historyNoMovers}>Нет МО с изменением в эту сторону</p>}</div></div>)}</details>
-        </article>)}</div>
-        <p className={styles.matrixMethod}>Сравнение по одинаковым OID и типу МО; новые или отсутствующие строки не считаются нулём. Суммы слотов и нормативов сравниваются отдельно. Разбивка изменений по специальностям для старого среза не показывается до повторной сверки архивного источника.</p>
-      </section>
-      <div className={styles.note}><b>Как читать показатель:</b> Реальный процент = «Слотов для ЕПГУ» ÷ «Норматив ВСЕГО» × 100%. План каждой МО — 60%, цель — 70%. Нехватка = max(0, округление вверх(«Норматив ВСЕГО» × 60%) − «Слотов для ЕПГУ»), считается отдельно по каждой МО. Общий процент — сумма слотов ЕПГУ, делённая на сумму общего норматива. В расчёте учитываются все слоты ЕПГУ, в том числе по специальностям с нулевым нормативом. {DATA[0].reportDate === DATA[1].reportDate ? `Обе выгрузки на ${DATA[0].reportDate}.` : `Даты выгрузок: ${DATA.map((dataset) => dataset.reportDate).join(" и ")}.`} «Норма для ЕПГУ» и «Всего слотов» не влияют на этот показатель.</div>
-      <div className={styles.grid2}>
-        <section className={styles.card}><h2>Распределение МО по достижению плана</h2><p className={styles.chartNote}>Сколько организаций достигло разных уровней от индивидуального плана 60%. Достижение плана = И‑38.9 МО ÷ 60%. В расчёт включены МО с полными данными: {completeOrganizations.length}.</p>
-          <div className={styles.planDistribution}>{planDistribution.map((band) => <div className={styles.planDistributionRow} key={band.key}><span>{band.label}</span><div className={styles.track}><i style={{ width: `${band.count / maxPlanDistribution * 100}%`, background: band.color }} /></div><strong>{band.count}</strong><small>{percent(band.share)}</small></div>)}</div>
-          <p className={styles.chartNote}>МО без полных данных: {missingCount}. «100–&lt;120%» означает выполнение плана с превышением до 20%.</p>
-        </section>
-        <section className={styles.card}><h2>Специальности с наибольшим дефицитом слотов</h2><p className={styles.chartNote}>Показаны специальности с наименьшим общим процентом И‑38.9. «МО без слотов» — организации, где норматив есть, а слотов ЕПГУ нет. План 60% применяется к МО в целом; ранжирование специальностей — диагностическое.</p>
-          <div className={styles.deficitSpecialties}>{[...specRows].filter((row) => row.norm !== null && row.norm > 0).slice(0, 5).map((row, index) => <div className={styles.deficitSpecialty} key={row.code}><b>{index + 1}</b><span title={row.name}>{row.name}</span><div className={styles.track}><i style={{ width: `${Math.min(100, Math.max(0, row.coverage ?? 0))}%`, background: heatColor(row.coverage) }} /></div><strong className={styles.neutral}>{percent(row.coverage)}</strong><small>{row.zeroSlotsOrganizations} МО без слотов</small></div>)}</div>
-        </section>
-      </div>
-      <section className={styles.card}>
-        <div className={styles.sectionHead}><div><h2>Рейтинг медицинских организаций</h2><p>По умолчанию — от худшего по <b>сбалансированному выполнению цели 70%</b>: каждый профиль учитывается не выше 70% своего норматива, и избыток слотов не закрывает дефицит другого профиля. Под ним в том же столбце — <b>официальное выполнение плана И‑38.9 (60%)</b>. «Спец. с 0 слотами» — специальности с положительным нормативом, но без слотов ЕПГУ.</p></div>
-          <div className={styles.matrixControls}>
-            <OwnershipSwitch value={ownership} onChange={changeOwnership} />
-            <label className={styles.matrixSearch}>Поиск по МО<div className={styles.suggestionBox}><input value={matrixSearch} onChange={(event) => setMatrixSearch(event.target.value)} placeholder="Начните вводить название" autoComplete="off" />
-              {matrixSuggestions.length > 0 && <div className={styles.suggestions}>{matrixSuggestions.map((org) => <button type="button" key={org.oid} onClick={() => openOrg(org.oid)}><strong>{matrixOrgName(org)}</strong><span>{org.city}</span></button>)}</div>}
-            </div></label>
-          </div>
-        </div>
-        <div className={styles.matrixScroll}><table className={styles.heat}><colgroup><col className={styles.orgCol} /><col className={styles.shortfallCol} /><col className={styles.attainmentCol} />{SPECIALTIES.map((specialty) => <col className={styles.specialtyCol} key={specialty.code} />)}<col className={styles.totalCol} /></colgroup><thead><tr>
-          <th className={styles.stickyName}><button type="button" className={styles.sortButton} onClick={() => toggleMatrixSort("name")}>Медицинская организация{sortMark("name")}</button></th>
-          <th className={styles.shortfallHead}><button type="button" className={styles.sortButton} onClick={() => toggleMatrixSort("deficit")}>Не хватает<br />до плана{sortMark("deficit")}</button></th>
-          <th className={styles.attainmentHead}><button type="button" className={styles.sortButton} onClick={() => toggleMatrixSort("balanced")} title="Управленческий показатель: 100% означает достижение 70% норматива каждой применимой специальности, без взаимной компенсации">Баланс 70%, %{sortMark("balanced")}</button><button type="button" className={styles.secondarySort} onClick={() => toggleMatrixSort("attainment")} title="Официальное выполнение плана И‑38.9: 100% означает достижение плана 60% по МО в целом">План 60%, %{sortMark("attainment")}</button></th>
-          {SPECIALTIES.map((specialty) => <th className={styles.rot} key={specialty.code} title={specialty.name}><button type="button" className={styles.specialtySort} onClick={() => toggleMatrixSort(`specialty:${specialty.code}`)}>{specialty.name.startsWith("ВОП") ? "ВОП" : specialty.name}{sortMark(`specialty:${specialty.code}`)}</button></th>)}
-          <th className={styles.totalHead}><button type="button" className={styles.sortButton} onClick={() => toggleMatrixSort("zeroSpecialties")} title="Количество специальностей с положительным нормативом и нулём слотов ЕПГУ">Спец. с 0<br />слотами{sortMark("zeroSpecialties")}</button></th>
-        </tr></thead><tbody>
-          {matrixRows.map((row) => {
-            const zeroSpecialtyCount = row.org.specialties.filter((item) => item.norm !== null && item.norm > 0 && item.epguSlots === 0).length;
-            return <Fragment key={row.org.oid}><tr>
-            <th className={styles.stickyName} onClick={() => openOrg(row.org.oid)} title={`${matrixOrgName(row.org)} · ${row.org.city}`}>
-              <span className={styles.matrixName}>{matrixOrgName(row.org)}</span><small className={styles.matrixCity}>{row.org.city}</small>
-              <button type="button" className={styles.mobileExpand} aria-expanded={expandedMatrixOid === row.org.oid} onClick={(event) => { event.stopPropagation(); setExpandedMatrixOid(expandedMatrixOid === row.org.oid ? "" : row.org.oid); }}>Специальности {expandedMatrixOid === row.org.oid ? "▲" : "▼"}</button>
-            </th>
-            <td className={styles.shortfallCell} title={`Минимум слотов до плана 60%: ${format(row.deficit)}`} onClick={() => openOrg(row.org.oid)}>{format(row.deficit)}</td>
-            <td className={styles.attainmentCell} title={`Баланс 70% — ${percent(row.balanced.attainment)}: каждый профиль ограничен уровнем 70% его норматива, избыток не переносится. Официальное выполнение плана 60% — ${row.coverage === null ? "—" : percent(row.coverage / PLAN_PERCENT * 100)}`}><strong className={`${styles.balancedResult} ${row.balanced.attainment === null ? styles.neutral : row.balanced.attainment >= 99.999999 ? styles.good : styles.belowNorm}`}>{percent(row.balanced.attainment)}</strong><small className={styles.officialResult}>{row.coverage === null ? "—" : percent(row.coverage / PLAN_PERCENT * 100)}</small></td>
-            {SPECIALTIES.map((specialty) => {
-              const cell = row.org.specialties.find((item) => item.code === specialty.code);
-              const value = cell ? ratio(cell.epguSlots, cell.norm) : null;
-              const text = !cell || cell.norm === null ? "—" : cell.norm <= 0 ? "Н" : value === null ? "—" : `${Math.round(value)}`;
-              const title = !cell ? "Нет строки по специальности" : cell.norm === null ? "Нет норматива в данных" : cell.norm <= 0 ? "Норматив не задан" : `${specialty.name}: ${percent(value)} · ЕПГУ ${format(cell.epguSlots)} из общего норматива ${format(cell.norm)}`;
-              return <td className={styles.specialtyCell} key={specialty.code} title={title} onClick={() => { setSelectedOid(row.org.oid); setSelectedSpecialty(specialty.code); setTab("organization"); }} style={{ background: text === "Н" ? "#e8eef3" : heatColor(value), color: text === "Н" ? "#657d8f" : "#fff" }}>{text}</td>;
-            })}
-            <td className={styles.totalCell} title="Число специальностей, где норматив больше нуля, а слотов ЕПГУ нет" style={{ background: zeroSpecialtyCount > 0 ? "#b83d47" : "#218257", color: "#fff" }}>{zeroSpecialtyCount}</td>
-          </tr>
-          {expandedMatrixOid === row.org.oid && <tr className={styles.mobileDetailsRow}><td colSpan={18}><div className={styles.mobileSpecialties}>
-            {SPECIALTIES.map((specialty) => {
-              const cell = row.org.specialties.find((item) => item.code === specialty.code);
-              const value = cell ? ratio(cell.epguSlots, cell.norm) : null;
-              const description = !cell || cell.norm === null ? "Нет данных" : cell.norm <= 0 ? "Норматив не задан" : value === null ? "Нет данных по слотам" : `${percent(value)} · ${format(cell.epguSlots)} из ${format(cell.norm)} слотов`;
-              return <div className={styles.mobileSpecialty} key={specialty.code}><span>{specialty.name}</span><strong>{description}</strong></div>;
-            })}
-          </div></td></tr>}</Fragment>;
-          })}
-        </tbody></table></div>
-        <p className={styles.matrixMethod}><b>Сбалансированный рейтинг (управленческий):</b> сумма min(слоты ЕПГУ, 70% норматива) по каждой специальности с положительным нормативом ÷ сумму 70% этих нормативов × 100%. Среднее арифметическое процентов специальностей не используется. Перевыполнение одной специальности не компенсирует дефицит другой. Специальности без норматива исключены, пропуски данных не считаются нулями. <b>Официальный показатель не изменён:</b> выполнение плана = И‑38.9 ÷ 60% × 100%. Например, 60% общего норматива — это 100% выполнения плана. «Спец. с 0 слотами» учитывает только специальности с заданным положительным нормативом. Если норматив равен 0, но слоты ЕПГУ есть, проверьте должность и привязку СП в разделе 06 «ФРМР ↔ ГИС»; это отдельный диагностический случай.</p><p className={styles.matrixMobileHint}>Нажмите «Специальности» в строке МО, чтобы увидеть разбивку по 14 специальностям.</p>
-        {matrixRows.length === 0 && <p className={styles.empty}>МО по такому названию не найдены.</p>}
-      </section>
-    </main>}
+���[�^
+HO�]��\�Ә[YO^��[\˙Y�X�]�X�X[_H�^O^ܛ�˘��_O����[�^
+�_O؏��[�]O^ܛ�˛�[Y_O�ܛ�˛�[Y_O��[��]��\�Ә[YO^��[\˝�X��O�H�[O^���Y�	�X]�Z[�LX]�X^
+��˘�ݙ\�Y�H��
+J_IX�X��ܛ�[��X]��܊��˘�ݙ\�Y�JH_HϏ�]����ۙ��\�Ә[YO^��[\˛�]]�[O��\��[�
+��˘�ݙ\�Y�J_O���ۙϏ�X[�ܛ�˞�\�����ܙ�[�^�][ۜ�H4'4'�4,t-t-�4`t.�/�`�/�,���X[��]��_O�]�����X�[ۏ���]����X�[ۈ�\�Ә[YO^��[\˘�\�O��]��\�Ә[YO^��[\˜�X�[ےXYO�]����(4-t.t`�.4/t,�4/4-t-4.4a�.4/t`t.�.4aH4/�`4,�,4/t.4-�,4a�.4.O����'�/�4`�/4/�.�a�,4/t.4c�8�%4/�`�4at`�-4b4-t,�/�4/�/���`t,t,4.�,4/t`t.4`4/�,�,4/t/t/�/4`�4,�b�/�/�.�/t-t/t.4c�4a�-t.�.�	O؏��4.�,4-�-4b�.H4/�`4/�a4.4.�c4`�a�.4`�b�,�,4-t`�`tc�4/t-H4,�b�b4-H�	H4`t,�/�-t,�/�4/t/�`4/4,4`�.4,�,4.4.4-�,tb�`�/�.�4`t.�/�`�/�,�4/t-H4-�,4.�`4b�,�,4-t`�4-4-ta4.4a�.4`�4-4`4`�,�/�,�/�4/�`4/�a4.4.�cˈ4'�/�-4/t.4/4,�4`�/�/4-�-H4`t`�/�.�,ta�-H8�%��/�a4.4a�.4,4.�c4/t/�-H4,�b�/�/�.�/t-t/t.4-H4/�.�,4/t,4&8�$L��H
+�	JO؏��0��(t/�-ta��4`H4`t.�/�`�,4/4.0��8�%4`t/�-ta�.4,4.�c4/t/�`t`�.4`H4/�/�.�/�-�.4`�-t.�c4/tb�/4/t/�`4/4,4`�.4,�/�/4/t/�4,t-t-�4`t.�/�`�/�,�4%t'�$�(ˏ���]���]��\�Ә[YO^��[\˛X]�^�۝���O���ۙ\��\��]��[YO^��ۙ\��\Hې�[��O^��[��S�ۙ\��\Hς�X�[�\�Ә[YO^��[\˛X]�^�X\��O�'�/�.4`t.�4/�/�4'4'�]��\�Ә[YO^��[\˜�Y��\�[ې��O�[�]�[YO^�X]�^�X\��Hې�[��O^�]�[�
+HO��]X]�^�X\��
+]�[��\��]��[YJ_HX�Z�\�H�'t,4a�/t.4`�-H4,�,�/�-4.4`�c4/t,4-�,�,4/t.4-H�]]���\]OH�ٙ��ς��X]�^�Y��\�[ۜ˛[���	��]��\�Ә[YO^��[\˜�Y��\�[ۜ�O��X]�^�Y��\�[ۜ˛X\
 
-    {tab === "organization" && <main className={styles.page}>
-      <section className={styles.card}>
-        <div className={styles.orgPicker}>
-          <OwnershipSwitch value={ownership} onChange={changeOwnership} />
-          <label>Поиск медицинской организации<div className={styles.suggestionBox}><input value={organizationSearch || selectedOrg?.name || ""} onChange={(event) => { setOrganizationSearch(event.target.value); setSelectedOid(""); }} placeholder="Начните вводить название" autoComplete="off" />
-            {organizationSuggestions.length > 0 && <div className={styles.suggestions}>{organizationSuggestions.map((org) => <button type="button" key={org.oid} onClick={() => { setSelectedOid(org.oid); setOrganizationSearch(""); }}><strong>{org.name}</strong><span>{org.city}</span></button>)}</div>}
-          </div></label>
-          <span className={styles.position}>{currentIndex + 1} из {organizationRows.length} · сортировка по выполнению</span>
-        </div>
-      </section>
-      {selectedOrg && <section className={styles.card}>
-        <div className={styles.sectionHead}><div><h2>{selectedOrg.name}</h2><p>И‑38.9 = слоты ЕПГУ ÷ «Норматив ВСЕГО» × 100%. План для МО — 60%, цель — 70%; статус показывает его выполнение.</p></div>
-          <div className={styles.frmrShortcutActions}>
-            <span className={`${styles.status} ${!orgMetrics(selectedOrg).complete ? styles.statusMissing : orgMetrics(selectedOrg).meetsPlan ? styles.statusComplete : styles.statusBelow}`}>{status(orgMetrics(selectedOrg).coverage)}</span>
-            {frmrMatched
-              ? <button type="button" className={styles.frmrShortcut} onClick={() => onOpenFrmrMo(selectedOrg.oid)}>Проверить ошибки в ФРМР <span aria-hidden="true">↗</span></button>
-              : <small className={styles.frmrUnmatched}>МО не сопоставлена с разделом 06 по OID</small>}
-          </div>
-        </div>
-        <div className={styles.orgKpis}>
-          <article><strong className={planTone(orgMetrics(selectedOrg).coverage)}>{percent(orgMetrics(selectedOrg).coverage)}</strong><span>И‑38.9 · план 60%, цель 70%</span><small>{format(orgMetrics(selectedOrg).epguSlots)} слотов ЕПГУ из {format(orgMetrics(selectedOrg).norm)} по общему нормативу</small></article>
-          <article><strong>{format(orgMetrics(selectedOrg).targetSlots)}</strong><span>Слотов нужно для плана</span><small>60% общего норматива, округление вверх</small></article>
-          <article><strong>{format(orgMetrics(selectedOrg).deficit)}</strong><span>Не хватает до плана</span><small>минимальное число дополнительных слотов ЕПГУ</small></article>
-          <article><strong className={selectedBalanced?.attainment !== null && selectedBalanced?.attainment !== undefined && selectedBalanced.attainment >= 99.999999 ? styles.good : styles.belowNorm}>{percent(selectedBalanced?.attainment ?? null)}</strong><span>Сбалансированное выполнение цели 70%</span><small>{selectedBalanced?.attainment === null ? "Нет полных данных или применимых специальностей" : `${selectedBalanced?.reachedCount ?? 0} из ${selectedBalanced?.eligibleCount ?? 0} специальностей достигли 70%`}</small></article>
-        </div>
-        {selectedBalanced?.attainment !== null && selectedBalanced?.attainment !== undefined && <p className={styles.balancedNote}><b>Контроль баланса:</b> превышение по отдельным специальностям ({format(selectedBalanced.excessSlots)} слотов сверх 70% их норматива) не используется для компенсации дефицита других профилей. Этот показатель — внутренний, официальный И‑38.9 и план 60% не изменены.</p>}
-        {zeroSlotSpecialties.length > 0 && <div className={styles.frmrDiagnostic} role="note">
-          <strong>Проверка связи ГИС–ФРМР/ФРМО · {zeroSlotSpecialties.length} специальностей с нулевыми слотами</strong>
-          <p>В выгрузке <b>расхождений ФРМР от {frmrRaw.summary.sourceCut}</b> по соответствующим должностям есть проблемные записи у {frmrZeroSlotFlagged} из {zeroSlotSpecialties.length} специальностей. Конкретные профили отмечены ниже.</p>
-          <p>Сверка ФРМО от {frmoLinkageRaw.cut}: {frmoOrganizationFindings?.matched
-            ? frmoOrganizationFindings.issues === null
-              ? "количество отклонений по подразделениям МО не определено"
-              : `${frmoOrganizationFindings.issues} строк с признаками расхождений по МО из ${format(frmoOrganizationFindings.rows)} строк`
-            : frmoOrganizationFindings?.ambiguous
-              ? "несколько совпадающих привязок OID МО — требуется проверка"
-              : "нет однозначного сопоставления МО по OID"}.</p>
-          <p><b>Важно:</b> эти выгрузки не содержат полного списка врачей и не устанавливают причину отсутствия слотов. При отсутствии записей по должности нельзя считать, что врач отсутствует. Проверьте кадровые сведения, привязку СП, расписание МИС и доступность слотов на ЕПГУ.</p>
-        </div>}
-        {frmrReviewRows.length > 0 && <p className={styles.chartNote}><b>Проверить ФРМР: {frmrReviewRows.length} специальностей.</b> Есть слоты ЕПГУ при нулевом нормативе. Нажмите «Проверить ошибки в ФРМР» выше: откроется карточка этой МО в разделе 06 с детализацией должностей, СП и записей. Подтверждённые ошибки исправьте в первичном источнике. Нулевой норматив сам по себе не доказывает ошибку.</p>}
-        <div className={styles.sectionHead}><div><h2>Показатели по специальностям</h2><p>Значения по специальностям справочные: план 60% применяется к общему показателю МО. Медиана сравнивает МО с другими организациями того же набора выгрузки.</p></div><select className={styles.inlineSelect} value={selectedSpecialty} onChange={(event) => setSelectedSpecialty(event.target.value)}><option value="">Все специальности</option>{SPECIALTIES.map((specialty) => <option key={specialty.code} value={specialty.code}>{specialty.name}</option>)}</select></div>
-        <div className={styles.tableScroll}><table className={styles.table}><thead><tr><th>Специальность</th><th>Норматив ВСЕГО</th><th>Слотов для ЕПГУ</th><th>И‑38.9, %</th><th>Медиана выборки, %</th><th>Отклонение, п.п.</th><th>МО в выборке</th></tr></thead><tbody>
-          {displaySpecialties.map((row) => {
-            const benchmark = benchmarkBySpecialty.get(row.code);
-            const difference = row.coverage !== null && benchmark?.median !== null && benchmark?.median !== undefined ? row.coverage - benchmark.median : null;
-            return <tr key={row.code}><td className={styles.orgName}>{row.name}{row.norm !== null && row.norm > 0 && row.epguSlots === 0 && <small className={styles.frmrInlineDiagnostic} title={frmrZeroSlotIssues.get(row.code)?.roles.map((record) => `${record.name}: ${record.count}`).join("; ") || "Нулевая запись слотов требует проверки МИС, ФРМР и ФРМО"}>{(frmrZeroSlotIssues.get(row.code)?.count ?? 0) > 0 ? `ФРМР: ${format(frmrZeroSlotIssues.get(row.code)!.count)} записей с расхождениями` : "Связку с ФРМР/ФРМО нужно проверить"}</small>}{row.norm === 0 && row.epguSlots !== null && row.epguSlots > 0 && <small style={{ display: "block", color: "#986118", fontWeight: 700 }}>Проверить ФРМР</small>}</td><td>{format(row.norm)}</td><td>{format(row.epguSlots)}</td><td className={`${styles.metricCell} ${specialtyBand(row.coverage)}`}>{percent(row.coverage)}</td><td>{percent(benchmark?.median ?? null)}</td><td className={difference === null ? styles.neutral : difference >= 0 ? styles.good : styles.belowNorm}>{difference === null ? "—" : <>{difference > 0 ? "+" : ""}{numberFormat.format(difference)}</>}</td><td>{benchmark?.count ?? 0}</td></tr>;
-          })}
-        </tbody></table></div>
-        <section className={styles.orgInsights}>
-          <article><h3>Организация относительно выборки</h3><p>По выбранным специальностям ниже медианы: <b>{belowMedianCount}</b>; на уровне или выше: <b>{aboveMedianCount}</b>.</p></article>
-          <article><h3>Управленческий вывод</h3><p>Специальностей с уровнем ниже 25%: <b>{criticalCount}</b>. Самые низкие значения: {weakestSpecialties.length ? weakestSpecialties.map((row) => `${row.name} — ${percent(row.coverage)}`).join("; ") : "нет данных"}.</p></article>
-        </section>
-        <div className={styles.specialtyLegend}><span><i className={styles.specialtyGreen} />≥75% — высокий уровень</span><span><i className={styles.specialtyYellow} />50–74% — требует внимания</span><span><i className={styles.specialtyOrange} />25–49% — зона риска</span><span><i className={styles.specialtyRed} />&lt;25% — критично</span><span>Цветовой ориентир для специальности; план 60% оценивается по МО в целом.</span></div>
-        <p className={styles.chartNote}>Медиана рассчитана по МО той же выгрузки: {benchmarkOrganizations.length} организаций · срез {benchmarkDataset?.reportDate ?? "—"}. В выборку по специальности входят МО с положительным общим нормативом; нулевые значения слотов учитываются.</p>
-      </section>}
-    </main>}
+ܙ�HO��]ۈ\OH��]ۈ��^O^�ܙ˛�YHې�X��^�
+HO��[�ܙ�ܙ˛�Y
+_O���ۙϞ�X]�^ܙӘ[YJܙ�_O���ۙϏ�[���ܙ˘�]_O��[��؝]ۏ�_O�]��B��]���X�[���]����]���]��\�Ә[YO^��[\˛X]�^�ܛ�O�X�H�\�Ә[YO^��[\˚X]O���ܛ�\����\�Ә[YO^��[\˛ܙ���HϏ���\�Ә[YO^��[\˜�ܝ�[��HϏ���\�Ә[YO^��[\˘]Z[�Y[���HϞ��P�PSQT˛X\
 
-    <footer className={styles.footer}>Источник: форма И‑38.9, лист «нормативы». Реальный процент И‑38.9 = «Слотов для ЕПГУ» ÷ «Норматив ВСЕГО» × 100%; план каждой МО — 60%, цель — 70%. Нехватка рассчитывается по каждой МО как минимальное целое число дополнительных слотов до 60% общего норматива. «Норма для ЕПГУ» и «Всего слотов» в оценке не используются. Итог по региону — отношение суммы слотов к сумме общего норматива. Даты срезов: {DATA.map((dataset) => dataset.reportDate).join(" · ")}. По правилу реорганизации Альметьевска из текущего отчёта исключены прежние МО, головная организация сохранена. Отсутствие данных не заменяется нулём; государственные/частные организации разделены по организационно-правовой форме.</footer>
-  </div>;
-}
+�X�X[JHO����\�Ә[YO^��[\˜�X�X[P��H�^O^��X�X[K���_Hϊ_O���\�Ә[YO^��[\˝�[��HϏ���ܛ�\�XY�����\�Ә[YO^��[\˜�X��S�[Y_O��]ۈ\OH��]ۈ��\�Ә[YO^��[\˜�ܝ�]۟Hې�X��^�
+HO����SX]�^�ܝ
+��[YH�_O�'4-t-4.4a�.4/t`t.�,4c�4/�`4,�,4/t.4-�,4a�.4c���ܝX\����[YH�_O؝]ۏ�����\�Ә[YO^��[\˜�ܝ�[XYO��]ۈ\OH��]ۈ��\�Ә[YO^��[\˜�ܝ�]۟Hې�X��^�
+HO����SX]�^�ܝ
+�Y�X�]�_O�'t-H4at,�,4`�,4-t`���ϴ-4/�4/�.�,4/t,��ܝX\���Y�X�]�_O؝]ۏ�����\�Ә[YO^��[\˘]Z[�Y[�XYO��]ۈ\OH��]ۈ��\�Ә[YO^��[\˜�ܝ�]۟Hې�X��^�
+HO����SX]�^�ܝ
+��[[��Y�_H]OH�(�/�`4,4,�.�-t/ta�-t`t.�.4.H4/�/�.�,4-�,4`�-t.�c�L	H4/�-�/t,4a�,4-t`�4-4/�`t`�.4-�-t/t.4-H�	H4/t/�`4/4,4`�.4,�,4.�,4-�-4/�.H4/�`4.4/4-t/t.4/4/�.H4`t/�-ta�.4,4.�c4/t/�`t`�.4,t-t-�4,�-�,4.4/4/t/�.H4.�/�/4/�-t/t`t,4a�.4.��$t,4.�,4/t`H�	K	^��ܝX\����[[��Y�_O؝]ۏ��]ۈ\OH��]ۈ��\�Ә[YO^��[\˜�X�ۙ\�T�ܝHې�X��^�
+HO����SX]�^�ܝ
+�]Z[�Y[��_H]OH�'�a4.4a�.4,4.�c4/t/�-H4,�b�/�/�.�/t-t/t.4-H4/�.�,4/t,4&8�$L��N�L	H4/�-�/t,4a�,4-t`�4-4/�`t`�.4-�-t/t.4-H4/�.�,4/t,�	H4/�/�4'4'�4,�4a�-t.�/�/��'�.�,4/H�	K	^��ܝX\���]Z[�Y[��_O؝]ۏ������P�PSQT˛X\
+
+�X�X[JHO��\�Ә[YO^��[\˜��H�^O^��X�X[K���_H]O^��X�X[K��[Y_O��]ۈ\OH��]ۈ��\�Ә[YO^��[\˜�X�X[T�ܝHې�X��^�
+HO����SX]�^�ܝ
+�X�X[N���X�X[K���_X
+_O���X�X[K��[YK��\���]
+�$�'�'ȊH��$�'�'Ȉ��X�X[K��[Y_^��ܝX\���X�X[N���X�X[K���_X
+_O؝]ۏ���_B��\�Ә[YO^��[\˝�[XYO��]ۈ\OH��]ۈ��\�Ә[YO^��[\˜�ܝ�]۟Hې�X��^�
+HO����SX]�^�ܝ
+��\���X�X[Y\Ȋ_H]OH�&�/�.�.4a�-t`t`�,�/�4`t/�-ta�.4,4.�c4/t/�`t`�-t.H4`H4/�/�.�/�-�.4`�-t.�c4/tb�/4/t/�`4/4,4`�.4,�/�/4.4/t`�.�dt/4`t.�/�`�/�,�4%t'�$�(ȏ�(t/�-ta��4`H��ϴ`t.�/�`�,4/4.��ܝX\����\���X�X[Y\Ȋ_O؝]ۏ��������XY���O���X]�^���˛X\
+
+���HO��ۜ��\���X�X[P��[�H��˛ܙ˜�X�X[Y\˙�[\�
+][JHO�][K��ܛHOOH�[	��][K��ܛH�	��][K�\�T���OOH
+K�[���]\����Y�Y[��^O^ܛ�˛ܙ˛�YO�����\�Ә[YO^��[\˜�X��S�[Y_Hې�X��^�
+HO��[�ܙ���˛ܙ˛�Y
+_H]O^�	�X]�^ܙӘ[YJ��˛ܙ�_H0��	ܛ�˛ܙ˘�]_XO���[��\�Ә[YO^��[\˛X]�^�[Y_O��X]�^ܙӘ[YJ��˛ܙ�_O��[���X[�\�Ә[YO^��[\˛X]�^�]_O�ܛ�˛ܙ˘�]_O��X[���]ۈ\OH��]ۈ��\�Ә[YO^��[\˛[ؚ[Q^[�H\�XKY^[�Y^�^[�YX]�^�YOOH��˛ܙ˛�YHې�X��^�]�[�
+HO��]�[������Y�][ۊ
+N��]^[�YX]�^�Y
+^[�YX]�^�YOOH��˛ܙ˛�Y������˛ܙ˛�Y
+N�_O�(t/�-ta�.4,4.�c4/t/�`t`�.�^[�YX]�^�YOOH��˛ܙ˛�Y�����������O؝]ۏ������\�Ә[YO^��[\˜�ܝ�[�[H]O^�4'4.4/t.4/4`�/4`t.�/�`�/�,�4-4/�4/�.�,4/t,�	N�	ٛܛX]
+��˙Y�X�]
+_XHې�X��^�
+HO��[�ܙ���˛ܙ˛�Y
+_O�ٛܛX]
+��˙Y�X�]
+_O����\�Ә[YO^��[\˘]Z[�Y[��[H]O^�4$t,4.�,4/t`H�	H8�%	�\��[�
+��˘�[[��Y�]Z[�Y[�
+_N�4.�,4-�-4b�.H4/�`4/�a4.4.�c4/�,�`4,4/t.4a�-t/H4`�`4/�,�/t-t/�	H4-t,�/�4/t/�`4/4,4`�.4,�,4.4-�,tb�`�/�.�4/t-H4/�-t`4-t/t/�`t.4`�`tcˈ4'�a4.4a�.4,4.�c4/t/�-H4,�b�/�/�.�/t-t/t.4-H4/�.�,4/t,�	H8�%	ܛ�˘�ݙ\�Y�HOOH�[���%��\��[�
+��˘�ݙ\�Y�H�S��T��S�
+�L
+_XO���ۙ��\�Ә[YO^�	��[\˘�[[��Y�\�[H	ܛ�˘�[[��Y�]Z[�Y[�OOH�[��[\˛�]]�[���˘�[[��Y�]Z[�Y[��HNK�NNNNNH��[\˙�����[\˘�[�ӛܛ_XO��\��[�
+��˘�[[��Y�]Z[�Y[�
+_O���ۙϏ�X[�\�Ә[YO^��[\˛ٙ�X�X[�\�[O�ܛ�˘�ݙ\�Y�HOOH�[���%��\��[�
+��˘�ݙ\�Y�H�S��T��S�
+�L
+_O��X[������P�PSQT˛X\
+
+�X�X[JHO��ۜ��[H��˛ܙ˜�X�X[Y\˙�[�
+
+][JHO�][K���HOOH�X�X[K���JN�ۜ��[YHH�[��][��[�\�T����[��ܛJH��[�ۜ�^HX�[�[��ܛHOOH�[���%���[��ܛHH��'H���[YHOOH�[���%��	�X]���[�
+�[YJ_X�ۜ�]HHX�[��'t-t`�4`t`�`4/�.�.4/�/�4`t/�-ta�.4,4.�c4/t/�`t`�.���[��ܛHOOH�[��'t-t`�4/t/�`4/4,4`�.4,�,4,�4-4,4/t/tb�aH���[��ܛHH��'t/�`4/4,4`�.4,�4/t-H4-�,4-4,4/H��	��X�X[K��[Y_N�	�\��[�
+�[YJ_H0��4%t'�$�(�	ٛܛX]
+�[�\�T���_H4.4-�4/�,tbt-t,�/�4/t/�`4/4,4`�.4,�,	ٛܛX]
+�[��ܛJ_X�]\���\�Ә[YO^��[\˜�X�X[P�[H�^O^��X�X[K���_H]O^�]_Hې�X��^�
+HO���]�[X�Y�Y
+��˛ܙ˛�Y
+N��]�[X�Y�X�X[J�X�X[K���JN��]X��ܙ�[�^�][ۈ�N�_H�[O^���X��ܛ�[��^OOH�'H����NYY�Ȉ�X]��܊�[YJK��܎�^OOH�'H���͍M�����ٙ���_O��^O��J_B��\�Ә[YO^��[\˝�[�[H]OH�)�.4`t.�/�4`t/�-ta�.4,4.�c4/t/�`t`�-t.K4,�-4-H4/t/�`4/4,4`�.4,�4,t/�.�c4b4-H4/t`�.�c�4,4`t.�/�`�/�,�4%t'�$�(�4/t-t`���[O^���X��ܛ�[���\���X�X[P��[����؎�Ȉ��̌N�Mȋ��܎��ٙ���_O�ޙ\���X�X[P��[�O��������^[�YX]�^�YOOH��˛ܙ˛�Y	����\�Ә[YO^��[\˛[ؚ[Q]Z[ԛ��O����[�^�NO�]��\�Ә[YO^��[\˛[ؚ[T�X�X[Y\�O����P�PSQT˛X\
+
+�X�X[JHO��ۜ��[H��˛ܙ˜�X�X[Y\˙�[�
+
+][JHO�][K���HOOH�X�X[K���JN�ۜ��[YHH�[��][��[�\�T����[��ܛJH��[�ۜ�\�ܚ\[ۈHX�[�[��ܛHOOH�[��'t-t`�4-4,4/t/tb�aH���[��ܛHH��'t/�`4/4,4`�.4,�4/t-H4-�,4-4,4/H���[YHOOH�[��'t-t`�4-4,4/t/tb�aH4/�/�4`t.�/�`�,4/��	�\��[�
+�[YJ_H0��	ٛܛX]
+�[�\�T���_H4.4-�	ٛܛX]
+�[��ܛJ_H4`t.�/�`�/�,��]\��]��\�Ә[YO^��[\˛[ؚ[T�X�X[_H�^O^��X�X[K���_O��[����X�X[K��[Y_O��[����ۙϞ�\�ܚ\[۟O���ۙϏ�]��J_B��]�������Oќ�Y�Y[��J_B����O��X�O��]����\�Ә[YO^��[\˛X]�^Y]�O���(t,t,4.�,4/t`t.4`4/�,�,4/t/tb�.H4`4-t.t`�.4/t,�
+4`�/�`4,4,�.�-t/ta�-t`t.�.4.JN�؏�4`t`�/4/4,Z[�4`t.�/�`�b�4%t'�$�(��	H4/t/�`4/4,4`�.4,�,
+H4/�/�4.�,4-�-4/�.H4`t/�-ta�.4,4.�c4/t/�`t`�.4`H4/�/�.�/�-�.4`�-t.�c4/tb�/4/t/�`4/4,4`�.4,�/�/0��4`t`�/4/4`��	H4ct`�.4aH4/t/�`4/4,4`�.4,�/�,�0��L	K�4(t`4-t-4/t-t-H4,4`4.4a4/4-t`�.4a�-t`t.�/�-H4/�`4/�a�-t/t`�/�,�4`t/�-ta�.4,4.�c4/t/�`t`�-t.H4/t-H4.4`t/�/�.�c4-�`�-t`�`tcˈ4'�-t`4-t,�b�/�/�.�/t-t/t.4-H4/�-4/t/�.H4`t/�-ta�.4,4.�c4/t/�`t`�.4/t-H4.�/�/4/�-t/t`t.4`4`�-t`�4-4-ta4.4a�.4`�4-4`4`�,�/�.K�4(t/�-ta�.4,4.�c4/t/�`t`�.4,t-t-�4/t/�`4/4,4`�.4,�,4.4`t.�.�c�a�-t/tb�4/�`4/�/�`�`t.�.4-4,4/t/tb�aH4/t-H4`ta�.4`�,4c�`�`tc�4/t`�.�c�/4.���'�a4.4a�.4,4.�c4/tb�.H4/�/�.�,4-�,4`�-t.�c4/t-H4.4-�/4-t/tdt/N�؏�4,�b�/�/�.�/t-t/t.4-H4/�.�,4/t,H4&8�$L��H0���	H0��L	K�4't,4/�`4.4/4-t`�	H4/�,tbt-t,�/�4/t/�`4/4,4`�.4,�,8�%4ct`�/�L	H4,�b�/�/�.�/t-t/t.4c�4/�.�,4/t,�0��(t/�-ta��4`H4`t.�/�`�,4/4.0��4`�a�.4`�b�,�,4-t`�4`�/�.�c4.�/�4`t/�-ta�.4,4.�c4/t/�`t`�.4`H4-�,4-4,4/t/tb�/4/�/�.�/�-�.4`�-t.�c4/tb�/4/t/�`4/4,4`�.4,�/�/�4%t`t.�.4/t/�`4/4,4`�.4,�4`4,4,�-t/H4/t/�4`t.�/�`�b�4%t'�$�(�4-t`t`�c4/�`4/�,�-t`4c4`�-H4-4/�.�-�/t/�`t`�c4.4/�`4.4,�c�-�.�`�4(t'�4,�4`4,4-�-4-t.�-H�0��)4(4'4(8��4$�&4(p���4ct`�/�4/�`�-4-t.�c4/tb�.H4-4.4,4,�/t/�`t`�.4a�-t`t.�.4.H4`t.�`�a�,4.K����\�Ә[YO^��[\˛X]�^[ؚ[R[�O�'t,4-�/4.4`�-H0��(t/�-ta�.4,4.�c4/t/�`t`�.0��4,�4`t`�`4/�.�-H4'4'�4a�`�/�,tb�4`�,�.4-4-t`�c4`4,4-�,t.4,�.�`�4/�/�M4`t/�-ta�.4,4.�c4/t/�`t`�c�/�����X]�^���˛[��OOH	���\�Ә[YO^��[\˙[\_O�'4'�4/�/�4`�,4.�/�/4`�4/t,4-�,�,4/t.4c�4/t-H4/t,4.t-4-t/tbˏ��B���X�[ۏ���XZ[��B���X�OOH�ܙ�[�^�][ۈ�	��XZ[��\�Ә[YO^��[\˜Y�_O���X�[ۈ�\�Ә[YO^��[\˘�\�O��]��\�Ә[YO^��[\˛ܙ�X��\�O���ۙ\��\��]��[YO^��ۙ\��\Hې�[��O^��[��S�ۙ\��\Hς�X�[�'�/�.4`t.�4/4-t-4.4a�.4/t`t.�/�.H4/�`4,�,4/t.4-�,4a�.4.]��\�Ә[YO^��[\˜�Y��\�[ې��O�[�]�[YO^�ܙ�[�^�][۔�X\���[X�Yܙ�˛�[YH��Hې�[��O^�]�[�
+HO���]ܙ�[�^�][۔�X\��
+]�[��\��]��[YJN��]�[X�Y�Y
+��N�_HX�Z�\�H�'t,4a�/t.4`�-H4,�,�/�-4.4`�c4/t,4-�,�,4/t.4-H�]]���\]OH�ٙ��ς��ܙ�[�^�][۔�Y��\�[ۜ˛[���	��]��\�Ә[YO^��[\˜�Y��\�[ۜ�O��ܙ�[�^�][۔�Y��\�[ۜ˛X\
+
+ܙ�HO��]ۈ\OH��]ۈ��^O^�ܙ˛�YHې�X��^�
+HO���]�[X�Y�Y
+ܙ˛�Y
+N��]ܙ�[�^�][۔�X\��
+��N�_O���ۙϞ�ܙ˛�[Y_O���ۙϏ�[���ܙ˘�]_O��[��؝]ۏ�_O�]��B��]���X�[���[��\�Ә[YO^��[\˜��][۟O���\��[�[�^
+�_H4.4-��ܙ�[�^�][۔���˛[��H0��4`t/�`4`�.4`4/�,�.�,4/�/�4,�b�/�/�.�/t-t/t.4c���[����]�����X�[ۏ����[X�Yܙ�	���X�[ۈ�\�Ә[YO^��[\˘�\�O��]��\�Ә[YO^��[\˜�X�[ےXYO�]������[X�Yܙ˛�[Y_O����&8�$L��HH4`t.�/�`�b�4%t'�$�(�0��0��'t/�`4/4,4`�.4,�4$�(t%t$�'���0��L	K�4'�.�,4/H4-4.�c�4'4'�8�%�	K4a�-t.�c8�%�	N�4`t`�,4`�`�`H4/�/�.�,4-�b�,�,4-t`�4-t,�/�4,�b�/�/�.�/t-t/t.4-K����]���]��\�Ә[YO^��[\˙��\��ܝ�]X�[ۜ�O���[��\�Ә[YO^�	��[\˜�]\�H	�[ܙ�Y]�X���[X�Yܙ�K���\]H��[\˜�]\�Z\��[���ܙ�Y]�X���[X�Yܙ�K�YY]�[���[\˜�]\���\]H��[\˜�]\Й[��XO���]\�ܙ�Y]�X���[X�Yܙ�K��ݙ\�Y�J_O��[���ٜ�\�X]�Y���]ۈ\OH��]ۈ��\�Ә[YO^��[\˙��\��ܝ�]Hې�X��^�
+HO�ۓ�[���\�[��[X�Yܙ˛�Y
+_O�'�`4/�,�-t`4.4`�c4/�b4.4,t.�.4,�4)4(4'4(�[�\�XKZY[�H��YH�������[��؝]ۏ����X[�\�Ә[YO^��[\˙��\�[�X]�YO�'4'�4/t-H4`t/�/�/�`t`�,4,�.�-t/t,4`H4`4,4-�-4-t.�/�/�4/�/��Q��X[�B��]����]���]��\�Ә[YO^��[\˛ܙ��\�O��\�X�O���ۙ��\�Ә[YO^�[�ۙJܙ�Y]�X���[X�Yܙ�K��ݙ\�Y�J_O��\��[�
+ܙ�Y]�X���[X�Yܙ�K��ݙ\�Y�J_O���ۙϏ�[��&8�$L��H0��4/�.�,4/H�	K4a�-t.�c�	O��[���X[�ٛܛX]
+ܙ�Y]�X���[X�Yܙ�K�\�T���_H4`t.�/�`�/�,�4%t'�$�(�4.4-�ٛܛX]
+ܙ�Y]�X���[X�Yܙ�K��ܛJ_H4/�/�4/�,tbt-t/4`�4/t/�`4/4,4`�.4,�`���X[��\�X�O��\�X�O���ۙϞٛܛX]
+ܙ�Y]�X���[X�Yܙ�K�\��]���_O���ۙϏ�[��(t.�/�`�/�,�4/t`�-�/t/�4-4.�c�4/�.�,4/t,��[���X[��	H4/�,tbt-t,�/�4/t/�`4/4,4`�.4,�,4/�.�`4`�,�.�-t/t.4-H4,�,�-t`4aO��X[��\�X�O��\�X�O���ۙϞٛܛX]
+ܙ�Y]�X���[X�Yܙ�K�Y�X�]
+_O���ۙϏ�[��'t-H4at,�,4`�,4-t`�4-4/�4/�.�,4/t,��[���X[�/4.4/t.4/4,4.�c4/t/�-H4a�.4`t.�/�4-4/�/�/�.�/t.4`�-t.�c4/tb�aH4`t.�/�`�/�,�4%t'�$�(���X[��\�X�O��\�X�O���ۙ��\�Ә[YO^��[X�Y�[[��Y˘]Z[�Y[�OOH�[	���[X�Y�[[��Y˘]Z[�Y[�OOH[�Y�[�Y	���[X�Y�[[��Y�]Z[�Y[��HNK�NNNNNH��[\˙�����[\˘�[�ӛܛ_O��\��[�
+�[X�Y�[[��Y˘]Z[�Y[����[
+_O���ۙϏ�[��(t,t,4.�,4/t`t.4`4/�,�,4/t/t/�-H4,�b�/�/�.�/t-t/t.4-H4a�-t.�.�	O��[���X[���[X�Y�[[��Y˘]Z[�Y[�OOH�[��'t-t`�4/�/�.�/tb�aH4-4,4/t/tb�aH4.4.�.4/�`4.4/4-t/t.4/4b�aH4`t/�-ta�.4,4.�c4/t/�`t`�-t.H��	��[X�Y�[[��Y˜�XX�Y��[���H4.4-�	��[X�Y�[[��Y˙[Y�X�P��[���H4`t/�-ta�.4,4.�c4/t/�`t`�-t.H4-4/�`t`�.4,�.�.�	XO��X[��\�X�O���]�����[X�Y�[[��Y˘]Z[�Y[�OOH�[	���[X�Y�[[��Y˘]Z[�Y[�OOH[�Y�[�Y	���\�Ә[YO^��[\˘�[[��Y��_O���&�/�/t`�`4/�.�c4,t,4.�,4/t`t,�؏�4/�`4-t,�b�b4-t/t.4-H4/�/�4/�`�-4-t.�c4/tb�/4`t/�-ta�.4,4.�c4/t/�`t`�c�/
+ٛܛX]
+�[X�Y�[[��Y�^�\�����_H4`t.�/�`�/�,�4`t,�-t`4aH�	H4.4aH4/t/�`4/4,4`�.4,�,
+H4/t-H4.4`t/�/�.�c4-�`�-t`�`tc�4-4.�c�4.�/�/4/�-t/t`t,4a�.4.4-4-ta4.4a�.4`�,4-4`4`�,�.4aH4/�`4/�a4.4.�-t.K�4+t`�/�`�4/�/�.�,4-�,4`�-t.�c8�%4,�/t`�`�`4-t/t/t.4.K4/�a4.4a�.4,4.�c4/tb�.H4&8�$L��H4.4/�.�,4/H�	H4/t-H4.4-�/4-t/t-t/tbˏ��B�ޙ\�����X�X[Y\˛[���	��]��\�Ә[YO^��[\˙��\�XYۛ��X�H��OH���H�����ۙϴ'�`4/�,�-t`4.�,4`t,�c�-�.4$�&4(x�$�)4(4'4(�)4(4'4'�0��ޙ\�����X�X[Y\˛[��H4`t/�-ta�.4,4.�c4/t/�`t`�-t.H4`H4/t`�.�-t,�b�/4.4`t.�/�`�,4/4.���ۙς��$�4,�b�,�`4`�-�.�-H��`4,4`tat/�-�-4-t/t.4.H4)4(4'4(4/�`�ٜ�\��]˜�[[X\�K���\��P�]O؏�4/�/�4`t/�/�`�,�-t`�`t`�,�`�c�bt.4/4-4/�.�-�/t/�`t`�c�/4-t`t`�c4/�`4/�,t.�-t/4/tb�-H4-�,4/�.4`t.4`�ٜ�\��\�����Y��YH4.4-�ޙ\�����X�X[Y\˛[��H4`t/�-ta�.4,4.�c4/t/�`t`�-t.K�4&�/�/t.�`4-t`�/tb�-H4/�`4/�a4.4.�.4/�`�/4-ta�-t/tb�4/t.4-�-K�����(t,�-t`4.�,4)4(4'4'�4/�`�ٜ�[�[��Y�T�]˘�]N�ٜ�[�ܙ�[�^�][ۑ�[�[���˛X]�Y����[�ܙ�[�^�][ۑ�[�[��˚\��Y\�OOH�[���.�/�.�.4a�-t`t`�,�/�4/�`�.�.�/�/t-t/t.4.H4/�/�4/�/�-4`4,4-�-4-t.�-t/t.4c�/4'4'�4/t-H4/�/�`4-t-4-t.�-t/t/����	ٜ�[�ܙ�[�^�][ۑ�[�[��˚\��Y\�H4`t`�`4/�.�4`H4/�`4.4-�/t,4.�,4/4.4`4,4`tat/�-�-4-t/t.4.H4/�/�4'4'�4.4-�	ٛܛX]
+��[�ܙ�[�^�][ۑ�[�[��˜����_H4`t`�`4/�.�����[�ܙ�[�^�][ۑ�[�[���˘[X�Y�[�\��/t-t`t.�/�.�c4.�/�4`t/�,�/�,4-4,4c�bt.4aH4/�`4.4,�c�-�/�.��Q4'4'�8�%4`�`4-t,t`�-t`�`tc�4/�`4/�,�-t`4.�,����/t-t`�4/�-4/t/�-�/t,4a�/t/�,�/�4`t/�/�/�`t`�,4,�.�-t/t.4c�4'4'�4/�/��Q�K�������$�,4-�/t/��؏�4ct`�.4,�b�,�`4`�-�.�.4/t-H4`t/�-4-t`4-�,4`�4/�/�.�/t/�,�/�4`t/�.4`t.�,4,�`4,4a�-t.H4.4/t-H4`�`t`�,4/t,4,�.�.4,�,4c�`�4/�`4.4a�.4/t`�4/�`�`t`�`�`t`�,�.4c�4`t.�/�`�/�,��4'�`4.4/�`�`t`�`�`t`�,�.4.4-�,4/�.4`t-t.H4/�/�4-4/�.�-�/t/�`t`�.4/t-t.�c4-�c�4`ta�.4`�,4`�c4a�`�/�4,�`4,4a�4/�`�`t`�`�`t`�,�`�-t`��4'�`4/�,�-t`4c4`�-H4.�,4-4`4/�,�b�-H4`t,�-t-4-t/t.4c�4/�`4.4,�c�-�.�`�4(t'�4`4,4`t/�.4`t,4/t.4-H4'4&4(H4.4-4/�`t`�`�/�/t/�`t`�c4`t.�/�`�/�,�4/t,4%t'�$�(ˏ����]��B�ٜ�\��]�Y]ԛ��˛[���	���\�Ә[YO^��[\˘�\���_O���'�`4/�,�-t`4.4`�c4)4(4'4(�ٜ�\��]�Y]ԛ��˛[��H4`t/�-ta�.4,4.�c4/t/�`t`�-t.K�؏�4%t`t`�c4`t.�/�`�b�4%t'�$�(�4/�`4.4/t`�.�-t,�/�/4/t/�`4/4,4`�.4,�-K�4't,4-�/4.4`�-H0��'�`4/�,�-t`4.4`�c4/�b4.4,t.�.4,�4)4(4'4(0��4,�b�b4-N�4/�`�.�`4/�-t`�`tc�4.�,4`4`�/�a�.�,4ct`�/�.H4'4'�4,�4`4,4-�-4-t.�-H�4`H4-4-t`�,4.�.4-�,4a�.4-t.H4-4/�.�-�/t/�`t`�-t.K4(t'�4.4-�,4/�.4`t-t.K�4'�/�-4`�,�-t`4-�-4dt/t/tb�-H4/�b4.4,t.�.4.4`t/�`4,4,�c4`�-H4,�4/�-t`4,�.4a�/t/�/4.4`t`�/�a�/t.4.�-K�4't`�.�-t,�/�.H4/t/�`4/4,4`�.4,�4`t,4/4/�/�4`t-t,t-H4/t-H4-4/�.�,4-�b�,�,4-t`�4/�b4.4,t.�`ˏ��B�]��\�Ә[YO^��[\˜�X�[ےXYO�]����'�/�.�,4-�,4`�-t.�.4/�/�4`t/�-ta�.4,4.�c4/t/�`t`�c�/����%�/t,4a�-t/t.4c�4/�/�4`t/�-ta�.4,4.�c4/t/�`t`�c�/4`t/�`4,4,�/�a�/tb�-N�4/�.�,4/H�	H4/�`4.4/4-t/tc�-t`�`tc�4.�4/�,tbt-t/4`�4/�/�.�,4-�,4`�-t.�c�4'4'��4'4-t-4.4,4/t,4`t`4,4,�/t.4,�,4-t`�4'4'�4`H4-4`4`�,�.4/4.4/�`4,�,4/t.4-�,4a�.4c�/4.4`�/�,�/�4-�-H4/t,4,t/�`4,4,�b�,�`4`�-�.�.����]���[X��\�Ә[YO^��[\˚[�[�T�[X�H�[YO^��[X�Y�X�X[_Hې�[��O^�]�[�
+HO��]�[X�Y�X�X[J]�[��\��]��[YJ_O��[ۈ�[YOH���$�`t-H4`t/�-ta�.4,4.�c4/t/�`t`�.��[ۏ���P�PSQT˛X\
+
+�X�X[JHO��[ۈ�^O^��X�X[K���_H�[YO^��X�X[K���_O���X�X[K��[Y_O��[ۏ�_O��[X���]���]��\�Ә[YO^��[\˝X�T�ܛ�O�X�H�\�Ә[YO^��[\˝X�_O�XY����(t/�-ta�.4,4.�c4/t/�`t`�c���'t/�`4/4,4`�.4,�4$�(t%t$�'����(t.�/�`�/�,�4-4.�c�4%t'�$�(����&8�$L��K	O���'4-t-4.4,4/t,4,�b�,t/�`4.�.	O���'�`�.�.�/�/t-t/t.4-K4/˴/ˏ���'4'�4,�4,�b�,t/�`4.�-O������XY���O���\�^T�X�X[Y\˛X\
+
+���HO��ۜ��[��X\��H�[��X\�ОT�X�X[K��]
+��˘��JN�ۜ�Y��\�[��HH��˘�ݙ\�Y�HOOH�[	���[��X\��˛YYX[�OOH�[	���[��X\��˛YYX[�OOH[�Y�[�Y���˘�ݙ\�Y�HH�[��X\�˛YYX[���[�]\����^O^ܛ�˘��_O��\�Ә[YO^��[\˛ܙӘ[Y_O�ܛ�˛�[Y_^ܛ�˛�ܛHOOH�[	����˛�ܛH�	����˙\�T���OOH	���X[�\�Ә[YO^��[\˙��\�[�[�QXYۛ��X�H]O^ٜ�\��\����\��Y\˙�]
+��˘��JO˜��\˛X\
+
+�X�ܙ
+HO�	ܙX�ܙ��[Y_N�	ܙX�ܙ���[�X
+K���[����H�'t`�.�-t,�,4c�4-�,4/�.4`tc4`t.�/�`�/�,�4`�`4-t,t`�-t`�4/�`4/�,�-t`4.�.4'4&4(K4)4(4'4(4.4)4(4'4'��O����\��\����\��Y\˙�]
+��˘��JO˘��[���
+H��4)4(4'4(�	ٛܛX]
+��\��\����\��Y\˙�]
+��˘��JHK���[�
+_H4-�,4/�.4`t-t.H4`H4`4,4`tat/�-�-4-t/t.4c�/4.��(t,�c�-�.�`�4`H4)4(4'4(�)4(4'4'�4/t`�-�/t/�4/�`4/�,�-t`4.4`�c�O��X[�^ܛ�˛�ܛHOOH	����˙\�T���OOH�[	����˙\�T����	���X[�[O^��\�^N�����ȋ��܎���N�LN��۝�ZY���_O�'�`4/�,�-t`4.4`�c4)4(4'4(��X[�O���ٛܛX]
+��˛�ܛJ_O���ٛܛX]
+��˙\�T���_O���\�Ә[YO^�	��[\˛Y]�X��[H	��X�X[P�[�
+��˘�ݙ\�Y�J_XO��\��[�
+��˘�ݙ\�Y�J_O����\��[�
+�[��X\��˛YYX[����[
+_O���\�Ә[YO^�Y��\�[��HOOH�[��[\˛�]]�[�Y��\�[��H�H��[\˙�����[\˘�[�ӛܛ_O��Y��\�[��HOOH�[���%����Y��\�[��H���Ȉ���^۝[X�\��ܛX]��ܛX]
+Y��\�[��J_OϟO���ؙ[��X\��˘��[���O�����J_B����O��X�O��]����X�[ۈ�\�Ә[YO^��[\˛ܙ�[��Y��O��\�X�O�ϴ'�`4,�,4/t.4-�,4a�.4c�4/�`�/t/�`t.4`�-t.�c4/t/�4,�b�,t/�`4.�.�Ϗ�'�/�4,�b�,t`4,4/t/tb�/4`t/�-ta�.4,4.�c4/t/�`t`�c�/4/t.4-�-H4/4-t-4.4,4/tbΈ��ؙ[��YYX[���[�O؏��4/t,4`�`4/�,�/t-H4.4.�.4,�b�b4-N����X�ݙSYYX[���[�O؏�����\�X�O��\�X�O�ϴ(�/�`4,4,�.�-t/ta�-t`t.�.4.H4,�b�,�/�-�Ϗ�(t/�-ta�.4,4.�c4/t/�`t`�-t.H4`H4`�`4/�,�/t-t/4/t.4-�-H�IN����ܚ]X�[��[�O؏��4(t,4/4b�-H4/t.4-�.�.4-H4-�/t,4a�-t/t.4cΈ��XZ�\��X�X[Y\˛[����XZ�\��X�X[Y\˛X\
+
+���HO�	ܛ�˛�[Y_H8�%	�\��[�
+��˘�ݙ\�Y�J_X
+K���[����H��/t-t`�4-4,4/t/tb�aH�K����\�X�O����X�[ۏ��]��\�Ә[YO^��[\˜�X�X[SY�[�O��[��H�\�Ә[YO^��[\˜�X�X[QܙY[�Hϸ�iM�IH8�%4,�b�`t/�.�.4.H4`�`4/�,�-t/tc��[���[��H�\�Ә[YO^��[\˜�X�X[VY[��HύL8�$��	H8�%4`�`4-t,t`�-t`�4,�/t.4/4,4/t.4c���[���[��H�\�Ә[YO^��[\˜�X�X[Sܘ[��_Hό�x�$�IH8�%4-�/�/t,4`4.4`t.�,��[���[��H�\�Ә[YO^��[\˜�X�X[T�YHω�̍IH8�%4.�`4.4`�.4a�/t/���[���[��)�,�-t`�/�,�/�.H4/�`4.4-t/t`�.4`4-4.�c�4`t/�-ta�.4,4.�c4/t/�`t`�.�4/�.�,4/H�	H4/�a�-t/t.4,�,4-t`�`tc�4/�/�4'4'�4,�4a�-t.�/�/���[���]����\�Ә[YO^��[\˘�\���_O�'4-t-4.4,4/t,4`4,4`t`ta�.4`�,4/t,4/�/�4'4'�4`�/�.H4-�-H4,�b�,�`4`�-�.�.�ؙ[��X\��ܙ�[�^�][ۜ˛[��H4/�`4,�,4/t.4-�,4a�.4.H0��4`t`4-t-�ؙ[��X\��]\�]˜�\ܝ]H����%�K�4$�4,�b�,t/�`4.�`�4/�/�4`t/�-ta�.4,4.�c4/t/�`t`�.4,�at/�-4c�`�4'4'�4`H4/�/�.�/�-�.4`�-t.�c4/tb�/4/�,tbt.4/4/t/�`4/4,4`�.4,�/�/�4/t`�.�-t,�b�-H4-�/t,4a�-t/t.4c�4`t.�/�`�/�,�4`�a�.4`�b�,�,4c�`�`tcˏ�����X�[ۏ�B��XZ[��B�����\��\�Ә[YO^��[\˙���\�O�&4`t`�/�a�/t.4.��4a4/�`4/4,4&8�$L��K4.�.4`t`�0��/t/�`4/4,4`�.4,�b�ˈ4(4-t,4.�c4/tb�.H4/�`4/�a�-t/t`�4&8�$L��HH0��(t.�/�`�/�,�4-4.�c�4%t'�$�(��0��0��'t/�`4/4,4`�.4,�4$�(t%t$�'���0��L	N�4/�.�,4/H4.�,4-�-4/�.H4'4'�8�%�	K4a�-t.�c8�%�	K�4't-tat,�,4`�.�,4`4,4`t`ta�.4`�b�,�,4-t`�`tc�4/�/�4.�,4-�-4/�.H4'4'�4.�,4.�4/4.4/t.4/4,4.�c4/t/�-H4a�-t.�/�-H4a�.4`t.�/�4-4/�/�/�.�/t.4`�-t.�c4/tb�aH4`t.�/�`�/�,�4-4/��	H4/�,tbt-t,�/�4/t/�`4/4,4`�.4,�,�0��'t/�`4/4,4-4.�c�4%t'�$�(��4.0��$�`t-t,�/�4`t.�/�`�/�,���4,�4/�a�-t/t.�-H4/t-H4.4`t/�/�.�c4-�`�c�`�`tc��4`t.�/�`�b�4/�/�4`t/�-ta�.4,4.�c4/t/�`t`�c�/4`H4/t`�.�-t,�b�/4/t/�`4/4,4`�.4,�/�/4/t-H4,�at/�-4c�`�4,�4/�a4.4a�.4,4.�c4/tb�.H4.4`�/�,�4a4/�`4/4bˈ4&4`�/�,�4/�/�4`4-t,�.4/�/t`�8�%4/�`�/t/�b4-t/t.4-H4`t`�/4/4b�4`t.�/�`�/�,�4.�4`t`�/4/4-H4/�,tbt-t,�/�4/t/�`4/4,4`�.4,�,�4%4,4`�b�4`t`4-t-�/�,���UK�X\
+
+]\�]
+HO�]\�]��\ܝ]JK���[��0���_K�4'�/�4/�`4,4,�.4.�`�4`4-t/�`4,�,4/t.4-�,4a�.4.4$4.�c4/4-t`�c4-t,�`t.�,4.4-�4`�-t.�`�bt-t,�/�4/�`�a�dt`�,4.4`t.�.�c�a�-t/tb�4/�`4-t-�/t.4-H4'4'�4,�/�.�/�,�/t,4c�4/�`4,�,4/t.4-�,4a�.4c�4`t/�at`4,4/t-t/t,�4'�`�`t`�`�`t`�,�.4-H4-4,4/t/tb�aH4/t-H4-�,4/4-t/tc�-t`�`tc�4/t`�.�dt/�4,�/�`t`�-4,4`4`t`�,�-t/t/tb�-K�a�,4`t`�/tb�-H4/�`4,�,4/t.4-�,4a�.4.4`4,4-�-4-t.�-t/tb�4/�/�4/�`4,�,4/t.4-�,4a�.4/�/t/t/�t/�`4,4,�/�,�/�.H4a4/�`4/4-K�ٛ��\����]��B

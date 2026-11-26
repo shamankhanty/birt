@@ -1,8 +1,8 @@
 {
-  "source": "–ò_38.9_–†–ê–ô–û–ù–´_–°–ª–æ—Ç—ã –ø–æ –Ω–æ—Ä–º–∞—Ç–∏–≤–∞–º –Ω–∞ –¥–∞—Ç—É. 20.11.2026.xlsx",
-  "reportDate": "20.11.2026",
-  "asOf": "20 –Ω–æ—è–±—Ä—è 2026",
-  "frmoDate": "19.11.2026",
+  "source": "–ò_38.9_–†–ê–ô–û–ù–´_–°–ª–æ—Ç—ã –ø–æ –Ω–æ—Ä–º–∞—Ç–∏–≤–∞–º –Ω–∞ –¥–∞—Ç—É. 26.11.2026.xlsx",
+  "reportDate": "26.11.2026",
+  "asOf": "26 –Ω–æ—è–±—Ä—è 2026",
+  "frmoDate": "26.11.2026",
   "forwardDays": 14,
   "orgCount": 46,
   "specialties": [
@@ -70,30 +70,37 @@
       "name": "–ì–ê–£–ó \"–ê–õ–¨–ú–ï–¢–¨–ï–í–°–ö–ê–Ø –†–ú–ë\"",
       "fullName": "–ì–ê–£–ó \"–ê–õ–¨–ú–ï–¢–¨–ï–í–°–ö–ê–Ø –†–ú–ë\" (–ê–ª—å–º–µ—Ç—å–µ–≤—Å–∫)",
       "city": "–ê–ª—å–º–µ—Ç—å–µ–≤—Å–∫",
+      "totals": {
+        "norm": 4920,
+        "slots": 5844,
+        "epguNorm": 3020,
+        "epguSlots": 2518,
+        "sourcePercent": 51.178861788617894
+      },
       "specialties": [
         {
           "code": "11",
           "name": "—Ç–µ—Ä–∞–ø–µ–≤—Ç",
           "norm": 700,
-          "slots": 708,
+          "slots": 688,
           "epguNorm": 450,
-          "epguSlots": 352
+          "epguSlots": 337
         },
         {
           "code": "13",
           "name": "–∞–∫—É—à–µ—Ä-–≥–∏–Ω–µ–∫–æ–ª–æ–≥",
           "norm": 2530,
-          "slots": 3320,
+          "slots": 3373,
           "epguNorm": 1540,
-          "epguSlots": 1509
+          "epguSlots": 1485
         },
         {
           "code": "25",
           "name": "–í–û–ü ‚Äî —Å–µ–º–µ–π–Ω—ã–π –≤—Ä–∞—á (—Å–µ–º–µ–π–Ω—ã–π –≤—Ä–∞—á)",
           "norm": 520,
-          "slots": 1031,
+          "slots": 1029,
           "epguNorm": 320,
-          "epguSlots": 448
+          "epguSlots": 445
         },
         {
           "code": "14",
@@ -107,9 +114,9 @@
           "code": "15",
           "name": "–æ—Ñ—Ç–∞–ª—å–º–æ–ª–æ–≥",
           "norm": 700,
-          "slots": 346,
+          "slots": 326,
           "epguNorm": 420,
-          "epguSlots": 93
+          "epguSlots": 91
         },
         {
           "code": "16",
@@ -171,9 +178,9 @@
           "code": "23",
           "name": "—Ö–∏—Ä—É—Ä–≥",
           "norm": 170,
-          "slots": 248,
+          "slots": 294,
           "epguNorm": 110,
-          "epguSlots": 94
+          "epguSlots": 160
         },
         {
           "code": "26",
@@ -191,22 +198,29 @@
       "name": "–ì–ê–£–ó \"–ö–ü–†–ë\"",
       "fullName": "–ì–ê–£–ó \"–ö–ü–†–ë\" (–ö–∞–º—Å–∫–∏–µ –ü–æ–ª—è–Ω—ã)",
       "city": "–ö–∞–º—Å–∫–∏–µ –ü–æ–ª—è–Ω—ã",
+      "totals": {
+        "norm": 4080,
+        "slots": 3321,
+        "epguNorm": 2585,
+        "epguSlots": 1919,
+        "sourcePercent": 47.03431372549019
+      },
       "specialties": [
         {
           "code": "11",
           "name": "—Ç–µ—Ä–∞–ø–µ–≤—Ç",
           "norm": 1540,
-          "slots": 1596,
+          "slots": 1597,
           "epguNorm": 990,
-          "epguSlots": 971
+          "epguSlots": 973
         },
         {
           "code": "13",
           "name": "–∞–∫—É—à–µ—Ä-–≥–∏–Ω–µ–∫–æ–ª–æ–≥",
           "norm": 632.5,
-          "slots": 234,
+          "slots": 492,
           "epguNorm": 385,
-          "epguSlots": 138
+          "epguSlots": 299
         },
         {
           "code": "25",
@@ -220,9 +234,9 @@
           "code": "14",
           "name": "–æ—Ç–æ—Ä–∏–Ω–æ–ª–∞—Ä–∏–Ω–≥–æ–ª–æ–≥",
           "norm": 300,
-          "slots": 260,
+          "slots": 142,
           "epguNorm": 180,
-          "epguSlots": 186
+          "epguSlots": 102
         },
         {
           "code": "15",
@@ -236,9 +250,9 @@
           "code": "16",
           "name": "–ø–µ–¥–∏–∞—Ç—Ä",
           "norm": 1120,
-          "slots": 1121,
+          "slots": 751,
           "epguNorm": 720,
-          "epguSlots": 623
+          "epguSlots": 416
         },
         {
           "code": "17",
@@ -292,9 +306,9 @@
           "code": "23",
           "name": "—Ö–∏—Ä—É—Ä–≥",
           "norm": 170,
-          "slots": 358,
+          "slots": 339,
           "epguNorm": 110,
-          "epguSlots": 141
+          "epguSlots": 129
         },
         {
           "code": "26",
@@ -312,20 +326,27 @@
       "name": "–ì–ê–£–ó \"–ù–¶–†–ú–ë\"",
       "fullName": "–ì–ê–£–ó \"–ù–¶–†–ú–ë\" (–ù–∏–∂–Ω–µ–∫–∞–º—Å–∫)",
       "city": "–ù–∏–∂–Ω–µ–∫–∞–º—Å–∫",
+      "totals": {
+        "norm": 13292.5,
+        "slots": 7919,
+        "epguNorm": 8387.5,
+        "epguSlots": 4899,
+        "sourcePercent": 36.855369569306
+      },
       "specialties": [
         {
           "code": "11",
           "name": "—Ç–µ—Ä–∞–ø–µ–≤—Ç",
           "norm": 8120,
-          "slots": 4389,
+          "slots": 5106,
           "epguNorm": 5220,
-          "epguSlots": 2742
+          "epguSlots": 3176
         },
         {
           "code": "13",
           "name": "–∞–∫—É—à–µ—Ä-–≥–∏–Ω–µ–∫–æ–ª–æ–≥",
           "norm": 0,
-          "slots": 88,
+          "slots": 72,
           "epguNorm": 0,
           "epguSlots": 0
         },
@@ -333,15 +354,15 @@
           "code": "25",
           "name": "–í–û–ü ‚Äî —Å–µ–º–µ–π–Ω—ã–π –≤—Ä–∞—á (—Å–µ–º–µ–π–Ω—ã–π –≤—Ä–∞—á)",
           "norm": 2080,
-          "slots": 1389,
+          "slots": 1393,
           "epguNorm": 1280,
-          "epguSlots": 831
+          "epguSlots": 821
         },
         {
           "code": "14",
           "name": "–æ—Ç–æ—Ä–∏–Ω–æ–ª–∞—Ä–∏–Ω–≥–æ–ª–æ–≥",
           "norm": 1050,
-          "slots": 342,
+          "slots": 353,
           "epguNorm": 630,
           "epguSlots": 195
         },
@@ -349,9 +370,9 @@
           "code": "15",
           "name": "–æ—Ñ—Ç–∞–ª—å–º–æ–ª–æ–≥",
           "norm": 1400,
-          "slots": 615,
+          "slots": 463,
           "epguNorm": 840,
-          "epguSlots": 345
+          "epguSlots": 254
         },
         {
           "code": "16",
@@ -397,9 +418,9 @@
           "code": "21",
           "name": "—Å—Ç–æ–º–∞—Ç–æ–ª–æ–≥-—Ç–µ—Ä–∞–ø–µ–≤—Ç",
           "norm": 90,
-          "slots": 82,
+          "slots": 40,
           "epguNorm": 60,
-          "epguSlots": 52
+          "epguSlots": 26
         },
         {
           "code": "22",
@@ -412,10 +433,10 @@
         {
           "code": "23",
           "name": "—Ö–∏—Ä—É—Ä–≥",
-          "norm": 467.5,
-          "slots": 390,
-          "epguNorm": 302.5,
-          "epguSlots": 250
+          "norm": 552.5,
+          "slots": 564,
+          "epguNorm": 357.5,
+          "epguSlots": 427
         },
         {
           "code": "26",
@@ -433,6 +454,13 @@
       "name": "–ì–ê–£–ó –ù–î–†–ë –° –ü–¶",
       "fullName": "–ì–ê–£–ó –ù–î–†–ë –° –ü–¶ (–ù–∏–∂–Ω–µ–∫–∞–º—Å–∫)",
       "city": "–ù–∏–∂–Ω–µ–∫–∞–º—Å–∫",
+      "totals": {
+        "norm": 20000,
+        "slots": 13890,
+        "epguNorm": 12697.5,
+        "epguSlots": 11987,
+        "sourcePercent": 59.935
+      },
       "specialties": [
         {
           "code": "11",
@@ -446,9 +474,9 @@
           "code": "13",
           "name": "–∞–∫—É—à–µ—Ä-–≥–∏–Ω–µ–∫–æ–ª–æ–≥",
           "norm": 2760,
-          "slots": 2447,
+          "slots": 2407,
           "epguNorm": 1680,
-          "epguSlots": 2199
+          "epguSlots": 2168
         },
         {
           "code": "25",
@@ -462,9 +490,9 @@
           "code": "14",
           "name": "–æ—Ç–æ—Ä–∏–Ω–æ–ª–∞—Ä–∏–Ω–≥–æ–ª–æ–≥",
           "norm": 900,
-          "slots": 0,
+          "slots": 20,
           "epguNorm": 540,
-          "epguSlots": 0
+          "epguSlots": 20
         },
         {
           "code": "15",
@@ -478,9 +506,9 @@
           "code": "16",
           "name": "–ø–µ–¥–∏–∞—Ç—Ä",
           "norm": 15680,
-          "slots": 11442,
+          "slots": 11243,
           "epguNorm": 10080,
-          "epguSlots": 9974
+          "epguSlots": 9799
         },
         {
           "code": "17",
@@ -542,9 +570,9 @@
           "code": "26",
           "name": "–¥–µ—Ç—Å–∫–∏–π —Ö–∏—Ä—É—Ä–≥",
           "norm": 0,
-          "slots": 128,
+          "slots": 92,
           "epguNorm": 0,
-          "epguSlots": 128
+          "epguSlots": 92
         }
       ]
     },
@@ -554,54 +582,61 @@
       "name": "–ì–ê–£–ó \"–ê–õ–¨–ú–ï–¢–¨–ï–í–°–ö–ê–Ø –¶–†–ë\"",
       "fullName": "–ì–ê–£–ó \"–ê–õ–¨–ú–ï–¢–¨–ï–í–°–ö–ê–Ø –¶–†–ë\" (–ê–ª—å–º–µ—Ç—å–µ–≤—Å–∫)",
       "city": "–ê–ª—å–º–µ—Ç—å–µ–≤—Å–∫",
+      "totals": {
+        "norm": 33721.5,
+        "slots": 20757,
+        "epguNorm": 21301.5,
+        "epguSlots": 16024,
+        "sourcePercent": 47.51864537461263
+      },
       "specialties": [
         {
           "code": "11",
           "name": "—Ç–µ—Ä–∞–ø–µ–≤—Ç",
-          "norm": 8708,
-          "slots": 5048,
-          "epguNorm": 5598,
-          "epguSlots": 3725
+          "norm": 8428,
+          "slots": 5074,
+          "epguNorm": 5418,
+          "epguSlots": 3740
         },
         {
           "code": "13",
           "name": "–∞–∫—É—à–µ—Ä-–≥–∏–Ω–µ–∫–æ–ª–æ–≥",
           "norm": 805,
-          "slots": 561,
+          "slots": 532,
           "epguNorm": 490,
-          "epguSlots": 297
+          "epguSlots": 270
         },
         {
           "code": "25",
           "name": "–í–û–ü ‚Äî —Å–µ–º–µ–π–Ω—ã–π –≤—Ä–∞—á (—Å–µ–º–µ–π–Ω—ã–π –≤—Ä–∞—á)",
           "norm": 5031,
-          "slots": 4717,
+          "slots": 4688,
           "epguNorm": 3096,
-          "epguSlots": 3461
+          "epguSlots": 3427
         },
         {
           "code": "14",
           "name": "–æ—Ç–æ—Ä–∏–Ω–æ–ª–∞—Ä–∏–Ω–≥–æ–ª–æ–≥",
           "norm": 1875,
-          "slots": 851,
+          "slots": 763,
           "epguNorm": 1125,
-          "epguSlots": 416
+          "epguSlots": 400
         },
         {
           "code": "15",
           "name": "–æ—Ñ—Ç–∞–ª—å–º–æ–ª–æ–≥",
           "norm": 1750,
-          "slots": 545,
+          "slots": 425,
           "epguNorm": 1050,
-          "epguSlots": 74
+          "epguSlots": 75
         },
         {
           "code": "16",
           "name": "–ø–µ–¥–∏–∞—Ç—Ä",
           "norm": 11410,
-          "slots": 9830,
+          "slots": 5881,
           "epguNorm": 7335,
-          "epguSlots": 9321
+          "epguSlots": 5636
         },
         {
           "code": "17",
@@ -623,15 +658,15 @@
           "code": "19",
           "name": "—Å—Ç–æ–º–∞—Ç–æ–ª–æ–≥",
           "norm": 1395,
-          "slots": 702,
+          "slots": 680,
           "epguNorm": 852.5,
-          "epguSlots": 583
+          "epguSlots": 550
         },
         {
           "code": "20",
           "name": "—Å—Ç–æ–º–∞—Ç–æ–ª–æ–≥ –¥–µ—Ç—Å–∫–∏–π",
           "norm": 1215,
-          "slots": 641,
+          "slots": 635,
           "epguNorm": 742.5,
           "epguSlots": 308
         },
@@ -639,9 +674,9 @@
           "code": "21",
           "name": "—Å—Ç–æ–º–∞—Ç–æ–ª–æ–≥-—Ç–µ—Ä–∞–ø–µ–≤—Ç",
           "norm": 945,
-          "slots": 1324,
+          "slots": 1142,
           "epguNorm": 630,
-          "epguSlots": 865
+          "epguSlots": 761
         },
         {
           "code": "22",
@@ -654,16 +689,16 @@
         {
           "code": "23",
           "name": "—Ö–∏—Ä—É—Ä–≥",
-          "norm": 637.5,
-          "slots": 851,
-          "epguNorm": 412.5,
-          "epguSlots": 777
+          "norm": 807.5,
+          "slots": 897,
+          "epguNorm": 522.5,
+          "epguSlots": 817
         },
         {
           "code": "26",
           "name": "–¥–µ—Ç—Å–∫–∏–π —Ö–∏—Ä—É—Ä–≥",
           "norm": 0,
-          "slots": 384,
+          "slots": 320,
           "epguNorm": 0,
           "epguSlots": 0
         }
@@ -675,6 +710,13 @@
       "name": "–ì–ê–£–ó \"–ê–õ–¨–ú–ï–¢–¨–ï–í–°–ö–ê–Ø –ì–ü ‚Ññ 3\"",
       "fullName": "–ì–ê–£–ó \"–ê–õ–¨–ú–ï–¢–¨–ï–í–°–ö–ê–Ø –ì–ü ‚Ññ 3\" (–ê–ª—å–º–µ—Ç—å–µ–≤—Å–∫)",
       "city": "–ê–ª—å–º–µ—Ç—å–µ–≤—Å–∫",
+      "totals": {
+        "norm": 0,
+        "slots": 0,
+        "epguNorm": 0,
+        "epguSlots": 0,
+        "sourcePercent": null
+      },
       "specialties": [
         {
           "code": "11",
@@ -796,94 +838,101 @@
       "name": "–ì–ê–£–ó \"–ë–£–ì–£–õ–¨–ú–ò–ù–°–ö–ê–Ø –¶–†–ë\"",
       "fullName": "–ì–ê–£–ó \"–ë–£–ì–£–õ–¨–ú–ò–ù–°–ö–ê–Ø –¶–†–ë\" (–ë—É–≥—É–ª—å–º–∞)",
       "city": "–ë—É–≥—É–ª—å–º–∞",
+      "totals": {
+        "norm": 7993,
+        "slots": 6421,
+        "epguNorm": 5009.5,
+        "epguSlots": 4762,
+        "sourcePercent": 59.577129988740154
+      },
       "specialties": [
         {
           "code": "11",
           "name": "—Ç–µ—Ä–∞–ø–µ–≤—Ç",
           "norm": 798,
-          "slots": 1023,
+          "slots": 988,
           "epguNorm": 513,
-          "epguSlots": 877
+          "epguSlots": 875
         },
         {
           "code": "13",
           "name": "–∞–∫—É—à–µ—Ä-–≥–∏–Ω–µ–∫–æ–ª–æ–≥",
           "norm": 1265,
-          "slots": 1122,
+          "slots": 1024,
           "epguNorm": 770,
-          "epguSlots": 495
+          "epguSlots": 434
         },
         {
           "code": "25",
           "name": "–í–û–ü ‚Äî —Å–µ–º–µ–π–Ω—ã–π –≤—Ä–∞—á (—Å–µ–º–µ–π–Ω—ã–π –≤—Ä–∞—á)",
           "norm": 780,
-          "slots": 875,
+          "slots": 863,
           "epguNorm": 480,
-          "epguSlots": 859
+          "epguSlots": 843
         },
         {
           "code": "14",
           "name": "–æ—Ç–æ—Ä–∏–Ω–æ–ª–∞—Ä–∏–Ω–≥–æ–ª–æ–≥",
           "norm": 345,
-          "slots": 272,
+          "slots": 300,
           "epguNorm": 206.99999999999997,
-          "epguSlots": 104
+          "epguSlots": 96
         },
         {
           "code": "15",
           "name": "–æ—Ñ—Ç–∞–ª—å–º–æ–ª–æ–≥",
           "norm": 612.5,
-          "slots": 484,
+          "slots": 652,
           "epguNorm": 367.5,
-          "epguSlots": 285
+          "epguSlots": 310
         },
         {
           "code": "16",
           "name": "–ø–µ–¥–∏–∞—Ç—Ä",
           "norm": 2590,
-          "slots": 999,
+          "slots": 1195,
           "epguNorm": 1665,
-          "epguSlots": 999
+          "epguSlots": 1195
         },
         {
           "code": "17",
           "name": "–ø—Å–∏—Ö–∏–∞—Ç—Ä –¥–µ—Ç—Å–∫–∏–π",
           "norm": 127.5,
-          "slots": 6,
+          "slots": 0,
           "epguNorm": 82.5,
-          "epguSlots": 6
+          "epguSlots": 0
         },
         {
           "code": "18",
           "name": "–ø—Å–∏—Ö–∏–∞—Ç—Ä-–Ω–∞—Ä–∫–æ–ª–æ–≥",
           "norm": 0,
-          "slots": 88,
+          "slots": 56,
           "epguNorm": 0,
-          "epguSlots": 88
+          "epguSlots": 56
         },
         {
           "code": "19",
           "name": "—Å—Ç–æ–º–∞—Ç–æ–ª–æ–≥",
           "norm": 720,
-          "slots": 330,
+          "slots": 363,
           "epguNorm": 440,
-          "epguSlots": 270
+          "epguSlots": 297
         },
         {
           "code": "20",
           "name": "—Å—Ç–æ–º–∞—Ç–æ–ª–æ–≥ –¥–µ—Ç—Å–∫–∏–π",
           "norm": 270,
-          "slots": 319,
+          "slots": 352,
           "epguNorm": 165,
-          "epguSlots": 261
+          "epguSlots": 288
         },
         {
           "code": "21",
           "name": "—Å—Ç–æ–º–∞—Ç–æ–ª–æ–≥-—Ç–µ—Ä–∞–ø–µ–≤—Ç",
           "norm": 90,
-          "slots": 220,
+          "slots": 242,
           "epguNorm": 60,
-          "epguSlots": 180
+          "epguSlots": 198
         },
         {
           "code": "22",
@@ -897,17 +946,17 @@
           "code": "23",
           "name": "—Ö–∏—Ä—É—Ä–≥",
           "norm": 255,
-          "slots": 324,
+          "slots": 344,
           "epguNorm": 165,
-          "epguSlots": 131
+          "epguSlots": 128
         },
         {
           "code": "26",
           "name": "–¥–µ—Ç—Å–∫–∏–π —Ö–∏—Ä—É—Ä–≥",
           "norm": 140,
-          "slots": 92,
+          "slots": 98,
           "epguNorm": 94.5,
-          "epguSlots": 92
+          "epguSlots": 98
         }
       ]
     },
@@ -917,70 +966,77 @@
       "name": "–ì–ê–£–ó \"–ï–¶–†–ë\"",
       "fullName": "–ì–ê–£–ó \"–ï–¶–†–ë\" (–ï–ª–∞–±—É–≥–∞)",
       "city": "–ï–ª–∞–±—É–≥–∞",
+      "totals": {
+        "norm": 12093,
+        "slots": 17602,
+        "epguNorm": 7588.5,
+        "epguSlots": 8616,
+        "sourcePercent": 71.2478293227487
+      },
       "specialties": [
         {
           "code": "11",
           "name": "—Ç–µ—Ä–∞–ø–µ–≤—Ç",
-          "norm": 1890,
-          "slots": 2140,
-          "epguNorm": 1215,
-          "epguSlots": 1593
+          "norm": 2380,
+          "slots": 3253,
+          "epguNorm": 1530,
+          "epguSlots": 2063
         },
         {
           "code": "13",
           "name": "–∞–∫—É—à–µ—Ä-–≥–∏–Ω–µ–∫–æ–ª–æ–≥",
           "norm": 1092.5,
-          "slots": 1776,
+          "slots": 1729,
           "epguNorm": 665,
-          "epguSlots": 380
+          "epguSlots": 409
         },
         {
           "code": "25",
           "name": "–í–û–ü ‚Äî —Å–µ–º–µ–π–Ω—ã–π –≤—Ä–∞—á (—Å–µ–º–µ–π–Ω—ã–π –≤—Ä–∞—á)",
           "norm": 2795,
-          "slots": 6027,
+          "slots": 6727,
           "epguNorm": 1720,
-          "epguSlots": 2490
+          "epguSlots": 2804
         },
         {
           "code": "14",
           "name": "–æ—Ç–æ—Ä–∏–Ω–æ–ª–∞—Ä–∏–Ω–≥–æ–ª–æ–≥",
           "norm": 900,
-          "slots": 614,
+          "slots": 667,
           "epguNorm": 540,
-          "epguSlots": 266
+          "epguSlots": 283
         },
         {
           "code": "15",
           "name": "–æ—Ñ—Ç–∞–ª—å–º–æ–ª–æ–≥",
           "norm": 787.5,
-          "slots": 534,
+          "slots": 673,
           "epguNorm": 472.5,
-          "epguSlots": 225
+          "epguSlots": 344
         },
         {
           "code": "16",
           "name": "–ø–µ–¥–∏–∞—Ç—Ä",
-          "norm": 2380,
-          "slots": 3102,
-          "epguNorm": 1530,
-          "epguSlots": 1431
+          "norm": 2660,
+          "slots": 3066,
+          "epguNorm": 1710,
+          "epguSlots": 1564
         },
         {
           "code": "17",
           "name": "–ø—Å–∏—Ö–∏–∞—Ç—Ä –¥–µ—Ç—Å–∫–∏–π",
           "norm": 212.5,
-          "slots": 101,
+          "slots": 140,
           "epguNorm": 137.5,
-          "epguSlots": 66
+          "epguSlots": 91
         },
         {
           "code": "18",
           "name": "–ø—Å–∏—Ö–∏–∞—Ç—Ä-–Ω–∞—Ä–∫–æ–ª–æ–≥",
-          "norm": 977.5,
-          "slots": 750,
-          "epguNorm": 632.5,
-          "epguSlots": 750
+          "norm": 807.5,
+          "slots": 770,
+          "epguNorm": 522.5,
+          "epguSlots": 770
         },
         {
           "code": "19",
@@ -994,7 +1050,7 @@
           "code": "20",
           "name": "—Å—Ç–æ–º–∞—Ç–æ–ª–æ–≥ –¥–µ—Ç—Å–∫–∏–π",
           "norm": 180,
-          "slots": 48,
+          "slots": 60,
           "epguNorm": 110,
           "epguSlots": 0
         },
@@ -1010,17 +1066,17 @@
           "code": "22",
           "name": "—Ñ—Ç–∏–∑–∏–∞—Ç—Ä",
           "norm": 90,
-          "slots": 86,
+          "slots": 139,
           "epguNorm": 60,
-          "epguSlots": 76
+          "epguSlots": 128
         },
         {
           "code": "23",
           "name": "—Ö–∏—Ä—É—Ä–≥",
           "norm": 170,
-          "slots": 295,
+          "slots": 258,
           "epguNorm": 110,
-          "epguSlots": 178
+          "epguSlots": 160
         },
         {
           "code": "26",
@@ -1038,54 +1094,61 @@
       "name": "–ì–ê–£–ó \"–ó–ï–õ–ï–ù–û–î–û–õ–¨–°–ö–ê–Ø –¶–†–ë\"",
       "fullName": "–ì–ê–£–ó \"–ó–ï–õ–ï–ù–û–î–û–õ–¨–°–ö–ê–Ø –¶–†–ë\" (–ó–µ–ª–µ–Ω–æ–¥–æ–ª—å—Å–∫)",
       "city": "–ó–µ–ª–µ–Ω–æ–¥–æ–ª—å—Å–∫",
+      "totals": {
+        "norm": 34105,
+        "slots": 31144,
+        "epguNorm": 21487.5,
+        "epguSlots": 22194,
+        "sourcePercent": 65.075502125788
+      },
       "specialties": [
         {
           "code": "11",
           "name": "—Ç–µ—Ä–∞–ø–µ–≤—Ç",
           "norm": 11410,
-          "slots": 10637,
+          "slots": 10553,
           "epguNorm": 7335,
-          "epguSlots": 8049
+          "epguSlots": 8061
         },
         {
           "code": "13",
           "name": "–∞–∫—É—à–µ—Ä-–≥–∏–Ω–µ–∫–æ–ª–æ–≥",
           "norm": 1552.5,
-          "slots": 1844,
+          "slots": 1849,
           "epguNorm": 945,
-          "epguSlots": 1549
+          "epguSlots": 1497
         },
         {
           "code": "25",
           "name": "–í–û–ü ‚Äî —Å–µ–º–µ–π–Ω—ã–π –≤—Ä–∞—á (—Å–µ–º–µ–π–Ω—ã–π –≤—Ä–∞—á)",
           "norm": 2470,
-          "slots": 3630,
+          "slots": 3568,
           "epguNorm": 1520,
-          "epguSlots": 2030
+          "epguSlots": 2059
         },
         {
           "code": "14",
           "name": "–æ—Ç–æ—Ä–∏–Ω–æ–ª–∞—Ä–∏–Ω–≥–æ–ª–æ–≥",
           "norm": 2475,
-          "slots": 1105,
+          "slots": 1138,
           "epguNorm": 1485,
-          "epguSlots": 957
+          "epguSlots": 982
         },
         {
           "code": "15",
           "name": "–æ—Ñ—Ç–∞–ª—å–º–æ–ª–æ–≥",
           "norm": 2450,
-          "slots": 1685,
+          "slots": 1625,
           "epguNorm": 1470,
-          "epguSlots": 1481
+          "epguSlots": 1436
         },
         {
           "code": "16",
           "name": "–ø–µ–¥–∏–∞—Ç—Ä",
           "norm": 8050,
-          "slots": 7265,
+          "slots": 6963,
           "epguNorm": 5175,
-          "epguSlots": 5746
+          "epguSlots": 5459
         },
         {
           "code": "17",
@@ -1107,25 +1170,25 @@
           "code": "19",
           "name": "—Å—Ç–æ–º–∞—Ç–æ–ª–æ–≥",
           "norm": 3420,
-          "slots": 1674,
+          "slots": 1747,
           "epguNorm": 2090,
-          "epguSlots": 548
+          "epguSlots": 596
         },
         {
           "code": "20",
           "name": "—Å—Ç–æ–º–∞—Ç–æ–ª–æ–≥ –¥–µ—Ç—Å–∫–∏–π",
           "norm": 540,
-          "slots": 404,
+          "slots": 364,
           "epguNorm": 330,
-          "epguSlots": 256
+          "epguSlots": 232
         },
         {
           "code": "21",
           "name": "—Å—Ç–æ–º–∞—Ç–æ–ª–æ–≥-—Ç–µ—Ä–∞–ø–µ–≤—Ç",
           "norm": 675,
-          "slots": 1257,
+          "slots": 1274,
           "epguNorm": 450,
-          "epguSlots": 794
+          "epguSlots": 802
         },
         {
           "code": "22",
@@ -1139,17 +1202,17 @@
           "code": "23",
           "name": "—Ö–∏—Ä—É—Ä–≥",
           "norm": 1062.5,
-          "slots": 1964,
+          "slots": 2063,
           "epguNorm": 687.5,
-          "epguSlots": 902
+          "epguSlots": 1070
         },
         {
           "code": "26",
           "name": "–¥–µ—Ç—Å–∫–∏–π —Ö–∏—Ä—É—Ä–≥",
           "norm": 0,
-          "slots": 111,
+          "slots": 115,
           "epguNorm": 0,
-          "epguSlots": 97
+          "epguSlots": 101
         }
       ]
     },
@@ -1159,36 +1222,43 @@
       "name": "–ì–ê–£–ó \"–õ–ï–ù–ò–ù–û–ì–û–†–°–ö–ê–Ø –¶–†–ë\"",
       "fullName": "–ì–ê–£–ó \"–õ–ï–ù–ò–ù–û–ì–û–†–°–ö–ê–Ø –¶–†–ë\" (–õ–µ–Ω–∏–Ω–æ–≥–æ—Ä—Å–∫)",
       "city": "–õ–µ–Ω–∏–Ω–æ–≥–æ—Ä—Å–∫",
+      "totals": {
+        "norm": 12132.5,
+        "slots": 9203,
+        "epguNorm": 7615,
+        "epguSlots": 6442,
+        "sourcePercent": 53.09705336905007
+      },
       "specialties": [
         {
           "code": "11",
           "name": "—Ç–µ—Ä–∞–ø–µ–≤—Ç",
-          "norm": 2870,
-          "slots": 2289,
-          "epguNorm": 1845,
-          "epguSlots": 1486
+          "norm": 3150,
+          "slots": 3144,
+          "epguNorm": 2025,
+          "epguSlots": 2160
         },
         {
           "code": "13",
           "name": "–∞–∫—É—à–µ—Ä-–≥–∏–Ω–µ–∫–æ–ª–æ–≥",
           "norm": 747.5,
-          "slots": 746,
+          "slots": 919,
           "epguNorm": 455,
-          "epguSlots": 746
+          "epguSlots": 899
         },
         {
           "code": "25",
           "name": "–í–û–ü ‚Äî —Å–µ–º–µ–π–Ω—ã–π –≤—Ä–∞—á (—Å–µ–º–µ–π–Ω—ã–π –≤—Ä–∞—á)",
-          "norm": 845,
-          "slots": 84,
-          "epguNorm": 520,
-          "epguSlots": 78
+          "norm": 910,
+          "slots": 74,
+          "epguNorm": 560,
+          "epguSlots": 65
         },
         {
           "code": "14",
           "name": "–æ—Ç–æ—Ä–∏–Ω–æ–ª–∞—Ä–∏–Ω–≥–æ–ª–æ–≥",
           "norm": 375,
-          "slots": 172,
+          "slots": 186,
           "epguNorm": 225,
           "epguSlots": 144
         },
@@ -1196,17 +1266,17 @@
           "code": "15",
           "name": "–æ—Ñ—Ç–∞–ª—å–º–æ–ª–æ–≥",
           "norm": 1925,
-          "slots": 712,
+          "slots": 762,
           "epguNorm": 1155,
-          "epguSlots": 712
+          "epguSlots": 762
         },
         {
           "code": "16",
           "name": "–ø–µ–¥–∏–∞—Ç—Ä",
-          "norm": 2100,
-          "slots": 2617,
-          "epguNorm": 1350,
-          "epguSlots": 1311
+          "norm": 2660,
+          "slots": 2673,
+          "epguNorm": 1710,
+          "epguSlots": 1353
         },
         {
           "code": "17",
@@ -1227,26 +1297,26 @@
         {
           "code": "19",
           "name": "—Å—Ç–æ–º–∞—Ç–æ–ª–æ–≥",
-          "norm": 945,
-          "slots": 355,
-          "epguNorm": 577.5,
-          "epguSlots": 245
+          "norm": 1080,
+          "slots": 382,
+          "epguNorm": 660,
+          "epguSlots": 314
         },
         {
           "code": "20",
           "name": "—Å—Ç–æ–º–∞—Ç–æ–ª–æ–≥ –¥–µ—Ç—Å–∫–∏–π",
           "norm": 180,
-          "slots": 171,
+          "slots": 72,
           "epguNorm": 110,
-          "epguSlots": 115
+          "epguSlots": 48
         },
         {
           "code": "21",
           "name": "—Å—Ç–æ–º–∞—Ç–æ–ª–æ–≥-—Ç–µ—Ä–∞–ø–µ–≤—Ç",
           "norm": 0,
-          "slots": 84,
+          "slots": 22,
           "epguNorm": 0,
-          "epguSlots": 58
+          "epguSlots": 14
         },
         {
           "code": "22",
@@ -1260,17 +1330,17 @@
           "code": "23",
           "name": "—Ö–∏—Ä—É—Ä–≥",
           "norm": 595,
-          "slots": 402,
+          "slots": 420,
           "epguNorm": 385,
-          "epguSlots": 394
+          "epguSlots": 408
         },
         {
           "code": "26",
           "name": "–¥–µ—Ç—Å–∫–∏–π —Ö–∏—Ä—É—Ä–≥",
           "norm": 0,
-          "slots": 239,
+          "slots": 268,
           "epguNorm": 0,
-          "epguSlots": 239
+          "epguSlots": 268
         }
       ]
     },
@@ -1280,54 +1350,61 @@
       "name": "–ì–ê–£–ó \"–ß–ò–°–¢–û–ü–û–õ–¨–°–ö–ê–Ø –¶–†–ë\"",
       "fullName": "–ì–ê–£–ó \"–ß–ò–°–¢–û–ü–û–õ–¨–°–ö–ê–Ø –¶–†–ë\" (–ß–∏—Å—Ç–æ–ø–æ–ª—å)",
       "city": "–ß–∏—Å—Ç–æ–ø–æ–ª—å",
+      "totals": {
+        "norm": 15245,
+        "slots": 15056,
+        "epguNorm": 9655,
+        "epguSlots": 10755,
+        "sourcePercent": 70.54772056411939
+      },
       "specialties": [
         {
           "code": "11",
           "name": "—Ç–µ—Ä–∞–ø–µ–≤—Ç",
-          "norm": 4480,
-          "slots": 3918,
-          "epguNorm": 2880,
-          "epguSlots": 2536
+          "norm": 4340,
+          "slots": 4012,
+          "epguNorm": 2790,
+          "epguSlots": 2596
         },
         {
           "code": "13",
           "name": "–∞–∫—É—à–µ—Ä-–≥–∏–Ω–µ–∫–æ–ª–æ–≥",
-          "norm": 1150,
-          "slots": 1224,
-          "epguNorm": 700,
-          "epguSlots": 987
+          "norm": 1437.5,
+          "slots": 1189,
+          "epguNorm": 875,
+          "epguSlots": 964
         },
         {
           "code": "25",
           "name": "–í–û–ü ‚Äî —Å–µ–º–µ–π–Ω—ã–π –≤—Ä–∞—á (—Å–µ–º–µ–π–Ω—ã–π –≤—Ä–∞—á)",
           "norm": 2730,
-          "slots": 2968,
+          "slots": 2921,
           "epguNorm": 1680,
-          "epguSlots": 2017
+          "epguSlots": 1964
         },
         {
           "code": "14",
           "name": "–æ—Ç–æ—Ä–∏–Ω–æ–ª–∞—Ä–∏–Ω–≥–æ–ª–æ–≥",
           "norm": 450,
-          "slots": 282,
+          "slots": 292,
           "epguNorm": 270,
-          "epguSlots": 208
+          "epguSlots": 216
         },
         {
           "code": "15",
           "name": "–æ—Ñ—Ç–∞–ª—å–º–æ–ª–æ–≥",
           "norm": 437.5,
-          "slots": 493,
+          "slots": 511,
           "epguNorm": 262.5,
-          "epguSlots": 339
+          "epguSlots": 357
         },
         {
           "code": "16",
           "name": "–ø–µ–¥–∏–∞—Ç—Ä",
-          "norm": 3780,
-          "slots": 4223,
-          "epguNorm": 2430,
-          "epguSlots": 3187
+          "norm": 4200,
+          "slots": 4323,
+          "epguNorm": 2700,
+          "epguSlots": 3281
         },
         {
           "code": "17",
@@ -1357,17 +1434,17 @@
           "code": "20",
           "name": "—Å—Ç–æ–º–∞—Ç–æ–ª–æ–≥ –¥–µ—Ç—Å–∫–∏–π",
           "norm": 225,
-          "slots": 169,
+          "slots": 174,
           "epguNorm": 137.5,
-          "epguSlots": 122
+          "epguSlots": 125
         },
         {
           "code": "21",
           "name": "—Å—Ç–æ–º–∞—Ç–æ–ª–æ–≥-—Ç–µ—Ä–∞–ø–µ–≤—Ç",
           "norm": 675,
-          "slots": 756,
+          "slots": 704,
           "epguNorm": 450,
-          "epguSlots": 500
+          "epguSlots": 463
         },
         {
           "code": "22",
@@ -1381,15 +1458,15 @@
           "code": "23",
           "name": "—Ö–∏—Ä—É—Ä–≥",
           "norm": 255,
-          "slots": 235,
+          "slots": 215,
           "epguNorm": 165,
-          "epguSlots": 235
+          "epguSlots": 215
         },
         {
           "code": "26",
           "name": "–¥–µ—Ç—Å–∫–∏–π —Ö–∏—Ä—É—Ä–≥",
           "norm": 0,
-          "slots": 272,
+          "slots": 321,
           "epguNorm": 0,
           "epguSlots": 0
         }
@@ -1401,54 +1478,61 @@
       "name": "–ê–ó–ù–ê–ö–ê–ï–í–°–ö–ê–Ø –¶–†–ë",
       "fullName": "–ê–ó–ù–ê–ö–ê–ï–í–°–ö–ê–Ø –¶–†–ë (–ê–∑–Ω–∞–∫–∞–µ–≤–æ)",
       "city": "–ê–∑–Ω–∞–∫–∞–µ–≤–æ",
+      "totals": {
+        "norm": 11555,
+        "slots": 12313,
+        "epguNorm": 7327.5,
+        "epguSlots": 7612,
+        "sourcePercent": 65.87624405019471
+      },
       "specialties": [
         {
           "code": "11",
           "name": "—Ç–µ—Ä–∞–ø–µ–≤—Ç",
           "norm": 3640,
-          "slots": 3638,
+          "slots": 3721,
           "epguNorm": 2340,
-          "epguSlots": 2021
+          "epguSlots": 2399
         },
         {
           "code": "13",
           "name": "–∞–∫—É—à–µ—Ä-–≥–∏–Ω–µ–∫–æ–ª–æ–≥",
           "norm": 747.5,
-          "slots": 628,
+          "slots": 803,
           "epguNorm": 455,
-          "epguSlots": 386
+          "epguSlots": 491
         },
         {
           "code": "25",
           "name": "–í–û–ü ‚Äî —Å–µ–º–µ–π–Ω—ã–π –≤—Ä–∞—á (—Å–µ–º–µ–π–Ω—ã–π –≤—Ä–∞—á)",
           "norm": 780,
-          "slots": 1467,
+          "slots": 1517,
           "epguNorm": 480,
-          "epguSlots": 925
+          "epguSlots": 972
         },
         {
           "code": "14",
           "name": "–æ—Ç–æ—Ä–∏–Ω–æ–ª–∞—Ä–∏–Ω–≥–æ–ª–æ–≥",
           "norm": 450,
-          "slots": 24,
+          "slots": 114,
           "epguNorm": 270,
-          "epguSlots": 20
+          "epguSlots": 87
         },
         {
           "code": "15",
           "name": "–æ—Ñ—Ç–∞–ª—å–º–æ–ª–æ–≥",
           "norm": 437.5,
-          "slots": 186,
+          "slots": 253,
           "epguNorm": 262.5,
-          "epguSlots": 122
+          "epguSlots": 186
         },
         {
           "code": "16",
           "name": "–ø–µ–¥–∏–∞—Ç—Ä",
           "norm": 3360,
-          "slots": 3830,
+          "slots": 3884,
           "epguNorm": 2160,
-          "epguSlots": 2224
+          "epguSlots": 2129
         },
         {
           "code": "17",
@@ -1462,57 +1546,57 @@
           "code": "18",
           "name": "–ø—Å–∏—Ö–∏–∞—Ç—Ä-–Ω–∞—Ä–∫–æ–ª–æ–≥",
           "norm": 255,
-          "slots": 86,
+          "slots": 106,
           "epguNorm": 165,
-          "epguSlots": 60
+          "epguSlots": 76
         },
         {
           "code": "19",
           "name": "—Å—Ç–æ–º–∞—Ç–æ–ª–æ–≥",
           "norm": 1080,
-          "slots": 781,
+          "slots": 779,
           "epguNorm": 660,
-          "epguSlots": 524
+          "epguSlots": 519
         },
         {
           "code": "20",
           "name": "—Å—Ç–æ–º–∞—Ç–æ–ª–æ–≥ –¥–µ—Ç—Å–∫–∏–π",
           "norm": 0,
-          "slots": 6,
+          "slots": 42,
           "epguNorm": 0,
-          "epguSlots": 3
+          "epguSlots": 21
         },
         {
           "code": "21",
           "name": "—Å—Ç–æ–º–∞—Ç–æ–ª–æ–≥-—Ç–µ—Ä–∞–ø–µ–≤—Ç",
           "norm": 540,
-          "slots": 724,
+          "slots": 604,
           "epguNorm": 360,
-          "epguSlots": 299
+          "epguSlots": 323
         },
         {
           "code": "22",
           "name": "—Ñ—Ç–∏–∑–∏–∞—Ç—Ä",
           "norm": 180,
-          "slots": 252,
+          "slots": 270,
           "epguNorm": 120,
-          "epguSlots": 216
+          "epguSlots": 234
         },
         {
           "code": "23",
           "name": "—Ö–∏—Ä—É—Ä–≥",
           "norm": 85,
-          "slots": 319,
+          "slots": 262,
           "epguNorm": 55,
-          "epguSlots": 253
+          "epguSlots": 196
         },
         {
           "code": "26",
           "name": "–¥–µ—Ç—Å–∫–∏–π —Ö–∏—Ä—É—Ä–≥",
           "norm": 0,
-          "slots": 199,
+          "slots": 303,
           "epguNorm": 0,
-          "epguSlots": 131
+          "epguSlots": 205
         }
       ]
     },
@@ -1522,12 +1606,19 @@
       "name": "–ì–ê–£–ó \"–ó–ê–ò–ù–°–ö–ê–Ø –¶–†–ë\"",
       "fullName": "–ì–ê–£–ó \"–ó–ê–ò–ù–°–ö–ê–Ø –¶–†–ë\" (–ó–∞–∏–Ω—Å–∫)",
       "city": "–ó–∞–∏–Ω—Å–∫",
+      "totals": {
+        "norm": 9219.5,
+        "slots": 13833,
+        "epguNorm": 5781,
+        "epguSlots": 6372,
+        "sourcePercent": 69.11437713541949
+      },
       "specialties": [
         {
           "code": "11",
           "name": "—Ç–µ—Ä–∞–ø–µ–≤—Ç",
           "norm": 280,
-          "slots": 597,
+          "slots": 603,
           "epguNorm": 180,
           "epguSlots": 242
         },
@@ -1535,4101 +1626,205 @@
           "code": "13",
           "name": "–∞–∫—É—à–µ—Ä-–≥–∏–Ω–µ–∫–æ–ª–æ–≥",
           "norm": 632.5,
-          "slots": 508,
+          "slots": 714,
           "epguNorm": 385,
-          "epguSlots": 272
+          "epguSlots": 442
         },
         {
           "code": "25",
           "name": "–í–û–ü ‚Äî —Å–µ–º–µ–π–Ω—ã–π –≤—Ä–∞—á (—Å–µ–º–µ–π–Ω—ã–π –≤—Ä–∞—á)",
           "norm": 2210,
-          "slots": 3967,
+          "slots": 4155,
           "epguNorm": 1360,
-          "epguSlots": 1890
+          "epguSlots": 1972
         },
         {
           "code": "14",
           "name": "–æ—Ç–æ—Ä–∏–Ω–æ–ª–∞—Ä–∏–Ω–≥–æ–ª–æ–≥",
           "norm": 150,
-          "slots": 253,
+          "slots": 278,
           "epguNorm": 90,
-          "epguSlots": 55
+          "epguSlots": 80
         },
         {
           "code": "15",
           "name": "–æ—Ñ—Ç–∞–ª—å–º–æ–ª–æ–≥",
           "norm": 875,
-          "slots": 738,
+          "slots": 750,
           "epguNorm": 525,
-          "epguSlots": 276
+          "epguSlots": 288
         },
         {
           "code": "16",
           "name": "–ø–µ–¥–∏–∞—Ç—Ä",
           "norm": 2800,
-          "slots": 5771,
+          "slots": 4532,
           "epguNorm": 1800,
-          "epguSlots": 1757
+          "epguSlots": 1955
         },
         {
           "code": "17",
           "name": "–ø—Å–∏—Ö–∏–∞—Ç—Ä –¥–µ—Ç—Å–∫–∏–π",
           "norm": 42.5,
-          "slots": 0,
+          "slots": 40,
           "epguNorm": 27.5,
-          "epguSlots": 0
+          "epguSlots": 40
         },
         {
           "code": "18",
           "name": "–ø—Å–∏—Ö–∏–∞—Ç—Ä-–Ω–∞—Ä–∫–æ–ª–æ–≥",
           "norm": 144.5,
-          "slots": 96,
+          "slots": 192,
           "epguNorm": 93.5,
-          "epguSlots": 96
-        },
-        {
-          "code": "19",
-          "name": "—Å—Ç–æ–º–∞—Ç–æ–ª–æ–≥",
-          "norm": 1080,
-          "slots": 372,
-          "epguNorm": 660,
-          "epguSlots": 372
-        },
-        {
-          "code": "20",
-          "name": "—Å—Ç–æ–º–∞—Ç–æ–ª–æ–≥ –¥–µ—Ç—Å–∫–∏–π",
-          "norm": 180,
-          "slots": 66,
-          "epguNorm": 110,
-          "epguSlots": 66
-        },
-        {
-          "code": "21",
-          "name": "—Å—Ç–æ–º–∞—Ç–æ–ª–æ–≥-—Ç–µ—Ä–∞–ø–µ–≤—Ç",
-          "norm": 540,
-          "slots": 367,
-          "epguNorm": 360,
-          "epguSlots": 367
-        },
-        {
-          "code": "22",
-          "name": "—Ñ—Ç–∏–∑–∏–∞—Ç—Ä",
-          "norm": 0,
-          "slots": 0,
-          "epguNorm": 0,
-          "epguSlots": 0
-        },
-        {
-          "code": "23",
-          "name": "—Ö–∏—Ä—É—Ä–≥",
-          "norm": 85,
-          "slots": 1474,
-          "epguNorm": 55,
-          "epguSlots": 242
-        },
-        {
-          "code": "26",
-          "name": "–¥–µ—Ç—Å–∫–∏–π —Ö–∏—Ä—É—Ä–≥",
-          "norm": 200,
-          "slots": 294,
-          "epguNorm": 135,
-          "epguSlots": 118
-        }
-      ]
-    },
-    {
-      "oid": "1.2.643.5.1.13.13.12.2.16.1088",
-      "code": "1201",
-      "name": "–ì–ê–£–ó \"–ê–ì–†–´–ó–°–ö–ê–Ø –¶–†–ë\"",
-      "fullName": "–ì–ê–£–ó \"–ê–ì–†–´–ó–°–ö–ê–Ø –¶–†–ë\" (–ê–≥—Ä—ã–∑)",
-      "city": "–ê–≥—Ä—ã–∑",
-      "specialties": [
-        {
-          "code": "11",
-          "name": "—Ç–µ—Ä–∞–ø–µ–≤—Ç",
-          "norm": 1960,
-          "slots": 1434,
-          "epguNorm": 1260,
-          "epguSlots": 836
-        },
-        {
-          "code": "13",
-          "name": "–∞–∫—É—à–µ—Ä-–≥–∏–Ω–µ–∫–æ–ª–æ–≥",
-          "norm": 460,
-          "slots": 142,
-          "epguNorm": 280,
-          "epguSlots": 71
-        },
-        {
-          "code": "25",
-          "name": "–í–û–ü ‚Äî —Å–µ–º–µ–π–Ω—ã–π –≤—Ä–∞—á (—Å–µ–º–µ–π–Ω—ã–π –≤—Ä–∞—á)",
-          "norm": 260,
-          "slots": 160,
-          "epguNorm": 160,
-          "epguSlots": 83
-        },
-        {
-          "code": "14",
-          "name": "–æ—Ç–æ—Ä–∏–Ω–æ–ª–∞—Ä–∏–Ω–≥–æ–ª–æ–≥",
-          "norm": 300,
-          "slots": 152,
-          "epguNorm": 180,
-          "epguSlots": 72
-        },
-        {
-          "code": "15",
-          "name": "–æ—Ñ—Ç–∞–ª—å–º–æ–ª–æ–≥",
-          "norm": 525,
-          "slots": 6,
-          "epguNorm": 315,
-          "epguSlots": 6
-        },
-        {
-          "code": "16",
-          "name": "–ø–µ–¥–∏–∞—Ç—Ä",
-          "norm": 1960,
-          "slots": 706,
-          "epguNorm": 1260,
-          "epguSlots": 452
-        },
-        {
-          "code": "17",
-          "name": "–ø—Å–∏—Ö–∏–∞—Ç—Ä –¥–µ—Ç—Å–∫–∏–π",
-          "norm": 42.5,
-          "slots": 0,
-          "epguNorm": 27.5,
-          "epguSlots": 0
-        },
-        {
-          "code": "18",
-          "name": "–ø—Å–∏—Ö–∏–∞—Ç—Ä-–Ω–∞—Ä–∫–æ–ª–æ–≥",
-          "norm": 170,
-          "slots": 0,
-          "epguNorm": 110,
-          "epguSlots": 0
-        },
-        {
-          "code": "19",
-          "name": "—Å—Ç–æ–º–∞—Ç–æ–ª–æ–≥",
-          "norm": 0,
-          "slots": 0,
-          "epguNorm": 0,
-          "epguSlots": 0
-        },
-        {
-          "code": "20",
-          "name": "—Å—Ç–æ–º–∞—Ç–æ–ª–æ–≥ –¥–µ—Ç—Å–∫–∏–π",
-          "norm": 180,
-          "slots": 0,
-          "epguNorm": 110,
-          "epguSlots": 0
-        },
-        {
-          "code": "21",
-          "name": "—Å—Ç–æ–º–∞—Ç–æ–ª–æ–≥-—Ç–µ—Ä–∞–ø–µ–≤—Ç",
-          "norm": 180,
-          "slots": 99,
-          "epguNorm": 120,
-          "epguSlots": 55
-        },
-        {
-          "code": "22",
-          "name": "—Ñ—Ç–∏–∑–∏–∞—Ç—Ä",
-          "norm": 90,
-          "slots": 0,
-          "epguNorm": 60,
-          "epguSlots": 0
-        },
-        {
-          "code": "23",
-          "name": "—Ö–∏—Ä—É—Ä–≥",
-          "norm": 85,
-          "slots": 0,
-          "epguNorm": 55,
-          "epguSlots": 0
-        },
-        {
-          "code": "26",
-          "name": "–¥–µ—Ç—Å–∫–∏–π —Ö–∏—Ä—É—Ä–≥",
-          "norm": 200,
-          "slots": 20,
-          "epguNorm": 135,
-          "epguSlots": 0
-        }
-      ]
-    },
-    {
-      "oid": "1.2.643.5.1.13.13.12.2.16.1156",
-      "code": "1301",
-      "name": "–ì–ê–£–ó \"–ê–ö–°–£–ë–ê–ï–í–°–ö–ê–Ø –¶–†–ë\"",
-      "fullName": "–ì–ê–£–ó \"–ê–ö–°–£–ë–ê–ï–í–°–ö–ê–Ø –¶–†–ë\" (–ê–∫—Å—É–±–∞–µ–≤–æ)",
-      "city": "–ê–∫—Å—É–±–∞–µ–≤–æ",
-      "specialties": [
-        {
-          "code": "11",
-          "name": "—Ç–µ—Ä–∞–ø–µ–≤—Ç",
-          "norm": 840,
-          "slots": 380,
-          "epguNorm": 540,
-          "epguSlots": 240
-        },
-        {
-          "code": "13",
-          "name": "–∞–∫—É—à–µ—Ä-–≥–∏–Ω–µ–∫–æ–ª–æ–≥",
-          "norm": 230,
-          "slots": 503,
-          "epguNorm": 140,
-          "epguSlots": 415
-        },
-        {
-          "code": "25",
-          "name": "–í–û–ü ‚Äî —Å–µ–º–µ–π–Ω—ã–π –≤—Ä–∞—á (—Å–µ–º–µ–π–Ω—ã–π –≤—Ä–∞—á)",
-          "norm": 520,
-          "slots": 1055,
-          "epguNorm": 320,
-          "epguSlots": 786
-        },
-        {
-          "code": "14",
-          "name": "–æ—Ç–æ—Ä–∏–Ω–æ–ª–∞—Ä–∏–Ω–≥–æ–ª–æ–≥",
-          "norm": 375,
-          "slots": 432,
-          "epguNorm": 225,
-          "epguSlots": 274
-        },
-        {
-          "code": "15",
-          "name": "–æ—Ñ—Ç–∞–ª—å–º–æ–ª–æ–≥",
-          "norm": 700,
-          "slots": 547,
-          "epguNorm": 420,
-          "epguSlots": 434
-        },
-        {
-          "code": "16",
-          "name": "–ø–µ–¥–∏–∞—Ç—Ä",
-          "norm": 1400,
-          "slots": 1496,
-          "epguNorm": 900,
-          "epguSlots": 1122
-        },
-        {
-          "code": "17",
-          "name": "–ø—Å–∏—Ö–∏–∞—Ç—Ä –¥–µ—Ç—Å–∫–∏–π",
-          "norm": 0,
-          "slots": 0,
-          "epguNorm": 0,
-          "epguSlots": 0
-        },
-        {
-          "code": "18",
-          "name": "–ø—Å–∏—Ö–∏–∞—Ç—Ä-–Ω–∞—Ä–∫–æ–ª–æ–≥",
-          "norm": 42.5,
-          "slots": 35,
-          "epguNorm": 27.5,
-          "epguSlots": 30
-        },
-        {
-          "code": "19",
-          "name": "—Å—Ç–æ–º–∞—Ç–æ–ª–æ–≥",
-          "norm": 0,
-          "slots": 0,
-          "epguNorm": 0,
-          "epguSlots": 0
-        },
-        {
-          "code": "20",
-          "name": "—Å—Ç–æ–º–∞—Ç–æ–ª–æ–≥ –¥–µ—Ç—Å–∫–∏–π",
-          "norm": 45,
-          "slots": 0,
-          "epguNorm": 27.5,
-          "epguSlots": 0
-        },
-        {
-          "code": "21",
-          "name": "—Å—Ç–æ–º–∞—Ç–æ–ª–æ–≥-—Ç–µ—Ä–∞–ø–µ–≤—Ç",
-          "norm": 90,
-          "slots": 157,
-          "epguNorm": 60,
-          "epguSlots": 157
-        },
-        {
-          "code": "22",
-          "name": "—Ñ—Ç–∏–∑–∏–∞—Ç—Ä",
-          "norm": 30,
-          "slots": 66,
-          "epguNorm": 20,
-          "epguSlots": 55
-        },
-        {
-          "code": "23",
-          "name": "—Ö–∏—Ä—É—Ä–≥",
-          "norm": 170,
-          "slots": 305,
-          "epguNorm": 110,
-          "epguSlots": 209
-        },
-        {
-          "code": "26",
-          "name": "–¥–µ—Ç—Å–∫–∏–π —Ö–∏—Ä—É—Ä–≥",
-          "norm": 100,
-          "slots": 0,
-          "epguNorm": 67.5,
-          "epguSlots": 0
-        }
-      ]
-    },
-    {
-      "oid": "1.2.643.5.1.13.13.12.2.16.1092",
-      "code": "1401",
-      "name": "–ì–ê–£–ó –ê–∫—Ç–∞–Ω—ã—à—Å–∫–∞—è –¶–†–ë",
-      "fullName": "–ì–ê–£–ó –ê–∫—Ç–∞–Ω—ã—à—Å–∫–∞—è –¶–†–ë (–ê–∫—Ç–∞–Ω—ã—à)",
-      "city": "–ê–∫—Ç–∞–Ω—ã—à",
-      "specialties": [
-        {
-          "code": "11",
-          "name": "—Ç–µ—Ä–∞–ø–µ–≤—Ç",
-          "norm": 770,
-          "slots": 1504,
-          "epguNorm": 495,
-          "epguSlots": 1235
-        },
-        {
-          "code": "13",
-          "name": "–∞–∫—É—à–µ—Ä-–≥–∏–Ω–µ–∫–æ–ª–æ–≥",
-          "norm": 345,
-          "slots": 275,
-          "epguNorm": 210,
-          "epguSlots": 220
-        },
-        {
-          "code": "25",
-          "name": "–í–û–ü ‚Äî —Å–µ–º–µ–π–Ω—ã–π –≤—Ä–∞—á (—Å–µ–º–µ–π–Ω—ã–π –≤—Ä–∞—á)",
-          "norm": 1170,
-          "slots": 3344,
-          "epguNorm": 720,
-          "epguSlots": 2761
-        },
-        {
-          "code": "14",
-          "name": "–æ—Ç–æ—Ä–∏–Ω–æ–ª–∞—Ä–∏–Ω–≥–æ–ª–æ–≥",
-          "norm": 525,
-          "slots": 286,
-          "epguNorm": 315,
-          "epguSlots": 231
-        },
-        {
-          "code": "15",
-          "name": "–æ—Ñ—Ç–∞–ª—å–º–æ–ª–æ–≥",
-          "norm": 700,
-          "slots": 704,
-          "epguNorm": 420,
-          "epguSlots": 396
-        },
-        {
-          "code": "16",
-          "name": "–ø–µ–¥–∏–∞—Ç—Ä",
-          "norm": 1610,
-          "slots": 1595,
-          "epguNorm": 1035,
-          "epguSlots": 1221
-        },
-        {
-          "code": "17",
-          "name": "–ø—Å–∏—Ö–∏–∞—Ç—Ä –¥–µ—Ç—Å–∫–∏–π",
-          "norm": 0,
-          "slots": 0,
-          "epguNorm": 0,
-          "epguSlots": 0
-        },
-        {
-          "code": "18",
-          "name": "–ø—Å–∏—Ö–∏–∞—Ç—Ä-–Ω–∞—Ä–∫–æ–ª–æ–≥",
-          "norm": 170,
-          "slots": 0,
-          "epguNorm": 110,
-          "epguSlots": 0
-        },
-        {
-          "code": "19",
-          "name": "—Å—Ç–æ–º–∞—Ç–æ–ª–æ–≥",
-          "norm": 360,
-          "slots": 21,
-          "epguNorm": 220,
-          "epguSlots": 21
-        },
-        {
-          "code": "20",
-          "name": "—Å—Ç–æ–º–∞—Ç–æ–ª–æ–≥ –¥–µ—Ç—Å–∫–∏–π",
-          "norm": 0,
-          "slots": 0,
-          "epguNorm": 0,
-          "epguSlots": 0
-        },
-        {
-          "code": "21",
-          "name": "—Å—Ç–æ–º–∞—Ç–æ–ª–æ–≥-—Ç–µ—Ä–∞–ø–µ–≤—Ç",
-          "norm": 0,
-          "slots": 0,
-          "epguNorm": 0,
-          "epguSlots": 0
-        },
-        {
-          "code": "22",
-          "name": "—Ñ—Ç–∏–∑–∏–∞—Ç—Ä",
-          "norm": 150,
-          "slots": 264,
-          "epguNorm": 100,
-          "epguSlots": 187
-        },
-        {
-          "code": "23",
-          "name": "—Ö–∏—Ä—É—Ä–≥",
-          "norm": 382.5,
-          "slots": 462,
-          "epguNorm": 247.5,
-          "epguSlots": 374
-        },
-        {
-          "code": "26",
-          "name": "–¥–µ—Ç—Å–∫–∏–π —Ö–∏—Ä—É—Ä–≥",
-          "norm": 200,
-          "slots": 0,
-          "epguNorm": 135,
-          "epguSlots": 0
-        }
-      ]
-    },
-    {
-      "oid": "1.2.643.5.1.13.13.12.2.16.1087",
-      "code": "1501",
-      "name": "–ì–ê–£–ó \"–ê–õ–ï–ö–°–ï–ï–í–°–ö–ê–Ø –¶–†–ë\"",
-      "fullName": "–ì–ê–£–ó \"–ê–õ–ï–ö–°–ï–ï–í–°–ö–ê–Ø –¶–†–ë\" (–ê–ª–µ–∫—Å–µ–µ–≤—Å–∫–æ–µ)",
-      "city": "–ê–ª–µ–∫—Å–µ–µ–≤—Å–∫–æ–µ",
-      "specialties": [
-        {
-          "code": "11",
-          "name": "—Ç–µ—Ä–∞–ø–µ–≤—Ç",
-          "norm": 1960,
-          "slots": 1351,
-          "epguNorm": 1260,
-          "epguSlots": 1244
-        },
-        {
-          "code": "13",
-          "name": "–∞–∫—É—à–µ—Ä-–≥–∏–Ω–µ–∫–æ–ª–æ–≥",
-          "norm": 287.5,
-          "slots": 193,
-          "epguNorm": 175,
-          "epguSlots": 160
-        },
-        {
-          "code": "25",
-          "name": "–í–û–ü ‚Äî —Å–µ–º–µ–π–Ω—ã–π –≤—Ä–∞—á (—Å–µ–º–µ–π–Ω—ã–π –≤—Ä–∞—á)",
-          "norm": 0,
-          "slots": 161,
-          "epguNorm": 0,
-          "epguSlots": 161
-        },
-        {
-          "code": "14",
-          "name": "–æ—Ç–æ—Ä–∏–Ω–æ–ª–∞—Ä–∏–Ω–≥–æ–ª–æ–≥",
-          "norm": 300,
-          "slots": 212,
-          "epguNorm": 180,
-          "epguSlots": 210
-        },
-        {
-          "code": "15",
-          "name": "–æ—Ñ—Ç–∞–ª—å–º–æ–ª–æ–≥",
-          "norm": 350,
-          "slots": 214,
-          "epguNorm": 210,
-          "epguSlots": 170
-        },
-        {
-          "code": "16",
-          "name": "–ø–µ–¥–∏–∞—Ç—Ä",
-          "norm": 1680,
-          "slots": 1654,
-          "epguNorm": 1080,
-          "epguSlots": 1415
-        },
-        {
-          "code": "17",
-          "name": "–ø—Å–∏—Ö–∏–∞—Ç—Ä –¥–µ—Ç—Å–∫–∏–π",
-          "norm": 0,
-          "slots": 0,
-          "epguNorm": 0,
-          "epguSlots": 0
-        },
-        {
-          "code": "18",
-          "name": "–ø—Å–∏—Ö–∏–∞—Ç—Ä-–Ω–∞—Ä–∫–æ–ª–æ–≥",
-          "norm": 170,
-          "slots": 150,
-          "epguNorm": 110,
-          "epguSlots": 120
-        },
-        {
-          "code": "19",
-          "name": "—Å—Ç–æ–º–∞—Ç–æ–ª–æ–≥",
-          "norm": 180,
-          "slots": 66,
-          "epguNorm": 110,
-          "epguSlots": 66
-        },
-        {
-          "code": "20",
-          "name": "—Å—Ç–æ–º–∞—Ç–æ–ª–æ–≥ –¥–µ—Ç—Å–∫–∏–π",
-          "norm": 45,
-          "slots": 0,
-          "epguNorm": 27.5,
-          "epguSlots": 0
-        },
-        {
-          "code": "21",
-          "name": "—Å—Ç–æ–º–∞—Ç–æ–ª–æ–≥-—Ç–µ—Ä–∞–ø–µ–≤—Ç",
-          "norm": 90,
-          "slots": 33,
-          "epguNorm": 60,
-          "epguSlots": 33
-        },
-        {
-          "code": "22",
-          "name": "—Ñ—Ç–∏–∑–∏–∞—Ç—Ä",
-          "norm": 0,
-          "slots": 0,
-          "epguNorm": 0,
-          "epguSlots": 0
-        },
-        {
-          "code": "23",
-          "name": "—Ö–∏—Ä—É—Ä–≥",
-          "norm": 212.5,
-          "slots": 204,
-          "epguNorm": 137.5,
-          "epguSlots": 160
-        },
-        {
-          "code": "26",
-          "name": "–¥–µ—Ç—Å–∫–∏–π —Ö–∏—Ä—É—Ä–≥",
-          "norm": 0,
-          "slots": 0,
-          "epguNorm": 0,
-          "epguSlots": 0
-        }
-      ]
-    },
-    {
-      "oid": "1.2.643.5.1.13.13.12.2.16.1161",
-      "code": "1601",
-      "name": "–ì–ê–£–ó \"–ë–ê–ó–ê–†–ù–û-–ú–ê–¢–ê–ö–°–ö–ê–Ø –¶–†–ë\"",
-      "fullName": "–ì–ê–£–ó \"–ë–ê–ó–ê–†–ù–û-–ú–ê–¢–ê–ö–°–ö–ê–Ø –¶–†–ë\" (–ë–∞–∑–∞—Ä–Ω—ã–µ –ú–∞—Ç–∞–∫–∏)",
-      "city": "–ë–∞–∑–∞—Ä–Ω—ã–µ –ú–∞—Ç–∞–∫–∏",
-      "specialties": [
-        {
-          "code": "11",
-          "name": "—Ç–µ—Ä–∞–ø–µ–≤—Ç",
-          "norm": 1050,
-          "slots": 1659,
-          "epguNorm": 675,
-          "epguSlots": 1166
-        },
-        {
-          "code": "13",
-          "name": "–∞–∫—É—à–µ—Ä-–≥–∏–Ω–µ–∫–æ–ª–æ–≥",
-          "norm": 345,
-          "slots": 481,
-          "epguNorm": 210,
-          "epguSlots": 303
-        },
-        {
-          "code": "25",
-          "name": "–í–û–ü ‚Äî —Å–µ–º–µ–π–Ω—ã–π –≤—Ä–∞—á (—Å–µ–º–µ–π–Ω—ã–π –≤—Ä–∞—á)",
-          "norm": 910,
-          "slots": 1892,
-          "epguNorm": 560,
-          "epguSlots": 1056
-        },
-        {
-          "code": "14",
-          "name": "–æ—Ç–æ—Ä–∏–Ω–æ–ª–∞—Ä–∏–Ω–≥–æ–ª–æ–≥",
-          "norm": 150,
-          "slots": 220,
-          "epguNorm": 90,
-          "epguSlots": 176
-        },
-        {
-          "code": "15",
-          "name": "–æ—Ñ—Ç–∞–ª—å–º–æ–ª–æ–≥",
-          "norm": 175,
-          "slots": 176,
-          "epguNorm": 105,
-          "epguSlots": 88
-        },
-        {
-          "code": "16",
-          "name": "–ø–µ–¥–∏–∞—Ç—Ä",
-          "norm": 1260,
-          "slots": 1639,
-          "epguNorm": 810,
-          "epguSlots": 1001
-        },
-        {
-          "code": "17",
-          "name": "–ø—Å–∏—Ö–∏–∞—Ç—Ä –¥–µ—Ç—Å–∫–∏–π",
-          "norm": 0,
-          "slots": 0,
-          "epguNorm": 0,
-          "epguSlots": 0
-        },
-        {
-          "code": "18",
-          "name": "–ø—Å–∏—Ö–∏–∞—Ç—Ä-–Ω–∞—Ä–∫–æ–ª–æ–≥",
-          "norm": 85,
-          "slots": 0,
-          "epguNorm": 55,
-          "epguSlots": 0
-        },
-        {
-          "code": "19",
-          "name": "—Å—Ç–æ–º–∞—Ç–æ–ª–æ–≥",
-          "norm": 0,
-          "slots": 0,
-          "epguNorm": 0,
-          "epguSlots": 0
-        },
-        {
-          "code": "20",
-          "name": "—Å—Ç–æ–º–∞—Ç–æ–ª–æ–≥ –¥–µ—Ç—Å–∫–∏–π",
-          "norm": 0,
-          "slots": 0,
-          "epguNorm": 0,
-          "epguSlots": 0
-        },
-        {
-          "code": "21",
-          "name": "—Å—Ç–æ–º–∞—Ç–æ–ª–æ–≥-—Ç–µ—Ä–∞–ø–µ–≤—Ç",
-          "norm": 135,
-          "slots": 70,
-          "epguNorm": 90,
-          "epguSlots": 45
-        },
-        {
-          "code": "22",
-          "name": "—Ñ—Ç–∏–∑–∏–∞—Ç—Ä",
-          "norm": 120,
-          "slots": 187,
-          "epguNorm": 80,
-          "epguSlots": 121
-        },
-        {
-          "code": "23",
-          "name": "—Ö–∏—Ä—É—Ä–≥",
-          "norm": 170,
-          "slots": 385,
-          "epguNorm": 110,
-          "epguSlots": 243
-        },
-        {
-          "code": "26",
-          "name": "–¥–µ—Ç—Å–∫–∏–π —Ö–∏—Ä—É—Ä–≥",
-          "norm": 0,
-          "slots": 0,
-          "epguNorm": 0,
-          "epguSlots": 0
-        }
-      ]
-    },
-    {
-      "oid": "1.2.643.5.1.13.13.12.2.16.1152",
-      "code": "1701",
-      "name": "–ì–ê–£–ó \"–ê–ü–ê–°–¢–û–í–°–ö–ê–Ø –¶–†–ë\"",
-      "fullName": "–ì–ê–£–ó \"–ê–ü–ê–°–¢–û–í–°–ö–ê–Ø –¶–†–ë\" (–ê–ø–∞—Å—Ç–æ–≤–æ)",
-      "city": "–ê–ø–∞—Å—Ç–æ–≤–æ",
-      "specialties": [
-        {
-          "code": "11",
-          "name": "—Ç–µ—Ä–∞–ø–µ–≤—Ç",
-          "norm": 280,
-          "slots": 434,
-          "epguNorm": 180,
-          "epguSlots": 51
-        },
-        {
-          "code": "13",
-          "name": "–∞–∫—É—à–µ—Ä-–≥–∏–Ω–µ–∫–æ–ª–æ–≥",
-          "norm": 460,
-          "slots": 484,
-          "epguNorm": 280,
-          "epguSlots": 308
-        },
-        {
-          "code": "25",
-          "name": "–í–û–ü ‚Äî —Å–µ–º–µ–π–Ω—ã–π –≤—Ä–∞—á (—Å–µ–º–µ–π–Ω—ã–π –≤—Ä–∞—á)",
-          "norm": 1300,
-          "slots": 1441,
-          "epguNorm": 800,
-          "epguSlots": 1100
-        },
-        {
-          "code": "14",
-          "name": "–æ—Ç–æ—Ä–∏–Ω–æ–ª–∞—Ä–∏–Ω–≥–æ–ª–æ–≥",
-          "norm": 150,
-          "slots": 0,
-          "epguNorm": 90,
-          "epguSlots": 0
-        },
-        {
-          "code": "15",
-          "name": "–æ—Ñ—Ç–∞–ª—å–º–æ–ª–æ–≥",
-          "norm": 87.5,
-          "slots": 88,
-          "epguNorm": 52.5,
-          "epguSlots": 66
-        },
-        {
-          "code": "16",
-          "name": "–ø–µ–¥–∏–∞—Ç—Ä",
-          "norm": 1120,
-          "slots": 1364,
-          "epguNorm": 720,
-          "epguSlots": 968
-        },
-        {
-          "code": "17",
-          "name": "–ø—Å–∏—Ö–∏–∞—Ç—Ä –¥–µ—Ç—Å–∫–∏–π",
-          "norm": 0,
-          "slots": 0,
-          "epguNorm": 0,
-          "epguSlots": 0
-        },
-        {
-          "code": "18",
-          "name": "–ø—Å–∏—Ö–∏–∞—Ç—Ä-–Ω–∞—Ä–∫–æ–ª–æ–≥",
-          "norm": 0,
-          "slots": 198,
-          "epguNorm": 0,
-          "epguSlots": 143
-        },
-        {
-          "code": "19",
-          "name": "—Å—Ç–æ–º–∞—Ç–æ–ª–æ–≥",
-          "norm": 360,
-          "slots": 297,
-          "epguNorm": 220,
-          "epguSlots": 187
-        },
-        {
-          "code": "20",
-          "name": "—Å—Ç–æ–º–∞—Ç–æ–ª–æ–≥ –¥–µ—Ç—Å–∫–∏–π",
-          "norm": 0,
-          "slots": 0,
-          "epguNorm": 0,
-          "epguSlots": 0
-        },
-        {
-          "code": "21",
-          "name": "—Å—Ç–æ–º–∞—Ç–æ–ª–æ–≥-—Ç–µ—Ä–∞–ø–µ–≤—Ç",
-          "norm": 112.5,
-          "slots": 154,
-          "epguNorm": 75,
-          "epguSlots": 88
-        },
-        {
-          "code": "22",
-          "name": "—Ñ—Ç–∏–∑–∏–∞—Ç—Ä",
-          "norm": 30,
-          "slots": 33,
-          "epguNorm": 20,
-          "epguSlots": 22
-        },
-        {
-          "code": "23",
-          "name": "—Ö–∏—Ä—É—Ä–≥",
-          "norm": 170,
-          "slots": 198,
-          "epguNorm": 110,
-          "epguSlots": 121
-        },
-        {
-          "code": "26",
-          "name": "–¥–µ—Ç—Å–∫–∏–π —Ö–∏—Ä—É—Ä–≥",
-          "norm": 100,
-          "slots": 110,
-          "epguNorm": 67.5,
-          "epguSlots": 66
-        }
-      ]
-    },
-    {
-      "oid": "1.2.643.5.1.13.13.12.2.16.1164",
-      "code": "1801",
-      "name": "–ì–ê–£–ó \"–ê–†–°–ö–ê–Ø –¶–†–ë\"",
-      "fullName": "–ì–ê–£–ó \"–ê–†–°–ö–ê–Ø –¶–†–ë\" (–ê—Ä—Å–∫)",
-      "city": "–ê—Ä—Å–∫",
-      "specialties": [
-        {
-          "code": "11",
-          "name": "—Ç–µ—Ä–∞–ø–µ–≤—Ç",
-          "norm": 1470,
-          "slots": 1853,
-          "epguNorm": 945,
-          "epguSlots": 927
-        },
-        {
-          "code": "13",
-          "name": "–∞–∫—É—à–µ—Ä-–≥–∏–Ω–µ–∫–æ–ª–æ–≥",
-          "norm": 575,
-          "slots": 605,
-          "epguNorm": 350,
-          "epguSlots": 374
-        },
-        {
-          "code": "25",
-          "name": "–í–û–ü ‚Äî —Å–µ–º–µ–π–Ω—ã–π –≤—Ä–∞—á (—Å–µ–º–µ–π–Ω—ã–π –≤—Ä–∞—á)",
-          "norm": 1820,
-          "slots": 2257,
-          "epguNorm": 1120,
-          "epguSlots": 1491
-        },
-        {
-          "code": "14",
-          "name": "–æ—Ç–æ—Ä–∏–Ω–æ–ª–∞—Ä–∏–Ω–≥–æ–ª–æ–≥",
-          "norm": 300,
-          "slots": 182,
-          "epguNorm": 180,
-          "epguSlots": 173
-        },
-        {
-          "code": "15",
-          "name": "–æ—Ñ—Ç–∞–ª—å–º–æ–ª–æ–≥",
-          "norm": 175,
-          "slots": 76,
-          "epguNorm": 105,
-          "epguSlots": 76
-        },
-        {
-          "code": "16",
-          "name": "–ø–µ–¥–∏–∞—Ç—Ä",
-          "norm": 2590,
-          "slots": 1043,
-          "epguNorm": 1665,
-          "epguSlots": 923
-        },
-        {
-          "code": "17",
-          "name": "–ø—Å–∏—Ö–∏–∞—Ç—Ä –¥–µ—Ç—Å–∫–∏–π",
-          "norm": 0,
-          "slots": 0,
-          "epguNorm": 0,
-          "epguSlots": 0
-        },
-        {
-          "code": "18",
-          "name": "–ø—Å–∏—Ö–∏–∞—Ç—Ä-–Ω–∞—Ä–∫–æ–ª–æ–≥",
-          "norm": 42.5,
-          "slots": 72,
-          "epguNorm": 27.5,
-          "epguSlots": 36
-        },
-        {
-          "code": "19",
-          "name": "—Å—Ç–æ–º–∞—Ç–æ–ª–æ–≥",
-          "norm": 900,
-          "slots": 453,
-          "epguNorm": 550,
-          "epguSlots": 403
-        },
-        {
-          "code": "20",
-          "name": "—Å—Ç–æ–º–∞—Ç–æ–ª–æ–≥ –¥–µ—Ç—Å–∫–∏–π",
-          "norm": 180,
-          "slots": 214,
-          "epguNorm": 110,
-          "epguSlots": 114
-        },
-        {
-          "code": "21",
-          "name": "—Å—Ç–æ–º–∞—Ç–æ–ª–æ–≥-—Ç–µ—Ä–∞–ø–µ–≤—Ç",
-          "norm": 225,
-          "slots": 262,
-          "epguNorm": 150,
-          "epguSlots": 177
-        },
-        {
-          "code": "22",
-          "name": "—Ñ—Ç–∏–∑–∏–∞—Ç—Ä",
-          "norm": 120,
-          "slots": 231,
-          "epguNorm": 80,
-          "epguSlots": 143
-        },
-        {
-          "code": "23",
-          "name": "—Ö–∏—Ä—É—Ä–≥",
-          "norm": 340,
-          "slots": 300,
-          "epguNorm": 220,
-          "epguSlots": 300
-        },
-        {
-          "code": "26",
-          "name": "–¥–µ—Ç—Å–∫–∏–π —Ö–∏—Ä—É—Ä–≥",
-          "norm": 200,
-          "slots": 120,
-          "epguNorm": 135,
-          "epguSlots": 120
-        }
-      ]
-    },
-    {
-      "oid": "1.2.643.5.1.13.13.12.2.16.1078",
-      "code": "1901",
-      "name": "–ì–ê–£–ó \"–ê–¢–ù–ò–ù–°–ö–ê–Ø –¶–†–ë\"",
-      "fullName": "–ì–ê–£–ó \"–ê–¢–ù–ò–ù–°–ö–ê–Ø –¶–†–ë\" (–ë–æ–ª—å—à–∞—è –ê—Ç–Ω—è)",
-      "city": "–ë–æ–ª—å—à–∞—è –ê—Ç–Ω—è",
-      "specialties": [
-        {
-          "code": "11",
-          "name": "—Ç–µ—Ä–∞–ø–µ–≤—Ç",
-          "norm": 1820,
-          "slots": 2644,
-          "epguNorm": 1170,
-          "epguSlots": 1500
-        },
-        {
-          "code": "13",
-          "name": "–∞–∫—É—à–µ—Ä-–≥–∏–Ω–µ–∫–æ–ª–æ–≥",
-          "norm": 460,
-          "slots": 338,
-          "epguNorm": 280,
-          "epguSlots": 220
-        },
-        {
-          "code": "25",
-          "name": "–í–û–ü ‚Äî —Å–µ–º–µ–π–Ω—ã–π –≤—Ä–∞—á (—Å–µ–º–µ–π–Ω—ã–π –≤—Ä–∞—á)",
-          "norm": 0,
-          "slots": 0,
-          "epguNorm": 0,
-          "epguSlots": 0
-        },
-        {
-          "code": "14",
-          "name": "–æ—Ç–æ—Ä–∏–Ω–æ–ª–∞—Ä–∏–Ω–≥–æ–ª–æ–≥",
-          "norm": 300,
-          "slots": 314,
-          "epguNorm": 180,
-          "epguSlots": 209
-        },
-        {
-          "code": "15",
-          "name": "–æ—Ñ—Ç–∞–ª—å–º–æ–ª–æ–≥",
-          "norm": 175,
-          "slots": 16,
-          "epguNorm": 105,
-          "epguSlots": 16
-        },
-        {
-          "code": "16",
-          "name": "–ø–µ–¥–∏–∞—Ç—Ä",
-          "norm": 700,
-          "slots": 654,
-          "epguNorm": 450,
-          "epguSlots": 444
-        },
-        {
-          "code": "17",
-          "name": "–ø—Å–∏—Ö–∏–∞—Ç—Ä –¥–µ—Ç—Å–∫–∏–π",
-          "norm": 0,
-          "slots": 0,
-          "epguNorm": 0,
-          "epguSlots": 0
-        },
-        {
-          "code": "18",
-          "name": "–ø—Å–∏—Ö–∏–∞—Ç—Ä-–Ω–∞—Ä–∫–æ–ª–æ–≥",
-          "norm": 85,
-          "slots": 22,
-          "epguNorm": 55,
-          "epguSlots": 12
-        },
-        {
-          "code": "19",
-          "name": "—Å—Ç–æ–º–∞—Ç–æ–ª–æ–≥",
-          "norm": 0,
-          "slots": 0,
-          "epguNorm": 0,
-          "epguSlots": 0
-        },
-        {
-          "code": "20",
-          "name": "—Å—Ç–æ–º–∞—Ç–æ–ª–æ–≥ –¥–µ—Ç—Å–∫–∏–π",
-          "norm": 0,
-          "slots": 0,
-          "epguNorm": 0,
-          "epguSlots": 0
-        },
-        {
-          "code": "21",
-          "name": "—Å—Ç–æ–º–∞—Ç–æ–ª–æ–≥-—Ç–µ—Ä–∞–ø–µ–≤—Ç",
-          "norm": 90,
-          "slots": 102,
-          "epguNorm": 60,
-          "epguSlots": 64
-        },
-        {
-          "code": "22",
-          "name": "—Ñ—Ç–∏–∑–∏–∞—Ç—Ä",
-          "norm": 120,
-          "slots": 151,
-          "epguNorm": 80,
-          "epguSlots": 96
-        },
-        {
-          "code": "23",
-          "name": "—Ö–∏—Ä—É—Ä–≥",
-          "norm": 170,
-          "slots": 726,
-          "epguNorm": 110,
-          "epguSlots": 502
-        },
-        {
-          "code": "26",
-          "name": "–¥–µ—Ç—Å–∫–∏–π —Ö–∏—Ä—É—Ä–≥",
-          "norm": 0,
-          "slots": 0,
-          "epguNorm": 0,
-          "epguSlots": 0
-        }
-      ]
-    },
-    {
-      "oid": "1.2.643.5.1.13.13.12.2.16.1120",
-      "code": "2001",
-      "name": "–ì–ê–£–ó –ë–£–ò–ù–°–ö–ê–Ø –¶–†–ë",
-      "fullName": "–ì–ê–£–ó –ë–£–ò–ù–°–ö–ê–Ø –¶–†–ë (–ë—É–∏–Ω—Å–∫)",
-      "city": "–ë—É–∏–Ω—Å–∫",
-      "specialties": [
-        {
-          "code": "11",
-          "name": "—Ç–µ—Ä–∞–ø–µ–≤—Ç",
-          "norm": 3920,
-          "slots": 3384,
-          "epguNorm": 2520,
-          "epguSlots": 2508
-        },
-        {
-          "code": "13",
-          "name": "–∞–∫—É—à–µ—Ä-–≥–∏–Ω–µ–∫–æ–ª–æ–≥",
-          "norm": 460,
-          "slots": 652,
-          "epguNorm": 280,
-          "epguSlots": 481
-        },
-        {
-          "code": "25",
-          "name": "–í–û–ü ‚Äî —Å–µ–º–µ–π–Ω—ã–π –≤—Ä–∞—á (—Å–µ–º–µ–π–Ω—ã–π –≤—Ä–∞—á)",
-          "norm": 1040,
-          "slots": 875,
-          "epguNorm": 640,
-          "epguSlots": 697
-        },
-        {
-          "code": "14",
-          "name": "–æ—Ç–æ—Ä–∏–Ω–æ–ª–∞—Ä–∏–Ω–≥–æ–ª–æ–≥",
-          "norm": 300,
-          "slots": 239,
-          "epguNorm": 180,
-          "epguSlots": 178
-        },
-        {
-          "code": "15",
-          "name": "–æ—Ñ—Ç–∞–ª—å–º–æ–ª–æ–≥",
-          "norm": 612.5,
-          "slots": 500,
-          "epguNorm": 367.5,
-          "epguSlots": 340
-        },
-        {
-          "code": "16",
-          "name": "–ø–µ–¥–∏–∞—Ç—Ä",
-          "norm": 1960,
-          "slots": 2233,
-          "epguNorm": 1260,
-          "epguSlots": 1613
-        },
-        {
-          "code": "17",
-          "name": "–ø—Å–∏—Ö–∏–∞—Ç—Ä –¥–µ—Ç—Å–∫–∏–π",
-          "norm": 0,
-          "slots": 0,
-          "epguNorm": 0,
-          "epguSlots": 0
-        },
-        {
-          "code": "18",
-          "name": "–ø—Å–∏—Ö–∏–∞—Ç—Ä-–Ω–∞—Ä–∫–æ–ª–æ–≥",
-          "norm": 255,
-          "slots": 198,
-          "epguNorm": 165,
-          "epguSlots": 176
-        },
-        {
-          "code": "19",
-          "name": "—Å—Ç–æ–º–∞—Ç–æ–ª–æ–≥",
-          "norm": 360,
-          "slots": 158,
-          "epguNorm": 220,
-          "epguSlots": 98
-        },
-        {
-          "code": "20",
-          "name": "—Å—Ç–æ–º–∞—Ç–æ–ª–æ–≥ –¥–µ—Ç—Å–∫–∏–π",
-          "norm": 180,
-          "slots": 85,
-          "epguNorm": 110,
-          "epguSlots": 65
-        },
-        {
-          "code": "21",
-          "name": "—Å—Ç–æ–º–∞—Ç–æ–ª–æ–≥-—Ç–µ—Ä–∞–ø–µ–≤—Ç",
-          "norm": 360,
-          "slots": 345,
-          "epguNorm": 240,
-          "epguSlots": 221
-        },
-        {
-          "code": "22",
-          "name": "—Ñ—Ç–∏–∑–∏–∞—Ç—Ä",
-          "norm": 180,
-          "slots": 187,
-          "epguNorm": 120,
-          "epguSlots": 132
-        },
-        {
-          "code": "23",
-          "name": "—Ö–∏—Ä—É—Ä–≥",
-          "norm": 255,
-          "slots": 286,
-          "epguNorm": 165,
-          "epguSlots": 187
-        },
-        {
-          "code": "26",
-          "name": "–¥–µ—Ç—Å–∫–∏–π —Ö–∏—Ä—É—Ä–≥",
-          "norm": 0,
-          "slots": 0,
-          "epguNorm": 0,
-          "epguSlots": 0
-        }
-      ]
-    },
-    {
-      "oid": "1.2.643.5.1.13.13.12.2.16.1129",
-      "code": "2101",
-      "name": "–ì–ê–£–ó \"–ë–ê–í–õ–ò–ù–°–ö–ê–Ø –¶–†–ë\"",
-      "fullName": "–ì–ê–£–ó \"–ë–ê–í–õ–ò–ù–°–ö–ê–Ø –¶–†–ë\" (–ë–∞–≤–ª—ã)",
-      "city": "–ë–∞–≤–ª—ã",
-      "specialties": [
-        {
-          "code": "11",
-          "name": "—Ç–µ—Ä–∞–ø–µ–≤—Ç",
-          "norm": 1988,
-          "slots": 1307,
-          "epguNorm": 1278,
-          "epguSlots": 857
-        },
-        {
-          "code": "13",
-          "name": "–∞–∫—É—à–µ—Ä-–≥–∏–Ω–µ–∫–æ–ª–æ–≥",
-          "norm": 920,
-          "slots": 1270,
-          "epguNorm": 560,
-          "epguSlots": 746
-        },
-        {
-          "code": "25",
-          "name": "–í–û–ü ‚Äî —Å–µ–º–µ–π–Ω—ã–π –≤—Ä–∞—á (—Å–µ–º–µ–π–Ω—ã–π –≤—Ä–∞—á)",
-          "norm": 715,
-          "slots": 993,
-          "epguNorm": 440,
-          "epguSlots": 675
-        },
-        {
-          "code": "14",
-          "name": "–æ—Ç–æ—Ä–∏–Ω–æ–ª–∞—Ä–∏–Ω–≥–æ–ª–æ–≥",
-          "norm": 450,
-          "slots": 126,
-          "epguNorm": 270,
-          "epguSlots": 89
-        },
-        {
-          "code": "15",
-          "name": "–æ—Ñ—Ç–∞–ª—å–º–æ–ª–æ–≥",
-          "norm": 0,
-          "slots": 34,
-          "epguNorm": 0,
-          "epguSlots": 20
-        },
-        {
-          "code": "16",
-          "name": "–ø–µ–¥–∏–∞—Ç—Ä",
-          "norm": 1400,
-          "slots": 1429,
-          "epguNorm": 900,
-          "epguSlots": 1002
-        },
-        {
-          "code": "17",
-          "name": "–ø—Å–∏—Ö–∏–∞—Ç—Ä –¥–µ—Ç—Å–∫–∏–π",
-          "norm": 0,
-          "slots": 0,
-          "epguNorm": 0,
-          "epguSlots": 0
-        },
-        {
-          "code": "18",
-          "name": "–ø—Å–∏—Ö–∏–∞—Ç—Ä-–Ω–∞—Ä–∫–æ–ª–æ–≥",
-          "norm": 0,
-          "slots": 162,
-          "epguNorm": 0,
-          "epguSlots": 108
-        },
-        {
-          "code": "19",
-          "name": "—Å—Ç–æ–º–∞—Ç–æ–ª–æ–≥",
-          "norm": 180,
-          "slots": 198,
-          "epguNorm": 110,
-          "epguSlots": 110
-        },
-        {
-          "code": "20",
-          "name": "—Å—Ç–æ–º–∞—Ç–æ–ª–æ–≥ –¥–µ—Ç—Å–∫–∏–π",
-          "norm": 180,
-          "slots": 126,
-          "epguNorm": 110,
-          "epguSlots": 70
-        },
-        {
-          "code": "21",
-          "name": "—Å—Ç–æ–º–∞—Ç–æ–ª–æ–≥-—Ç–µ—Ä–∞–ø–µ–≤—Ç",
-          "norm": 90,
-          "slots": 100,
-          "epguNorm": 60,
-          "epguSlots": 70
-        },
-        {
-          "code": "22",
-          "name": "—Ñ—Ç–∏–∑–∏–∞—Ç—Ä",
-          "norm": 0,
-          "slots": 172,
-          "epguNorm": 0,
-          "epguSlots": 88
-        },
-        {
-          "code": "23",
-          "name": "—Ö–∏—Ä—É—Ä–≥",
-          "norm": 0,
-          "slots": 0,
-          "epguNorm": 0,
-          "epguSlots": 0
-        },
-        {
-          "code": "26",
-          "name": "–¥–µ—Ç—Å–∫–∏–π —Ö–∏—Ä—É—Ä–≥",
-          "norm": 0,
-          "slots": 0,
-          "epguNorm": 0,
-          "epguSlots": 0
-        }
-      ]
-    },
-    {
-      "oid": "1.2.643.5.1.13.13.12.2.16.1081",
-      "code": "2205",
-      "name": "–ì–ê–£–ó \"–ë–ê–õ–¢–ê–°–ò–ù–°–ö–ê–Ø –¶–†–ë\"",
-      "fullName": "–ì–ê–£–ó \"–ë–ê–õ–¢–ê–°–ò–ù–°–ö–ê–Ø –¶–†–ë\" (–ë–∞–ª—Ç–∞—Å–∏)",
-      "city": "–ë–∞–ª—Ç–∞—Å–∏",
-      "specialties": [
-        {
-          "code": "11",
-          "name": "—Ç–µ—Ä–∞–ø–µ–≤—Ç",
-          "norm": 1400,
-          "slots": 1925,
-          "epguNorm": 900,
-          "epguSlots": 1240
-        },
-        {
-          "code": "13",
-          "name": "–∞–∫—É—à–µ—Ä-–≥–∏–Ω–µ–∫–æ–ª–æ–≥",
-          "norm": 287.5,
-          "slots": 209,
-          "epguNorm": 175,
-          "epguSlots": 132
-        },
-        {
-          "code": "25",
-          "name": "–í–û–ü ‚Äî —Å–µ–º–µ–π–Ω—ã–π –≤—Ä–∞—á (—Å–µ–º–µ–π–Ω—ã–π –≤—Ä–∞—á)",
-          "norm": 1560,
-          "slots": 1888,
-          "epguNorm": 960,
-          "epguSlots": 1228
-        },
-        {
-          "code": "14",
-          "name": "–æ—Ç–æ—Ä–∏–Ω–æ–ª–∞—Ä–∏–Ω–≥–æ–ª–æ–≥",
-          "norm": 300,
-          "slots": 168,
-          "epguNorm": 180,
-          "epguSlots": 80
-        },
-        {
-          "code": "15",
-          "name": "–æ—Ñ—Ç–∞–ª—å–º–æ–ª–æ–≥",
-          "norm": 350,
-          "slots": 0,
-          "epguNorm": 210,
-          "epguSlots": 0
-        },
-        {
-          "code": "16",
-          "name": "–ø–µ–¥–∏–∞—Ç—Ä",
-          "norm": 2240,
-          "slots": 2591,
-          "epguNorm": 1440,
-          "epguSlots": 1574
-        },
-        {
-          "code": "17",
-          "name": "–ø—Å–∏—Ö–∏–∞—Ç—Ä –¥–µ—Ç—Å–∫–∏–π",
-          "norm": 0,
-          "slots": 0,
-          "epguNorm": 0,
-          "epguSlots": 0
-        },
-        {
-          "code": "18",
-          "name": "–ø—Å–∏—Ö–∏–∞—Ç—Ä-–Ω–∞—Ä–∫–æ–ª–æ–≥",
-          "norm": 170,
-          "slots": 165,
-          "epguNorm": 110,
-          "epguSlots": 110
-        },
-        {
-          "code": "19",
-          "name": "—Å—Ç–æ–º–∞—Ç–æ–ª–æ–≥",
-          "norm": 540,
-          "slots": 139,
-          "epguNorm": 330,
-          "epguSlots": 95
-        },
-        {
-          "code": "20",
-          "name": "—Å—Ç–æ–º–∞—Ç–æ–ª–æ–≥ –¥–µ—Ç—Å–∫–∏–π",
-          "norm": 180,
-          "slots": 112,
-          "epguNorm": 110,
-          "epguSlots": 69
-        },
-        {
-          "code": "21",
-          "name": "—Å—Ç–æ–º–∞—Ç–æ–ª–æ–≥-—Ç–µ—Ä–∞–ø–µ–≤—Ç",
-          "norm": 270,
-          "slots": 281,
-          "epguNorm": 180,
-          "epguSlots": 162
-        },
-        {
-          "code": "22",
-          "name": "—Ñ—Ç–∏–∑–∏–∞—Ç—Ä",
-          "norm": 120,
-          "slots": 48,
-          "epguNorm": 80,
-          "epguSlots": 32
-        },
-        {
-          "code": "23",
-          "name": "—Ö–∏—Ä—É—Ä–≥",
-          "norm": 170,
-          "slots": 209,
-          "epguNorm": 110,
-          "epguSlots": 132
-        },
-        {
-          "code": "26",
-          "name": "–¥–µ—Ç—Å–∫–∏–π —Ö–∏—Ä—É—Ä–≥",
-          "norm": 0,
-          "slots": 0,
-          "epguNorm": 0,
-          "epguSlots": 0
-        }
-      ]
-    },
-    {
-      "oid": "1.2.643.5.1.13.13.12.2.16.1052",
-      "code": "2301",
-      "name": "–í–ï–†–•–ù–ï–£–°–õ–û–ù–°–ö–ê–Ø –¶–†–ë",
-      "fullName": "–í–ï–†–•–ù–ï–£–°–õ–û–ù–°–ö–ê–Ø –¶–†–ë (–í–µ—Ä—Ö–Ω–∏–π –£—Å–ª–æ–Ω)",
-      "city": "–í–µ—Ä—Ö–Ω–∏–π –£—Å–ª–æ–Ω",
-      "specialties": [
-        {
-          "code": "11",
-          "name": "—Ç–µ—Ä–∞–ø–µ–≤—Ç",
-          "norm": 1120,
-          "slots": 1064,
-          "epguNorm": 720,
-          "epguSlots": 656
-        },
-        {
-          "code": "13",
-          "name": "–∞–∫—É—à–µ—Ä-–≥–∏–Ω–µ–∫–æ–ª–æ–≥",
-          "norm": 230,
-          "slots": 222,
-          "epguNorm": 140,
-          "epguSlots": 160
-        },
-        {
-          "code": "25",
-          "name": "–í–û–ü ‚Äî —Å–µ–º–µ–π–Ω—ã–π –≤—Ä–∞—á (—Å–µ–º–µ–π–Ω—ã–π –≤—Ä–∞—á)",
-          "norm": 0,
-          "slots": 144,
-          "epguNorm": 0,
-          "epguSlots": 117
-        },
-        {
-          "code": "14",
-          "name": "–æ—Ç–æ—Ä–∏–Ω–æ–ª–∞—Ä–∏–Ω–≥–æ–ª–æ–≥",
-          "norm": 0,
-          "slots": 19,
-          "epguNorm": 0,
-          "epguSlots": 15
-        },
-        {
-          "code": "15",
-          "name": "–æ—Ñ—Ç–∞–ª—å–º–æ–ª–æ–≥",
-          "norm": 175,
-          "slots": 198,
-          "epguNorm": 105,
-          "epguSlots": 132
-        },
-        {
-          "code": "16",
-          "name": "–ø–µ–¥–∏–∞—Ç—Ä",
-          "norm": 560,
-          "slots": 561,
-          "epguNorm": 360,
-          "epguSlots": 352
-        },
-        {
-          "code": "17",
-          "name": "–ø—Å–∏—Ö–∏–∞—Ç—Ä –¥–µ—Ç—Å–∫–∏–π",
-          "norm": 0,
-          "slots": 0,
-          "epguNorm": 0,
-          "epguSlots": 0
-        },
-        {
-          "code": "18",
-          "name": "–ø—Å–∏—Ö–∏–∞—Ç—Ä-–Ω–∞—Ä–∫–æ–ª–æ–≥",
-          "norm": 85,
-          "slots": 120,
-          "epguNorm": 55,
-          "epguSlots": 107
-        },
-        {
-          "code": "19",
-          "name": "—Å—Ç–æ–º–∞—Ç–æ–ª–æ–≥",
-          "norm": 0,
-          "slots": 0,
-          "epguNorm": 0,
-          "epguSlots": 0
-        },
-        {
-          "code": "20",
-          "name": "—Å—Ç–æ–º–∞—Ç–æ–ª–æ–≥ –¥–µ—Ç—Å–∫–∏–π",
-          "norm": 0,
-          "slots": 0,
-          "epguNorm": 0,
-          "epguSlots": 0
-        },
-        {
-          "code": "21",
-          "name": "—Å—Ç–æ–º–∞—Ç–æ–ª–æ–≥-—Ç–µ—Ä–∞–ø–µ–≤—Ç",
-          "norm": 45,
-          "slots": 32,
-          "epguNorm": 30,
-          "epguSlots": 28
-        },
-        {
-          "code": "22",
-          "name": "—Ñ—Ç–∏–∑–∏–∞—Ç—Ä",
-          "norm": 60,
-          "slots": 77,
-          "epguNorm": 40,
-          "epguSlots": 55
-        },
-        {
-          "code": "23",
-          "name": "—Ö–∏—Ä—É—Ä–≥",
-          "norm": 340,
-          "slots": 466,
-          "epguNorm": 220,
-          "epguSlots": 342
-        },
-        {
-          "code": "26",
-          "name": "–¥–µ—Ç—Å–∫–∏–π —Ö–∏—Ä—É—Ä–≥",
-          "norm": 0,
-          "slots": 0,
-          "epguNorm": 0,
-          "epguSlots": 0
-        }
-      ]
-    },
-    {
-      "oid": "1.2.643.5.1.13.13.12.2.16.1050",
-      "code": "2401",
-      "name": "–ì–ê–£–ó \"–í–´–°–û–ö–û–ì–û–†–°–ö–ê–Ø –¶–†–ë\"",
-      "fullName": "–ì–ê–£–ó \"–í–´–°–û–ö–û–ì–û–†–°–ö–ê–Ø –¶–†–ë\" (–∂/–¥ —Å—Ç–∞–Ω—Ü–∏–∏ –í—ã—Å–æ–∫–∞—è –ì–æ—Ä–∞)",
-      "city": "–∂/–¥ —Å—Ç–∞–Ω—Ü–∏–∏ –í—ã—Å–æ–∫–∞—è –ì–æ—Ä–∞",
-      "specialties": [
-        {
-          "code": "11",
-          "name": "—Ç–µ—Ä–∞–ø–µ–≤—Ç",
-          "norm": 840,
-          "slots": 2340,
-          "epguNorm": 540,
-          "epguSlots": 1329
-        },
-        {
-          "code": "13",
-          "name": "–∞–∫—É—à–µ—Ä-–≥–∏–Ω–µ–∫–æ–ª–æ–≥",
-          "norm": 747.5,
-          "slots": 249,
-          "epguNorm": 455,
-          "epguSlots": 249
-        },
-        {
-          "code": "25",
-          "name": "–í–û–ü ‚Äî —Å–µ–º–µ–π–Ω—ã–π –≤—Ä–∞—á (—Å–µ–º–µ–π–Ω—ã–π –≤—Ä–∞—á)",
-          "norm": 1040,
-          "slots": 1686,
-          "epguNorm": 640,
-          "epguSlots": 1072
-        },
-        {
-          "code": "14",
-          "name": "–æ—Ç–æ—Ä–∏–Ω–æ–ª–∞—Ä–∏–Ω–≥–æ–ª–æ–≥",
-          "norm": 300,
-          "slots": 99,
-          "epguNorm": 180,
-          "epguSlots": 99
-        },
-        {
-          "code": "15",
-          "name": "–æ—Ñ—Ç–∞–ª—å–º–æ–ª–æ–≥",
-          "norm": 350,
-          "slots": 72,
-          "epguNorm": 210,
-          "epguSlots": 72
-        },
-        {
-          "code": "16",
-          "name": "–ø–µ–¥–∏–∞—Ç—Ä",
-          "norm": 910,
-          "slots": 1702,
-          "epguNorm": 585,
-          "epguSlots": 1658
-        },
-        {
-          "code": "17",
-          "name": "–ø—Å–∏—Ö–∏–∞—Ç—Ä –¥–µ—Ç—Å–∫–∏–π",
-          "norm": 0,
-          "slots": 0,
-          "epguNorm": 0,
-          "epguSlots": 0
-        },
-        {
-          "code": "18",
-          "name": "–ø—Å–∏—Ö–∏–∞—Ç—Ä-–Ω–∞—Ä–∫–æ–ª–æ–≥",
-          "norm": 212.5,
-          "slots": 0,
-          "epguNorm": 137.5,
-          "epguSlots": 0
-        },
-        {
-          "code": "19",
-          "name": "—Å—Ç–æ–º–∞—Ç–æ–ª–æ–≥",
-          "norm": 720,
-          "slots": 334,
-          "epguNorm": 440,
-          "epguSlots": 161
-        },
-        {
-          "code": "20",
-          "name": "—Å—Ç–æ–º–∞—Ç–æ–ª–æ–≥ –¥–µ—Ç—Å–∫–∏–π",
-          "norm": 180,
-          "slots": 84,
-          "epguNorm": 110,
-          "epguSlots": 29
-        },
-        {
-          "code": "21",
-          "name": "—Å—Ç–æ–º–∞—Ç–æ–ª–æ–≥-—Ç–µ—Ä–∞–ø–µ–≤—Ç",
-          "norm": 180,
-          "slots": 158,
-          "epguNorm": 120,
-          "epguSlots": 45
-        },
-        {
-          "code": "22",
-          "name": "—Ñ—Ç–∏–∑–∏–∞—Ç—Ä",
-          "norm": 120,
-          "slots": 99,
-          "epguNorm": 80,
-          "epguSlots": 0
-        },
-        {
-          "code": "23",
-          "name": "—Ö–∏—Ä—É—Ä–≥",
-          "norm": 170,
-          "slots": 228,
-          "epguNorm": 110,
-          "epguSlots": 228
-        },
-        {
-          "code": "26",
-          "name": "–¥–µ—Ç—Å–∫–∏–π —Ö–∏—Ä—É—Ä–≥",
-          "norm": 0,
-          "slots": 0,
-          "epguNorm": 0,
-          "epguSlots": 0
-        }
-      ]
-    },
-    {
-      "oid": "1.2.643.5.1.13.13.12.2.16.1105",
-      "code": "2501",
-      "name": "–ì–ê–£–ó \"–î–†–û–ñ–ñ–ê–ù–û–í–°–ö–ê–Ø –¶–†–ë\"",
-      "fullName": "–ì–ê–£–ó \"–î–†–û–ñ–ñ–ê–ù–û–í–°–ö–ê–Ø –¶–†–ë\" (–°—Ç–∞—Ä–æ–µ –î—Ä–æ–∂–∂–∞–Ω–æ–µ)",
-      "city": "–°—Ç–∞—Ä–æ–µ –î—Ä–æ–∂–∂–∞–Ω–æ–µ",
-      "specialties": [
-        {
-          "code": "11",
-          "name": "—Ç–µ—Ä–∞–ø–µ–≤—Ç",
-          "norm": 1540,
-          "slots": 1676,
-          "epguNorm": 990,
-          "epguSlots": 1051
-        },
-        {
-          "code": "13",
-          "name": "–∞–∫—É—à–µ—Ä-–≥–∏–Ω–µ–∫–æ–ª–æ–≥",
-          "norm": 345,
-          "slots": 679,
-          "epguNorm": 210,
-          "epguSlots": 324
-        },
-        {
-          "code": "25",
-          "name": "–í–û–ü ‚Äî —Å–µ–º–µ–π–Ω—ã–π –≤—Ä–∞—á (—Å–µ–º–µ–π–Ω—ã–π –≤—Ä–∞—á)",
-          "norm": 780,
-          "slots": 1141,
-          "epguNorm": 480,
-          "epguSlots": 598
-        },
-        {
-          "code": "14",
-          "name": "–æ—Ç–æ—Ä–∏–Ω–æ–ª–∞—Ä–∏–Ω–≥–æ–ª–æ–≥",
-          "norm": 150,
-          "slots": 34,
-          "epguNorm": 90,
-          "epguSlots": 28
-        },
-        {
-          "code": "15",
-          "name": "–æ—Ñ—Ç–∞–ª—å–º–æ–ª–æ–≥",
-          "norm": 350,
-          "slots": 110,
-          "epguNorm": 210,
-          "epguSlots": 99
-        },
-        {
-          "code": "16",
-          "name": "–ø–µ–¥–∏–∞—Ç—Ä",
-          "norm": 700,
-          "slots": 1284,
-          "epguNorm": 450,
-          "epguSlots": 741
-        },
-        {
-          "code": "17",
-          "name": "–ø—Å–∏—Ö–∏–∞—Ç—Ä –¥–µ—Ç—Å–∫–∏–π",
-          "norm": 0,
-          "slots": 0,
-          "epguNorm": 0,
-          "epguSlots": 0
-        },
-        {
-          "code": "18",
-          "name": "–ø—Å–∏—Ö–∏–∞—Ç—Ä-–Ω–∞—Ä–∫–æ–ª–æ–≥",
-          "norm": 85,
-          "slots": 484,
-          "epguNorm": 55,
-          "epguSlots": 242
-        },
-        {
-          "code": "19",
-          "name": "—Å—Ç–æ–º–∞—Ç–æ–ª–æ–≥",
-          "norm": 0,
-          "slots": 0,
-          "epguNorm": 0,
-          "epguSlots": 0
-        },
-        {
-          "code": "20",
-          "name": "—Å—Ç–æ–º–∞—Ç–æ–ª–æ–≥ –¥–µ—Ç—Å–∫–∏–π",
-          "norm": 45,
-          "slots": 0,
-          "epguNorm": 27.5,
-          "epguSlots": 0
-        },
-        {
-          "code": "21",
-          "name": "—Å—Ç–æ–º–∞—Ç–æ–ª–æ–≥-—Ç–µ—Ä–∞–ø–µ–≤—Ç",
-          "norm": 180,
-          "slots": 112,
-          "epguNorm": 120,
-          "epguSlots": 112
-        },
-        {
-          "code": "22",
-          "name": "—Ñ—Ç–∏–∑–∏–∞—Ç—Ä",
-          "norm": 0,
-          "slots": 0,
-          "epguNorm": 0,
-          "epguSlots": 0
-        },
-        {
-          "code": "23",
-          "name": "—Ö–∏—Ä—É—Ä–≥",
-          "norm": 170,
-          "slots": 236,
-          "epguNorm": 110,
-          "epguSlots": 236
-        },
-        {
-          "code": "26",
-          "name": "–¥–µ—Ç—Å–∫–∏–π —Ö–∏—Ä—É—Ä–≥",
-          "norm": 0,
-          "slots": 0,
-          "epguNorm": 0,
-          "epguSlots": 0
-        }
-      ]
-    },
-    {
-      "oid": "1.2.643.5.1.13.13.12.2.16.1131",
-      "code": "2601",
-      "name": "–ì–ê–£–ó \"–ö–ê–ô–ë–ò–¶–ö–ê–Ø –¶–ï–ù–¢–†–ê–õ–¨–ù–ê–Ø –†–ê–ô–û–ù–ù–ê–Ø –ë–û–õ–¨–ù–ò–¶–ê\"",
-      "fullName": "–ì–ê–£–ó \"–ö–ê–ô–ë–ò–¶–ö–ê–Ø –¶–ï–ù–¢–†–ê–õ–¨–ù–ê–Ø –†–ê–ô–û–ù–ù–ê–Ø –ë–û–õ–¨–ù–ò–¶–ê\" (–ë–æ–ª—å—à–∏–µ –ö–∞–π–±–∏—Ü—ã)",
-      "city": "–ë–æ–ª—å—à–∏–µ –ö–∞–π–±–∏—Ü—ã",
-      "specialties": [
-        {
-          "code": "11",
-          "name": "—Ç–µ—Ä–∞–ø–µ–≤—Ç",
-          "norm": 630,
-          "slots": 924,
-          "epguNorm": 405,
-          "epguSlots": 616
-        },
-        {
-          "code": "13",
-          "name": "–∞–∫—É—à–µ—Ä-–≥–∏–Ω–µ–∫–æ–ª–æ–≥",
-          "norm": 345,
-          "slots": 407,
-          "epguNorm": 210,
-          "epguSlots": 308
-        },
-        {
-          "code": "25",
-          "name": "–í–û–ü ‚Äî —Å–µ–º–µ–π–Ω—ã–π –≤—Ä–∞—á (—Å–µ–º–µ–π–Ω—ã–π –≤—Ä–∞—á)",
-          "norm": 0,
-          "slots": 517,
-          "epguNorm": 0,
-          "epguSlots": 330
-        },
-        {
-          "code": "14",
-          "name": "–æ—Ç–æ—Ä–∏–Ω–æ–ª–∞—Ä–∏–Ω–≥–æ–ª–æ–≥",
-          "norm": 300,
-          "slots": 297,
-          "epguNorm": 180,
-          "epguSlots": 143
-        },
-        {
-          "code": "15",
-          "name": "–æ—Ñ—Ç–∞–ª—å–º–æ–ª–æ–≥",
-          "norm": 175,
-          "slots": 187,
-          "epguNorm": 105,
-          "epguSlots": 130
-        },
-        {
-          "code": "16",
-          "name": "–ø–µ–¥–∏–∞—Ç—Ä",
-          "norm": 560,
-          "slots": 817,
-          "epguNorm": 360,
-          "epguSlots": 588
-        },
-        {
-          "code": "17",
-          "name": "–ø—Å–∏—Ö–∏–∞—Ç—Ä –¥–µ—Ç—Å–∫–∏–π",
-          "norm": 0,
-          "slots": 0,
-          "epguNorm": 0,
-          "epguSlots": 0
-        },
-        {
-          "code": "18",
-          "name": "–ø—Å–∏—Ö–∏–∞—Ç—Ä-–Ω–∞—Ä–∫–æ–ª–æ–≥",
-          "norm": 0,
-          "slots": 0,
-          "epguNorm": 0,
-          "epguSlots": 0
-        },
-        {
-          "code": "19",
-          "name": "—Å—Ç–æ–º–∞—Ç–æ–ª–æ–≥",
-          "norm": 0,
-          "slots": 0,
-          "epguNorm": 0,
-          "epguSlots": 0
-        },
-        {
-          "code": "20",
-          "name": "—Å—Ç–æ–º–∞—Ç–æ–ª–æ–≥ –¥–µ—Ç—Å–∫–∏–π",
-          "norm": 0,
-          "slots": 0,
-          "epguNorm": 0,
-          "epguSlots": 0
-        },
-        {
-          "code": "21",
-          "name": "—Å—Ç–æ–º–∞—Ç–æ–ª–æ–≥-—Ç–µ—Ä–∞–ø–µ–≤—Ç",
-          "norm": 22.5,
-          "slots": 66,
-          "epguNorm": 15,
-          "epguSlots": 44
-        },
-        {
-          "code": "22",
-          "name": "—Ñ—Ç–∏–∑–∏–∞—Ç—Ä",
-          "norm": 0,
-          "slots": 0,
-          "epguNorm": 0,
-          "epguSlots": 0
-        },
-        {
-          "code": "23",
-          "name": "—Ö–∏—Ä—É—Ä–≥",
-          "norm": 212.5,
-          "slots": 176,
-          "epguNorm": 137.5,
-          "epguSlots": 110
-        },
-        {
-          "code": "26",
-          "name": "–¥–µ—Ç—Å–∫–∏–π —Ö–∏—Ä—É—Ä–≥",
-          "norm": 0,
-          "slots": 0,
-          "epguNorm": 0,
-          "epguSlots": 0
-        }
-      ]
-    },
-    {
-      "oid": "1.2.643.5.1.13.13.12.2.16.1044",
-      "code": "2701",
-      "name": "–ì–ê–£–ó \"–ö–ê–ú–°–ö–û-–£–°–¢–¨–ò–ù–°–ö–ê–Ø –¶–†–ë\"",
-      "fullName": "–ì–ê–£–ó \"–ö–ê–ú–°–ö–û-–£–°–¢–¨–ò–ù–°–ö–ê–Ø –¶–†–ë\" (–ö–∞–º—Å–∫–æ–µ –£—Å—Ç—å–µ)",
-      "city": "–ö–∞–º—Å–∫–æ–µ –£—Å—Ç—å–µ",
-      "specialties": [
-        {
-          "code": "11",
-          "name": "—Ç–µ—Ä–∞–ø–µ–≤—Ç",
-          "norm": 840,
-          "slots": 1189,
-          "epguNorm": 540,
-          "epguSlots": 638
-        },
-        {
-          "code": "13",
-          "name": "–∞–∫—É—à–µ—Ä-–≥–∏–Ω–µ–∫–æ–ª–æ–≥",
-          "norm": 287.5,
-          "slots": 109,
-          "epguNorm": 175,
-          "epguSlots": 109
-        },
-        {
-          "code": "25",
-          "name": "–í–û–ü ‚Äî —Å–µ–º–µ–π–Ω—ã–π –≤—Ä–∞—á (—Å–µ–º–µ–π–Ω—ã–π –≤—Ä–∞—á)",
-          "norm": 520,
-          "slots": 1038,
-          "epguNorm": 320,
-          "epguSlots": 556
-        },
-        {
-          "code": "14",
-          "name": "–æ—Ç–æ—Ä–∏–Ω–æ–ª–∞—Ä–∏–Ω–≥–æ–ª–æ–≥",
-          "norm": 300,
-          "slots": 260,
-          "epguNorm": 180,
-          "epguSlots": 238
-        },
-        {
-          "code": "15",
-          "name": "–æ—Ñ—Ç–∞–ª—å–º–æ–ª–æ–≥",
-          "norm": 175,
-          "slots": 220,
-          "epguNorm": 105,
-          "epguSlots": 209
-        },
-        {
-          "code": "16",
-          "name": "–ø–µ–¥–∏–∞—Ç—Ä",
-          "norm": 630,
-          "slots": 671,
-          "epguNorm": 405,
-          "epguSlots": 424
-        },
-        {
-          "code": "17",
-          "name": "–ø—Å–∏—Ö–∏–∞—Ç—Ä –¥–µ—Ç—Å–∫–∏–π",
-          "norm": 0,
-          "slots": 0,
-          "epguNorm": 0,
-          "epguSlots": 0
-        },
-        {
-          "code": "18",
-          "name": "–ø—Å–∏—Ö–∏–∞—Ç—Ä-–Ω–∞—Ä–∫–æ–ª–æ–≥",
-          "norm": 85,
-          "slots": 215,
-          "epguNorm": 55,
-          "epguSlots": 215
-        },
-        {
-          "code": "19",
-          "name": "—Å—Ç–æ–º–∞—Ç–æ–ª–æ–≥",
-          "norm": 180,
-          "slots": 7,
-          "epguNorm": 110,
-          "epguSlots": 7
-        },
-        {
-          "code": "20",
-          "name": "—Å—Ç–æ–º–∞—Ç–æ–ª–æ–≥ –¥–µ—Ç—Å–∫–∏–π",
-          "norm": 18,
-          "slots": 0,
-          "epguNorm": 11,
-          "epguSlots": 0
-        },
-        {
-          "code": "21",
-          "name": "—Å—Ç–æ–º–∞—Ç–æ–ª–æ–≥-—Ç–µ—Ä–∞–ø–µ–≤—Ç",
-          "norm": 90,
-          "slots": 252,
-          "epguNorm": 60,
-          "epguSlots": 241
-        },
-        {
-          "code": "22",
-          "name": "—Ñ—Ç–∏–∑–∏–∞—Ç—Ä",
-          "norm": 120,
-          "slots": 260,
-          "epguNorm": 80,
-          "epguSlots": 163
-        },
-        {
-          "code": "23",
-          "name": "—Ö–∏—Ä—É—Ä–≥",
-          "norm": 170,
-          "slots": 235,
-          "epguNorm": 110,
-          "epguSlots": 185
-        },
-        {
-          "code": "26",
-          "name": "–¥–µ—Ç—Å–∫–∏–π —Ö–∏—Ä—É—Ä–≥",
-          "norm": 100,
-          "slots": 0,
-          "epguNorm": 67.5,
-          "epguSlots": 0
-        }
-      ]
-    },
-    {
-      "oid": "1.2.643.5.1.13.13.12.2.16.1144",
-      "code": "2801",
-      "name": "–ì–ê–£–ó \"–ö–£–ö–ú–û–†–°–ö–ê–Ø –¶–†–ë\"",
-      "fullName": "–ì–ê–£–ó \"–ö–£–ö–ú–û–†–°–ö–ê–Ø –¶–†–ë\" (–ö—É–∫–º–æ—Ä)",
-      "city": "–ö—É–∫–º–æ—Ä",
-      "specialties": [
-        {
-          "code": "11",
-          "name": "—Ç–µ—Ä–∞–ø–µ–≤—Ç",
-          "norm": 3780,
-          "slots": 2707,
-          "epguNorm": 2430,
-          "epguSlots": 2279
-        },
-        {
-          "code": "13",
-          "name": "–∞–∫—É—à–µ—Ä-–≥–∏–Ω–µ–∫–æ–ª–æ–≥",
-          "norm": 172.5,
-          "slots": 72,
-          "epguNorm": 105,
-          "epguSlots": 36
-        },
-        {
-          "code": "25",
-          "name": "–í–û–ü ‚Äî —Å–µ–º–µ–π–Ω—ã–π –≤—Ä–∞—á (—Å–µ–º–µ–π–Ω—ã–π –≤—Ä–∞—á)",
-          "norm": 845,
-          "slots": 1008,
-          "epguNorm": 520,
-          "epguSlots": 848
-        },
-        {
-          "code": "14",
-          "name": "–æ—Ç–æ—Ä–∏–Ω–æ–ª–∞—Ä–∏–Ω–≥–æ–ª–æ–≥",
-          "norm": 75,
-          "slots": 92,
-          "epguNorm": 45,
-          "epguSlots": 48
-        },
-        {
-          "code": "15",
-          "name": "–æ—Ñ—Ç–∞–ª—å–º–æ–ª–æ–≥",
-          "norm": 87.5,
-          "slots": 0,
-          "epguNorm": 52.5,
-          "epguSlots": 0
-        },
-        {
-          "code": "16",
-          "name": "–ø–µ–¥–∏–∞—Ç—Ä",
-          "norm": 2240,
-          "slots": 2492,
-          "epguNorm": 1440,
-          "epguSlots": 1254
-        },
-        {
-          "code": "17",
-          "name": "–ø—Å–∏—Ö–∏–∞—Ç—Ä –¥–µ—Ç—Å–∫–∏–π",
-          "norm": 0,
-          "slots": 0,
-          "epguNorm": 0,
-          "epguSlots": 0
-        },
-        {
-          "code": "18",
-          "name": "–ø—Å–∏—Ö–∏–∞—Ç—Ä-–Ω–∞—Ä–∫–æ–ª–æ–≥",
-          "norm": 170,
-          "slots": 225,
-          "epguNorm": 110,
           "epguSlots": 192
         },
         {
           "code": "19",
           "name": "—Å—Ç–æ–º–∞—Ç–æ–ª–æ–≥",
-          "norm": 450,
-          "slots": 228,
-          "epguNorm": 275,
-          "epguSlots": 190
+          "norm": 1080,
+          "slots": 384,
+          "epguNorm": 660,
+          "epguSlots": 384
         },
         {
           "code": "20",
           "name": "—Å—Ç–æ–º–∞—Ç–æ–ª–æ–≥ –¥–µ—Ç—Å–∫–∏–π",
-          "norm": 0,
-          "slots": 0,
-          "epguNorm": 0,
-          "epguSlots": 0
-        },
-        {
-          "code": "21",
-          "name": "—Å—Ç–æ–º–∞—Ç–æ–ª–æ–≥-—Ç–µ—Ä–∞–ø–µ–≤—Ç",
-          "norm": 360,
-          "slots": 443,
-          "epguNorm": 240,
-          "epguSlots": 381
-        },
-        {
-          "code": "22",
-          "name": "—Ñ—Ç–∏–∑–∏–∞—Ç—Ä",
-          "norm": 120,
-          "slots": 136,
-          "epguNorm": 80,
-          "epguSlots": 136
-        },
-        {
-          "code": "23",
-          "name": "—Ö–∏—Ä—É—Ä–≥",
-          "norm": 340,
-          "slots": 445,
-          "epguNorm": 220,
-          "epguSlots": 445
-        },
-        {
-          "code": "26",
-          "name": "–¥–µ—Ç—Å–∫–∏–π —Ö–∏—Ä—É—Ä–≥",
-          "norm": 0,
-          "slots": 0,
-          "epguNorm": 0,
-          "epguSlots": 0
-        }
-      ]
-    },
-    {
-      "oid": "1.2.643.5.1.13.13.12.2.16.1149",
-      "code": "2901",
-      "name": "–õ–ê–ò–®–ï–í–°–ö–ê–Ø –¶–†–ë",
-      "fullName": "–õ–ê–ò–®–ï–í–°–ö–ê–Ø –¶–†–ë (–õ–∞–∏—à–µ–≤–æ)",
-      "city": "–õ–∞–∏—à–µ–≤–æ",
-      "specialties": [
-        {
-          "code": "11",
-          "name": "—Ç–µ—Ä–∞–ø–µ–≤—Ç",
-          "norm": 1400,
-          "slots": 2702,
-          "epguNorm": 900,
-          "epguSlots": 2063
-        },
-        {
-          "code": "13",
-          "name": "–∞–∫—É—à–µ—Ä-–≥–∏–Ω–µ–∫–æ–ª–æ–≥",
-          "norm": 460,
-          "slots": 484,
-          "epguNorm": 280,
-          "epguSlots": 346
-        },
-        {
-          "code": "25",
-          "name": "–í–û–ü ‚Äî —Å–µ–º–µ–π–Ω—ã–π –≤—Ä–∞—á (—Å–µ–º–µ–π–Ω—ã–π –≤—Ä–∞—á)",
-          "norm": 520,
-          "slots": 945,
-          "epguNorm": 320,
-          "epguSlots": 676
-        },
-        {
-          "code": "14",
-          "name": "–æ—Ç–æ—Ä–∏–Ω–æ–ª–∞—Ä–∏–Ω–≥–æ–ª–æ–≥",
-          "norm": 300,
-          "slots": 15,
-          "epguNorm": 180,
-          "epguSlots": 15
-        },
-        {
-          "code": "15",
-          "name": "–æ—Ñ—Ç–∞–ª—å–º–æ–ª–æ–≥",
-          "norm": 350,
-          "slots": 262,
-          "epguNorm": 210,
-          "epguSlots": 198
-        },
-        {
-          "code": "16",
-          "name": "–ø–µ–¥–∏–∞—Ç—Ä",
-          "norm": 1400,
-          "slots": 2098,
-          "epguNorm": 900,
-          "epguSlots": 1669
-        },
-        {
-          "code": "17",
-          "name": "–ø—Å–∏—Ö–∏–∞—Ç—Ä –¥–µ—Ç—Å–∫–∏–π",
-          "norm": 0,
-          "slots": 0,
-          "epguNorm": 0,
-          "epguSlots": 0
-        },
-        {
-          "code": "18",
-          "name": "–ø—Å–∏—Ö–∏–∞—Ç—Ä-–Ω–∞—Ä–∫–æ–ª–æ–≥",
-          "norm": 170,
-          "slots": 0,
-          "epguNorm": 110,
-          "epguSlots": 0
-        },
-        {
-          "code": "19",
-          "name": "—Å—Ç–æ–º–∞—Ç–æ–ª–æ–≥",
-          "norm": 360,
-          "slots": 418,
-          "epguNorm": 220,
-          "epguSlots": 325
-        },
-        {
-          "code": "20",
-          "name": "—Å—Ç–æ–º–∞—Ç–æ–ª–æ–≥ –¥–µ—Ç—Å–∫–∏–π",
-          "norm": 45,
-          "slots": 9,
-          "epguNorm": 27.5,
-          "epguSlots": 9
-        },
-        {
-          "code": "21",
-          "name": "—Å—Ç–æ–º–∞—Ç–æ–ª–æ–≥-—Ç–µ—Ä–∞–ø–µ–≤—Ç",
-          "norm": 0,
-          "slots": 30,
-          "epguNorm": 0,
-          "epguSlots": 15
-        },
-        {
-          "code": "22",
-          "name": "—Ñ—Ç–∏–∑–∏–∞—Ç—Ä",
-          "norm": 120,
-          "slots": 128,
-          "epguNorm": 80,
-          "epguSlots": 84
-        },
-        {
-          "code": "23",
-          "name": "—Ö–∏—Ä—É—Ä–≥",
-          "norm": 85,
-          "slots": 412,
-          "epguNorm": 55,
-          "epguSlots": 337
-        },
-        {
-          "code": "26",
-          "name": "–¥–µ—Ç—Å–∫–∏–π —Ö–∏—Ä—É—Ä–≥",
-          "norm": 400,
-          "slots": 187,
-          "epguNorm": 270,
-          "epguSlots": 132
-        }
-      ]
-    },
-    {
-      "oid": "1.2.643.5.1.13.13.12.2.16.1104",
-      "code": "3001",
-      "name": "–ì–ê–£–ó \"–ú–ê–ú–ê–î–´–®–°–ö–ê–Ø –¶–†–ë\"",
-      "fullName": "–ì–ê–£–ó \"–ú–ê–ú–ê–î–´–®–°–ö–ê–Ø –¶–†–ë\" (–ú–∞–º–∞–¥—ã—à)",
-      "city": "–ú–∞–º–∞–¥—ã—à",
-      "specialties": [
-        {
-          "code": "11",
-          "name": "—Ç–µ—Ä–∞–ø–µ–≤—Ç",
-          "norm": 1470,
-          "slots": 2588,
-          "epguNorm": 945,
-          "epguSlots": 1210
-        },
-        {
-          "code": "13",
-          "name": "–∞–∫—É—à–µ—Ä-–≥–∏–Ω–µ–∫–æ–ª–æ–≥",
-          "norm": 460,
-          "slots": 341,
-          "epguNorm": 280,
-          "epguSlots": 75
-        },
-        {
-          "code": "25",
-          "name": "–í–û–ü ‚Äî —Å–µ–º–µ–π–Ω—ã–π –≤—Ä–∞—á (—Å–µ–º–µ–π–Ω—ã–π –≤—Ä–∞—á)",
-          "norm": 520,
-          "slots": 1697,
-          "epguNorm": 320,
-          "epguSlots": 939
-        },
-        {
-          "code": "14",
-          "name": "–æ—Ç–æ—Ä–∏–Ω–æ–ª–∞—Ä–∏–Ω–≥–æ–ª–æ–≥",
-          "norm": 600,
-          "slots": 382,
-          "epguNorm": 360,
-          "epguSlots": 258
-        },
-        {
-          "code": "15",
-          "name": "–æ—Ñ—Ç–∞–ª—å–º–æ–ª–æ–≥",
-          "norm": 437.5,
-          "slots": 75,
-          "epguNorm": 262.5,
-          "epguSlots": 75
-        },
-        {
-          "code": "16",
-          "name": "–ø–µ–¥–∏–∞—Ç—Ä",
-          "norm": 1470,
-          "slots": 1517,
-          "epguNorm": 945,
-          "epguSlots": 970
-        },
-        {
-          "code": "17",
-          "name": "–ø—Å–∏—Ö–∏–∞—Ç—Ä –¥–µ—Ç—Å–∫–∏–π",
-          "norm": 0,
-          "slots": 0,
-          "epguNorm": 0,
-          "epguSlots": 0
-        },
-        {
-          "code": "18",
-          "name": "–ø—Å–∏—Ö–∏–∞—Ç—Ä-–Ω–∞—Ä–∫–æ–ª–æ–≥",
-          "norm": 170,
-          "slots": 187,
-          "epguNorm": 110,
-          "epguSlots": 121
-        },
-        {
-          "code": "19",
-          "name": "—Å—Ç–æ–º–∞—Ç–æ–ª–æ–≥",
-          "norm": 360,
-          "slots": 9,
-          "epguNorm": 220,
-          "epguSlots": 2
-        },
-        {
-          "code": "20",
-          "name": "—Å—Ç–æ–º–∞—Ç–æ–ª–æ–≥ –¥–µ—Ç—Å–∫–∏–π",
-          "norm": 180,
-          "slots": 10,
-          "epguNorm": 110,
-          "epguSlots": 6
-        },
-        {
-          "code": "21",
-          "name": "—Å—Ç–æ–º–∞—Ç–æ–ª–æ–≥-—Ç–µ—Ä–∞–ø–µ–≤—Ç",
-          "norm": 157.5,
-          "slots": 597,
-          "epguNorm": 105,
-          "epguSlots": 585
-        },
-        {
-          "code": "22",
-          "name": "—Ñ—Ç–∏–∑–∏–∞—Ç—Ä",
-          "norm": 120,
-          "slots": 132,
-          "epguNorm": 80,
-          "epguSlots": 88
-        },
-        {
-          "code": "23",
-          "name": "—Ö–∏—Ä—É—Ä–≥",
-          "norm": 212.5,
-          "slots": 286,
-          "epguNorm": 137.5,
-          "epguSlots": 165
-        },
-        {
-          "code": "26",
-          "name": "–¥–µ—Ç—Å–∫–∏–π —Ö–∏—Ä—É—Ä–≥",
-          "norm": 0,
-          "slots": 0,
-          "epguNorm": 0,
-          "epguSlots": 0
-        }
-      ]
-    },
-    {
-      "oid": "1.2.643.5.1.13.13.12.2.16.1058",
-      "code": "3101",
-      "name": "–ì–ê–£–ó \"–ú–ï–ù–î–ï–õ–ï–ï–í–°–ö–ê–Ø –¶–†–ë\"",
-      "fullName": "–ì–ê–£–ó \"–ú–ï–ù–î–ï–õ–ï–ï–í–°–ö–ê–Ø –¶–†–ë\" (–ú–µ–Ω–¥–µ–ª–µ–µ–≤—Å–∫)",
-      "city": "–ú–µ–Ω–¥–µ–ª–µ–µ–≤—Å–∫",
-      "specialties": [
-        {
-          "code": "11",
-          "name": "—Ç–µ—Ä–∞–ø–µ–≤—Ç",
-          "norm": 1400,
-          "slots": 909,
-          "epguNorm": 900,
-          "epguSlots": 616
-        },
-        {
-          "code": "13",
-          "name": "–∞–∫—É—à–µ—Ä-–≥–∏–Ω–µ–∫–æ–ª–æ–≥",
-          "norm": 253.00000000000003,
-          "slots": 154,
-          "epguNorm": 154,
-          "epguSlots": 154
-        },
-        {
-          "code": "25",
-          "name": "–í–û–ü ‚Äî —Å–µ–º–µ–π–Ω—ã–π –≤—Ä–∞—á (—Å–µ–º–µ–π–Ω—ã–π –≤—Ä–∞—á)",
-          "norm": 325,
-          "slots": 121,
-          "epguNorm": 200,
-          "epguSlots": 97
-        },
-        {
-          "code": "14",
-          "name": "–æ—Ç–æ—Ä–∏–Ω–æ–ª–∞—Ä–∏–Ω–≥–æ–ª–æ–≥",
-          "norm": 150,
-          "slots": 133,
-          "epguNorm": 90,
-          "epguSlots": 133
-        },
-        {
-          "code": "15",
-          "name": "–æ—Ñ—Ç–∞–ª—å–º–æ–ª–æ–≥",
-          "norm": 175,
-          "slots": 60,
-          "epguNorm": 105,
-          "epguSlots": 60
-        },
-        {
-          "code": "16",
-          "name": "–ø–µ–¥–∏–∞—Ç—Ä",
-          "norm": 1120,
-          "slots": 487,
-          "epguNorm": 720,
-          "epguSlots": 445
-        },
-        {
-          "code": "17",
-          "name": "–ø—Å–∏—Ö–∏–∞—Ç—Ä –¥–µ—Ç—Å–∫–∏–π",
-          "norm": 0,
-          "slots": 0,
-          "epguNorm": 0,
-          "epguSlots": 0
-        },
-        {
-          "code": "18",
-          "name": "–ø—Å–∏—Ö–∏–∞—Ç—Ä-–Ω–∞—Ä–∫–æ–ª–æ–≥",
-          "norm": 170,
-          "slots": 242,
-          "epguNorm": 110,
-          "epguSlots": 176
-        },
-        {
-          "code": "19",
-          "name": "—Å—Ç–æ–º–∞—Ç–æ–ª–æ–≥",
-          "norm": 360,
-          "slots": 361,
-          "epguNorm": 220,
-          "epguSlots": 284
-        },
-        {
-          "code": "20",
-          "name": "—Å—Ç–æ–º–∞—Ç–æ–ª–æ–≥ –¥–µ—Ç—Å–∫–∏–π",
-          "norm": 45,
-          "slots": 0,
-          "epguNorm": 27.5,
-          "epguSlots": 0
-        },
-        {
-          "code": "21",
-          "name": "—Å—Ç–æ–º–∞—Ç–æ–ª–æ–≥-—Ç–µ—Ä–∞–ø–µ–≤—Ç",
-          "norm": 90,
-          "slots": 123,
-          "epguNorm": 60,
-          "epguSlots": 123
-        },
-        {
-          "code": "22",
-          "name": "—Ñ—Ç–∏–∑–∏–∞—Ç—Ä",
-          "norm": 180,
-          "slots": 22,
-          "epguNorm": 120,
-          "epguSlots": 14
-        },
-        {
-          "code": "23",
-          "name": "—Ö–∏—Ä—É—Ä–≥",
-          "norm": 212.5,
-          "slots": 367,
-          "epguNorm": 137.5,
-          "epguSlots": 304
-        },
-        {
-          "code": "26",
-          "name": "–¥–µ—Ç—Å–∫–∏–π —Ö–∏—Ä—É—Ä–≥",
-          "norm": 100,
-          "slots": 0,
-          "epguNorm": 67.5,
-          "epguSlots": 0
-        }
-      ]
-    },
-    {
-      "oid": "1.2.643.5.1.13.13.12.2.16.1101",
-      "code": "3201",
-      "name": "–ì–ê–£–ó \"–ú–ï–ù–ó–ï–õ–ò–ù–°–ö–ê–Ø –¶–†–ë\"",
-      "fullName": "–ì–ê–£–ó \"–ú–ï–ù–ó–ï–õ–ò–ù–°–ö–ê–Ø –¶–†–ë\" (–ú–µ–Ω–∑–µ–ª–∏–Ω—Å–∫)",
-      "city": "–ú–µ–Ω–∑–µ–ª–∏–Ω—Å–∫",
-      "specialties": [
-        {
-          "code": "11",
-          "name": "—Ç–µ—Ä–∞–ø–µ–≤—Ç",
-          "norm": 1260,
-          "slots": 1450,
-          "epguNorm": 810,
-          "epguSlots": 1019
-        },
-        {
-          "code": "13",
-          "name": "–∞–∫—É—à–µ—Ä-–≥–∏–Ω–µ–∫–æ–ª–æ–≥",
-          "norm": 690,
-          "slots": 649,
-          "epguNorm": 420,
-          "epguSlots": 495
-        },
-        {
-          "code": "25",
-          "name": "–í–û–ü ‚Äî —Å–µ–º–µ–π–Ω—ã–π –≤—Ä–∞—á (—Å–µ–º–µ–π–Ω—ã–π –≤—Ä–∞—á)",
-          "norm": 1040,
-          "slots": 1169,
-          "epguNorm": 640,
-          "epguSlots": 709
-        },
-        {
-          "code": "14",
-          "name": "–æ—Ç–æ—Ä–∏–Ω–æ–ª–∞—Ä–∏–Ω–≥–æ–ª–æ–≥",
-          "norm": 150,
-          "slots": 105,
-          "epguNorm": 90,
-          "epguSlots": 90
-        },
-        {
-          "code": "15",
-          "name": "–æ—Ñ—Ç–∞–ª—å–º–æ–ª–æ–≥",
-          "norm": 350,
-          "slots": 423,
-          "epguNorm": 210,
-          "epguSlots": 256
-        },
-        {
-          "code": "16",
-          "name": "–ø–µ–¥–∏–∞—Ç—Ä",
-          "norm": 1400,
-          "slots": 1301,
-          "epguNorm": 900,
-          "epguSlots": 876
-        },
-        {
-          "code": "17",
-          "name": "–ø—Å–∏—Ö–∏–∞—Ç—Ä –¥–µ—Ç—Å–∫–∏–π",
-          "norm": 0,
-          "slots": 0,
-          "epguNorm": 0,
-          "epguSlots": 0
-        },
-        {
-          "code": "18",
-          "name": "–ø—Å–∏—Ö–∏–∞—Ç—Ä-–Ω–∞—Ä–∫–æ–ª–æ–≥",
-          "norm": 85,
-          "slots": 126,
-          "epguNorm": 55,
-          "epguSlots": 90
-        },
-        {
-          "code": "19",
-          "name": "—Å—Ç–æ–º–∞—Ç–æ–ª–æ–≥",
-          "norm": 0,
-          "slots": 0,
-          "epguNorm": 0,
-          "epguSlots": 0
-        },
-        {
-          "code": "20",
-          "name": "—Å—Ç–æ–º–∞—Ç–æ–ª–æ–≥ –¥–µ—Ç—Å–∫–∏–π",
-          "norm": 180,
-          "slots": 160,
-          "epguNorm": 110,
-          "epguSlots": 96
-        },
-        {
-          "code": "21",
-          "name": "—Å—Ç–æ–º–∞—Ç–æ–ª–æ–≥-—Ç–µ—Ä–∞–ø–µ–≤—Ç",
-          "norm": 180,
-          "slots": 278,
-          "epguNorm": 120,
-          "epguSlots": 204
-        },
-        {
-          "code": "22",
-          "name": "—Ñ—Ç–∏–∑–∏–∞—Ç—Ä",
-          "norm": 120,
-          "slots": 143,
-          "epguNorm": 80,
-          "epguSlots": 121
-        },
-        {
-          "code": "23",
-          "name": "—Ö–∏—Ä—É—Ä–≥",
-          "norm": 0,
-          "slots": 431,
-          "epguNorm": 0,
-          "epguSlots": 323
-        },
-        {
-          "code": "26",
-          "name": "–¥–µ—Ç—Å–∫–∏–π —Ö–∏—Ä—É—Ä–≥",
-          "norm": 150,
-          "slots": 0,
-          "epguNorm": 101.25,
-          "epguSlots": 0
-        }
-      ]
-    },
-    {
-      "oid": "1.2.643.5.1.13.13.12.2.16.1055",
-      "code": "3301",
-      "name": "–ú–£–°–õ–Æ–ú–û–í–°–ö–ê–Ø –¶–†–ë",
-      "fullName": "–ú–£–°–õ–Æ–ú–û–í–°–ö–ê–Ø –¶–†–ë (–ú—É—Å–ª—é–º–æ–≤–æ)",
-      "city": "–ú—É—Å–ª—é–º–æ–≤–æ",
-      "specialties": [
-        {
-          "code": "11",
-          "name": "—Ç–µ—Ä–∞–ø–µ–≤—Ç",
-          "norm": 1400,
-          "slots": 1594,
-          "epguNorm": 900,
-          "epguSlots": 842
-        },
-        {
-          "code": "13",
-          "name": "–∞–∫—É—à–µ—Ä-–≥–∏–Ω–µ–∫–æ–ª–æ–≥",
-          "norm": 460,
-          "slots": 638,
-          "epguNorm": 280,
-          "epguSlots": 440
-        },
-        {
-          "code": "25",
-          "name": "–í–û–ü ‚Äî —Å–µ–º–µ–π–Ω—ã–π –≤—Ä–∞—á (—Å–µ–º–µ–π–Ω—ã–π –≤—Ä–∞—á)",
-          "norm": 520,
-          "slots": 376,
-          "epguNorm": 320,
-          "epguSlots": 245
-        },
-        {
-          "code": "14",
-          "name": "–æ—Ç–æ—Ä–∏–Ω–æ–ª–∞—Ä–∏–Ω–≥–æ–ª–æ–≥",
-          "norm": 150,
-          "slots": 616,
-          "epguNorm": 90,
-          "epguSlots": 308
-        },
-        {
-          "code": "15",
-          "name": "–æ—Ñ—Ç–∞–ª—å–º–æ–ª–æ–≥",
-          "norm": 350,
-          "slots": 462,
-          "epguNorm": 210,
-          "epguSlots": 286
-        },
-        {
-          "code": "16",
-          "name": "–ø–µ–¥–∏–∞—Ç—Ä",
-          "norm": 1120,
-          "slots": 1012,
-          "epguNorm": 720,
-          "epguSlots": 539
-        },
-        {
-          "code": "17",
-          "name": "–ø—Å–∏—Ö–∏–∞—Ç—Ä –¥–µ—Ç—Å–∫–∏–π",
-          "norm": 85,
-          "slots": 0,
-          "epguNorm": 55,
-          "epguSlots": 0
-        },
-        {
-          "code": "18",
-          "name": "–ø—Å–∏—Ö–∏–∞—Ç—Ä-–Ω–∞—Ä–∫–æ–ª–æ–≥",
-          "norm": 42.5,
-          "slots": 0,
-          "epguNorm": 27.5,
-          "epguSlots": 0
-        },
-        {
-          "code": "19",
-          "name": "—Å—Ç–æ–º–∞—Ç–æ–ª–æ–≥",
-          "norm": 0,
-          "slots": 0,
-          "epguNorm": 0,
-          "epguSlots": 0
-        },
-        {
-          "code": "20",
-          "name": "—Å—Ç–æ–º–∞—Ç–æ–ª–æ–≥ –¥–µ—Ç—Å–∫–∏–π",
-          "norm": 180,
-          "slots": 40,
-          "epguNorm": 110,
-          "epguSlots": 40
-        },
-        {
-          "code": "21",
-          "name": "—Å—Ç–æ–º–∞—Ç–æ–ª–æ–≥-—Ç–µ—Ä–∞–ø–µ–≤—Ç",
-          "norm": 360,
-          "slots": 171,
-          "epguNorm": 240,
-          "epguSlots": 80
-        },
-        {
-          "code": "22",
-          "name": "—Ñ—Ç–∏–∑–∏–∞—Ç—Ä",
-          "norm": 60,
-          "slots": 0,
-          "epguNorm": 40,
-          "epguSlots": 0
-        },
-        {
-          "code": "23",
-          "name": "—Ö–∏—Ä—É—Ä–≥",
-          "norm": 340,
-          "slots": 330,
-          "epguNorm": 220,
-          "epguSlots": 154
-        },
-        {
-          "code": "26",
-          "name": "–¥–µ—Ç—Å–∫–∏–π —Ö–∏—Ä—É—Ä–≥",
-          "norm": 100,
-          "slots": 0,
-          "epguNorm": 67.5,
-          "epguSlots": 0
-        }
-      ]
-    },
-    {
-      "oid": "1.2.643.5.1.13.13.12.2.16.1059",
-      "code": "3401",
-      "name": "–ì–ê–£–ó \"–ù–û–í–û–®–ï–®–ú–ò–ù–°–ö–ê–Ø –¶–†–ë\"",
-      "fullName": "–ì–ê–£–ó \"–ù–û–í–û–®–ï–®–ú–ò–ù–°–ö–ê–Ø –¶–†–ë\" (–ù–æ–≤–æ—à–µ—à–º–∏–Ω—Å–∫)",
-      "city": "–ù–æ–≤–æ—à–µ—à–º–∏–Ω—Å–∫",
-      "specialties": [
-        {
-          "code": "11",
-          "name": "—Ç–µ—Ä–∞–ø–µ–≤—Ç",
-          "norm": 1120,
-          "slots": 462,
-          "epguNorm": 720,
-          "epguSlots": 330
-        },
-        {
-          "code": "13",
-          "name": "–∞–∫—É—à–µ—Ä-–≥–∏–Ω–µ–∫–æ–ª–æ–≥",
-          "norm": 287.5,
-          "slots": 153,
-          "epguNorm": 175,
-          "epguSlots": 153
-        },
-        {
-          "code": "25",
-          "name": "–í–û–ü ‚Äî —Å–µ–º–µ–π–Ω—ã–π –≤—Ä–∞—á (—Å–µ–º–µ–π–Ω—ã–π –≤—Ä–∞—á)",
-          "norm": 780,
-          "slots": 1089,
-          "epguNorm": 480,
-          "epguSlots": 924
-        },
-        {
-          "code": "14",
-          "name": "–æ—Ç–æ—Ä–∏–Ω–æ–ª–∞—Ä–∏–Ω–≥–æ–ª–æ–≥",
-          "norm": 0,
-          "slots": 0,
-          "epguNorm": 0,
-          "epguSlots": 0
-        },
-        {
-          "code": "15",
-          "name": "–æ—Ñ—Ç–∞–ª—å–º–æ–ª–æ–≥",
-          "norm": 350,
-          "slots": 0,
-          "epguNorm": 210,
-          "epguSlots": 0
-        },
-        {
-          "code": "16",
-          "name": "–ø–µ–¥–∏–∞—Ç—Ä",
-          "norm": 840,
-          "slots": 802,
-          "epguNorm": 540,
-          "epguSlots": 706
-        },
-        {
-          "code": "17",
-          "name": "–ø—Å–∏—Ö–∏–∞—Ç—Ä –¥–µ—Ç—Å–∫–∏–π",
-          "norm": 0,
-          "slots": 0,
-          "epguNorm": 0,
-          "epguSlots": 0
-        },
-        {
-          "code": "18",
-          "name": "–ø—Å–∏—Ö–∏–∞—Ç—Ä-–Ω–∞—Ä–∫–æ–ª–æ–≥",
-          "norm": 42.5,
-          "slots": 0,
-          "epguNorm": 27.5,
-          "epguSlots": 0
-        },
-        {
-          "code": "19",
-          "name": "—Å—Ç–æ–º–∞—Ç–æ–ª–æ–≥",
-          "norm": 0,
-          "slots": 0,
-          "epguNorm": 0,
-          "epguSlots": 0
-        },
-        {
-          "code": "20",
-          "name": "—Å—Ç–æ–º–∞—Ç–æ–ª–æ–≥ –¥–µ—Ç—Å–∫–∏–π",
-          "norm": 180,
-          "slots": 0,
-          "epguNorm": 110,
-          "epguSlots": 0
-        },
-        {
-          "code": "21",
-          "name": "—Å—Ç–æ–º–∞—Ç–æ–ª–æ–≥-—Ç–µ—Ä–∞–ø–µ–≤—Ç",
-          "norm": 90,
-          "slots": 143,
-          "epguNorm": 60,
-          "epguSlots": 143
-        },
-        {
-          "code": "22",
-          "name": "—Ñ—Ç–∏–∑–∏–∞—Ç—Ä",
-          "norm": 0,
-          "slots": 0,
-          "epguNorm": 0,
-          "epguSlots": 0
-        },
-        {
-          "code": "23",
-          "name": "—Ö–∏—Ä—É—Ä–≥",
-          "norm": 0,
-          "slots": 0,
-          "epguNorm": 0,
-          "epguSlots": 0
-        },
-        {
-          "code": "26",
-          "name": "–¥–µ—Ç—Å–∫–∏–π —Ö–∏—Ä—É—Ä–≥",
-          "norm": 200,
-          "slots": 0,
-          "epguNorm": 135,
-          "epguSlots": 0
-        }
-      ]
-    },
-    {
-      "oid": "1.2.643.5.1.13.13.12.2.16.1138",
-      "code": "3501",
-      "name": "–ì–ê–£–ó \"–ù–£–†–õ–ê–¢–°–ö–ê–Ø –¶–†–ë\"",
-      "fullName": "–ì–ê–£–ó \"–ù–£–†–õ–ê–¢–°–ö–ê–Ø –¶–†–ë\" (–ù—É—Ä–ª–∞—Ç)",
-      "city": "–ù—É—Ä–ª–∞—Ç",
-      "specialties": [
-        {
-          "code": "11",
-          "name": "—Ç–µ—Ä–∞–ø–µ–≤—Ç",
-          "norm": 2240,
-          "slots": 3016,
-          "epguNorm": 1440,
-          "epguSlots": 1557
-        },
-        {
-          "code": "13",
-          "name": "–∞–∫—É—à–µ—Ä-–≥–∏–Ω–µ–∫–æ–ª–æ–≥",
-          "norm": 575,
-          "slots": 779,
-          "epguNorm": 350,
-          "epguSlots": 490
-        },
-        {
-          "code": "25",
-          "name": "–í–û–ü ‚Äî —Å–µ–º–µ–π–Ω—ã–π –≤—Ä–∞—á (—Å–µ–º–µ–π–Ω—ã–π –≤—Ä–∞—á)",
-          "norm": 1820,
-          "slots": 2131,
-          "epguNorm": 1120,
-          "epguSlots": 1416
-        },
-        {
-          "code": "14",
-          "name": "–æ—Ç–æ—Ä–∏–Ω–æ–ª–∞—Ä–∏–Ω–≥–æ–ª–æ–≥",
-          "norm": 450,
-          "slots": 693,
-          "epguNorm": 270,
-          "epguSlots": 418
-        },
-        {
-          "code": "15",
-          "name": "–æ—Ñ—Ç–∞–ª—å–º–æ–ª–æ–≥",
-          "norm": 350,
-          "slots": 68,
-          "epguNorm": 210,
-          "epguSlots": 44
-        },
-        {
-          "code": "16",
-          "name": "–ø–µ–¥–∏–∞—Ç—Ä",
-          "norm": 1820,
-          "slots": 1834,
-          "epguNorm": 1170,
-          "epguSlots": 1224
-        },
-        {
-          "code": "17",
-          "name": "–ø—Å–∏—Ö–∏–∞—Ç—Ä –¥–µ—Ç—Å–∫–∏–π",
-          "norm": 0,
-          "slots": 0,
-          "epguNorm": 0,
-          "epguSlots": 0
-        },
-        {
-          "code": "18",
-          "name": "–ø—Å–∏—Ö–∏–∞—Ç—Ä-–Ω–∞—Ä–∫–æ–ª–æ–≥",
-          "norm": 21.25,
-          "slots": 88,
-          "epguNorm": 13.75,
-          "epguSlots": 55
-        },
-        {
-          "code": "19",
-          "name": "—Å—Ç–æ–º–∞—Ç–æ–ª–æ–≥",
-          "norm": 0,
-          "slots": 0,
-          "epguNorm": 0,
-          "epguSlots": 0
-        },
-        {
-          "code": "20",
-          "name": "—Å—Ç–æ–º–∞—Ç–æ–ª–æ–≥ –¥–µ—Ç—Å–∫–∏–π",
-          "norm": 0,
-          "slots": 110,
-          "epguNorm": 0,
-          "epguSlots": 66
-        },
-        {
-          "code": "21",
-          "name": "—Å—Ç–æ–º–∞—Ç–æ–ª–æ–≥-—Ç–µ—Ä–∞–ø–µ–≤—Ç",
-          "norm": 360,
-          "slots": 194,
-          "epguNorm": 240,
-          "epguSlots": 134
-        },
-        {
-          "code": "22",
-          "name": "—Ñ—Ç–∏–∑–∏–∞—Ç—Ä",
-          "norm": 90,
-          "slots": 208,
-          "epguNorm": 60,
-          "epguSlots": 146
-        },
-        {
-          "code": "23",
-          "name": "—Ö–∏—Ä—É—Ä–≥",
-          "norm": 255,
-          "slots": 231,
-          "epguNorm": 165,
-          "epguSlots": 143
-        },
-        {
-          "code": "26",
-          "name": "–¥–µ—Ç—Å–∫–∏–π —Ö–∏—Ä—É—Ä–≥",
-          "norm": 400,
-          "slots": 390,
-          "epguNorm": 270,
-          "epguSlots": 270
-        }
-      ]
-    },
-    {
-      "oid": "1.2.643.5.1.13.13.12.2.16.1109",
-      "code": "3601",
-      "name": "–ì–ê–£–ó \"–ü–ï–°–¢–†–ï–ß–ò–ù–°–ö–ê–Ø –¶–†–ë\"",
-      "fullName": "–ì–ê–£–ó \"–ü–ï–°–¢–†–ï–ß–ò–ù–°–ö–ê–Ø –¶–†–ë\" (–ü–µ—Å—Ç—Ä–µ—Ü—ã)",
-      "city": "–ü–µ—Å—Ç—Ä–µ—Ü—ã",
-      "specialties": [
-        {
-          "code": "11",
-          "name": "—Ç–µ—Ä–∞–ø–µ–≤—Ç",
-          "norm": 1820,
-          "slots": 5842,
-          "epguNorm": 1170,
-          "epguSlots": 2060
-        },
-        {
-          "code": "13",
-          "name": "–∞–∫—É—à–µ—Ä-–≥–∏–Ω–µ–∫–æ–ª–æ–≥",
-          "norm": 690,
-          "slots": 878,
-          "epguNorm": 420,
-          "epguSlots": 435
-        },
-        {
-          "code": "25",
-          "name": "–í–û–ü ‚Äî —Å–µ–º–µ–π–Ω—ã–π –≤—Ä–∞—á (—Å–µ–º–µ–π–Ω—ã–π –≤—Ä–∞—á)",
-          "norm": 260,
-          "slots": 1080,
-          "epguNorm": 160,
-          "epguSlots": 499
-        },
-        {
-          "code": "14",
-          "name": "–æ—Ç–æ—Ä–∏–Ω–æ–ª–∞—Ä–∏–Ω–≥–æ–ª–æ–≥",
-          "norm": 300,
-          "slots": 627,
-          "epguNorm": 180,
-          "epguSlots": 187
-        },
-        {
-          "code": "15",
-          "name": "–æ—Ñ—Ç–∞–ª—å–º–æ–ª–æ–≥",
-          "norm": 525,
-          "slots": 669,
-          "epguNorm": 315,
-          "epguSlots": 267
-        },
-        {
-          "code": "16",
-          "name": "–ø–µ–¥–∏–∞—Ç—Ä",
-          "norm": 1190,
-          "slots": 2895,
-          "epguNorm": 765,
-          "epguSlots": 1422
-        },
-        {
-          "code": "17",
-          "name": "–ø—Å–∏—Ö–∏–∞—Ç—Ä –¥–µ—Ç—Å–∫–∏–π",
-          "norm": 0,
-          "slots": 0,
-          "epguNorm": 0,
-          "epguSlots": 0
-        },
-        {
-          "code": "18",
-          "name": "–ø—Å–∏—Ö–∏–∞—Ç—Ä-–Ω–∞—Ä–∫–æ–ª–æ–≥",
-          "norm": 85,
-          "slots": 0,
-          "epguNorm": 55,
-          "epguSlots": 0
-        },
-        {
-          "code": "19",
-          "name": "—Å—Ç–æ–º–∞—Ç–æ–ª–æ–≥",
-          "norm": 0,
-          "slots": 53,
-          "epguNorm": 0,
-          "epguSlots": 0
-        },
-        {
-          "code": "20",
-          "name": "—Å—Ç–æ–º–∞—Ç–æ–ª–æ–≥ –¥–µ—Ç—Å–∫–∏–π",
-          "norm": 45,
-          "slots": 24,
-          "epguNorm": 27.5,
-          "epguSlots": 0
-        },
-        {
-          "code": "21",
-          "name": "—Å—Ç–æ–º–∞—Ç–æ–ª–æ–≥-—Ç–µ—Ä–∞–ø–µ–≤—Ç",
-          "norm": 270,
-          "slots": 1284,
-          "epguNorm": 180,
-          "epguSlots": 603
-        },
-        {
-          "code": "22",
-          "name": "—Ñ—Ç–∏–∑–∏–∞—Ç—Ä",
-          "norm": 60,
-          "slots": 62,
-          "epguNorm": 40,
-          "epguSlots": 40
-        },
-        {
-          "code": "23",
-          "name": "—Ö–∏—Ä—É—Ä–≥",
-          "norm": 170,
-          "slots": 551,
-          "epguNorm": 110,
-          "epguSlots": 267
-        },
-        {
-          "code": "26",
-          "name": "–¥–µ—Ç—Å–∫–∏–π —Ö–∏—Ä—É—Ä–≥",
-          "norm": 100,
-          "slots": 0,
-          "epguNorm": 67.5,
-          "epguSlots": 0
-        }
-      ]
-    },
-    {
-      "oid": "1.2.643.5.1.13.13.12.2.16.1133",
-      "code": "3701",
-      "name": "–ì–ê–£–ó –†–´–ë–ù–û-–°–õ–û–ë–û–î–°–ö–ê–Ø –¶–†–ë",
-      "fullName": "–ì–ê–£–ó –†–´–ë–ù–û-–°–õ–û–ë–û–î–°–ö–ê–Ø –¶–†–ë (–†—ã–±–Ω–∞—è –°–ª–æ–±–æ–¥–∞)",
-      "city": "–†—ã–±–Ω–∞—è –°–ª–æ–±–æ–¥–∞",
-      "specialties": [
-        {
-          "code": "11",
-          "name": "—Ç–µ—Ä–∞–ø–µ–≤—Ç",
-          "norm": 1120,
-          "slots": 1640,
-          "epguNorm": 720,
-          "epguSlots": 1158
-        },
-        {
-          "code": "13",
-          "name": "–∞–∫—É—à–µ—Ä-–≥–∏–Ω–µ–∫–æ–ª–æ–≥",
-          "norm": 690,
-          "slots": 436,
-          "epguNorm": 420,
-          "epguSlots": 302
-        },
-        {
-          "code": "25",
-          "name": "–í–û–ü ‚Äî —Å–µ–º–µ–π–Ω—ã–π –≤—Ä–∞—á (—Å–µ–º–µ–π–Ω—ã–π –≤—Ä–∞—á)",
-          "norm": 780,
-          "slots": 1220,
-          "epguNorm": 480,
-          "epguSlots": 881
-        },
-        {
-          "code": "14",
-          "name": "–æ—Ç–æ—Ä–∏–Ω–æ–ª–∞—Ä–∏–Ω–≥–æ–ª–æ–≥",
-          "norm": 75,
-          "slots": 72,
-          "epguNorm": 45,
-          "epguSlots": 54
-        },
-        {
-          "code": "15",
-          "name": "–æ—Ñ—Ç–∞–ª—å–º–æ–ª–æ–≥",
-          "norm": 350,
-          "slots": 258,
-          "epguNorm": 210,
-          "epguSlots": 206
-        },
-        {
-          "code": "16",
-          "name": "–ø–µ–¥–∏–∞—Ç—Ä",
-          "norm": 840,
-          "slots": 2081,
-          "epguNorm": 540,
-          "epguSlots": 1076
-        },
-        {
-          "code": "17",
-          "name": "–ø—Å–∏—Ö–∏–∞—Ç—Ä –¥–µ—Ç—Å–∫–∏–π",
-          "norm": 0,
-          "slots": 0,
-          "epguNorm": 0,
-          "epguSlots": 0
-        },
-        {
-          "code": "18",
-          "name": "–ø—Å–∏—Ö–∏–∞—Ç—Ä-–Ω–∞—Ä–∫–æ–ª–æ–≥",
-          "norm": 0,
-          "slots": 188,
-          "epguNorm": 0,
-          "epguSlots": 139
-        },
-        {
-          "code": "19",
-          "name": "—Å—Ç–æ–º–∞—Ç–æ–ª–æ–≥",
-          "norm": 405,
-          "slots": 616,
-          "epguNorm": 247.5,
-          "epguSlots": 484
-        },
-        {
-          "code": "20",
-          "name": "—Å—Ç–æ–º–∞—Ç–æ–ª–æ–≥ –¥–µ—Ç—Å–∫–∏–π",
-          "norm": 0,
-          "slots": 0,
-          "epguNorm": 0,
-          "epguSlots": 0
-        },
-        {
-          "code": "21",
-          "name": "—Å—Ç–æ–º–∞—Ç–æ–ª–æ–≥-—Ç–µ—Ä–∞–ø–µ–≤—Ç",
-          "norm": 157.5,
-          "slots": 242,
-          "epguNorm": 105,
-          "epguSlots": 168
-        },
-        {
-          "code": "22",
-          "name": "—Ñ—Ç–∏–∑–∏–∞—Ç—Ä",
-          "norm": 0,
-          "slots": 0,
-          "epguNorm": 0,
-          "epguSlots": 0
-        },
-        {
-          "code": "23",
-          "name": "—Ö–∏—Ä—É—Ä–≥",
-          "norm": 212.5,
-          "slots": 240,
-          "epguNorm": 137.5,
-          "epguSlots": 170
-        },
-        {
-          "code": "26",
-          "name": "–¥–µ—Ç—Å–∫–∏–π —Ö–∏—Ä—É—Ä–≥",
-          "norm": 0,
-          "slots": 0,
-          "epguNorm": 0,
-          "epguSlots": 0
-        }
-      ]
-    },
-    {
-      "oid": "1.2.643.5.1.13.13.12.2.16.1126",
-      "code": "3801",
-      "name": "–ì–ê–£–ó \"–°–ê–ë–ò–ù–°–ö–ê–Ø –¶–†–ë\"",
-      "fullName": "–ì–ê–£–ó \"–°–ê–ë–ò–ù–°–ö–ê–Ø –¶–†–ë\" (–ë–æ–≥–∞—Ç—ã–µ –°–∞–±—ã)",
-      "city": "–ë–æ–≥–∞—Ç—ã–µ –°–∞–±—ã",
-      "specialties": [
-        {
-          "code": "11",
-          "name": "—Ç–µ—Ä–∞–ø–µ–≤—Ç",
-          "norm": 2520,
-          "slots": 2925,
-          "epguNorm": 1620,
-          "epguSlots": 1943
-        },
-        {
-          "code": "13",
-          "name": "–∞–∫—É—à–µ—Ä-–≥–∏–Ω–µ–∫–æ–ª–æ–≥",
-          "norm": 460,
-          "slots": 457,
-          "epguNorm": 280,
-          "epguSlots": 328
-        },
-        {
-          "code": "25",
-          "name": "–í–û–ü ‚Äî —Å–µ–º–µ–π–Ω—ã–π –≤—Ä–∞—á (—Å–µ–º–µ–π–Ω—ã–π –≤—Ä–∞—á)",
-          "norm": 260,
-          "slots": 500,
-          "epguNorm": 160,
-          "epguSlots": 340
-        },
-        {
-          "code": "14",
-          "name": "–æ—Ç–æ—Ä–∏–Ω–æ–ª–∞—Ä–∏–Ω–≥–æ–ª–æ–≥",
-          "norm": 300,
-          "slots": 129,
-          "epguNorm": 180,
-          "epguSlots": 84
-        },
-        {
-          "code": "15",
-          "name": "–æ—Ñ—Ç–∞–ª—å–º–æ–ª–æ–≥",
-          "norm": 350,
-          "slots": 352,
-          "epguNorm": 210,
-          "epguSlots": 234
-        },
-        {
-          "code": "16",
-          "name": "–ø–µ–¥–∏–∞—Ç—Ä",
-          "norm": 2240,
-          "slots": 2082,
-          "epguNorm": 1440,
-          "epguSlots": 1394
-        },
-        {
-          "code": "17",
-          "name": "–ø—Å–∏—Ö–∏–∞—Ç—Ä –¥–µ—Ç—Å–∫–∏–π",
-          "norm": 0,
-          "slots": 0,
-          "epguNorm": 0,
-          "epguSlots": 0
-        },
-        {
-          "code": "18",
-          "name": "–ø—Å–∏—Ö–∏–∞—Ç—Ä-–Ω–∞—Ä–∫–æ–ª–æ–≥",
-          "norm": 85,
-          "slots": 110,
-          "epguNorm": 55,
-          "epguSlots": 77
-        },
-        {
-          "code": "19",
-          "name": "—Å—Ç–æ–º–∞—Ç–æ–ª–æ–≥",
-          "norm": 180,
-          "slots": 144,
-          "epguNorm": 110,
-          "epguSlots": 89
-        },
-        {
-          "code": "20",
-          "name": "—Å—Ç–æ–º–∞—Ç–æ–ª–æ–≥ –¥–µ—Ç—Å–∫–∏–π",
-          "norm": 180,
-          "slots": 143,
-          "epguNorm": 110,
-          "epguSlots": 88
-        },
-        {
-          "code": "21",
-          "name": "—Å—Ç–æ–º–∞—Ç–æ–ª–æ–≥-—Ç–µ—Ä–∞–ø–µ–≤—Ç",
-          "norm": 157.5,
-          "slots": 221,
-          "epguNorm": 105,
-          "epguSlots": 136
-        },
-        {
-          "code": "22",
-          "name": "—Ñ—Ç–∏–∑–∏–∞—Ç—Ä",
-          "norm": 120,
-          "slots": 188,
-          "epguNorm": 80,
-          "epguSlots": 135
-        },
-        {
-          "code": "23",
-          "name": "—Ö–∏—Ä—É—Ä–≥",
-          "norm": 170,
-          "slots": 264,
-          "epguNorm": 110,
-          "epguSlots": 168
-        },
-        {
-          "code": "26",
-          "name": "–¥–µ—Ç—Å–∫–∏–π —Ö–∏—Ä—É—Ä–≥",
-          "norm": 0,
-          "slots": 0,
-          "epguNorm": 0,
-          "epguSlots": 0
-        }
-      ]
-    },
-    {
-      "oid": "1.2.643.5.1.13.13.12.2.16.1169",
-      "code": "3901",
-      "name": "–ì–ê–£–ó \"–°–ê–†–ú–ê–ù–û–í–°–ö–ê–Ø –¶–†–ë\"",
-      "fullName": "–ì–ê–£–ó \"–°–ê–†–ú–ê–ù–û–í–°–ö–ê–Ø –¶–†–ë\" (–°–∞—Ä–º–∞–Ω–æ–≤–æ)",
-      "city": "–°–∞—Ä–º–∞–Ω–æ–≤–æ",
-      "specialties": [
-        {
-          "code": "11",
-          "name": "—Ç–µ—Ä–∞–ø–µ–≤—Ç",
-          "norm": 3010,
-          "slots": 3560,
-          "epguNorm": 1935,
-          "epguSlots": 2430
-        },
-        {
-          "code": "13",
-          "name": "–∞–∫—É—à–µ—Ä-–≥–∏–Ω–µ–∫–æ–ª–æ–≥",
-          "norm": 402.5,
-          "slots": 702,
-          "epguNorm": 245,
-          "epguSlots": 458
-        },
-        {
-          "code": "25",
-          "name": "–í–û–ü ‚Äî —Å–µ–º–µ–π–Ω—ã–π –≤—Ä–∞—á (—Å–µ–º–µ–π–Ω—ã–π –≤—Ä–∞—á)",
-          "norm": 1300,
-          "slots": 2568,
-          "epguNorm": 800,
-          "epguSlots": 1976
-        },
-        {
-          "code": "14",
-          "name": "–æ—Ç–æ—Ä–∏–Ω–æ–ª–∞—Ä–∏–Ω–≥–æ–ª–æ–≥",
-          "norm": 600,
-          "slots": 197,
-          "epguNorm": 360,
-          "epguSlots": 136
-        },
-        {
-          "code": "15",
-          "name": "–æ—Ñ—Ç–∞–ª—å–º–æ–ª–æ–≥",
-          "norm": 350,
-          "slots": 140,
-          "epguNorm": 210,
-          "epguSlots": 106
-        },
-        {
-          "code": "16",
-          "name": "–ø–µ–¥–∏–∞—Ç—Ä",
-          "norm": 1820,
-          "slots": 1663,
-          "epguNorm": 1170,
-          "epguSlots": 1235
-        },
-        {
-          "code": "17",
-          "name": "–ø—Å–∏—Ö–∏–∞—Ç—Ä –¥–µ—Ç—Å–∫–∏–π",
-          "norm": 85,
-          "slots": 24,
-          "epguNorm": 55,
-          "epguSlots": 24
-        },
-        {
-          "code": "18",
-          "name": "–ø—Å–∏—Ö–∏–∞—Ç—Ä-–Ω–∞—Ä–∫–æ–ª–æ–≥",
-          "norm": 0,
-          "slots": 144,
-          "epguNorm": 0,
-          "epguSlots": 144
-        },
-        {
-          "code": "19",
-          "name": "—Å—Ç–æ–º–∞—Ç–æ–ª–æ–≥",
-          "norm": 360,
-          "slots": 0,
-          "epguNorm": 220,
-          "epguSlots": 0
-        },
-        {
-          "code": "20",
-          "name": "—Å—Ç–æ–º–∞—Ç–æ–ª–æ–≥ –¥–µ—Ç—Å–∫–∏–π",
-          "norm": 180,
-          "slots": 110,
-          "epguNorm": 110,
-          "epguSlots": 77
-        },
-        {
-          "code": "21",
-          "name": "—Å—Ç–æ–º–∞—Ç–æ–ª–æ–≥-—Ç–µ—Ä–∞–ø–µ–≤—Ç",
-          "norm": 202.5,
-          "slots": 664,
-          "epguNorm": 135,
-          "epguSlots": 436
-        },
-        {
-          "code": "22",
-          "name": "—Ñ—Ç–∏–∑–∏–∞—Ç—Ä",
-          "norm": 0,
-          "slots": 0,
-          "epguNorm": 0,
-          "epguSlots": 0
-        },
-        {
-          "code": "23",
-          "name": "—Ö–∏—Ä—É—Ä–≥",
-          "norm": 340,
-          "slots": 451,
-          "epguNorm": 220,
-          "epguSlots": 275
-        },
-        {
-          "code": "26",
-          "name": "–¥–µ—Ç—Å–∫–∏–π —Ö–∏—Ä—É—Ä–≥",
-          "norm": 0,
-          "slots": 24,
-          "epguNorm": 0,
-          "epguSlots": 24
-        }
-      ]
-    },
-    {
-      "oid": "1.2.643.5.1.13.13.12.2.16.1130",
-      "code": "4101",
-      "name": "–ì–ê–£–ó –¢–ï–¢–Æ–®–°–ö–ê–Ø –¶–†–ë",
-      "fullName": "–ì–ê–£–ó –¢–ï–¢–Æ–®–°–ö–ê–Ø –¶–†–ë (–¢–µ—Ç—é—à–∏)",
-      "city": "–¢–µ—Ç—é—à–∏",
-      "specialties": [
-        {
-          "code": "11",
-          "name": "—Ç–µ—Ä–∞–ø–µ–≤—Ç",
-          "norm": 840,
-          "slots": 1241,
-          "epguNorm": 540,
-          "epguSlots": 820
-        },
-        {
-          "code": "13",
-          "name": "–∞–∫—É—à–µ—Ä-–≥–∏–Ω–µ–∫–æ–ª–æ–≥",
-          "norm": 460,
-          "slots": 350,
-          "epguNorm": 280,
-          "epguSlots": 202
-        },
-        {
-          "code": "25",
-          "name": "–í–û–ü ‚Äî —Å–µ–º–µ–π–Ω—ã–π –≤—Ä–∞—á (—Å–µ–º–µ–π–Ω—ã–π –≤—Ä–∞—á)",
-          "norm": 1560,
-          "slots": 1235,
-          "epguNorm": 960,
-          "epguSlots": 886
-        },
-        {
-          "code": "14",
-          "name": "–æ—Ç–æ—Ä–∏–Ω–æ–ª–∞—Ä–∏–Ω–≥–æ–ª–æ–≥",
-          "norm": 300,
-          "slots": 216,
-          "epguNorm": 180,
-          "epguSlots": 150
-        },
-        {
-          "code": "15",
-          "name": "–æ—Ñ—Ç–∞–ª—å–º–æ–ª–æ–≥",
-          "norm": 175,
-          "slots": 170,
-          "epguNorm": 105,
-          "epguSlots": 120
-        },
-        {
-          "code": "16",
-          "name": "–ø–µ–¥–∏–∞—Ç—Ä",
-          "norm": 280,
-          "slots": 140,
-          "epguNorm": 180,
-          "epguSlots": 100
-        },
-        {
-          "code": "17",
-          "name": "–ø—Å–∏—Ö–∏–∞—Ç—Ä –¥–µ—Ç—Å–∫–∏–π",
-          "norm": 0,
-          "slots": 0,
-          "epguNorm": 0,
-          "epguSlots": 0
-        },
-        {
-          "code": "18",
-          "name": "–ø—Å–∏—Ö–∏–∞—Ç—Ä-–Ω–∞—Ä–∫–æ–ª–æ–≥",
-          "norm": 0,
-          "slots": 0,
-          "epguNorm": 0,
-          "epguSlots": 0
-        },
-        {
-          "code": "19",
-          "name": "—Å—Ç–æ–º–∞—Ç–æ–ª–æ–≥",
-          "norm": 45,
-          "slots": 84,
-          "epguNorm": 27.5,
-          "epguSlots": 64
-        },
-        {
-          "code": "20",
-          "name": "—Å—Ç–æ–º–∞—Ç–æ–ª–æ–≥ –¥–µ—Ç—Å–∫–∏–π",
-          "norm": 90,
-          "slots": 55,
-          "epguNorm": 55,
-          "epguSlots": 44
-        },
-        {
-          "code": "21",
-          "name": "—Å—Ç–æ–º–∞—Ç–æ–ª–æ–≥-—Ç–µ—Ä–∞–ø–µ–≤—Ç",
-          "norm": 292.5,
-          "slots": 341,
-          "epguNorm": 195,
-          "epguSlots": 264
-        },
-        {
-          "code": "22",
-          "name": "—Ñ—Ç–∏–∑–∏–∞—Ç—Ä",
-          "norm": 120,
-          "slots": 121,
-          "epguNorm": 80,
-          "epguSlots": 110
-        },
-        {
-          "code": "23",
-          "name": "—Ö–∏—Ä—É—Ä–≥",
-          "norm": 0,
-          "slots": 602,
-          "epguNorm": 0,
-          "epguSlots": 458
-        },
-        {
-          "code": "26",
-          "name": "–¥–µ—Ç—Å–∫–∏–π —Ö–∏—Ä—É—Ä–≥",
-          "norm": 100,
-          "slots": 91,
-          "epguNorm": 67.5,
-          "epguSlots": 91
-        }
-      ]
-    },
-    {
-      "oid": "1.2.643.5.1.13.13.12.2.16.1140",
-      "code": "4201",
-      "name": "–ì–ê–£–ó \"–¢–£–ö–ê–ï–í–°–ö–ê–Ø –¶–†–ë\"",
-      "fullName": "–ì–ê–£–ó \"–¢–£–ö–ê–ï–í–°–ö–ê–Ø –¶–†–ë\" (—Å–æ–≤—Ö–æ–∑–∞ –¢–∞—Ç–∞—Ä—Å—Ç–∞–Ω)",
-      "city": "—Å–æ–≤—Ö–æ–∑–∞ –¢–∞—Ç–∞—Ä—Å—Ç–∞–Ω",
-      "specialties": [
-        {
-          "code": "11",
-          "name": "—Ç–µ—Ä–∞–ø–µ–≤—Ç",
-          "norm": 1120,
-          "slots": 1776,
-          "epguNorm": 720,
-          "epguSlots": 1140
-        },
-        {
-          "code": "13",
-          "name": "–∞–∫—É—à–µ—Ä-–≥–∏–Ω–µ–∫–æ–ª–æ–≥",
-          "norm": 690,
-          "slots": 590,
-          "epguNorm": 420,
-          "epguSlots": 276
-        },
-        {
-          "code": "25",
-          "name": "–í–û–ü ‚Äî —Å–µ–º–µ–π–Ω—ã–π –≤—Ä–∞—á (—Å–µ–º–µ–π–Ω—ã–π –≤—Ä–∞—á)",
-          "norm": 0,
-          "slots": 576,
-          "epguNorm": 0,
-          "epguSlots": 408
-        },
-        {
-          "code": "14",
-          "name": "–æ—Ç–æ—Ä–∏–Ω–æ–ª–∞—Ä–∏–Ω–≥–æ–ª–æ–≥",
-          "norm": 150,
-          "slots": 48,
-          "epguNorm": 90,
-          "epguSlots": 36
-        },
-        {
-          "code": "15",
-          "name": "–æ—Ñ—Ç–∞–ª—å–º–æ–ª–æ–≥",
-          "norm": 262.5,
-          "slots": 0,
-          "epguNorm": 157.5,
-          "epguSlots": 0
-        },
-        {
-          "code": "16",
-          "name": "–ø–µ–¥–∏–∞—Ç—Ä",
-          "norm": 280,
-          "slots": 1160,
-          "epguNorm": 180,
-          "epguSlots": 794
-        },
-        {
-          "code": "17",
-          "name": "–ø—Å–∏—Ö–∏–∞—Ç—Ä –¥–µ—Ç—Å–∫–∏–π",
-          "norm": 0,
-          "slots": 0,
-          "epguNorm": 0,
-          "epguSlots": 0
-        },
-        {
-          "code": "18",
-          "name": "–ø—Å–∏—Ö–∏–∞—Ç—Ä-–Ω–∞—Ä–∫–æ–ª–æ–≥",
-          "norm": 170,
-          "slots": 187,
-          "epguNorm": 110,
-          "epguSlots": 121
-        },
-        {
-          "code": "19",
-          "name": "—Å—Ç–æ–º–∞—Ç–æ–ª–æ–≥",
-          "norm": 180,
-          "slots": 110,
-          "epguNorm": 110,
-          "epguSlots": 99
-        },
-        {
-          "code": "20",
-          "name": "—Å—Ç–æ–º–∞—Ç–æ–ª–æ–≥ –¥–µ—Ç—Å–∫–∏–π",
-          "norm": 180,
-          "slots": 110,
-          "epguNorm": 110,
-          "epguSlots": 99
-        },
-        {
-          "code": "21",
-          "name": "—Å—Ç–æ–º–∞—Ç–æ–ª–æ–≥-—Ç–µ—Ä–∞–ø–µ–≤—Ç",
-          "norm": 180,
-          "slots": 328,
-          "epguNorm": 120,
-          "epguSlots": 304
-        },
-        {
-          "code": "22",
-          "name": "—Ñ—Ç–∏–∑–∏–∞—Ç—Ä",
-          "norm": 120,
-          "slots": 0,
-          "epguNorm": 80,
-          "epguSlots": 0
-        },
-        {
-          "code": "23",
-          "name": "—Ö–∏—Ä—É—Ä–≥",
-          "norm": 170,
-          "slots": 48,
-          "epguNorm": 110,
-          "epguSlots": 48
-        },
-        {
-          "code": "26",
-          "name": "–¥–µ—Ç—Å–∫–∏–π —Ö–∏—Ä—É—Ä–≥",
-          "norm": 0,
-          "slots": 0,
-          "epguNorm": 0,
-          "epguSlots": 0
-        }
-      ]
-    },
-    {
-      "oid": "1.2.643.5.1.13.13.12.2.16.1162",
-      "code": "4301",
-      "name": "–ì–ê–£–ó \"–ß–ï–†–ï–ú–®–ê–ù–°–ö–ê–Ø –¶–†–ë\"",
-      "fullName": "–ì–ê–£–ó \"–ß–ï–†–ï–ú–®–ê–ù–°–ö–ê–Ø –¶–†–ë\" (–ß–µ—Ä–µ–º—à–∞–Ω)",
-      "city": "–ß–µ—Ä–µ–º—à–∞–Ω",
-      "specialties": [
-        {
-          "code": "11",
-          "name": "—Ç–µ—Ä–∞–ø–µ–≤—Ç",
-          "norm": 1260,
-          "slots": 856,
-          "epguNorm": 810,
-          "epguSlots": 672
-        },
-        {
-          "code": "13",
-          "name": "–∞–∫—É—à–µ—Ä-–≥–∏–Ω–µ–∫–æ–ª–æ–≥",
-          "norm": 460,
-          "slots": 500,
-          "epguNorm": 280,
-          "epguSlots": 359
-        },
-        {
-          "code": "25",
-          "name": "–í–û–ü ‚Äî —Å–µ–º–µ–π–Ω—ã–π –≤—Ä–∞—á (—Å–µ–º–µ–π–Ω—ã–π –≤—Ä–∞—á)",
-          "norm": 260,
-          "slots": 847,
-          "epguNorm": 160,
-          "epguSlots": 506
-        },
-        {
-          "code": "14",
-          "name": "–æ—Ç–æ—Ä–∏–Ω–æ–ª–∞—Ä–∏–Ω–≥–æ–ª–æ–≥",
-          "norm": 75,
-          "slots": 0,
-          "epguNorm": 45,
-          "epguSlots": 0
-        },
-        {
-          "code": "15",
-          "name": "–æ—Ñ—Ç–∞–ª—å–º–æ–ª–æ–≥",
-          "norm": 350,
-          "slots": 370,
-          "epguNorm": 210,
-          "epguSlots": 276
-        },
-        {
-          "code": "16",
-          "name": "–ø–µ–¥–∏–∞—Ç—Ä",
-          "norm": 840,
-          "slots": 924,
-          "epguNorm": 540,
-          "epguSlots": 726
-        },
-        {
-          "code": "17",
-          "name": "–ø—Å–∏—Ö–∏–∞—Ç—Ä –¥–µ—Ç—Å–∫–∏–π",
-          "norm": 0,
-          "slots": 0,
-          "epguNorm": 0,
-          "epguSlots": 0
-        },
-        {
-          "code": "18",
-          "name": "–ø—Å–∏—Ö–∏–∞—Ç—Ä-–Ω–∞—Ä–∫–æ–ª–æ–≥",
-          "norm": 85,
-          "slots": 20,
-          "epguNorm": 55,
-          "epguSlots": 13
-        },
-        {
-          "code": "19",
-          "name": "—Å—Ç–æ–º–∞—Ç–æ–ª–æ–≥",
-          "norm": 495,
-          "slots": 322,
-          "epguNorm": 302.5,
-          "epguSlots": 211
-        },
-        {
-          "code": "20",
-          "name": "—Å—Ç–æ–º–∞—Ç–æ–ª–æ–≥ –¥–µ—Ç—Å–∫–∏–π",
-          "norm": 45,
-          "slots": 55,
-          "epguNorm": 27.5,
-          "epguSlots": 33
-        },
-        {
-          "code": "21",
-          "name": "—Å—Ç–æ–º–∞—Ç–æ–ª–æ–≥-—Ç–µ—Ä–∞–ø–µ–≤—Ç",
-          "norm": 0,
-          "slots": 0,
-          "epguNorm": 0,
-          "epguSlots": 0
-        },
-        {
-          "code": "22",
-          "name": "—Ñ—Ç–∏–∑–∏–∞—Ç—Ä",
-          "norm": 30,
-          "slots": 0,
-          "epguNorm": 20,
-          "epguSlots": 0
-        },
-        {
-          "code": "23",
-          "name": "—Ö–∏—Ä—É—Ä–≥",
-          "norm": 170,
-          "slots": 306,
-          "epguNorm": 110,
-          "epguSlots": 236
-        },
-        {
-          "code": "26",
-          "name": "–¥–µ—Ç—Å–∫–∏–π —Ö–∏—Ä—É—Ä–≥",
-          "norm": 48,
-          "slots": 0,
-          "epguNorm": 32.4,
-          "epguSlots": 0
-        }
-      ]
-    },
-    {
-      "oid": "1.2.643.5.1.13.13.12.2.16.1039",
-      "code": "4401",
-      "name": "–ì–ê–£–ó \"–¢–Æ–õ–Ø–ß–ò–ù–°–ö–ê–Ø –¶–†–ë\"",
-      "fullName": "–ì–ê–£–ó \"–¢–Æ–õ–Ø–ß–ò–ù–°–ö–ê–Ø –¶–†–ë\" (–¢—é–ª—è—á–∏)",
-      "city": "–¢—é–ª—è—á–∏",
-      "specialties": [
-        {
-          "code": "11",
-          "name": "—Ç–µ—Ä–∞–ø–µ–≤—Ç",
-          "norm": 840,
-          "slots": 877,
-          "epguNorm": 540,
-          "epguSlots": 661
-        },
-        {
-          "code": "13",
-          "name": "–∞–∫—É—à–µ—Ä-–≥–∏–Ω–µ–∫–æ–ª–æ–≥",
-          "norm": 345,
-          "slots": 299,
-          "epguNorm": 210,
-          "epguSlots": 243
-        },
-        {
-          "code": "25",
-          "name": "–í–û–ü ‚Äî —Å–µ–º–µ–π–Ω—ã–π –≤—Ä–∞—á (—Å–µ–º–µ–π–Ω—ã–π –≤—Ä–∞—á)",
-          "norm": 260,
-          "slots": 530,
-          "epguNorm": 160,
-          "epguSlots": 429
-        },
-        {
-          "code": "14",
-          "name": "–æ—Ç–æ—Ä–∏–Ω–æ–ª–∞—Ä–∏–Ω–≥–æ–ª–æ–≥",
-          "norm": 300,
-          "slots": 353,
-          "epguNorm": 180,
-          "epguSlots": 269
-        },
-        {
-          "code": "15",
-          "name": "–æ—Ñ—Ç–∞–ª—å–º–æ–ª–æ–≥",
-          "norm": 350,
-          "slots": 197,
-          "epguNorm": 210,
-          "epguSlots": 100
-        },
-        {
-          "code": "16",
-          "name": "–ø–µ–¥–∏–∞—Ç—Ä",
-          "norm": 1120,
-          "slots": 1166,
-          "epguNorm": 720,
-          "epguSlots": 847
-        },
-        {
-          "code": "17",
-          "name": "–ø—Å–∏—Ö–∏–∞—Ç—Ä –¥–µ—Ç—Å–∫–∏–π",
-          "norm": 0,
-          "slots": 0,
-          "epguNorm": 0,
-          "epguSlots": 0
-        },
-        {
-          "code": "18",
-          "name": "–ø—Å–∏—Ö–∏–∞—Ç—Ä-–Ω–∞—Ä–∫–æ–ª–æ–≥",
-          "norm": 17,
-          "slots": 0,
-          "epguNorm": 11,
-          "epguSlots": 0
-        },
-        {
-          "code": "19",
-          "name": "—Å—Ç–æ–º–∞—Ç–æ–ª–æ–≥",
-          "norm": 270,
-          "slots": 110,
-          "epguNorm": 165,
-          "epguSlots": 90
-        },
-        {
-          "code": "20",
-          "name": "—Å—Ç–æ–º–∞—Ç–æ–ª–æ–≥ –¥–µ—Ç—Å–∫–∏–π",
-          "norm": 0,
-          "slots": 40,
-          "epguNorm": 0,
-          "epguSlots": 32
-        },
-        {
-          "code": "21",
-          "name": "—Å—Ç–æ–º–∞—Ç–æ–ª–æ–≥-—Ç–µ—Ä–∞–ø–µ–≤—Ç",
-          "norm": 180,
-          "slots": 240,
-          "epguNorm": 120,
-          "epguSlots": 157
-        },
-        {
-          "code": "22",
-          "name": "—Ñ—Ç–∏–∑–∏–∞—Ç—Ä",
-          "norm": 0,
-          "slots": 0,
-          "epguNorm": 0,
-          "epguSlots": 0
-        },
-        {
-          "code": "23",
-          "name": "—Ö–∏—Ä—É—Ä–≥",
-          "norm": 42.5,
-          "slots": 110,
-          "epguNorm": 27.5,
-          "epguSlots": 66
-        },
-        {
-          "code": "26",
-          "name": "–¥–µ—Ç—Å–∫–∏–π —Ö–∏—Ä—É—Ä–≥",
-          "norm": 0,
-          "slots": 0,
-          "epguNorm": 0,
-          "epguSlots": 0
-        }
-      ]
-    },
-    {
-      "oid": "1.2.643.5.1.13.13.12.2.16.1097",
-      "code": "4501",
-      "name": "–ì–ê–£–ó \"–£–†–£–°–°–ò–ù–°–ö–ê–Ø –¶–†–ë\"",
-      "fullName": "–ì–ê–£–ó \"–£–†–£–°–°–ò–ù–°–ö–ê–Ø –¶–†–ë\" (–£—Ä—É—Å—Å—É)",
-      "city": "–£—Ä—É—Å—Å—É",
-      "specialties": [
-        {
-          "code": "11",
-          "name": "—Ç–µ—Ä–∞–ø–µ–≤—Ç",
-          "norm": 1400,
-          "slots": 491,
-          "epguNorm": 900,
-          "epguSlots": 415
-        },
-        {
-          "code": "13",
-          "name": "–∞–∫—É—à–µ—Ä-–≥–∏–Ω–µ–∫–æ–ª–æ–≥",
-          "norm": 287.5,
-          "slots": 176,
-          "epguNorm": 175,
-          "epguSlots": 88
-        },
-        {
-          "code": "25",
-          "name": "–í–û–ü ‚Äî —Å–µ–º–µ–π–Ω—ã–π –≤—Ä–∞—á (—Å–µ–º–µ–π–Ω—ã–π –≤—Ä–∞—á)",
-          "norm": 520,
-          "slots": 369,
-          "epguNorm": 320,
-          "epguSlots": 315
-        },
-        {
-          "code": "14",
-          "name": "–æ—Ç–æ—Ä–∏–Ω–æ–ª–∞—Ä–∏–Ω–≥–æ–ª–æ–≥",
-          "norm": 75,
-          "slots": 8,
-          "epguNorm": 45,
-          "epguSlots": 8
-        },
-        {
-          "code": "15",
-          "name": "–æ—Ñ—Ç–∞–ª—å–º–æ–ª–æ–≥",
-          "norm": 350,
-          "slots": 107,
-          "epguNorm": 210,
-          "epguSlots": 92
-        },
-        {
-          "code": "16",
-          "name": "–ø–µ–¥–∏–∞—Ç—Ä",
-          "norm": 700,
-          "slots": 426,
-          "epguNorm": 450,
-          "epguSlots": 329
-        },
-        {
-          "code": "17",
-          "name": "–ø—Å–∏—Ö–∏–∞—Ç—Ä –¥–µ—Ç—Å–∫–∏–π",
-          "norm": 0,
-          "slots": 0,
-          "epguNorm": 0,
-          "epguSlots": 0
-        },
-        {
-          "code": "18",
-          "name": "–ø—Å–∏—Ö–∏–∞—Ç—Ä-–Ω–∞—Ä–∫–æ–ª–æ–≥",
-          "norm": 85,
-          "slots": 120,
-          "epguNorm": 55,
-          "epguSlots": 120
-        },
-        {
-          "code": "19",
-          "name": "—Å—Ç–æ–º–∞—Ç–æ–ª–æ–≥",
           "norm": 180,
           "slots": 66,
           "epguNorm": 110,
           "epguSlots": 66
         },
         {
-          "code": "20",
-          "name": "—Å—Ç–æ–º–∞—Ç–æ–ª–æ–≥ –¥–µ—Ç—Å–∫–∏–π",
-          "norm": 180,
-          "slots": 59,
-          "epguNorm": 110,
-          "epguSlots": 52
-        },
-        {
           "code": "21",
           "name": "—Å—Ç–æ–º–∞—Ç–æ–ª–æ–≥-—Ç–µ—Ä–∞–ø–µ–≤—Ç",
-          "norm": 180,
-          "slots": 255,
-          "epguNorm": 120,
-          "epguSlots": 131
-        },
-        {
-          "code": "22",
-          "name": "—Ñ—Ç–∏–∑–∏–∞—Ç—Ä",
-          "norm": 120,
-          "slots": 792,
-          "epguNorm": 80,
-          "epguSlots": 792
-        },
-        {
-          "code": "23",
-          "name": "—Ö–∏—Ä—É—Ä–≥",
-          "norm": 170,
-          "slots": 178,
-          "epguNorm": 110,
-          "epguSlots": 129
-        },
-        {
-          "code": "26",
-          "name": "–¥–µ—Ç—Å–∫–∏–π —Ö–∏—Ä—É—Ä–≥",
-          "norm": 100,
-          "slots": 0,
-          "epguNorm": 67.5,
-          "epguSlots": 0
-        }
-      ]
-    }
-  ]
-}
+          "no~∑€-¢Gß≤⁄Óù∆≠y÷ñÊt6˜VÁB“˜&vÊó¶FñˆÂ&˜w2Êfñ«FW"Çá&˜rí”‚&˜rÊ6ˆ◊∆WFR«¬&˜rÊ6˜fW&vR””“ÁV∆¬íÊ∆VÊwFÉ∞¢6ˆÁ7B6ˆ◊∆WFT˜&vÊó¶FñˆÁ2“˜&vÊó¶FñˆÂ&˜w2Êfñ«FW"Çá&˜rí”‚&˜rÊ6ˆ◊∆WFRbb&˜rÊ6˜fW&vR”“ÁV∆¬ì∞¢6ˆÁ7B∆‰Fó7G&ñ'WFñˆ‚“∞¢≤∂Wì¢&«CS"¬∆&V√¢-	Õ]›]RSR˝Ω›"¬÷ñ„¢¬÷É¢S¬6ˆ∆˜#¢"6#É6CCr"“¿¢≤∂Wì¢#SFÛ"¬∆&V√¢#S(	3√R˝Ω›"¬÷ñ„¢S¬÷É¢¬6ˆ∆˜#¢"66v#3r"“¿¢≤∂Wì¢#FÛ#"¬∆&V√¢#(	3√#R˝Ω›"¬÷ñ„¢¬÷É¢#¬6ˆ∆˜#¢"33ÉvV""“¿¢≤∂Wì¢&wFS#"¬∆&V√¢##R˝Ω›Ç-ΩçR"¬÷ñ„¢#¬÷É¢ÁV÷&W"Âı4ïDïdUÙî‰dî‰ïEí¬6ˆ∆˜#¢"3cÉsV2"“¿¢“Ê÷ÇÜ&ÊBí”‚∞¢6ˆÁ7B6˜VÁB“6ˆ◊∆WFT˜&vÊó¶FñˆÁ2Êfñ«FW"Çá&˜rí”‚∞¢6ˆÁ7B6ÜñWfV÷VÁB“&˜rÊ6˜fW&vRÚƒÂıU$4TÂB¢∞¢&WGW&‚6ÜñWfV÷VÁB„“&ÊBÊ÷ñ‚bb6ÜñWfV÷VÁB¬&ÊBÊ÷É∞¢“íÊ∆VÊwFÉ∞¢&WGW&‚≤‚‚Ê&ÊB¬6˜VÁB¬6Ü&S¢6ˆ◊∆WFT˜&vÊó¶FñˆÁ2Ê∆VÊwFÇÚ6˜VÁBÚ6ˆ◊∆WFT˜&vÊó¶FñˆÁ2Ê∆VÊwFÇ¢¢”∞¢“ì∞¢6ˆÁ7B÷Ö∆‰Fó7G&ñ'WFñˆ‚“÷FÇÊ÷ÇÉ¬‚‚Á∆‰Fó7G&ñ'WFñˆ‚Ê÷ÇÜ&ÊBí”‚&ÊBÊ6˜VÁBíì∞¢6ˆÁ7B7W'&VÁDñÊFWÇ“6V∆V7FVD˜&rÚ˜&vÊó¶FñˆÂ&˜w2ÊfñÊDñÊFWÇÇá&˜rí”‚&˜rÊ˜&rÊˆñB””“6V∆V7FVD˜&rÊˆñBí¢”∞¢6ˆÁ7Bg&◊$÷ÙñB“6V∆V7FVD˜&sÚÊˆñBÁ7F'G5vóFÇÑe$’%ÙÙîEı$TdïÇíÚ6V∆V7FVD˜&rÊˆñBÁ6∆ñ6RÑe$’%ÙÙîEı$TdïÇÊ∆VÊwFÇí¢ÁV∆√∞¢6ˆÁ7Bg&◊$÷F6ÜVB“&ˆˆ∆V‚Üg&◊$÷ÙñBbbe$’%Ù‘ıÙîE2ÊÜ2Üg&◊$÷ÙñBíì∞¢6ˆÁ7B¶W&ı6∆˜E7V6ñ«FñW2“6V∆V7FVE7V6ñ«FñW2Êfñ«FW"Çá&˜rí”‚&˜rÊÊ˜&“”“ÁV∆¬bb&˜rÊÊ˜&“‚bb&˜rÊWwU6∆˜G2””“ì∞¢6ˆÁ7Bg&◊%¶W&ı6∆˜Dó77VW2“ÊWr÷á¶W&ı6∆˜E7V6ñ«FñW2Ê÷Çá&˜rí”‚∞¢&˜rÊ6ˆFR¬vWDg&◊%7V6ñ«Gîó77VW2á6V∆V7FVD˜&rÊˆñB¬&˜rÊ6ˆFR¬g&◊%&rÁ7V÷÷'íÁ&˜w2í¿¢“íì∞¢6ˆÁ7Bg&◊%¶W&ı6∆˜Df∆vvVB“≤‚‚Êg&◊%¶W&ı6∆˜Dó77VW2Áf«VW2Çï“Êfñ«FW"Çá&˜rí”‚&˜rÊ6˜VÁB”“ÁV∆¬bb&˜rÊ6˜VÁB‚íÊ∆VÊwFÉ∞¢6ˆÁ7Bg&÷Ù˜&vÊó¶Fñˆ‰fñÊFñÊw2“6V∆V7FVD˜&rÚvWDg&÷Ù˜&vÊó¶Fñˆ‰fñÊFñÊw2á6V∆V7FVD˜&rÊˆñB¬g&÷Ù∆ñÊ∂vU&rÊ˜&vÊó¶FñˆÁ2í¢ÁV∆√∞†¢gVÊ7Fñˆ‚˜V‰˜&rÜˆñC¢7G&ñÊrí∞¢6WE6V∆V7FVDˆñBÜˆñBì∞¢6WE6V∆V7FVE7V6ñ«GíÇ""ì∞¢6WD˜&vÊó¶FñˆÂ6V&6ÇÇ""ì∞¢6WEF"Ç&˜&vÊó¶Fñˆ‚"ì∞¢–†¢gVÊ7Fñˆ‚6ÜÊvT˜vÊW'6Üóáf«VS¢˜vÊW'6Üóí∞¢6WD˜vÊW'6Üóáf«VRì∞¢6WE6V∆V7FVDˆñBÇ""ì∞¢6WD˜&vÊó¶FñˆÂ6V&6ÇÇ""ì∞¢6WD÷G&óÖ6V&6ÇÇ""ì∞¢–†¢gVÊ7Fñˆ‚Fˆvv∆T÷G&óÖ6˜'BÜ∂Wì¢7G&ñÊrí∞¢6WD÷G&óÖ6˜'BÇÜ7W'&VÁBí”‚á≤∂Wí¬Fó&V7Fñˆ„¢7W'&VÁBÊ∂Wí””“∂Wíbb7W'&VÁBÊFó&V7Fñˆ‚””“&62"Ú&FW62"¢&62"“íì∞¢–¢6ˆÁ7B6˜'D÷&≤“Ü∂Wì¢7G&ñÊrí”‚÷G&óÖ6˜'BÊ∂Wí””“∂WíÚÜ÷G&óÖ6˜'BÊFó&V7Fñˆ‚””“&62"Ú"(i"¢"(i2"í¢"#∞†¢&WGW&‚∆Fób6∆74Ê÷S◊∑7Gñ∆W2Á&ˆ˜G”‡¢∆ÜVFW"6∆74Ê÷S◊∑7Gñ∆W2ÊÜW&˜”‡¢∆Fóc„«6∆74Ê÷S◊∑7Gñ∆W2Ê∂ñ6∂W'”Ì
+		}	M	]	≤	É3Ç+r
+M	Ì
+	Õ		Ç”3Ç„ì¬˜„∆ÉÌ
+ΩÌ-≤	]	˝	=
+2˝‚›ÌÕ-ç-√¬ˆÉ‡¢«6∆74Ê÷S◊∑7Gñ∆W2Á7V'FóF∆W”Ì
+-ÌÌM›ΩRΩÌ-≤›ΩçmùççRBM›]í+r∂˜vÊW'6Üó””“'7FFR"Ú-=Ì=M--]››ΩR"¢-}-›ΩR'“Õ]Mçmç›≠çRÌ=›ç}mçÉ¬˜‡¢«6∆74Ê÷S◊∑7Gñ∆W2Á6˜W&6TFFW7”Ì	M-≤-Ω==}Ì£¢¥DDÊ÷ÇÜFF6WBí”‚FF6WBÁ&W˜'DFFRíÊ¶ˆñ‚Ç"+r"ó“+r≠-=ΩÕ›Ì-¬
+M
+	Õ
+¢¥DDÊ÷ÇÜFF6WBí”‚FF6WBÊg&÷ÙFFRíÊ¶ˆñ‚Ç"+r"ó”¬˜‡¢¬ˆFóc‡¢∆Fób6∆74Ê÷S◊∑7Gñ∆W2ÊÜW&ı&W7V«G”„«7„Ì	é(	3Ç„í+rΩÌ-≤	]	˝	=
+2Ì"Ìù]=‚›ÌÕ-ç-¬˜7„„«7G&ˆÊr6∆74Ê÷S◊∑∆ÂFˆÊRá&VvñˆÊ¬Ê6˜fW&vRó”Á∑W&6VÁBá&VvñˆÊ¬Ê6˜fW&vRó”¬˜7G&ˆÊs„«6÷∆√Ì	˝Ω“(	BcR+rm]Ω¬(	BsS¬˜6÷∆√„¬ˆFóc‡¢¬ˆÜVFW#‡†¢∆Êb6∆74Ê÷S◊∑7Gñ∆W2ÁF'7“&ñ÷∆&V√“-
+}M]Ω≤	É3Ç#‡¢∆'WGFˆ‚GóS“&'WGFˆ‚"6∆74Ê÷S◊∑F"””“&˜fW'fñWr"Ú7Gñ∆W2ÁF$7FófR¢"'“ˆ‰6∆ñ6≥◊≤Çí”‚6WEF"Ç&˜fW'fñWr"ó”Ì	Ì}Ì	Õ	r
 
+#¬ˆ'WGFˆ„‡¢∆'WGFˆ‚GóS“&'WGFˆ‚"6∆74Ê÷S◊∑F"””“&˜&vÊó¶Fñˆ‚"Ú7Gñ∆W2ÁF$7FófR¢"'“ˆ‰6∆ñ6≥◊≤Çí”‚6WEF"Ç&˜&vÊó¶Fñˆ‚"ó”Ì	Õ]MÌ=›ç}mçÛ¬ˆ'WGFˆ„‡¢¬ˆÊc‡†¢∑F"””“&˜fW'fñWr"bb∆÷ñ‚6∆74Ê÷S◊∑7Gñ∆W2ÁvW”‡¢∆Fób6∆74Ê÷S◊∑7Gñ∆W2Ê˜fW'fñWtw&ñG”‡¢∆Fób6∆74Ê÷S◊∑7Gñ∆W2Ê∑ó7”‡¢∆'Fñ6∆R6∆74Ê÷S◊∑7Gñ∆W2Ê∑ó”„«7G&ˆÊr6∆74Ê÷S◊∑∆ÂFˆÊRá&VvñˆÊ¬Ê6˜fW&vRó”Á∑W&6VÁBá&VvñˆÊ¬Ê6˜fW&vRó”¬˜7G&ˆÊs„«7„Ì	Ìùçí˝Ìm]›"	é(	3Ç„ì¬˜7„„«6÷∆√Á∂f˜&÷Bá&VvñˆÊ¬ÊWwU6∆˜G2ó“ΩÌ-Ì"	]	˝	=
+2;r∂f˜&÷Bá&VvñˆÊ¬ÊÊ˜&“ó“*Ω	›ÌÕ-ç"	-
+	]	=	Ï+≥¬˜6÷∆√„¬ˆ'Fñ6∆S‡¢∆'Fñ6∆R6∆74Ê÷S◊∑7Gñ∆W2Ê∑ó”„«7G&ˆÊr6∆74Ê÷S◊∑7Gñ∆W2ÊvˆˆG”Á∂6ˆ◊∆WFT6˜VÁG”¬˜7G&ˆÊs„«7„Ì	Õ	‚-Ω˝ÌΩ›çΩÇ˝Ω“cS¬˜7„„«6÷∆√Ì	é(	3Ç„í≠mMÌí	Õ	‚›R›çmRcS¬˜6÷∆√„¬ˆ'Fñ6∆S‡¢∆'Fñ6∆R6∆74Ê÷S◊∑7Gñ∆W2Ê∑ó”„«7G&ˆÊr6∆74Ê÷S◊∑7Gñ∆W2Ê&V∆˜tÊ˜&◊”Á∂&V∆˜t6˜VÁG”¬˜7G&ˆÊs„«7„Ì	Õ	‚›çmR˝Ω›cS¬˜7„„«6÷∆√Ì
+˝ÌΩ›ΩÕÇM››ΩÕÉ¬˜6÷∆√„¬ˆ'Fñ6∆S‡¢∆'Fñ6∆R6∆74Ê÷S◊∑7Gñ∆W2Ê∑ó”„«7G&ˆÊsÁ∂f˜&÷Bá&VvñˆÊ¬ÊFVfñ6óBó”¬˜7G&ˆÊs„«7„Ì	›R]--]"ΩÌ-Ì"M‚˝Ω›¬˜7„„«6÷∆√Ì	Õç›çÕΩÕ›Ú›]]--≠˝‚≠mMÌí	Õ	„¬˜6÷∆√„¬ˆ'Fñ6∆S‡¢∆'Fñ6∆R6∆74Ê÷S◊∑7Gñ∆W2Ê∑ó”„«7G&ˆÊr6∆74Ê÷S◊∑7Gñ∆W2ÊÊWWG&«”Á∂÷ó76ñÊt6˜VÁG”¬˜7G&ˆÊs„«7„Ì	Õ	‚›]˝ÌΩ›ΩÕÇM››ΩÕÉ¬˜7„„«6÷∆√Ì	›R}ç-Ì-Ú›=Ω√¬˜6÷∆√„¬ˆ'Fñ6∆S‡¢¬ˆFóc‡¢∆'Fñ6∆R6∆74Ê÷S◊∑7Gñ∆W2Ê÷Ñw&˜W6&G”‡¢«7‚6∆74Ê÷S◊∑7Gñ∆W2Ê÷Ñw&˜WWñV'&˜w”Ì
+			Ì
+}	
+Ú	=
+
+=	˝	˝	¬˜7„‡¢∆É#Ì	ç›mçM]›"3Ç"‘É¬ˆÉ#‡¢∆6∆74Ê÷S◊∑7Gñ∆W2Ê÷Ñw&˜W∆ñÊ∑“á&Vc“&áGG3¢Úˆ÷ÇÁ'Rˆ¶ˆñ‚ıÙñ¶DE%T%CÉ3UÙ7•ˆfEìDT≈ÖÉ'Ss$7U§vÊF≥5F7Ç"F&vWC“%ˆ&∆Ê≤"&V√“&Ê˜&VfW'&W"#Ì	Ì-≠Ω-¬}"«7‚&ñ÷ÜñFFV„“'G'VR#Ó(is¬˜7„„¬ˆ‡¢¬ˆ'Fñ6∆S‡¢¬ˆFóc‡¢«6V7Fñˆ‚6∆74Ê÷S◊∑7Gñ∆W2Ê6&G“&ñ÷∆&V√“-	Mç›Õç≠	É3ÇÕ]mM2Ì›Ì-Ω]›ç˝ÕÇ#‡¢∆Fób6∆74Ê÷S◊∑7Gñ∆W2Á6V7Fñˆ‰ÜVG”„∆Fóc„∆É#Ì	Mç›Õç≠Õ]mM2Ì›Ì-Ω]›ç˝ÕÉ¬ˆÉ#„«Ì	ç-Ìç}]≠çR]}≤-›ç-Ì-ÚÌ-M]ΩÕ›„¢M-≤=ÌÌM≠ÌíÇùÌ››Ìí-Ω==}Ì¢}Ωç}Ì-Ú‚	ç}Õ]›]›çRMÌΩÇ=≠}›‚"˝Ìm]›-›ΩR˝=›≠-R‚*≤≤Ú(â,+≤2	Õ	‚(	B˝]]]ÌM≤}]]r˝ÌÌ2"ÌR-ÌÌ›≤„¬˜„¬ˆFóc„¬ˆFóc‡¢∆Fób6∆74Ê÷S◊∑7Gñ∆W2ÊÜó7F˜'îw&ñG”Á∑66˜TÜó7F˜'íÊ÷ÇÜóFV“í”‚∆'Fñ6∆R6∆74Ê÷S◊∑7Gñ∆W2ÊÜó7F˜'ïÊV«“∂Wì◊∂óFV“Á66˜W”‡¢∆Fób6∆74Ê÷S◊∑7Gñ∆W2ÊÜó7F˜'îÜVG”„«7G&ˆÊsÁ∂óFV“Ê∆&V«”¬˜7G&ˆÊs„«6÷∆√Á∂óFV“Á&ñ˜"Á&W˜'DFFW“(i"∂óFV“ÊFFW“+r∂óFV“Ê÷F6ÜVD6˜VÁG“Ì˝Ì--çÕΩR	Õ	Á∂óFV“Ê÷F6ÜVD6˜VÁB”“óFV“Ê7W'&VÁD6˜VÁBÚçrG∂óFV“Ê7W'&VÁD6˜VÁG÷¢"'”¬˜6÷∆√„¬ˆFóc‡¢∆Fób6∆74Ê÷S◊∑7Gñ∆W2ÊÜó7F˜'î÷ñÁ”„«7„Á∑W&6VÁBÜóFV“Ê6˜fW&vT&Vf˜&Ró“(i"∆#Á∑W&6VÁBÜóFV“Ê6˜fW&vTgFW"ó”¬ˆ#„¬˜7„„«7G&ˆÊr6∆74Ê÷S◊≤ÜóFV“Ê6˜fW&vTgFW"ÛÚí„“ÜóFV“Ê6˜fW&vT&Vf˜&RÛÚíÚ7Gñ∆W2ÊvˆˆB¢7Gñ∆W2Ê&G”Á∂óFV“Ê6˜fW&vTgFW"””“ÁV∆¬«¬óFV“Ê6˜fW&vT&Vf˜&R””“ÁV∆¬Ú.(	B"¢G∂óFV“Ê6˜fW&vTgFW"„“óFV“Ê6˜fW&vT&Vf˜&RÚ"≤"¢"'“G∂ÁV÷&W$f˜&÷BÊf˜&÷BÜóFV“Ê6˜fW&vTgFW"“óFV“Ê6˜fW&vT&Vf˜&Ró“Ú‚ÚÊ”¬˜7G&ˆÊs„¬ˆFóc‡¢∆Fób6∆74Ê÷S◊∑7Gñ∆W2ÊÜó7F˜'ïG&6∑”„∆í7Gñ∆S◊∑≤vñGFÉ¢G¥÷FÇÊ÷ñ‚É¬÷FÇÊ÷ÇÉ¬óFV“Ê6˜fW&vTgFW"ÛÚíó“V◊“Û„«7‚6∆74Ê÷S◊∑7Gñ∆W2ÊÜó7F˜'ï∆Á“FóF∆S“-	˝Ω“cR"Û„«7‚6∆74Ê÷S◊∑7Gñ∆W2ÊÜó7F˜'îvˆ«“FóF∆S“-
+m]Ω¬sR"Û„¬ˆFóc„∆Fób6∆74Ê÷S◊∑7Gñ∆W2ÊÜó7F˜'ïFá&W6Üˆ∆G7”„«7„Ì	˝Ω“cS¬˜7„„«7„Ì
+m]Ω¬sS¬˜7„„¬ˆFóc‡¢∆Fób6∆74Ê÷S◊∑7Gñ∆W2ÊÜó7F˜'îf7G7”„«7„Ì	˝Ω“cS¢∆#Á∂óFV“ÊgFW%∆Á”¬ˆ#‚«6÷∆√‚Ç∑∂óFV“Á∆ÂW“Ú(â'∂óFV“Á∆‰F˜vÁ“ì¬˜6÷∆√„¬˜7„„«7„Ì
+m]Ω¬sS¢∆#Á∂óFV“ÊgFW$vˆ«”¬ˆ#‚«6÷∆√‚Ç∑∂óFV“Êvˆ≈W“Ú(â'∂óFV“ÊvˆƒF˜vÁ“ì¬˜6÷∆√„¬˜7„„«7„Ì
+ΩÌ-≤	]	˝	=
+3¢∆#Á∂f˜&÷BÜóFV“ÊgFW%6∆˜G2ó”¬ˆ#‚«6÷∆√‚á∂óFV“ÊgFW%6∆˜G2“óFV“Ê&Vf˜&U6∆˜G2„“Ú"≤"¢"'◊∂f˜&÷BÜóFV“ÊgFW%6∆˜G2“óFV“Ê&Vf˜&U6∆˜G2ó“ì¬˜6÷∆√„¬˜7„„«7„Ì	›ÌÕ-ç#¢∆#Á∂f˜&÷BÜóFV“ÊgFW$Ê˜&“ó”¬ˆ#‚«6÷∆√‚á∂óFV“ÊgFW$Ê˜&““óFV“Ê&Vf˜&TÊ˜&“„“Ú"≤"¢"'◊∂f˜&÷BÜóFV“ÊgFW$Ê˜&““óFV“Ê&Vf˜&TÊ˜&“ó“ì¬˜6÷∆√„¬˜7„„«7„Ì	M]Mçmç#¢∆#Á∂f˜&÷BÜóFV“ÊÊWtFVfñ6óBó”¬ˆ#‚«6÷∆√‚á∂óFV“ÊÊWtFVfñ6óB“óFV“Êˆ∆DFVfñ6óB„“Ú"≤"¢"'◊∂f˜&÷BÜóFV“ÊÊWtFVfñ6óB“óFV“Êˆ∆DFVfñ6óBó“ì¬˜6÷∆√„¬˜7„„¬ˆFóc‡¢∆FWFñ«26∆74Ê÷S◊∑7Gñ∆W2ÊÜó7F˜'îFWFñ«7”„«7V÷÷'ìÌ	ç}Õ]›]›çÚ˝‚	Õ	‚+rRΩ=}ççRÚR]=MççS¬˜7V÷÷'ìÁ≤Ö∑≤∆&V√¢-	Ω=}ççR]}=ΩÕ--≤"¬&˜w3¢óFV“Ê&W7D÷˜fW'2“¬≤∆&V√¢-
+]=MççR]}=ΩÕ--≤"¬&˜w3¢óFV“Áv˜'7D÷˜fW'2’“íÊ÷ÇÜw&˜Wí”‚∆Fób6∆74Ê÷S◊∑7Gñ∆W2ÊÜó7F˜'î÷˜fW$w&˜W“∂Wì◊∂w&˜WÊ∆&V«”„∆É3Á∂w&˜WÊ∆&V«”¬ˆÉ3„∆Fób6∆74Ê÷S◊∑7Gñ∆W2ÊÜó7F˜'î÷˜fW'7”Á∂w&˜WÁ&˜w2Ê∆VÊwFÇÚw&˜WÁ&˜w2Ê÷Çá&˜rí”‚∆'WGFˆ‚GóS“&'WGFˆ‚"∂Wì◊∑&˜rÊˆñG“ˆ‰6∆ñ6≥◊≤Çí”‚˜V‰˜&rá&˜rÊˆñBó”„«7„Á∑&˜rÊÊ÷W”¬˜7„„∆"6∆74Ê÷S◊∑&˜rÊgFW"‚&˜rÊ&Vf˜&RÚ7Gñ∆W2ÊÜó7F˜'ï˜6óFófR¢7Gñ∆W2ÊÜó7F˜'îÊVvFófW”Á∑&˜rÊgFW"‚&˜rÊ&Vf˜&RÚ"≤"¢"'◊∂ÁV÷&W$f˜&÷BÊf˜&÷Bá&˜rÊgFW"“&˜rÊ&Vf˜&Ró“Ú‚Ú„¬ˆ#„«6÷∆¬6∆74Ê÷S◊∑&˜rÁ6∆˜G4FV«F‚Ú7Gñ∆W2ÊÜó7F˜'ï˜6óFófR¢&˜rÁ6∆˜G4FV«F¬Ú7Gñ∆W2ÊÜó7F˜'îÊVvFófR¢"'”ÌΩÌ-≤∑&˜rÁ6∆˜G4FV«F„“Ú"≤"¢"'◊∂f˜&÷Bá&˜rÁ6∆˜G4FV«Fó”¬˜6÷∆√„¬ˆ'WGFˆ„‚í¢«6∆74Ê÷S◊∑7Gñ∆W2ÊÜó7F˜'îÊÙ÷˜fW'7”Ì	›]"	Õ	‚ç}Õ]›]›ç]¬"›-2-ÌÌ›3¬˜Á”¬ˆFóc„¬ˆFóc‚ó”¬ˆFWFñ«3‡¢¬ˆ'Fñ6∆S‚ó”¬ˆFóc‡¢«6∆74Ê÷S◊∑7Gñ∆W2Ê÷G&óÑ÷WFÜˆG”Ì
+-›]›çR˝‚ÌMç›≠Ì-Ω¬ÙîBÇ-ç˝2	Õ	„≤›Ì-ΩRçΩÇÌ-=---=ÌùçR-Ì≠Ç›R}ç-Ì-Ú›=Ω¬‚
+=ÕÕ≤ΩÌ-Ì"Ç›ÌÕ-ç-Ì"-›ç-Ì-ÚÌ-M]ΩÕ›‚‚
+}ç-≠ç}Õ]›]›çí˝‚˝]mçΩÕ›Ì-˝¬MΩÚ-Ì=‚]}›R˝Ì≠}Ω-]-ÚM‚˝Ì--Ì›Ìí-]≠Ç]ç-›Ì=‚ç-Ì}›ç≠„¬˜‡¢¬˜6V7Fñˆ„‡¢∆Fób6∆74Ê÷S◊∑7Gñ∆W2ÊÊ˜FW”„∆#Ì	≠¢}ç--¬˝Ì≠}-]Ω√£¬ˆ#‚
+]ΩÕ›Ωí˝Ìm]›"“*Ω
+ΩÌ-Ì"MΩÚ	]	˝	=
+<+≤;r*Ω	›ÌÕ-ç"	-
+	]	=	Ï+≤9rR‚	˝Ω“≠mMÌí	Õ	‚(	BcR¬m]Ω¬(	BsR‚	›]]--≠“÷ÇÉ¬Ì≠==Ω]›çR--]Rå*Ω	›ÌÕ-ç"	-
+	]	=	Ï+≤9rcRí(â"*Ω
+ΩÌ-Ì"MΩÚ	]	˝	=
+<+≤í¬}ç-]-ÚÌ-M]ΩÕ›‚˝‚≠mMÌí	Õ	‚‚	Ìùçí˝Ìm]›"(	B=ÕÕΩÌ-Ì"	]	˝	=
+2¬M]Ω››Ú›=ÕÕ2Ìù]=‚›ÌÕ-ç-‚	ç˝ÌΩÕ}=]-ÚÌMçmçΩÕ›Ωíç-Ì2MÌÕ≤*Ω	-]=Ï+≤‚
+ΩÌ-≤˝]mçΩÕ›Ì-]í›=Ω]-Ω¬›ÌÕ-ç-Ì¬Ì-Ì-Ú"M]-Ωç}mçÇMΩÚ˝Ì-]≠Ç¬›‚›R-]ÌM˝""Ìùçíç-Ì2‚¥DD≥“Á&W˜'DFFR””“DD≥“Á&W˜'DFFRÚ	ÌR-Ω==}≠Ç›G¥DD≥“Á&W˜'DFFW“Ê¢	M-≤-Ω==}Ì£¢G¥DDÊ÷ÇÜFF6WBí”‚FF6WBÁ&W˜'DFFRíÊ¶ˆñ‚Ç"Ç"ó“Ê“*Ω	›ÌÕMΩÚ	]	˝	=
+<+≤Ç*Ω	-]=‚ΩÌ-Ì,+≤›R-Ωç˝Ì"››-Ì"˝Ì≠}-]Ω¬„¬ˆFóc‡¢∆Fób6∆74Ê÷S◊∑7Gñ∆W2Êw&ñC'”‡¢«6V7Fñˆ‚6∆74Ê÷S◊∑7Gñ∆W2Ê6&G”„∆É#Ì
+˝]M]Ω]›çR	Õ	‚˝‚MÌ-çm]›ç‚˝Ω›¬ˆÉ#„«6∆74Ê÷S◊∑7Gñ∆W2Ê6Ü'DÊ˜FW”Ì
+≠ÌΩÕ≠‚Ì=›ç}mçíMÌ-ç=Ω‚}›ΩR=Ì-›]íÌ"ç›Mç-çM=ΩÕ›Ì=‚˝Ω›cR‚	MÌ-çm]›çR˝Ω›“	é(	3Ç„í	Õ	‚;rcR‚	"}"-≠ΩÌ}]›≤	Õ	‚˝ÌΩ›ΩÕÇM››ΩÕÉ¢∂6ˆ◊∆WFT˜&vÊó¶FñˆÁ2Ê∆VÊwFá“„¬˜‡¢∆Fób6∆74Ê÷S◊∑7Gñ∆W2Á∆‰Fó7G&ñ'WFñˆÁ”Á∑∆‰Fó7G&ñ'WFñˆ‚Ê÷ÇÜ&ÊBí”‚∆Fób6∆74Ê÷S◊∑7Gñ∆W2Á∆‰Fó7G&ñ'WFñˆÂ&˜w“∂Wì◊∂&ÊBÊ∂Wó”„«7„Á∂&ÊBÊ∆&V«”¬˜7„„∆Fób6∆74Ê÷S◊∑7Gñ∆W2ÁG&6∑”„∆í7Gñ∆S◊∑≤vñGFÉ¢G∂&ÊBÊ6˜VÁBÚ÷Ö∆‰Fó7G&ñ'WFñˆ‚¢“V¬&6∂w&˜VÊC¢&ÊBÊ6ˆ∆˜"◊“Û„¬ˆFóc„«7G&ˆÊsÁ∂&ÊBÊ6˜VÁG”¬˜7G&ˆÊs„«6÷∆√Á∑W&6VÁBÜ&ÊBÁ6Ü&Ró”¬˜6÷∆√„¬ˆFóc‚ó”¬ˆFóc‡¢«6∆74Ê÷S◊∑7Gñ∆W2Ê6Ü'DÊ˜FW”Ì	Õ	‚]r˝ÌΩ›ΩRM››ΩS¢∂÷ó76ñÊt6˜VÁG“‚*≥(	2f«C≥#\+≤Ì}›}]"-Ω˝ÌΩ›]›çR˝Ω›˝]-Ωç]›ç]¬M‚#R„¬˜‡¢¬˜6V7Fñˆ„‡¢«6V7Fñˆ‚6∆74Ê÷S◊∑7Gñ∆W2Ê6&G”„∆É#Ì
+˝]mçΩÕ›Ì-Ç›çÌΩÕçç¬M]Mçmç-Ì¬ΩÌ-Ì#¬ˆÉ#„«6∆74Ê÷S◊∑7Gñ∆W2Ê6Ü'DÊ˜FW”Ì	˝Ì≠}›≤˝]mçΩÕ›Ì-Ç›çÕ]›Õçç¬Ìùç¬˝Ìm]›-Ì¬	é(	3Ç„í‚*Ω	Õ	‚]rΩÌ-Ì,+≤(	BÌ=›ç}mçÇ¬=MR›ÌÕ-ç"]-¬¬ΩÌ-Ì"	]	˝	=
+2›]"‚	˝Ω“cR˝çÕ]›˝]-Ú¢	Õ	‚"m]ΩÌ√≤›mçÌ-›çR˝]mçΩÕ›Ì-]í(	BMç=›Ì-ç}]≠ÌR„¬˜‡¢∆Fób6∆74Ê÷S◊∑7Gñ∆W2ÊFVfñ6óE7V6ñ«FñW7”Áµ≤‚‚Á7V5&˜w5“Êfñ«FW"Çá&˜rí”‚&˜rÊÊ˜&“”“ÁV∆¬bb&˜rÊÊ˜&“‚íÁ6∆ñ6RÉ¬RíÊ÷Çá&˜r¬ñÊFWÇí”‚∆Fób6∆74Ê÷S◊∑7Gñ∆W2ÊFVfñ6óE7V6ñ«Gó“∂Wì◊∑&˜rÊ6ˆFW”„∆#Á∂ñÊFWÇ≤”¬ˆ#„«7‚FóF∆S◊∑&˜rÊÊ÷W”Á∑&˜rÊÊ÷W”¬˜7„„∆Fób6∆74Ê÷S◊∑7Gñ∆W2ÁG&6∑”„∆í7Gñ∆S◊∑≤vñGFÉ¢G¥÷FÇÊ÷ñ‚É¬÷FÇÊ÷ÇÉ¬&˜rÊ6˜fW&vRÛÚíó“V¬&6∂w&˜VÊC¢ÜVD6ˆ∆˜"á&˜rÊ6˜fW&vRí◊“Û„¬ˆFóc„«7G&ˆÊr6∆74Ê÷S◊∑7Gñ∆W2ÊÊWWG&«”Á∑W&6VÁBá&˜rÊ6˜fW&vRó”¬˜7G&ˆÊs„«6÷∆√Á∑&˜rÁ¶W&ı6∆˜G4˜&vÊó¶FñˆÁ7“	Õ	‚]rΩÌ-Ì#¬˜6÷∆√„¬ˆFóc‚ó”¬ˆFóc‡¢¬˜6V7Fñˆ„‡¢¬ˆFóc‡¢«6V7Fñˆ‚6∆74Ê÷S◊∑7Gñ∆W2Ê6&G”‡¢∆Fób6∆74Ê÷S◊∑7Gñ∆W2Á6V7Fñˆ‰ÜVG”„∆Fóc„∆É#Ì
+]ù-ç›2Õ]Mçmç›≠çRÌ=›ç}mçì¬ˆÉ#„«Ì	˝‚=ÕÌΩ}›ç‚(	BÌ"]=Mç]=‚˝‚∆#ÌΩ›çÌ-››ÌÕ2-Ω˝ÌΩ›]›ç‚m]ΩÇsS¬ˆ#„¢≠mMΩí˝ÌMçΩ¬=}ç-Ω-]-Ú›R-ΩçRsR-Ì]=‚›ÌÕ-ç-¬Çç}Ω-Ì¢ΩÌ-Ì"›R}≠Ω-]"M]Mçmç"M==Ì=‚˝ÌMçΩÚ‚	˝ÌB›ç¬"-Ì¬mR-ÌΩmR(	B∆#ÌÌMçmçΩÕ›ÌR-Ω˝ÌΩ›]›çR˝Ω›	é(	3Ç„íÉcRì¬ˆ#‚‚*Ω
+˝]b‚ΩÌ-Õå+≤(	B˝]mçΩÕ›Ì-Ç˝ÌΩÌmç-]ΩÕ›Ω¬›ÌÕ-ç-Ì¬¬›‚]rΩÌ-Ì"	]	˝	=
+2„¬˜„¬ˆFóc‡¢∆Fób6∆74Ê÷S◊∑7Gñ∆W2Ê÷G&óÑ6ˆÁG&ˆ«7”‡¢ƒ˜vÊW'6Üó7vóF6Çf«VS◊∂˜vÊW'6Üó“ˆ‰6ÜÊvS◊∂6ÜÊvT˜vÊW'6Üó“Û‡¢∆∆&V¬6∆74Ê÷S◊∑7Gñ∆W2Ê÷G&óÖ6V&6á”Ì	˝Ìç¢˝‚	Õ	„∆Fób6∆74Ê÷S◊∑7Gñ∆W2Á7VvvW7Fñˆ‰&˜á”„∆ñÁWBf«VS◊∂÷G&óÖ6V&6á“ˆ‰6ÜÊvS◊≤ÜWfVÁBí”‚6WD÷G&óÖ6V&6ÇÜWfVÁBÁF&vWBÁf«VRó“∆6VÜˆ∆FW#“-	›}›ç-R--ÌMç-¬›}-›çR"WFÙ6ˆ◊∆WFS“&ˆfb"Û‡¢∂÷G&óÖ7VvvW7FñˆÁ2Ê∆VÊwFÇ‚bb∆Fób6∆74Ê÷S◊∑7Gñ∆W2Á7VvvW7FñˆÁ7”Á∂÷G&óÖ7VvvW7FñˆÁ2Ê÷ÇÜ˜&rí”‚∆'WGFˆ‚GóS“&'WGFˆ‚"∂Wì◊∂˜&rÊˆñG“ˆ‰6∆ñ6≥◊≤Çí”‚˜V‰˜&rÜ˜&rÊˆñBó”„«7G&ˆÊsÁ∂÷G&óÑ˜&tÊ÷RÜ˜&ró”¬˜7G&ˆÊs„«7„Á∂˜&rÊ6óGó”¬˜7„„¬ˆ'WGFˆ„‚ó”¬ˆFócÁ–¢¬ˆFóc„¬ˆ∆&V√‡¢¬ˆFóc‡¢¬ˆFóc‡¢∆Fób6∆74Ê÷S◊∑7Gñ∆W2Ê÷G&óÖ67&ˆ∆«”„«F&∆R6∆74Ê÷S◊∑7Gñ∆W2ÊÜVG”„∆6ˆ∆w&˜W„∆6ˆ¬6∆74Ê÷S◊∑7Gñ∆W2Ê˜&t6ˆ«“Û„∆6ˆ¬6∆74Ê÷S◊∑7Gñ∆W2Á6Ü˜'Ff∆ƒ6ˆ«“Û„∆6ˆ¬6∆74Ê÷S◊∑7Gñ∆W2ÊGFñÊ÷VÁD6ˆ«“ÛÁµ5T4î≈DîU2Ê÷Çá7V6ñ«Gíí”‚∆6ˆ¬6∆74Ê÷S◊∑7Gñ∆W2Á7V6ñ«Gî6ˆ«“∂Wì◊∑7V6ñ«GíÊ6ˆFW“Û‚ó”∆6ˆ¬6∆74Ê÷S◊∑7Gñ∆W2ÁF˜Fƒ6ˆ«“Û„¬ˆ6ˆ∆w&˜W„«FÜVC„«G#‡¢«FÇ6∆74Ê÷S◊∑7Gñ∆W2Á7Fñ6∑îÊ÷W”„∆'WGFˆ‚GóS“&'WGFˆ‚"6∆74Ê÷S◊∑7Gñ∆W2Á6˜'D'WGFˆÁ“ˆ‰6∆ñ6≥◊≤Çí”‚Fˆvv∆T÷G&óÖ6˜'BÇ&Ê÷R"ó”Ì	Õ]Mçmç›≠ÚÌ=›ç}mç˜∑6˜'D÷&≤Ç&Ê÷R"ó”¬ˆ'WGFˆ„„¬˜FÉ‡¢«FÇ6∆74Ê÷S◊∑7Gñ∆W2Á6Ü˜'Ff∆ƒÜVG”„∆'WGFˆ‚GóS“&'WGFˆ‚"6∆74Ê÷S◊∑7Gñ∆W2Á6˜'D'WGFˆÁ“ˆ‰6∆ñ6≥◊≤Çí”‚Fˆvv∆T÷G&óÖ6˜'BÇ&FVfñ6óB"ó”Ì	›R]--]#∆'"ÛÌM‚˝Ω›∑6˜'D÷&≤Ç&FVfñ6óB"ó”¬ˆ'WGFˆ„„¬˜FÉ‡¢«FÇ6∆74Ê÷S◊∑7Gñ∆W2ÊGFñÊ÷VÁDÜVG”„∆'WGFˆ‚GóS“&'WGFˆ‚"6∆74Ê÷S◊∑7Gñ∆W2Á6˜'D'WGFˆÁ“ˆ‰6∆ñ6≥◊≤Çí”‚Fˆvv∆T÷G&óÖ6˜'BÇ&&∆Ê6VB"ó“FóF∆S“-
+=˝-Ω]›}]≠çí˝Ì≠}-]Ω√¢RÌ}›}]"MÌ-çm]›çRsR›ÌÕ-ç-≠mMÌí˝çÕ]›çÕÌí˝]mçΩÕ›Ì-Ç¬]r-}çÕ›Ìí≠ÌÕ˝]›mçÇ#Ì	Ω›sR¬W∑6˜'D÷&≤Ç&&∆Ê6VB"ó”¬ˆ'WGFˆ„„∆'WGFˆ‚GóS“&'WGFˆ‚"6∆74Ê÷S◊∑7Gñ∆W2Á6V6ˆÊF'ï6˜'G“ˆ‰6∆ñ6≥◊≤Çí”‚Fˆvv∆T÷G&óÖ6˜'BÇ&GFñÊ÷VÁB"ó“FóF∆S“-	ÌMçmçΩÕ›ÌR-Ω˝ÌΩ›]›çR˝Ω›	é(	3Ç„ì¢RÌ}›}]"MÌ-çm]›çR˝Ω›cR˝‚	Õ	‚"m]ΩÌ¬#Ì	˝Ω“cR¬W∑6˜'D÷&≤Ç&GFñÊ÷VÁB"ó”¬ˆ'WGFˆ„„¬˜FÉ‡¢µ5T4î≈DîU2Ê÷Çá7V6ñ«Gíí”‚«FÇ6∆74Ê÷S◊∑7Gñ∆W2Á&˜G“∂Wì◊∑7V6ñ«GíÊ6ˆFW“FóF∆S◊∑7V6ñ«GíÊÊ÷W”„∆'WGFˆ‚GóS“&'WGFˆ‚"6∆74Ê÷S◊∑7Gñ∆W2Á7V6ñ«Gï6˜'G“ˆ‰6∆ñ6≥◊≤Çí”‚Fˆvv∆T÷G&óÖ6˜'BÜ7V6ñ«Gì¢G∑7V6ñ«GíÊ6ˆFW÷ó”Á∑7V6ñ«GíÊÊ÷RÁ7F'G5vóFÇÇ-	-	Ì	Ú"íÚ-	-	Ì	Ú"¢7V6ñ«GíÊÊ÷W◊∑6˜'D÷&≤Ü7V6ñ«Gì¢G∑7V6ñ«GíÊ6ˆFW÷ó”¬ˆ'WGFˆ„„¬˜FÉ‚ó–¢«FÇ6∆74Ê÷S◊∑7Gñ∆W2ÁF˜FƒÜVG”„∆'WGFˆ‚GóS“&'WGFˆ‚"6∆74Ê÷S◊∑7Gñ∆W2Á6˜'D'WGFˆÁ“ˆ‰6∆ñ6≥◊≤Çí”‚Fˆvv∆T÷G&óÖ6˜'BÇ'¶W&ı7V6ñ«FñW2"ó“FóF∆S“-	≠ÌΩç}]--‚˝]mçΩÕ›Ì-]í˝ÌΩÌmç-]ΩÕ›Ω¬›ÌÕ-ç-Ì¬Ç›=Ω¬ΩÌ-Ì"	]	˝	=
+2#Ì
+˝]b‚∆'"ÛÌΩÌ-Õá∑6˜'D÷&≤Ç'¶W&ı7V6ñ«FñW2"ó”¬ˆ'WGFˆ„„¬˜FÉ‡¢¬˜G#„¬˜FÜVC„«F&ˆGì‡¢∂÷G&óÖ&˜w2Ê÷Çá&˜rí”‚∞¢6ˆÁ7B¶W&ı7V6ñ«Gî6˜VÁB“&˜rÊ˜&rÁ7V6ñ«FñW2Êfñ«FW"ÇÜóFV“í”‚óFV“ÊÊ˜&“”“ÁV∆¬bbóFV“ÊÊ˜&“‚bbóFV“ÊWwU6∆˜G2””“íÊ∆VÊwFÉ∞¢&WGW&‚ƒg&v÷VÁB∂Wì◊∑&˜rÊ˜&rÊˆñG”„«G#‡¢«FÇ6∆74Ê÷S◊∑7Gñ∆W2Á7Fñ6∑îÊ÷W“ˆ‰6∆ñ6≥◊≤Çí”‚˜V‰˜&rá&˜rÊ˜&rÊˆñBó“FóF∆S◊∂G∂÷G&óÑ˜&tÊ÷Rá&˜rÊ˜&ró“+rG∑&˜rÊ˜&rÊ6óGó÷”‡¢«7‚6∆74Ê÷S◊∑7Gñ∆W2Ê÷G&óÑÊ÷W”Á∂÷G&óÑ˜&tÊ÷Rá&˜rÊ˜&ró”¬˜7„„«6÷∆¬6∆74Ê÷S◊∑7Gñ∆W2Ê÷G&óÑ6óGó”Á∑&˜rÊ˜&rÊ6óGó”¬˜6÷∆√‡¢∆'WGFˆ‚GóS“&'WGFˆ‚"6∆74Ê÷S◊∑7Gñ∆W2Ê÷ˆ&ñ∆TWáÊG“&ñ÷WáÊFVC◊∂WáÊFVD÷G&óÑˆñB””“&˜rÊ˜&rÊˆñG“ˆ‰6∆ñ6≥◊≤ÜWfVÁBí”‚≤WfVÁBÁ7F˜&˜vFñˆ‚Çì≤6WDWáÊFVD÷G&óÑˆñBÜWáÊFVD÷G&óÑˆñB””“&˜rÊ˜&rÊˆñBÚ""¢&˜rÊ˜&rÊˆñBì≤◊”Ì
+˝]mçΩÕ›Ì-Ç∂WáÊFVD÷G&óÑˆñB””“&˜rÊ˜&rÊˆñBÚ.)k""¢.)k¬'”¬ˆ'WGFˆ„‡¢¬˜FÉ‡¢«FB6∆74Ê÷S◊∑7Gñ∆W2Á6Ü˜'Ff∆ƒ6V∆«“FóF∆S◊∂	Õç›çÕ=¬ΩÌ-Ì"M‚˝Ω›cS¢G∂f˜&÷Bá&˜rÊFVfñ6óBó÷“ˆ‰6∆ñ6≥◊≤Çí”‚˜V‰˜&rá&˜rÊ˜&rÊˆñBó”Á∂f˜&÷Bá&˜rÊFVfñ6óBó”¬˜FC‡¢«FB6∆74Ê÷S◊∑7Gñ∆W2ÊGFñÊ÷VÁD6V∆«“FóF∆S◊∂	Ω›sR(	BG∑W&6VÁBá&˜rÊ&∆Ê6VBÊGFñÊ÷VÁBó”¢≠mMΩí˝ÌMçΩ¬Ì=›ç}]“=Ì-›]¬sR]=‚›ÌÕ-ç-¬ç}Ω-Ì¢›R˝]]›Ìç-Ú‚	ÌMçmçΩÕ›ÌR-Ω˝ÌΩ›]›çR˝Ω›cR(	BG∑&˜rÊ6˜fW&vR””“ÁV∆¬Ú.(	B"¢W&6VÁBá&˜rÊ6˜fW&vRÚƒÂıU$4TÂB¢ó÷”„«7G&ˆÊr6∆74Ê÷S◊∂G∑7Gñ∆W2Ê&∆Ê6VE&W7V«G“G∑&˜rÊ&∆Ê6VBÊGFñÊ÷VÁB””“ÁV∆¬Ú7Gñ∆W2ÊÊWWG&¬¢&˜rÊ&∆Ê6VBÊGFñÊ÷VÁB„“ìí„ìììììíÚ7Gñ∆W2ÊvˆˆB¢7Gñ∆W2Ê&V∆˜tÊ˜&◊÷”Á∑W&6VÁBá&˜rÊ&∆Ê6VBÊGFñÊ÷VÁBó”¬˜7G&ˆÊs„«6÷∆¬6∆74Ê÷S◊∑7Gñ∆W2Êˆffñ6ñ≈&W7V«G”Á∑&˜rÊ6˜fW&vR””“ÁV∆¬Ú.(	B"¢W&6VÁBá&˜rÊ6˜fW&vRÚƒÂıU$4TÂB¢ó”¬˜6÷∆√„¬˜FC‡¢µ5T4î≈DîU2Ê÷Çá7V6ñ«Gíí”‚∞¢6ˆÁ7B6V∆¬“&˜rÊ˜&rÁ7V6ñ«FñW2ÊfñÊBÇÜóFV“í”‚óFV“Ê6ˆFR””“7V6ñ«GíÊ6ˆFRì∞¢6ˆÁ7Bf«VR“6V∆¬Ú&FñÚÜ6V∆¬ÊWwU6∆˜G2¬6V∆¬ÊÊ˜&“í¢ÁV∆√∞¢6ˆÁ7BFWáB“6V∆¬«¬6V∆¬ÊÊ˜&“””“ÁV∆¬Ú.(	B"¢6V∆¬ÊÊ˜&“√“Ú-	“"¢f«VR””“ÁV∆¬Ú.(	B"¢G¥÷FÇÁ&˜VÊBáf«VRó÷∞¢6ˆÁ7BFóF∆R“6V∆¬Ú-	›]"-Ì≠Ç˝‚˝]mçΩÕ›Ì-Ç"¢6V∆¬ÊÊ˜&“””“ÁV∆¬Ú-	›]"›ÌÕ-ç-"M››ΩR"¢6V∆¬ÊÊ˜&“√“Ú-	›ÌÕ-ç"›R}M“"¢G∑7V6ñ«GíÊÊ÷W”¢G∑W&6VÁBáf«VRó“+r	]	˝	=
+2G∂f˜&÷BÜ6V∆¬ÊWwU6∆˜G2ó“çrÌù]=‚›ÌÕ-ç-G∂f˜&÷BÜ6V∆¬ÊÊ˜&“ó÷∞¢&WGW&‚«FB6∆74Ê÷S◊∑7Gñ∆W2Á7V6ñ«Gî6V∆«“∂Wì◊∑7V6ñ«GíÊ6ˆFW“FóF∆S◊∑FóF∆W“ˆ‰6∆ñ6≥◊≤Çí”‚≤6WE6V∆V7FVDˆñBá&˜rÊ˜&rÊˆñBì≤6WE6V∆V7FVE7V6ñ«Gíá7V6ñ«GíÊ6ˆFRì≤6WEF"Ç&˜&vÊó¶Fñˆ‚"ì≤◊“7Gñ∆S◊∑≤&6∂w&˜VÊC¢FWáB””“-	“"Ú"6SÜVVc2"¢ÜVD6ˆ∆˜"áf«VRí¬6ˆ∆˜#¢FWáB””“-	“"Ú"3cSvCÜb"¢"6ffb"◊”Á∑FWáG”¬˜FC„∞¢“ó–¢«FB6∆74Ê÷S◊∑7Gñ∆W2ÁF˜Fƒ6V∆«“FóF∆S“-
+}çΩ‚˝]mçΩÕ›Ì-]í¬=MR›ÌÕ-ç"ÌΩÕçR›=ΩÚ¬ΩÌ-Ì"	]	˝	=
+2›]""7Gñ∆S◊∑≤&6∂w&˜VÊC¢¶W&ı7V6ñ«Gî6˜VÁB‚Ú"6#É6CCr"¢"3#É#Sr"¬6ˆ∆˜#¢"6ffb"◊”Á∑¶W&ı7V6ñ«Gî6˜VÁG”¬˜FC‡¢¬˜G#‡¢∂WáÊFVD÷G&óÑˆñB””“&˜rÊ˜&rÊˆñBbb«G"6∆74Ê÷S◊∑7Gñ∆W2Ê÷ˆ&ñ∆TFWFñ«5&˜w”„«FB6ˆ≈7„◊≥á”„∆Fób6∆74Ê÷S◊∑7Gñ∆W2Ê÷ˆ&ñ∆U7V6ñ«FñW7”‡¢µ5T4î≈DîU2Ê÷Çá7V6ñ«Gíí”‚∞¢6ˆÁ7B6V∆¬“&˜rÊ˜&rÁ7V6ñ«FñW2ÊfñÊBÇÜóFV“í”‚óFV“Ê6ˆFR””“7V6ñ«GíÊ6ˆFRì∞¢6ˆÁ7Bf«VR“6V∆¬Ú&FñÚÜ6V∆¬ÊWwU6∆˜G2¬6V∆¬ÊÊ˜&“í¢ÁV∆√∞¢6ˆÁ7BFW67&óFñˆ‚“6V∆¬«¬6V∆¬ÊÊ˜&“””“ÁV∆¬Ú-	›]"M››ΩR"¢6V∆¬ÊÊ˜&“√“Ú-	›ÌÕ-ç"›R}M“"¢f«VR””“ÁV∆¬Ú-	›]"M››ΩR˝‚ΩÌ-¬"¢G∑W&6VÁBáf«VRó“+rG∂f˜&÷BÜ6V∆¬ÊWwU6∆˜G2ó“çrG∂f˜&÷BÜ6V∆¬ÊÊ˜&“ó“ΩÌ-Ì&∞¢&WGW&‚∆Fób6∆74Ê÷S◊∑7Gñ∆W2Ê÷ˆ&ñ∆U7V6ñ«Gó“∂Wì◊∑7V6ñ«GíÊ6ˆFW”„«7„Á∑7V6ñ«GíÊÊ÷W”¬˜7„„«7G&ˆÊsÁ∂FW67&óFñˆÁ”¬˜7G&ˆÊs„¬ˆFóc„∞¢“ó–¢¬ˆFóc„¬˜FC„¬˜G#Á”¬Ùg&v÷VÁC„∞¢“ó–¢¬˜F&ˆGì„¬˜F&∆S„¬ˆFóc‡¢«6∆74Ê÷S◊∑7Gñ∆W2Ê÷G&óÑ÷WFÜˆG”„∆#Ì
+Ω›çÌ-››Ωí]ù-ç›2ç=˝-Ω]›}]≠çíì£¬ˆ#‚=ÕÕ÷ñ‚çΩÌ-≤	]	˝	=
+2¬sR›ÌÕ-ç-í˝‚≠mMÌí˝]mçΩÕ›Ì-Ç˝ÌΩÌmç-]ΩÕ›Ω¬›ÌÕ-ç-Ì¬;r=ÕÕ2sR›-çR›ÌÕ-ç-Ì"9rR‚
+]M›]RçMÕ]-ç}]≠ÌR˝Ìm]›-Ì"˝]mçΩÕ›Ì-]í›Rç˝ÌΩÕ}=]-Ú‚	˝]]-Ω˝ÌΩ›]›çRÌM›Ìí˝]mçΩÕ›Ì-Ç›R≠ÌÕ˝]›ç=]"M]Mçmç"M==Ìí‚
+˝]mçΩÕ›Ì-Ç]r›ÌÕ-ç-ç≠ΩÌ}]›≤¬˝Ì˝=≠ÇM››ΩR›R}ç-Ì-Ú›=Ω˝ÕÇ‚∆#Ì	ÌMçmçΩÕ›Ωí˝Ì≠}-]Ω¬›Rç}Õ]›”£¬ˆ#‚-Ω˝ÌΩ›]›çR˝Ω›“	é(	3Ç„í;rcR9rR‚	›˝çÕ]¬cRÌù]=‚›ÌÕ-ç-(	B›-‚R-Ω˝ÌΩ›]›çÚ˝Ω›‚*Ω
+˝]b‚ΩÌ-Õå+≤=}ç-Ω-]"-ÌΩÕ≠‚˝]mçΩÕ›Ì-Ç}M››Ω¬˝ÌΩÌmç-]ΩÕ›Ω¬›ÌÕ-ç-Ì¬‚	]ΩÇ›ÌÕ-ç"-]“¬›‚ΩÌ-≤	]	˝	=
+2]-¬¬˝Ì-]Õ-RMÌΩm›Ì-¬Ç˝ç-˝}≠2
+	Ú"}M]ΩRb*Ω
+M
+	Õ
+(iB	=	ç
++≥≤›-‚Ì-M]ΩÕ›ΩíMç=›Ì-ç}]≠çíΩ=}í„¬˜„«6∆74Ê÷S◊∑7Gñ∆W2Ê÷G&óÑ÷ˆ&ñ∆TÜñÁG”Ì	›mÕç-R*Ω
+˝]mçΩÕ›Ì-å+≤"-Ì≠R	Õ	‚¬}-Ì≤=-çM]-¬}ç-≠2˝‚B˝]mçΩÕ›Ì-˝¬„¬˜‡¢∂÷G&óÖ&˜w2Ê∆VÊwFÇ””“bb«6∆74Ê÷S◊∑7Gñ∆W2ÊV◊Gó”Ì	Õ	‚˝‚-≠ÌÕ2›}-›ç‚›R›ùM]›≤„¬˜Á–¢¬˜6V7Fñˆ„‡¢¬ˆ÷ñ„Á–†¢∑F"””“&˜&vÊó¶Fñˆ‚"bb∆÷ñ‚6∆74Ê÷S◊∑7Gñ∆W2ÁvW”‡¢«6V7Fñˆ‚6∆74Ê÷S◊∑7Gñ∆W2Ê6&G”‡¢∆Fób6∆74Ê÷S◊∑7Gñ∆W2Ê˜&uñ6∂W'”‡¢ƒ˜vÊW'6Üó7vóF6Çf«VS◊∂˜vÊW'6Üó“ˆ‰6ÜÊvS◊∂6ÜÊvT˜vÊW'6Üó“Û‡¢∆∆&V√Ì	˝Ìç¢Õ]Mçmç›≠ÌíÌ=›ç}mçÉ∆Fób6∆74Ê÷S◊∑7Gñ∆W2Á7VvvW7Fñˆ‰&˜á”„∆ñÁWBf«VS◊∂˜&vÊó¶FñˆÂ6V&6Ç«¬6V∆V7FVD˜&sÚÊÊ÷R«¬"'“ˆ‰6ÜÊvS◊≤ÜWfVÁBí”‚≤6WD˜&vÊó¶FñˆÂ6V&6ÇÜWfVÁBÁF&vWBÁf«VRì≤6WE6V∆V7FVDˆñBÇ""ì≤◊“∆6VÜˆ∆FW#“-	›}›ç-R--ÌMç-¬›}-›çR"WFÙ6ˆ◊∆WFS“&ˆfb"Û‡¢∂˜&vÊó¶FñˆÂ7VvvW7FñˆÁ2Ê∆VÊwFÇ‚bb∆Fób6∆74Ê÷S◊∑7Gñ∆W2Á7VvvW7FñˆÁ7”Á∂˜&vÊó¶FñˆÂ7VvvW7FñˆÁ2Ê÷ÇÜ˜&rí”‚∆'WGFˆ‚GóS“&'WGFˆ‚"∂Wì◊∂˜&rÊˆñG“ˆ‰6∆ñ6≥◊≤Çí”‚≤6WE6V∆V7FVDˆñBÜ˜&rÊˆñBì≤6WD˜&vÊó¶FñˆÂ6V&6ÇÇ""ì≤◊”„«7G&ˆÊsÁ∂˜&rÊÊ÷W”¬˜7G&ˆÊs„«7„Á∂˜&rÊ6óGó”¬˜7„„¬ˆ'WGFˆ„‚ó”¬ˆFócÁ–¢¬ˆFóc„¬ˆ∆&V√‡¢«7‚6∆74Ê÷S◊∑7Gñ∆W2Á˜6óFñˆÁ”Á∂7W'&VÁDñÊFWÇ≤“çr∂˜&vÊó¶FñˆÂ&˜w2Ê∆VÊwFá“+rÌ-çÌ-≠˝‚-Ω˝ÌΩ›]›ç„¬˜7„‡¢¬ˆFóc‡¢¬˜6V7Fñˆ„‡¢∑6V∆V7FVD˜&rbb«6V7Fñˆ‚6∆74Ê÷S◊∑7Gñ∆W2Ê6&G”‡¢∆Fób6∆74Ê÷S◊∑7Gñ∆W2Á6V7Fñˆ‰ÜVG”„∆Fóc„∆É#Á∑6V∆V7FVD˜&rÊÊ÷W”¬ˆÉ#„«Ì	é(	3Ç„í“ΩÌ-≤	]	˝	=
+2;r*Ω	›ÌÕ-ç"	-
+	]	=	Ï+≤9rR‚	˝Ω“MΩÚ	Õ	‚(	BcR¬m]Ω¬(	BsS≤--=˝Ì≠}Ω-]"]=‚-Ω˝ÌΩ›]›çR„¬˜„¬ˆFóc‡¢∆Fób6∆74Ê÷S◊∑7Gñ∆W2Êg&◊%6Ü˜'F7WD7FñˆÁ7”‡¢«7‚6∆74Ê÷S◊∂G∑7Gñ∆W2Á7FGW7“G≤˜&t÷WG&ñ72á6V∆V7FVD˜&ríÊ6ˆ◊∆WFRÚ7Gñ∆W2Á7FGW4÷ó76ñÊr¢˜&t÷WG&ñ72á6V∆V7FVD˜&ríÊ÷VWG5∆‚Ú7Gñ∆W2Á7FGW46ˆ◊∆WFR¢7Gñ∆W2Á7FGW4&V∆˜w÷”Á∑7FGW2Ü˜&t÷WG&ñ72á6V∆V7FVD˜&ríÊ6˜fW&vRó”¬˜7„‡¢∂g&◊$÷F6ÜV@¢Ú∆'WGFˆ‚GóS“&'WGFˆ‚"6∆74Ê÷S◊∑7Gñ∆W2Êg&◊%6Ü˜'F7WG“ˆ‰6∆ñ6≥◊≤Çí”‚ˆ‰˜V‰g&◊$÷Úá6V∆V7FVD˜&rÊˆñBó”Ì	˝Ì-]ç-¬Ìçç≠Ç"
+M
+	Õ
+«7‚&ñ÷ÜñFFV„“'G'VR#Ó(is¬˜7„„¬ˆ'WGFˆ„‡¢¢«6÷∆¬6∆74Ê÷S◊∑7Gñ∆W2Êg&◊%VÊ÷F6ÜVG”Ì	Õ	‚›RÌ˝Ì--Ω]›}M]ΩÌ¬b˝‚ÙîC¬˜6÷∆√Á–¢¬ˆFóc‡¢¬ˆFóc‡¢∆Fób6∆74Ê÷S◊∑7Gñ∆W2Ê˜&t∑ó7”‡¢∆'Fñ6∆S„«7G&ˆÊr6∆74Ê÷S◊∑∆ÂFˆÊRÜ˜&t÷WG&ñ72á6V∆V7FVD˜&ríÊ6˜fW&vRó”Á∑W&6VÁBÜ˜&t÷WG&ñ72á6V∆V7FVD˜&ríÊ6˜fW&vRó”¬˜7G&ˆÊs„«7„Ì	é(	3Ç„í+r˝Ω“cR¬m]Ω¬sS¬˜7„„«6÷∆√Á∂f˜&÷BÜ˜&t÷WG&ñ72á6V∆V7FVD˜&ríÊWwU6∆˜G2ó“ΩÌ-Ì"	]	˝	=
+2çr∂f˜&÷BÜ˜&t÷WG&ñ72á6V∆V7FVD˜&ríÊÊ˜&“ó“˝‚Ìù]Õ2›ÌÕ-ç-3¬˜6÷∆√„¬ˆ'Fñ6∆S‡¢∆'Fñ6∆S„«7G&ˆÊsÁ∂f˜&÷BÜ˜&t÷WG&ñ72á6V∆V7FVD˜&ríÁF&vWE6∆˜G2ó”¬˜7G&ˆÊs„«7„Ì
+ΩÌ-Ì"›=m›‚MΩÚ˝Ω›¬˜7„„«6÷∆√„cRÌù]=‚›ÌÕ-ç-¬Ì≠==Ω]›çR--]S¬˜6÷∆√„¬ˆ'Fñ6∆S‡¢∆'Fñ6∆S„«7G&ˆÊsÁ∂f˜&÷BÜ˜&t÷WG&ñ72á6V∆V7FVD˜&ríÊFVfñ6óBó”¬˜7G&ˆÊs„«7„Ì	›R]--]"M‚˝Ω›¬˜7„„«6÷∆√ÌÕç›çÕΩÕ›ÌR}çΩ‚MÌ˝ÌΩ›ç-]ΩÕ›ΩRΩÌ-Ì"	]	˝	=
+3¬˜6÷∆√„¬ˆ'Fñ6∆S‡¢∆'Fñ6∆S„«7G&ˆÊr6∆74Ê÷S◊∑6V∆V7FVD&∆Ê6VCÚÊGFñÊ÷VÁB”“ÁV∆¬bb6V∆V7FVD&∆Ê6VCÚÊGFñÊ÷VÁB”“VÊFVfñÊVBbb6V∆V7FVD&∆Ê6VBÊGFñÊ÷VÁB„“ìí„ìììììíÚ7Gñ∆W2ÊvˆˆB¢7Gñ∆W2Ê&V∆˜tÊ˜&◊”Á∑W&6VÁBá6V∆V7FVD&∆Ê6VCÚÊGFñÊ÷VÁBÛÚÁV∆¬ó”¬˜7G&ˆÊs„«7„Ì
+Ω›çÌ-››ÌR-Ω˝ÌΩ›]›çRm]ΩÇsS¬˜7„„«6÷∆√Á∑6V∆V7FVD&∆Ê6VCÚÊGFñÊ÷VÁB””“ÁV∆¬Ú-	›]"˝ÌΩ›ΩRM››ΩRçΩÇ˝çÕ]›çÕΩR˝]mçΩÕ›Ì-]í"¢G∑6V∆V7FVD&∆Ê6VCÚÁ&V6ÜVD6˜VÁBÛÚ“çrG∑6V∆V7FVD&∆Ê6VCÚÊV∆ñvñ&∆T6˜VÁBÛÚ“˝]mçΩÕ›Ì-]íMÌ-ç=ΩÇsV”¬˜6÷∆√„¬ˆ'Fñ6∆S‡¢¬ˆFóc‡¢∑6V∆V7FVD&∆Ê6VCÚÊGFñÊ÷VÁB”“ÁV∆¬bb6V∆V7FVD&∆Ê6VCÚÊGFñÊ÷VÁB”“VÊFVfñÊVBbb«6∆74Ê÷S◊∑7Gñ∆W2Ê&∆Ê6VDÊ˜FW”„∆#Ì	≠Ì›-ÌΩ¬Ω›£¬ˆ#‚˝]-Ωç]›çR˝‚Ì-M]ΩÕ›Ω¬˝]mçΩÕ›Ì-˝¬á∂f˜&÷Bá6V∆V7FVD&∆Ê6VBÊWÜ6W756∆˜G2ó“ΩÌ-Ì"-]RsRçR›ÌÕ-ç-í›Rç˝ÌΩÕ}=]-ÚMΩÚ≠ÌÕ˝]›mçÇM]Mçmç-M==çR˝ÌMçΩ]í‚
+›-Ì"˝Ì≠}-]Ω¬(	B-›=-]››çí¬ÌMçmçΩÕ›Ωí	é(	3Ç„íÇ˝Ω“cR›Rç}Õ]›]›≤„¬˜Á–¢∑¶W&ı6∆˜E7V6ñ«FñW2Ê∆VÊwFÇ‚bb∆Fób6∆74Ê÷S◊∑7Gñ∆W2Êg&◊$FñvÊ˜7Fñ7“&ˆ∆S“&Ê˜FR#‡¢«7G&ˆÊsÌ	˝Ì-]≠-˝}Ç	=	ç
+(	=
+M
+	Õ
+˝
+M
+	Õ	‚+r∑¶W&ı6∆˜E7V6ñ«FñW2Ê∆VÊwFá“˝]mçΩÕ›Ì-]í›=Ω]-ΩÕÇΩÌ-ÕÉ¬˜7G&ˆÊs‡¢«Ì	"-Ω==}≠R∆#Ì]ÌmM]›çí
+M
+	Õ
+Ì"∂g&◊%&rÁ7V÷÷'íÁ6˜W&6T7WG”¬ˆ#‚˝‚ÌÌ--]---=Ìùç¬MÌΩm›Ì-˝¬]-¬˝ÌΩ]Õ›ΩR}˝çÇ2∂g&◊%¶W&ı6∆˜Df∆vvVG“çr∑¶W&ı6∆˜E7V6ñ«FñW2Ê∆VÊwFá“˝]mçΩÕ›Ì-]í‚	≠Ì›≠]-›ΩR˝ÌMçΩÇÌ-Õ]}]›≤›çmR„¬˜‡¢«Ì
+-]≠
+M
+	Õ	‚Ì"∂g&÷Ù∆ñÊ∂vU&rÊ7WG”¢∂g&÷Ù˜&vÊó¶Fñˆ‰fñÊFñÊw3ÚÊ÷F6ÜV@¢Úg&÷Ù˜&vÊó¶Fñˆ‰fñÊFñÊw2Êó77VW2””“ÁV∆¿¢Ú-≠ÌΩç}]--‚Ì-≠ΩÌ›]›çí˝‚˝ÌM}M]Ω]›ç˝¬	Õ	‚›RÌ˝]M]Ω]›‚ ¢¢G∂g&÷Ù˜&vÊó¶Fñˆ‰fñÊFñÊw2Êó77VW7“-Ì¢˝ç}›≠ÕÇ]ÌmM]›çí˝‚	Õ	‚çrG∂f˜&÷BÜg&÷Ù˜&vÊó¶Fñˆ‰fñÊFñÊw2Á&˜w2ó“-Ì¶ ¢¢g&÷Ù˜&vÊó¶Fñˆ‰fñÊFñÊw3ÚÊ÷&ñwV˜W0¢Ú-›]≠ÌΩÕ≠‚Ì-˝MÌùçR˝ç-˝}Ì¢ÙîB	Õ	‚(	B-]=]-Ú˝Ì-]≠ ¢¢-›]"ÌM›Ì}›}›Ì=‚Ì˝Ì--Ω]›çÚ	Õ	‚˝‚ÙîB'“„¬˜‡¢«„∆#Ì	-m›„£¬ˆ#‚›-Ç-Ω==}≠Ç›RÌM]m"˝ÌΩ›Ì=‚˝ç≠-}]íÇ›R=-›-Ωç-Ì"˝ç}ç›2Ì-=---çÚΩÌ-Ì"‚	˝ÇÌ-=---çÇ}˝ç]í˝‚MÌΩm›Ì-Ç›]ΩÕ}Ú}ç--¬¬}-‚-rÌ-=---=]"‚	˝Ì-]Õ-R≠MÌ-ΩR-]M]›çÚ¬˝ç-˝}≠2
+	Ú¬˝ç›çR	Õ	ç
+ÇMÌ-=˝›Ì-¬ΩÌ-Ì"›	]	˝	=
+2„¬˜‡¢¬ˆFócÁ–¢∂g&◊%&WfñWu&˜w2Ê∆VÊwFÇ‚bb«6∆74Ê÷S◊∑7Gñ∆W2Ê6Ü'DÊ˜FW”„∆#Ì	˝Ì-]ç-¬
+M
+	Õ
+¢∂g&◊%&WfñWu&˜w2Ê∆VÊwFá“˝]mçΩÕ›Ì-]í„¬ˆ#‚	]-¬ΩÌ-≤	]	˝	=
+2˝Ç›=Ω]-Ì¬›ÌÕ-ç-R‚	›mÕç-R*Ω	˝Ì-]ç-¬Ìçç≠Ç"
+M
+	Õ
++≤-ΩçS¢Ì-≠Ì]-Ú≠-Ì}≠›-Ìí	Õ	‚"}M]ΩRbM]-Ωç}mç]íMÌΩm›Ì-]í¬
+	ÚÇ}˝ç]í‚	˝ÌM--]mM››ΩRÌçç≠Çç˝-Õ-R"˝]-ç}›Ì¬ç-Ì}›ç≠R‚	›=Ω]-Ìí›ÌÕ-ç"¬˝‚]R›RMÌ≠}Ω-]"Ìçç≠2„¬˜Á–¢∆Fób6∆74Ê÷S◊∑7Gñ∆W2Á6V7Fñˆ‰ÜVG”„∆Fóc„∆É#Ì	˝Ì≠}-]ΩÇ˝‚˝]mçΩÕ›Ì-˝√¬ˆÉ#„«Ì	}›}]›çÚ˝‚˝]mçΩÕ›Ì-˝¬˝-Ì}›ΩS¢˝Ω“cR˝çÕ]›˝]-Ú¢Ìù]Õ2˝Ì≠}-]Ω‚	Õ	‚‚	Õ]Mç›-›ç-]"	Õ	‚M==çÕÇÌ=›ç}mç˝ÕÇ-Ì=‚mR›Ì-Ω==}≠Ç„¬˜„¬ˆFóc„«6V∆V7B6∆74Ê÷S◊∑7Gñ∆W2ÊñÊ∆ñÊU6V∆V7G“f«VS◊∑6V∆V7FVE7V6ñ«Gó“ˆ‰6ÜÊvS◊≤ÜWfVÁBí”‚6WE6V∆V7FVE7V6ñ«GíÜWfVÁBÁF&vWBÁf«VRó”„∆˜Fñˆ‚f«VS“"#Ì	-R˝]mçΩÕ›Ì-É¬ˆ˜Fñˆ„Áµ5T4î≈DîU2Ê÷Çá7V6ñ«Gíí”‚∆˜Fñˆ‚∂Wì◊∑7V6ñ«GíÊ6ˆFW“f«VS◊∑7V6ñ«GíÊ6ˆFW”Á∑7V6ñ«GíÊÊ÷W”¬ˆ˜Fñˆ„‚ó”¬˜6V∆V7C„¬ˆFóc‡¢∆Fób6∆74Ê÷S◊∑7Gñ∆W2ÁF&∆U67&ˆ∆«”„«F&∆R6∆74Ê÷S◊∑7Gñ∆W2ÁF&∆W”„«FÜVC„«G#„«FÉÌ
+˝]mçΩÕ›Ì-√¬˜FÉ„«FÉÌ	›ÌÕ-ç"	-
+	]	=	„¬˜FÉ„«FÉÌ
+ΩÌ-Ì"MΩÚ	]	˝	=
+3¬˜FÉ„«FÉÌ	é(	3Ç„í¬S¬˜FÉ„«FÉÌ	Õ]Mç›-ΩÌ≠Ç¬S¬˜FÉ„«FÉÌ	Ì-≠ΩÌ›]›çR¬ÚÌÚ„¬˜FÉ„«FÉÌ	Õ	‚"-ΩÌ≠S¬˜FÉ„¬˜G#„¬˜FÜVC„«F&ˆGì‡¢∂Fó7∆ï7V6ñ«FñW2Ê÷Çá&˜rí”‚∞¢6ˆÁ7B&VÊ6Ü÷&≤“&VÊ6Ü÷&¥'ï7V6ñ«GíÊvWBá&˜rÊ6ˆFRì∞¢6ˆÁ7BFñffW&VÊ6R“&˜rÊ6˜fW&vR”“ÁV∆¬bb&VÊ6Ü÷&≥ÚÊ÷VFñ‚”“ÁV∆¬bb&VÊ6Ü÷&≥ÚÊ÷VFñ‚”“VÊFVfñÊVBÚ&˜rÊ6˜fW&vR“&VÊ6Ü÷&≤Ê÷VFñ‚¢ÁV∆√∞¢&WGW&‚«G"∂Wì◊∑&˜rÊ6ˆFW”„«FB6∆74Ê÷S◊∑7Gñ∆W2Ê˜&tÊ÷W”Á∑&˜rÊÊ÷W◊∑&˜rÊÊ˜&“”“ÁV∆¬bb&˜rÊÊ˜&“‚bb&˜rÊWwU6∆˜G2””“bb«6÷∆¬6∆74Ê÷S◊∑7Gñ∆W2Êg&◊$ñÊ∆ñÊTFñvÊ˜7Fñ7“FóF∆S◊∂g&◊%¶W&ı6∆˜Dó77VW2ÊvWBá&˜rÊ6ˆFRìÚÁ&ˆ∆W2Ê÷Çá&V6˜&Bí”‚G∑&V6˜&BÊÊ÷W”¢G∑&V6˜&BÊ6˜VÁG÷íÊ¶ˆñ‚Ç#≤"í«¬-	›=Ω]-Ú}˝ç¬ΩÌ-Ì"-]=]"˝Ì-]≠Ç	Õ	ç
+¬
+M
+	Õ
+Ç
+M
+	Õ	‚'”Á≤Üg&◊%¶W&ı6∆˜Dó77VW2ÊvWBá&˜rÊ6ˆFRìÚÊ6˜VÁBÛÚí‚Ú
+M
+	Õ
+¢G∂f˜&÷BÜg&◊%¶W&ı6∆˜Dó77VW2ÊvWBá&˜rÊ6ˆFRíÊ6˜VÁBó“}˝ç]í]ÌmM]›ç˝ÕÜ¢-
+-˝}≠2
+M
+	Õ
+˝
+M
+	Õ	‚›=m›‚˝Ì-]ç-¬'”¬˜6÷∆√Á◊∑&˜rÊÊ˜&“””“bb&˜rÊWwU6∆˜G2”“ÁV∆¬bb&˜rÊWwU6∆˜G2‚bb«6÷∆¬7Gñ∆S◊∑≤Fó7∆ì¢&&∆ˆ6≤"¬6ˆ∆˜#¢"3ìÉcÇ"¬fˆÁEvVñváC¢s◊”Ì	˝Ì-]ç-¬
+M
+	Õ
+¬˜6÷∆√Á”¬˜FC„«FCÁ∂f˜&÷Bá&˜rÊÊ˜&“ó”¬˜FC„«FCÁ∂f˜&÷Bá&˜rÊWwU6∆˜G2ó”¬˜FC„«FB6∆74Ê÷S◊∂G∑7Gñ∆W2Ê÷WG&ñ46V∆«“G∑7V6ñ«Gî&ÊBá&˜rÊ6˜fW&vRó÷”Á∑W&6VÁBá&˜rÊ6˜fW&vRó”¬˜FC„«FCÁ∑W&6VÁBÜ&VÊ6Ü÷&≥ÚÊ÷VFñ‚ÛÚÁV∆¬ó”¬˜FC„«FB6∆74Ê÷S◊∂FñffW&VÊ6R””“ÁV∆¬Ú7Gñ∆W2ÊÊWWG&¬¢FñffW&VÊ6R„“Ú7Gñ∆W2ÊvˆˆB¢7Gñ∆W2Ê&V∆˜tÊ˜&◊”Á∂FñffW&VÊ6R””“ÁV∆¬Ú.(	B"¢√Á∂FñffW&VÊ6R‚Ú"≤"¢"'◊∂ÁV÷&W$f˜&÷BÊf˜&÷BÜFñffW&VÊ6Ró”¬ÛÁ”¬˜FC„«FCÁ∂&VÊ6Ü÷&≥ÚÊ6˜VÁBÛÚ”¬˜FC„¬˜G#„∞¢“ó–¢¬˜F&ˆGì„¬˜F&∆S„¬ˆFóc‡¢«6V7Fñˆ‚6∆74Ê÷S◊∑7Gñ∆W2Ê˜&tñÁ6ñváG7”‡¢∆'Fñ6∆S„∆É3Ì	Ì=›ç}mçÚÌ-›Ìç-]ΩÕ›‚-ΩÌ≠É¬ˆÉ3„«Ì	˝‚-Ω››Ω¬˝]mçΩÕ›Ì-˝¬›çmRÕ]Mç›≥¢∆#Á∂&V∆˜t÷VFñ‰6˜VÁG”¬ˆ#„≤›=Ì-›RçΩÇ-ΩçS¢∆#Á∂&˜fT÷VFñ‰6˜VÁG”¬ˆ#‚„¬˜„¬ˆ'Fñ6∆S‡¢∆'Fñ6∆S„∆É3Ì
+=˝-Ω]›}]≠çí-Ω-ÌC¬ˆÉ3„«Ì
+˝]mçΩÕ›Ì-]í=Ì-›]¬›çmR#RS¢∆#Á∂7&óFñ6ƒ6˜VÁG”¬ˆ#‚‚
+ÕΩR›ç}≠çR}›}]›çÛ¢∑vV∂W7E7V6ñ«FñW2Ê∆VÊwFÇÚvV∂W7E7V6ñ«FñW2Ê÷Çá&˜rí”‚G∑&˜rÊÊ÷W“(	BG∑W&6VÁBá&˜rÊ6˜fW&vRó÷íÊ¶ˆñ‚Ç#≤"í¢-›]"M››ΩR'“„¬˜„¬ˆ'Fñ6∆S‡¢¬˜6V7Fñˆ„‡¢∆Fób6∆74Ê÷S◊∑7Gñ∆W2Á7V6ñ«Gî∆VvVÊG”„«7„„∆í6∆74Ê÷S◊∑7Gñ∆W2Á7V6ñ«Gîw&VVÁ“ÛÓ(öSsRR(	B-ΩÌ≠çí=Ì-]›√¬˜7„„«7„„∆í6∆74Ê÷S◊∑7Gñ∆W2Á7V6ñ«GïñV∆∆˜w“Û„S(	3sBR(	B-]=]"-›çÕ›çÛ¬˜7„„«7„„∆í6∆74Ê÷S◊∑7Gñ∆W2Á7V6ñ«Gî˜&ÊvW“Û„#^(	3CíR(	B}Ì›ç≠¬˜7„„«7„„∆í6∆74Ê÷S◊∑7Gñ∆W2Á7V6ñ«Gï&VG“Û‚f«C≥#RR(	B≠ç-ç}›„¬˜7„„«7„Ì
+m-]-Ì-ÌíÌç]›-çMΩÚ˝]mçΩÕ›Ì-É≤˝Ω“cRÌm]›ç-]-Ú˝‚	Õ	‚"m]ΩÌ¬„¬˜7„„¬ˆFóc‡¢«6∆74Ê÷S◊∑7Gñ∆W2Ê6Ü'DÊ˜FW”Ì	Õ]Mç›}ç-›˝‚	Õ	‚-ÌímR-Ω==}≠É¢∂&VÊ6Ü÷&¥˜&vÊó¶FñˆÁ2Ê∆VÊwFá“Ì=›ç}mçí+r]r∂&VÊ6Ü÷&¥FF6WCÚÁ&W˜'DFFRÛÚ.(	B'“‚	"-ΩÌ≠2˝‚˝]mçΩÕ›Ì-Ç-]ÌM˝"	Õ	‚˝ÌΩÌmç-]ΩÕ›Ω¬Ìùç¬›ÌÕ-ç-Ì√≤›=Ω]-ΩR}›}]›çÚΩÌ-Ì"=}ç-Ω-Ì-Ú„¬˜‡¢¬˜6V7Fñˆ„Á–¢¬ˆ÷ñ„Á–†¢∆fˆ˜FW"6∆74Ê÷S◊∑7Gñ∆W2Êfˆ˜FW'”Ì	ç-Ì}›ç£¢MÌÕ	é(	3Ç„í¬Ωç"*Ω›ÌÕ-ç-º+≤‚
+]ΩÕ›Ωí˝Ìm]›"	é(	3Ç„í“*Ω
+ΩÌ-Ì"MΩÚ	]	˝	=
+<+≤;r*Ω	›ÌÕ-ç"	-
+	]	=	Ï+≤9rS≤˝Ω“≠mMÌí	Õ	‚(	BcR¬m]Ω¬(	BsR‚	›]]--≠}ç-Ω-]-Ú˝‚≠mMÌí	Õ	‚≠¢Õç›çÕΩÕ›ÌRm]ΩÌR}çΩ‚MÌ˝ÌΩ›ç-]ΩÕ›ΩRΩÌ-Ì"M‚cRÌù]=‚›ÌÕ-ç-‚*Ω	›ÌÕMΩÚ	]	˝	=
+<+≤Ç*Ω	-]=‚ΩÌ-Ì,+≤"Ìm]›≠R›Rç˝ÌΩÕ}=Ì-Û≤ΩÌ-≤˝‚˝]mçΩÕ›Ì-˝¬›=Ω]-Ω¬›ÌÕ-ç-Ì¬›R-]ÌM˝""ÌMçmçΩÕ›Ωíç-Ì2MÌÕ≤‚	ç-Ì2˝‚]=çÌ›2(	BÌ-›Ìç]›çR=ÕÕ≤ΩÌ-Ì"¢=ÕÕRÌù]=‚›ÌÕ-ç-‚	M-≤]}Ì#¢¥DDÊ÷ÇÜFF6WBí”‚FF6WBÁ&W˜'DFFRíÊ¶ˆñ‚Ç"+r"ó“‚	˝‚˝-çΩ2]Ì=›ç}mçÇ	ΩÕÕ]-Õ]-≠çr-]≠=ù]=‚Ì-}-ç≠ΩÌ}]›≤˝]m›çR	Õ	‚¬=ÌΩÌ-›ÚÌ=›ç}mçÚÌ]›]›‚	Ì-=---çRM››ΩR›R}Õ]›˝]-Ú›=Ω√≤=Ì=M--]››ΩR˝}-›ΩRÌ=›ç}mçÇ}M]Ω]›≤˝‚Ì=›ç}mçÌ››‚›˝-Ì-ÌíMÌÕR„¬ˆfˆ˜FW#‡¢¬ˆFóc„∞ß–†
