@@ -1,8 +1,8 @@
 {
-  "source": "И_38.9_КЗН_НЧ  Слоты по нормативам на дату. 20.11.2026.xlsx",
-  "reportDate": "20.11.2026",
-  "asOf": "20 ноября 2026",
-  "frmoDate": "19.11.2026",
+  "source": "И_38.9_КЗН_НЧ  Слоты по нормативам на дату. 26.11.2026.xlsx",
+  "reportDate": "26.11.2026",
+  "asOf": "26 ноября 2026",
+  "frmoDate": "26.11.2026",
   "forwardDays": 14,
   "orgCount": 57,
   "specialties": [
@@ -70,46 +70,53 @@
       "name": "ГАУЗ \"ГКБ № 12\"",
       "fullName": "ГАУЗ \"ГКБ № 12\" (Казань)",
       "city": "Казань",
+      "totals": {
+        "norm": 8390,
+        "slots": 8496,
+        "epguNorm": 5280,
+        "epguSlots": 6605,
+        "sourcePercent": 78.72467222884386
+      },
       "specialties": [
         {
           "code": "11",
           "name": "терапевт",
-          "norm": 4760,
-          "slots": 4697,
-          "epguNorm": 3060,
-          "epguSlots": 3408
+          "norm": 4620,
+          "slots": 4778,
+          "epguNorm": 2970,
+          "epguSlots": 3728
         },
         {
           "code": "13",
           "name": "акушер-гинеколог",
-          "norm": 1150,
-          "slots": 1315,
-          "epguNorm": 700,
-          "epguSlots": 889
+          "norm": 1380,
+          "slots": 1273,
+          "epguNorm": 840,
+          "epguSlots": 876
         },
         {
           "code": "25",
           "name": "ВОП — семейный врач (семейный врач)",
-          "norm": 520,
-          "slots": 586,
-          "epguNorm": 320,
-          "epguSlots": 546
+          "norm": 780,
+          "slots": 707,
+          "epguNorm": 480,
+          "epguSlots": 635
         },
         {
           "code": "14",
           "name": "оториноларинголог",
-          "norm": 450,
-          "slots": 667,
-          "epguNorm": 270,
-          "epguSlots": 554
+          "norm": 750,
+          "slots": 693,
+          "epguNorm": 450,
+          "epguSlots": 572
         },
         {
           "code": "15",
           "name": "офтальмолог",
-          "norm": 525,
-          "slots": 500,
-          "epguNorm": 315,
-          "epguSlots": 396
+          "norm": 350,
+          "slots": 448,
+          "epguNorm": 210,
+          "epguSlots": 364
         },
         {
           "code": "16",
@@ -171,9 +178,9 @@
           "code": "23",
           "name": "хирург",
           "norm": 510,
-          "slots": 557,
+          "slots": 597,
           "epguNorm": 330,
-          "epguSlots": 406
+          "epguSlots": 430
         },
         {
           "code": "26",
@@ -191,6 +198,13 @@
       "name": "АО ДЕТСКАЯ СТОМАТОЛОГИЧЕСКАЯ ПОЛИКЛИНИКА № 9 НА САБАНЕ",
       "fullName": "АО ДЕТСКАЯ СТОМАТОЛОГИЧЕСКАЯ ПОЛИКЛИНИКА № 9 НА САБАНЕ (Казань)",
       "city": "Казань",
+      "totals": {
+        "norm": 2182.5,
+        "slots": 72,
+        "epguNorm": 1337.5,
+        "epguSlots": 30,
+        "sourcePercent": 1.3745704467353952
+      },
       "specialties": [
         {
           "code": "11",
@@ -260,9 +274,9 @@
           "code": "19",
           "name": "стоматолог",
           "norm": 1620,
-          "slots": 84,
+          "slots": 72,
           "epguNorm": 990,
-          "epguSlots": 35
+          "epguSlots": 30
         },
         {
           "code": "20",
@@ -312,30 +326,37 @@
       "name": "ГАУЗ \"ГОРОДСКАЯ БОЛЬНИЦА №2\"",
       "fullName": "ГАУЗ \"ГОРОДСКАЯ БОЛЬНИЦА №2\" (Набережные Челны)",
       "city": "Набережные Челны",
+      "totals": {
+        "norm": 5245,
+        "slots": 4012,
+        "epguNorm": 3225,
+        "epguSlots": 2805,
+        "sourcePercent": 53.479504289799806
+      },
       "specialties": [
         {
           "code": "11",
           "name": "терапевт",
-          "norm": 1148,
-          "slots": 1121,
-          "epguNorm": 737.9999999999999,
-          "epguSlots": 852
+          "norm": 1120,
+          "slots": 1167,
+          "epguNorm": 720,
+          "epguSlots": 855
         },
         {
           "code": "13",
           "name": "акушер-гинеколог",
           "norm": 1495,
-          "slots": 1588,
+          "slots": 1583,
           "epguNorm": 910,
-          "epguSlots": 1024
+          "epguSlots": 970
         },
         {
           "code": "25",
           "name": "ВОП — семейный врач (семейный врач)",
-          "norm": 650,
-          "slots": 448,
-          "epguNorm": 400,
-          "epguSlots": 298
+          "norm": 585,
+          "slots": 496,
+          "epguNorm": 360,
+          "epguSlots": 344
         },
         {
           "code": "14",
@@ -349,9 +370,9 @@
           "code": "15",
           "name": "офтальмолог",
           "norm": 1575,
-          "slots": 300,
+          "slots": 370,
           "epguNorm": 945,
-          "epguSlots": 287
+          "epguSlots": 320
         },
         {
           "code": "16",
@@ -433,30 +454,37 @@
       "name": "ГАУЗ \"ГОРОДСКАЯ ПОЛИКЛИНИКА №3\"",
       "fullName": "ГАУЗ \"ГОРОДСКАЯ ПОЛИКЛИНИКА №3\" (Набережные Челны)",
       "city": "Набережные Челны",
+      "totals": {
+        "norm": 6327.5,
+        "slots": 5089,
+        "epguNorm": 4027.5,
+        "epguSlots": 3347,
+        "sourcePercent": 52.89608850256815
+      },
       "specialties": [
         {
           "code": "11",
           "name": "терапевт",
-          "norm": 5040,
-          "slots": 3796,
-          "epguNorm": 3240,
-          "epguSlots": 2463
+          "norm": 4760,
+          "slots": 3355,
+          "epguNorm": 3060,
+          "epguSlots": 2190
         },
         {
           "code": "13",
           "name": "акушер-гинеколог",
-          "norm": 690,
-          "slots": 869,
-          "epguNorm": 420,
-          "epguSlots": 540
+          "norm": 575,
+          "slots": 796,
+          "epguNorm": 350,
+          "epguSlots": 499
         },
         {
           "code": "25",
           "name": "ВОП — семейный врач (семейный врач)",
           "norm": 520,
-          "slots": 336,
+          "slots": 391,
           "epguNorm": 320,
-          "epguSlots": 243
+          "epguSlots": 296
         },
         {
           "code": "14",
@@ -470,9 +498,9 @@
           "code": "15",
           "name": "офтальмолог",
           "norm": 175,
-          "slots": 319,
+          "slots": 315,
           "epguNorm": 105,
-          "epguSlots": 190
+          "epguSlots": 188
         },
         {
           "code": "16",
@@ -534,9 +562,9 @@
           "code": "23",
           "name": "хирург",
           "norm": 297.5,
-          "slots": 222,
+          "slots": 232,
           "epguNorm": 192.5,
-          "epguSlots": 166
+          "epguSlots": 174
         },
         {
           "code": "26",
@@ -554,36 +582,43 @@
       "name": "ГАУЗ \"ГОРОДСКАЯ БОЛЬНИЦА №5\"",
       "fullName": "ГАУЗ \"ГОРОДСКАЯ БОЛЬНИЦА №5\" (Набережные Челны)",
       "city": "Набережные Челны",
+      "totals": {
+        "norm": 15795,
+        "slots": 11931,
+        "epguNorm": 9900,
+        "epguSlots": 9641,
+        "sourcePercent": 61.03830326052548
+      },
       "specialties": [
         {
           "code": "11",
           "name": "терапевт",
           "norm": 7700,
-          "slots": 6059,
+          "slots": 6075,
           "epguNorm": 4950,
-          "epguSlots": 4837
+          "epguSlots": 4752
         },
         {
           "code": "13",
           "name": "акушер-гинеколог",
-          "norm": 3105,
-          "slots": 1676,
-          "epguNorm": 1890,
-          "epguSlots": 1540
+          "norm": 3335,
+          "slots": 1604,
+          "epguNorm": 2030,
+          "epguSlots": 1470
         },
         {
           "code": "25",
           "name": "ВОП — семейный врач (семейный врач)",
           "norm": 2600,
-          "slots": 2519,
+          "slots": 2624,
           "epguNorm": 1600,
-          "epguSlots": 2146
+          "epguSlots": 2203
         },
         {
           "code": "14",
           "name": "оториноларинголог",
           "norm": 600,
-          "slots": 537,
+          "slots": 539,
           "epguNorm": 360,
           "epguSlots": 407
         },
@@ -591,9 +626,9 @@
           "code": "15",
           "name": "офтальмолог",
           "norm": 1050,
-          "slots": 525,
+          "slots": 602,
           "epguNorm": 630,
-          "epguSlots": 393
+          "epguSlots": 451
         },
         {
           "code": "16",
@@ -655,9 +690,9 @@
           "code": "23",
           "name": "хирург",
           "norm": 510,
-          "slots": 538,
+          "slots": 487,
           "epguNorm": 330,
-          "epguSlots": 334
+          "epguSlots": 358
         },
         {
           "code": "26",
@@ -675,14 +710,21 @@
       "name": "ГАУЗ \"ГОСПИТАЛЬ ДЛЯ ВЕТЕРАНОВ ВОЙН\" Г. Н. ЧЕЛНЫ",
       "fullName": "ГАУЗ \"ГОСПИТАЛЬ ДЛЯ ВЕТЕРАНОВ ВОЙН\" Г. Н. ЧЕЛНЫ (Набережные Челны)",
       "city": "Набережные Челны",
+      "totals": {
+        "norm": 3075.5,
+        "slots": 2289,
+        "epguNorm": 1950.5,
+        "epguSlots": 1710,
+        "sourcePercent": 55.60071533084051
+      },
       "specialties": [
         {
           "code": "11",
           "name": "терапевт",
           "norm": 2268,
-          "slots": 1620,
+          "slots": 1706,
           "epguNorm": 1458,
-          "epguSlots": 1218
+          "epguSlots": 1292
         },
         {
           "code": "13",
@@ -704,9 +746,9 @@
           "code": "14",
           "name": "оториноларинголог",
           "norm": 375,
-          "slots": 190,
+          "slots": 106,
           "epguNorm": 225,
-          "epguSlots": 162
+          "epguSlots": 90
         },
         {
           "code": "15",
@@ -776,9 +818,9 @@
           "code": "23",
           "name": "хирург",
           "norm": 170,
-          "slots": 201,
+          "slots": 214,
           "epguNorm": 110,
-          "epguSlots": 143
+          "epguSlots": 152
         },
         {
           "code": "26",
@@ -796,6 +838,13 @@
       "name": "ГАУЗ \"ДЕТСКАЯ ГОРОДСКАЯ ПОЛИКЛИНИКА №3\"",
       "fullName": "ГАУЗ \"ДЕТСКАЯ ГОРОДСКАЯ ПОЛИКЛИНИКА №3\" (Набережные Челны)",
       "city": "Набережные Челны",
+      "totals": {
+        "norm": 6060,
+        "slots": 4165,
+        "epguNorm": 3882.5,
+        "epguSlots": 2897,
+        "sourcePercent": 47.805280528052805
+      },
       "specialties": [
         {
           "code": "11",
@@ -825,9 +874,9 @@
           "code": "14",
           "name": "оториноларинголог",
           "norm": 450,
-          "slots": 141,
+          "slots": 211,
           "epguNorm": 270,
-          "epguSlots": 113
+          "epguSlots": 163
         },
         {
           "code": "15",
@@ -841,9 +890,9 @@
           "code": "16",
           "name": "педиатр",
           "norm": 4270,
-          "slots": 3894,
+          "slots": 3760,
           "epguNorm": 2745,
-          "epguSlots": 2604
+          "epguSlots": 2540
         },
         {
           "code": "17",
@@ -905,9 +954,9 @@
           "code": "26",
           "name": "детский хирург",
           "norm": 800,
-          "slots": 144,
+          "slots": 194,
           "epguNorm": 540,
-          "epguSlots": 144
+          "epguSlots": 194
         }
       ]
     },
@@ -917,36 +966,43 @@
       "name": "ГАУЗ \"ГОРОДСКАЯ ПОЛИКЛИНИКА №4 ИМ.Л.Н.ГАНИЕВОЙ\"",
       "fullName": "ГАУЗ \"ГОРОДСКАЯ ПОЛИКЛИНИКА №4 ИМ.Л.Н.ГАНИЕВОЙ\" (Набережные Челны)",
       "city": "Набережные Челны",
+      "totals": {
+        "norm": 5837.5,
+        "slots": 4772,
+        "epguNorm": 3647.5,
+        "epguSlots": 3068,
+        "sourcePercent": 52.55674518201284
+      },
       "specialties": [
         {
           "code": "11",
           "name": "терапевт",
-          "norm": 2940,
-          "slots": 2397,
-          "epguNorm": 1890,
-          "epguSlots": 1362
+          "norm": 2450,
+          "slots": 2442,
+          "epguNorm": 1575,
+          "epguSlots": 1375
         },
         {
           "code": "13",
           "name": "акушер-гинеколог",
-          "norm": 1725,
-          "slots": 885,
-          "epguNorm": 1050,
-          "epguSlots": 509
+          "norm": 1380,
+          "slots": 1240,
+          "epguNorm": 840,
+          "epguSlots": 756
         },
         {
           "code": "25",
           "name": "ВОП — семейный врач (семейный врач)",
           "norm": 390,
-          "slots": 437,
+          "slots": 501,
           "epguNorm": 240,
-          "epguSlots": 335
+          "epguSlots": 387
         },
         {
           "code": "14",
           "name": "оториноларинголог",
           "norm": 450,
-          "slots": 126,
+          "slots": 102,
           "epguNorm": 270,
           "epguSlots": 90
         },
@@ -954,9 +1010,9 @@
           "code": "15",
           "name": "офтальмолог",
           "norm": 700,
-          "slots": 291,
+          "slots": 308,
           "epguNorm": 420,
-          "epguSlots": 243
+          "epguSlots": 281
         },
         {
           "code": "16",
@@ -1018,9 +1074,9 @@
           "code": "23",
           "name": "хирург",
           "norm": 467.5,
-          "slots": 168,
+          "slots": 179,
           "epguNorm": 302.5,
-          "epguSlots": 168
+          "epguSlots": 179
         },
         {
           "code": "26",
@@ -1038,6 +1094,13 @@
       "name": "ГАУЗ \"ДЕТСКАЯ ГОРОДСКАЯ ПОЛИКЛИНИКА №2\"",
       "fullName": "ГАУЗ \"ДЕТСКАЯ ГОРОДСКАЯ ПОЛИКЛИНИКА №2\" (Набережные Челны)",
       "city": "Набережные Челны",
+      "totals": {
+        "norm": 5880,
+        "slots": 4669,
+        "epguNorm": 3780,
+        "epguSlots": 3773,
+        "sourcePercent": 64.16666666666667
+      },
       "specialties": [
         {
           "code": "11",
@@ -1051,9 +1114,9 @@
           "code": "13",
           "name": "акушер-гинеколог",
           "norm": 0,
-          "slots": 194,
+          "slots": 203,
           "epguNorm": 0,
-          "epguSlots": 162
+          "epguSlots": 166
         },
         {
           "code": "25",
@@ -1075,17 +1138,17 @@
           "code": "15",
           "name": "офтальмолог",
           "norm": 0,
-          "slots": 42,
+          "slots": 40,
           "epguNorm": 0,
-          "epguSlots": 42
+          "epguSlots": 40
         },
         {
           "code": "16",
           "name": "педиатр",
-          "norm": 5530,
-          "slots": 4452,
-          "epguNorm": 3555,
-          "epguSlots": 3598
+          "norm": 5880,
+          "slots": 4669,
+          "epguNorm": 3780,
+          "epguSlots": 3773
         },
         {
           "code": "17",
@@ -1159,6 +1222,13 @@
       "name": "ГАУЗ \"ДЕТСКАЯ ГОРОДСКАЯ ПОЛИКЛИНИКА №4 ИМ. Ф.Г. АХМЕРОВОЙ\"",
       "fullName": "ГАУЗ \"ДЕТСКАЯ ГОРОДСКАЯ ПОЛИКЛИНИКА №4 ИМ. Ф.Г. АХМЕРОВОЙ\" (Набережные Челны)",
       "city": "Набережные Челны",
+      "totals": {
+        "norm": 8407.5,
+        "slots": 7005,
+        "epguNorm": 5362.5,
+        "epguSlots": 4893,
+        "sourcePercent": 58.198037466547724
+      },
       "specialties": [
         {
           "code": "11",
@@ -1172,9 +1242,9 @@
           "code": "13",
           "name": "акушер-гинеколог",
           "norm": 230,
-          "slots": 110,
+          "slots": 96,
           "epguNorm": 140,
-          "epguSlots": 110
+          "epguSlots": 96
         },
         {
           "code": "25",
@@ -1188,25 +1258,25 @@
           "code": "14",
           "name": "оториноларинголог",
           "norm": 600,
-          "slots": 298,
+          "slots": 276,
           "epguNorm": 360,
-          "epguSlots": 298
+          "epguSlots": 276
         },
         {
           "code": "15",
           "name": "офтальмолог",
           "norm": 525,
-          "slots": 89,
+          "slots": 92,
           "epguNorm": 315,
-          "epguSlots": 89
+          "epguSlots": 92
         },
         {
           "code": "16",
           "name": "педиатр",
           "norm": 6230,
-          "slots": 6263,
+          "slots": 6409,
           "epguNorm": 4005,
-          "epguSlots": 4151
+          "epguSlots": 4297
         },
         {
           "code": "17",
@@ -1236,9 +1306,9 @@
           "code": "20",
           "name": "стоматолог детский",
           "norm": 180,
-          "slots": 86,
+          "slots": 108,
           "epguNorm": 110,
-          "epguSlots": 86
+          "epguSlots": 108
         },
         {
           "code": "21",
@@ -1268,9 +1338,9 @@
           "code": "26",
           "name": "детский хирург",
           "norm": 600,
-          "slots": 36,
+          "slots": 24,
           "epguNorm": 405,
-          "epguSlots": 36
+          "epguSlots": 24
         }
       ]
     },
@@ -1280,6 +1350,13 @@
       "name": "ГАУЗ \"ДЕТСКАЯ ГОРОДСКАЯ ПОЛИКЛИНИКА №5\"",
       "fullName": "ГАУЗ \"ДЕТСКАЯ ГОРОДСКАЯ ПОЛИКЛИНИКА №5\" (Набережные Челны)",
       "city": "Набережные Челны",
+      "totals": {
+        "norm": 5955,
+        "slots": 6691,
+        "epguNorm": 3815,
+        "epguSlots": 5855,
+        "sourcePercent": 98.32073887489504
+      },
       "specialties": [
         {
           "code": "11",
@@ -1293,9 +1370,9 @@
           "code": "13",
           "name": "акушер-гинеколог",
           "norm": 230,
-          "slots": 88,
+          "slots": 161,
           "epguNorm": 140,
-          "epguSlots": 88
+          "epguSlots": 161
         },
         {
           "code": "25",
@@ -1325,9 +1402,9 @@
           "code": "16",
           "name": "педиатр",
           "norm": 4900,
-          "slots": 5821,
+          "slots": 5918,
           "epguNorm": 3150,
-          "epguSlots": 5081
+          "epguSlots": 5082
         },
         {
           "code": "17",
@@ -1389,9 +1466,9 @@
           "code": "26",
           "name": "детский хирург",
           "norm": 400,
-          "slots": 231,
+          "slots": 246,
           "epguNorm": 270,
-          "epguSlots": 231
+          "epguSlots": 246
         }
       ]
     },
@@ -1401,6 +1478,13 @@
       "name": "ГАУЗ \"ДЕТСКАЯ ГОРОДСКАЯ ПОЛИКЛИНИКА №6\"",
       "fullName": "ГАУЗ \"ДЕТСКАЯ ГОРОДСКАЯ ПОЛИКЛИНИКА №6\" (Набережные Челны)",
       "city": "Набережные Челны",
+      "totals": {
+        "norm": 5457.5,
+        "slots": 9812,
+        "epguNorm": 3467.5,
+        "epguSlots": 4280,
+        "sourcePercent": 78.42418689876317
+      },
       "specialties": [
         {
           "code": "11",
@@ -1414,9 +1498,9 @@
           "code": "13",
           "name": "акушер-гинеколог",
           "norm": 287.5,
-          "slots": 98,
+          "slots": 1422,
           "epguNorm": 175,
-          "epguSlots": 98
+          "epguSlots": 102
         },
         {
           "code": "25",
@@ -1430,25 +1514,25 @@
           "code": "14",
           "name": "оториноларинголог",
           "norm": 300,
-          "slots": 266,
+          "slots": 909,
           "epguNorm": 180,
-          "epguSlots": 266
+          "epguSlots": 189
         },
         {
           "code": "15",
           "name": "офтальмолог",
           "norm": 700,
-          "slots": 303,
+          "slots": 1529,
           "epguNorm": 420,
-          "epguSlots": 303
+          "epguSlots": 209
         },
         {
           "code": "16",
           "name": "педиатр",
           "norm": 3640,
-          "slots": 5886,
+          "slots": 5092,
           "epguNorm": 2340,
-          "epguSlots": 4434
+          "epguSlots": 3640
         },
         {
           "code": "17",
@@ -1510,9 +1594,9 @@
           "code": "26",
           "name": "детский хирург",
           "norm": 400,
-          "slots": 177,
+          "slots": 860,
           "epguNorm": 270,
-          "epguSlots": 177
+          "epguSlots": 140
         }
       ]
     },
@@ -1522,6 +1606,13 @@
       "name": "ГАУЗ ДЕТСКАЯ СТОМАТОЛОГИЧЕСКАЯ ПОЛИКЛИНИКА №1",
       "fullName": "ГАУЗ ДЕТСКАЯ СТОМАТОЛОГИЧЕСКАЯ ПОЛИКЛИНИКА №1 (Набережные Челны)",
       "city": "Набережные Челны",
+      "totals": {
+        "norm": 4725,
+        "slots": 2627,
+        "epguNorm": 2887.5,
+        "epguSlots": 1727,
+        "sourcePercent": 36.55026455026455
+      },
       "specialties": [
         {
           "code": "11",
@@ -1591,17 +1682,17 @@
           "code": "19",
           "name": "стоматолог",
           "norm": 3780,
-          "slots": 1908,
+          "slots": 2150,
           "epguNorm": 2310,
-          "epguSlots": 1349
+          "epguSlots": 1406
         },
         {
           "code": "20",
           "name": "стоматолог детский",
-          "norm": 990,
-          "slots": 460,
-          "epguNorm": 605,
-          "epguSlots": 305
+          "norm": 945,
+          "slots": 477,
+          "epguNorm": 577.5,
+          "epguSlots": 321
         },
         {
           "code": "21",
@@ -1643,6 +1734,13 @@
       "name": "ГАУЗ СТОМАТОЛОГИЧЕСКАЯ ПОЛИКЛИНИКА №1",
       "fullName": "ГАУЗ СТОМАТОЛОГИЧЕСКАЯ ПОЛИКЛИНИКА №1 (Набережные Челны)",
       "city": "Набережные Челны",
+      "totals": {
+        "norm": 1305,
+        "slots": 1257,
+        "epguNorm": 815,
+        "epguSlots": 849,
+        "sourcePercent": 65.05747126436782
+      },
       "specialties": [
         {
           "code": "11",
@@ -1711,10 +1809,10 @@
         {
           "code": "19",
           "name": "стоматолог",
-          "norm": 1170,
-          "slots": 628,
-          "epguNorm": 715,
-          "epguSlots": 448
+          "norm": 990,
+          "slots": 600,
+          "epguNorm": 605,
+          "epguSlots": 432
         },
         {
           "code": "20",
@@ -1727,10 +1825,10 @@
         {
           "code": "21",
           "name": "стоматолог-терапевт",
-          "norm": 405,
-          "slots": 677,
-          "epguNorm": 270,
-          "epguSlots": 484
+          "norm": 315,
+          "slots": 657,
+          "epguNorm": 210,
+          "epguSlots": 417
         },
         {
           "code": "22",
@@ -1764,6 +1862,13 @@
       "name": "ГАУЗ СТОМАТОЛОГИЧЕСКАЯ ПОЛИКЛИНИКА №2",
       "fullName": "ГАУЗ СТОМАТОЛОГИЧЕСКАЯ ПОЛИКЛИНИКА №2 (Набережные Челны)",
       "city": "Набережные Челны",
+      "totals": {
+        "norm": 2430,
+        "slots": 4042,
+        "epguNorm": 1580,
+        "epguSlots": 1353,
+        "sourcePercent": 55.67901234567901
+      },
       "specialties": [
         {
           "code": "11",
@@ -1832,10 +1937,10 @@
         {
           "code": "19",
           "name": "стоматолог",
-          "norm": 1260,
-          "slots": 589,
-          "epguNorm": 770,
-          "epguSlots": 176
+          "norm": 720,
+          "slots": 791,
+          "epguNorm": 440,
+          "epguSlots": 245
         },
         {
           "code": "20",
@@ -1848,10 +1953,10 @@
         {
           "code": "21",
           "name": "стоматолог-терапевт",
-          "norm": 1800,
-          "slots": 3175,
-          "epguNorm": 1200,
-          "epguSlots": 1044
+          "norm": 1710,
+          "slots": 3251,
+          "epguNorm": 1140,
+          "epguSlots": 1108
         },
         {
           "code": "22",
@@ -1885,6 +1990,13 @@
       "name": "ГАУЗ СТОМАТОЛОГИЧЕСКАЯ ПОЛИКЛИНИКА № 3",
       "fullName": "ГАУЗ СТОМАТОЛОГИЧЕСКАЯ ПОЛИКЛИНИКА № 3 (Набережные Челны)",
       "city": "Набережные Челны",
+      "totals": {
+        "norm": 2880.018,
+        "slots": 3656,
+        "epguNorm": 1870.011,
+        "epguSlots": 2746,
+        "sourcePercent": 95.34662630580782
+      },
       "specialties": [
         {
           "code": "11",
@@ -1954,9 +2066,9 @@
           "code": "19",
           "name": "стоматолог",
           "norm": 900.0179999999999,
-          "slots": 1084,
+          "slots": 1087,
           "epguNorm": 550.011,
-          "epguSlots": 884
+          "epguSlots": 890
         },
         {
           "code": "20",
@@ -1969,10 +2081,10 @@
         {
           "code": "21",
           "name": "стоматолог-терапевт",
-          "norm": 1890,
-          "slots": 2410,
-          "epguNorm": 1260,
-          "epguSlots": 1736
+          "norm": 1980,
+          "slots": 2569,
+          "epguNorm": 1320,
+          "epguSlots": 1856
         },
         {
           "code": "22",
@@ -2006,46 +2118,53 @@
       "name": "ГАУЗ \"ГОРОДСКАЯ ПОЛИКЛИНИКА №6\"",
       "fullName": "ГАУЗ \"ГОРОДСКАЯ ПОЛИКЛИНИКА №6\" (Набережные Челны)",
       "city": "Набережные Челны",
+      "totals": {
+        "norm": 7632.5,
+        "slots": 5385,
+        "epguNorm": 4832.5,
+        "epguSlots": 4268,
+        "sourcePercent": 55.918768424500485
+      },
       "specialties": [
         {
           "code": "11",
           "name": "терапевт",
-          "norm": 4900,
-          "slots": 3555,
-          "epguNorm": 3150,
-          "epguSlots": 2731
+          "norm": 5180,
+          "slots": 3694,
+          "epguNorm": 3330,
+          "epguSlots": 2891
         },
         {
           "code": "13",
           "name": "акушер-гинеколог",
           "norm": 1035,
-          "slots": 611,
+          "slots": 602,
           "epguNorm": 630,
-          "epguSlots": 611
+          "epguSlots": 602
         },
         {
           "code": "25",
           "name": "ВОП — семейный врач (семейный врач)",
           "norm": 260,
-          "slots": 243,
+          "slots": 231,
           "epguNorm": 160,
-          "epguSlots": 179
+          "epguSlots": 172
         },
         {
           "code": "14",
           "name": "оториноларинголог",
           "norm": 75,
-          "slots": 24,
+          "slots": 36,
           "epguNorm": 45,
-          "epguSlots": 24
+          "epguSlots": 36
         },
         {
           "code": "15",
           "name": "офтальмолог",
           "norm": 700,
-          "slots": 445,
+          "slots": 367,
           "epguNorm": 420,
-          "epguSlots": 281
+          "epguSlots": 229
         },
         {
           "code": "16",
@@ -2107,9 +2226,9 @@
           "code": "23",
           "name": "хирург",
           "norm": 382.5,
-          "slots": 500,
+          "slots": 455,
           "epguNorm": 247.5,
-          "epguSlots": 362
+          "epguSlots": 338
         },
         {
           "code": "26",
@@ -2127,46 +2246,53 @@
       "name": "ГАУЗ \"ГОРОДСКАЯ ПОЛИКЛИНИКА №7\"",
       "fullName": "ГАУЗ \"ГОРОДСКАЯ ПОЛИКЛИНИКА №7\" (Набережные Челны)",
       "city": "Набережные Челны",
+      "totals": {
+        "norm": 9145,
+        "slots": 7828,
+        "epguNorm": 5755,
+        "epguSlots": 4997,
+        "sourcePercent": 54.64188080918535
+      },
       "specialties": [
         {
           "code": "11",
           "name": "терапевт",
-          "norm": 5110,
-          "slots": 4404,
-          "epguNorm": 3285,
-          "epguSlots": 2874
+          "norm": 5390,
+          "slots": 4289,
+          "epguNorm": 3465,
+          "epguSlots": 2794
         },
         {
           "code": "13",
           "name": "акушер-гинеколог",
-          "norm": 690,
-          "slots": 1012,
-          "epguNorm": 420,
-          "epguSlots": 579
+          "norm": 920,
+          "slots": 1318,
+          "epguNorm": 560,
+          "epguSlots": 722
         },
         {
           "code": "25",
           "name": "ВОП — семейный врач (семейный врач)",
           "norm": 1235,
-          "slots": 1098,
+          "slots": 1120,
           "epguNorm": 760,
-          "epguSlots": 722
+          "epguSlots": 738
         },
         {
           "code": "14",
           "name": "оториноларинголог",
-          "norm": 300,
-          "slots": 738,
-          "epguNorm": 180,
-          "epguSlots": 396
+          "norm": 600,
+          "slots": 576,
+          "epguNorm": 360,
+          "epguSlots": 306
         },
         {
           "code": "15",
           "name": "офтальмолог",
           "norm": 787.5,
-          "slots": 198,
+          "slots": 197,
           "epguNorm": 472.5,
-          "epguSlots": 164
+          "epguSlots": 156
         },
         {
           "code": "16",
@@ -2227,10 +2353,10 @@
         {
           "code": "23",
           "name": "хирург",
-          "norm": 42.5,
-          "slots": 265,
-          "epguNorm": 27.5,
-          "epguSlots": 207
+          "norm": 212.5,
+          "slots": 328,
+          "epguNorm": 137.5,
+          "epguSlots": 281
         },
         {
           "code": "26",
@@ -2248,6 +2374,13 @@
       "name": "ГАУЗ \"КДМЦ\"",
       "fullName": "ГАУЗ \"КДМЦ\" (Набережные Челны)",
       "city": "Набережные Челны",
+      "totals": {
+        "norm": 4650,
+        "slots": 4007,
+        "epguNorm": 2952.5,
+        "epguSlots": 3699,
+        "sourcePercent": 79.54838709677419
+      },
       "specialties": [
         {
           "code": "11",
@@ -2261,9 +2394,9 @@
           "code": "13",
           "name": "акушер-гинеколог",
           "norm": 57.5,
-          "slots": 10,
+          "slots": 0,
           "epguNorm": 35,
-          "epguSlots": 10
+          "epguSlots": 0
         },
         {
           "code": "25",
@@ -2277,25 +2410,25 @@
           "code": "14",
           "name": "оториноларинголог",
           "norm": 375,
-          "slots": 218,
+          "slots": 219,
           "epguNorm": 225,
-          "epguSlots": 180
+          "epguSlots": 183
         },
         {
           "code": "15",
           "name": "офтальмолог",
-          "norm": 350,
-          "slots": 110,
-          "epguNorm": 210,
-          "epguSlots": 86
+          "norm": 437.5,
+          "slots": 92,
+          "epguNorm": 262.5,
+          "epguSlots": 72
         },
         {
           "code": "16",
           "name": "педиатр",
-          "norm": 4060,
-          "slots": 2746,
-          "epguNorm": 2610,
-          "epguSlots": 2502
+          "norm": 3780,
+          "slots": 3696,
+          "epguNorm": 2430,
+          "epguSlots": 3444
         },
         {
           "code": "17",
@@ -2356,10 +2489,10 @@
         {
           "code": "26",
           "name": "детский хирург",
-          "norm": 400,
-          "slots": 132,
-          "epguNorm": 270,
-          "epguSlots": 114
+          "norm": 0,
+          "slots": 42,
+          "epguNorm": 0,
+          "epguSlots": 42
         }
       ]
     },
@@ -2369,6 +2502,13 @@
       "name": "ООО \"НИЖНЕКАМСКАЯ СТОМАТОЛОГИЧЕСКАЯ ПОЛИКЛИНИКА\"",
       "fullName": "ООО \"НИЖНЕКАМСКАЯ СТОМАТОЛОГИЧЕСКАЯ ПОЛИКЛИНИКА\" (Казань)",
       "city": "Казань",
+      "totals": {
+        "norm": 6165,
+        "slots": 2254,
+        "epguNorm": 3800,
+        "epguSlots": 2254,
+        "sourcePercent": 36.56123276561233
+      },
       "specialties": [
         {
           "code": "11",
@@ -2446,17 +2586,17 @@
           "code": "20",
           "name": "стоматолог детский",
           "norm": 1620,
-          "slots": 998,
+          "slots": 1029,
           "epguNorm": 990,
-          "epguSlots": 998
+          "epguSlots": 1029
         },
         {
           "code": "21",
           "name": "стоматолог-терапевт",
           "norm": 585,
-          "slots": 1029,
+          "slots": 1225,
           "epguNorm": 390,
-          "epguSlots": 1029
+          "epguSlots": 1225
         },
         {
           "code": "22",
@@ -2490,30 +2630,37 @@
       "name": "ГАУЗ \"ГОРОДСКАЯ БОЛЬНИЦА № 11\"",
       "fullName": "ГАУЗ \"ГОРОДСКАЯ БОЛЬНИЦА № 11\" (Казань)",
       "city": "Казань",
+      "totals": {
+        "norm": 6440,
+        "slots": 5216,
+        "epguNorm": 4030,
+        "epguSlots": 4145,
+        "sourcePercent": 64.36335403726709
+      },
       "specialties": [
         {
           "code": "11",
           "name": "терапевт",
           "norm": 2520,
-          "slots": 1771,
+          "slots": 1856,
           "epguNorm": 1620,
-          "epguSlots": 1381
+          "epguSlots": 1450
         },
         {
           "code": "13",
           "name": "акушер-гинеколог",
           "norm": 1035,
-          "slots": 1171,
+          "slots": 1144,
           "epguNorm": 630,
-          "epguSlots": 956
+          "epguSlots": 943
         },
         {
           "code": "25",
           "name": "ВОП — семейный врач (семейный врач)",
           "norm": 1365,
-          "slots": 863,
+          "slots": 1015,
           "epguNorm": 840,
-          "epguSlots": 667
+          "epguSlots": 799
         },
         {
           "code": "14",
@@ -2529,7 +2676,7 @@
           "norm": 700,
           "slots": 383,
           "epguNorm": 420,
-          "epguSlots": 285
+          "epguSlots": 283
         },
         {
           "code": "16",
@@ -2591,9 +2738,9 @@
           "code": "23",
           "name": "хирург",
           "norm": 340,
-          "slots": 437,
+          "slots": 452,
           "epguNorm": 220,
-          "epguSlots": 383
+          "epguSlots": 392
         },
         {
           "code": "26",
@@ -2611,6 +2758,13 @@
       "name": "ГАУЗ \"ДГКБ № 7\"",
       "fullName": "ГАУЗ \"ДГКБ № 7\" (Казань)",
       "city": "Казань",
+      "totals": {
+        "norm": 8552.5,
+        "slots": 11033,
+        "epguNorm": 5470,
+        "epguSlots": 7329,
+        "sourcePercent": 85.69424144986846
+      },
       "specialties": [
         {
           "code": "11",
@@ -2624,9 +2778,9 @@
           "code": "13",
           "name": "акушер-гинеколог",
           "norm": 230,
-          "slots": 798,
+          "slots": 818,
           "epguNorm": 140,
-          "epguSlots": 700
+          "epguSlots": 720
         },
         {
           "code": "25",
@@ -2648,23 +2802,23 @@
           "code": "15",
           "name": "офтальмолог",
           "norm": 437.5,
-          "slots": 1252,
+          "slots": 752,
           "epguNorm": 262.5,
-          "epguSlots": 802
+          "epguSlots": 527
         },
         {
           "code": "16",
           "name": "педиатр",
           "norm": 7840,
-          "slots": 8789,
+          "slots": 9418,
           "epguNorm": 5040,
-          "epguSlots": 5654
+          "epguSlots": 6037
         },
         {
           "code": "17",
           "name": "психиатр детский",
           "norm": 0,
-          "slots": 90,
+          "slots": 51,
           "epguNorm": 0,
           "epguSlots": 0
         },
@@ -2688,9 +2842,9 @@
           "code": "20",
           "name": "стоматолог детский",
           "norm": 45,
-          "slots": 0,
+          "slots": 45,
           "epguNorm": 27.5,
-          "epguSlots": 0
+          "epguSlots": 45
         },
         {
           "code": "21",
@@ -2732,6 +2886,13 @@
       "name": "ГАУЗ \"РСП МЗ РТ\"",
       "fullName": "ГАУЗ \"РСП МЗ РТ\" (Казань)",
       "city": "Казань",
+      "totals": {
+        "norm": 2880,
+        "slots": 2832,
+        "epguNorm": 1795,
+        "epguSlots": 1616,
+        "sourcePercent": 56.111111111111114
+      },
       "specialties": [
         {
           "code": "11",
@@ -2800,25 +2961,25 @@
         {
           "code": "19",
           "name": "стоматолог",
-          "norm": 1620,
-          "slots": 1068,
-          "epguNorm": 990,
-          "epguSlots": 638
+          "norm": 1350,
+          "slots": 1158,
+          "epguNorm": 825,
+          "epguSlots": 693
         },
         {
           "code": "20",
           "name": "стоматолог детский",
-          "norm": 945,
+          "norm": 900,
           "slots": 774,
-          "epguNorm": 577.5,
+          "epguNorm": 550,
           "epguSlots": 473
         },
         {
           "code": "21",
           "name": "стоматолог-терапевт",
-          "norm": 540,
+          "norm": 630,
           "slots": 900,
-          "epguNorm": 360,
+          "epguNorm": 420,
           "epguSlots": 450
         },
         {
@@ -2853,6 +3014,13 @@
       "name": "ООО ОТЕЛЬ-КЛИНИКА",
       "fullName": "ООО ОТЕЛЬ-КЛИНИКА (Казань)",
       "city": "Казань",
+      "totals": {
+        "norm": 145,
+        "slots": 36,
+        "epguNorm": 88,
+        "epguSlots": 0,
+        "sourcePercent": 0.0
+      },
       "specialties": [
         {
           "code": "11",
@@ -2866,7 +3034,7 @@
           "code": "13",
           "name": "акушер-гинеколог",
           "norm": 115,
-          "slots": 48,
+          "slots": 36,
           "epguNorm": 70,
           "epguSlots": 0
         },
@@ -2974,20 +3142,27 @@
       "name": "ГАУЗ \"ГОРОДСКАЯ ПОЛИКЛИНИКА № 7\"",
       "fullName": "ГАУЗ \"ГОРОДСКАЯ ПОЛИКЛИНИКА № 7\" (Казань)",
       "city": "Казань",
+      "totals": {
+        "norm": 6060,
+        "slots": 4417,
+        "epguNorm": 3840,
+        "epguSlots": 3499,
+        "sourcePercent": 57.739273927392745
+      },
       "specialties": [
         {
           "code": "11",
           "name": "терапевт",
-          "norm": 3360,
-          "slots": 3240,
-          "epguNorm": 2160,
-          "epguSlots": 2552
+          "norm": 4200,
+          "slots": 2917,
+          "epguNorm": 2700,
+          "epguSlots": 2302
         },
         {
           "code": "13",
           "name": "акушер-гинеколог",
           "norm": 0,
-          "slots": 140,
+          "slots": 220,
           "epguNorm": 0,
           "epguSlots": 0
         },
@@ -3011,9 +3186,9 @@
           "code": "15",
           "name": "офтальмолог",
           "norm": 700,
-          "slots": 408,
+          "slots": 453,
           "epguNorm": 420,
-          "epguSlots": 357
+          "epguSlots": 396
         },
         {
           "code": "16",
@@ -3075,9 +3250,9 @@
           "code": "23",
           "name": "хирург",
           "norm": 340,
-          "slots": 282,
+          "slots": 300,
           "epguNorm": 220,
-          "epguSlots": 211
+          "epguSlots": 225
         },
         {
           "code": "26",
@@ -3095,6 +3270,13 @@
       "name": "ГАУЗ \"ДГП № 2\"",
       "fullName": "ГАУЗ \"ДГП № 2\" (Казань)",
       "city": "Казань",
+      "totals": {
+        "norm": 7110,
+        "slots": 5124,
+        "epguNorm": 4535,
+        "epguSlots": 4289,
+        "sourcePercent": 60.32348804500703
+      },
       "specialties": [
         {
           "code": "11",
@@ -3108,9 +3290,9 @@
           "code": "13",
           "name": "акушер-гинеколог",
           "norm": 230,
-          "slots": 20,
+          "slots": 24,
           "epguNorm": 140,
-          "epguSlots": 20
+          "epguSlots": 24
         },
         {
           "code": "25",
@@ -3124,9 +3306,9 @@
           "code": "14",
           "name": "оториноларинголог",
           "norm": 600,
-          "slots": 465,
+          "slots": 427,
           "epguNorm": 360,
-          "epguSlots": 369
+          "epguSlots": 330
         },
         {
           "code": "15",
@@ -3139,10 +3321,10 @@
         {
           "code": "16",
           "name": "педиатр",
-          "norm": 5810,
-          "slots": 4491,
-          "epguNorm": 3735,
-          "epguSlots": 3755
+          "norm": 5530,
+          "slots": 4408,
+          "epguNorm": 3555,
+          "epguSlots": 3708
         },
         {
           "code": "17",
@@ -3204,9 +3386,9 @@
           "code": "26",
           "name": "детский хирург",
           "norm": 400,
-          "slots": 156,
+          "slots": 201,
           "epguNorm": 270,
-          "epguSlots": 130
+          "epguSlots": 175
         }
       ]
     },
@@ -3216,22 +3398,29 @@
       "name": "ГАУЗ \"КЛИНИКА МЕДИЦИНСКОГО УНИВЕРСИТЕТА\"",
       "fullName": "ГАУЗ \"КЛИНИКА МЕДИЦИНСКОГО УНИВЕРСИТЕТА\" (Казань)",
       "city": "Казань",
+      "totals": {
+        "norm": 6120,
+        "slots": 8537,
+        "epguNorm": 3845,
+        "epguSlots": 5424,
+        "sourcePercent": 88.62745098039215
+      },
       "specialties": [
         {
           "code": "11",
           "name": "терапевт",
-          "norm": 3220,
-          "slots": 5511,
-          "epguNorm": 2070,
-          "epguSlots": 3556
+          "norm": 3290,
+          "slots": 5325,
+          "epguNorm": 2115,
+          "epguSlots": 3457
         },
         {
           "code": "13",
           "name": "акушер-гинеколог",
           "norm": 1840,
-          "slots": 1927,
+          "slots": 1823,
           "epguNorm": 1120,
-          "epguSlots": 936
+          "epguSlots": 1104
         },
         {
           "code": "25",
@@ -3245,17 +3434,17 @@
           "code": "14",
           "name": "оториноларинголог",
           "norm": 300,
-          "slots": 224,
+          "slots": 359,
           "epguNorm": 180,
-          "epguSlots": 128
+          "epguSlots": 212
         },
         {
           "code": "15",
           "name": "офтальмолог",
           "norm": 350,
-          "slots": 396,
+          "slots": 252,
           "epguNorm": 210,
-          "epguSlots": 264
+          "epguSlots": 168
         },
         {
           "code": "16",
@@ -3317,9 +3506,9 @@
           "code": "23",
           "name": "хирург",
           "norm": 340,
-          "slots": 765,
+          "slots": 778,
           "epguNorm": 220,
-          "epguSlots": 476
+          "epguSlots": 483
         },
         {
           "code": "26",
@@ -3337,46 +3526,53 @@
       "name": "ФГАОУ ВО К(П)ФУ",
       "fullName": "ФГАОУ ВО К(П)ФУ (Казань)",
       "city": "Казань",
+      "totals": {
+        "norm": 11637.5,
+        "slots": 8854,
+        "epguNorm": 7275,
+        "epguSlots": 4194,
+        "sourcePercent": 36.038668098818476
+      },
       "specialties": [
         {
           "code": "11",
           "name": "терапевт",
           "norm": 5040,
-          "slots": 3594,
+          "slots": 3607,
           "epguNorm": 3240,
-          "epguSlots": 2587
+          "epguSlots": 2584
         },
         {
           "code": "13",
           "name": "акушер-гинеколог",
           "norm": 3220,
-          "slots": 2988,
+          "slots": 2957,
           "epguNorm": 1960,
-          "epguSlots": 367
+          "epguSlots": 313
         },
         {
           "code": "25",
           "name": "ВОП — семейный врач (семейный врач)",
           "norm": 520,
-          "slots": 432,
+          "slots": 452,
           "epguNorm": 320,
-          "epguSlots": 312
+          "epguSlots": 329
         },
         {
           "code": "14",
           "name": "оториноларинголог",
           "norm": 900,
-          "slots": 604,
+          "slots": 557,
           "epguNorm": 540,
-          "epguSlots": 391
+          "epguSlots": 361
         },
         {
           "code": "15",
           "name": "офтальмолог",
           "norm": 875,
-          "slots": 348,
+          "slots": 360,
           "epguNorm": 525,
-          "epguSlots": 272
+          "epguSlots": 280
         },
         {
           "code": "16",
@@ -3438,9 +3634,9 @@
           "code": "23",
           "name": "хирург",
           "norm": 340,
-          "slots": 488,
+          "slots": 459,
           "epguNorm": 220,
-          "epguSlots": 351
+          "epguSlots": 327
         },
         {
           "code": "26",
@@ -3458,22 +3654,29 @@
       "name": "ГАУЗ \"КЛИНИЧЕСКАЯ БОЛЬНИЦА №2\"",
       "fullName": "ГАУЗ \"КЛИНИЧЕСКАЯ БОЛЬНИЦА №2\" (Казань)",
       "city": "Казань",
+      "totals": {
+        "norm": 12537.5,
+        "slots": 11163,
+        "epguNorm": 7907.5,
+        "epguSlots": 7207,
+        "sourcePercent": 57.48354935194416
+      },
       "specialties": [
         {
           "code": "11",
           "name": "терапевт",
-          "norm": 7280,
-          "slots": 5656,
-          "epguNorm": 4680,
-          "epguSlots": 3447
+          "norm": 7420,
+          "slots": 6938,
+          "epguNorm": 4770,
+          "epguSlots": 4307
         },
         {
           "code": "13",
           "name": "акушер-гинеколог",
           "norm": 1955,
-          "slots": 2011,
+          "slots": 2131,
           "epguNorm": 1190,
-          "epguSlots": 1309
+          "epguSlots": 1354
         },
         {
           "code": "25",
@@ -3487,17 +3690,17 @@
           "code": "14",
           "name": "оториноларинголог",
           "norm": 1050,
-          "slots": 485,
+          "slots": 533,
           "epguNorm": 630,
-          "epguSlots": 367
+          "epguSlots": 407
         },
         {
           "code": "15",
           "name": "офтальмолог",
           "norm": 1050,
-          "slots": 885,
+          "slots": 857,
           "epguNorm": 630,
-          "epguSlots": 590
+          "epguSlots": 573
         },
         {
           "code": "16",
@@ -3558,10 +3761,10 @@
         {
           "code": "23",
           "name": "хирург",
-          "norm": 722.5,
-          "slots": 624,
-          "epguNorm": 467.5,
-          "epguSlots": 512
+          "norm": 1062.5,
+          "slots": 704,
+          "epguNorm": 687.5,
+          "epguSlots": 566
         },
         {
           "code": "26",
@@ -3579,6 +3782,13 @@
       "name": "ГАУЗ \"ДЕТСКАЯ ГОРОДСКАЯ ПОЛИКЛИНИКА № 4\"",
       "fullName": "ГАУЗ \"ДЕТСКАЯ ГОРОДСКАЯ ПОЛИКЛИНИКА № 4\" (Казань)",
       "city": "Казань",
+      "totals": {
+        "norm": 9937.5,
+        "slots": 10720,
+        "epguNorm": 6342.5,
+        "epguSlots": 7787,
+        "sourcePercent": 78.35974842767295
+      },
       "specialties": [
         {
           "code": "11",
@@ -3592,9 +3802,9 @@
           "code": "13",
           "name": "акушер-гинеколог",
           "norm": 230,
-          "slots": 214,
+          "slots": 211,
           "epguNorm": 140,
-          "epguSlots": 145
+          "epguSlots": 141
         },
         {
           "code": "25",
@@ -3608,25 +3818,25 @@
           "code": "14",
           "name": "оториноларинголог",
           "norm": 375,
-          "slots": 645,
+          "slots": 433,
           "epguNorm": 225,
-          "epguSlots": 401
+          "epguSlots": 255
         },
         {
           "code": "15",
           "name": "офтальмолог",
           "norm": 962.5,
-          "slots": 777,
+          "slots": 679,
           "epguNorm": 577.5,
-          "epguSlots": 624
+          "epguSlots": 548
         },
         {
           "code": "16",
           "name": "педиатр",
-          "norm": 8050,
-          "slots": 8577,
-          "epguNorm": 5175,
-          "epguSlots": 6255
+          "norm": 7770,
+          "slots": 8983,
+          "epguNorm": 4995,
+          "epguSlots": 6537
         },
         {
           "code": "17",
@@ -3688,9 +3898,9 @@
           "code": "26",
           "name": "детский хирург",
           "norm": 600,
-          "slots": 473,
+          "slots": 414,
           "epguNorm": 405,
-          "epguSlots": 350
+          "epguSlots": 306
         }
       ]
     },
@@ -3700,6 +3910,13 @@
       "name": "ООО \"КДЦ АРАКЧИНО\"",
       "fullName": "ООО \"КДЦ АРАКЧИНО\" (Казань)",
       "city": "Казань",
+      "totals": {
+        "norm": 662.5,
+        "slots": 364,
+        "epguNorm": 412.5,
+        "epguSlots": 364,
+        "sourcePercent": 54.943396226415096
+      },
       "specialties": [
         {
           "code": "11",
@@ -3713,17 +3930,17 @@
           "code": "13",
           "name": "акушер-гинеколог",
           "norm": 57.5,
-          "slots": 12,
+          "slots": 13,
           "epguNorm": 35,
-          "epguSlots": 12
+          "epguSlots": 13
         },
         {
           "code": "25",
           "name": "ВОП — семейный врач (семейный врач)",
           "norm": 260,
-          "slots": 144,
+          "slots": 154,
           "epguNorm": 160,
-          "epguSlots": 144
+          "epguSlots": 154
         },
         {
           "code": "14",
@@ -3737,9 +3954,9 @@
           "code": "15",
           "name": "офтальмолог",
           "norm": 87.5,
-          "slots": 16,
+          "slots": 20,
           "epguNorm": 52.5,
-          "epguSlots": 16
+          "epguSlots": 20
         },
         {
           "code": "16",
@@ -3785,9 +4002,9 @@
           "code": "21",
           "name": "стоматолог-терапевт",
           "norm": 112.5,
-          "slots": 104,
+          "slots": 177,
           "epguNorm": 75,
-          "epguSlots": 104
+          "epguSlots": 177
         },
         {
           "code": "22",
@@ -3821,14 +4038,21 @@
       "name": "ГАУЗ \"ГОСПИТАЛЬ ДЛЯ ВЕТЕРАНОВ ВОЙН\" Г. КАЗАНИ",
       "fullName": "ГАУЗ \"ГОСПИТАЛЬ ДЛЯ ВЕТЕРАНОВ ВОЙН\" Г. КАЗАНИ (Казань)",
       "city": "Казань",
+      "totals": {
+        "norm": 5570,
+        "slots": 4999,
+        "epguNorm": 3535,
+        "epguSlots": 3554,
+        "sourcePercent": 63.80610412926392
+      },
       "specialties": [
         {
           "code": "11",
           "name": "терапевт",
-          "norm": 3640,
-          "slots": 3021,
-          "epguNorm": 2340,
-          "epguSlots": 2033
+          "norm": 3570,
+          "slots": 3146,
+          "epguNorm": 2295,
+          "epguSlots": 2134
         },
         {
           "code": "13",
@@ -3836,7 +4060,7 @@
           "norm": 345,
           "slots": 364,
           "epguNorm": 210,
-          "epguSlots": 84
+          "epguSlots": 224
         },
         {
           "code": "25",
@@ -3858,7 +4082,7 @@
           "code": "15",
           "name": "офтальмолог",
           "norm": 700,
-          "slots": 520,
+          "slots": 519,
           "epguNorm": 420,
           "epguSlots": 498
         },
@@ -3889,10 +4113,10 @@
         {
           "code": "19",
           "name": "стоматолог",
-          "norm": 90,
-          "slots": 0,
-          "epguNorm": 55,
-          "epguSlots": 0
+          "norm": 0,
+          "slots": 30,
+          "epguNorm": 0,
+          "epguSlots": 28
         },
         {
           "code": "20",
@@ -3905,10 +4129,10 @@
         {
           "code": "21",
           "name": "стоматолог-терапевт",
-          "norm": 270,
-          "slots": 314,
-          "epguNorm": 180,
-          "epguSlots": 214
+          "norm": 315,
+          "slots": 303,
+          "epguNorm": 210,
+          "epguSlots": 207
         },
         {
           "code": "22",
@@ -3922,9 +4146,9 @@
           "code": "23",
           "name": "хирург",
           "norm": 340,
-          "slots": 417,
+          "slots": 411,
           "epguNorm": 220,
-          "epguSlots": 287
+          "epguSlots": 279
         },
         {
           "code": "26",
@@ -3942,22 +4166,29 @@
       "name": "ГАУЗ \"ГКБ №16\"",
       "fullName": "ГАУЗ \"ГКБ №16\" (Казань)",
       "city": "Казань",
+      "totals": {
+        "norm": 11985,
+        "slots": 11999,
+        "epguNorm": 7505,
+        "epguSlots": 8883,
+        "sourcePercent": 74.11764705882354
+      },
       "specialties": [
         {
           "code": "11",
           "name": "терапевт",
           "norm": 5460,
-          "slots": 5490,
+          "slots": 5878,
           "epguNorm": 3510,
-          "epguSlots": 4325
+          "epguSlots": 4627
         },
         {
           "code": "13",
           "name": "акушер-гинеколог",
-          "norm": 1955,
-          "slots": 1435,
-          "epguNorm": 1190,
-          "epguSlots": 1086
+          "norm": 1725,
+          "slots": 1406,
+          "epguNorm": 1050,
+          "epguSlots": 1059
         },
         {
           "code": "25",
@@ -3971,17 +4202,17 @@
           "code": "14",
           "name": "оториноларинголог",
           "norm": 1800,
-          "slots": 1254,
+          "slots": 1530,
           "epguNorm": 1080,
-          "epguSlots": 885
+          "epguSlots": 1071
         },
         {
           "code": "15",
           "name": "офтальмолог",
           "norm": 875,
-          "slots": 803,
+          "slots": 751,
           "epguNorm": 525,
-          "epguSlots": 446
+          "epguSlots": 408
         },
         {
           "code": "16",
@@ -4045,7 +4276,7 @@
           "norm": 510,
           "slots": 883,
           "epguNorm": 330,
-          "epguSlots": 565
+          "epguSlots": 563
         },
         {
           "code": "26",
@@ -4063,6 +4294,13 @@
       "name": "ГАУЗ \"ГДБ № 1 ИМ. М.Ш.УРАЗАЕВОЙ\"",
       "fullName": "ГАУЗ \"ГДБ № 1 ИМ. М.Ш.УРАЗАЕВОЙ\" (Казань)",
       "city": "Казань",
+      "totals": {
+        "norm": 6887.5,
+        "slots": 5931,
+        "epguNorm": 4352.5,
+        "epguSlots": 3862,
+        "sourcePercent": 56.07259528130671
+      },
       "specialties": [
         {
           "code": "11",
@@ -4076,9 +4314,9 @@
           "code": "13",
           "name": "акушер-гинеколог",
           "norm": 230,
-          "slots": 140,
+          "slots": 98,
           "epguNorm": 140,
-          "epguSlots": 86
+          "epguSlots": 61
         },
         {
           "code": "25",
@@ -4092,25 +4330,25 @@
           "code": "14",
           "name": "оториноларинголог",
           "norm": 300,
-          "slots": 275,
+          "slots": 171,
           "epguNorm": 180,
-          "epguSlots": 226
+          "epguSlots": 139
         },
         {
           "code": "15",
           "name": "офтальмолог",
           "norm": 1137.5,
-          "slots": 1019,
+          "slots": 723,
           "epguNorm": 682.5,
-          "epguSlots": 753
+          "epguSlots": 542
         },
         {
           "code": "16",
           "name": "педиатр",
-          "norm": 4760,
-          "slots": 4199,
-          "epguNorm": 3060,
-          "epguSlots": 2817
+          "norm": 5040,
+          "slots": 4939,
+          "epguNorm": 3240,
+          "epguSlots": 3120
         },
         {
           "code": "17",
@@ -4172,9 +4410,9 @@
           "code": "26",
           "name": "детский хирург",
           "norm": 0,
-          "slots": 757,
+          "slots": 503,
           "epguNorm": 0,
-          "epguSlots": 569
+          "epguSlots": 378
         }
       ]
     },
@@ -4184,6 +4422,13 @@
       "name": "ГАУЗ \"ДЕТСКАЯ СТОМАТОЛОГИЧЕСКАЯ ПОЛИКЛИНИКА № 1\"",
       "fullName": "ГАУЗ \"ДЕТСКАЯ СТОМАТОЛОГИЧЕСКАЯ ПОЛИКЛИНИКА № 1\" (Казань)",
       "city": "Казань",
+      "totals": {
+        "norm": 900,
+        "slots": 594,
+        "epguNorm": 550,
+        "epguSlots": 400,
+        "sourcePercent": 44.44444444444444
+      },
       "specialties": [
         {
           "code": "11",
@@ -4261,9 +4506,9 @@
           "code": "20",
           "name": "стоматолог детский",
           "norm": 900,
-          "slots": 606,
+          "slots": 594,
           "epguNorm": 550,
-          "epguSlots": 408
+          "epguSlots": 400
         },
         {
           "code": "21",
@@ -4305,46 +4550,53 @@
       "name": "ГАУЗ \"ГКБ№7 ИМ. М.Н.САДЫКОВА\"",
       "fullName": "ГАУЗ \"ГКБ№7 ИМ. М.Н.САДЫКОВА\" (Казань)",
       "city": "Казань",
+      "totals": {
+        "norm": 27255,
+        "slots": 17610,
+        "epguNorm": 17092.5,
+        "epguSlots": 14200,
+        "sourcePercent": 52.10053201247477
+      },
       "specialties": [
         {
           "code": "11",
           "name": "терапевт",
-          "norm": 13720,
-          "slots": 11518,
-          "epguNorm": 8820,
-          "epguSlots": 8847
+          "norm": 14280,
+          "slots": 10665,
+          "epguNorm": 9180,
+          "epguSlots": 8157
         },
         {
           "code": "13",
           "name": "акушер-гинеколог",
-          "norm": 7785.5,
-          "slots": 4468,
-          "epguNorm": 4739,
-          "epguSlots": 3907
+          "norm": 7532.5,
+          "slots": 4653,
+          "epguNorm": 4585,
+          "epguSlots": 3994
         },
         {
           "code": "25",
           "name": "ВОП — семейный врач (семейный врач)",
           "norm": 650,
-          "slots": 263,
+          "slots": 189,
           "epguNorm": 400,
-          "epguSlots": 219
+          "epguSlots": 165
         },
         {
           "code": "14",
           "name": "оториноларинголог",
           "norm": 1500,
-          "slots": 68,
+          "slots": 186,
           "epguNorm": 900,
-          "epguSlots": 65
+          "epguSlots": 180
         },
         {
           "code": "15",
           "name": "офтальмолог",
           "norm": 2187.5,
-          "slots": 867,
+          "slots": 863,
           "epguNorm": 1312.5,
-          "epguSlots": 819
+          "epguSlots": 825
         },
         {
           "code": "16",
@@ -4406,9 +4658,9 @@
           "code": "23",
           "name": "хирург",
           "norm": 1105,
-          "slots": 934,
+          "slots": 1054,
           "epguNorm": 715,
-          "epguSlots": 779
+          "epguSlots": 879
         },
         {
           "code": "26",
@@ -4426,20 +4678,27 @@
       "name": "ГАУЗ \"ГОРОДСКАЯ ПОЛИКЛИНИКА № 10\"",
       "fullName": "ГАУЗ \"ГОРОДСКАЯ ПОЛИКЛИНИКА № 10\" (Казань)",
       "city": "Казань",
+      "totals": {
+        "norm": 14217.5,
+        "slots": 15445,
+        "epguNorm": 9037.5,
+        "epguSlots": 11626,
+        "sourcePercent": 81.7724635132759
+      },
       "specialties": [
         {
           "code": "11",
           "name": "терапевт",
           "norm": 10430,
-          "slots": 10942,
+          "slots": 10973,
           "epguNorm": 6705,
-          "epguSlots": 8095
+          "epguSlots": 8260
         },
         {
           "code": "13",
           "name": "акушер-гинеколог",
           "norm": 0,
-          "slots": 532,
+          "slots": 450,
           "epguNorm": 0,
           "epguSlots": 0
         },
@@ -4447,9 +4706,9 @@
           "code": "25",
           "name": "ВОП — семейный врач (семейный врач)",
           "norm": 780,
-          "slots": 897,
+          "slots": 896,
           "epguNorm": 480,
-          "epguSlots": 655
+          "epguSlots": 665
         },
         {
           "code": "14",
@@ -4457,15 +4716,15 @@
           "norm": 1200,
           "slots": 1203,
           "epguNorm": 720,
-          "epguSlots": 934
+          "epguSlots": 913
         },
         {
           "code": "15",
           "name": "офтальмолог",
           "norm": 787.5,
-          "slots": 895,
+          "slots": 1006,
           "epguNorm": 472.5,
-          "epguSlots": 731
+          "epguSlots": 827
         },
         {
           "code": "16",
@@ -4526,10 +4785,10 @@
         {
           "code": "23",
           "name": "хирург",
-          "norm": 850,
-          "slots": 1463,
-          "epguNorm": 550,
-          "epguSlots": 1022
+          "norm": 1020,
+          "slots": 1367,
+          "epguNorm": 660,
+          "epguSlots": 961
         },
         {
           "code": "26",
@@ -4547,6 +4806,13 @@
       "name": "ГАУЗ \"ГДП №7\"",
       "fullName": "ГАУЗ \"ГДП №7\" (Казань)",
       "city": "Казань",
+      "totals": {
+        "norm": 10980,
+        "slots": 6735,
+        "epguNorm": 6975,
+        "epguSlots": 5662,
+        "sourcePercent": 51.56648451730419
+      },
       "specialties": [
         {
           "code": "11",
@@ -4560,9 +4826,9 @@
           "code": "13",
           "name": "акушер-гинеколог",
           "norm": 0,
-          "slots": 300,
+          "slots": 292,
           "epguNorm": 0,
-          "epguSlots": 235
+          "epguSlots": 231
         },
         {
           "code": "25",
@@ -4575,26 +4841,26 @@
         {
           "code": "14",
           "name": "оториноларинголог",
-          "norm": 825,
-          "slots": 330,
-          "epguNorm": 495,
-          "epguSlots": 265
+          "norm": 900,
+          "slots": 334,
+          "epguNorm": 540,
+          "epguSlots": 241
         },
         {
           "code": "15",
           "name": "офтальмолог",
           "norm": 1050,
-          "slots": 352,
+          "slots": 346,
           "epguNorm": 630,
-          "epguSlots": 301
+          "epguSlots": 296
         },
         {
           "code": "16",
           "name": "педиатр",
-          "norm": 9170,
-          "slots": 6021,
-          "epguNorm": 5895,
-          "epguSlots": 5090
+          "norm": 9030,
+          "slots": 6055,
+          "epguNorm": 5805,
+          "epguSlots": 5125
         },
         {
           "code": "17",
@@ -4656,9 +4922,9 @@
           "code": "26",
           "name": "детский хирург",
           "norm": 0,
-          "slots": 281,
+          "slots": 233,
           "epguNorm": 0,
-          "epguSlots": 238
+          "epguSlots": 200
         }
       ]
     },
@@ -4668,6 +4934,13 @@
       "name": "ГАУЗ ДГП № 9",
       "fullName": "ГАУЗ ДГП № 9 (Казань)",
       "city": "Казань",
+      "totals": {
+        "norm": 9000,
+        "slots": 9018,
+        "epguNorm": 5715,
+        "epguSlots": 5967,
+        "sourcePercent": 66.3
+      },
       "specialties": [
         {
           "code": "11",
@@ -4681,9 +4954,9 @@
           "code": "13",
           "name": "акушер-гинеколог",
           "norm": 230,
-          "slots": 202,
+          "slots": 226,
           "epguNorm": 140,
-          "epguSlots": 140
+          "epguSlots": 160
         },
         {
           "code": "25",
@@ -4697,25 +4970,25 @@
           "code": "14",
           "name": "оториноларинголог",
           "norm": 825,
-          "slots": 493,
+          "slots": 378,
           "epguNorm": 495,
-          "epguSlots": 361
+          "epguSlots": 279
         },
         {
           "code": "15",
           "name": "офтальмолог",
           "norm": 875,
-          "slots": 243,
+          "slots": 204,
           "epguNorm": 525,
-          "epguSlots": 220
+          "epguSlots": 184
         },
         {
           "code": "16",
           "name": "педиатр",
           "norm": 6580,
-          "slots": 8062,
+          "slots": 8073,
           "epguNorm": 4230,
-          "epguSlots": 5231
+          "epguSlots": 5240
         },
         {
           "code": "17",
@@ -4777,9 +5050,9 @@
           "code": "26",
           "name": "детский хирург",
           "norm": 400,
-          "slots": 167,
+          "slots": 137,
           "epguNorm": 270,
-          "epguSlots": 125
+          "epguSlots": 104
         }
       ]
     },
@@ -4789,6 +5062,13 @@
       "name": "АО ДЕТСКАЯ СТОМАТОЛОГИЧЕСКАЯ ПОЛИКЛИНИКА № 9",
       "fullName": "АО ДЕТСКАЯ СТОМАТОЛОГИЧЕСКАЯ ПОЛИКЛИНИКА № 9 (Казань)",
       "city": "Казань",
+      "totals": {
+        "norm": 4288.5,
+        "slots": 155,
+        "epguNorm": 2622.5,
+        "epguSlots": 155,
+        "sourcePercent": 3.614317360382418
+      },
       "specialties": [
         {
           "code": "11",
@@ -4858,9 +5138,9 @@
           "code": "19",
           "name": "стоматолог",
           "norm": 3645,
-          "slots": 195,
+          "slots": 155,
           "epguNorm": 2227.5,
-          "epguSlots": 195
+          "epguSlots": 155
         },
         {
           "code": "20",
@@ -4910,30 +5190,37 @@
       "name": "ГАУЗ \"РКБ МЗ РТ\"",
       "fullName": "ГАУЗ \"РКБ МЗ РТ\" (Казань)",
       "city": "Казань",
+      "totals": {
+        "norm": 3677.5,
+        "slots": 3624,
+        "epguNorm": 2357.5,
+        "epguSlots": 2740,
+        "sourcePercent": 74.50713800135962
+      },
       "specialties": [
         {
           "code": "11",
           "name": "терапевт",
-          "norm": 1680,
-          "slots": 1073,
-          "epguNorm": 1080,
-          "epguSlots": 809
+          "norm": 1120,
+          "slots": 1060,
+          "epguNorm": 720,
+          "epguSlots": 806
         },
         {
           "code": "13",
           "name": "акушер-гинеколог",
           "norm": 345,
-          "slots": 469,
+          "slots": 454,
           "epguNorm": 210,
-          "epguSlots": 382
+          "epguSlots": 367
         },
         {
           "code": "25",
           "name": "ВОП — семейный врач (семейный врач)",
           "norm": 260,
-          "slots": 367,
+          "slots": 339,
           "epguNorm": 160,
-          "epguSlots": 304
+          "epguSlots": 285
         },
         {
           "code": "14",
@@ -4947,17 +5234,17 @@
           "code": "15",
           "name": "офтальмолог",
           "norm": 87.5,
-          "slots": 340,
+          "slots": 374,
           "epguNorm": 52.5,
-          "epguSlots": 280
+          "epguSlots": 308
         },
         {
           "code": "16",
           "name": "педиатр",
           "norm": 980,
-          "slots": 937,
+          "slots": 940,
           "epguNorm": 630,
-          "epguSlots": 620
+          "epguSlots": 623
         },
         {
           "code": "17",
@@ -5011,9 +5298,9 @@
           "code": "23",
           "name": "хирург",
           "norm": 42.5,
-          "slots": 261,
+          "slots": 286,
           "epguNorm": 27.5,
-          "epguSlots": 181
+          "epguSlots": 198
         },
         {
           "code": "26",
@@ -5031,6 +5318,13 @@
       "name": "ГАУЗ \"ДРКБ МЗ РТ\"",
       "fullName": "ГАУЗ \"ДРКБ МЗ РТ\" (Казань)",
       "city": "Казань",
+      "totals": {
+        "norm": 12907.5,
+        "slots": 21710,
+        "epguNorm": 8202.5,
+        "epguSlots": 11271,
+        "sourcePercent": 87.3213248111563
+      },
       "specialties": [
         {
           "code": "11",
@@ -5044,7 +5338,7 @@
           "code": "13",
           "name": "акушер-гинеколог",
           "norm": 230,
-          "slots": 512,
+          "slots": 478,
           "epguNorm": 140,
           "epguSlots": 0
         },
@@ -5060,25 +5354,25 @@
           "code": "14",
           "name": "оториноларинголог",
           "norm": 1200,
-          "slots": 870,
+          "slots": 1008,
           "epguNorm": 720,
-          "epguSlots": 415
+          "epguSlots": 502
         },
         {
           "code": "15",
           "name": "офтальмолог",
           "norm": 1137.5,
-          "slots": 824,
+          "slots": 948,
           "epguNorm": 682.5,
-          "epguSlots": 116
+          "epguSlots": 219
         },
         {
           "code": "16",
           "name": "педиатр",
           "norm": 9940,
-          "slots": 18346,
+          "slots": 18362,
           "epguNorm": 6390,
-          "epguSlots": 10176
+          "epguSlots": 10192
         },
         {
           "code": "17",
@@ -5124,7 +5418,7 @@
           "code": "22",
           "name": "фтизиатр",
           "norm": 0,
-          "slots": 181,
+          "slots": 193,
           "epguNorm": 0,
           "epguSlots": 0
         },
@@ -5140,9 +5434,9 @@
           "code": "26",
           "name": "детский хирург",
           "norm": 400,
-          "slots": 867,
+          "slots": 914,
           "epguNorm": 270,
-          "epguSlots": 310
+          "epguSlots": 358
         }
       ]
     },
@@ -5152,46 +5446,53 @@
       "name": "ГАУЗ \"ЦГКБ № 18 ИМ. ПРОФ. К.Ш. ЗЫЯТДИНОВА\"",
       "fullName": "ГАУЗ \"ЦГКБ № 18 ИМ. ПРОФ. К.Ш. ЗЫЯТДИНОВА\" (Казань)",
       "city": "Казань",
+      "totals": {
+        "norm": 12970,
+        "slots": 10017,
+        "epguNorm": 8200,
+        "epguSlots": 8081,
+        "sourcePercent": 62.3053199691596
+      },
       "specialties": [
         {
           "code": "11",
           "name": "терапевт",
           "norm": 8680,
-          "slots": 8577,
+          "slots": 5523,
           "epguNorm": 5580,
-          "epguSlots": 6630
+          "epguSlots": 4263
         },
         {
           "code": "13",
           "name": "акушер-гинеколог",
           "norm": 1610,
-          "slots": 2158,
+          "slots": 2177,
           "epguNorm": 980,
-          "epguSlots": 2050
+          "epguSlots": 2059
         },
         {
           "code": "25",
           "name": "ВОП — семейный врач (семейный врач)",
           "norm": 520,
-          "slots": 526,
+          "slots": 381,
           "epguNorm": 320,
-          "epguSlots": 410
+          "epguSlots": 297
         },
         {
           "code": "14",
           "name": "оториноларинголог",
           "norm": 600,
-          "slots": 673,
+          "slots": 558,
           "epguNorm": 360,
-          "epguSlots": 498
+          "epguSlots": 408
         },
         {
           "code": "15",
           "name": "офтальмолог",
           "norm": 1050,
-          "slots": 742,
+          "slots": 795,
           "epguNorm": 630,
-          "epguSlots": 366
+          "epguSlots": 617
         },
         {
           "code": "16",
@@ -5253,9 +5554,9 @@
           "code": "23",
           "name": "хирург",
           "norm": 510,
-          "slots": 679,
+          "slots": 583,
           "epguNorm": 330,
-          "epguSlots": 509
+          "epguSlots": 437
         },
         {
           "code": "26",
@@ -5273,22 +5574,29 @@
       "name": "ГАУЗ \"ГОРОДСКАЯ ПОЛИКЛИНИКА №18\"",
       "fullName": "ГАУЗ \"ГОРОДСКАЯ ПОЛИКЛИНИКА №18\" (Казань)",
       "city": "Казань",
+      "totals": {
+        "norm": 14470,
+        "slots": 13707,
+        "epguNorm": 9162.5,
+        "epguSlots": 11376,
+        "sourcePercent": 78.61782999308915
+      },
       "specialties": [
         {
           "code": "11",
           "name": "терапевт",
-          "norm": 8750,
-          "slots": 10961,
-          "epguNorm": 5625,
-          "epguSlots": 8866
+          "norm": 9030,
+          "slots": 10649,
+          "epguNorm": 5805,
+          "epguSlots": 8650
         },
         {
           "code": "13",
           "name": "акушер-гинеколог",
           "norm": 2472.5,
-          "slots": 1862,
+          "slots": 1895,
           "epguNorm": 1505,
-          "epguSlots": 1600
+          "epguSlots": 1621
         },
         {
           "code": "25",
@@ -5310,9 +5618,9 @@
           "code": "15",
           "name": "офтальмолог",
           "norm": 1050,
-          "slots": 196,
+          "slots": 371,
           "epguNorm": 630,
-          "epguSlots": 136
+          "epguSlots": 317
         },
         {
           "code": "16",
@@ -5342,9 +5650,9 @@
           "code": "19",
           "name": "стоматолог",
           "norm": 225,
-          "slots": 223,
+          "slots": 213,
           "epguNorm": 137.5,
-          "epguSlots": 90
+          "epguSlots": 209
         },
         {
           "code": "20",
@@ -5358,9 +5666,9 @@
           "code": "21",
           "name": "стоматолог-терапевт",
           "norm": 562.5,
-          "slots": 342,
+          "slots": 378,
           "epguNorm": 375,
-          "epguSlots": 324
+          "epguSlots": 378
         },
         {
           "code": "22",
@@ -5374,9 +5682,9 @@
           "code": "23",
           "name": "хирург",
           "norm": 680,
-          "slots": 173,
+          "slots": 201,
           "epguNorm": 440,
-          "epguSlots": 173
+          "epguSlots": 201
         },
         {
           "code": "26",
@@ -5394,38 +5702,45 @@
       "name": "ГАУЗ \"ГОРОДСКАЯ ПОЛИКЛИНИКА № 20\"",
       "fullName": "ГАУЗ \"ГОРОДСКАЯ ПОЛИКЛИНИКА № 20\" (Казань)",
       "city": "Казань",
+      "totals": {
+        "norm": 18261,
+        "slots": 18264,
+        "epguNorm": 11504.5,
+        "epguSlots": 14103,
+        "sourcePercent": 77.23016264169542
+      },
       "specialties": [
         {
           "code": "11",
           "name": "терапевт",
-          "norm": 9870,
-          "slots": 10822,
-          "epguNorm": 6345,
-          "epguSlots": 8705
+          "norm": 10430,
+          "slots": 10993,
+          "epguNorm": 6705,
+          "epguSlots": 8886
         },
         {
           "code": "13",
           "name": "акушер-гинеколог",
-          "norm": 3105,
-          "slots": 2562,
-          "epguNorm": 1890,
-          "epguSlots": 1704
+          "norm": 2875,
+          "slots": 2626,
+          "epguNorm": 1750,
+          "epguSlots": 1904
         },
         {
           "code": "25",
           "name": "ВОП — семейный врач (семейный врач)",
-          "norm": 1105,
-          "slots": 1093,
-          "epguNorm": 680,
-          "epguSlots": 931
+          "norm": 1300,
+          "slots": 1109,
+          "epguNorm": 800,
+          "epguSlots": 944
         },
         {
           "code": "14",
           "name": "оториноларинголог",
-          "norm": 1275,
-          "slots": 1234,
-          "epguNorm": 765,
-          "epguSlots": 869
+          "norm": 1650,
+          "slots": 1223,
+          "epguNorm": 990,
+          "epguSlots": 858
         },
         {
           "code": "15",
@@ -5433,7 +5748,7 @@
           "norm": 787.5,
           "slots": 812,
           "epguNorm": 472.5,
-          "epguSlots": 601
+          "epguSlots": 590
         },
         {
           "code": "16",
@@ -5494,10 +5809,10 @@
         {
           "code": "23",
           "name": "хирург",
-          "norm": 977.5,
-          "slots": 1720,
-          "epguNorm": 632.5,
-          "epguSlots": 1113
+          "norm": 1147.5,
+          "slots": 1501,
+          "epguNorm": 742.5,
+          "epguSlots": 921
         },
         {
           "code": "26",
@@ -5515,28 +5830,35 @@
       "name": "ГАУЗ \"ГОРОДСКАЯ ПОЛИКЛИНИКА № 21\"",
       "fullName": "ГАУЗ \"ГОРОДСКАЯ ПОЛИКЛИНИКА № 21\" (Казань)",
       "city": "Казань",
+      "totals": {
+        "norm": 17275,
+        "slots": 16999,
+        "epguNorm": 10950,
+        "epguSlots": 14293,
+        "sourcePercent": 82.73806078147612
+      },
       "specialties": [
         {
           "code": "11",
           "name": "терапевт",
-          "norm": 10640,
-          "slots": 9591,
-          "epguNorm": 6840,
-          "epguSlots": 9081
+          "norm": 11480,
+          "slots": 10533,
+          "epguNorm": 7380,
+          "epguSlots": 9771
         },
         {
           "code": "13",
           "name": "акушер-гинеколог",
-          "norm": 2530,
-          "slots": 3306,
-          "epguNorm": 1540,
-          "epguSlots": 1890
+          "norm": 2760,
+          "slots": 3468,
+          "epguNorm": 1680,
+          "epguSlots": 2034
         },
         {
           "code": "25",
           "name": "ВОП — семейный врач (семейный врач)",
           "norm": 0,
-          "slots": 80,
+          "slots": 100,
           "epguNorm": 0,
           "epguSlots": 0
         },
@@ -5544,17 +5866,17 @@
           "code": "14",
           "name": "оториноларинголог",
           "norm": 600,
-          "slots": 526,
+          "slots": 762,
           "epguNorm": 360,
-          "epguSlots": 398
+          "epguSlots": 636
         },
         {
           "code": "15",
           "name": "офтальмолог",
-          "norm": 700,
-          "slots": 882,
-          "epguNorm": 420,
-          "epguSlots": 700
+          "norm": 1050,
+          "slots": 906,
+          "epguNorm": 630,
+          "epguSlots": 710
         },
         {
           "code": "16",
@@ -5583,10 +5905,10 @@
         {
           "code": "19",
           "name": "стоматолог",
-          "norm": 0,
-          "slots": 180,
-          "epguNorm": 0,
-          "epguSlots": 110
+          "norm": 180,
+          "slots": 198,
+          "epguNorm": 110,
+          "epguSlots": 121
         },
         {
           "code": "20",
@@ -5600,9 +5922,9 @@
           "code": "21",
           "name": "стоматолог-терапевт",
           "norm": 585,
-          "slots": 573,
+          "slots": 621,
           "epguNorm": 390,
-          "epguSlots": 573
+          "epguSlots": 621
         },
         {
           "code": "22",
@@ -5616,9 +5938,9 @@
           "code": "23",
           "name": "хирург",
           "norm": 340,
-          "slots": 400,
+          "slots": 511,
           "epguNorm": 220,
-          "epguSlots": 325
+          "epguSlots": 400
         },
         {
           "code": "26",
@@ -5636,6 +5958,13 @@
       "name": "ГАУЗ \"ДЕТСКАЯ ГОРОДСКАЯ ПОЛИКЛИНИКА № 10\"",
       "fullName": "ГАУЗ \"ДЕТСКАЯ ГОРОДСКАЯ ПОЛИКЛИНИКА № 10\" (Казань)",
       "city": "Казань",
+      "totals": {
+        "norm": 11110,
+        "slots": 8757,
+        "epguNorm": 7100,
+        "epguSlots": 7160,
+        "sourcePercent": 64.44644464446445
+      },
       "specialties": [
         {
           "code": "11",
@@ -5649,9 +5978,9 @@
           "code": "13",
           "name": "акушер-гинеколог",
           "norm": 230,
-          "slots": 64,
+          "slots": 216,
           "epguNorm": 140,
-          "epguSlots": 52
+          "epguSlots": 176
         },
         {
           "code": "25",
@@ -5665,17 +5994,17 @@
           "code": "14",
           "name": "оториноларинголог",
           "norm": 750,
-          "slots": 391,
+          "slots": 524,
           "epguNorm": 450,
-          "epguSlots": 330
+          "epguSlots": 445
         },
         {
           "code": "15",
           "name": "офтальмолог",
           "norm": 350,
-          "slots": 147,
+          "slots": 107,
           "epguNorm": 210,
-          "epguSlots": 135
+          "epguSlots": 98
         },
         {
           "code": "16",
@@ -5745,9 +6074,9 @@
           "code": "26",
           "name": "детский хирург",
           "norm": 400,
-          "slots": 417,
+          "slots": 388,
           "epguNorm": 270,
-          "epguSlots": 353
+          "epguSlots": 328
         }
       ]
     },
@@ -5757,6 +6086,13 @@
       "name": "ГАУЗ \"ДЕТСКАЯ ГОРОДСКАЯ ПОЛИКЛИНИКА № 11\"",
       "fullName": "ГАУЗ \"ДЕТСКАЯ ГОРОДСКАЯ ПОЛИКЛИНИКА № 11\" (Казань)",
       "city": "Казань",
+      "totals": {
+        "norm": 8280.5,
+        "slots": 7132,
+        "epguNorm": 5289.5,
+        "epguSlots": 6264,
+        "sourcePercent": 75.64760582090454
+      },
       "specialties": [
         {
           "code": "11",
@@ -5770,9 +6106,9 @@
           "code": "13",
           "name": "акушер-гинеколог",
           "norm": 23,
-          "slots": 24,
+          "slots": 64,
           "epguNorm": 14,
-          "epguSlots": 24
+          "epguSlots": 64
         },
         {
           "code": "25",
@@ -5786,25 +6122,25 @@
           "code": "14",
           "name": "оториноларинголог",
           "norm": 450,
-          "slots": 368,
+          "slots": 348,
           "epguNorm": 270,
-          "epguSlots": 333
+          "epguSlots": 318
         },
         {
           "code": "15",
           "name": "офтальмолог",
           "norm": 437.5,
-          "slots": 400,
+          "slots": 393,
           "epguNorm": 262.5,
-          "epguSlots": 354
+          "epguSlots": 362
         },
         {
           "code": "16",
           "name": "педиатр",
           "norm": 7210,
-          "slots": 6077,
+          "slots": 5939,
           "epguNorm": 4635,
-          "epguSlots": 5584
+          "epguSlots": 5140
         },
         {
           "code": "17",
@@ -5866,9 +6202,9 @@
           "code": "26",
           "name": "детский хирург",
           "norm": 160,
-          "slots": 368,
+          "slots": 388,
           "epguNorm": 108,
-          "epguSlots": 360
+          "epguSlots": 380
         }
       ]
     },
@@ -5878,12 +6214,19 @@
       "name": "ООО \"МО \"СПАСЕНИЕ\"",
       "fullName": "ООО \"МО \"СПАСЕНИЕ\" (Казань)",
       "city": "Казань",
+      "totals": {
+        "norm": 5042,
+        "slots": 2099,
+        "epguNorm": 3173.5,
+        "epguSlots": 1664,
+        "sourcePercent": 33.00277667592225
+      },
       "specialties": [
         {
           "code": "11",
           "name": "терапевт",
           "norm": 2730,
-          "slots": 1130,
+          "slots": 1139,
           "epguNorm": 1755,
           "epguSlots": 938
         },
@@ -5891,9 +6234,9 @@
           "code": "13",
           "name": "акушер-гинеколог",
           "norm": 57.5,
-          "slots": 72,
+          "slots": 32,
           "epguNorm": 35,
-          "epguSlots": 68
+          "epguSlots": 31
         },
         {
           "code": "25",
@@ -5907,9 +6250,9 @@
           "code": "14",
           "name": "оториноларинголог",
           "norm": 300,
-          "slots": 92,
+          "slots": 154,
           "epguNorm": 180,
-          "epguSlots": 79
+          "epguSlots": 131
         },
         {
           "code": "15",
@@ -5917,7 +6260,7 @@
           "norm": 350,
           "slots": 64,
           "epguNorm": 210,
-          "epguSlots": 49
+          "epguSlots": 48
         },
         {
           "code": "16",
@@ -5955,17 +6298,17 @@
           "code": "20",
           "name": "стоматолог детский",
           "norm": 0,
-          "slots": 364,
+          "slots": 402,
           "epguNorm": 0,
-          "epguSlots": 247
+          "epguSlots": 270
         },
         {
           "code": "21",
           "name": "стоматолог-терапевт",
           "norm": 112.5,
-          "slots": 503,
+          "slots": 554,
           "epguNorm": 75,
-          "epguSlots": 344
+          "epguSlots": 380
         },
         {
           "code": "22",
@@ -5979,9 +6322,9 @@
           "code": "23",
           "name": "хирург",
           "norm": 187.00000000000003,
-          "slots": 124,
+          "slots": 156,
           "epguNorm": 121.00000000000001,
-          "epguSlots": 107
+          "epguSlots": 136
         },
         {
           "code": "26",
@@ -5999,22 +6342,29 @@
       "name": "ЧУЗ \"КБ\"РЖД-МЕДИЦИНА\"Г.КАЗАНЬ\"",
       "fullName": "ЧУЗ \"КБ\"РЖД-МЕДИЦИНА\"Г.КАЗАНЬ\" (Казань)",
       "city": "Казань",
+      "totals": {
+        "norm": 5675,
+        "slots": 293,
+        "epguNorm": 3595,
+        "epguSlots": 266,
+        "sourcePercent": 4.687224669603524
+      },
       "specialties": [
         {
           "code": "11",
           "name": "терапевт",
-          "norm": 3500,
-          "slots": 218,
-          "epguNorm": 2250,
-          "epguSlots": 200
+          "norm": 3430,
+          "slots": 235,
+          "epguNorm": 2205,
+          "epguSlots": 208
         },
         {
           "code": "13",
           "name": "акушер-гинеколог",
           "norm": 575,
-          "slots": 26,
+          "slots": 17,
           "epguNorm": 350,
-          "epguSlots": 26
+          "epguSlots": 17
         },
         {
           "code": "25",
@@ -6100,9 +6450,9 @@
           "code": "23",
           "name": "хирург",
           "norm": 340,
-          "slots": 28,
+          "slots": 27,
           "epguNorm": 220,
-          "epguSlots": 28
+          "epguSlots": 27
         },
         {
           "code": "26",
@@ -6120,6 +6470,13 @@
       "name": "ГАУЗ \"ГОРОДСКАЯ ДЕТСКАЯ ПОЛИКЛИНИКА № 6\"",
       "fullName": "ГАУЗ \"ГОРОДСКАЯ ДЕТСКАЯ ПОЛИКЛИНИКА № 6\" (Казань)",
       "city": "Казань",
+      "totals": {
+        "norm": 16772.5,
+        "slots": 11776,
+        "epguNorm": 10655,
+        "epguSlots": 10633,
+        "sourcePercent": 63.39543896258757
+      },
       "specialties": [
         {
           "code": "11",
@@ -6149,25 +6506,25 @@
           "code": "14",
           "name": "оториноларинголог",
           "norm": 1200,
-          "slots": 712,
+          "slots": 688,
           "epguNorm": 720,
-          "epguSlots": 660
+          "epguSlots": 636
         },
         {
           "code": "15",
           "name": "офтальмолог",
           "norm": 1487.5,
-          "slots": 866,
+          "slots": 858,
           "epguNorm": 892.5,
-          "epguSlots": 833
+          "epguSlots": 827
         },
         {
           "code": "16",
           "name": "педиатр",
-          "norm": 13440,
-          "slots": 10054,
-          "epguNorm": 8640,
-          "epguSlots": 9000
+          "norm": 13720,
+          "slots": 10036,
+          "epguNorm": 8820,
+          "epguSlots": 8976
         },
         {
           "code": "17",
@@ -6241,6 +6598,13 @@
       "name": "ГАУЗ ДЕТСКАЯ СТОМАТОЛОГИЧЕСКАЯ ПОЛИКЛИНИКА № 6",
       "fullName": "ГАУЗ ДЕТСКАЯ СТОМАТОЛОГИЧЕСКАЯ ПОЛИКЛИНИКА № 6 (Казань)",
       "city": "Казань",
+      "totals": {
+        "norm": 2475,
+        "slots": 616,
+        "epguNorm": 1512.5,
+        "epguSlots": 396,
+        "sourcePercent": 16.0
+      },
       "specialties": [
         {
           "code": "11",
@@ -6362,6 +6726,13 @@
       "name": "ООО СТОМАТОЛОГИЧЕСКАЯ ПОЛИКЛИНИКА № 9 ДЕРБЫШКИ",
       "fullName": "ООО СТОМАТОЛОГИЧЕСКАЯ ПОЛИКЛИНИКА № 9 ДЕРБЫШКИ (Казань)",
       "city": "Казань",
+      "totals": {
+        "norm": 4410,
+        "slots": 181,
+        "epguNorm": 2755,
+        "epguSlots": 181,
+        "sourcePercent": 4.104308390022675
+      },
       "specialties": [
         {
           "code": "11",
@@ -6431,25 +6802,25 @@
           "code": "19",
           "name": "стоматолог",
           "norm": 3060,
-          "slots": 51,
+          "slots": 85,
           "epguNorm": 1870,
-          "epguSlots": 51
+          "epguSlots": 85
         },
         {
           "code": "20",
           "name": "стоматолог детский",
           "norm": 270,
-          "slots": 5,
+          "slots": 9,
           "epguNorm": 165,
-          "epguSlots": 5
+          "epguSlots": 9
         },
         {
           "code": "21",
           "name": "стоматолог-терапевт",
           "norm": 1080,
-          "slots": 85,
+          "slots": 87,
           "epguNorm": 720,
-          "epguSlots": 85
+          "epguSlots": 87
         },
         {
           "code": "22",
@@ -6483,44 +6854,51 @@
       "name": "ГАУЗ \"ГОРОДСКАЯ ПОЛИКЛИНИКА № 8\" Г.КАЗАНИ",
       "fullName": "ГАУЗ \"ГОРОДСКАЯ ПОЛИКЛИНИКА № 8\" Г.КАЗАНИ (Казань)",
       "city": "Казань",
+      "totals": {
+        "norm": 14622.5,
+        "slots": 12349,
+        "epguNorm": 9202.5,
+        "epguSlots": 9827,
+        "sourcePercent": 67.20465036758421
+      },
       "specialties": [
         {
           "code": "11",
           "name": "терапевт",
           "norm": 7910,
-          "slots": 7131,
+          "slots": 7427,
           "epguNorm": 5085,
-          "epguSlots": 5381
+          "epguSlots": 5803
         },
         {
           "code": "13",
           "name": "акушер-гинеколог",
           "norm": 3220,
-          "slots": 2046,
+          "slots": 2146,
           "epguNorm": 1960,
-          "epguSlots": 1576
+          "epguSlots": 1676
         },
         {
           "code": "25",
           "name": "ВОП — семейный врач (семейный врач)",
           "norm": 1690,
-          "slots": 1330,
+          "slots": 1249,
           "epguNorm": 1040,
-          "epguSlots": 1176
+          "epguSlots": 1249
         },
         {
           "code": "14",
           "name": "оториноларинголог",
           "norm": 600,
-          "slots": 319,
+          "slots": 312,
           "epguNorm": 360,
-          "epguSlots": 236
+          "epguSlots": 234
         },
         {
           "code": "15",
           "name": "офтальмолог",
           "norm": 437.5,
-          "slots": 394,
+          "slots": 395,
           "epguNorm": 262.5,
           "epguSlots": 220
         },
@@ -6584,9 +6962,9 @@
           "code": "23",
           "name": "хирург",
           "norm": 765,
-          "slots": 668,
+          "slots": 820,
           "epguNorm": 495,
-          "epguSlots": 524
+          "epguSlots": 645
         },
         {
           "code": "26",
@@ -6604,6 +6982,13 @@
       "name": "ООО \"СТОМАТОЛОГИЧЕСКАЯ ПОЛИКЛИНИКА № 9 АЗИНО\" Г. КАЗАНИ",
       "fullName": "ООО \"СТОМАТОЛОГИЧЕСКАЯ ПОЛИКЛИНИКА № 9 АЗИНО\" Г. КАЗАНИ (Казань)",
       "city": "Казань",
+      "totals": {
+        "norm": 5490,
+        "slots": 511,
+        "epguNorm": 3413.5,
+        "epguSlots": 511,
+        "sourcePercent": 9.30783242258652
+      },
       "specialties": [
         {
           "code": "11",
@@ -6673,17 +7058,17 @@
           "code": "19",
           "name": "стоматолог",
           "norm": 3581.9999999999995,
-          "slots": 373,
+          "slots": 350,
           "epguNorm": 2189,
-          "epguSlots": 373
+          "epguSlots": 350
         },
         {
           "code": "20",
           "name": "стоматолог детский",
           "norm": 855,
-          "slots": 90,
+          "slots": 73,
           "epguNorm": 522.5,
-          "epguSlots": 90
+          "epguSlots": 73
         },
         {
           "code": "21",
@@ -6725,14 +7110,21 @@
       "name": "ООО \"СИТИДОК-ЭКСПЕРТ КАЗАНЬ\"",
       "fullName": "ООО \"СИТИДОК-ЭКСПЕРТ КАЗАНЬ\" (Казань)",
       "city": "Казань",
+      "totals": {
+        "norm": 4275,
+        "slots": 1861,
+        "epguNorm": 2690.5,
+        "epguSlots": 1768,
+        "sourcePercent": 41.35672514619883
+      },
       "specialties": [
         {
           "code": "11",
           "name": "терапевт",
           "norm": 1610,
-          "slots": 702,
+          "slots": 813,
           "epguNorm": 1035,
-          "epguSlots": 660
+          "epguSlots": 756
         },
         {
           "code": "13",
@@ -6754,17 +7146,17 @@
           "code": "14",
           "name": "оториноларинголог",
           "norm": 255,
-          "slots": 128,
+          "slots": 140,
           "epguNorm": 153,
-          "epguSlots": 104
+          "epguSlots": 116
         },
         {
           "code": "15",
           "name": "офтальмолог",
           "norm": 612.5,
-          "slots": 184,
+          "slots": 210,
           "epguNorm": 367.5,
-          "epguSlots": 184
+          "epguSlots": 210
         },
         {
           "code": "16",
@@ -6834,9 +7226,9 @@
           "code": "26",
           "name": "детский хирург",
           "norm": 100,
-          "slots": 39,
+          "slots": 30,
           "epguNorm": 67.5,
-          "epguSlots": 27
+          "epguSlots": 18
         }
       ]
     },
@@ -6846,6 +7238,13 @@
       "name": "АО ГОРОДСКАЯ СТОМАТОЛОГИЯ",
       "fullName": "АО ГОРОДСКАЯ СТОМАТОЛОГИЯ (Казань)",
       "city": "Казань",
+      "totals": {
+        "norm": 1755,
+        "slots": 0,
+        "epguNorm": 1072.5,
+        "epguSlots": 0,
+        "sourcePercent": 0.0
+      },
       "specialties": [
         {
           "code": "11",
@@ -6923,17 +7322,17 @@
           "code": "20",
           "name": "стоматолог детский",
           "norm": 0,
-          "slots": 0,
+          "slots": 168,
           "epguNorm": 0,
-          "epguSlots": 0
+          "epguSlots": 168
         },
         {
           "code": "21",
           "name": "стоматолог-терапевт",
           "norm": 0,
-          "slots": 329,
+          "slots": 882,
           "epguNorm": 0,
-          "epguSlots": 329
+          "epguSlots": 882
         },
         {
           "code": "22",
@@ -6963,4 +7362,3 @@
     }
   ]
 }
-

@@ -13,7 +13,7 @@ import styles from "./incident38-dashboard.module.css";
 
 type SlotValue = number | null;
 type Specialty = { code: string; name: string; norm: SlotValue; slots: SlotValue; epguNorm: SlotValue; epguSlots: SlotValue };
-type Organization = { oid: string; code: string; name: string; fullName: string; city: string; specialties: Specialty[] };
+type Organization = { oid: string; code: string; name: string; fullName: string; city: string; totals: { norm: SlotValue; slots: SlotValue; epguNorm: SlotValue; epguSlots: SlotValue; sourcePercent: number | null }; specialties: Specialty[] };
 type Dataset = { source: string; reportDate: string; asOf: string; frmoDate: string; forwardDays: number; orgCount: number; specialties: Array<{ code: string; name: string }>; orgs: Organization[] };
 type Tab = "overview" | "organization";
 type Ownership = "state" | "private";
@@ -56,9 +56,8 @@ const median = (values: number[]) => {
 // Keep them in the public/state-participation view; classify private entities by their legal-form prefixes.
 const isPrivateOrganization = (org: Organization) => /^(ООО|ЧУЗ|ИП|АНО|ЗАО|ОАО|НЧОУ)\s/i.test(org.name.trim());
 function metrics(rows: Specialty[]) {
-  // Match the source form: include every EPGU slot, even where the overall norm is zero.
   const norm = sumKnown(rows.map((row) => row.norm));
-  const epguSlots = sumKnown(rows.map((row) => row.epguSlots));
+  const epguSlots = rows.some((row) => row.norm === null || row.epguSlots === null) ? null : rows.filter((row) => row.norm! > 0).reduce((sum, row) => sum + row.epguSlots!, 0);
   const coverage = ratio(epguSlots, norm);
   const complete = rows.every((row) => row.norm !== null && row.epguSlots !== null);
   const deficit = complete ? planShortfall(epguSlots, norm) : null;
@@ -75,7 +74,22 @@ function metrics(rows: Specialty[]) {
   };
 }
 
-const orgMetrics = (org: Organization) => metrics(org.specialties);
+const orgMetrics = (org: Organization) => {
+  const { norm, epguSlots } = org.totals;
+  const coverage = ratio(epguSlots, norm);
+  const complete = norm !== null && epguSlots !== null;
+  const deficit = complete ? planShortfall(epguSlots, norm) : null;
+  return { norm, epguSlots, coverage, deficit, targetSlots: norm === null ? null : Math.ceil(norm * PLAN_RATIO), complete, meetsPlan: coverage !== null && coverage >= PLAN_PERCENT, missing: complete ? 0 : 1 };
+};
+
+function aggregateOrganizationTotals(orgs: Organization[]) {
+  const norm = sumKnown(orgs.map((org) => org.totals.norm));
+  const epguSlots = sumKnown(orgs.map((org) => org.totals.epguSlots));
+  const coverage = ratio(epguSlots, norm);
+  const complete = orgs.every((org) => org.totals.norm !== null && org.totals.epguSlots !== null);
+  const deficit = complete ? sumKnown(orgs.map((org) => orgMetrics(org).deficit)) : null;
+  return { norm, epguSlots, coverage, deficit, targetSlots: norm === null ? null : Math.ceil(norm * PLAN_RATIO), complete, meetsPlan: coverage !== null && coverage >= PLAN_PERCENT, missing: orgs.filter((org) => org.totals.norm === null || org.totals.epguSlots === null).length };
+}
 
 /** Read-only reuse of the same source, ownership rules and formula as И-38.9. */
 export function getVitrinaIncident38(includePrivate: boolean) {
@@ -84,7 +98,7 @@ export function getVitrinaIncident38(includePrivate: boolean) {
   const horizons = [...new Set(DATA.map(dataset => dataset.forwardDays))];
   const unique = new Set(orgs.map(org => org.oid)).size === orgs.length;
   const comparable = dates.length === 1 && horizons.length === 1 && unique;
-  const total = comparable ? metrics(orgs.flatMap(org => org.specialties)) : null;
+  const total = comparable ? aggregateOrganizationTotals(orgs) : null;
   const specialties = SPECIALTIES.map(specialty => {
     const cells = orgs.map(org => org.specialties.find(row => row.code === specialty.code));
     const complete = comparable && cells.every((row): row is Specialty => Boolean(row));
@@ -143,7 +157,7 @@ export default function Incident38Dashboard({ onOpenFrmrMo }: { onOpenFrmrMo: (o
     : visibleOrganizations.find((org) => org.oid === selectedOid) ?? visibleOrganizations[0] ?? null;
   const selectedBalanced = selectedOrg ? balancedSpecialties(selectedOrg.specialties) : null;
   const regional = useMemo(() => {
-    const totals = metrics(visibleOrganizations.flatMap((org) => org.specialties));
+    const totals = aggregateOrganizationTotals(visibleOrganizations);
     return { ...totals, deficit: sumKnown(visibleOrganizations.map((org) => orgMetrics(org).deficit)) };
   }, [visibleOrganizations]);
   const scopeHistory = useMemo(() => DATA.map((dataset, index) => {
@@ -336,7 +350,7 @@ export default function Incident38Dashboard({ onOpenFrmrMo }: { onOpenFrmrMo: (o
         </article>)}</div>
         <p className={styles.matrixMethod}>Сравнение по одинаковым OID и типу МО; новые или отсутствующие строки не считаются нулём. Суммы слотов и нормативов сравниваются отдельно. Разбивка изменений по специальностям для старого среза не показывается до повторной сверки архивного источника.</p>
       </section>
-      <div className={styles.note}><b>Как читать показатель:</b> Реальный процент = «Слотов для ЕПГУ» ÷ «Норматив ВСЕГО» × 100%. План каждой МО — 60%, цель — 70%. Нехватка = max(0, округление вверх(«Норматив ВСЕГО» × 60%) − «Слотов для ЕПГУ»), считается отдельно по каждой МО. Общий процент — сумма слотов ЕПГУ, делённая на сумму общего норматива. В расчёте учитываются все слоты ЕПГУ, в том числе по специальностям с нулевым нормативом. {DATA[0].reportDate === DATA[1].reportDate ? `Обе выгрузки на ${DATA[0].reportDate}.` : `Даты выгрузок: ${DATA.map((dataset) => dataset.reportDate).join(" и ")}.`} «Норма для ЕПГУ» и «Всего слотов» не влияют на этот показатель.</div>
+      <div className={styles.note}><b>Как читать показатель:</b> Реальный процент = «Слотов для ЕПГУ» ÷ «Норматив ВСЕГО» × 100%. План каждой МО — 60%, цель — 70%. Нехватка = max(0, округление вверх(«Норматив ВСЕГО» × 60%) − «Слотов для ЕПГУ»), считается отдельно по каждой МО. Общий процент — сумма слотов ЕПГУ, делённая на сумму общего норматива. Используется официальный итог формы «Всего». Слоты специальностей с нулевым нормативом остаются в детализации для проверки, но не входят в общий итог. {DATA[0].reportDate === DATA[1].reportDate ? `Обе выгрузки на ${DATA[0].reportDate}.` : `Даты выгрузок: ${DATA.map((dataset) => dataset.reportDate).join(" и ")}.`} «Норма для ЕПГУ» и «Всего слотов» не влияют на этот показатель.</div>
       <div className={styles.grid2}>
         <section className={styles.card}><h2>Распределение МО по достижению плана</h2><p className={styles.chartNote}>Сколько организаций достигло разных уровней от индивидуального плана 60%. Достижение плана = И‑38.9 МО ÷ 60%. В расчёт включены МО с полными данными: {completeOrganizations.length}.</p>
           <div className={styles.planDistribution}>{planDistribution.map((band) => <div className={styles.planDistributionRow} key={band.key}><span>{band.label}</span><div className={styles.track}><i style={{ width: `${band.count / maxPlanDistribution * 100}%`, background: band.color }} /></div><strong>{band.count}</strong><small>{percent(band.share)}</small></div>)}</div>
@@ -451,6 +465,6 @@ export default function Incident38Dashboard({ onOpenFrmrMo }: { onOpenFrmrMo: (o
       </section>}
     </main>}
 
-    <footer className={styles.footer}>Источник: форма И‑38.9, лист «нормативы». Реальный процент И‑38.9 = «Слотов для ЕПГУ» ÷ «Норматив ВСЕГО» × 100%; план каждой МО — 60%, цель — 70%. Нехватка рассчитывается по каждой МО как минимальное целое число дополнительных слотов до 60% общего норматива. «Норма для ЕПГУ» и «Всего слотов» в оценке не используются. Итог по региону — отношение суммы слотов к сумме общего норматива. Даты срезов: {DATA.map((dataset) => dataset.reportDate).join(" · ")}. По правилу реорганизации Альметьевска из текущего отчёта исключены прежние МО, головная организация сохранена. Отсутствие данных не заменяется нулём; государственные/частные организации разделены по организационно-правовой форме.</footer>
+    <footer className={styles.footer}>Источник: форма И‑38.9, лист «нормативы». Реальный процент И‑38.9 = «Слотов для ЕПГУ» ÷ «Норматив ВСЕГО» × 100%; план каждой МО — 60%, цель — 70%. Нехватка рассчитывается по каждой МО как минимальное целое число дополнительных слотов до 60% общего норматива. «Норма для ЕПГУ» и «Всего слотов» в оценке не используются; слоты по специальностям с нулевым нормативом не входят в официальный итог формы. Итог по региону — отношение суммы слотов к сумме общего норматива. Даты срезов: {DATA.map((dataset) => dataset.reportDate).join(" · ")}. По правилу реорганизации Альметьевска из текущего отчёта исключены прежние МО, головная организация сохранена. Отсутствие данных не заменяется нулём; государственные/частные организации разделены по организационно-правовой форме.</footer>
   </div>;
 }
