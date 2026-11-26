@@ -31,7 +31,7 @@ test('accepted October values have an independent primary-source audit and exact
  // The November 09 promotion explicitly replaces these October MAX snapshots.
  // Historic evidence hashes stay fixed; promoted hashes are verified against the production manifest.
  const refreshedPaths=new Set(['app/mo-data.json','app/mo-detail-oids.json','app/mo-details.json','app/operational-mo.json','app/organization-status.json','app/unit-data.json','app/unit-mo-snapshots.json','app/max-period-views.json','app/monthly-mo.json','app/month-closure-2026-10.json','app/electronic-waybill.json','app/electronic-waybill-weekly.json','app/error-categories.json','app/error-cumulative.json','app/error-organizations.json','app/preventive-semd-audit.json','app/physician-weekly-snapshot.json','app/physician500-audit.json']);
- const frmrPaths=new Set(['app/frmr-all-specialties.json','app/frmr-previous-control.json','app/frmr-sp-types.json']);
+ const frmrPaths=new Set(['app/frmr-all-specialties.json','app/frmr-previous-control.json','app/frmr-sp-types.json','app/frmo-linkage-data.json']);
  for(const [path,hash] of Object.entries({...audit.acceptedAppSha256,...preventive.acceptedAppSha256,...unchangedDataFiles})) {
   if(frmrPaths.has(path)) continue;
   if(path in currentAudit.afterSha256) continue;

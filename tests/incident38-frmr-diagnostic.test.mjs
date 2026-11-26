@@ -7,7 +7,7 @@ const read = file => JSON.parse(readFileSync(new URL("../app/" + file, import.me
 const cities = read("incident38-cities.json");
 const districts = read("incident38-districts.json");
 const frmr = read("frmr-all-specialties.json");
-const frmo = read("frmo-linkage-data.json");
+const frmo = read("frmo-linkage-data-20261126.json");
 const orgs = [...cities.orgs, ...districts.orgs];
 const get = suffix => orgs.find(org => org.oid.endsWith("." + suffix));
 
@@ -38,7 +38,7 @@ test("И38: show relevant problematic FRMR role records only for exact MO OID an
 test("И38: FRMO issues are only organization-level findings, never specialty-level proof", () => {
   const agryz = get("1088");
   const findings = getFrmoOrganizationFindings(agryz.oid, frmo.organizations);
-  assert.deepEqual(findings, { matched: true, ambiguous: false, issues: 25, rows: 29 });
+  assert.deepEqual(findings, { matched: true, ambiguous: false, issues: 24, rows: 30 });
   assert.deepEqual(getFrmoOrganizationFindings("unknown", frmo.organizations), { matched: false, ambiguous: false, issues: null, rows: null });
   assert.deepEqual(getFrmoOrganizationFindings(agryz.oid, [{ parentOids: [agryz.oid] }, { parentOids: [agryz.oid] }]), { matched: false, ambiguous: true, issues: null, rows: null });
 });

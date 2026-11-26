@@ -1,6 +1,6 @@
 "use client";
 import { useMemo, useState } from "react";
-import source from "./frmr-sp-audit-20261119.json";
+import source from "./frmr-sp-audit-20261126.json";
 import styles from "./frmr-sp-audit.module.css";
 
 const labels: Record<string,string> = {
@@ -32,7 +32,7 @@ export default function FrmrSpAudit() {
     </div>
     <div className={styles.cards}>
       <article><span>Строк в исходной привязке</span><strong>{format(source.records.length)}</strong><small>одна строка — отделение в привязке</small></article>
-      <article><span>МО в двух листах</span><strong>{format(source.summary.length)}</strong><small>{source.summarySourceCount} в своде · {source.summary.length-source.summarySourceCount} только в детализации</small></article>
+      <article><span>МО в своде / детализации</span><strong>{format(source.summarySourceCount)} / {format(source.detailOrganizationCount)}</strong><small>только детализация: {source.detailOnlyCount} · только свод: {source.summaryOnlyCount}</small></article>
       <article><span>Различается OID филиала</span><strong>{format(counts.oid)}</strong><small>проверить сопоставление вручную</small></article>
       <article><span>Не указан один из OID</span><strong>{format(counts.missing)}</strong><small>отсутствие значения не равно ошибке МО</small></article>
     </div>
@@ -46,7 +46,7 @@ export default function FrmrSpAudit() {
         <input type="search" className={styles.search} value={query} onChange={e=>setQuery(e.target.value)} placeholder="Найти МО или код" aria-label="Поиск МО в сверке СП" />
         <div className={styles.list}>
           {summary.map(mo => <button key={mo.id} className={selected===mo.id?styles.active:""} onClick={()=>{setSelected(mo.id);setLimit(100)}}>
-            <span><b>{mo.name}</b><small>Код {mo.id} · 09.11: {format(mo.previous)}{mo.old===null?"":" · 08.09.2025: "+format(mo.old)}</small></span><strong>{format(mo.current)}</strong>
+            <span><b>{mo.name}</b><small>Код {mo.id} · {source.previousCut}: {format(mo.previous)}{mo.old===null?"":" · "+source.historicCut+": "+format(mo.old)}</small></span><strong>{format(mo.current)}</strong>
           </button>)}
         </div>
       </section>
@@ -55,7 +55,7 @@ export default function FrmrSpAudit() {
         <select className={styles.search} value={flag} onChange={e=>{setFlag(e.target.value);setLimit(100)}} aria-label="Фильтр признаков сверки">
           <option value="">Все строки</option>{Object.entries(labels).map(([key,label])=><option key={key} value={key}>{label} · {format(counts[key])}</option>)}
         </select>
-        <p className={styles.count}>Найдено {format(records.length)} строк. Признаки служат для проверки, не для санкций или рейтинга.</p>
+        {organization && !organization.hasDetail ? <p className={styles.note}>В детализации по этой МО строк нет. Сводка источника показана отдельно; отсутствие детализации не трактуется как ноль.</p> : <p className={styles.count}>Найдено {format(records.length)} строк. Признаки служат для проверки, не для санкций или рейтинга.</p>}
         <div className={styles.detail}>{records.slice(0,limit).map((row,i)=><article key={row.mo+"-"+i}>
           <b>{row.department || "Отделение не указано"}</b><span>{row.name} · {row.branchGis || "Филиал ГИС не указан"}</span>
           <small>ФРМО: {row.branchFrmo || "нет названия"} · OID: {row.oidFrmo || "не указан"}</small>

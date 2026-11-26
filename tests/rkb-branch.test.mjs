@@ -8,7 +8,7 @@ import { createMoRegistryRuntime, reportMoName } from "../lib/mo-registry.js";
 const read = (path) => JSON.parse(fs.readFileSync(path, "utf8"));
 const catalog = read("config/rkb-spassk-branch.json");
 const registry = read("app/mo-registry.json");
-const frmo = read("app/frmo-linkage-data.json");
+const frmo = read("app/frmo-linkage-data-20261126.json");
 const runtime = createMoRegistryRuntime(registry);
 const rootOid = "1.2.643.5.1.13.13.12.2.16.1094";
 
@@ -59,9 +59,9 @@ test("current FRMO linkage for code 4001 is inconsistent, so aggregation gate mu
   const source = frmo.organizations.find((org) => org.code === "4001");
   assert.ok(source);
   assert.equal(source.rows, 71);
-  assert.equal(source.issues, 71);
+  assert.equal(source.issues, 70);
   assert.deepEqual(new Set(source.parentOids), new Set(catalog.frmoAudit.parentOidVariants));
-  assert.equal(frmo.cut, "30.10.2026");
+  assert.equal(frmo.cut, "26.11.2026");
 });
 
 test("both source sheets resolve independently through the runtime without changing legal OIDs", () => {

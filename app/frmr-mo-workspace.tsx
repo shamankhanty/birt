@@ -3,8 +3,8 @@
 import { useMemo, useState } from "react";
 import allRaw from "./frmr-all-specialties.json";
 import spTypes from "./frmr-sp-types.json";
-import linkage from "./frmo-linkage-data.json";
-import auditRaw from "./frmr-sp-audit-20261119.json";
+import linkage from "./frmo-linkage-data-20261126.json";
+import auditRaw from "./frmr-sp-audit-20261126.json";
 import { applyFrmrScope } from "../lib/frmr-scope";
 import styles from "./frmr-mo-workspace.module.css";
 
@@ -64,7 +64,7 @@ export default function FrmrMoWorkspace({ selectedId, selectedName }: { selected
   const data = useMemo(() => {
     const org = staffSource.summary.rows.find(row => row[0] === selectedId);
     const auditOrg = resolveAuditOrganization(selectedId, selectedName);
-    const auditRows = auditOrg ? auditRaw.records.filter(row => row.mo === auditOrg.id) : null;
+    const auditRows = auditOrg?.hasDetail ? auditRaw.records.filter(row => row.mo === auditOrg.id) : null;
     const moIndex = staffSource.departments.mos.indexOf(selectedId);
     const grouped = new Map<string, StaffRecord[]>();
     if (moIndex >= 0) {
@@ -200,6 +200,7 @@ export default function FrmrMoWorkspace({ selectedId, selectedName }: { selected
       <article><span>Сверка СП с ФРМО</span><strong>{format(data.flaggedFrmo)}</strong><small>Строк для проверки · {auditRaw.sourceCut}</small></article>
     </div>
     {!data.auditOrg && <p className={styles.warning} role="status">Эта МО не сопоставлена однозначно с данными сверки ФРМО. Данные отсутствуют, не нулевые. Проверьте OID.</p>}
+    {data.auditOrg && !data.auditOrg.hasDetail && <p className={styles.warning} role="status">Код МО есть в сводке ФРМО, но строк детализации нет. Данные не считаются нулевым числом отделений.</p>}
     <nav className={styles.tabs} aria-label="Рабочие таблицы медицинской организации">
       <button type="button" className={workspaceTab === "staff" ? styles.tabActive : ""}
         aria-pressed={workspaceTab === "staff"} onClick={() => setWorkspaceTab("staff")}>Должности ФРМР</button>
