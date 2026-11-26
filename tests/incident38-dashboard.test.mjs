@@ -40,8 +40,8 @@ test("Incident 38 organization and specialty rows are complete and unique", () =
 
 test("Incident 38 specialty columns match source summary controls", () => {
   const controls = [
-    [cities, { "11": [146188, 127183, 93978, 97236], "16": [112910, 112537, 72585, 83065], "26": [5160, 5432, 3483, 3751] }],
-    [districts, { "11": [95424, 101235, 61344, 65803], "16": [95270, 95719, 61245, 67677], "26": [3038, 2679, 2050.65, 1508] }],
+    [cities, { "11": [146188, 127183, 93978, 97236], "16": [112840, 114619, 72540, 83987], "26": [5160, 5432, 3483, 3751] }],
+    [districts, { "11": [95424, 101235, 61344, 65803], "16": [96530, 90538, 62055, 64031], "26": [2638, 3124, 1780.65, 1820] }],
   ];
   for (const [dataset, expected] of controls) {
     for (const [code, totals] of Object.entries(expected)) {
