@@ -5,6 +5,7 @@ import allRaw from "./frmr-all-specialties.json";
 import moRegistry from "./mo-registry.json";
 import spTypes from "./frmr-sp-types.json";
 import previousControl from "./frmr-previous-control.json";
+import frmoAudit from "./frmr-sp-audit-20261126.json";
 import FrmrSpAudit from "./frmr-sp-audit";
 import FrmrMoWorkspace from "./frmr-mo-workspace";
 import { compareFrmrControl, frmrControlView } from "../lib/frmr-control";
@@ -52,6 +53,7 @@ const change = (row: Org) =>
 export default function FrmrReconciliation({ targetOid = null }: { targetOid?: string | null }) {
   const initialMoId = targetOid?.startsWith(officialPrefix) ? targetOid.slice(officialPrefix.length) : null;
   const matchedInitialMoId = initialMoId && scopedAll.summary.rows.some(row => row[0] === initialMoId) ? initialMoId : null;
+  const excludedInitialMo = initialMoId ? allRaw.metadata.uncontrolledOrganizations?.find(row => row.id === initialMoId) : null;
   const isAll = true;
   const [controlLevel, setControlLevel] = useState<"mo" | "department">("mo");
   const [spType, setSpType] = useState("");
@@ -219,13 +221,15 @@ export default function FrmrReconciliation({ targetOid = null }: { targetOid?: s
         <h1>{view === "audit" ? "ФРМО ↔ ГИС: привязка подразделений" : "ФРМР ↔ ГИС: достоверность должностей"}</h1>
         <p>{view === "audit" ? "Справочная сверка филиалов и отделений с ФРМО. Признаки для проверки не влияют на основной показатель должностей." : "Единый контроль расхождений между федеральным регистром и региональной ГИС. Основной контроль — наличие должности на уровне медицинской организации. Привязки подразделений доступны отдельно, справочно."}</p>
         <div className={styles.heroBottom}>
-          <span className={styles.eyebrow}>Срез {view === "audit" ? "19.11.2026 · все специальности" : dateLabel}</span>
+          <span className={styles.eyebrow}>Срез {view === "audit" ? frmoAudit.sourceCut + " · все специальности" : dateLabel}</span>
           <span className={styles.heroNote}>{view === "audit" ? "Единица учёта — строка привязки отделения. Изменения состава СП проверяются по датированным срезам." : "Единица учёта — должностная запись, а не уникальный сотрудник. Влияние на запись пациентов пока не подтверждено."}</span>
         </div>
       </section>
 
+      {targetOid && initialMoId && !matchedInitialMoId && excludedInitialMo && <p className={styles.warning} role="status">{excludedInitialMo.name} ({initialMoId}) помечена в источнике «{excludedInitialMo.reason}» на {allRaw.summary.sourceCut}. Данные не подменены нулём.</p>}
+
       <div className={styles.workspaceControls}>
-      <span className={styles.pill}>{view === "audit" ? "Привязки СП · 19.11" : `Все специальности · ${allRaw.summary.sourceCut.slice(0,5)}`}</span>
+      <span className={styles.pill}>{view === "audit" ? `Привязки СП · ${frmoAudit.sourceCut.slice(0,5)}` : `Все специальности · ${allRaw.summary.sourceCut.slice(0,5)}`}</span>
       <div className={styles.tabs} role="group" aria-label="Представление раздела">
         <button className={[styles.tab, view === "minister" ? styles.tabActive : ""].join(" ")} onClick={() => setView("minister")} aria-pressed={view === "minister"}>Обзор</button>
         <button className={[styles.tab, view === "organization" ? styles.tabActive : ""].join(" ")} onClick={() => setView("organization")} aria-pressed={view === "organization"}>Карточка МО · все ошибки</button>

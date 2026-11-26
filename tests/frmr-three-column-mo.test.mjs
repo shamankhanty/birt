@@ -33,7 +33,7 @@ test("separate FRMO audit retains cut, warning semantics, and avoids mixing staf
   assert.match(component, /Строк для проверки/);
   assert.match(component, /Отсутствие данных не равно нулю/);
   assert.match(component, /staffRows : auditDisplay/);
-  assert.equal(source.summary.sourceCut, "19.11.2026");
+  assert.equal(source.summary.sourceCut, "26.11.2026");
   const saby = source.summary.rows.find(row => row[0] === "1126");
   assert.ok(saby);
   assert.equal(saby[4], saby[5] + saby[6]);

@@ -5,7 +5,7 @@ import cityRaw from "./incident38-cities.json";
 import districtRaw from "./incident38-districts.json";
 import historyRaw from "./incident38-history.json";
 import frmrRaw from "./frmr-all-specialties.json";
-import frmoLinkageRaw from "./frmo-linkage-data.json";
+import frmoLinkageRaw from "./frmo-linkage-data-20261126.json";
 import { getFrmrSpecialtyIssues, getFrmoOrganizationFindings } from "../lib/incident38-frmr-diagnostic.js";
 import { balancedSpecialties } from "../lib/incident38-balanced-specialties.js";
 import reorganizationRaw from "../config/mo-reorganizations.json";

@@ -20,8 +20,8 @@ test("Section 06 keeps overview first and routes organization work to unified MO
 
 test("Saby has one stable MO identity in both sources, without summing different units", () => {
   const data = read("frmr-all-specialties.json");
-  const audit = read("frmr-sp-audit-20261119.json");
-  const linkage = read("frmo-linkage-data.json");
+  const audit = read("frmr-sp-audit-20261126.json");
+  const linkage = read("frmo-linkage-data-20261126.json");
   const staff = data.summary.rows.find(r => r[0] === "1126");
   assert.ok(staff);
   assert.equal(staff[4], staff[5] + staff[6]);
@@ -34,9 +34,9 @@ test("Saby has one stable MO identity in both sources, without summing different
   assert.equal(rows.length, match.current);
   assert.ok(rows.every(r => Array.isArray(r.flags)));
   const flagged = rows.filter(r => r.flags.length).length;
-  assert.equal(flagged, 24);
-  assert.equal(data.summary.sourceCut, "19.11.2026");
-  assert.equal(audit.sourceCut, "19.11.2026");
+  assert.equal(flagged, 2);
+  assert.equal(data.summary.sourceCut, "26.11.2026");
+  assert.equal(audit.sourceCut, "26.11.2026");
 });
 
 test("MO workspace uses full-width table without redundant sidebar and restores employee drilldown", () => {

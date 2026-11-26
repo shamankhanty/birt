@@ -17,10 +17,10 @@ const group = ([id,name]) => registryOids.has(prefix+id) || stateParticipationAo
 const ids = Object.fromEntries(["state","private","unknown"].map(key =>
   [key,new Set(raw.summary.rows.filter(row => group(row) === key).map(row => row[0]))]));
 
-test("FRMR source has 113 public/state-participation and 24 private organizations, without silent classification", () => {
-  assert.equal(raw.summary.sourceCut,"19.11.2026");
-  assert.equal(raw.summary.rows.length,137);
-  assert.equal(ids.state.size,113);
+test("FRMR source has 111 public/state-participation and 24 private organizations, without silent classification", () => {
+  assert.equal(raw.summary.sourceCut,"26.11.2026");
+  assert.equal(raw.summary.rows.length,135);
+  assert.equal(ids.state.size,111);
   assert.equal(ids.private.size,24);
   assert.equal(ids.unknown.size,0);
   assert.equal(ids.state.size+ids.private.size+ids.unknown.size,raw.summary.rows.length);

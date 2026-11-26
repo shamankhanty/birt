@@ -8,22 +8,26 @@ const districts = read("incident38-districts.json");
 const frmr = read("frmr-all-specialties.json");
 const prefix = "1.2.643.5.1.13.13.12.2.16.";
 
-test("И38 → раздел 06: every 19.11.2026 organization resolves to exactly one FRMR MO by OID", () => {
+test("И38 → раздел 06: every 26.11.2026 organization resolves to exactly one FRMR MO by OID", () => {
   const frmrIds = frmr.summary.rows.map(row => row[0]);
   assert.equal(new Set(frmrIds).size, frmrIds.length, "duplicates in FRMR MO registry");
   const frmrSet = new Set(frmrIds);
+  const notControlled = new Set(frmr.metadata.uncontrolledOrganizations.map(row => row.id));
+  assert.deepEqual([...notControlled].sort(), ["1107", "1146"]);
   const organizations = [...cities.orgs, ...districts.orgs];
   assert.equal(organizations.length, 103);
   for (const org of organizations) {
     assert.ok(org.oid.startsWith(prefix), org.name + ": invalid OID prefix");
     const id = org.oid.slice(prefix.length);
     assert.ok(/^\d+$/.test(id), org.name + ": malformed MO OID");
-    assert.ok(frmrSet.has(id), org.name + ": not found in section 06 by exact OID");
+    assert.ok(frmrSet.has(id) || notControlled.has(id), org.name + ": not found in section 06 or source exclusions");
   }
   const saby = organizations.find(org => org.oid.endsWith(".1126"));
   assert.ok(saby);
   assert.ok(frmrSet.has("1126"));
-  assert.equal(frmr.summary.sourceCut, "19.11.2026");
+  assert.equal(frmr.summary.sourceCut, "26.11.2026");
+  const reconciliation = readFileSync(new URL("../app/frmr-reconciliation.tsx", import.meta.url), "utf8");
+  assert.match(reconciliation, /excludedInitialMo\.reason/);
 });
 
 test("И38 MO button opens the same MO directly, without redirecting via names", () => {
