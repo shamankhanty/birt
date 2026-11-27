@@ -35,8 +35,8 @@ test('TVSP composition changes are distinct from current plan and retain OID evi
 test('Zelenodolsk FAP discrepancy remains explicit and is not classified as an MO violation', () => {
   const fap = read('operational-mo').fapSemdCount;
   const row = fap.rows.find((item) => item.name.includes('Зеленодольская ЦРБ'));
-  assert.equal(row.previous, 15920);
-  assert.equal(row.fact, 100164);
+  assert.equal(row.previous, 100164);
+  assert.equal(row.fact, 100603);
   assert.equal(row.units, 41);
   assert.equal(row.zeroUnits, 0);
   assert.equal(row.sourceWarning, undefined);

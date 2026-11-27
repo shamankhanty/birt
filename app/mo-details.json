@@ -1,44 +1,44 @@
 {
   "egpu": {
     "гкб №12 казань": {
-      "volume": 1704,
-      "registered": 1703
+      "volume": 1730,
+      "registered": 1729
     },
     "альметьевская рмб альметьевск": {
       "volume": 19,
       "registered": 19
     },
     "городская больница №2 г набережные челны набережные челны": {
-      "volume": 573,
-      "registered": 573
+      "volume": 585,
+      "registered": 585
     },
     "городская поликлиника №3 г набережные челны набережные челны": {
-      "volume": 739,
-      "registered": 736
+      "volume": 752,
+      "registered": 750
     },
     "городская больница №5 г набережные челны набережные челны": {
-      "volume": 775,
-      "registered": 772
+      "volume": 793,
+      "registered": 790
     },
     "госпиталь для ветеранов войн г н челны набережные челны": {
       "volume": 121,
       "registered": 121
     },
     "детская городская поликлиника №3 набережные челны": {
-      "volume": 278,
-      "registered": 276
+      "volume": 282,
+      "registered": 282
     },
     "городская поликлиника №4 им л н ганиевой набережные челны": {
-      "volume": 977,
-      "registered": 968
+      "volume": 1015,
+      "registered": 1014
     },
     "детская городская поликлиника №2 г набережные челны набережные челны": {
-      "volume": 159,
-      "registered": 157
+      "volume": 160,
+      "registered": 160
     },
     "детская городская поликлиника №4 им ф г ахмеровой набережные челны": {
-      "volume": 269,
-      "registered": 268
+      "volume": 273,
+      "registered": 273
     },
     "детская городская поликлиника №5 г набережные челны набережные челны": {
       "volume": 10,
@@ -49,76 +49,76 @@
       "registered": 7
     },
     "городская поликлиника №6 г набережные челны набережные челны": {
-      "volume": 1404,
-      "registered": 1392
+      "volume": 1432,
+      "registered": 1428
     },
     "городская поликлиника №7 набережные челны": {
-      "volume": 1036,
-      "registered": 1034
+      "volume": 1045,
+      "registered": 1045
     },
     "кдмц набережные челны": {
-      "volume": 114,
-      "registered": 114
+      "volume": 118,
+      "registered": 118
     },
     "камско полянская рб камские поляны": {
-      "volume": 72,
-      "registered": 72
+      "volume": 73,
+      "registered": 73
     },
     "нцрмб нижнекамск": {
-      "volume": 1559,
-      "registered": 1553
+      "volume": 1594,
+      "registered": 1593
     },
     "ндрб с пц нижнекамск": {
-      "volume": 368,
-      "registered": 366
+      "volume": 369,
+      "registered": 369
     },
     "альметьевская црб альметьевск": {
-      "volume": 1847,
-      "registered": 1754
+      "volume": 1875,
+      "registered": 1786
     },
     "бугульминская црб бугульма": {
-      "volume": 322,
-      "registered": 320
+      "volume": 327,
+      "registered": 327
     },
     "елабужская црб елабуга": {
-      "volume": 833,
-      "registered": 832
+      "volume": 845,
+      "registered": 844
     },
     "зеленодольская црб зеленодольск": {
-      "volume": 840,
-      "registered": 837
+      "volume": 865,
+      "registered": 863
     },
     "лениногорская црб лениногорск": {
-      "volume": 244,
-      "registered": 244
+      "volume": 250,
+      "registered": 250
     },
     "чистопольская црб чистополь": {
-      "volume": 338,
-      "registered": 337
+      "volume": 348,
+      "registered": 344
     },
     "азнакаевская црб азнакаево": {
-      "volume": 134,
-      "registered": 134
+      "volume": 141,
+      "registered": 141
     },
     "заинская црб заинск": {
-      "volume": 67,
-      "registered": 67
+      "volume": 69,
+      "registered": 69
     },
     "агрызская црб агрыз": {
-      "volume": 46,
-      "registered": 44
+      "volume": 48,
+      "registered": 45
     },
     "аксубаевская црб аксубаево": {
       "volume": 43,
-      "registered": 42
+      "registered": 43
     },
     "актанышская црб актаныш": {
       "volume": 19,
       "registered": 19
     },
     "алексеевская црб алексеевское": {
-      "volume": 140,
-      "registered": 139
+      "volume": 142,
+      "registered": 142
     },
     "базарно матакская црб базарные матаки": {
       "volume": 22,
@@ -130,15 +130,15 @@
     },
     "арская црб арск": {
       "volume": 85,
-      "registered": 84
+      "registered": 85
     },
     "атнинская црб большая атня": {
       "volume": 31,
       "registered": 31
     },
     "буинская црб буинск": {
-      "volume": 96,
-      "registered": 93
+      "volume": 97,
+      "registered": 97
     },
     "бавлинская црб бавлы": {
       "volume": 25,
@@ -150,11 +150,11 @@
     },
     "верхнеуслонская црб верхний услон": {
       "volume": 94,
-      "registered": 93
+      "registered": 94
     },
     "высокогорская црб ж д станции высокая гора": {
-      "volume": 763,
-      "registered": 752
+      "volume": 779,
+      "registered": 775
     },
     "дрожжановская црб старое дрожжаное": {
       "volume": 20,
@@ -165,28 +165,28 @@
       "registered": 11
     },
     "камско устьинская црб камское устье": {
-      "volume": 43,
-      "registered": 43
+      "volume": 44,
+      "registered": 44
     },
     "кукморская црб кукмор": {
-      "volume": 128,
-      "registered": 128
+      "volume": 129,
+      "registered": 129
     },
     "лаишевская црб лаишево": {
-      "volume": 983,
-      "registered": 974
+      "volume": 1007,
+      "registered": 995
     },
     "мамадышская црб мамадыш": {
       "volume": 216,
-      "registered": 215
+      "registered": 216
     },
     "менделеевская црб менделеевск": {
-      "volume": 80,
-      "registered": 80
+      "volume": 81,
+      "registered": 81
     },
     "мензелинская црб мензелинск": {
-      "volume": 31,
-      "registered": 31
+      "volume": 34,
+      "registered": 34
     },
     "муслюмовская црб муслюмово": {
       "volume": 24,
@@ -197,166 +197,166 @@
       "registered": 18
     },
     "нурлатская црб нурлат": {
-      "volume": 262,
-      "registered": 261
+      "volume": 263,
+      "registered": 263
     },
     "пестречинская црб пестрецы": {
-      "volume": 897,
-      "registered": 894
+      "volume": 929,
+      "registered": 923
     },
     "рыбно слободская црб рыбная слобода": {
-      "volume": 33,
+      "volume": 35,
       "registered": 33
     },
     "сабинская црб богатые сабы": {
-      "volume": 97,
-      "registered": 97
+      "volume": 98,
+      "registered": 98
     },
     "сармановская црб сарманово": {
-      "volume": 59,
-      "registered": 59
+      "volume": 60,
+      "registered": 60
     },
     "тетюшская црб тетюши": {
-      "volume": 31,
+      "volume": 32,
       "registered": 31
     },
     "тукаевская црб совхоза татарстан": {
-      "volume": 185,
-      "registered": 183
+      "volume": 190,
+      "registered": 190
     },
     "черемшанская црб черемшан": {
       "volume": 12,
       "registered": 12
     },
     "тюлячинская црб тюлячи": {
-      "volume": 64,
-      "registered": 63
+      "volume": 67,
+      "registered": 67
     },
     "уруссинская црб уруссу": {
       "volume": 48,
       "registered": 48
     },
     "городская больница №11 г казани казань": {
-      "volume": 1195,
-      "registered": 1184
+      "volume": 1239,
+      "registered": 1231
     },
     "детская городская клиническая больница №7 г казани казань": {
-      "volume": 232,
-      "registered": 227
+      "volume": 236,
+      "registered": 236
     },
     "клиника латыпова р м казань": {
       "volume": 15,
       "registered": 0
     },
     "городская поликлиника №7 г казани казань": {
-      "volume": 59,
-      "registered": 59
+      "volume": 63,
+      "registered": 60
     },
     "детская городская поликлиника №2 г казани казань": {
-      "volume": 419,
-      "registered": 419
+      "volume": 433,
+      "registered": 430
     },
     "клиническая больница №2 г казани казань": {
       "volume": 283,
-      "registered": 282
+      "registered": 283
     },
     "детская городская поликлиника №4 г казани казань": {
-      "volume": 364,
-      "registered": 362
+      "volume": 376,
+      "registered": 376
     },
     "госпиталь для ветеранов войн г казани казань": {
       "volume": 10,
       "registered": 10
     },
     "гкб №16 г казани казань": {
-      "volume": 1898,
-      "registered": 1886
+      "volume": 1933,
+      "registered": 1924
     },
     "городская детская больница №1 имени м ш уразаевой г казани казань": {
-      "volume": 151,
-      "registered": 150
+      "volume": 153,
+      "registered": 153
     },
     "гкб №7 им м н садыкова казань": {
-      "volume": 4046,
-      "registered": 4030
+      "volume": 4136,
+      "registered": 4136
     },
     "городская поликлиника №10 г казани казань": {
-      "volume": 2639,
-      "registered": 2637
+      "volume": 2692,
+      "registered": 2691
     },
     "гдп №7 казань": {
-      "volume": 292,
-      "registered": 290
+      "volume": 299,
+      "registered": 299
     },
     "детская городская поликлиника №9 г казани казань": {
-      "volume": 206,
-      "registered": 206
+      "volume": 209,
+      "registered": 209
     },
     "дркб мз рт казань": {
-      "volume": 620,
-      "registered": 619
+      "volume": 634,
+      "registered": 633
     },
     "цгкб №18 им проф к ш зыятдинова казань": {
-      "volume": 2969,
-      "registered": 2957
+      "volume": 3069,
+      "registered": 3058
     },
     "городская поликлиника №18 г казани казань": {
-      "volume": 2689,
-      "registered": 2680
+      "volume": 2740,
+      "registered": 2739
     },
     "городская поликлиника №20 г казани казань": {
-      "volume": 2704,
-      "registered": 2690
+      "volume": 2779,
+      "registered": 2772
     },
     "городская поликлиника №21 г казани казань": {
-      "volume": 4782,
-      "registered": 4739
+      "volume": 4938,
+      "registered": 4918
     },
     "детская городская поликлиника №10 г казани казань": {
-      "volume": 398,
-      "registered": 396
+      "volume": 404,
+      "registered": 403
     },
     "детская городская поликлиника № 11 казань": {
-      "volume": 1082,
-      "registered": 1078
+      "volume": 1102,
+      "registered": 1099
     },
     "городская детская поликлиника №6 г казани казань": {
-      "volume": 566,
-      "registered": 566
+      "volume": 585,
+      "registered": 583
     },
     "городская поликлиника №8 г казани казань": {
-      "volume": 2054,
-      "registered": 2044
+      "volume": 2084,
+      "registered": 2077
     }
   },
   "birth": {
     "азнакаевская црб": {
-      "volume": 122,
-      "registered": 122
+      "volume": 123,
+      "registered": 123
     },
     "чистопольская црб": {
-      "volume": 320,
-      "registered": 319
+      "volume": 332,
+      "registered": 330
     },
     "актанышская црб": {
-      "volume": 46,
-      "registered": 46
+      "volume": 47,
+      "registered": 47
     },
     "бугульминская црб": {
-      "volume": 461,
-      "registered": 461
+      "volume": 472,
+      "registered": 471
     },
     "ава казань": {
-      "volume": 653,
-      "registered": 644
+      "volume": 662,
+      "registered": 652
     },
     "базарно матакская црб": {
       "volume": 1,
       "registered": 1
     },
     "уруссинская црб": {
-      "volume": 2,
-      "registered": 2
+      "volume": 3,
+      "registered": 3
     },
     "бавлинская црб": {
       "volume": 2,
@@ -367,20 +367,20 @@
       "registered": 1
     },
     "ркб мз рт": {
-      "volume": 6651,
-      "registered": 6651
+      "volume": 6757,
+      "registered": 6755
     },
     "елабужская црб": {
-      "volume": 77,
-      "registered": 77
+      "volume": 78,
+      "registered": 78
     },
     "сабинская црб": {
-      "volume": 35,
-      "registered": 35
+      "volume": 36,
+      "registered": 36
     },
     "нурлатская црб": {
-      "volume": 75,
-      "registered": 75
+      "volume": 76,
+      "registered": 76
     },
     "дгп № 4 г казань": {
       "volume": 1,
@@ -403,20 +403,20 @@
       "registered": 2
     },
     "ндрб с пц г нижнекамск": {
-      "volume": 1625,
-      "registered": 1625
+      "volume": 1647,
+      "registered": 1647
     },
     "зеленодольская црб": {
-      "volume": 535,
-      "registered": 535
+      "volume": 544,
+      "registered": 544
     },
     "алексеевская црб": {
       "volume": 1,
       "registered": 1
     },
     "гкб№7 им м н садыкова г казань": {
-      "volume": 8921,
-      "registered": 8917
+      "volume": 9027,
+      "registered": 9016
     },
     "буинская црб": {
       "volume": 35,
@@ -455,12 +455,12 @@
       "registered": 1
     },
     "кфу": {
-      "volume": 1260,
-      "registered": 1259
+      "volume": 1275,
+      "registered": 1271
     },
     "сармановская црб": {
-      "volume": 23,
-      "registered": 23
+      "volume": 24,
+      "registered": 24
     },
     "детская городская поликлиника №6": {
       "volume": 1,
@@ -479,16 +479,16 @@
       "registered": 0
     },
     "кдмц г наб челны": {
-      "volume": 4238,
-      "registered": 4230
+      "volume": 4276,
+      "registered": 4275
     },
     "кму г казань": {
-      "volume": 1447,
-      "registered": 1447
+      "volume": 1464,
+      "registered": 1464
     },
     "альметьевская рмб": {
-      "volume": 1961,
-      "registered": 1946
+      "volume": 1977,
+      "registered": 1972
     },
     "дгп № 11 г казань": {
       "volume": 1,
@@ -501,280 +501,280 @@
   },
   "death": {
     "кфу": {
-      "volume": 487,
-      "registered": 486
+      "volume": 493,
+      "registered": 493
     },
     "гкб№7 им м н садыкова г казань": {
-      "volume": 1967,
-      "registered": 1966
+      "volume": 2023,
+      "registered": 2018
     },
     "бугульминская црб": {
-      "volume": 724,
-      "registered": 722
+      "volume": 750,
+      "registered": 747
     },
     "альметьевская црб": {
-      "volume": 1142,
-      "registered": 1138
+      "volume": 1212,
+      "registered": 1204
     },
     "нурлатская црб": {
-      "volume": 297,
-      "registered": 297
+      "volume": 308,
+      "registered": 308
     },
     "нцрмб г нижнекамск": {
-      "volume": 973,
-      "registered": 968
+      "volume": 998,
+      "registered": 988
     },
     "кукморская црб": {
-      "volume": 283,
-      "registered": 283
-    },
-    "тукаевская црб": {
-      "volume": 28,
-      "registered": 28
-    },
-    "кб №2 г казань": {
-      "volume": 277,
-      "registered": 274
-    },
-    "верхнеуслонская црб": {
-      "volume": 123,
-      "registered": 121
-    },
-    "альметьевская рмб": {
-      "volume": 28,
-      "registered": 28
-    },
-    "буинская црб": {
-      "volume": 391,
-      "registered": 388
-    },
-    "рыбно слободская црб": {
-      "volume": 280,
-      "registered": 270
-    },
-    "агрызская црб": {
-      "volume": 195,
-      "registered": 191
-    },
-    "гп № 21 г казань": {
-      "volume": 208,
-      "registered": 208
-    },
-    "гкб № 12 г казань": {
-      "volume": 1490,
-      "registered": 1483
-    },
-    "лениногорская црб": {
-      "volume": 639,
-      "registered": 639
-    },
-    "нмчу детский хоспис": {
-      "volume": 95,
-      "registered": 86
-    },
-    "зеленодольская црб": {
-      "volume": 1312,
-      "registered": 1312
-    },
-    "кдц на четаева": {
-      "volume": 16,
-      "registered": 11
-    },
-    "высокогорская црб": {
-      "volume": 170,
-      "registered": 169
-    },
-    "республиканское бюро судебно медицинской экспертизы": {
-      "volume": 12900,
-      "registered": 12845
-    },
-    "гп № 7 г казань": {
-      "volume": 129,
-      "registered": 129
-    },
-    "чистопольская црб": {
-      "volume": 836,
-      "registered": 835
-    },
-    "заинская црб": {
-      "volume": 408,
-      "registered": 405
-    },
-    "мамадышская црб": {
-      "volume": 258,
-      "registered": 257
-    },
-    "кдц авиастроительного района": {
-      "volume": 53,
-      "registered": 53
-    },
-    "кб ржд медицина г казани": {
-      "volume": 44,
-      "registered": 30
-    },
-    "мензелинская црб": {
-      "volume": 310,
-      "registered": 307
-    },
-    "гб № 11 г казань": {
-      "volume": 131,
-      "registered": 131
-    },
-    "лаишевская црб": {
-      "volume": 221,
-      "registered": 211
-    },
-    "гб №5 г наб челны": {
-      "volume": 40,
-      "registered": 39
-    },
-    "ркб мз рт": {
-      "volume": 742,
-      "registered": 734
-    },
-    "цгкб № 18 им проф к ш зыятдинова г казань": {
-      "volume": 192,
-      "registered": 191
-    },
-    "арская црб": {
-      "volume": 463,
-      "registered": 459
-    },
-    "мано казанский хоспис наташа": {
-      "volume": 186,
-      "registered": 171
-    },
-    "тетюшская црб": {
-      "volume": 129,
-      "registered": 129
-    },
-    "ркод мз рт им проф м з сигала г казань": {
-      "volume": 257,
-      "registered": 257
-    },
-    "камско устьинская црб": {
-      "volume": 104,
-      "registered": 103
-    },
-    "гб №2 г наб челны": {
-      "volume": 16,
-      "registered": 16
-    },
-    "ситидок эксперт казань": {
-      "volume": 24,
-      "registered": 22
-    },
-    "гп №18 г казань": {
-      "volume": 209,
-      "registered": 209
-    },
-    "мо спасение": {
-      "volume": 52,
-      "registered": 52
-    },
-    "гп № 20 г казань": {
-      "volume": 252,
-      "registered": 252
-    },
-    "тюлячинская црб": {
-      "volume": 86,
-      "registered": 86
-    },
-    "дрожжановская црб": {
-      "volume": 130,
-      "registered": 128
-    },
-    "актанышская црб": {
-      "volume": 206,
-      "registered": 206
-    },
-    "камско полянская рб": {
-      "volume": 23,
-      "registered": 18
-    },
-    "базарно матакская црб": {
-      "volume": 160,
-      "registered": 157
-    },
-    "гвв г казань": {
-      "volume": 67,
-      "registered": 67
-    },
-    "азнакаевская црб": {
-      "volume": 405,
-      "registered": 403
-    },
-    "алексеевская црб": {
-      "volume": 168,
-      "registered": 168
-    },
-    "атнинская црб": {
-      "volume": 122,
-      "registered": 121
-    },
-    "мкдц г казань": {
-      "volume": 195,
-      "registered": 194
-    },
-    "муслюмовская црб": {
-      "volume": 115,
-      "registered": 115
-    },
-    "рт бсмп им р с акчурина г наб челны": {
-      "volume": 2144,
-      "registered": 2128
-    },
-    "уруссинская црб": {
-      "volume": 17,
-      "registered": 16
-    },
-    "гкб №16 г казань": {
-      "volume": 172,
-      "registered": 171
-    },
-    "апастовская црб": {
-      "volume": 129,
-      "registered": 127
-    },
-    "черемшанская црб": {
-      "volume": 141,
-      "registered": 141
-    },
-    "гп № 8 г казань": {
-      "volume": 195,
-      "registered": 191
-    },
-    "аксубаевская црб": {
-      "volume": 202,
-      "registered": 196
-    },
-    "гп №4 им л н ганиевой г наб челны": {
-      "volume": 39,
-      "registered": 39
-    },
-    "новошешминская црб": {
-      "volume": 65,
-      "registered": 65
-    },
-    "бавлинская црб": {
       "volume": 295,
       "registered": 295
     },
+    "тукаевская црб": {
+      "volume": 30,
+      "registered": 30
+    },
+    "кб №2 г казань": {
+      "volume": 284,
+      "registered": 277
+    },
+    "верхнеуслонская црб": {
+      "volume": 128,
+      "registered": 127
+    },
+    "альметьевская рмб": {
+      "volume": 29,
+      "registered": 28
+    },
+    "буинская црб": {
+      "volume": 401,
+      "registered": 394
+    },
+    "рыбно слободская црб": {
+      "volume": 285,
+      "registered": 275
+    },
+    "агрызская црб": {
+      "volume": 196,
+      "registered": 193
+    },
+    "гп № 21 г казань": {
+      "volume": 211,
+      "registered": 210
+    },
+    "гкб № 12 г казань": {
+      "volume": 1531,
+      "registered": 1529
+    },
+    "лениногорская црб": {
+      "volume": 643,
+      "registered": 643
+    },
+    "нмчу детский хоспис": {
+      "volume": 97,
+      "registered": 86
+    },
+    "зеленодольская црб": {
+      "volume": 1352,
+      "registered": 1349
+    },
+    "кдц на четаева": {
+      "volume": 17,
+      "registered": 11
+    },
+    "высокогорская црб": {
+      "volume": 178,
+      "registered": 176
+    },
+    "республиканское бюро судебно медицинской экспертизы": {
+      "volume": 13202,
+      "registered": 13192
+    },
+    "гп № 7 г казань": {
+      "volume": 133,
+      "registered": 130
+    },
+    "чистопольская црб": {
+      "volume": 867,
+      "registered": 861
+    },
+    "заинская црб": {
+      "volume": 415,
+      "registered": 414
+    },
+    "мамадышская црб": {
+      "volume": 267,
+      "registered": 266
+    },
+    "кдц авиастроительного района": {
+      "volume": 54,
+      "registered": 53
+    },
+    "кб ржд медицина г казани": {
+      "volume": 45,
+      "registered": 30
+    },
+    "мензелинская црб": {
+      "volume": 317,
+      "registered": 316
+    },
+    "гб № 11 г казань": {
+      "volume": 134,
+      "registered": 131
+    },
+    "лаишевская црб": {
+      "volume": 224,
+      "registered": 211
+    },
+    "гб №5 г наб челны": {
+      "volume": 42,
+      "registered": 40
+    },
+    "ркб мз рт": {
+      "volume": 756,
+      "registered": 747
+    },
+    "цгкб № 18 им проф к ш зыятдинова г казань": {
+      "volume": 196,
+      "registered": 196
+    },
+    "арская црб": {
+      "volume": 481,
+      "registered": 480
+    },
+    "мано казанский хоспис наташа": {
+      "volume": 190,
+      "registered": 180
+    },
+    "тетюшская црб": {
+      "volume": 133,
+      "registered": 133
+    },
+    "ркод мз рт им проф м з сигала г казань": {
+      "volume": 261,
+      "registered": 260
+    },
+    "камско устьинская црб": {
+      "volume": 106,
+      "registered": 105
+    },
+    "гб №2 г наб челны": {
+      "volume": 17,
+      "registered": 16
+    },
+    "ситидок эксперт казань": {
+      "volume": 26,
+      "registered": 22
+    },
+    "гп №18 г казань": {
+      "volume": 217,
+      "registered": 217
+    },
+    "мо спасение": {
+      "volume": 54,
+      "registered": 54
+    },
+    "гп № 20 г казань": {
+      "volume": 255,
+      "registered": 254
+    },
+    "тюлячинская црб": {
+      "volume": 87,
+      "registered": 86
+    },
+    "дрожжановская црб": {
+      "volume": 132,
+      "registered": 130
+    },
+    "актанышская црб": {
+      "volume": 208,
+      "registered": 208
+    },
+    "камско полянская рб": {
+      "volume": 25,
+      "registered": 22
+    },
+    "базарно матакская црб": {
+      "volume": 160,
+      "registered": 160
+    },
+    "гвв г казань": {
+      "volume": 68,
+      "registered": 68
+    },
+    "азнакаевская црб": {
+      "volume": 414,
+      "registered": 414
+    },
+    "алексеевская црб": {
+      "volume": 171,
+      "registered": 170
+    },
+    "атнинская црб": {
+      "volume": 126,
+      "registered": 123
+    },
+    "мкдц г казань": {
+      "volume": 197,
+      "registered": 196
+    },
+    "муслюмовская црб": {
+      "volume": 121,
+      "registered": 120
+    },
+    "рт бсмп им р с акчурина г наб челны": {
+      "volume": 2200,
+      "registered": 2188
+    },
+    "уруссинская црб": {
+      "volume": 17,
+      "registered": 17
+    },
+    "гкб №16 г казань": {
+      "volume": 175,
+      "registered": 175
+    },
+    "апастовская црб": {
+      "volume": 135,
+      "registered": 135
+    },
+    "черемшанская црб": {
+      "volume": 142,
+      "registered": 142
+    },
+    "гп № 8 г казань": {
+      "volume": 200,
+      "registered": 195
+    },
+    "аксубаевская црб": {
+      "volume": 207,
+      "registered": 203
+    },
+    "гп №4 им л н ганиевой г наб челны": {
+      "volume": 40,
+      "registered": 40
+    },
+    "новошешминская црб": {
+      "volume": 68,
+      "registered": 68
+    },
+    "бавлинская црб": {
+      "volume": 296,
+      "registered": 295
+    },
     "гп №3 г наб челны": {
-      "volume": 43,
-      "registered": 43
+      "volume": 44,
+      "registered": 44
     },
     "дгп № 2 г казань": {
       "volume": 1,
       "registered": 1
     },
     "сабинская црб": {
-      "volume": 155,
-      "registered": 154
+      "volume": 158,
+      "registered": 158
     },
     "елабужская црб": {
-      "volume": 616,
-      "registered": 616
+      "volume": 627,
+      "registered": 627
     },
     "ммц профмедицина нк": {
       "volume": 2,
@@ -785,36 +785,32 @@
       "registered": 38
     },
     "балтасинская црб": {
-      "volume": 207,
-      "registered": 207
+      "volume": 212,
+      "registered": 211
     },
     "сармановская црб": {
-      "volume": 275,
-      "registered": 274
+      "volume": 288,
+      "registered": 285
     },
     "пестречинская црб": {
-      "volume": 162,
-      "registered": 157
-    },
-    "альметьевская гп № 3": {
-      "volume": 45,
-      "registered": 42
+      "volume": 170,
+      "registered": 163
     },
     "гп № 10 г казань": {
-      "volume": 260,
-      "registered": 260
+      "volume": 270,
+      "registered": 269
     },
     "дгп № 4 г казань": {
       "volume": 1,
       "registered": 1
     },
     "кму г казань": {
-      "volume": 147,
-      "registered": 147
+      "volume": 150,
+      "registered": 150
     },
     "кайбицкая црб": {
-      "volume": 74,
-      "registered": 74
+      "volume": 76,
+      "registered": 76
     },
     "ндрб с пц г нижнекамск": {
       "volume": 2,
@@ -826,7 +822,7 @@
     },
     "гвв г наб челны": {
       "volume": 16,
-      "registered": 13
+      "registered": 16
     },
     "кдмц г наб челны": {
       "volume": 1,
@@ -834,19 +830,19 @@
     },
     "дркб мз рт": {
       "volume": 55,
-      "registered": 54
+      "registered": 55
     },
     "дгп № 6 г казань": {
       "volume": 1,
       "registered": 1
     },
     "гп №6 г наб челны": {
-      "volume": 26,
-      "registered": 25
+      "volume": 28,
+      "registered": 27
     },
     "менделеевская црб": {
-      "volume": 205,
-      "registered": 204
+      "volume": 209,
+      "registered": 208
     },
     "ркпб им акад в м бехтерева г казань": {
       "volume": 56,
@@ -855,621 +851,621 @@
   },
   "semd228": {
     "агрызская црб": {
-      "volume": 18199,
-      "registered": 17385
+      "volume": 18447,
+      "registered": 17607
     },
     "азнакаевская црб": {
-      "volume": 40461,
-      "registered": 39706
+      "volume": 40832,
+      "registered": 39873
     },
     "аксубаевская црб": {
-      "volume": 16456,
-      "registered": 15212
+      "volume": 16508,
+      "registered": 15340
     },
     "актанышская црб": {
-      "volume": 19612,
-      "registered": 17421
+      "volume": 19943,
+      "registered": 19286
     },
     "алексеевская црб": {
-      "volume": 14555,
-      "registered": 13471
+      "volume": 14801,
+      "registered": 13585
     },
     "альметьевская рмб": {
-      "volume": 14443,
-      "registered": 12657
+      "volume": 14790,
+      "registered": 13017
     },
     "альметьевская црб": {
-      "volume": 120429,
-      "registered": 106120
+      "volume": 122769,
+      "registered": 108269
     },
     "апастовская црб": {
-      "volume": 10608,
-      "registered": 10432
+      "volume": 10799,
+      "registered": 10494
     },
     "арская црб": {
-      "volume": 32416,
-      "registered": 29928
+      "volume": 33159,
+      "registered": 30521
     },
     "атнинская црб": {
-      "volume": 10377,
-      "registered": 9634
+      "volume": 10494,
+      "registered": 9689
     },
     "бавлинская црб": {
-      "volume": 19882,
-      "registered": 19669
+      "volume": 20101,
+      "registered": 19749
     },
     "базарно матакская црб": {
-      "volume": 9200,
-      "registered": 8605
+      "volume": 9336,
+      "registered": 8816
     },
     "балтасинская црб": {
-      "volume": 24084,
-      "registered": 23498
+      "volume": 24436,
+      "registered": 23590
     },
     "бугульминская црб": {
-      "volume": 47438,
-      "registered": 46348
+      "volume": 48144,
+      "registered": 46931
     },
     "буинская црб": {
-      "volume": 21398,
-      "registered": 17815
+      "volume": 21588,
+      "registered": 17845
     },
     "верхнеуслонская црб": {
-      "volume": 8639,
-      "registered": 7716
+      "volume": 8808,
+      "registered": 7926
     },
     "высокогорская црб": {
-      "volume": 33131,
-      "registered": 29853
+      "volume": 33724,
+      "registered": 30174
     },
     "гдп №7": {
-      "volume": 24038,
-      "registered": 20562
+      "volume": 25018,
+      "registered": 21147
     },
     "гкб №12": {
-      "volume": 32596,
-      "registered": 30207
+      "volume": 33095,
+      "registered": 30499
     },
     "гкб №16 г казани": {
-      "volume": 35828,
-      "registered": 34893
+      "volume": 36245,
+      "registered": 35151
     },
     "гкб №7 им м н садыкова": {
-      "volume": 73737,
-      "registered": 70443
+      "volume": 74889,
+      "registered": 70784
     },
     "городская больница №11 г казани": {
-      "volume": 22633,
-      "registered": 19236
+      "volume": 23066,
+      "registered": 19518
     },
     "городская больница №2 г набережные челны": {
-      "volume": 10644,
-      "registered": 10082
+      "volume": 10806,
+      "registered": 10209
     },
     "городская больница №5 г набережные челны": {
-      "volume": 55370,
-      "registered": 52338
+      "volume": 56333,
+      "registered": 52632
     },
     "городская детская больница №1 имени м ш уразаевой г казани": {
-      "volume": 16519,
-      "registered": 13641
+      "volume": 16959,
+      "registered": 14002
     },
     "городская детская поликлиника №6 г казани": {
-      "volume": 49563,
-      "registered": 46693
+      "volume": 50351,
+      "registered": 47391
     },
     "городская поликлиника №10 г казани": {
-      "volume": 60630,
-      "registered": 54999
+      "volume": 61588,
+      "registered": 55225
     },
     "городская поликлиника №18 г казани": {
-      "volume": 48149,
-      "registered": 43685
+      "volume": 48848,
+      "registered": 44185
     },
     "городская поликлиника №20 г казани": {
-      "volume": 53828,
-      "registered": 47613
+      "volume": 54766,
+      "registered": 48533
     },
     "городская поликлиника №21 г казани": {
-      "volume": 65586,
-      "registered": 58592
+      "volume": 66768,
+      "registered": 59055
     },
     "городская поликлиника №3 г набережные челны": {
-      "volume": 41740,
-      "registered": 36283
+      "volume": 42287,
+      "registered": 36510
     },
     "городская поликлиника №4 им л н ганиевой": {
-      "volume": 25890,
-      "registered": 23055
+      "volume": 26590,
+      "registered": 23852
     },
     "городская поликлиника №6 г набережные челны": {
-      "volume": 35057,
-      "registered": 30125
+      "volume": 35550,
+      "registered": 30598
     },
     "городская поликлиника №7": {
-      "volume": 42032,
-      "registered": 37842
+      "volume": 43335,
+      "registered": 38551
     },
     "городская поликлиника №7 г казани": {
-      "volume": 22932,
-      "registered": 21871
+      "volume": 23264,
+      "registered": 22245
     },
     "городская поликлиника №8 г казани": {
-      "volume": 32286,
-      "registered": 25662
+      "volume": 32825,
+      "registered": 26647
     },
     "госпиталь для ветеранов войн г казани": {
-      "volume": 12195,
-      "registered": 11283
+      "volume": 12379,
+      "registered": 11484
     },
     "госпиталь для ветеранов войн г н челны": {
-      "volume": 14490,
-      "registered": 13988
+      "volume": 14691,
+      "registered": 14122
     },
     "детская городская клиническая больница №7 г казани": {
-      "volume": 31034,
-      "registered": 29129
+      "volume": 31215,
+      "registered": 29240
     },
     "детская городская поликлиника № 11": {
-      "volume": 26547,
-      "registered": 21263
+      "volume": 27064,
+      "registered": 21627
     },
     "детская городская поликлиника №10 г казани": {
-      "volume": 32330,
-      "registered": 26667
+      "volume": 32345,
+      "registered": 27030
     },
     "детская городская поликлиника №2 г казани": {
-      "volume": 20434,
-      "registered": 19948
+      "volume": 20718,
+      "registered": 20009
     },
     "детская городская поликлиника №2 г набережные челны": {
-      "volume": 22253,
-      "registered": 21099
+      "volume": 22724,
+      "registered": 21324
     },
     "детская городская поликлиника №3": {
-      "volume": 20920,
-      "registered": 20076
+      "volume": 21190,
+      "registered": 20381
     },
     "детская городская поликлиника №4 им ф г ахмеровой": {
-      "volume": 26566,
-      "registered": 24308
+      "volume": 26991,
+      "registered": 24465
     },
     "детская городская поликлиника №4 г казани": {
-      "volume": 30408,
-      "registered": 29846
+      "volume": 30972,
+      "registered": 30059
     },
     "детская городская поликлиника №5 г набережные челны": {
-      "volume": 21692,
-      "registered": 21059
+      "volume": 22305,
+      "registered": 21267
     },
     "детская городская поликлиника №6": {
-      "volume": 17675,
-      "registered": 15693
+      "volume": 17770,
+      "registered": 15823
     },
     "детская городская поликлиника №9 г казани": {
-      "volume": 19029,
-      "registered": 17359
+      "volume": 19615,
+      "registered": 17553
     },
     "дркб мз рт": {
-      "volume": 37479,
-      "registered": 35810
+      "volume": 38227,
+      "registered": 36419
     },
     "дрожжановская црб": {
-      "volume": 11322,
-      "registered": 10354
+      "volume": 11434,
+      "registered": 10385
     },
     "елабужская црб": {
-      "volume": 62362,
-      "registered": 61235
+      "volume": 63086,
+      "registered": 61770
     },
     "заинская црб": {
-      "volume": 25929,
-      "registered": 25432
+      "volume": 26189,
+      "registered": 25663
     },
     "зеленодольская црб": {
-      "volume": 98857,
-      "registered": 96365
+      "volume": 100354,
+      "registered": 96893
     },
     "кайбицкая црб": {
-      "volume": 7106,
-      "registered": 6877
+      "volume": 7233,
+      "registered": 7027
     },
     "камско полянская рб": {
-      "volume": 15026,
-      "registered": 11960
+      "volume": 15220,
+      "registered": 13479
     },
     "камско устьинская црб": {
-      "volume": 10540,
-      "registered": 10252
+      "volume": 10607,
+      "registered": 10247
     },
     "кдмц": {
-      "volume": 21009,
-      "registered": 20316
+      "volume": 22032,
+      "registered": 20587
     },
     "клиника медицинского университета г казани": {
-      "volume": 17482,
-      "registered": 14313
+      "volume": 17665,
+      "registered": 15334
     },
     "клиническая больница №2 г казани": {
-      "volume": 31263,
-      "registered": 28230
+      "volume": 32115,
+      "registered": 28503
     },
     "кукморская црб": {
-      "volume": 29443,
-      "registered": 28780
+      "volume": 30207,
+      "registered": 29019
     },
     "лаишевская црб": {
-      "volume": 32442,
-      "registered": 28845
+      "volume": 33020,
+      "registered": 29092
     },
     "лениногорская црб": {
-      "volume": 47339,
-      "registered": 46551
+      "volume": 48024,
+      "registered": 47137
     },
     "мамадышская црб": {
-      "volume": 24510,
-      "registered": 23632
+      "volume": 24950,
+      "registered": 24072
     },
     "менделеевская црб": {
-      "volume": 18926,
-      "registered": 17483
+      "volume": 19061,
+      "registered": 17752
     },
     "мензелинская црб": {
-      "volume": 18234,
-      "registered": 17332
+      "volume": 18645,
+      "registered": 17331
     },
     "муслюмовская црб": {
-      "volume": 11971,
-      "registered": 10751
+      "volume": 12106,
+      "registered": 10874
     },
     "ндрб с пц": {
-      "volume": 53286,
-      "registered": 52151
+      "volume": 54436,
+      "registered": 52914
     },
     "новошешминская црб": {
-      "volume": 8052,
-      "registered": 7097
+      "volume": 8130,
+      "registered": 7209
     },
     "нурлатская црб": {
-      "volume": 35383,
-      "registered": 35164
+      "volume": 35831,
+      "registered": 35559
     },
     "нцрмб": {
-      "volume": 93524,
-      "registered": 91507
+      "volume": 95010,
+      "registered": 92318
     },
     "пестречинская црб": {
-      "volume": 33868,
-      "registered": 28150
+      "volume": 34360,
+      "registered": 28403
     },
     "спасская црб": {
-      "volume": 9072,
-      "registered": 7189
+      "volume": 9201,
+      "registered": 7645
     },
     "рыбно слободская црб": {
-      "volume": 14018,
-      "registered": 13348
+      "volume": 14225,
+      "registered": 13401
     },
     "сабинская црб": {
-      "volume": 20989,
-      "registered": 19951
+      "volume": 21171,
+      "registered": 20145
     },
     "сармановская црб": {
-      "volume": 21154,
-      "registered": 20146
+      "volume": 21368,
+      "registered": 20307
     },
     "тетюшская црб": {
-      "volume": 10776,
-      "registered": 10300
+      "volume": 10888,
+      "registered": 10472
     },
     "тукаевская црб": {
-      "volume": 24194,
-      "registered": 23346
+      "volume": 24647,
+      "registered": 23714
     },
     "тюлячинская црб": {
-      "volume": 7688,
-      "registered": 7444
+      "volume": 7867,
+      "registered": 7465
     },
     "уруссинская црб": {
-      "volume": 14850,
-      "registered": 14097
+      "volume": 15126,
+      "registered": 14296
     },
     "цгкб №18 им проф к ш зыятдинова": {
-      "volume": 38601,
-      "registered": 35616
+      "volume": 39280,
+      "registered": 35917
     },
     "черемшанская црб": {
-      "volume": 10682,
-      "registered": 9743
+      "volume": 10891,
+      "registered": 10039
     },
     "чистопольская црб": {
-      "volume": 43500,
-      "registered": 40670
+      "volume": 44232,
+      "registered": 41214
     },
     "кдц авиастроительного района": {
-      "volume": 17708,
-      "registered": 2588
+      "volume": 17962,
+      "registered": 2598
     },
     "кдц аракчино": {
-      "volume": 982,
+      "volume": 995,
       "registered": 0
     },
     "кдц на четаева": {
-      "volume": 6068,
+      "volume": 6222,
       "registered": 3512
     },
     "красноключинский центр семейной медицины": {
-      "volume": 1628,
+      "volume": 1673,
       "registered": 169
     },
     "ммц профмедицина нк": {
-      "volume": 7985,
-      "registered": 5017
+      "volume": 8127,
+      "registered": 5089
     },
     "ситидок эксперт казань": {
-      "volume": 12950,
-      "registered": 406
+      "volume": 13207,
+      "registered": 405
     },
     "ассоциация клиник медицина будущего": {
-      "volume": 5672,
+      "volume": 5685,
       "registered": 0
     },
     "мо спасение": {
-      "volume": 12202,
-      "registered": 11571
+      "volume": 12471,
+      "registered": 11662
     },
     "казанский приволжский федеральный университет": {
-      "volume": 21940,
-      "registered": 19613
+      "volume": 22547,
+      "registered": 19933
     },
     "больница ржд медицина города ижевск": {
       "volume": 1,
       "registered": 0
     },
     "кб ржд медицина г казани": {
-      "volume": 15285,
-      "registered": 11781
+      "volume": 15483,
+      "registered": 11783
     }
   },
   "hospital": {
     "агрызская црб": {
-      "volume": 5691,
-      "registered": 4752,
-      "inpatient": 4752,
+      "volume": 5825,
+      "registered": 4889,
+      "inpatient": 4889,
       "maternity": 0
     },
     "азнакаевская црб": {
-      "volume": 10777,
-      "registered": 10431,
-      "inpatient": 10315,
+      "volume": 10972,
+      "registered": 10556,
+      "inpatient": 10440,
       "maternity": 116
     },
     "аксубаевская црб": {
-      "volume": 4783,
-      "registered": 4630,
-      "inpatient": 4630,
+      "volume": 4851,
+      "registered": 4676,
+      "inpatient": 4676,
       "maternity": 0
     },
     "актанышская црб": {
-      "volume": 4363,
-      "registered": 4386,
-      "inpatient": 4341,
+      "volume": 4514,
+      "registered": 4488,
+      "inpatient": 4443,
       "maternity": 45
     },
     "алексеевская црб": {
-      "volume": 4297,
-      "registered": 4044,
-      "inpatient": 4044,
+      "volume": 4416,
+      "registered": 4167,
+      "inpatient": 4167,
       "maternity": 0
     },
     "альметьевская рмб": {
-      "volume": 17470,
-      "registered": 16901,
-      "inpatient": 15329,
-      "maternity": 1572
+      "volume": 17758,
+      "registered": 17303,
+      "inpatient": 15717,
+      "maternity": 1586
     },
     "альметьевская црб": {
-      "volume": 22744,
-      "registered": 20306,
-      "inpatient": 20306,
+      "volume": 23159,
+      "registered": 20623,
+      "inpatient": 20623,
       "maternity": 0
     },
     "апастовская црб": {
-      "volume": 3131,
-      "registered": 3075,
-      "inpatient": 3075,
+      "volume": 3218,
+      "registered": 3105,
+      "inpatient": 3105,
       "maternity": 0
     },
     "арская црб": {
-      "volume": 8313,
-      "registered": 7996,
-      "inpatient": 7961,
+      "volume": 8435,
+      "registered": 8077,
+      "inpatient": 8042,
       "maternity": 35
     },
     "атнинская црб": {
-      "volume": 3494,
-      "registered": 3226,
-      "inpatient": 3226,
+      "volume": 3514,
+      "registered": 3267,
+      "inpatient": 3267,
       "maternity": 0
     },
     "бавлинская црб": {
-      "volume": 6246,
-      "registered": 6039,
-      "inpatient": 6037,
+      "volume": 6358,
+      "registered": 6094,
+      "inpatient": 6092,
       "maternity": 2
     },
     "базарно матакская црб": {
-      "volume": 4355,
-      "registered": 4079,
-      "inpatient": 4079,
+      "volume": 4429,
+      "registered": 4112,
+      "inpatient": 4112,
       "maternity": 0
     },
     "балтасинская црб": {
-      "volume": 4248,
-      "registered": 4022,
-      "inpatient": 4022,
+      "volume": 4299,
+      "registered": 4091,
+      "inpatient": 4091,
       "maternity": 0
     },
     "бугульминская црб": {
-      "volume": 20772,
-      "registered": 20996,
-      "inpatient": 20632,
-      "maternity": 364
+      "volume": 21107,
+      "registered": 21224,
+      "inpatient": 20859,
+      "maternity": 365
     },
     "буинская црб": {
-      "volume": 7577,
-      "registered": 6449,
-      "inpatient": 6419,
+      "volume": 7774,
+      "registered": 6469,
+      "inpatient": 6439,
       "maternity": 30
     },
     "верхнеуслонская црб": {
-      "volume": 3459,
-      "registered": 3369,
-      "inpatient": 3369,
+      "volume": 3514,
+      "registered": 3407,
+      "inpatient": 3407,
       "maternity": 0
     },
     "высокогорская црб": {
-      "volume": 4471,
-      "registered": 4138,
-      "inpatient": 4138,
+      "volume": 4545,
+      "registered": 4167,
+      "inpatient": 4167,
       "maternity": 0
     },
     "гдп №7": {
-      "volume": 1258,
-      "registered": 1022,
-      "inpatient": 1022,
+      "volume": 1278,
+      "registered": 1026,
+      "inpatient": 1026,
       "maternity": 0
     },
     "гкб №12": {
-      "volume": 10451,
-      "registered": 9975,
-      "inpatient": 9975,
+      "volume": 10650,
+      "registered": 10232,
+      "inpatient": 10232,
       "maternity": 0
     },
     "гкб №16 г казани": {
-      "volume": 14359,
-      "registered": 13950,
-      "inpatient": 13950,
+      "volume": 14594,
+      "registered": 14097,
+      "inpatient": 14097,
       "maternity": 0
     },
     "гкб №7 им м н садыкова": {
-      "volume": 61235,
-      "registered": 60237,
-      "inpatient": 52510,
-      "maternity": 7727
+      "volume": 62282,
+      "registered": 60833,
+      "inpatient": 53028,
+      "maternity": 7805
     },
     "городская больница №11 г казани": {
-      "volume": 6991,
-      "registered": 5742,
-      "inpatient": 5742,
+      "volume": 7118,
+      "registered": 5844,
+      "inpatient": 5844,
       "maternity": 0
     },
     "городская больница №2 г набережные челны": {
-      "volume": 11361,
-      "registered": 10800,
-      "inpatient": 10800,
+      "volume": 11572,
+      "registered": 10953,
+      "inpatient": 10953,
       "maternity": 0
     },
     "городская больница №5 г набережные челны": {
-      "volume": 27092,
-      "registered": 25538,
-      "inpatient": 25538,
+      "volume": 27533,
+      "registered": 25748,
+      "inpatient": 25748,
       "maternity": 0
     },
     "городская детская больница №1 имени м ш уразаевой г казани": {
-      "volume": 5121,
-      "registered": 4694,
-      "inpatient": 4694,
+      "volume": 5242,
+      "registered": 4868,
+      "inpatient": 4868,
       "maternity": 0
     },
     "городская детская поликлиника №6 г казани": {
-      "volume": 313,
-      "registered": 309,
-      "inpatient": 309,
+      "volume": 316,
+      "registered": 311,
+      "inpatient": 311,
       "maternity": 0
     },
     "городская поликлиника №10 г казани": {
-      "volume": 1523,
-      "registered": 776,
-      "inpatient": 776,
+      "volume": 1557,
+      "registered": 793,
+      "inpatient": 793,
       "maternity": 0
     },
     "городская поликлиника №18 г казани": {
-      "volume": 1294,
-      "registered": 1271,
-      "inpatient": 1271,
+      "volume": 1326,
+      "registered": 1281,
+      "inpatient": 1281,
       "maternity": 0
     },
     "городская поликлиника №20 г казани": {
-      "volume": 2292,
-      "registered": 1724,
-      "inpatient": 1724,
+      "volume": 2335,
+      "registered": 1828,
+      "inpatient": 1828,
       "maternity": 0
     },
     "городская поликлиника №21 г казани": {
-      "volume": 2292,
-      "registered": 2088,
-      "inpatient": 2088,
+      "volume": 2347,
+      "registered": 2092,
+      "inpatient": 2092,
       "maternity": 0
     },
     "городская поликлиника №3 г набережные челны": {
-      "volume": 2181,
-      "registered": 2155,
-      "inpatient": 2155,
+      "volume": 2210,
+      "registered": 2174,
+      "inpatient": 2174,
       "maternity": 0
     },
     "городская поликлиника №4 им л н ганиевой": {
-      "volume": 1520,
-      "registered": 1116,
-      "inpatient": 1116,
+      "volume": 1585,
+      "registered": 1285,
+      "inpatient": 1285,
       "maternity": 0
     },
     "городская поликлиника №6 г набережные челны": {
-      "volume": 1857,
-      "registered": 1764,
-      "inpatient": 1764,
+      "volume": 1901,
+      "registered": 1802,
+      "inpatient": 1802,
       "maternity": 0
     },
     "городская поликлиника №7": {
-      "volume": 772,
-      "registered": 722,
-      "inpatient": 722,
+      "volume": 776,
+      "registered": 724,
+      "inpatient": 724,
       "maternity": 0
     },
     "городская поликлиника №7 г казани": {
-      "volume": 1569,
-      "registered": 1507,
-      "inpatient": 1507,
+      "volume": 1610,
+      "registered": 1532,
+      "inpatient": 1532,
       "maternity": 0
     },
     "городская поликлиника №8 г казани": {
-      "volume": 2590,
-      "registered": 1948,
-      "inpatient": 1948,
+      "volume": 2656,
+      "registered": 1966,
+      "inpatient": 1966,
       "maternity": 0
     },
     "госпиталь для ветеранов войн г казани": {
-      "volume": 9493,
-      "registered": 7913,
-      "inpatient": 7913,
+      "volume": 9672,
+      "registered": 8041,
+      "inpatient": 8041,
       "maternity": 0
     },
     "госпиталь для ветеранов войн г н челны": {
-      "volume": 6322,
-      "registered": 6022,
-      "inpatient": 6022,
+      "volume": 6438,
+      "registered": 6121,
+      "inpatient": 6121,
       "maternity": 0
     },
     "детская городская больница №8 г казани": {
-      "volume": 4445,
-      "registered": 4333,
-      "inpatient": 4333,
+      "volume": 4549,
+      "registered": 4416,
+      "inpatient": 4416,
       "maternity": 0
     },
     "детская городская клиническая больница №7 г казани": {
-      "volume": 5237,
-      "registered": 4871,
-      "inpatient": 4871,
+      "volume": 5347,
+      "registered": 4956,
+      "inpatient": 4956,
       "maternity": 0
     },
     "детская городская поликлиника №2 г казани": {
@@ -1479,237 +1475,237 @@
       "maternity": 0
     },
     "детская городская поликлиника №2 г набережные челны": {
-      "volume": 943,
-      "registered": 913,
-      "inpatient": 913,
+      "volume": 956,
+      "registered": 931,
+      "inpatient": 931,
       "maternity": 0
     },
     "детская городская поликлиника №3": {
-      "volume": 1319,
-      "registered": 1287,
-      "inpatient": 1287,
+      "volume": 1340,
+      "registered": 1307,
+      "inpatient": 1307,
       "maternity": 0
     },
     "детская городская поликлиника №4 им ф г ахмеровой": {
-      "volume": 512,
-      "registered": 497,
-      "inpatient": 497,
+      "volume": 520,
+      "registered": 510,
+      "inpatient": 510,
       "maternity": 0
     },
     "детская городская поликлиника №4 г казани": {
-      "volume": 529,
-      "registered": 521,
-      "inpatient": 521,
+      "volume": 546,
+      "registered": 534,
+      "inpatient": 534,
       "maternity": 0
     },
     "детская городская поликлиника №5 г набережные челны": {
-      "volume": 397,
-      "registered": 392,
-      "inpatient": 392,
+      "volume": 408,
+      "registered": 398,
+      "inpatient": 398,
       "maternity": 0
     },
     "детская городская поликлиника №6": {
-      "volume": 473,
-      "registered": 459,
-      "inpatient": 459,
+      "volume": 480,
+      "registered": 466,
+      "inpatient": 466,
       "maternity": 0
     },
     "детская городская поликлиника №9 г казани": {
-      "volume": 338,
-      "registered": 326,
-      "inpatient": 326,
+      "volume": 344,
+      "registered": 335,
+      "inpatient": 335,
       "maternity": 0
     },
     "дркб мз рт": {
-      "volume": 39341,
-      "registered": 37909,
-      "inpatient": 37909,
+      "volume": 40018,
+      "registered": 38808,
+      "inpatient": 38808,
       "maternity": 0
     },
     "дрожжановская црб": {
-      "volume": 3552,
-      "registered": 3344,
-      "inpatient": 3344,
+      "volume": 3613,
+      "registered": 3355,
+      "inpatient": 3355,
       "maternity": 0
     },
     "дцмр": {
-      "volume": 1505,
-      "registered": 1068,
-      "inpatient": 1068,
+      "volume": 1515,
+      "registered": 1073,
+      "inpatient": 1073,
       "maternity": 0
     },
     "елабужская црб": {
-      "volume": 17398,
-      "registered": 17214,
-      "inpatient": 17196,
+      "volume": 17655,
+      "registered": 17457,
+      "inpatient": 17439,
       "maternity": 18
     },
     "заинская црб": {
-      "volume": 10229,
-      "registered": 10044,
-      "inpatient": 10043,
+      "volume": 10449,
+      "registered": 10116,
+      "inpatient": 10115,
       "maternity": 1
     },
     "зеленодольская црб": {
-      "volume": 30148,
-      "registered": 28917,
-      "inpatient": 28423,
-      "maternity": 494
+      "volume": 30753,
+      "registered": 29269,
+      "inpatient": 28761,
+      "maternity": 508
     },
     "казанский эндокринологический диспансер": {
-      "volume": 792,
-      "registered": 782,
-      "inpatient": 782,
+      "volume": 795,
+      "registered": 786,
+      "inpatient": 786,
       "maternity": 0
     },
     "кайбицкая црб": {
-      "volume": 3701,
-      "registered": 3629,
-      "inpatient": 3629,
+      "volume": 3768,
+      "registered": 3668,
+      "inpatient": 3668,
       "maternity": 0
     },
     "камско полянская рб": {
-      "volume": 5007,
-      "registered": 3692,
-      "inpatient": 3692,
+      "volume": 5115,
+      "registered": 4645,
+      "inpatient": 4645,
       "maternity": 0
     },
     "камско устьинская црб": {
-      "volume": 3919,
-      "registered": 3805,
-      "inpatient": 3805,
+      "volume": 3992,
+      "registered": 3804,
+      "inpatient": 3804,
       "maternity": 0
     },
     "кдмц": {
-      "volume": 23435,
-      "registered": 24621,
-      "inpatient": 21010,
-      "maternity": 3611
+      "volume": 23818,
+      "registered": 24795,
+      "inpatient": 21168,
+      "maternity": 3627
     },
     "клиника медицинского университета г казани": {
-      "volume": 13886,
-      "registered": 12233,
-      "inpatient": 10902,
+      "volume": 14112,
+      "registered": 12680,
+      "inpatient": 11349,
       "maternity": 1331
     },
     "клиническая больница №2 г казани": {
-      "volume": 6195,
-      "registered": 5773,
-      "inpatient": 5773,
+      "volume": 6283,
+      "registered": 5827,
+      "inpatient": 5827,
       "maternity": 0
     },
     "кукморская црб": {
-      "volume": 8021,
-      "registered": 7927,
-      "inpatient": 7833,
+      "volume": 8188,
+      "registered": 8019,
+      "inpatient": 7925,
       "maternity": 94
     },
     "лаишевская црб": {
-      "volume": 5034,
-      "registered": 4659,
-      "inpatient": 4659,
+      "volume": 5134,
+      "registered": 4695,
+      "inpatient": 4695,
       "maternity": 0
     },
     "лениногорская црб": {
-      "volume": 14593,
-      "registered": 14374,
-      "inpatient": 14374,
+      "volume": 14864,
+      "registered": 14576,
+      "inpatient": 14576,
       "maternity": 0
     },
     "мамадышская црб": {
-      "volume": 8596,
-      "registered": 8093,
-      "inpatient": 8093,
+      "volume": 8797,
+      "registered": 8209,
+      "inpatient": 8209,
       "maternity": 0
     },
     "менделеевская црб": {
-      "volume": 4939,
-      "registered": 3886,
-      "inpatient": 3886,
+      "volume": 5037,
+      "registered": 3937,
+      "inpatient": 3937,
       "maternity": 0
     },
     "мензелинская црб": {
-      "volume": 3732,
-      "registered": 3567,
-      "inpatient": 3567,
+      "volume": 3768,
+      "registered": 3570,
+      "inpatient": 3570,
       "maternity": 0
     },
     "муслюмовская црб": {
-      "volume": 3961,
-      "registered": 2788,
-      "inpatient": 2788,
+      "volume": 4030,
+      "registered": 2817,
+      "inpatient": 2817,
       "maternity": 0
     },
     "набережно челнинская иб": {
-      "volume": 12016,
-      "registered": 10217,
-      "inpatient": 10217,
+      "volume": 12285,
+      "registered": 10438,
+      "inpatient": 10438,
       "maternity": 0
     },
     "ндрб с пц": {
-      "volume": 11683,
-      "registered": 12329,
-      "inpatient": 10792,
-      "maternity": 1537
+      "volume": 11892,
+      "registered": 12517,
+      "inpatient": 10957,
+      "maternity": 1560
     },
     "новошешминская црб": {
-      "volume": 3367,
-      "registered": 2698,
-      "inpatient": 2698,
+      "volume": 3429,
+      "registered": 2765,
+      "inpatient": 2765,
       "maternity": 0
     },
     "нурлатская црб": {
-      "volume": 7599,
-      "registered": 7386,
-      "inpatient": 7331,
-      "maternity": 55
+      "volume": 7783,
+      "registered": 7508,
+      "inpatient": 7452,
+      "maternity": 56
     },
     "нцрмб": {
-      "volume": 27506,
-      "registered": 26703,
-      "inpatient": 26703,
+      "volume": 27947,
+      "registered": 26849,
+      "inpatient": 26849,
       "maternity": 0
     },
     "пестречинская црб": {
-      "volume": 4419,
-      "registered": 4086,
-      "inpatient": 4086,
+      "volume": 4493,
+      "registered": 4105,
+      "inpatient": 4105,
       "maternity": 0
     },
     "республиканский клинический наркологический диспансер мз рт": {
-      "volume": 4849,
-      "registered": 4814,
-      "inpatient": 4814,
+      "volume": 4931,
+      "registered": 4856,
+      "inpatient": 4856,
       "maternity": 0
     },
     "ркб мз рт": {
-      "volume": 3875,
-      "registered": 2518,
-      "inpatient": 2518,
+      "volume": 3947,
+      "registered": 2526,
+      "inpatient": 2526,
       "maternity": 0
     },
     "ркиб им проф а ф агафонова": {
-      "volume": 22386,
-      "registered": 20373,
-      "inpatient": 20373,
+      "volume": 22801,
+      "registered": 20751,
+      "inpatient": 20751,
       "maternity": 0
     },
     "ркоб мз рт им проф е в адамюка": {
-      "volume": 13236,
-      "registered": 12915,
-      "inpatient": 12915,
+      "volume": 13452,
+      "registered": 12957,
+      "inpatient": 12957,
       "maternity": 0
     },
     "ркод мз рт им проф м з сигала": {
-      "volume": 78857,
-      "registered": 76641,
-      "inpatient": 76641,
+      "volume": 80283,
+      "registered": 77168,
+      "inpatient": 77168,
       "maternity": 0
     },
     "ркпд": {
-      "volume": 970,
-      "registered": 962,
-      "inpatient": 962,
+      "volume": 982,
+      "registered": 972,
+      "inpatient": 972,
       "maternity": 0
     },
     "ркпд детский туберкулезный санаторий": {
@@ -1719,69 +1715,69 @@
       "maternity": 0
     },
     "рыбно слободская црб": {
-      "volume": 4437,
-      "registered": 4096,
-      "inpatient": 4096,
+      "volume": 4513,
+      "registered": 4135,
+      "inpatient": 4135,
       "maternity": 0
     },
     "сабинская црб": {
-      "volume": 6104,
-      "registered": 6098,
-      "inpatient": 6066,
+      "volume": 6223,
+      "registered": 6152,
+      "inpatient": 6120,
       "maternity": 32
     },
     "сармановская црб": {
-      "volume": 6048,
-      "registered": 5699,
-      "inpatient": 5674,
+      "volume": 6197,
+      "registered": 5755,
+      "inpatient": 5730,
       "maternity": 25
     },
     "тетюшская црб": {
-      "volume": 4619,
-      "registered": 4493,
-      "inpatient": 4493,
+      "volume": 4701,
+      "registered": 4576,
+      "inpatient": 4576,
       "maternity": 0
     },
     "тукаевская црб": {
-      "volume": 3750,
-      "registered": 3594,
-      "inpatient": 3594,
+      "volume": 3823,
+      "registered": 3631,
+      "inpatient": 3631,
       "maternity": 0
     },
     "тюлячинская црб": {
-      "volume": 2641,
-      "registered": 2511,
-      "inpatient": 2511,
+      "volume": 2708,
+      "registered": 2525,
+      "inpatient": 2525,
       "maternity": 0
     },
     "уруссинская црб": {
-      "volume": 3762,
-      "registered": 3244,
-      "inpatient": 3243,
+      "volume": 3848,
+      "registered": 3294,
+      "inpatient": 3293,
       "maternity": 1
     },
     "цгкб №18 им проф к ш зыятдинова": {
-      "volume": 13984,
-      "registered": 12977,
-      "inpatient": 12977,
+      "volume": 14221,
+      "registered": 13156,
+      "inpatient": 13156,
       "maternity": 0
     },
     "черемшанская црб": {
-      "volume": 2980,
-      "registered": 2199,
-      "inpatient": 2199,
+      "volume": 3042,
+      "registered": 2200,
+      "inpatient": 2200,
       "maternity": 0
     },
     "чистопольская црб": {
-      "volume": 16934,
-      "registered": 16250,
-      "inpatient": 16036,
-      "maternity": 214
+      "volume": 17191,
+      "registered": 16443,
+      "inpatient": 16217,
+      "maternity": 226
     },
     "бсмп им р с акчурина": {
-      "volume": 20756,
-      "registered": 19841,
-      "inpatient": 19841,
+      "volume": 21114,
+      "registered": 20068,
+      "inpatient": 20068,
       "maternity": 0
     },
     "центр реабилитации слуха": {
@@ -1791,7 +1787,7 @@
       "maternity": 0
     },
     "кгма филиал фгаоу дпо рманпо мз рф": {
-      "volume": 397,
+      "volume": 400,
       "registered": 0,
       "inpatient": 0,
       "maternity": 0
@@ -1803,7 +1799,7 @@
       "maternity": 0
     },
     "нмчу детский хоспис": {
-      "volume": 110,
+      "volume": 113,
       "registered": 0,
       "inpatient": 0,
       "maternity": 0
@@ -1821,19 +1817,19 @@
       "maternity": 0
     },
     "кдц на четаева": {
-      "volume": 224,
+      "volume": 236,
       "registered": 0,
       "inpatient": 0,
       "maternity": 0
     },
     "клиника восстановительной медицины": {
-      "volume": 85,
+      "volume": 87,
       "registered": 0,
       "inpatient": 0,
       "maternity": 0
     },
     "красноключинский центр семейной медицины": {
-      "volume": 53,
+      "volume": 60,
       "registered": 0,
       "inpatient": 0,
       "maternity": 0
@@ -1851,25 +1847,25 @@
       "maternity": 0
     },
     "ммц профмедицина нк": {
-      "volume": 565,
+      "volume": 572,
       "registered": 0,
       "inpatient": 0,
       "maternity": 0
     },
     "мцгх хузангаево": {
-      "volume": 246,
+      "volume": 250,
       "registered": 0,
       "inpatient": 0,
       "maternity": 0
     },
     "прозрение": {
-      "volume": 1104,
+      "volume": 1112,
       "registered": 0,
       "inpatient": 0,
       "maternity": 0
     },
     "ситидок эксперт казань": {
-      "volume": 675,
+      "volume": 696,
       "registered": 0,
       "inpatient": 0,
       "maternity": 0
@@ -1881,13 +1877,13 @@
       "maternity": 0
     },
     "центр микрохирургии глаза прозрение отделение в г елабуге": {
-      "volume": 734,
+      "volume": 754,
       "registered": 0,
       "inpatient": 0,
       "maternity": 0
     },
     "центр репродуктивной медицины аист": {
-      "volume": 261,
+      "volume": 273,
       "registered": 0,
       "inpatient": 0,
       "maternity": 0
@@ -1899,7 +1895,7 @@
       "maternity": 0
     },
     "отель клиника": {
-      "volume": 429,
+      "volume": 435,
       "registered": 0,
       "inpatient": 0,
       "maternity": 0
@@ -1911,51 +1907,51 @@
       "maternity": 0
     },
     "мо спасение": {
-      "volume": 672,
+      "volume": 709,
       "registered": 0,
       "inpatient": 0,
       "maternity": 0
     },
     "пао татнефть им в д шашина": {
-      "volume": 205,
+      "volume": 217,
       "registered": 0,
       "inpatient": 0,
       "maternity": 0
     },
     "ркпб им акад в м бехтерева мз рт": {
-      "volume": 13815,
-      "registered": 13115,
-      "inpatient": 13115,
+      "volume": 14056,
+      "registered": 13247,
+      "inpatient": 13247,
       "maternity": 0
     },
     "казанский приволжский федеральный университет": {
-      "volume": 19752,
-      "registered": 20352,
-      "inpatient": 19157,
-      "maternity": 1195
+      "volume": 20046,
+      "registered": 20521,
+      "inpatient": 19322,
+      "maternity": 1199
     },
     "филиал гауз ркнд мз рт анд": {
-      "volume": 1365,
-      "registered": 1271,
-      "inpatient": 1271,
+      "volume": 1380,
+      "registered": 1316,
+      "inpatient": 1316,
       "maternity": 0
     },
     "филиал гауз ркнд мз рт ннд": {
-      "volume": 1116,
-      "registered": 1088,
-      "inpatient": 1088,
+      "volume": 1127,
+      "registered": 1112,
+      "inpatient": 1112,
       "maternity": 0
     },
     "филиал гауз ркнд мз рт нчнд": {
-      "volume": 1695,
-      "registered": 1661,
-      "inpatient": 1661,
+      "volume": 1739,
+      "registered": 1676,
+      "inpatient": 1676,
       "maternity": 0
     },
     "филиал гауз ркпд альметьевский птд": {
-      "volume": 920,
-      "registered": 825,
-      "inpatient": 825,
+      "volume": 949,
+      "registered": 826,
+      "inpatient": 826,
       "maternity": 0
     },
     "филиал гауз ркпд бугульминский птд": {
@@ -1965,31 +1961,31 @@
       "maternity": 0
     },
     "филиал гауз ркпд зеленодольский птд": {
-      "volume": 132,
-      "registered": 129,
-      "inpatient": 129,
+      "volume": 134,
+      "registered": 131,
+      "inpatient": 131,
       "maternity": 0
     },
     "филиал гауз ркпд лениногорский птд": {
-      "volume": 104,
+      "volume": 106,
       "registered": 97,
       "inpatient": 97,
       "maternity": 0
     },
     "филиал гауз ркпд набережночелнинский птд": {
-      "volume": 235,
+      "volume": 238,
       "registered": 225,
       "inpatient": 225,
       "maternity": 0
     },
     "филиал гауз ркпд нижнекамский птд": {
-      "volume": 132,
-      "registered": 131,
-      "inpatient": 131,
+      "volume": 133,
+      "registered": 132,
+      "inpatient": 132,
       "maternity": 0
     },
     "кб ржд медицина г казани": {
-      "volume": 4368,
+      "volume": 4423,
       "registered": 0,
       "inpatient": 0,
       "maternity": 0
@@ -1997,578 +1993,578 @@
   },
   "smp": {
     "агрызская црб": {
-      "volume": 7186,
-      "registered": 7050
+      "volume": 7276,
+      "registered": 7099
     },
     "азнакаевская црб": {
-      "volume": 13354,
-      "registered": 12999
+      "volume": 13544,
+      "registered": 13087
     },
     "аксубаевская црб": {
-      "volume": 4573,
-      "registered": 3988
+      "volume": 4630,
+      "registered": 4213
     },
     "актанышская црб": {
-      "volume": 4980,
-      "registered": 4842
+      "volume": 5040,
+      "registered": 4884
     },
     "алексеевская црб": {
-      "volume": 3509,
-      "registered": 3293
+      "volume": 3563,
+      "registered": 3379
     },
     "альметьевская црб": {
-      "volume": 48742,
-      "registered": 45508
+      "volume": 49408,
+      "registered": 45678
     },
     "апастовская црб": {
-      "volume": 1758,
-      "registered": 1630
+      "volume": 1787,
+      "registered": 1640
     },
     "арская црб": {
-      "volume": 8953,
-      "registered": 8500
+      "volume": 9065,
+      "registered": 8655
     },
     "атнинская црб": {
-      "volume": 2376,
-      "registered": 2228
+      "volume": 2403,
+      "registered": 2264
     },
     "бавлинская црб": {
-      "volume": 8052,
-      "registered": 7803
+      "volume": 8180,
+      "registered": 7918
     },
     "базарно матакская црб алькеевский р н": {
-      "volume": 2159,
-      "registered": 2054
+      "volume": 2195,
+      "registered": 2065
     },
     "балтасинская црб": {
-      "volume": 4960,
-      "registered": 4801
+      "volume": 5031,
+      "registered": 4795
     },
     "бугульминская црб": {
-      "volume": 25376,
-      "registered": 24489
+      "volume": 25729,
+      "registered": 24792
     },
     "буинская црб": {
-      "volume": 6772,
-      "registered": 6575
+      "volume": 6883,
+      "registered": 6669
     },
     "верхнеуслонская црб": {
-      "volume": 5394,
-      "registered": 3323
+      "volume": 5437,
+      "registered": 3357
     },
     "высокогорская црб": {
-      "volume": 8742,
+      "volume": 8881,
       "registered": 8540
     },
     "дрожжановская црб": {
-      "volume": 2686,
-      "registered": 2482
+      "volume": 2730,
+      "registered": 2479
     },
     "елабужская црб": {
-      "volume": 21061,
-      "registered": 20527
+      "volume": 21414,
+      "registered": 20983
     },
     "заинская црб": {
-      "volume": 10904,
-      "registered": 10835
+      "volume": 11032,
+      "registered": 10825
     },
     "зеленодольская црб": {
-      "volume": 41370,
-      "registered": 39288
+      "volume": 42023,
+      "registered": 39162
     },
     "кайбицкая црб": {
-      "volume": 2007,
-      "registered": 1844
+      "volume": 2026,
+      "registered": 1863
     },
     "камско устьинская црб": {
-      "volume": 2086,
-      "registered": 2043
+      "volume": 2116,
+      "registered": 2028
     },
     "кукморская црб": {
-      "volume": 6698,
-      "registered": 6529
+      "volume": 6803,
+      "registered": 6553
     },
     "лениногорская црб ссмп": {
-      "volume": 17925,
-      "registered": 17588
+      "volume": 18230,
+      "registered": 17570
     },
     "мамадышская црб": {
-      "volume": 6853,
-      "registered": 6509
+      "volume": 6976,
+      "registered": 6504
     },
     "менделеевская црб": {
-      "volume": 4975,
-      "registered": 4612
+      "volume": 5080,
+      "registered": 4728
     },
     "мензелинская црб": {
-      "volume": 4349,
-      "registered": 4160
+      "volume": 4414,
+      "registered": 4141
     },
     "муслюмовская црб": {
-      "volume": 3211,
-      "registered": 3161
+      "volume": 3249,
+      "registered": 3179
     },
     "нижнекамская црмб": {
-      "volume": 49375,
-      "registered": 45211
+      "volume": 50156,
+      "registered": 45736
     },
     "новошешминская црб": {
-      "volume": 2611,
-      "registered": 2490
+      "volume": 2636,
+      "registered": 2522
     },
     "нурлатская црб": {
-      "volume": 11412,
-      "registered": 11266
+      "volume": 11562,
+      "registered": 11411
     },
     "пестречинская црб": {
-      "volume": 9737,
-      "registered": 8129
+      "volume": 9873,
+      "registered": 8328
     },
     "ркб мз рт спасская црб": {
-      "volume": 3690,
-      "registered": 3398
+      "volume": 3733,
+      "registered": 3415
     },
     "рыбно слободская црб": {
-      "volume": 6549,
-      "registered": 5711
+      "volume": 6645,
+      "registered": 5752
     },
     "сабинская црб": {
-      "volume": 4431,
-      "registered": 4190
+      "volume": 4504,
+      "registered": 4357
     },
     "сармановская црб": {
-      "volume": 5966,
-      "registered": 5889
+      "volume": 6044,
+      "registered": 5949
     },
     "ссмп г казань": {
-      "volume": 328955,
-      "registered": 308236
+      "volume": 334022,
+      "registered": 311652
     },
     "ссмп набережные челны": {
-      "volume": 121711,
-      "registered": 118224
+      "volume": 123516,
+      "registered": 119783
     },
     "тетюшская црб": {
-      "volume": 3860,
-      "registered": 3670
+      "volume": 3928,
+      "registered": 3753
     },
     "тюлячинская црб": {
-      "volume": 1448,
-      "registered": 1402
+      "volume": 1480,
+      "registered": 1404
     },
     "уруссинская црб ютазинского муниципального района рт": {
-      "volume": 4444,
-      "registered": 4392
+      "volume": 4493,
+      "registered": 4400
     },
     "черемшанская црб": {
-      "volume": 1939,
+      "volume": 1974,
       "registered": 1729
     },
     "чистопольская црб": {
-      "volume": 18614,
-      "registered": 17722
+      "volume": 18892,
+      "registered": 17965
     }
   },
   "ambulatoryCase": {
     "агрызская црб": {
-      "volume": 142915,
-      "registered": 133546
+      "volume": 146540,
+      "registered": 137206
     },
     "азнакаевская црб": {
-      "volume": 274561,
-      "registered": 263146
+      "volume": 279366,
+      "registered": 266748
     },
     "аксубаевская црб": {
-      "volume": 131992,
-      "registered": 122261
+      "volume": 134637,
+      "registered": 124305
     },
     "актанышская црб": {
-      "volume": 136500,
-      "registered": 134675
+      "volume": 145991,
+      "registered": 143436
     },
     "алексеевская црб": {
-      "volume": 84367,
-      "registered": 77069
+      "volume": 87475,
+      "registered": 79625
     },
     "альметьевская рмб": {
-      "volume": 94269,
-      "registered": 82903
+      "volume": 95946,
+      "registered": 86921
     },
     "альметьевская црб": {
-      "volume": 295466,
-      "registered": 265402
+      "volume": 595996,
+      "registered": 544007
     },
     "апастовская црб": {
-      "volume": 95132,
-      "registered": 93566
+      "volume": 96679,
+      "registered": 95047
     },
     "арская црб": {
-      "volume": 130749,
-      "registered": 124163
+      "volume": 136347,
+      "registered": 128274
     },
     "атнинская црб": {
-      "volume": 77615,
-      "registered": 72280
+      "volume": 79656,
+      "registered": 72643
     },
     "бавлинская црб": {
-      "volume": 138515,
-      "registered": 134156
+      "volume": 142093,
+      "registered": 136805
     },
     "базарно матакская црб": {
-      "volume": 90550,
-      "registered": 75814
+      "volume": 92178,
+      "registered": 78859
     },
     "балтасинская црб": {
-      "volume": 132355,
-      "registered": 128929
+      "volume": 135726,
+      "registered": 131534
     },
     "бугульминская црб": {
-      "volume": 287580,
-      "registered": 284117
+      "volume": 293682,
+      "registered": 289004
     },
     "буинская црб": {
-      "volume": 168453,
-      "registered": 163423
+      "volume": 172711,
+      "registered": 166081
     },
     "верхнеуслонская црб": {
-      "volume": 61429,
-      "registered": 58179
+      "volume": 62700,
+      "registered": 60069
     },
     "высокогорская црб": {
-      "volume": 173647,
-      "registered": 161461
+      "volume": 179726,
+      "registered": 165447
     },
     "гдп №7": {
-      "volume": 205677,
-      "registered": 194487
+      "volume": 213400,
+      "registered": 200833
     },
     "гкб №12": {
-      "volume": 167528,
-      "registered": 148692
+      "volume": 172908,
+      "registered": 152412
     },
     "гкб №16 г казани": {
-      "volume": 212389,
-      "registered": 207323
+      "volume": 220110,
+      "registered": 214473
     },
     "гкб №7 им м н садыкова": {
-      "volume": 403690,
-      "registered": 376892
+      "volume": 407322,
+      "registered": 390731
     },
     "городская больница №11 г казани": {
-      "volume": 108410,
-      "registered": 85717
+      "volume": 111205,
+      "registered": 87087
     },
     "городская больница №2 г набережные челны": {
-      "volume": 75770,
-      "registered": 70389
+      "volume": 76063,
+      "registered": 70662
     },
     "городская больница №5 г набережные челны": {
-      "volume": 189296,
-      "registered": 178928
+      "volume": 194685,
+      "registered": 182714
     },
     "городская детская больница №1 имени м ш уразаевой г казани": {
-      "volume": 131779,
-      "registered": 126187
+      "volume": 135546,
+      "registered": 129763
     },
     "городская детская поликлиника №6 г казани": {
-      "volume": 72533,
-      "registered": 69224
+      "volume": 80297,
+      "registered": 76328
     },
     "городская поликлиника №10 г казани": {
-      "volume": 259166,
-      "registered": 251307
+      "volume": 268460,
+      "registered": 259125
     },
     "городская поликлиника №18 г казани": {
-      "volume": 214196,
-      "registered": 187765
+      "volume": 221423,
+      "registered": 192233
     },
     "городская поликлиника №20 г казани": {
-      "volume": 257553,
-      "registered": 226942
+      "volume": 266923,
+      "registered": 239157
     },
     "городская поликлиника №21 г казани": {
-      "volume": 173749,
-      "registered": 167444
+      "volume": 181672,
+      "registered": 173356
     },
     "городская поликлиника №3 г набережные челны": {
-      "volume": 148886,
-      "registered": 131775
+      "volume": 152261,
+      "registered": 135046
     },
     "городская поликлиника №4 им л н ганиевой": {
-      "volume": 117901,
-      "registered": 106199
+      "volume": 122122,
+      "registered": 109623
     },
     "городская поликлиника №6 г набережные челны": {
-      "volume": 182753,
-      "registered": 145271
+      "volume": 186621,
+      "registered": 147931
     },
     "городская поликлиника №7 г казани": {
-      "volume": 104805,
-      "registered": 102519
+      "volume": 108015,
+      "registered": 105175
     },
     "городская поликлиника №7 г набережные челны": {
-      "volume": 174723,
-      "registered": 157872
+      "volume": 178851,
+      "registered": 159935
     },
     "городская поликлиника №8 г казани": {
-      "volume": 169390,
-      "registered": 155341
+      "volume": 174324,
+      "registered": 159408
     },
     "госпиталь для ветеранов войн г казани": {
-      "volume": 113756,
-      "registered": 99905
+      "volume": 116267,
+      "registered": 101293
     },
     "госпиталь для ветеранов войн г н челны": {
-      "volume": 77689,
-      "registered": 75638
+      "volume": 79721,
+      "registered": 78324
     },
     "детская городская больница №8 г казани": {
-      "volume": 158,
-      "registered": 158
+      "volume": 168,
+      "registered": 165
     },
     "детская городская клиническая больница №7 г казани": {
-      "volume": 119669,
-      "registered": 111168
+      "volume": 126154,
+      "registered": 116680
     },
     "детская городская поликлиника № 11": {
-      "volume": 133346,
-      "registered": 131290
+      "volume": 143380,
+      "registered": 140464
     },
     "детская городская поликлиника №10 г казани": {
-      "volume": 161260,
-      "registered": 144452
+      "volume": 171066,
+      "registered": 152908
     },
     "детская городская поликлиника №2 г казани": {
-      "volume": 110333,
-      "registered": 108907
+      "volume": 113345,
+      "registered": 111777
     },
     "детская городская поликлиника №2 г набережные челны": {
-      "volume": 129722,
-      "registered": 127740
+      "volume": 131809,
+      "registered": 129575
     },
     "детская городская поликлиника №3": {
-      "volume": 113934,
-      "registered": 101653
+      "volume": 120598,
+      "registered": 107343
     },
     "детская городская поликлиника №4 им ф г ахмеровой": {
-      "volume": 147312,
-      "registered": 138264
+      "volume": 157051,
+      "registered": 142595
     },
     "детская городская поликлиника №4 г казани": {
-      "volume": 153742,
-      "registered": 153528
+      "volume": 161498,
+      "registered": 161236
     },
     "детская городская поликлиника №5 г набережные челны": {
-      "volume": 135246,
-      "registered": 128979
+      "volume": 143666,
+      "registered": 138005
     },
     "детская городская поликлиника №6 г набережные челны": {
-      "volume": 98749,
-      "registered": 90725
+      "volume": 99005,
+      "registered": 90809
     },
     "детская городская поликлиника №9 г казани": {
-      "volume": 120944,
-      "registered": 117125
+      "volume": 125038,
+      "registered": 121122
     },
     "детская стоматологическая поликлиника №1 г казань": {
-      "volume": 23120,
-      "registered": 22905
+      "volume": 23146,
+      "registered": 22931
     },
     "детская стоматологическая поликлиника №1 г наб челны": {
-      "volume": 110510,
-      "registered": 109409
+      "volume": 114517,
+      "registered": 113357
     },
     "детская стоматологическая поликлиника №6": {
-      "volume": 36964,
-      "registered": 36362
+      "volume": 37956,
+      "registered": 37175
     },
     "дркб мз рт": {
-      "volume": 255970,
-      "registered": 245162
+      "volume": 261348,
+      "registered": 249432
     },
     "дрожжановская црб": {
-      "volume": 93770,
-      "registered": 83187
+      "volume": 96398,
+      "registered": 84597
     },
     "елабужская црб": {
-      "volume": 342469,
-      "registered": 338912
+      "volume": 355084,
+      "registered": 350310
     },
     "заинская црб": {
-      "volume": 176431,
-      "registered": 173995
+      "volume": 186362,
+      "registered": 182679
     },
     "зеленодольская црб": {
-      "volume": 611210,
-      "registered": 592868
+      "volume": 626205,
+      "registered": 602152
     },
     "казанский эндокринологический диспансер": {
-      "volume": 23496,
-      "registered": 20808
+      "volume": 24004,
+      "registered": 21119
     },
     "кайбицкая црб": {
-      "volume": 82345,
-      "registered": 81310
+      "volume": 83892,
+      "registered": 82623
     },
     "камско полянская рб": {
-      "volume": 95170,
-      "registered": 92732
+      "volume": 101146,
+      "registered": 98430
     },
     "камско устьинская црб": {
-      "volume": 77766,
-      "registered": 77172
+      "volume": 79295,
+      "registered": 78209
     },
     "кдмц": {
-      "volume": 131624,
-      "registered": 129264
+      "volume": 132095,
+      "registered": 129506
     },
     "клиника медицинского университета г казани": {
-      "volume": 89615,
-      "registered": 79174
+      "volume": 90674,
+      "registered": 79755
     },
     "клиническая больница №2 г казани": {
-      "volume": 199694,
-      "registered": 191750
+      "volume": 202252,
+      "registered": 195320
     },
     "кукморская црб": {
-      "volume": 223200,
-      "registered": 221274
+      "volume": 230758,
+      "registered": 226889
     },
     "лаишевская црб": {
-      "volume": 204814,
-      "registered": 184558
+      "volume": 213595,
+      "registered": 188535
     },
     "лениногорская црб": {
-      "volume": 262232,
-      "registered": 253093
+      "volume": 269448,
+      "registered": 258779
     },
     "мамадышская црб": {
-      "volume": 183692,
-      "registered": 175765
+      "volume": 190259,
+      "registered": 180795
     },
     "межрегиональный клинико диагностический центр": {
       "volume": 62,
       "registered": 18
     },
     "менделеевская црб": {
-      "volume": 134257,
-      "registered": 128266
+      "volume": 138385,
+      "registered": 131101
     },
     "мензелинская црб": {
-      "volume": 125078,
-      "registered": 123747
+      "volume": 130573,
+      "registered": 125829
     },
     "муслюмовская црб": {
-      "volume": 76160,
-      "registered": 73706
+      "volume": 77258,
+      "registered": 74754
     },
     "набережно челнинская иб": {
       "volume": 240,
       "registered": 238
     },
     "ндрб с пц": {
-      "volume": 284384,
-      "registered": 281695
+      "volume": 284228,
+      "registered": 282108
     },
     "новошешминская црб": {
-      "volume": 70897,
-      "registered": 61613
+      "volume": 72485,
+      "registered": 62680
     },
     "нурлатская црб": {
-      "volume": 194013,
-      "registered": 193045
+      "volume": 196776,
+      "registered": 195773
     },
     "нцрмб": {
-      "volume": 385429,
-      "registered": 374325
+      "volume": 397346,
+      "registered": 384312
     },
     "пестречинская црб": {
-      "volume": 203894,
-      "registered": 192864
+      "volume": 204730,
+      "registered": 193891
     },
     "республиканский клинический наркологический диспансер мз рт": {
-      "volume": 56813,
-      "registered": 50467
+      "volume": 56852,
+      "registered": 50495
     },
     "ркб мз рт": {
-      "volume": 103799,
-      "registered": 95610
+      "volume": 105332,
+      "registered": 96750
     },
     "ркиб им проф а ф агафонова": {
-      "volume": 11975,
-      "registered": 11612
+      "volume": 12238,
+      "registered": 11881
     },
     "ркоб мз рт им проф е в адамюка": {
-      "volume": 59727,
-      "registered": 56970
+      "volume": 60695,
+      "registered": 57932
     },
     "ркод мз рт им проф м з сигала": {
-      "volume": 218518,
-      "registered": 210570
+      "volume": 219402,
+      "registered": 211446
     },
     "ркпд": {
-      "volume": 47216,
-      "registered": 46577
+      "volume": 47258,
+      "registered": 46661
     },
     "рсп мз рт": {
-      "volume": 55226,
-      "registered": 54453
+      "volume": 56736,
+      "registered": 55644
     },
     "рцоз и мп": {
-      "volume": 6593,
-      "registered": 3292
+      "volume": 6837,
+      "registered": 3428
     },
     "рыбно слободская црб": {
-      "volume": 143243,
-      "registered": 139394
+      "volume": 148051,
+      "registered": 143614
     },
     "сабинская црб": {
-      "volume": 121015,
-      "registered": 118479
+      "volume": 126375,
+      "registered": 123254
     },
     "сармановская црб": {
-      "volume": 145818,
-      "registered": 142708
+      "volume": 150610,
+      "registered": 145927
     },
     "стоматологическая поликлиника №1 г наб челны": {
-      "volume": 22411,
-      "registered": 21553
+      "volume": 22942,
+      "registered": 22002
     },
     "стоматологическая поликлиника №2 г наб челны": {
-      "volume": 58785,
-      "registered": 54232
+      "volume": 61864,
+      "registered": 57267
     },
     "стоматологическая поликлиника №3 г наб челны": {
-      "volume": 55979,
-      "registered": 54279
+      "volume": 56052,
+      "registered": 54340
     },
     "тетюшская црб": {
-      "volume": 110277,
-      "registered": 107157
+      "volume": 113278,
+      "registered": 109375
     },
     "тукаевская црб": {
-      "volume": 168490,
-      "registered": 160082
+      "volume": 177969,
+      "registered": 168931
     },
     "тюлячинская црб": {
-      "volume": 75998,
-      "registered": 73709
+      "volume": 78038,
+      "registered": 75294
     },
     "уруссинская црб": {
-      "volume": 93825,
-      "registered": 90988
+      "volume": 96603,
+      "registered": 92812
     },
     "цгкб №18 им проф к ш зыятдинова": {
-      "volume": 225267,
-      "registered": 204656
+      "volume": 227195,
+      "registered": 204459
     },
     "черемшанская црб": {
-      "volume": 76045,
-      "registered": 72905
+      "volume": 77833,
+      "registered": 74344
     },
     "чистопольская црб": {
-      "volume": 252787,
-      "registered": 245233
+      "volume": 259405,
+      "registered": 250436
     },
     "бсмп им р с акчурина": {
       "volume": 1182,
@@ -2595,8 +2591,8 @@
       "registered": 0
     },
     "кдц авиастроительного района": {
-      "volume": 72930,
-      "registered": 6268
+      "volume": 76182,
+      "registered": 6436
     },
     "кдц аракчино": {
       "volume": 5537,
@@ -2619,12 +2615,12 @@
       "registered": 0
     },
     "красноключинский центр семейной медицины": {
-      "volume": 3235,
+      "volume": 3400,
       "registered": 389
     },
     "ммц профмедицина нк": {
-      "volume": 24508,
-      "registered": 5531
+      "volume": 25575,
+      "registered": 5813
     },
     "мцгх хузангаево": {
       "volume": 656,
@@ -2635,16 +2631,16 @@
       "registered": 0
     },
     "поликлиника профилактической медицины": {
-      "volume": 177,
-      "registered": 36
+      "volume": 187,
+      "registered": 46
     },
     "прозрение": {
       "volume": 1078,
       "registered": 0
     },
     "ситидок эксперт казань": {
-      "volume": 44667,
-      "registered": 1479
+      "volume": 45712,
+      "registered": 1481
     },
     "ситиком": {
       "volume": 164,
@@ -2675,56 +2671,56 @@
       "registered": 0
     },
     "мо спасение": {
-      "volume": 39077,
-      "registered": 28253
+      "volume": 41930,
+      "registered": 30055
     },
     "ркпб им акад в м бехтерева мз рт": {
-      "volume": 190267,
-      "registered": 188342
+      "volume": 191792,
+      "registered": 189881
     },
     "казанский приволжский федеральный университет": {
-      "volume": 135198,
-      "registered": 130016
+      "volume": 142991,
+      "registered": 136599
     },
     "филиал гауз ркнд мз рт анд": {
-      "volume": 16990,
-      "registered": 14682
+      "volume": 17003,
+      "registered": 14687
     },
     "филиал гауз ркнд мз рт ннд": {
-      "volume": 20739,
-      "registered": 20676
+      "volume": 20747,
+      "registered": 20683
     },
     "филиал гауз ркнд мз рт нчнд": {
-      "volume": 24684,
-      "registered": 23950
+      "volume": 25090,
+      "registered": 24331
     },
     "филиал гауз ркпд альметьевский птд": {
-      "volume": 8721,
-      "registered": 8557
+      "volume": 8725,
+      "registered": 8577
     },
     "филиал гауз ркпд бугульминский птд": {
-      "volume": 3494,
-      "registered": 3460
+      "volume": 3730,
+      "registered": 3461
     },
     "филиал гауз ркпд зеленодольский птд": {
       "volume": 556,
       "registered": 550
     },
     "филиал гауз ркпд лениногорский птд": {
-      "volume": 2881,
-      "registered": 2802
+      "volume": 2919,
+      "registered": 2824
     },
     "филиал гауз ркпд набережночелнинский птд": {
-      "volume": 16677,
-      "registered": 16254
+      "volume": 16684,
+      "registered": 16258
     },
     "филиал гауз ркпд нижнекамский птд": {
-      "volume": 9258,
-      "registered": 9164
+      "volume": 9265,
+      "registered": 9171
     },
     "кб ржд медицина г казани": {
-      "volume": 55738,
-      "registered": 49748
+      "volume": 57064,
+      "registered": 50538
     },
     "адрб с пц": {
       "volume": 117786,
@@ -2783,10 +2779,6 @@
     "арская црб": {
       "volume": 2,
       "registered": 2
-    },
-    "атнинская црб": {
-      "volume": 8,
-      "registered": 7
     },
     "бавлинская црб": {
       "volume": 16,
@@ -2940,10 +2932,6 @@
       "volume": 7,
       "registered": 7
     },
-    "мамадышская црб": {
-      "volume": 5,
-      "registered": 5
-    },
     "менделеевская црб": {
       "volume": 2,
       "registered": 2
@@ -2999,10 +2987,6 @@
     "ркод мз рт им проф м з сигала": {
       "volume": 22,
       "registered": 22
-    },
-    "ркпб им акад в м бехтерева": {
-      "volume": 59,
-      "registered": 59
     },
     "ркпд": {
       "volume": 7,
@@ -3076,10 +3060,6 @@
       "volume": 2,
       "registered": 2
     },
-    "филиал гауз ркнд мз рт нчнд": {
-      "volume": 4,
-      "registered": 2
-    },
     "филиал гауз ркнд мз рт ннд": {
       "volume": 4,
       "registered": 4
@@ -3106,6 +3086,22 @@
     },
     "филиал гауз ркпд детский туберкулезный санаторий": {
       "volume": 2,
+      "registered": 2
+    },
+    "ркпб им акад в м бехтерева": {
+      "volume": 54,
+      "registered": 54
+    },
+    "атнинская црб": {
+      "volume": 7,
+      "registered": 7
+    },
+    "мамадышская црб": {
+      "volume": 6,
+      "registered": 5
+    },
+    "филиал гауз ркнд мз рт нчнд": {
+      "volume": 3,
       "registered": 2
     }
   },
@@ -3221,10 +3217,6 @@
     "городская поликлиника № 20": {
       "volume": 29,
       "registered": 29
-    },
-    "городская поликлиника № 21": {
-      "volume": 28,
-      "registered": 26
     },
     "городская поликлиника № 7": {
       "volume": 16,
@@ -3362,10 +3354,6 @@
       "volume": 4,
       "registered": 4
     },
-    "кукморская црб": {
-      "volume": 9,
-      "registered": 9
-    },
     "лениногорская црб": {
       "volume": 11,
       "registered": 11
@@ -3421,10 +3409,6 @@
     "ркод мз рт им проф м з сигала": {
       "volume": 5,
       "registered": 5
-    },
-    "ркпб им акад в м бехтерева": {
-      "volume": 27,
-      "registered": 21
     },
     "ркпд": {
       "volume": 5,
@@ -3541,6 +3525,18 @@
     "филиал гауз рцпб спид и из мз рт в г набережные челны": {
       "volume": 1,
       "registered": 1
+    },
+    "ркпб им акад в м бехтерева": {
+      "volume": 27,
+      "registered": 22
+    },
+    "кукморская црб": {
+      "volume": 8,
+      "registered": 8
+    },
+    "городская поликлиника № 21": {
+      "volume": 27,
+      "registered": 26
     }
   },
   "tvspLaboratory": {
@@ -3966,10 +3962,6 @@
       "volume": 1,
       "registered": 1
     },
-    "городская поликлиника № 20": {
-      "volume": 4,
-      "registered": 4
-    },
     "городская поликлиника № 21": {
       "volume": 2,
       "registered": 2
@@ -4106,10 +4098,6 @@
       "volume": 2,
       "registered": 2
     },
-    "кукморская црб": {
-      "volume": 2,
-      "registered": 2
-    },
     "кэд": {
       "volume": 1,
       "registered": 1
@@ -4218,10 +4206,6 @@
       "volume": 1,
       "registered": 1
     },
-    "цгкб № 18 им проф к ш зыятдинова": {
-      "volume": 5,
-      "registered": 5
-    },
     "черемшанская црб": {
       "volume": 1,
       "registered": 1
@@ -4281,6 +4265,18 @@
     "филиал гауз ркпд лениногорский противотуберкулезный диспансер": {
       "volume": 1,
       "registered": 1
+    },
+    "кукморская црб": {
+      "volume": 1,
+      "registered": 1
+    },
+    "цгкб № 18 им проф к ш зыятдинова": {
+      "volume": 6,
+      "registered": 6
+    },
+    "городская поликлиника № 20": {
+      "volume": 3,
+      "registered": 3
     }
   },
   "smpFederal": {
@@ -4400,10 +4396,6 @@
       "volume": 1,
       "registered": 1
     },
-    "ркб мз рт": {
-      "volume": 3,
-      "registered": 2
-    },
     "рыбно слободская црб": {
       "volume": 1,
       "registered": 1
@@ -4447,48 +4439,52 @@
     "муслюмовская црб": {
       "volume": 1,
       "registered": 1
+    },
+    "ркб мз рт": {
+      "volume": 2,
+      "registered": 2
     }
   },
   "egpu2days": {
     "гкб №12 казань": {
-      "volume": 1704,
-      "registered": 1694
+      "volume": 1730,
+      "registered": 1720
     },
     "альметьевская рмб альметьевск": {
       "volume": 19,
       "registered": 6
     },
     "городская больница №2 г набережные челны набережные челны": {
-      "volume": 573,
-      "registered": 517
+      "volume": 585,
+      "registered": 529
     },
     "городская поликлиника №3 г набережные челны набережные челны": {
-      "volume": 739,
-      "registered": 630
+      "volume": 752,
+      "registered": 643
     },
     "городская больница №5 г набережные челны набережные челны": {
-      "volume": 775,
-      "registered": 517
+      "volume": 793,
+      "registered": 535
     },
     "госпиталь для ветеранов войн г н челны набережные челны": {
       "volume": 121,
       "registered": 49
     },
     "детская городская поликлиника №3 набережные челны": {
-      "volume": 278,
-      "registered": 251
+      "volume": 282,
+      "registered": 255
     },
     "городская поликлиника №4 им л н ганиевой набережные челны": {
-      "volume": 977,
-      "registered": 948
+      "volume": 1015,
+      "registered": 986
     },
     "детская городская поликлиника №2 г набережные челны набережные челны": {
-      "volume": 159,
-      "registered": 157
+      "volume": 160,
+      "registered": 158
     },
     "детская городская поликлиника №4 им ф г ахмеровой набережные челны": {
-      "volume": 269,
-      "registered": 252
+      "volume": 273,
+      "registered": 256
     },
     "детская городская поликлиника №5 г набережные челны набережные челны": {
       "volume": 10,
@@ -4499,64 +4495,64 @@
       "registered": 3
     },
     "городская поликлиника №6 г набережные челны набережные челны": {
-      "volume": 1404,
-      "registered": 1258
+      "volume": 1432,
+      "registered": 1286
     },
     "городская поликлиника №7 набережные челны": {
-      "volume": 1036,
-      "registered": 1011
+      "volume": 1045,
+      "registered": 1020
     },
     "кдмц набережные челны": {
-      "volume": 114,
-      "registered": 55
+      "volume": 118,
+      "registered": 59
     },
     "камско полянская рб камские поляны": {
-      "volume": 72,
+      "volume": 73,
       "registered": 20
     },
     "нцрмб нижнекамск": {
-      "volume": 1559,
-      "registered": 1511
+      "volume": 1594,
+      "registered": 1546
     },
     "ндрб с пц нижнекамск": {
-      "volume": 368,
+      "volume": 369,
       "registered": 276
     },
     "альметьевская црб альметьевск": {
-      "volume": 1847,
-      "registered": 1115
+      "volume": 1875,
+      "registered": 1134
     },
     "бугульминская црб бугульма": {
-      "volume": 322,
-      "registered": 292
+      "volume": 327,
+      "registered": 297
     },
     "елабужская црб елабуга": {
-      "volume": 833,
-      "registered": 774
+      "volume": 845,
+      "registered": 786
     },
     "зеленодольская црб зеленодольск": {
-      "volume": 840,
-      "registered": 802
+      "volume": 865,
+      "registered": 827
     },
     "лениногорская црб лениногорск": {
-      "volume": 244,
-      "registered": 209
+      "volume": 250,
+      "registered": 215
     },
     "чистопольская црб чистополь": {
-      "volume": 338,
-      "registered": 225
+      "volume": 348,
+      "registered": 235
     },
     "азнакаевская црб азнакаево": {
-      "volume": 134,
-      "registered": 118
+      "volume": 141,
+      "registered": 125
     },
     "заинская црб заинск": {
-      "volume": 67,
-      "registered": 55
+      "volume": 69,
+      "registered": 57
     },
     "агрызская црб агрыз": {
-      "volume": 46,
-      "registered": 5
+      "volume": 48,
+      "registered": 6
     },
     "аксубаевская црб аксубаево": {
       "volume": 43,
@@ -4567,8 +4563,8 @@
       "registered": 16
     },
     "алексеевская црб алексеевское": {
-      "volume": 140,
-      "registered": 100
+      "volume": 142,
+      "registered": 102
     },
     "базарно матакская црб базарные матаки": {
       "volume": 22,
@@ -4587,8 +4583,8 @@
       "registered": 12
     },
     "буинская црб буинск": {
-      "volume": 96,
-      "registered": 75
+      "volume": 97,
+      "registered": 76
     },
     "бавлинская црб бавлы": {
       "volume": 25,
@@ -4603,8 +4599,8 @@
       "registered": 84
     },
     "высокогорская црб ж д станции высокая гора": {
-      "volume": 763,
-      "registered": 405
+      "volume": 779,
+      "registered": 416
     },
     "дрожжановская црб старое дрожжаное": {
       "volume": 20,
@@ -4615,28 +4611,28 @@
       "registered": 1
     },
     "камско устьинская црб камское устье": {
-      "volume": 43,
-      "registered": 39
+      "volume": 44,
+      "registered": 40
     },
     "кукморская црб кукмор": {
-      "volume": 128,
-      "registered": 88
+      "volume": 129,
+      "registered": 89
     },
     "лаишевская црб лаишево": {
-      "volume": 983,
-      "registered": 683
+      "volume": 1007,
+      "registered": 703
     },
     "мамадышская црб мамадыш": {
       "volume": 216,
-      "registered": 161
+      "registered": 160
     },
     "менделеевская црб менделеевск": {
-      "volume": 80,
-      "registered": 30
+      "volume": 81,
+      "registered": 31
     },
     "мензелинская црб мензелинск": {
-      "volume": 31,
-      "registered": 23
+      "volume": 34,
+      "registered": 26
     },
     "муслюмовская црб муслюмово": {
       "volume": 24,
@@ -4647,136 +4643,136 @@
       "registered": 9
     },
     "нурлатская црб нурлат": {
-      "volume": 262,
-      "registered": 240
+      "volume": 263,
+      "registered": 241
     },
     "пестречинская црб пестрецы": {
-      "volume": 897,
-      "registered": 445
+      "volume": 929,
+      "registered": 477
     },
     "рыбно слободская црб рыбная слобода": {
-      "volume": 33,
-      "registered": 12
+      "volume": 35,
+      "registered": 13
     },
     "сабинская црб богатые сабы": {
-      "volume": 97,
-      "registered": 58
+      "volume": 98,
+      "registered": 59
     },
     "сармановская црб сарманово": {
-      "volume": 59,
-      "registered": 34
+      "volume": 60,
+      "registered": 35
     },
     "тетюшская црб тетюши": {
-      "volume": 31,
-      "registered": 12
+      "volume": 32,
+      "registered": 13
     },
     "тукаевская црб совхоза татарстан": {
-      "volume": 185,
-      "registered": 182
+      "volume": 190,
+      "registered": 187
     },
     "черемшанская црб черемшан": {
       "volume": 12,
       "registered": 8
     },
     "тюлячинская црб тюлячи": {
-      "volume": 64,
-      "registered": 49
+      "volume": 67,
+      "registered": 52
     },
     "уруссинская црб уруссу": {
       "volume": 48,
       "registered": 36
     },
     "городская больница №11 г казани казань": {
-      "volume": 1195,
-      "registered": 714
+      "volume": 1239,
+      "registered": 757
     },
     "детская городская клиническая больница №7 г казани казань": {
-      "volume": 232,
-      "registered": 55
+      "volume": 236,
+      "registered": 59
     },
     "клиника латыпова р м казань": {
       "volume": 15,
       "registered": 0
     },
     "городская поликлиника №7 г казани казань": {
-      "volume": 59,
-      "registered": 21
+      "volume": 63,
+      "registered": 24
     },
     "детская городская поликлиника №2 г казани казань": {
-      "volume": 419,
-      "registered": 390
+      "volume": 433,
+      "registered": 404
     },
     "клиническая больница №2 г казани казань": {
       "volume": 283,
       "registered": 16
     },
     "детская городская поликлиника №4 г казани казань": {
-      "volume": 364,
-      "registered": 336
+      "volume": 376,
+      "registered": 348
     },
     "госпиталь для ветеранов войн г казани казань": {
       "volume": 10,
       "registered": 0
     },
     "гкб №16 г казани казань": {
-      "volume": 1898,
-      "registered": 1864
+      "volume": 1933,
+      "registered": 1899
     },
     "городская детская больница №1 имени м ш уразаевой г казани казань": {
-      "volume": 151,
-      "registered": 129
+      "volume": 153,
+      "registered": 130
     },
     "гкб №7 им м н садыкова казань": {
-      "volume": 4046,
-      "registered": 3992
+      "volume": 4136,
+      "registered": 4082
     },
     "городская поликлиника №10 г казани казань": {
-      "volume": 2639,
-      "registered": 2571
+      "volume": 2692,
+      "registered": 2624
     },
     "гдп №7 казань": {
-      "volume": 292,
-      "registered": 282
+      "volume": 299,
+      "registered": 289
     },
     "детская городская поликлиника №9 г казани казань": {
-      "volume": 206,
-      "registered": 172
+      "volume": 209,
+      "registered": 175
     },
     "дркб мз рт казань": {
-      "volume": 620,
-      "registered": 576
+      "volume": 634,
+      "registered": 590
     },
     "цгкб №18 им проф к ш зыятдинова казань": {
-      "volume": 2969,
-      "registered": 2665
+      "volume": 3069,
+      "registered": 2765
     },
     "городская поликлиника №18 г казани казань": {
-      "volume": 2689,
-      "registered": 2492
+      "volume": 2740,
+      "registered": 2543
     },
     "городская поликлиника №20 г казани казань": {
-      "volume": 2704,
-      "registered": 2456
+      "volume": 2779,
+      "registered": 2531
     },
     "городская поликлиника №21 г казани казань": {
-      "volume": 4782,
-      "registered": 4531
+      "volume": 4938,
+      "registered": 4686
     },
     "детская городская поликлиника №10 г казани казань": {
-      "volume": 398,
-      "registered": 309
+      "volume": 404,
+      "registered": 315
     },
     "детская городская поликлиника № 11 казань": {
-      "volume": 1082,
-      "registered": 990
+      "volume": 1102,
+      "registered": 1010
     },
     "городская детская поликлиника №6 г казани казань": {
-      "volume": 566,
-      "registered": 331
+      "volume": 585,
+      "registered": 350
     },
     "городская поликлиника №8 г казани казань": {
-      "volume": 2054,
-      "registered": 1604
+      "volume": 2084,
+      "registered": 1634
     }
   }
 }

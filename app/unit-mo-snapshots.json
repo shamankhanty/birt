@@ -1,16 +1,16 @@
 {
   "tvspStationary": {
     "previous": {
-      "date": "ноябрь 2026",
+      "date": "23.11.2026",
       "total": 91,
-      "good": 72,
-      "partial": 19,
+      "good": 75,
+      "partial": 16,
       "none": 0
     }
   },
   "tvspAmbulatory": {
     "previous": {
-      "date": "ноябрь 2026",
+      "date": "23.11.2026",
       "total": 108,
       "good": 95,
       "partial": 13,
@@ -19,27 +19,27 @@
   },
   "tvspLaboratory": {
     "previous": {
-      "date": "19.11.2026",
-      "total": 80,
-      "good": 80,
+      "date": "23.11.2026",
+      "total": 78,
+      "good": 78,
       "partial": 0,
       "none": 0
     }
   },
   "tvspDiagnostic": {
     "previous": {
-      "date": "31.10.2026",
-      "total": 107,
-      "good": 104,
-      "partial": 2,
-      "none": 1
+      "date": "22.11.2026",
+      "total": 106,
+      "good": 106,
+      "partial": 0,
+      "none": 0
     }
   },
   "smpFederal": {
     "previous": {
-      "date": "31.10.2026",
-      "total": 42,
-      "good": 41,
+      "date": "22.11.2026",
+      "total": 41,
+      "good": 40,
       "partial": 1,
       "none": 0
     }

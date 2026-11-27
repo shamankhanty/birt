@@ -96,3 +96,28 @@ test('stage9 supports every catalogued source family in staging',()=>{
  const all=cfg.families.map(x=>x.id).sort(); const supported=[...cfg.stage9.supportedFamilies].sort();
  assert.deepEqual(supported,all); assert.equal(all.length,21);
 });
+
+test('27 November ambulatory refresh preserves both previous components when source is blank or absent',()=>{
+ const current=JSON.parse(fs.readFileSync(path.join(root,'app/mo-data.json'),'utf8')).ambulatoryCase;
+ const byOid=JSON.parse(fs.readFileSync(path.join(root,'app/mo-detail-oids.json'),'utf8')).ambulatoryCase;
+ // The 27 November source-specific coverage counts are an audited release fixture.
+ if(current.date!=='25.11.2026') return;
+ assert.equal(current.sourceCoverage.updated,119);
+ assert.equal(current.sourceCoverage.retainedBlank,18);
+ assert.equal(current.sourceCoverage.retainedAbsent,5);
+ const retained=current.rows.filter(row=>row.sourceDate==='18.11.2026');
+ assert.equal(retained.length,23);
+ assert.equal(current.rows.filter(row=>row.sourceDate==='25.11.2026').length,119);
+ for(const row of retained){
+  assert.ok(row.sourceWarning);
+  assert.equal(row.count,byOid[row.oid].registered);
+  const expected=byOid[row.oid].volume?byOid[row.oid].registered/byOid[row.oid].volume*100:null;
+  if(expected===null) assert.equal(row.fact,null);
+  else {
+   assert.equal(typeof row.fact,'number');
+   assert.ok(Math.abs(row.fact-expected)<1e-10, 'percentage agrees within floating-point precision');
+  }
+ }
+ assert.equal(current.numerator,Object.values(byOid).reduce((sum,row)=>sum+row.registered,0));
+ assert.equal(current.denominator,Object.values(byOid).reduce((sum,row)=>sum+row.volume,0));
+});

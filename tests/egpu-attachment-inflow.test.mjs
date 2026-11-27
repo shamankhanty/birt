@@ -11,11 +11,11 @@ test("both EPGU attachment indicators use the same denominator growth, not the n
   assert.ok(first);
   assert.ok(timely);
   assert.deepEqual(first, timely);
-  assert.equal(first.count, 610);
-  assert.equal(first.currentTotal, 49169);
-  assert.equal(first.previousTotal, 48559);
-  assert.equal(first.previousDate, "19.11.2026");
-  assert.equal(first.currentDate, "22.11.2026");
+  assert.equal(first.count, 1125);
+  assert.equal(first.currentTotal, 50294);
+  assert.equal(first.previousTotal, 49169);
+  assert.equal(first.previousDate, "22.11.2026");
+  assert.equal(first.currentDate, "27.11.2026");
   assert.notEqual(first.count, data.egpu.numerator - data.egpu.previousNumerator);
   assert.notEqual(first.count, data.egpu2days.numerator - data.egpu2days.previousNumerator);
 });
@@ -34,7 +34,7 @@ test("missing, negative or incomparable data never becomes zero new applications
     { ...base, previousDate: null },
     { ...base, previousPeriod: "01.11–12.11.2026" },
     { ...base, period: "01.11–19.11.2026" },
-    { ...base, previousDate: "26.11.2026" },
+    { ...base, previousDate: "28.11.2026" },
     { ...base, denominator: base.previousDenominator - 1 },
     { ...base, denominator: "48559" },
     { ...base, period: "01.01–18.11.2026" },
