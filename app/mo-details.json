@@ -331,32 +331,32 @@
   },
   "birth": {
     "азнакаевская црб": {
-      "volume": 122,
-      "registered": 122
+      "volume": 123,
+      "registered": 123
     },
     "чистопольская црб": {
-      "volume": 320,
-      "registered": 319
+      "volume": 332,
+      "registered": 330
     },
     "актанышская црб": {
-      "volume": 46,
-      "registered": 46
+      "volume": 47,
+      "registered": 47
     },
     "бугульминская црб": {
-      "volume": 461,
-      "registered": 461
+      "volume": 472,
+      "registered": 471
     },
     "ава казань": {
-      "volume": 653,
-      "registered": 644
+      "volume": 662,
+      "registered": 652
     },
     "базарно матакская црб": {
       "volume": 1,
       "registered": 1
     },
     "уруссинская црб": {
-      "volume": 2,
-      "registered": 2
+      "volume": 3,
+      "registered": 3
     },
     "бавлинская црб": {
       "volume": 2,
@@ -367,20 +367,20 @@
       "registered": 1
     },
     "ркб мз рт": {
-      "volume": 6651,
-      "registered": 6651
+      "volume": 6757,
+      "registered": 6755
     },
     "елабужская црб": {
-      "volume": 77,
-      "registered": 77
+      "volume": 78,
+      "registered": 78
     },
     "сабинская црб": {
-      "volume": 35,
-      "registered": 35
+      "volume": 36,
+      "registered": 36
     },
     "нурлатская црб": {
-      "volume": 75,
-      "registered": 75
+      "volume": 76,
+      "registered": 76
     },
     "дгп № 4 г казань": {
       "volume": 1,
@@ -403,20 +403,20 @@
       "registered": 2
     },
     "ндрб с пц г нижнекамск": {
-      "volume": 1625,
-      "registered": 1625
+      "volume": 1647,
+      "registered": 1647
     },
     "зеленодольская црб": {
-      "volume": 535,
-      "registered": 535
+      "volume": 544,
+      "registered": 544
     },
     "алексеевская црб": {
       "volume": 1,
       "registered": 1
     },
     "гкб№7 им м н садыкова г казань": {
-      "volume": 8921,
-      "registered": 8917
+      "volume": 9027,
+      "registered": 9016
     },
     "буинская црб": {
       "volume": 35,
@@ -455,12 +455,12 @@
       "registered": 1
     },
     "кфу": {
-      "volume": 1260,
-      "registered": 1259
+      "volume": 1275,
+      "registered": 1271
     },
     "сармановская црб": {
-      "volume": 23,
-      "registered": 23
+      "volume": 24,
+      "registered": 24
     },
     "детская городская поликлиника №6": {
       "volume": 1,
@@ -479,16 +479,16 @@
       "registered": 0
     },
     "кдмц г наб челны": {
-      "volume": 4238,
-      "registered": 4230
+      "volume": 4276,
+      "registered": 4275
     },
     "кму г казань": {
-      "volume": 1447,
-      "registered": 1447
+      "volume": 1464,
+      "registered": 1464
     },
     "альметьевская рмб": {
-      "volume": 1961,
-      "registered": 1946
+      "volume": 1977,
+      "registered": 1972
     },
     "дгп № 11 г казань": {
       "volume": 1,
@@ -501,280 +501,280 @@
   },
   "death": {
     "кфу": {
-      "volume": 487,
-      "registered": 486
+      "volume": 493,
+      "registered": 493
     },
     "гкб№7 им м н садыкова г казань": {
-      "volume": 1967,
-      "registered": 1966
+      "volume": 2023,
+      "registered": 2018
     },
     "бугульминская црб": {
-      "volume": 724,
-      "registered": 722
+      "volume": 750,
+      "registered": 747
     },
     "альметьевская црб": {
-      "volume": 1142,
-      "registered": 1138
+      "volume": 1212,
+      "registered": 1204
     },
     "нурлатская црб": {
-      "volume": 297,
-      "registered": 297
+      "volume": 308,
+      "registered": 308
     },
     "нцрмб г нижнекамск": {
-      "volume": 973,
-      "registered": 968
+      "volume": 998,
+      "registered": 988
     },
     "кукморская црб": {
-      "volume": 283,
-      "registered": 283
-    },
-    "тукаевская црб": {
-      "volume": 28,
-      "registered": 28
-    },
-    "кб №2 г казань": {
-      "volume": 277,
-      "registered": 274
-    },
-    "верхнеуслонская црб": {
-      "volume": 123,
-      "registered": 121
-    },
-    "альметьевская рмб": {
-      "volume": 28,
-      "registered": 28
-    },
-    "буинская црб": {
-      "volume": 391,
-      "registered": 388
-    },
-    "рыбно слободская црб": {
-      "volume": 280,
-      "registered": 270
-    },
-    "агрызская црб": {
-      "volume": 195,
-      "registered": 191
-    },
-    "гп № 21 г казань": {
-      "volume": 208,
-      "registered": 208
-    },
-    "гкб № 12 г казань": {
-      "volume": 1490,
-      "registered": 1483
-    },
-    "лениногорская црб": {
-      "volume": 639,
-      "registered": 639
-    },
-    "нмчу детский хоспис": {
-      "volume": 95,
-      "registered": 86
-    },
-    "зеленодольская црб": {
-      "volume": 1312,
-      "registered": 1312
-    },
-    "кдц на четаева": {
-      "volume": 16,
-      "registered": 11
-    },
-    "высокогорская црб": {
-      "volume": 170,
-      "registered": 169
-    },
-    "республиканское бюро судебно медицинской экспертизы": {
-      "volume": 12900,
-      "registered": 12845
-    },
-    "гп № 7 г казань": {
-      "volume": 129,
-      "registered": 129
-    },
-    "чистопольская црб": {
-      "volume": 836,
-      "registered": 835
-    },
-    "заинская црб": {
-      "volume": 408,
-      "registered": 405
-    },
-    "мамадышская црб": {
-      "volume": 258,
-      "registered": 257
-    },
-    "кдц авиастроительного района": {
-      "volume": 53,
-      "registered": 53
-    },
-    "кб ржд медицина г казани": {
-      "volume": 44,
-      "registered": 30
-    },
-    "мензелинская црб": {
-      "volume": 310,
-      "registered": 307
-    },
-    "гб № 11 г казань": {
-      "volume": 131,
-      "registered": 131
-    },
-    "лаишевская црб": {
-      "volume": 221,
-      "registered": 211
-    },
-    "гб №5 г наб челны": {
-      "volume": 40,
-      "registered": 39
-    },
-    "ркб мз рт": {
-      "volume": 742,
-      "registered": 734
-    },
-    "цгкб № 18 им проф к ш зыятдинова г казань": {
-      "volume": 192,
-      "registered": 191
-    },
-    "арская црб": {
-      "volume": 463,
-      "registered": 459
-    },
-    "мано казанский хоспис наташа": {
-      "volume": 186,
-      "registered": 171
-    },
-    "тетюшская црб": {
-      "volume": 129,
-      "registered": 129
-    },
-    "ркод мз рт им проф м з сигала г казань": {
-      "volume": 257,
-      "registered": 257
-    },
-    "камско устьинская црб": {
-      "volume": 104,
-      "registered": 103
-    },
-    "гб №2 г наб челны": {
-      "volume": 16,
-      "registered": 16
-    },
-    "ситидок эксперт казань": {
-      "volume": 24,
-      "registered": 22
-    },
-    "гп №18 г казань": {
-      "volume": 209,
-      "registered": 209
-    },
-    "мо спасение": {
-      "volume": 52,
-      "registered": 52
-    },
-    "гп № 20 г казань": {
-      "volume": 252,
-      "registered": 252
-    },
-    "тюлячинская црб": {
-      "volume": 86,
-      "registered": 86
-    },
-    "дрожжановская црб": {
-      "volume": 130,
-      "registered": 128
-    },
-    "актанышская црб": {
-      "volume": 206,
-      "registered": 206
-    },
-    "камско полянская рб": {
-      "volume": 23,
-      "registered": 18
-    },
-    "базарно матакская црб": {
-      "volume": 160,
-      "registered": 157
-    },
-    "гвв г казань": {
-      "volume": 67,
-      "registered": 67
-    },
-    "азнакаевская црб": {
-      "volume": 405,
-      "registered": 403
-    },
-    "алексеевская црб": {
-      "volume": 168,
-      "registered": 168
-    },
-    "атнинская црб": {
-      "volume": 122,
-      "registered": 121
-    },
-    "мкдц г казань": {
-      "volume": 195,
-      "registered": 194
-    },
-    "муслюмовская црб": {
-      "volume": 115,
-      "registered": 115
-    },
-    "рт бсмп им р с акчурина г наб челны": {
-      "volume": 2144,
-      "registered": 2128
-    },
-    "уруссинская црб": {
-      "volume": 17,
-      "registered": 16
-    },
-    "гкб №16 г казань": {
-      "volume": 172,
-      "registered": 171
-    },
-    "апастовская црб": {
-      "volume": 129,
-      "registered": 127
-    },
-    "черемшанская црб": {
-      "volume": 141,
-      "registered": 141
-    },
-    "гп № 8 г казань": {
-      "volume": 195,
-      "registered": 191
-    },
-    "аксубаевская црб": {
-      "volume": 202,
-      "registered": 196
-    },
-    "гп №4 им л н ганиевой г наб челны": {
-      "volume": 39,
-      "registered": 39
-    },
-    "новошешминская црб": {
-      "volume": 65,
-      "registered": 65
-    },
-    "бавлинская црб": {
       "volume": 295,
       "registered": 295
     },
+    "тукаевская црб": {
+      "volume": 30,
+      "registered": 30
+    },
+    "кб №2 г казань": {
+      "volume": 284,
+      "registered": 277
+    },
+    "верхнеуслонская црб": {
+      "volume": 128,
+      "registered": 127
+    },
+    "альметьевская рмб": {
+      "volume": 29,
+      "registered": 28
+    },
+    "буинская црб": {
+      "volume": 401,
+      "registered": 394
+    },
+    "рыбно слободская црб": {
+      "volume": 285,
+      "registered": 275
+    },
+    "агрызская црб": {
+      "volume": 196,
+      "registered": 193
+    },
+    "гп № 21 г казань": {
+      "volume": 211,
+      "registered": 210
+    },
+    "гкб № 12 г казань": {
+      "volume": 1531,
+      "registered": 1529
+    },
+    "лениногорская црб": {
+      "volume": 643,
+      "registered": 643
+    },
+    "нмчу детский хоспис": {
+      "volume": 97,
+      "registered": 86
+    },
+    "зеленодольская црб": {
+      "volume": 1352,
+      "registered": 1349
+    },
+    "кдц на четаева": {
+      "volume": 17,
+      "registered": 11
+    },
+    "высокогорская црб": {
+      "volume": 178,
+      "registered": 176
+    },
+    "республиканское бюро судебно медицинской экспертизы": {
+      "volume": 13202,
+      "registered": 13192
+    },
+    "гп № 7 г казань": {
+      "volume": 133,
+      "registered": 130
+    },
+    "чистопольская црб": {
+      "volume": 867,
+      "registered": 861
+    },
+    "заинская црб": {
+      "volume": 415,
+      "registered": 414
+    },
+    "мамадышская црб": {
+      "volume": 267,
+      "registered": 266
+    },
+    "кдц авиастроительного района": {
+      "volume": 54,
+      "registered": 53
+    },
+    "кб ржд медицина г казани": {
+      "volume": 45,
+      "registered": 30
+    },
+    "мензелинская црб": {
+      "volume": 317,
+      "registered": 316
+    },
+    "гб № 11 г казань": {
+      "volume": 134,
+      "registered": 131
+    },
+    "лаишевская црб": {
+      "volume": 224,
+      "registered": 211
+    },
+    "гб №5 г наб челны": {
+      "volume": 42,
+      "registered": 40
+    },
+    "ркб мз рт": {
+      "volume": 756,
+      "registered": 747
+    },
+    "цгкб № 18 им проф к ш зыятдинова г казань": {
+      "volume": 196,
+      "registered": 196
+    },
+    "арская црб": {
+      "volume": 481,
+      "registered": 480
+    },
+    "мано казанский хоспис наташа": {
+      "volume": 190,
+      "registered": 180
+    },
+    "тетюшская црб": {
+      "volume": 133,
+      "registered": 133
+    },
+    "ркод мз рт им проф м з сигала г казань": {
+      "volume": 261,
+      "registered": 260
+    },
+    "камско устьинская црб": {
+      "volume": 106,
+      "registered": 105
+    },
+    "гб №2 г наб челны": {
+      "volume": 17,
+      "registered": 16
+    },
+    "ситидок эксперт казань": {
+      "volume": 26,
+      "registered": 22
+    },
+    "гп №18 г казань": {
+      "volume": 217,
+      "registered": 217
+    },
+    "мо спасение": {
+      "volume": 54,
+      "registered": 54
+    },
+    "гп № 20 г казань": {
+      "volume": 255,
+      "registered": 254
+    },
+    "тюлячинская црб": {
+      "volume": 87,
+      "registered": 86
+    },
+    "дрожжановская црб": {
+      "volume": 132,
+      "registered": 130
+    },
+    "актанышская црб": {
+      "volume": 208,
+      "registered": 208
+    },
+    "камско полянская рб": {
+      "volume": 25,
+      "registered": 22
+    },
+    "базарно матакская црб": {
+      "volume": 160,
+      "registered": 160
+    },
+    "гвв г казань": {
+      "volume": 68,
+      "registered": 68
+    },
+    "азнакаевская црб": {
+      "volume": 414,
+      "registered": 414
+    },
+    "алексеевская црб": {
+      "volume": 171,
+      "registered": 170
+    },
+    "атнинская црб": {
+      "volume": 126,
+      "registered": 123
+    },
+    "мкдц г казань": {
+      "volume": 197,
+      "registered": 196
+    },
+    "муслюмовская црб": {
+      "volume": 121,
+      "registered": 120
+    },
+    "рт бсмп им р с акчурина г наб челны": {
+      "volume": 2200,
+      "registered": 2188
+    },
+    "уруссинская црб": {
+      "volume": 17,
+      "registered": 17
+    },
+    "гкб №16 г казань": {
+      "volume": 175,
+      "registered": 175
+    },
+    "апастовская црб": {
+      "volume": 135,
+      "registered": 135
+    },
+    "черемшанская црб": {
+      "volume": 142,
+      "registered": 142
+    },
+    "гп № 8 г казань": {
+      "volume": 200,
+      "registered": 195
+    },
+    "аксубаевская црб": {
+      "volume": 207,
+      "registered": 203
+    },
+    "гп №4 им л н ганиевой г наб челны": {
+      "volume": 40,
+      "registered": 40
+    },
+    "новошешминская црб": {
+      "volume": 68,
+      "registered": 68
+    },
+    "бавлинская црб": {
+      "volume": 296,
+      "registered": 295
+    },
     "гп №3 г наб челны": {
-      "volume": 43,
-      "registered": 43
+      "volume": 44,
+      "registered": 44
     },
     "дгп № 2 г казань": {
       "volume": 1,
       "registered": 1
     },
     "сабинская црб": {
-      "volume": 155,
-      "registered": 154
+      "volume": 158,
+      "registered": 158
     },
     "елабужская црб": {
-      "volume": 616,
-      "registered": 616
+      "volume": 627,
+      "registered": 627
     },
     "ммц профмедицина нк": {
       "volume": 2,
@@ -785,36 +785,32 @@
       "registered": 38
     },
     "балтасинская црб": {
-      "volume": 207,
-      "registered": 207
+      "volume": 212,
+      "registered": 211
     },
     "сармановская црб": {
-      "volume": 275,
-      "registered": 274
+      "volume": 288,
+      "registered": 285
     },
     "пестречинская црб": {
-      "volume": 162,
-      "registered": 157
-    },
-    "альметьевская гп № 3": {
-      "volume": 45,
-      "registered": 42
+      "volume": 170,
+      "registered": 163
     },
     "гп № 10 г казань": {
-      "volume": 260,
-      "registered": 260
+      "volume": 270,
+      "registered": 269
     },
     "дгп № 4 г казань": {
       "volume": 1,
       "registered": 1
     },
     "кму г казань": {
-      "volume": 147,
-      "registered": 147
+      "volume": 150,
+      "registered": 150
     },
     "кайбицкая црб": {
-      "volume": 74,
-      "registered": 74
+      "volume": 76,
+      "registered": 76
     },
     "ндрб с пц г нижнекамск": {
       "volume": 2,
@@ -826,7 +822,7 @@
     },
     "гвв г наб челны": {
       "volume": 16,
-      "registered": 13
+      "registered": 16
     },
     "кдмц г наб челны": {
       "volume": 1,
@@ -834,19 +830,19 @@
     },
     "дркб мз рт": {
       "volume": 55,
-      "registered": 54
+      "registered": 55
     },
     "дгп № 6 г казань": {
       "volume": 1,
       "registered": 1
     },
     "гп №6 г наб челны": {
-      "volume": 26,
-      "registered": 25
+      "volume": 28,
+      "registered": 27
     },
     "менделеевская црб": {
-      "volume": 205,
-      "registered": 204
+      "volume": 209,
+      "registered": 208
     },
     "ркпб им акад в м бехтерева г казань": {
       "volume": 56,
