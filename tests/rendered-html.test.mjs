@@ -29,5 +29,11 @@ test("renders development preview metadata", async () => {
     response.headers.get("content-type") ?? "",
     /^text\/html\b/i,
   );
-  assert.match(await response.text(), developmentPreviewMeta);
+  const html = await response.text();
+  assert.match(html, developmentPreviewMeta);
+  assert.match(html, /<html\b/i);
+  assert.match(html, /<body\b/i);
+  assert.match(html, /<\/body>/i);
+  assert.match(html, /<\/html>/i);
+  assert.ok(html.length > 100, "rendered HTML must not be an empty response");
 });
