@@ -40,6 +40,7 @@ import errorGuidanceRaw from "./error-guidance.json";
 import monthlyMoRaw from "./monthly-mo.json";
 import maxAppointmentsMunicipalRaw from "./max-appointments-municipal.json";
 import maxPeriodViewsRaw from "./max-period-views.json";
+import maxSemd40Raw from "./max-semd40-20261127.json";
 import maxAppointmentPlanRaw from "./max-appointment-plan.json";
 import unitDataRaw from "./unit-data.json";
 import unitMoSnapshotsRaw from "./unit-mo-snapshots.json";
@@ -2386,7 +2387,7 @@ const methodologies: Methodology[] = [
     denominator: "Не применяется — абсолютный показатель.",
     source: "ГИС ЭЗ РТ / МАХ",
     cadence: "Еженедельно и за полный месяц",
-    note: "Оперативный факт на 07.09.2026 — 103 940 при плане 193 000 на 2026 год. Для рейтинга МО используются полные накопительные срезы на 31.07 и 31.08; оперативный итог РТ показывается отдельно.",
+    note: "С 27.11.2026 оперативный контроль — по выгрузкам с СЭМД 40. План 193 000 на 2026 год не изменён. Сопоставимый годовой факт ожидается; прежние значения доступны в архиве.",
   },
   {
     id: "elnMaxCount",
@@ -2397,7 +2398,7 @@ const methodologies: Methodology[] = [
     denominator: "Не применяется — абсолютный показатель.",
     source: "ГИС ЭЗ РТ / МАХ",
     cadence: "Еженедельно и за полный месяц",
-    note: "Оперативный факт на 07.09.2026 — 77 629 при плане 99 000 на 2026 год. Для рейтинга МО используются полные накопительные срезы на 31.07 и 31.08.",
+    note: "С 27.11.2026 оперативный контроль — по выгрузкам с СЭМД 40. План 99 000 на 2026 год не изменён. Сопоставимый годовой факт ожидается; прежние значения доступны в архиве.",
   },
   {
     id: "visitMax",
@@ -3692,14 +3693,18 @@ export default function Home() {
   const [remdTimeFilter, setRemdTimeFilter] = useState<"all" | "overDay" | "withinDay">("all");
   const [maxMonth, setMaxMonth] = useState<"2026-08" | "2026-09">("2026-09");
   const [maxService, setMaxService] = useState<"visit" | "tmk" | "eln">("tmk");
-  const [maxPeriodView, setMaxPeriodView] = useState<"cumulative" | "operational">("operational");
-  const [maxControlMonth, setMaxControlMonth] = useState<"2026-10" | "2026-11">("2026-11");
+  const [maxArchive, setMaxArchive] = useState(false);
+  const [maxPeriodViewChoice, setMaxPeriodView] = useState<"cumulative" | "operational">("operational");
+  const [maxControlMonthChoice, setMaxControlMonth] = useState<"2026-10" | "2026-11">("2026-11");
   const [maxFilter, setMaxFilter] = useState<"volume" | "growth" | "decline" | "zero" | "missing">("volume");
   const [maxSelectedMo, setMaxSelectedMo] = useState<string | null>(null);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [group, setGroup] = useState("Все направления");
   const [query, setQuery] = useState("");
   const [matrixMetric, setMatrixMetric] = useState("egpu");
+  const maxNewMethod = !maxArchive && matrixMetric !== "visitMax";
+  const maxPeriodView = maxNewMethod ? "operational" : maxPeriodViewChoice;
+  const maxControlMonth = maxNewMethod ? "2026-11" : maxControlMonthChoice;
   const [metricQuery, setMetricQuery] = useState("");
   const [moStatus, setMoStatus] = useState("all");
   const [moOwnership, setMoOwnership] = useState<"state" | "all">("state");
@@ -5484,7 +5489,7 @@ export default function Home() {
   // the current calendar month. Missing source rows remain missing.
   const maxDashboardServiceKey = maxService === "tmk" ? "tmk" : "eln";
   const maxDashboardMetric = maxService === "tmk" ? "tmkMaxCount" : "elnMaxCount";
-  const maxPeriodViews = maxPeriodViewsRaw as any;
+  const maxPeriodViews = (maxArchive ? maxPeriodViewsRaw : { ...maxPeriodViewsRaw, operational: maxSemd40Raw.operational }) as any;
   // October is frozen. November reads its own direct month report, while
   // cumulative control uses a separate year-to-date source; forecast needs two month cuts.
   const maxOperationalSlice = maxControlMonth === "2026-10"
@@ -5703,16 +5708,17 @@ export default function Home() {
   );
   const maxSidebarSnapshot = (id: string) => {
     const service = id === "visitMax" ? "visit" : id === "tmkMaxCount" ? "tmk" : "eln";
-    const slice = maxPeriodView === "operational" ? maxOperationalSlice : maxPeriodViews.cumulative;
+    const slice = service !== "visit" && !maxArchive ? maxPeriodViews.operational : maxPeriodView === "operational" ? maxOperationalSlice : maxPeriodViews.cumulative;
     const metric = service === "visit" ? (maxPeriodView === "cumulative" ? maxAppointmentPlanRaw.cumulative : maxControlMonth === "2026-10" ? maxAppointmentPlanRaw.october : maxAppointmentPlanRaw.november) : slice.metrics[service];
     const fact = metric.plannedMoFact as number | null;
     const plan = metric.republicPlan as number;
     const achievement = plan > 0 && fact !== null ? (fact / plan) * 100 : null;
-    const intervalDays = maxPeriodView === "operational" && slice.previousDate && slice.date ? snapshotDistanceDays(slice.previousDate, slice.date) : null;
-    const daysRemaining = maxPeriodView === "operational" && slice.date ? daysRemainingInCutMonth(slice.date) : null;
+    const sidebarOperational = (service !== "visit" && !maxArchive) || maxPeriodView === "operational";
+    const intervalDays = sidebarOperational && slice.previousDate && slice.date ? snapshotDistanceDays(slice.previousDate, slice.date) : null;
+    const daysRemaining = sidebarOperational && slice.date ? daysRemainingInCutMonth(slice.date) : null;
     const recentPace = fact !== null && metric.previousPlannedMoFact !== null && intervalDays && intervalDays > 0 ? (fact - metric.previousPlannedMoFact) / intervalDays : null;
     const forecast = fact !== null && recentPace !== null && daysRemaining !== null ? fact + Math.max(0, recentPace) * daysRemaining : null;
-    return { achievement, fact, forecast, label: service === "visit" ? "Факт ожидается" : maxPeriodView === "operational" ? (slice.date ? `Оперативно ${slice.date.slice(0, 5)}` : "Ноябрь · нет данных") : `Накопительно ${slice.date.slice(0, 5)}`, plan };
+    return { achievement, fact, forecast, label: service === "visit" ? "Факт ожидается" : sidebarOperational ? (slice.date ? `Оперативно ${slice.date.slice(0, 5)}` : "Ноябрь · нет данных") : `Накопительно ${slice.date.slice(0, 5)}`, plan };
   };
   const sidebarMetricValue = (id: string) => {
     const dataset = moData[id];
@@ -9235,14 +9241,16 @@ export default function Home() {
               )}
               {isMaxMetric && (
                 <div className="indicatorPeriodBar" data-testid="max-indicator-period-switch">
-                  <div className="maxPeriodSwitch" role="group" aria-label="Месяц контроля МАХ">
+                  {matrixMetric !== "visitMax" && <div className="maxPeriodSwitch"><button data-testid="max-archive-toggle" className={maxArchive ? "active" : ""} aria-pressed={maxArchive} onClick={() => { setMaxArchive(!maxArchive); setMaxControlMonth("2026-11"); setMaxPeriodView("operational"); }}>{maxArchive ? "К новой методике" : "Архив"}</button></div>}
+                  {(!maxNewMethod || matrixMetric === "visitMax") && <><div className="maxPeriodSwitch" role="group" aria-label="Месяц контроля МАХ">
                     <button className={maxControlMonth === "2026-10" ? "active" : ""} onClick={() => { setMaxControlMonth("2026-10"); setMaxPeriodView("operational"); }}>{matrixMetric === "visitMax" ? "Октябрь · план" : "Октябрь · закрыт"}</button>
                     <button className={maxControlMonth === "2026-11" ? "active" : ""} onClick={() => { setMaxControlMonth("2026-11"); setMaxPeriodView("operational"); }}>Ноябрь · план</button>
                   </div>
                   <div className="maxPeriodSwitch" role="group" aria-label="Период показателя МАХ">
                     <button className={maxPeriodView === "operational" ? "active" : ""} onClick={() => setMaxPeriodView("operational")}>Оперативно</button>
                     <button className={maxPeriodView === "cumulative" ? "active" : ""} onClick={() => setMaxPeriodView("cumulative")}>Накопительно</button>
-                  </div>
+                  </div></>}
+                  {matrixMetric !== "visitMax" && <span>{maxArchive ? "АРХИВ · прежняя методика" : "СЭМД 40 · новая методика. Накопительный факт ожидается."}</span>}
                   <span>{matrixMetric === "visitMax" ? `Утверждённый план · факт ожидается` : maxPeriodView === "operational" ? `${maxIndicatorSlice.period} · ${maxIndicatorSlice.date ? "подтверждено" : "ожидается первый ноябрьский отчёт"}` : `${maxIndicatorSlice.period} · последний подтверждённый накопительный срез`}</span>
                 </div>
               )}
