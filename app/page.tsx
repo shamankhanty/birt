@@ -50,6 +50,7 @@ import smpStatusesRaw from "./smp-statuses.json";
 import organizationStatusRaw from "./organization-status.json";
 import moRegistryRaw from "./mo-registry.json";
 import { filterActiveDatasetMap } from "../lib/mo-reorganization.js";
+import { activeMaxPlanMetric, maxPlanTone } from "../lib/max-active-control.js";
 import electronicWaybillRaw from "./electronic-waybill.json";
 import electronicWaybillWeeklyRaw from "./electronic-waybill-weekly.json";
 import federalControlRaw from "./federal-control.json";
@@ -5504,9 +5505,10 @@ export default function Home() {
   const maxIndicatorServiceKey = matrixMetric === "visitMax" ? "visit" : matrixMetric === "tmkMaxCount" ? "tmk" : "eln";
   const maxIndicatorSlice = maxPeriodView === "operational" ? maxOperationalSlice : maxPeriodViews.cumulative;
   const maxIndicatorDate = matrixMetric === "visitMax" ? null : maxIndicatorSlice.date;
-  const maxIndicatorMetricData = maxIndicatorServiceKey === "visit"
+  const maxIndicatorMetricSource = maxIndicatorServiceKey === "visit"
     ? (maxPeriodView === "cumulative" ? maxAppointmentPlanRaw.cumulative : maxControlMonth === "2026-10" ? maxAppointmentPlanRaw.october : maxAppointmentPlanRaw.november)
     : maxIndicatorSlice.metrics[maxIndicatorServiceKey];
+  const maxIndicatorMetricData = activeMaxPlanMetric(maxIndicatorMetricSource, maxIndicatorSlice.date ?? (maxControlMonth === "2026-10" ? "31.10.2026" : "30.11.2026"), maxArchive && maxIndicatorServiceKey !== "visit");
   const maxIndicatorPlan = maxIndicatorMetricData.republicPlan as number;
   const maxIndicatorFact = maxIndicatorMetricData.plannedMoFact as number | null;
   const maxIndicatorPreviousFact = maxIndicatorMetricData.previousPlannedMoFact ?? null;
@@ -5534,6 +5536,10 @@ export default function Home() {
   const maxIndicatorForecast = maxPeriodView === "operational" && maxIndicatorFact !== null && maxIndicatorRecentPace !== null && maxIndicatorDaysRemaining !== null
     ? maxIndicatorFact + Math.max(0, maxIndicatorRecentPace) * maxIndicatorDaysRemaining
     : null;
+  const maxIndicatorForecastPercent = maxIndicatorForecast === null || !maxIndicatorPlan ? null : maxIndicatorForecast / maxIndicatorPlan * 100;
+  const maxIndicatorCompletionTone = maxPlanTone(maxIndicatorAchievement);
+  const maxIndicatorForecastTone = maxPlanTone(maxIndicatorForecastPercent);
+  const maxIndicatorTempoTone = maxPlanTone(maxIndicatorRemaining === 0 ? 100 : maxIndicatorRecentPace === null || !maxIndicatorRequiredPace ? null : maxIndicatorRecentPace / maxIndicatorRequiredPace * 100);
   const maxIndicatorRows = (maxIndicatorMetricData.rows as Array<any>)
     .map((sourceRow) => {
       const plan = sourceRow.plan as number | null;
@@ -5617,7 +5623,7 @@ export default function Home() {
     })
     .slice(0, 5);
   const maxDashboardSlice = maxPeriodView === "operational" ? maxOperationalSlice : maxPeriodViews.cumulative;
-  const maxDashboardMetricData = maxDashboardSlice.metrics[maxDashboardServiceKey];
+  const maxDashboardMetricData = activeMaxPlanMetric(maxDashboardSlice.metrics[maxDashboardServiceKey], maxDashboardSlice.date, maxArchive);
   const maxDashboardMonthKey = maxPeriodViews.month as string;
   const maxDashboardPlan = maxDashboardMetricData.republicPlan as number;
   const maxDashboardFact = maxDashboardMetricData.plannedMoFact as number | null;
@@ -5712,7 +5718,8 @@ export default function Home() {
   const maxSidebarSnapshot = (id: string) => {
     const service = id === "visitMax" ? "visit" : id === "tmkMaxCount" ? "tmk" : "eln";
     const slice = service !== "visit" && !maxArchive ? maxPeriodViews.operational : maxPeriodView === "operational" ? maxOperationalSlice : maxPeriodViews.cumulative;
-    const metric = service === "visit" ? (maxPeriodView === "cumulative" ? maxAppointmentPlanRaw.cumulative : maxControlMonth === "2026-10" ? maxAppointmentPlanRaw.october : maxAppointmentPlanRaw.november) : slice.metrics[service];
+    const metricSource = service === "visit" ? (maxPeriodView === "cumulative" ? maxAppointmentPlanRaw.cumulative : maxControlMonth === "2026-10" ? maxAppointmentPlanRaw.october : maxAppointmentPlanRaw.november) : slice.metrics[service];
+    const metric = activeMaxPlanMetric(metricSource, slice.date ?? (maxControlMonth === "2026-10" ? "31.10.2026" : "30.11.2026"), maxArchive && service !== "visit");
     const fact = metric.plannedMoFact as number | null;
     const plan = metric.republicPlan as number;
     const achievement = plan > 0 && fact !== null ? (fact / plan) * 100 : null;
@@ -9261,7 +9268,7 @@ export default function Home() {
               )}
               {isMaxMetric ? (
                 <p className="sourceDataNote">
-                  <b>Источник и ограничение:</b> {matrixMetric === "visitMax" ? "Приказ МЗ РТ № под-2291 от 28.09.2026; фактическая выгрузка записей по МО пока отсутствует" : maxIndicatorSlice.source ?? "Ноябрьская выгрузка пока отсутствует"}. В утверждённый план включены 85 МО; контрольный итог фактической выгрузки — {maxIndicatorMetricData.sourceTotal === null ? "нет данных" : format(maxIndicatorMetricData.sourceTotal, 0)}. {matrixMetric !== "visitMax" && maxIndicatorSlice.date ? `Факт в плановом периметре подтверждён по ${(maxIndicatorMetricData.rows as Array<any>).filter((row) => row.fact !== null).length} из 85 МО; остальные строки — нет данных.` : ""} Отсутствие строки не заменяется нулём.
+                  <b>Источник и ограничение:</b> {matrixMetric === "visitMax" ? "Приказ МЗ РТ № под-2291 от 28.09.2026; фактическая выгрузка записей по МО пока отсутствует" : maxIndicatorSlice.source ?? "Ноябрьская выгрузка пока отсутствует"}. В текущем периметре {maxIndicatorMetricData.rows.length} МО; контрольный итог фактической выгрузки — {maxIndicatorMetricData.sourceTotal === null ? "нет данных" : format(maxIndicatorMetricData.sourceTotal, 0)}. {matrixMetric !== "visitMax" && maxIndicatorSlice.date ? `Факт в плановом периметре подтверждён по ${(maxIndicatorMetricData.rows as Array<any>).filter((row) => row.fact !== null).length} из ${maxIndicatorMetricData.rows.length} МО; остальные строки — нет данных.` : ""} Отсутствие строки не заменяется нулём. {maxIndicatorMetricData.archivedCount > 0 && `Исключено реорганизованных МО: ${maxIndicatorMetricData.archivedCount}. Их план (${format(maxIndicatorMetricData.archivedPlan, 0)}) не перераспределён без утверждения; план РТ сохранён.`}
                 </p>
               ) : selectedDataset.note && matrixMetric !== "semd228" && (
                 <p className="sourceDataNote">
@@ -9304,20 +9311,21 @@ export default function Home() {
                     </span>
                   </header>
                   <div className="planControlCards">
-                    <article><small>{maxPeriodView === "operational" ? (maxIndicatorDate ? `Факт за месяц на ${maxIndicatorDate}` : "Факт за месяц — ожидаем") : maxIndicatorDate ? `Факт накопительно на ${maxIndicatorDate}` : "Накопительный факт — ожидаем"}</small><strong>{maxIndicatorFact === null ? "Нет данных" : format(maxIndicatorFact, 0)}</strong></article>
+                    <article className={`maxTone ${maxIndicatorCompletionTone}`}><small>{maxPeriodView === "operational" ? (maxIndicatorDate ? `Факт за месяц на ${maxIndicatorDate}` : "Факт за месяц — ожидаем") : maxIndicatorDate ? `Факт накопительно на ${maxIndicatorDate}` : "Накопительный факт — ожидаем"}</small><strong>{maxIndicatorFact === null ? "Нет данных" : format(maxIndicatorFact, 0)}</strong></article>
                     <article><small>{maxPeriodView === "operational" ? "План на месяц" : "Накопительный план"}</small><strong>{format(maxIndicatorPlan, 0)}</strong></article>
-                    <article><small>Выполнение плана</small><strong>{maxIndicatorAchievement === null ? "—" : `${format(maxIndicatorAchievement, 2)}%`}</strong></article>
-                    <article><small>Осталось до плана</small><strong>{maxIndicatorRemaining === null ? "—" : format(maxIndicatorRemaining, 0)}</strong></article>
+                    <article className={`maxTone ${maxIndicatorCompletionTone}`}><small>Выполнение плана</small><strong>{maxIndicatorAchievement === null ? "—" : `${format(maxIndicatorAchievement, 2)}%`}</strong></article>
+                    <article className={`maxTone ${maxIndicatorRemaining === 0 ? "good" : maxIndicatorForecastTone === "neutral" ? maxIndicatorCompletionTone : maxIndicatorForecastTone}`}><small>Осталось до плана</small><strong>{maxIndicatorRemaining === null ? "—" : format(maxIndicatorRemaining, 0)}</strong></article>
                     {maxPeriodView === "operational" ? (
-                      <article className="forecastCard"><small>Прогноз к концу месяца</small><strong>{maxIndicatorForecast === null ? "—" : format(maxIndicatorForecast, 0)}</strong><span>{maxIndicatorForecast === null ? "нет сопоставимой динамики" : `${format((maxIndicatorForecast / maxIndicatorPlan) * 100, 1)}% плана`}</span></article>
+                      <article className={`forecastCard maxTone ${maxIndicatorForecastTone}`}><small>Прогноз к концу месяца</small><strong>{maxIndicatorForecast === null ? "—" : format(maxIndicatorForecast, 0)}</strong><span>{maxIndicatorForecast === null ? "нет сопоставимой динамики" : `${format((maxIndicatorForecast / maxIndicatorPlan) * 100, 1)}% плана`}</span></article>
                     ) : (
-                      <article><small>Периметр расчёта</small><strong>85 МО</strong><span>утверждённый план</span></article>
+                      <article><small>Периметр расчёта</small><strong>{maxIndicatorMetricData.rows.length} МО</strong><span>утверждённый план</span></article>
                     )}
                   </div>
+                  <div className="maxToneLegend" aria-label="Цвета выполнения плана"><span className="maxToneText bad">Менее 80%</span><span className="maxToneText warn">80–94,9%</span><span className="maxToneText near">95–99,9%</span><span className="maxToneText good">100% и более</span><span className="maxToneText neutral">Нет данных</span></div>
                   <div className="planTempoLine">
                     <span>{maxIndicatorSlice.previousDate && maxIndicatorDate ? `Изменение ${maxIndicatorSlice.previousDate} → ${maxIndicatorDate}` : "Динамика появится после следующей выгрузки"}</span><b className={(maxIndicatorGrowth ?? 0) > 0 ? "deltaUp" : ""}>{maxIndicatorGrowth === null ? "—" : `${maxIndicatorGrowth > 0 ? "+" : ""}${format(maxIndicatorGrowth, 0)}`}</b>
-                    <span>{maxPeriodView === "operational" ? "Текущий темп" : "Средний прирост"}</span><b>{maxIndicatorRecentPace === null ? "—" : `${format(maxIndicatorRecentPace, 1)} в день`}</b>
-                    {maxPeriodView === "operational" && <><span>Нужно до конца месяца</span><b>{maxIndicatorRequiredPace === null ? "—" : `${format(maxIndicatorRequiredPace, 1)} в день`}</b></>}
+                    <span>{maxPeriodView === "operational" ? "Текущий темп" : "Средний прирост"}</span><b className={`maxToneText ${maxIndicatorTempoTone}`}>{maxIndicatorRecentPace === null ? "—" : `${format(maxIndicatorRecentPace, 1)} в день`}</b>
+                    {maxPeriodView === "operational" && <><span>Нужно до конца месяца</span><b className={`maxToneText ${maxIndicatorTempoTone}`}>{maxIndicatorRequiredPace === null ? "—" : `${format(maxIndicatorRequiredPace, 1)} в день`}</b></>}
                   </div>
                   <p>{matrixMetric === "visitMax" ? "План по приказу задан накопительным итогом. План месяца — разность соседних контрольных точек. Фактическая выгрузка ещё не поступила; выполнение, динамика и прогноз не рассчитываются." : maxPeriodView === "operational"
                     ? maxControlMonth === "2026-10"
@@ -9375,9 +9383,9 @@ export default function Home() {
                           <td><strong>{displayMoName(item.row.name, item.row.oid)}</strong><small>{item.row.oid}</small></td>
                           <td>{item.plan === null ? "—" : format(item.plan, 0)}</td>
                           <td>{item.fact === null ? "Нет данных" : format(item.fact, 0)}</td>
-                          <td>{item.achievement === null ? "—" : <div className="achievementCell"><b>{format(item.achievement, 2)}%</b><span><i style={{ width: `${Math.min(Math.max(item.achievement, 0), 100)}%` }} /></span></div>}</td>
+                          <td>{item.achievement === null ? "—" : <div className={`achievementCell maxToneText ${maxPlanTone(item.achievement)}`}><b>{format(item.achievement, 2)}%</b><span><i style={{ width: `${Math.min(Math.max(item.achievement, 0), 100)}%` }} /></span></div>}</td>
                           <td>{item.remaining === null ? "—" : format(item.remaining, 0)}</td>
-                          <td><span className={`changePill ${item.growth === null || item.growth === 0 ? "neutral" : item.growth > 0 ? "up" : "down"}`}>{item.growth === null ? "—" : `${item.growth > 0 ? "+" : ""}${format(item.growth, 0)} за ${maxIndicatorIntervalDays ?? "—"} дн.`}</span></td>{maxPeriodView === "operational" && <td>{item.forecast === null ? "—" : <><b>{format(item.forecast, 0)}</b><small>{format(item.forecastAchievement ?? 0, 1)}% плана</small></>}</td>}
+                          <td><span className={`changePill ${item.growth === null || item.growth === 0 ? "neutral" : item.growth > 0 ? "up" : "down"}`}>{item.growth === null ? "—" : `${item.growth > 0 ? "+" : ""}${format(item.growth, 0)} за ${maxIndicatorIntervalDays ?? "—"} дн.`}</span></td>{maxPeriodView === "operational" && <td className={`maxToneText ${maxPlanTone(item.forecastAchievement)}`}>{item.forecast === null ? "—" : <><b>{format(item.forecast, 0)}</b><small>{format(item.forecastAchievement ?? 0, 1)}% плана</small></>}</td>}
                           <td><span className={`statusChip ${item.status === "План достигнут ✓" || item.status === "Темп достаточен" ? "good" : item.status === "Нет данных" ? "na" : "bad"}`}>{item.status}</span></td>
                         </tr>
                       ))}</tbody>
