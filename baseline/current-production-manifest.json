@@ -1,8 +1,8 @@
 {
   "schemaVersion": 1,
   "kind": "current-production",
-  "promotedFrom": "27.11.2026 source-reconciled staging candidate",
-  "promotedAt": "2026-11-27T12:45:00Z",
+  "promotedFrom": "November physicians operational snapshot, 26.11.2026 (BI export 27.11.2026)",
+  "promotedAt": "2026-11-27T15:55:00Z",
   "files": {
     "app/contract-semd-monitoring.json": "0c1880605fb5f27758be179cbc39e237eccdb188f6ff0eb0b0aefb43d0e5097d",
     "app/egpu-attachment-volume-snapshots.json": "4c25d4a91661a4e64dca048deeaa19c67d3739b8fb047158a81dcceea22f8f28",
@@ -47,8 +47,8 @@
     "app/organization-status.json": "4d33e30e5f5f94430bac686eae73f351db0d2055cb3c6526efeda187c140f642",
     "app/physician-doctors-all-cumulative-2026-10.json": "074093943b36a1650aa8aba2da77fac93c6f57e7044f8e3e76faca0b9e4024fc",
     "app/physician-metrics.json": "2eeee2b03d16c01457de3d2da146ff45d6a5e75fecaa9f0cf2d72abfe7c9e8ab",
-    "app/physician-weekly-snapshot.json": "fd858ffb47e29ee75edabe4014cb0b2e5d4ed72bfc6b67d5fe0ae58eeab4bc06",
-    "app/physician500-audit.json": "1531d89a24f1290276a0f304840e950b12b16b4bcde3281fbcc99ce33edeb8d9",
+    "app/physician-weekly-snapshot.json": "64a64590379a00eaaec2b095ee4d98a7d9342ae72a56d697dd89f934eda4b689",
+    "app/physician500-audit.json": "0a3ace482a2cd36b1861f6dd3d8ecfcdc833faa81941ee7f1272da7d52ea783b",
     "app/preventive-semd-audit.json": "cb5226b9420eb282c500a9408bbaa6896fe995169d70d7c8d3c1ec1287284c8b",
     "app/remd-registration-time.json": "29b7f77d8549ff8b5c3757be8e66e5fc835e1604890d5c7a63ff02e479446d3a",
     "app/semd-summary.json": "7dd8382defd2c0c1d86df8c721f274a1b743894d955e11a1063c27bce086e420",
