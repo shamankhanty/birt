@@ -787,3 +787,19 @@ body{font-size:14px}
 .attachmentInflowCell .attachmentInflowPositive{color:#147d58}
 .attachmentInflowCell .attachmentInflowCorrection{color:#ca3d48}
 @media(max-width:980px){.attachmentInflowTable th,.attachmentInflowTable td{font-size:9px;padding:8px 4px}.attachmentInflowTable th:nth-child(2),.attachmentInflowTable td:nth-child(2){min-width:155px;width:28%}.attachmentInflowCell small{white-space:normal}}
+
+/* MAX: consistent semantic color for actual achievement, forecast and pace. */
+.planControlCards article.maxTone.bad{background:#fff1f1!important;border-color:#e9a1a1!important;color:#a5252d}
+.planControlCards article.maxTone.warn{background:#fff6e6!important;border-color:#e5c27b!important;color:#88540d}
+.planControlCards article.maxTone.near{background:#edf5ff!important;border-color:#a9c8ee!important;color:#245a9a}
+.planControlCards article.maxTone.good{background:#e8f7ef!important;border-color:#91ccb0!important;color:#116442}
+.planControlCards article.maxTone.neutral{background:#f3f5f5!important;border-color:#dbe2df!important;color:#697b75}
+.planControlCards article.maxTone small,.planControlCards article.maxTone span{color:inherit}
+.maxToneText.bad,.planTempoLine b.maxToneText.bad{color:#b72c36}
+.maxToneText.warn,.planTempoLine b.maxToneText.warn{color:#946007}
+.maxToneText.near,.planTempoLine b.maxToneText.near{color:#2866a6}
+.maxToneText.good,.planTempoLine b.maxToneText.good{color:#117348}
+.maxToneText.neutral,.planTempoLine b.maxToneText.neutral{color:#697b75}
+.maxPlanTable .achievementCell.maxToneText>span>i{background:currentColor}
+.maxToneLegend{display:flex;flex-wrap:wrap;gap:12px;margin:6px 0 0;font-size:10px;font-weight:650}
+.maxToneLegend span::before{content:"";display:inline-block;width:7px;height:7px;margin-right:4px;border-radius:50%;background:currentColor}
