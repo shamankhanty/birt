@@ -1340,6 +1340,7 @@ const operational = [
   const id = runtimeIds[index];
   const metadata = currentOperationalRuntime[id];
   const dataset = operationalDatasets[id] as any;
+  if (id === "tmkMaxCount") return { ...card, value: maxSemd40Raw.operational.metrics.tmk.sourceTotal, period: maxSemd40Raw.operational.period, note: "СЭМД 40 · новая методика. ЛВН после ТМК: " + format(maxSemd40Raw.operational.metrics.eln.sourceTotal, 0) + ". Накопительный факт ожидается.", source: maxSemd40Raw.operational.source };
   return {
     ...card,
     value: metadata?.fact ?? metadata?.derivedFact ?? metadata?.total ?? card.value,
@@ -4881,10 +4882,12 @@ export default function Home() {
     "Все направления",
     ...Array.from(new Set(liveIndicators.map((i) => i.group))),
   ];
-  const filtered = liveIndicators.filter(
+  // Annual MAX facts have not been recalculated using SEMD40. Keep the approved plans, not an incomparable fact.
+  const summaryIndicators = liveIndicators.map((i) => ["tmkMax", "elnMax", "tmkMaxCount", "elnMaxCount"].includes(i.id) ? { ...i, fact: null, quantity: undefined, quantityLabel: undefined, trend: null, lag: null, date: "ожидается пересчёт по СЭМД 40" } : i);
+  const filtered = summaryIndicators.filter(
     (i) => group === "Все направления" || i.group === group,
   );
-  const planned = liveIndicators.filter((i) => i.plan !== null && i.fact !== null);
+  const planned = summaryIndicators.filter((i) => i.plan !== null && i.fact !== null);
   const achieved = planned.filter(
     (i) => statusFor(i.fact, i.plan, Boolean(i.reverse)) === "good",
   ).length;
@@ -6391,6 +6394,7 @@ export default function Home() {
                 <h2>Показатели</h2>
                 <span>{filtered.length} · нарастающим итогом</span>
               </div>
+              <p className="sourceDataNote">МАХ: накопительный факт ТМК и ЛВН по СЭМД 40 ожидается; прежние значения доступны в разделе 02 → «Архив». </p>
               <div className="kpiGrid">
                 {filtered.map((i) => {
                   const s = statusFor(i.fact, i.plan, Boolean(i.reverse));
@@ -7026,6 +7030,7 @@ export default function Home() {
                 <button className={ratingEdition === "v2" ? "active" : ""} onClick={() => setRatingEdition("v2")}>Сентябрь · новая методика</button>
                 <button className={ratingEdition === "v1" ? "active" : ""} onClick={() => setRatingEdition("v1")}>Сентябрь · прежняя версия</button>
               </div>
+              <p className="sourceDataNote">ТМК и ЛВН МАХ в закрытых рейтингах сентября и октября — архив прежней методики. Новые ноябрьские срезы по СЭМД 40 доступны в разделе 02 и не изменяют места закрытых месяцев.</p>
               {ratingEdition === "october" ? <SeptemberRating october /> : ratingEdition === "v2" ? <SeptemberRating /> : <>
               <p className="prototypeNote">Архив версии 1 за сентябрь. Содержит прежние правила, включая оперативный 500+ стоматологов. Для пересчёта используйте новую методику.</p>
               <div className="pageHead ratingHead">
