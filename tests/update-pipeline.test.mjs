@@ -96,3 +96,21 @@ test('stage9 supports every catalogued source family in staging',()=>{
  const all=cfg.families.map(x=>x.id).sort(); const supported=[...cfg.stage9.supportedFamilies].sort();
  assert.deepEqual(supported,all); assert.equal(all.length,21);
 });
+
+test('27 November ambulatory refresh preserves both previous components when source is blank or absent',()=>{
+ const current=JSON.parse(fs.readFileSync(path.join(root,'app/mo-data.json'),'utf8')).ambulatoryCase;
+ const byOid=JSON.parse(fs.readFileSync(path.join(root,'app/mo-detail-oids.json'),'utf8')).ambulatoryCase;
+ assert.equal(current.sourceCoverage.updated,119);
+ assert.equal(current.sourceCoverage.retainedBlank,18);
+ assert.equal(current.sourceCoverage.retainedAbsent,5);
+ const retained=current.rows.filter(row=>row.sourceDate==='18.11.2026');
+ assert.equal(retained.length,23);
+ assert.equal(current.rows.filter(row=>row.sourceDate==='25.11.2026').length,119);
+ for(const row of retained){
+  assert.ok(row.sourceWarning);
+  assert.equal(row.count,byOid[row.oid].registered);
+  assert.equal(row.fact,byOid[row.oid].volume?byOid[row.oid].registered/byOid[row.oid].volume*100:null);
+ }
+ assert.equal(current.numerator,Object.values(byOid).reduce((sum,row)=>sum+row.registered,0));
+ assert.equal(current.denominator,Object.values(byOid).reduce((sum,row)=>sum+row.volume,0));
+});
