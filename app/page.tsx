@@ -40,6 +40,7 @@ import errorGuidanceRaw from "./error-guidance.json";
 import monthlyMoRaw from "./monthly-mo.json";
 import maxAppointmentsMunicipalRaw from "./max-appointments-municipal.json";
 import maxPeriodViewsRaw from "./max-period-views.json";
+import maxSemd40Raw from "./max-semd40-20261127.json";
 import maxAppointmentPlanRaw from "./max-appointment-plan.json";
 import unitDataRaw from "./unit-data.json";
 import unitMoSnapshotsRaw from "./unit-mo-snapshots.json";
@@ -1339,6 +1340,7 @@ const operational = [
   const id = runtimeIds[index];
   const metadata = currentOperationalRuntime[id];
   const dataset = operationalDatasets[id] as any;
+  if (id === "tmkMaxCount") return { ...card, value: maxSemd40Raw.operational.metrics.tmk.sourceTotal, period: maxSemd40Raw.operational.period, note: `СЭМД 40 · новая методика. ЛВН после ТМК: ${format(maxSemd40Raw.operational.metrics.eln.sourceTotal, 0)}. Накопительный факт ожидается.`, source: maxSemd40Raw.operational.source };
   return {
     ...card,
     value: metadata?.fact ?? metadata?.derivedFact ?? metadata?.total ?? card.value,
@@ -2386,7 +2388,7 @@ const methodologies: Methodology[] = [
     denominator: "Не применяется — абсолютный показатель.",
     source: "ГИС ЭЗ РТ / МАХ",
     cadence: "Еженедельно и за полный месяц",
-    note: "Оперативный факт на 07.09.2026 — 103 940 при плане 193 000 на 2026 год. Для рейтинга МО используются полные накопительные срезы на 31.07 и 31.08; оперативный итог РТ показывается отдельно.",
+    note: "С 27.11.2026 оперативный контроль — по выгрузкам с СЭМД 40. План 193 000 на 2026 год не изменён. Сопоставимый годовой факт ожидается; прежние значения доступны в архиве.",
   },
   {
     id: "elnMaxCount",
@@ -2397,7 +2399,7 @@ const methodologies: Methodology[] = [
     denominator: "Не применяется — абсолютный показатель.",
     source: "ГИС ЭЗ РТ / МАХ",
     cadence: "Еженедельно и за полный месяц",
-    note: "Оперативный факт на 07.09.2026 — 77 629 при плане 99 000 на 2026 год. Для рейтинга МО используются полные накопительные срезы на 31.07 и 31.08.",
+    note: "С 27.11.2026 оперативный контроль — по выгрузкам с СЭМД 40. План 99 000 на 2026 год не изменён. Сопоставимый годовой факт ожидается; прежние значения доступны в архиве.",
   },
   {
     id: "visitMax",
@@ -3692,14 +3694,18 @@ export default function Home() {
   const [remdTimeFilter, setRemdTimeFilter] = useState<"all" | "overDay" | "withinDay">("all");
   const [maxMonth, setMaxMonth] = useState<"2026-08" | "2026-09">("2026-09");
   const [maxService, setMaxService] = useState<"visit" | "tmk" | "eln">("tmk");
-  const [maxPeriodView, setMaxPeriodView] = useState<"cumulative" | "operational">("operational");
-  const [maxControlMonth, setMaxControlMonth] = useState<"2026-10" | "2026-11">("2026-11");
+  const [maxArchive, setMaxArchive] = useState(false);
+  const [maxPeriodViewChoice, setMaxPeriodView] = useState<"cumulative" | "operational">("operational");
+  const [maxControlMonthChoice, setMaxControlMonth] = useState<"2026-10" | "2026-11">("2026-11");
   const [maxFilter, setMaxFilter] = useState<"volume" | "growth" | "decline" | "zero" | "missing">("volume");
   const [maxSelectedMo, setMaxSelectedMo] = useState<string | null>(null);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [group, setGroup] = useState("Все направления");
   const [query, setQuery] = useState("");
   const [matrixMetric, setMatrixMetric] = useState("egpu");
+  const maxNewMethod = !maxArchive && matrixMetric !== "visitMax";
+  const maxPeriodView = maxNewMethod ? "operational" : maxPeriodViewChoice;
+  const maxControlMonth = maxNewMethod ? "2026-11" : maxControlMonthChoice;
   const [metricQuery, setMetricQuery] = useState("");
   const [moStatus, setMoStatus] = useState("all");
   const [moOwnership, setMoOwnership] = useState<"state" | "all">("state");
@@ -4876,10 +4882,12 @@ export default function Home() {
     "Все направления",
     ...Array.from(new Set(liveIndicators.map((i) => i.group))),
   ];
-  const filtered = liveIndicators.filter(
+  // Annual MAX facts have not been recalculated using SEMD40. Keep the approved plans, not an incomparable fact.
+  const summaryIndicators = liveIndicators.map((i) => ["tmkMax", "elnMax", "tmkMaxCount", "elnMaxCount"].includes(i.id) ? { ...i, fact: null, quantity: undefined, quantityLabel: undefined, trend: null, lag: null, date: "ожидается пересчёт по СЭМД 40" } : i);
+  const filtered = summaryIndicators.filter(
     (i) => group === "Все направления" || i.group === group,
   );
-  const planned = liveIndicators.filter((i) => i.plan !== null && i.fact !== null);
+  const planned = summaryIndicators.filter((i) => i.plan !== null && i.fact !== null);
   const achieved = planned.filter(
     (i) => statusFor(i.fact, i.plan, Boolean(i.reverse)) === "good",
   ).length;
@@ -5484,7 +5492,7 @@ export default function Home() {
   // the current calendar month. Missing source rows remain missing.
   const maxDashboardServiceKey = maxService === "tmk" ? "tmk" : "eln";
   const maxDashboardMetric = maxService === "tmk" ? "tmkMaxCount" : "elnMaxCount";
-  const maxPeriodViews = maxPeriodViewsRaw as any;
+  const maxPeriodViews = (maxArchive ? maxPeriodViewsRaw : { ...maxPeriodViewsRaw, operational: maxSemd40Raw.operational }) as any;
   // October is frozen. November reads its own direct month report, while
   // cumulative control uses a separate year-to-date source; forecast needs two month cuts.
   const maxOperationalSlice = maxControlMonth === "2026-10"
@@ -5703,16 +5711,17 @@ export default function Home() {
   );
   const maxSidebarSnapshot = (id: string) => {
     const service = id === "visitMax" ? "visit" : id === "tmkMaxCount" ? "tmk" : "eln";
-    const slice = maxPeriodView === "operational" ? maxOperationalSlice : maxPeriodViews.cumulative;
+    const slice = service !== "visit" && !maxArchive ? maxPeriodViews.operational : maxPeriodView === "operational" ? maxOperationalSlice : maxPeriodViews.cumulative;
     const metric = service === "visit" ? (maxPeriodView === "cumulative" ? maxAppointmentPlanRaw.cumulative : maxControlMonth === "2026-10" ? maxAppointmentPlanRaw.october : maxAppointmentPlanRaw.november) : slice.metrics[service];
     const fact = metric.plannedMoFact as number | null;
     const plan = metric.republicPlan as number;
     const achievement = plan > 0 && fact !== null ? (fact / plan) * 100 : null;
-    const intervalDays = maxPeriodView === "operational" && slice.previousDate && slice.date ? snapshotDistanceDays(slice.previousDate, slice.date) : null;
-    const daysRemaining = maxPeriodView === "operational" && slice.date ? daysRemainingInCutMonth(slice.date) : null;
+    const sidebarOperational = (service !== "visit" && !maxArchive) || maxPeriodView === "operational";
+    const intervalDays = sidebarOperational && slice.previousDate && slice.date ? snapshotDistanceDays(slice.previousDate, slice.date) : null;
+    const daysRemaining = sidebarOperational && slice.date ? daysRemainingInCutMonth(slice.date) : null;
     const recentPace = fact !== null && metric.previousPlannedMoFact !== null && intervalDays && intervalDays > 0 ? (fact - metric.previousPlannedMoFact) / intervalDays : null;
     const forecast = fact !== null && recentPace !== null && daysRemaining !== null ? fact + Math.max(0, recentPace) * daysRemaining : null;
-    return { achievement, fact, forecast, label: service === "visit" ? "Факт ожидается" : maxPeriodView === "operational" ? (slice.date ? `Оперативно ${slice.date.slice(0, 5)}` : "Ноябрь · нет данных") : `Накопительно ${slice.date.slice(0, 5)}`, plan };
+    return { achievement, fact, forecast, label: service === "visit" ? "Факт ожидается" : sidebarOperational ? (slice.date ? `Оперативно ${slice.date.slice(0, 5)}` : "Ноябрь · нет данных") : `Накопительно ${slice.date.slice(0, 5)}`, plan };
   };
   const sidebarMetricValue = (id: string) => {
     const dataset = moData[id];
@@ -6385,6 +6394,7 @@ export default function Home() {
                 <h2>Показатели</h2>
                 <span>{filtered.length} · нарастающим итогом</span>
               </div>
+              <p className="sourceDataNote">МАХ: накопительный факт ТМК и ЛВН по СЭМД 40 ожидается; прежние значения доступны в разделе 02 → «Архив». </p>
               <div className="kpiGrid">
                 {filtered.map((i) => {
                   const s = statusFor(i.fact, i.plan, Boolean(i.reverse));
@@ -7020,6 +7030,7 @@ export default function Home() {
                 <button className={ratingEdition === "v2" ? "active" : ""} onClick={() => setRatingEdition("v2")}>Сентябрь · новая методика</button>
                 <button className={ratingEdition === "v1" ? "active" : ""} onClick={() => setRatingEdition("v1")}>Сентябрь · прежняя версия</button>
               </div>
+              <p className="sourceDataNote">ТМК и ЛВН МАХ в закрытых рейтингах сентября и октября — архив прежней методики. Новые ноябрьские срезы по СЭМД 40 доступны в разделе 02 и не изменяют места закрытых месяцев.</p>
               {ratingEdition === "october" ? <SeptemberRating october /> : ratingEdition === "v2" ? <SeptemberRating /> : <>
               <p className="prototypeNote">Архив версии 1 за сентябрь. Содержит прежние правила, включая оперативный 500+ стоматологов. Для пересчёта используйте новую методику.</p>
               <div className="pageHead ratingHead">
@@ -9235,14 +9246,16 @@ export default function Home() {
               )}
               {isMaxMetric && (
                 <div className="indicatorPeriodBar" data-testid="max-indicator-period-switch">
-                  <div className="maxPeriodSwitch" role="group" aria-label="Месяц контроля МАХ">
+                  {matrixMetric !== "visitMax" && <div className="maxPeriodSwitch"><button data-testid="max-archive-toggle" className={maxArchive ? "active" : ""} aria-pressed={maxArchive} onClick={() => { setMaxArchive(!maxArchive); setMaxControlMonth("2026-11"); setMaxPeriodView("operational"); }}>{maxArchive ? "К новой методике" : "Архив"}</button></div>}
+                  {(!maxNewMethod || matrixMetric === "visitMax") && <><div className="maxPeriodSwitch" role="group" aria-label="Месяц контроля МАХ">
                     <button className={maxControlMonth === "2026-10" ? "active" : ""} onClick={() => { setMaxControlMonth("2026-10"); setMaxPeriodView("operational"); }}>{matrixMetric === "visitMax" ? "Октябрь · план" : "Октябрь · закрыт"}</button>
                     <button className={maxControlMonth === "2026-11" ? "active" : ""} onClick={() => { setMaxControlMonth("2026-11"); setMaxPeriodView("operational"); }}>Ноябрь · план</button>
                   </div>
                   <div className="maxPeriodSwitch" role="group" aria-label="Период показателя МАХ">
                     <button className={maxPeriodView === "operational" ? "active" : ""} onClick={() => setMaxPeriodView("operational")}>Оперативно</button>
                     <button className={maxPeriodView === "cumulative" ? "active" : ""} onClick={() => setMaxPeriodView("cumulative")}>Накопительно</button>
-                  </div>
+                  </div></>}
+                  {matrixMetric !== "visitMax" && <span>{maxArchive ? "АРХИВ · прежняя методика" : "СЭМД 40 · новая методика. Накопительный факт ожидается."}</span>}
                   <span>{matrixMetric === "visitMax" ? `Утверждённый план · факт ожидается` : maxPeriodView === "operational" ? `${maxIndicatorSlice.period} · ${maxIndicatorSlice.date ? "подтверждено" : "ожидается первый ноябрьский отчёт"}` : `${maxIndicatorSlice.period} · последний подтверждённый накопительный срез`}</span>
                 </div>
               )}
