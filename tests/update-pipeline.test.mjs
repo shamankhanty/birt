@@ -111,7 +111,12 @@ test('27 November ambulatory refresh preserves both previous components when sou
  for(const row of retained){
   assert.ok(row.sourceWarning);
   assert.equal(row.count,byOid[row.oid].registered);
-  assert.equal(row.fact,byOid[row.oid].volume?byOid[row.oid].registered/byOid[row.oid].volume*100:null);
+  const expected=byOid[row.oid].volume?byOid[row.oid].registered/byOid[row.oid].volume*100:null;
+  if(expected===null) assert.equal(row.fact,null);
+  else {
+   assert.equal(typeof row.fact,'number');
+   assert.ok(Math.abs(row.fact-expected)<1e-10, 'percentage agrees within floating-point precision');
+  }
  }
  assert.equal(current.numerator,Object.values(byOid).reduce((sum,row)=>sum+row.registered,0));
  assert.equal(current.denominator,Object.values(byOid).reduce((sum,row)=>sum+row.volume,0));
