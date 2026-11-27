@@ -1340,7 +1340,7 @@ const operational = [
   const id = runtimeIds[index];
   const metadata = currentOperationalRuntime[id];
   const dataset = operationalDatasets[id] as any;
-  if (id === "tmkMaxCount") return { ...card, value: maxSemd40Raw.operational.metrics.tmk.sourceTotal, period: maxSemd40Raw.operational.period, note: "СЭМД 40 · новая методика. ЛВН после ТМК: " + format(maxSemd40Raw.operational.metrics.eln.sourceTotal, 0) + ". Накопительный факт ожидается.", source: maxSemd40Raw.operational.source };
+  if (id === "tmkMaxCount") return { ...card, value: maxSemd40Raw.operational.metrics.tmk.sourceTotal, period: maxSemd40Raw.operational.period, note: `СЭМД 40 · новая методика. ЛВН после ТМК: ${format(maxSemd40Raw.operational.metrics.eln.sourceTotal, 0)}. Накопительный факт ожидается.`, source: maxSemd40Raw.operational.source };
   return {
     ...card,
     value: metadata?.fact ?? metadata?.derivedFact ?? metadata?.total ?? card.value,
